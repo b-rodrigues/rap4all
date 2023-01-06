@@ -1,0 +1,34 @@
+project:
+  type: book
+
+book:
+  title: "Building reproducible analytical pipelines with the R programming language"
+  author: "Jane Doe"
+  date: "1/6/2023"
+  site-url: "https://github.com/b-rodrigues/rap4all"
+  chapters:
+    - index.qmd
+    - intro.qmd
+    - fprog.qmd
+    - git.qmd
+    - start_project.qmd
+    - testing.qmd
+    - packages.qmd
+    - targets.qmd
+    - repro_intro.qmd
+    - repro_cont.qmd
+    - ci_cd.qmd
+    - references.qmd
+
+bibliography: references.bib
+
+format:
+  html:
+    theme:
+      light: flatly
+      dark: darkly
+  pdf:
+    documentclass: scrreprt
+
+
+
