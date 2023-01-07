@@ -173,4 +173,112 @@ food_list
 [1] "cassoulet"
 ```
 
-If you keep running `h()`, this list will continue growing. 
+If you keep running `h()`, this list will continue growing. Let me just say that I hesitated showing you this; this
+is because you're reaction if you didn't know `<<-` is that you might find it useful. But it is quite dangerous as well.
+Generally, we want to avoid using functions that change the state as much as possible because these function are
+unpredictable, especially if randomness is involved. It is much safer to define `h()` like this instead:
+
+```{r, eval = F}
+h <- function(name, food_list = list()){
+
+  food <- sample(c("lasagna", "cassoulet", "feijoada"), 1)
+
+  food_list <- append(food_list, food)
+
+  print(paste0(name, " likes ", food))
+
+  food_list
+}
+```
+
+The difference now is that we made `food_list` the second argument of the function. Also, we defined it as being
+optional by writing:
+
+```{r, eval = F}
+food_list = list()
+```
+
+This means that if we omit this argument, the empty list will get used by default. This avoids the users having
+to manually specify it.
+
+We can call it like this:
+
+```{r, eval = F}
+food_list <- h("Bruno", food_list) # since food_list is already defined, we don't need to start with an empty list
+```
+
+```{r, eval = F}
+[1] "Bruno likes feijoada"
+```
+
+We save the output back to `food_list`. Let's now check its contents:
+
+```{r, eval = F}
+food_list
+```
+
+```{r, eval = F}
+[[1]]
+[1] "feijoada"
+
+[[2]]
+[1] "cassoulet"
+
+[[3]]
+[1] "cassoulet"
+```
+
+The only thing that we need now to deal with is the fact that the food gets chosen randomly. I'm going to show you the
+simple way of dealing with this, but later in this chapter we are going to use the `{withr}` package for situations
+like this. Let's redefine `h()` one last time:
+
+```{r, eval = F}
+h <- function(name, food_list = list(), seed = 123){
+
+  # We set the seed, making sure that we get the same selection of food for a given seed
+  set.seed(seed)
+  food <- sample(c("lasagna", "cassoulet", "feijoada"), 1)
+
+  # We now need to unset the seed, because if we don't, guess what, the seed will stay set for the whole session!
+  set.seed(NULL)
+
+  food_list <- append(food_list, food)
+
+  print(paste0(name, " likes ", food))
+
+  food_list
+}
+```
+
+Let's now call `h()` several times with its default arguments:
+
+```{r, eval = F}
+h("Bruno")
+```
+
+```{r, eval = F}
+[1] "Bruno likes feijoada"
+[[1]]
+[1] "feijoada"
+```
+
+```{r, eval = F}
+h("Bruno")
+```
+
+```{r, eval = F}
+[1] "Bruno likes feijoada"
+[[1]]
+[1] "feijoada"
+```
+
+```{r, eval = F}
+h("Bruno")
+```
+
+```{r, eval = F}
+[1] "Bruno likes feijoada"
+[[1]]
+[1] "feijoada"
+```
+
