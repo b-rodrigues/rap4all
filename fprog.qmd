@@ -4,3 +4,173 @@ This chapter will teach you the fundamentals of functional programming. *Functio
 sound scary, but we will focus on only a handful of concepts that are quite accessible while providing
 many benefits. Using these functional programming concepts will make your code more reliable, easier
 to test, document, share, and ultimately rerun.
+
+## Introduction
+
+You are very likely already familiar with some aspects of functional program. Let's start by discussing
+the two central elements of functional programming: functions and lists.
+
+There are several ways that you can structure a program, called programming paradigms. Functional programming
+is a paradigm that relies exclusively on the evaluation of functions to achieve the desired end result. If you
+have already written your own functions in the past, what follows will not be very new. But in order to write
+a good functional program, the functions that you write and evaluate have to have certain properties. Before
+discussing these properties, let's start by with *state*.
+
+### The state of your program
+
+Let's suppose that you start a fresh R session, and
+immediately run this next line:
+
+```{r, eval = F}
+ls()
+```
+
+If you did not modify any of R's configuration files
+that get automatically loaded on startup, you should
+see the following:
+
+```{r, eval = F}
+character(0)
+```
+
+Let's suppose that now you load some data:
+
+```{r, eval = F}
+data(mtcars)
+```
+
+and define a variable `a`:
+
+```{r, eval = F}
+a <- 1
+```
+
+Running `ls()` now shows the following:
+
+```{r, eval = F}
+[1] "a"      "mtcars"
+```
+
+You have just altered the state of your program. You can think of the *state* as box that holds everything
+that gets defined by the user and is accessible at any time. Let's now define a simple function that
+prints a sentence:
+
+```{r, eval = F}
+f <- function(name){
+  print(paste0(name, " likes lasagna"))
+}
+
+f("Bruno")
+```
+
+and here's the output:
+
+```{r, eval = F}
+[1] "Bruno likes lasagna"
+```
+
+Let's run `ls()` again:
+
+```{r, eval = F}
+[1] "a"      "f"      "mtcars"
+```
+
+Function `f()` is now listed there as well. This function has two nice properties:
+
+- For a given input, it always returns exactly the same output. So `f("Bruno")` will always return "Bruno likes lasagna".
+- This function does not change the state of your program.
+
+Let's now define another function called `g()`, that does not have the same properties as `f()`. First, let's define
+a function that does not always return the same output given a particular input:
+
+```{r, eval = F}
+g <- function(name){
+  food <- sample(c("lasagna", "cassoulet", "feijoada"), 1)
+  print(paste0(name, " likes ", food))
+}
+```
+
+For the same input, "Bruno", this function now produces (potentially) a different output:
+
+```{r, eval = F}
+g("Bruno")
+[1] "Bruno likes lasagna"
+```
+
+```{r, eval = F}
+g("Bruno")
+[1] "Bruno likes feijoada"
+```
+
+And now let's consider function `h()` that modifies the state of the program:
+
+```{r, eval = F}
+h <- function(name){
+  food <- sample(c("lasagna", "cassoulet", "feijoada"), 1)
+
+  if(exists("food_list")){
+    food_list <<- append(food_list, food)
+  } else {
+    food_list <<- append(list(), food)
+  }
+
+  print(paste0(name, " likes ", food))
+}
+```
+
+This function uses the `<<-` operator. This operator saves definitions that are made inside the body
+of functions in the global environment. Before calling this function, run `ls()` again. You should
+see the same objects as before, plus the functions we've defined:
+
+```{r, eval = F}
+[1] "a"         "f"          "g"         "h"         "mtcars"   
+```
+
+Let's now run `h()` once:
+
+```{r, eval = F}
+h("Bruno")
+[1] "Bruno likes lasagna"
+```
+
+And now `ls()` again:
+
+```{r, eval = F}
+[1] "a"         "f"         "food_list" "g"         "h"         "mtcars" 
+```
+
+Running `h()` did two things: it printed the message, but also created a variable called "food_list" in the
+global environment with the following contents:
+
+```{r, eval = F}
+food_list
+```
+
+```{r, eval = F}
+[[1]]
+[1] "feijoada"
+```
+
+Let's run `h()` again:
+
+```{r, eval = F}
+h("Bruno")
+[1] "Bruno likes feijoada"
+```
+
+and let's check the contents of "food_list":
+
+
+```{r, eval = F}
+food_list
+```
+
+```{r, eval = F}
+[[1]]
+[1] "feijoada"
+
+[[2]]
+[1] "cassoulet"
+```
+
+If you keep running `h()`, this list will continue growing. 
