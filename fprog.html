@@ -235,6 +235,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#the-state-of-your-program" id="toc-the-state-of-your-program" class="nav-link" data-scroll-target="#the-state-of-your-program"><span class="toc-section-number">2.1.1</span>  The state of your program</a></li>
   <li><a href="#predictable-functions" id="toc-predictable-functions" class="nav-link" data-scroll-target="#predictable-functions"><span class="toc-section-number">2.1.2</span>  Predictable functions</a></li>
   </ul></li>
+  <li><a href="#referentially-transparent-and-pure-functions" id="toc-referentially-transparent-and-pure-functions" class="nav-link" data-scroll-target="#referentially-transparent-and-pure-functions"><span class="toc-section-number">2.2</span>  Referentially transparent and pure functions</a></li>
   </ul>
 </nav>
     </div>
@@ -285,7 +286,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"a"</span>      <span class="st">"mtcars"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>You have just altered the state of your program. You can think of the <em>state</em> as box that holds everything that gets defined by the user and is accessible at any time. Let’s now define a simple function that prints a sentence:</p>
+<p>You have just altered the state of your program. You can think of the <em>state</em> as a box that holds everything that gets defined by the user and is accessible at any time. Let’s now define a simple function that prints a sentence:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>f <span class="ot">&lt;-</span> <span class="cf">function</span>(name){</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="fu">paste0</span>(name, <span class="st">" likes lasagna"</span>))</span>
@@ -304,7 +305,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Function <code>f()</code> is now listed there as well. This function has two nice properties:</p>
 <ul>
 <li>For a given input, it always returns exactly the same output. So <code>f("Bruno")</code> will always return “Bruno likes lasagna”.</li>
-<li>This function does not change the state of your program.</li>
+<li>This function does not change the state of your program, by adding new objects every time it’s run.</li>
 </ul>
 </section>
 <section id="predictable-functions" class="level3" data-number="2.1.2">
@@ -339,14 +340,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="fu">paste0</span>(name, <span class="st">" likes "</span>, food))</span>
 <span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>This function uses the <code>&lt;&lt;-</code> operator. This operator saves definitions that are made inside the body of functions in the global environment. Before calling this function, run <code>ls()</code> again. You should see the same objects as before, plus the functions we’ve defined:</p>
+<p>This function uses the <code>&lt;&lt;-</code> operator. This operator saves definitions that are made inside the body of functions in the global environment. Before calling this function, run <code>ls()</code> again. You should see the same objects as before, plus the new functions we’ve defined:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"a"</span>         <span class="st">"f"</span>          <span class="st">"g"</span>         <span class="st">"h"</span>         <span class="st">"mtcars"</span>   </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Let’s now run <code>h()</code> once:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">h</span>(<span class="st">"Bruno"</span>)</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"Bruno likes lasagna"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"Bruno likes feijoada"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>And now <code>ls()</code> again:</p>
 <div class="cell">
@@ -363,7 +364,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Let’s run <code>h()</code> again:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">h</span>(<span class="st">"Bruno"</span>)</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"Bruno likes feijoada"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"Bruno likes cassoulet"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>and let’s check the contents of “food_list”:</p>
 <div class="cell">
@@ -376,7 +377,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>[[<span class="dv">2</span>]]</span>
 <span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"cassoulet"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>If you keep running <code>h()</code>, this list will continue growing. Let me just say that I hesitated showing you this; this is because you’re reaction if you didn’t know <code>&lt;&lt;-</code> is that you might find it useful. But it is quite dangerous as well. Generally, we want to avoid using functions that change the state as much as possible because these function are unpredictable, especially if randomness is involved. It is much safer to define <code>h()</code> like this instead:</p>
+<p>If you keep running <code>h()</code>, this list will continue growing. Let me just say that I hesitated showing you this; this is because if you didn’t know <code>&lt;&lt;-</code>, you might find the example above useful. But while useful, it is quite dangerous as well. Generally, we want to avoid using functions that change the state as much as possible because these function are unpredictable, especially if randomness is involved. It is much safer to define <code>h()</code> like this instead:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>h <span class="ot">&lt;-</span> <span class="cf">function</span>(name, <span class="at">food_list =</span> <span class="fu">list</span>()){</span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -413,7 +414,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"cassoulet"</span></span>
 <span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>[[<span class="dv">3</span>]]</span>
-<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"cassoulet"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"feijoada"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>The only thing that we need now to deal with is the fact that the food gets chosen randomly. I’m going to show you the simple way of dealing with this, but later in this chapter we are going to use the <code>{withr}</code> package for situations like this. Let’s redefine <code>h()</code> one last time:</p>
 <div class="cell">
@@ -458,9 +459,36 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>[[<span class="dv">1</span>]]</span>
 <span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"feijoada"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-
-
+<p>As you can see, every time this function runs, it now produces the same result. Users can change the seed to have this function produce, consistently, another result.</p>
 </section>
+</section>
+<section id="referentially-transparent-and-pure-functions" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="referentially-transparent-and-pure-functions"><span class="header-section-number">2.2</span> Referentially transparent and pure functions</h2>
+<p>A referentially transparent function is a function that does not use any variable that is not also one of its inputs. For example, the following function:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>bad <span class="ot">&lt;-</span> <span class="cf">function</span>(x){</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>  x <span class="sc">+</span> y</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>is not referentially transparent, because <code>y</code> is not one of the functions inputs. What happens if you run <code>bad()</code> is that <code>bad()</code> needs to look for <code>y</code>. Because <code>y</code> is not one of its inputs, <code>bad()</code> then looks for it in the global environment. If <code>y</code> is defined there, it then gets used. Defining and using such functions must be avoided at all costs, because these functions are unpredictable. For example:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="dv">10</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>bad <span class="ot">&lt;-</span> <span class="cf">function</span>(x){</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>  x <span class="sc">+</span> y</span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a><span class="fu">bad</span>(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>This will return <code>15</code>. But if <code>y &lt;- 45</code> then <code>bad(5)</code> would this time around return <code>50</code>. It is much safer, and easier to make <code>y</code> an explicit input of the function instead of having to keep track of <code>y</code>’s value:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>good <span class="ot">&lt;-</span> <span class="cf">function</span>(x, y){</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>  x <span class="sc">+</span> y</span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><code>good()</code> is a referentially transparent function; it is much safer than <code>bad()</code>. <code>good()</code> is also a pure function, because it’s a function that does not interact in any way with the global environment. It does not write anything to the global environment, nor requires anything from the global environment. Function <code>h()</code> from the previous section was not pure, because it created an object and wrote it to the global environment (the <code>food_list</code> object). Turns out that pure functions are thus necesarrily referentially transparent.</p>
+<p>So the first lesson in your functional programming journey that you have to remember is to only use pure functions.</p>
+
+
 </section>
 
 </main> <!-- /main -->
