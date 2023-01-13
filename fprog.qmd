@@ -51,7 +51,7 @@ Running `ls()` now shows the following:
 [1] "a"      "mtcars"
 ```
 
-You have just altered the state of your program. You can think of the *state* as box that holds everything
+You have just altered the state of your program. You can think of the *state* as a box that holds everything
 that gets defined by the user and is accessible at any time. Let's now define a simple function that
 prints a sentence:
 
@@ -78,7 +78,7 @@ Let's run `ls()` again:
 Function `f()` is now listed there as well. This function has two nice properties:
 
 - For a given input, it always returns exactly the same output. So `f("Bruno")` will always return "Bruno likes lasagna".
-- This function does not change the state of your program.
+- This function does not change the state of your program, by adding new objects every time it’s run.
 
 ### Predictable functions
 
@@ -122,7 +122,7 @@ h <- function(name){
 
 This function uses the `<<-` operator. This operator saves definitions that are made inside the body
 of functions in the global environment. Before calling this function, run `ls()` again. You should
-see the same objects as before, plus the functions we've defined:
+see the same objects as before, plus the new functions we've defined:
 
 ```{r, eval = F}
 [1] "a"         "f"          "g"         "h"         "mtcars"   
@@ -132,7 +132,7 @@ Let's now run `h()` once:
 
 ```{r, eval = F}
 h("Bruno")
-[1] "Bruno likes lasagna"
+[1] "Bruno likes feijoada"
 ```
 
 And now `ls()` again:
@@ -157,7 +157,7 @@ Let's run `h()` again:
 
 ```{r, eval = F}
 h("Bruno")
-[1] "Bruno likes feijoada"
+[1] "Bruno likes cassoulet"
 ```
 
 and let's check the contents of "food_list":
@@ -176,7 +176,7 @@ food_list
 ```
 
 If you keep running `h()`, this list will continue growing. Let me just say that I hesitated showing you this; this
-is because you're reaction if you didn't know `<<-` is that you might find it useful. But it is quite dangerous as well.
+is because if you didn't know `<<-`, you might find the example above useful. But while useful, it is quite dangerous as well.
 Generally, we want to avoid using functions that change the state as much as possible because these function are
 unpredictable, especially if randomness is involved. It is much safer to define `h()` like this instead:
 
@@ -227,7 +227,7 @@ food_list
 [1] "cassoulet"
 
 [[3]]
-[1] "cassoulet"
+[1] "feijoada"
 ```
 
 The only thing that we need now to deal with is the fact that the food gets chosen randomly. I'm going to show you the
