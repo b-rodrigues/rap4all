@@ -287,7 +287,7 @@ h("Bruno")
 As you can see, every time this function runs, it now produces the same result. Users can change the seed to have this function produce, consistently,
 another result.
 
-## Referentially transparent and pure functions
+### Referentially transparent and pure functions
 
 A referentially transparent function is a function that does not use any variable that is not also one of its inputs. For example, the following function:
 
@@ -326,3 +326,81 @@ from the previous section was not pure, because it created an object and wrote i
 functions are thus necesarrily referentially transparent.
 
 So the first lesson in your functional programming journey that you have to remember is to only use pure functions.
+
+## Writing good functions
+### Functions are first class objects
+
+In a functional programming language, functions are first class objects. Contrary to what the name implies, this means that functions, especially the ones you define
+yourself, are nothing special. A function is an object like any other, and can thus be manipulated as such. Think of anything that you can do with any object in R,
+and you can do the same thing with a function. For example, let’s consider the `+()` function. It takes two numeric objects and retuns their sum:
+
+```{r}
+1 + 5.3
+
+# or alternatively: `+`(1, 5.3)
+```
+
+You can replace the numbers by functions that return numbers:
+
+```{r}
+sqrt(1) + log(5.3)
+```
+
+It’s also possible to define a function that explicitely takes another function as an input:
+
+```{r}
+h <- function(number, f){
+  f(number)
+}
+```
+
+You can call then use `h()` as a wrapper for `f()`:
+
+```{r}
+h(4, sqrt)
+
+h(10, log10)
+```
+
+If you don’t know how many arguments `f()`, the function you’re wrapping, has, you can use the `...`:
+
+```{r}
+h <- function(number, f, ...){
+  f(number, ...)
+}
+```
+
+`...` are simply a placeholder for any potential additional argument that `f()` might have:
+
+```{r}
+h(c(1, 2, NA, 3), mean, na.rm = TRUE)
+
+h(c(1, 2, NA, 3), mean, na.rm = FALSE)
+```
+
+`na.rm` is an argument of `mean()`. As the developer of `h()`, I don’t necessarily know what `f()` might be, or maybe I know `f()` and know all its
+arguments, but don’t want to have to rewrite them all to make them arguments of `h()`, so I can use `...` instead. If you want to learn more about `...`, type 
+`?dots` in an R console.
+
+## Optional arguments
+
+It is possible to make function arguments optional, by using `NULL`. For example:
+
+```{r}
+g <- function(x, y = NULL){
+  if(is.null(y)){
+    print("optional argument y is NULL")
+    x
+  } else {
+    if(y == 5) print("y is present"); x+y
+  }
+}
+```
+
+Calling `g(10)` prints the message "Optional argument y is NULL", and returns 10. Calling `g(10, 5)` however, prints "y is present" and returns 15.
+
+## Lists: a powerful data-structure
+
+
+
+
