@@ -234,8 +234,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <ul class="collapse">
   <li><a href="#the-state-of-your-program" id="toc-the-state-of-your-program" class="nav-link" data-scroll-target="#the-state-of-your-program"><span class="toc-section-number">2.1.1</span>  The state of your program</a></li>
   <li><a href="#predictable-functions" id="toc-predictable-functions" class="nav-link" data-scroll-target="#predictable-functions"><span class="toc-section-number">2.1.2</span>  Predictable functions</a></li>
+  <li><a href="#referentially-transparent-and-pure-functions" id="toc-referentially-transparent-and-pure-functions" class="nav-link" data-scroll-target="#referentially-transparent-and-pure-functions"><span class="toc-section-number">2.1.3</span>  Referentially transparent and pure functions</a></li>
   </ul></li>
-  <li><a href="#referentially-transparent-and-pure-functions" id="toc-referentially-transparent-and-pure-functions" class="nav-link" data-scroll-target="#referentially-transparent-and-pure-functions"><span class="toc-section-number">2.2</span>  Referentially transparent and pure functions</a></li>
+  <li><a href="#writing-good-functions" id="toc-writing-good-functions" class="nav-link" data-scroll-target="#writing-good-functions"><span class="toc-section-number">2.2</span>  Writing good functions</a>
+  <ul class="collapse">
+  <li><a href="#functions-are-first-class-objects" id="toc-functions-are-first-class-objects" class="nav-link" data-scroll-target="#functions-are-first-class-objects"><span class="toc-section-number">2.2.1</span>  Functions are first class objects</a></li>
+  <li><a href="#optional-arguments" id="toc-optional-arguments" class="nav-link" data-scroll-target="#optional-arguments"><span class="toc-section-number">2.2.2</span>  Optional arguments</a></li>
+  <li><a href="#safe-functions" id="toc-safe-functions" class="nav-link" data-scroll-target="#safe-functions"><span class="toc-section-number">2.2.3</span>  Safe functions</a></li>
+  <li><a href="#recursive-functions" id="toc-recursive-functions" class="nav-link" data-scroll-target="#recursive-functions"><span class="toc-section-number">2.2.4</span>  Recursive functions</a></li>
+  </ul></li>
+  <li><a href="#lists-a-powerful-data-structure" id="toc-lists-a-powerful-data-structure" class="nav-link" data-scroll-target="#lists-a-powerful-data-structure"><span class="toc-section-number">2.3</span>  Lists: a powerful data-structure</a></li>
   </ul>
 </nav>
     </div>
@@ -461,9 +469,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <p>As you can see, every time this function runs, it now produces the same result. Users can change the seed to have this function produce, consistently, another result.</p>
 </section>
-</section>
-<section id="referentially-transparent-and-pure-functions" class="level2" data-number="2.2">
-<h2 data-number="2.2" class="anchored" data-anchor-id="referentially-transparent-and-pure-functions"><span class="header-section-number">2.2</span> Referentially transparent and pure functions</h2>
+<section id="referentially-transparent-and-pure-functions" class="level3" data-number="2.1.3">
+<h3 data-number="2.1.3" class="anchored" data-anchor-id="referentially-transparent-and-pure-functions"><span class="header-section-number">2.1.3</span> Referentially transparent and pure functions</h3>
 <p>A referentially transparent function is a function that does not use any variable that is not also one of its inputs. For example, the following function:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>bad <span class="ot">&lt;-</span> <span class="cf">function</span>(x){</span>
@@ -487,6 +494,154 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <p><code>good()</code> is a referentially transparent function; it is much safer than <code>bad()</code>. <code>good()</code> is also a pure function, because it’s a function that does not interact in any way with the global environment. It does not write anything to the global environment, nor requires anything from the global environment. Function <code>h()</code> from the previous section was not pure, because it created an object and wrote it to the global environment (the <code>food_list</code> object). Turns out that pure functions are thus necesarrily referentially transparent.</p>
 <p>So the first lesson in your functional programming journey that you have to remember is to only use pure functions.</p>
+</section>
+</section>
+<section id="writing-good-functions" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="writing-good-functions"><span class="header-section-number">2.2</span> Writing good functions</h2>
+<section id="functions-are-first-class-objects" class="level3" data-number="2.2.1">
+<h3 data-number="2.2.1" class="anchored" data-anchor-id="functions-are-first-class-objects"><span class="header-section-number">2.2.1</span> Functions are first class objects</h3>
+<p>In a functional programming language, functions are first class objects. Contrary to what the name implies, this means that functions, especially the ones you define yourself, are nothing special. A function is an object like any other, and can thus be manipulated as such. Think of anything that you can do with any object in R, and you can do the same thing with a function. For example, let’s consider the <code>+()</code> function. It takes two numeric objects and retuns their sum:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="sc">+</span> <span class="fl">5.3</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 6.3</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># or alternatively: `+`(1, 5.3)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>You can replace the numbers by functions that return numbers:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>(<span class="dv">1</span>) <span class="sc">+</span> <span class="fu">log</span>(<span class="fl">5.3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2.667707</code></pre>
+</div>
+</div>
+<p>It’s also possible to define a function that explicitely takes another function as an input:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>h <span class="ot">&lt;-</span> <span class="cf">function</span>(number, f){</span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">f</span>(number)</span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>You can call then use <code>h()</code> as a wrapper for <code>f()</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">h</span>(<span class="dv">4</span>, sqrt)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">h</span>(<span class="dv">10</span>, log10)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1</code></pre>
+</div>
+</div>
+<p>If you don’t know how many arguments <code>f()</code>, the function you’re wrapping, has, you can use the <code>...</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>h <span class="ot">&lt;-</span> <span class="cf">function</span>(number, f, ...){</span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">f</span>(number, ...)</span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><code>...</code> are simply a placeholder for any potential additional argument that <code>f()</code> might have:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">h</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="cn">NA</span>, <span class="dv">3</span>), mean, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">h</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="cn">NA</span>, <span class="dv">3</span>), mean, <span class="at">na.rm =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] NA</code></pre>
+</div>
+</div>
+<p><code>na.rm</code> is an argument of <code>mean()</code>. As the developer of <code>h()</code>, I don’t necessarily know what <code>f()</code> might be, or maybe I know <code>f()</code> and know all its arguments, but don’t want to have to rewrite them all to make them arguments of <code>h()</code>, so I can use <code>...</code> instead. The following is also possible:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>w <span class="ot">&lt;-</span> <span class="cf">function</span>(...){</span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a><span class="fu">paste0</span>(<span class="st">"First argument: "</span>, ..<span class="dv">1</span>, <span class="st">", second argument: "</span>, ..<span class="dv">2</span>, <span class="st">", last argument: "</span>, ..<span class="dv">3</span>)</span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-5"><a href="#cb52-5" aria-hidden="true" tabindex="-1"></a><span class="fu">w</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "First argument: 1, second argument: 2, last argument: 3"</code></pre>
+</div>
+</div>
+<p>If you want to learn more about <code>...</code>, type <code>?dots</code> in an R console.</p>
+</section>
+<section id="optional-arguments" class="level3" data-number="2.2.2">
+<h3 data-number="2.2.2" class="anchored" data-anchor-id="optional-arguments"><span class="header-section-number">2.2.2</span> Optional arguments</h3>
+<p>It is possible to make function arguments optional, by using <code>NULL</code>. For example:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>g <span class="ot">&lt;-</span> <span class="cf">function</span>(x, <span class="at">y =</span> <span class="cn">NULL</span>){</span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(<span class="fu">is.null</span>(y)){</span>
+<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">print</span>(<span class="st">"optional argument y is NULL"</span>)</span>
+<span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a>    x</span>
+<span id="cb54-5"><a href="#cb54-5" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb54-6"><a href="#cb54-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(y <span class="sc">==</span> <span class="dv">5</span>) <span class="fu">print</span>(<span class="st">"y is present"</span>); x<span class="sc">+</span>y</span>
+<span id="cb54-7"><a href="#cb54-7" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb54-8"><a href="#cb54-8" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Calling <code>g(10)</code> prints the message “Optional argument y is NULL”, and returns 10. Calling <code>g(10, 5)</code> however, prints “y is present” and returns 15. It is also possible to using <code>missing()</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>g <span class="ot">&lt;-</span> <span class="cf">function</span>(x, y){</span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(<span class="fu">missing</span>(y)){</span>
+<span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">print</span>(<span class="st">"optional argument y is missing"</span>)</span>
+<span id="cb55-4"><a href="#cb55-4" aria-hidden="true" tabindex="-1"></a>    x</span>
+<span id="cb55-5"><a href="#cb55-5" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb55-6"><a href="#cb55-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(y <span class="sc">==</span> <span class="dv">5</span>) <span class="fu">print</span>(<span class="st">"y is present"</span>); x<span class="sc">+</span>y</span>
+<span id="cb55-7"><a href="#cb55-7" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb55-8"><a href="#cb55-8" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>I however prefer the first approach, because it is clearer which arguments are optional, which is not the case with the second approach, where you need to read the body of the function.</p>
+</section>
+<section id="safe-functions" class="level3" data-number="2.2.3">
+<h3 data-number="2.2.3" class="anchored" data-anchor-id="safe-functions"><span class="header-section-number">2.2.3</span> Safe functions</h3>
+<p>It is important that your functions are safe and predictable. You should avoid writing functions that behave like <code>nchar()</code>, a base R function. Let’s see why this function is not safe:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nchar</span>(<span class="st">"10000000"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 8</code></pre>
+</div>
+</div>
+<p>It returns the expected result of 8. But what if I remove the quotes?</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nchar</span>(<span class="dv">10000000</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 5</code></pre>
+</div>
+</div>
+<p>What is going on here? I’ll give you a hint: simply type <code>10000000</code> in the console:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="dv">10000000</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1e+07</code></pre>
+</div>
+</div>
+<p><code>10000000</code> gets represented as <code>1e+07</code> by R. This number in scientific notation gets then converted into a character “1e+07” by <code>nchar()</code>, silently. <code>nchar()</code> then counts the number of characters, and <em>correctly</em> returns 5. The problem is that it doesn’t make sense to provide a number to a function that expepects a character. This function should have returned an error message, or at the very least raised a warning that the number got converted into a character. Here is how you could rewrite <code>nchar()</code> to make it safer:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a>nchar2 <span class="ot">&lt;-</span> <span class="cf">function</span>(x, <span class="at">result =</span> <span class="dv">0</span>){</span>
+<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-3"><a href="#cb62-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(<span class="sc">!</span><span class="fu">isTRUE</span>(<span class="fu">is.character</span>(x))){</span>
+<span id="cb62-4"><a href="#cb62-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stop</span>(<span class="fu">paste0</span>(<span class="st">"x should be of type 'character', but is of type '"</span>,</span>
+<span id="cb62-5"><a href="#cb62-5" aria-hidden="true" tabindex="-1"></a>                <span class="fu">typeof</span>(x), <span class="st">"' instead."</span>))</span>
+<span id="cb62-6"><a href="#cb62-6" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> <span class="cf">if</span>(x <span class="sc">==</span> <span class="st">""</span>){</span>
+<span id="cb62-7"><a href="#cb62-7" aria-hidden="true" tabindex="-1"></a>    result</span>
+<span id="cb62-8"><a href="#cb62-8" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb62-9"><a href="#cb62-9" aria-hidden="true" tabindex="-1"></a>    result <span class="ot">&lt;-</span> result <span class="sc">+</span> <span class="dv">1</span></span>
+<span id="cb62-10"><a href="#cb62-10" aria-hidden="true" tabindex="-1"></a>    split_x <span class="ot">&lt;-</span> <span class="fu">strsplit</span>(x, <span class="at">split =</span> <span class="st">""</span>)[[<span class="dv">1</span>]]</span>
+<span id="cb62-11"><a href="#cb62-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">nchar2</span>(<span class="fu">paste0</span>(split_x[<span class="sc">-</span><span class="dv">1</span>],</span>
+<span id="cb62-12"><a href="#cb62-12" aria-hidden="true" tabindex="-1"></a>                     <span class="at">collapse =</span> <span class="st">""</span>), result)</span>
+<span id="cb62-13"><a href="#cb62-13" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb62-14"><a href="#cb62-14" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>This function now returns an error message if the input is not a character:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nchar</span>(<span class="dv">10000000</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 5</code></pre>
+</div>
+</div>
+</section>
+<section id="recursive-functions" class="level3" data-number="2.2.4">
+<h3 data-number="2.2.4" class="anchored" data-anchor-id="recursive-functions"><span class="header-section-number">2.2.4</span> Recursive functions</h3>
+</section>
+</section>
+<section id="lists-a-powerful-data-structure" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="lists-a-powerful-data-structure"><span class="header-section-number">2.3</span> Lists: a powerful data-structure</h2>
 
 
 </section>
