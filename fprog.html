@@ -242,6 +242,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#optional-arguments" id="toc-optional-arguments" class="nav-link" data-scroll-target="#optional-arguments"><span class="toc-section-number">2.2.2</span>  Optional arguments</a></li>
   <li><a href="#safe-functions" id="toc-safe-functions" class="nav-link" data-scroll-target="#safe-functions"><span class="toc-section-number">2.2.3</span>  Safe functions</a></li>
   <li><a href="#recursive-functions" id="toc-recursive-functions" class="nav-link" data-scroll-target="#recursive-functions"><span class="toc-section-number">2.2.4</span>  Recursive functions</a></li>
+  <li><a href="#the-unix-philosophy-applied-to-r" id="toc-the-unix-philosophy-applied-to-r" class="nav-link" data-scroll-target="#the-unix-philosophy-applied-to-r"><span class="toc-section-number">2.2.5</span>  The Unix philosophy applied to R</a></li>
   </ul></li>
   <li><a href="#lists-a-powerful-data-structure" id="toc-lists-a-powerful-data-structure" class="nav-link" data-scroll-target="#lists-a-powerful-data-structure"><span class="toc-section-number">2.3</span>  Lists: a powerful data-structure</a></li>
   </ul>
@@ -561,30 +562,49 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 <p>If you want to learn more about <code>...</code>, type <code>?dots</code> in an R console.</p>
+<p>Because functions are nothing special, you can also write functions that return functions. For example:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>z <span class="ot">&lt;-</span> <span class="cf">function</span>(f){</span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">message</span>(<span class="st">"I’m a function factory!"</span>)</span>
+<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a>  f</span>
+<span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>You can now define a new function:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>z_sqrt <span class="ot">&lt;-</span> <span class="fu">z</span>(sqrt)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>I’m a function factory!</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="fu">z_sqrt</span>(<span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2</code></pre>
+</div>
+</div>
+<p>Functions that return functions are called <em>functions factories</em> and they’re incredibly useful.</p>
 </section>
 <section id="optional-arguments" class="level3" data-number="2.2.2">
 <h3 data-number="2.2.2" class="anchored" data-anchor-id="optional-arguments"><span class="header-section-number">2.2.2</span> Optional arguments</h3>
 <p>It is possible to make function arguments optional, by using <code>NULL</code>. For example:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>g <span class="ot">&lt;-</span> <span class="cf">function</span>(x, <span class="at">y =</span> <span class="cn">NULL</span>){</span>
-<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(<span class="fu">is.null</span>(y)){</span>
-<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">print</span>(<span class="st">"optional argument y is NULL"</span>)</span>
-<span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a>    x</span>
-<span id="cb54-5"><a href="#cb54-5" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
-<span id="cb54-6"><a href="#cb54-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(y <span class="sc">==</span> <span class="dv">5</span>) <span class="fu">print</span>(<span class="st">"y is present"</span>); x<span class="sc">+</span>y</span>
-<span id="cb54-7"><a href="#cb54-7" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb54-8"><a href="#cb54-8" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a>g <span class="ot">&lt;-</span> <span class="cf">function</span>(x, <span class="at">y =</span> <span class="cn">NULL</span>){</span>
+<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(<span class="fu">is.null</span>(y)){</span>
+<span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">print</span>(<span class="st">"optional argument y is NULL"</span>)</span>
+<span id="cb59-4"><a href="#cb59-4" aria-hidden="true" tabindex="-1"></a>    x</span>
+<span id="cb59-5"><a href="#cb59-5" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb59-6"><a href="#cb59-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(y <span class="sc">==</span> <span class="dv">5</span>) <span class="fu">print</span>(<span class="st">"y is present"</span>); x<span class="sc">+</span>y</span>
+<span id="cb59-7"><a href="#cb59-7" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb59-8"><a href="#cb59-8" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Calling <code>g(10)</code> prints the message “Optional argument y is NULL”, and returns 10. Calling <code>g(10, 5)</code> however, prints “y is present” and returns 15. It is also possible to using <code>missing()</code>:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>g <span class="ot">&lt;-</span> <span class="cf">function</span>(x, y){</span>
-<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(<span class="fu">missing</span>(y)){</span>
-<span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">print</span>(<span class="st">"optional argument y is missing"</span>)</span>
-<span id="cb55-4"><a href="#cb55-4" aria-hidden="true" tabindex="-1"></a>    x</span>
-<span id="cb55-5"><a href="#cb55-5" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
-<span id="cb55-6"><a href="#cb55-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(y <span class="sc">==</span> <span class="dv">5</span>) <span class="fu">print</span>(<span class="st">"y is present"</span>); x<span class="sc">+</span>y</span>
-<span id="cb55-7"><a href="#cb55-7" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb55-8"><a href="#cb55-8" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a>g <span class="ot">&lt;-</span> <span class="cf">function</span>(x, y){</span>
+<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(<span class="fu">missing</span>(y)){</span>
+<span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">print</span>(<span class="st">"optional argument y is missing"</span>)</span>
+<span id="cb60-4"><a href="#cb60-4" aria-hidden="true" tabindex="-1"></a>    x</span>
+<span id="cb60-5"><a href="#cb60-5" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb60-6"><a href="#cb60-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(y <span class="sc">==</span> <span class="dv">5</span>) <span class="fu">print</span>(<span class="st">"y is present"</span>); x<span class="sc">+</span>y</span>
+<span id="cb60-7"><a href="#cb60-7" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb60-8"><a href="#cb60-8" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>I however prefer the first approach, because it is clearer which arguments are optional, which is not the case with the second approach, where you need to read the body of the function.</p>
 </section>
@@ -592,45 +612,45 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h3 data-number="2.2.3" class="anchored" data-anchor-id="safe-functions"><span class="header-section-number">2.2.3</span> Safe functions</h3>
 <p>It is important that your functions are safe and predictable. You should avoid writing functions that behave like <code>nchar()</code>, a base R function. Let’s see why this function is not safe:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nchar</span>(<span class="st">"10000000"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nchar</span>(<span class="st">"10000000"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 8</code></pre>
 </div>
 </div>
 <p>It returns the expected result of 8. But what if I remove the quotes?</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nchar</span>(<span class="dv">10000000</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nchar</span>(<span class="dv">10000000</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 5</code></pre>
 </div>
 </div>
 <p>What is going on here? I’ll give you a hint: simply type <code>10000000</code> in the console:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="dv">10000000</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="dv">10000000</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 1e+07</code></pre>
 </div>
 </div>
 <p><code>10000000</code> gets represented as <code>1e+07</code> by R. This number in scientific notation gets then converted into a character “1e+07” by <code>nchar()</code>, silently. <code>nchar()</code> then counts the number of characters, and <em>correctly</em> returns 5. The problem is that it doesn’t make sense to provide a number to a function that expepects a character. This function should have returned an error message, or at the very least raised a warning that the number got converted into a character. Here is how you could rewrite <code>nchar()</code> to make it safer:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a>nchar2 <span class="ot">&lt;-</span> <span class="cf">function</span>(x, <span class="at">result =</span> <span class="dv">0</span>){</span>
-<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-3"><a href="#cb62-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(<span class="sc">!</span><span class="fu">isTRUE</span>(<span class="fu">is.character</span>(x))){</span>
-<span id="cb62-4"><a href="#cb62-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stop</span>(<span class="fu">paste0</span>(<span class="st">"x should be of type 'character', but is of type '"</span>,</span>
-<span id="cb62-5"><a href="#cb62-5" aria-hidden="true" tabindex="-1"></a>                <span class="fu">typeof</span>(x), <span class="st">"' instead."</span>))</span>
-<span id="cb62-6"><a href="#cb62-6" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> <span class="cf">if</span>(x <span class="sc">==</span> <span class="st">""</span>){</span>
-<span id="cb62-7"><a href="#cb62-7" aria-hidden="true" tabindex="-1"></a>    result</span>
-<span id="cb62-8"><a href="#cb62-8" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
-<span id="cb62-9"><a href="#cb62-9" aria-hidden="true" tabindex="-1"></a>    result <span class="ot">&lt;-</span> result <span class="sc">+</span> <span class="dv">1</span></span>
-<span id="cb62-10"><a href="#cb62-10" aria-hidden="true" tabindex="-1"></a>    split_x <span class="ot">&lt;-</span> <span class="fu">strsplit</span>(x, <span class="at">split =</span> <span class="st">""</span>)[[<span class="dv">1</span>]]</span>
-<span id="cb62-11"><a href="#cb62-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">nchar2</span>(<span class="fu">paste0</span>(split_x[<span class="sc">-</span><span class="dv">1</span>],</span>
-<span id="cb62-12"><a href="#cb62-12" aria-hidden="true" tabindex="-1"></a>                     <span class="at">collapse =</span> <span class="st">""</span>), result)</span>
-<span id="cb62-13"><a href="#cb62-13" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb62-14"><a href="#cb62-14" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a>nchar2 <span class="ot">&lt;-</span> <span class="cf">function</span>(x, <span class="at">result =</span> <span class="dv">0</span>){</span>
+<span id="cb67-2"><a href="#cb67-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb67-3"><a href="#cb67-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(<span class="sc">!</span><span class="fu">isTRUE</span>(<span class="fu">is.character</span>(x))){</span>
+<span id="cb67-4"><a href="#cb67-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stop</span>(<span class="fu">paste0</span>(<span class="st">"x should be of type 'character', but is of type '"</span>,</span>
+<span id="cb67-5"><a href="#cb67-5" aria-hidden="true" tabindex="-1"></a>                <span class="fu">typeof</span>(x), <span class="st">"' instead."</span>))</span>
+<span id="cb67-6"><a href="#cb67-6" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> <span class="cf">if</span>(x <span class="sc">==</span> <span class="st">""</span>){</span>
+<span id="cb67-7"><a href="#cb67-7" aria-hidden="true" tabindex="-1"></a>    result</span>
+<span id="cb67-8"><a href="#cb67-8" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb67-9"><a href="#cb67-9" aria-hidden="true" tabindex="-1"></a>    result <span class="ot">&lt;-</span> result <span class="sc">+</span> <span class="dv">1</span></span>
+<span id="cb67-10"><a href="#cb67-10" aria-hidden="true" tabindex="-1"></a>    split_x <span class="ot">&lt;-</span> <span class="fu">strsplit</span>(x, <span class="at">split =</span> <span class="st">""</span>)[[<span class="dv">1</span>]]</span>
+<span id="cb67-11"><a href="#cb67-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">nchar2</span>(<span class="fu">paste0</span>(split_x[<span class="sc">-</span><span class="dv">1</span>],</span>
+<span id="cb67-12"><a href="#cb67-12" aria-hidden="true" tabindex="-1"></a>                     <span class="at">collapse =</span> <span class="st">""</span>), result)</span>
+<span id="cb67-13"><a href="#cb67-13" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb67-14"><a href="#cb67-14" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>This function now returns an error message if the input is not a character:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nchar</span>(<span class="dv">10000000</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nchar</span>(<span class="dv">10000000</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 5</code></pre>
 </div>
@@ -638,6 +658,55 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </section>
 <section id="recursive-functions" class="level3" data-number="2.2.4">
 <h3 data-number="2.2.4" class="anchored" data-anchor-id="recursive-functions"><span class="header-section-number">2.2.4</span> Recursive functions</h3>
+<p>You may have noticed that in the last lines of <code>nchar2()</code>, the function calls itself. A function that calls itself in its own body is called a recursive function. It is sometimes easier to write down a function in its recursive form than in an iterative form. The most common example is of course the factorial function. However, there is an issue with recursive functions (in the R programming language, other programming languages may not have the same problem, like Haskell): while it is sometimes easier to write down a function using a recursive algorithm than an iterative algorithm, like for the factorial function, recursive functions in R are quite slow. Let’s take a look at two definitions of the factorial function, one recursive, the other iterative:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb70"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a>fact_iter <span class="ot">&lt;-</span> <span class="cf">function</span>(n){</span>
+<span id="cb70-2"><a href="#cb70-2" aria-hidden="true" tabindex="-1"></a>  result <span class="ot">=</span> <span class="dv">1</span></span>
+<span id="cb70-3"><a href="#cb70-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>n){</span>
+<span id="cb70-4"><a href="#cb70-4" aria-hidden="true" tabindex="-1"></a>    result <span class="ot">=</span> result <span class="sc">*</span> i</span>
+<span id="cb70-5"><a href="#cb70-5" aria-hidden="true" tabindex="-1"></a>    i <span class="ot">=</span> i <span class="sc">+</span> <span class="dv">1</span></span>
+<span id="cb70-6"><a href="#cb70-6" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb70-7"><a href="#cb70-7" aria-hidden="true" tabindex="-1"></a>  result</span>
+<span id="cb70-8"><a href="#cb70-8" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb70-9"><a href="#cb70-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb70-10"><a href="#cb70-10" aria-hidden="true" tabindex="-1"></a>fact_recur <span class="ot">&lt;-</span> <span class="cf">function</span>(n){</span>
+<span id="cb70-11"><a href="#cb70-11" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(n <span class="sc">==</span> <span class="dv">0</span> <span class="sc">||</span> n <span class="sc">==</span> <span class="dv">1</span>){</span>
+<span id="cb70-12"><a href="#cb70-12" aria-hidden="true" tabindex="-1"></a>  result <span class="ot">=</span> <span class="dv">1</span></span>
+<span id="cb70-13"><a href="#cb70-13" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb70-14"><a href="#cb70-14" aria-hidden="true" tabindex="-1"></a>    n <span class="sc">*</span> <span class="fu">fact_recur</span>(n<span class="dv">-1</span>)</span>
+<span id="cb70-15"><a href="#cb70-15" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb70-16"><a href="#cb70-16" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Using the <code>{microbenchmark}</code> package we can benchmark the code:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb71"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a>microbenchmark<span class="sc">::</span><span class="fu">microbenchmark</span>(</span>
+<span id="cb71-2"><a href="#cb71-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fact_recur</span>(<span class="dv">50</span>), </span>
+<span id="cb71-3"><a href="#cb71-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fact_iter</span>(<span class="dv">50</span>)</span>
+<span id="cb71-4"><a href="#cb71-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<pre><code>Unit: microseconds
+           expr    min     lq     mean median      uq    max neval
+ fact_recur(50) 21.501 21.701 23.82701 21.901 22.0515 68.902   100
+  fact_iter(50)  2.000  2.101  2.74599  2.201  2.3510 21.000   100</code></pre>
+<p>We see that the recursive factorial function is 10 times slower then the iterative version. In this particular example it doesn’t make much of a difference, because the functions only take microseconds to run. But if you’re working with more complex functions, this is a problem. There is a workaround for this, called <em>trampolining</em>. I won’t go into details, but if you’re interested, there is an R package that allows you to use trampolining with R, aptly called <a href="https://rdinnager.github.io/trampoline/"><code>{trampoline}</code></a>.</p>
+</section>
+<section id="the-unix-philosophy-applied-to-r" class="level3" data-number="2.2.5">
+<h3 data-number="2.2.5" class="anchored" data-anchor-id="the-unix-philosophy-applied-to-r"><span class="header-section-number">2.2.5</span> The Unix philosophy applied to R</h3>
+<blockquote class="blockquote">
+<p>This is the Unix philosophy: Write programs that do one thing and do it well. Write programs to work together. Write programs to handle text streams, because that is a universal interface.</p>
+</blockquote>
+<p><em>Doug McIlroy, in A Quarter Century of Unix</em>[^1]</p>
+<p>[^1] http://www.catb.org/~esr/writings/taoup/html/ch01s06.html</p>
+<p>We can take inspiration from the Unix philosophy and rewrite it like this for our purposes:</p>
+<p><em>Write functions that do one thing and do it well. Write functions that work together. Write functions that handle lists, because that is a universal interface.</em></p>
+<p>Strive for writing simple functions that only perform one task. Don’t hesitate to split a big function into smaller ones. Small functions that only perform one task are easier to maintain, test, document and debug. These smaller functions can then be chained using the <code>|&gt;</code> operator. In other words, it is preferable to have something like:</p>
+<pre><code>a |&gt;
+  f() |&gt;
+  g() |&gt;
+  h()</code></pre>
+<p>where <code>a</code> is for example a path to a data set, and where <code>f()</code>, <code>g()</code> and <code>h()</code> successively read, clean, and plot the data, than having something like:</p>
+<pre><code>big_function(a)</code></pre>
+<p>that does all the steps above in one go. The advantage of splitting <code>big_function()</code> into <code>f()</code>, <code>g()</code> and <code>h()</code> is that you can reuse these smaller functions in other projects much more easily. Make them work together by sharing a common interface. The list is usually a good candidate for this.</p>
 </section>
 </section>
 <section id="lists-a-powerful-data-structure" class="level2" data-number="2.3">
