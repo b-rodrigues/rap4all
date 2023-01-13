@@ -284,3 +284,45 @@ h("Bruno")
 [1] "feijoada"
 ```
 
+As you can see, every time this function runs, it now produces the same result. Users can change the seed to have this function produce, consistently,
+another result.
+
+## Referentially transparent and pure functions
+
+A referentially transparent function is a function that does not use any variable that is not also one of its inputs. For example, the following function:
+
+```{r, eval = F}
+bad <- function(x){
+  x + y
+}
+```
+
+is not referentially transparent, because `y` is not one of the functions inputs. What happens if you run `bad()` is that `bad()` needs to look for `y`. 
+Because `y` is not one of its inputs, `bad()` then looks for it in the global environment. If `y` is defined there, it then gets used. Defining and using
+such functions must be avoided at all costs, because these functions are unpredictable. For example:
+
+
+```{r, eval = F}
+y <- 10
+bad <- function(x){
+  x + y
+}
+
+bad(5)
+```
+
+This will return `15`. But if `y <- 45` then `bad(5)` would this time around return `50`. It is much safer, and easier to make `y` an explicit input of 
+the function instead of having to keep track of `y`’s value:
+
+```{r, eval = F}
+good <- function(x, y){
+  x + y
+}
+```
+
+`good()` is a referentially transparent function; it is much safer than `bad()`. `good()` is also a pure function, because it’s a function that does not interact
+in any way with the global environment. It does not write anything to the global environment, nor requires anything from the global environment. Function `h()`
+from the previous section was not pure, because it created an object and wrote it to the global environment (the `food_list` object). Turns out that pure 
+functions are thus necesarrily referentially transparent.
+
+So the first lesson in your functional programming journey that you have to remember is to only use pure functions.
