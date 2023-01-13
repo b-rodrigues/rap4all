@@ -392,6 +392,26 @@ w(1, 2, 3)
 
 If you want to learn more about `...`, type `?dots` in an R console.
 
+Because functions are nothing special, you can also write functions that return functions. For example:
+
+```{r}
+z <- function(f){
+  message("I’m a function factory!")
+  f
+}
+
+```
+
+You can now define a new function:
+
+```{r}
+z_sqrt <- z(sqrt)
+
+z_sqrt(4)
+```
+
+Functions that return functions are called *functions factories* and they’re incredibly useful.
+
 ### Optional arguments
 
 It is possible to make function arguments optional, by using `NULL`. For example:
@@ -474,6 +494,85 @@ nchar(10000000)
 ```
 
 ### Recursive functions
+
+You may have noticed that in the last lines of `nchar2()`, the function calls itself. A function that calls itself in its own body is called a recursive 
+function. It is sometimes easier to write down a function in its recursive form than in an iterative form. The most common example is of course the 
+factorial function. However, there is an issue with recursive functions (in the R programming language, other programming languages may not have the same
+problem, like Haskell): while it is sometimes easier to write down a function using a recursive algorithm than an iterative algorithm, like for the 
+factorial function, recursive functions in R are quite slow. Let’s take a look at two definitions of the factorial function, one recursive, the other
+iterative:
+
+```{r}
+fact_iter <- function(n){
+  result = 1
+  for(i in 1:n){
+    result = result * i
+    i = i + 1
+  }
+  result
+}
+
+fact_recur <- function(n){
+  if(n == 0 || n == 1){
+  result = 1
+  } else {
+    n * fact_recur(n-1)
+  }
+}
+```
+
+Using the `{microbenchmark}` package we can benchmark the code:
+
+```{r, eval = FALSE}
+microbenchmark::microbenchmark(
+  fact_recur(50), 
+  fact_iter(50)
+)
+```
+
+```
+Unit: microseconds
+           expr    min     lq     mean median      uq    max neval
+ fact_recur(50) 21.501 21.701 23.82701 21.901 22.0515 68.902   100
+  fact_iter(50)  2.000  2.101  2.74599  2.201  2.3510 21.000   100
+```
+
+We see that the recursive factorial function is 10 times slower then the iterative version. In this particular example it doesn’t make much of a difference,
+because the functions only take microseconds to run. But if you’re working with more complex functions, this is a problem. There is a workaround for this,
+called *trampolining*. I won’t go into details, but if you’re interested, there is an R package that allows you to use trampolining with R,
+aptly called [`{trampoline}`](https://rdinnager.github.io/trampoline/).
+
+### The Unix philosophy applied to R
+
+>This is the Unix philosophy: Write programs that do one thing and do it well. Write programs to work together. Write programs to handle text streams, because that is a universal interface.
+
+*Doug McIlroy, in A Quarter Century of Unix*[^1]
+
+[^1] http://www.catb.org/~esr/writings/taoup/html/ch01s06.html
+
+We can take inspiration from the Unix philosophy and rewrite it like this for our purposes:
+
+*Write functions that do one thing and do it well. Write functions that work together. Write functions that handle lists, because that is a universal interface.*
+
+Strive for writing simple functions that only perform one task. Don’t hesitate to split a big function into smaller ones. Small functions that only perform
+one task are easier to maintain, test, document and debug. These smaller functions can then be chained using the `|>` operator. In other words,
+it is preferable to have something like:
+
+```
+a |>
+  f() |>
+  g() |>
+  h()
+```
+
+where `a` is for example a path to a data set, and where `f()`, `g()` and `h()` successively read, clean, and plot the data, than having something like:
+
+```
+big_function(a)
+```
+
+that does all the steps above in one go. The advantage of splitting `big_function()` into `f()`, `g()` and `h()` is that you can reuse these smaller 
+functions in other projects much more easily. Make them work together by sharing a common interface. The list is usually a good candidate for this.
 
 ## Lists: a powerful data-structure
 
