@@ -328,6 +328,7 @@ functions are thus necesarrily referentially transparent.
 So the first lesson in your functional programming journey that you have to remember is to only use pure functions.
 
 ## Writing good functions
+
 ### Functions are first class objects
 
 In a functional programming language, functions are first class objects. Contrary to what the name implies, this means that functions, especially the ones you define
@@ -379,10 +380,19 @@ h(c(1, 2, NA, 3), mean, na.rm = FALSE)
 ```
 
 `na.rm` is an argument of `mean()`. As the developer of `h()`, I don’t necessarily know what `f()` might be, or maybe I know `f()` and know all its
-arguments, but don’t want to have to rewrite them all to make them arguments of `h()`, so I can use `...` instead. If you want to learn more about `...`, type 
-`?dots` in an R console.
+arguments, but don’t want to have to rewrite them all to make them arguments of `h()`, so I can use `...` instead. The following is also possible:
 
-## Optional arguments
+```{r}
+w <- function(...){
+paste0("First argument: ", ..1, ", second argument: ", ..2, ", last argument: ", ..3)
+}
+
+w(1, 2, 3)
+```
+
+If you want to learn more about `...`, type `?dots` in an R console.
+
+### Optional arguments
 
 It is possible to make function arguments optional, by using `NULL`. For example:
 
@@ -398,6 +408,72 @@ g <- function(x, y = NULL){
 ```
 
 Calling `g(10)` prints the message "Optional argument y is NULL", and returns 10. Calling `g(10, 5)` however, prints "y is present" and returns 15.
+It is also possible to using `missing()`:
+
+```{r}
+g <- function(x, y){
+  if(missing(y)){
+    print("optional argument y is missing")
+    x
+  } else {
+    if(y == 5) print("y is present"); x+y
+  }
+}
+```
+
+I however prefer the first approach, because it is clearer which arguments are optional, which is not the case with the second approach, where you 
+need to read the body of the function.
+
+### Safe functions
+
+It is important that your functions are safe and predictable. You should avoid writing functions that behave like `nchar()`, a base R function.
+Let’s see why this function is not safe:
+
+```{r}
+nchar("10000000")
+```
+
+It returns the expected result of 8. But what if I remove the quotes?
+
+```{r}
+nchar(10000000)
+```
+
+What is going on here? I’ll give you a hint: simply type `10000000` in the console:
+
+```{r}
+10000000
+```
+
+`10000000` gets represented as `1e+07` by R. This number in scientific notation gets then converted into a character "1e+07" by `nchar()`, silently.
+`nchar()` then counts the number of characters, and *correctly* returns 5. The problem is that it doesn’t make sense to provide a number to a function
+that expepects a character. This function should have returned an error message, or at the very least raised a warning that the number got converted
+into a character. Here is how you could rewrite `nchar()` to make it safer:
+
+```{r}
+nchar2 <- function(x, result = 0){
+
+  if(!isTRUE(is.character(x))){
+    stop(paste0("x should be of type 'character', but is of type '",
+                typeof(x), "' instead."))
+  } else if(x == ""){
+    result
+  } else {
+    result <- result + 1
+    split_x <- strsplit(x, split = "")[[1]]
+    nchar2(paste0(split_x[-1],
+                     collapse = ""), result)
+  }
+}
+```
+
+This function now returns an error message if the input is not a character:
+
+```{r}
+nchar(10000000)
+```
+
+### Recursive functions
 
 ## Lists: a powerful data-structure
 
