@@ -361,7 +361,9 @@ You can call then use `h()` as a wrapper for `f()`:
 h(4, sqrt)
 
 h(10, log10)
-```
+``` 
+
+Because `h()` takes another function as an argument, `h()` is called a higher-order function.
 
 If you don’t know how many arguments `f()`, the function you’re wrapping, has, you can use the `...`:
 
@@ -392,21 +394,39 @@ w(1, 2, 3)
 
 If you want to learn more about `...`, type `?dots` in an R console.
 
-Because functions are nothing special, you can also write functions that return functions. For example:
+Because functions are nothing special, you can also write functions that return functions.
+As an illustration, we'll be writing a function that converts warnings to errors. This can be quite
+useful if you want your functions to fail early, which often makes debuging easier. For example, try
+running this:
+
+```{r}
+sqrt(-5)
+```
+
+This only raises a warning and returns `NaN` (Not a Number)
+
+
+For example:
 
 ```{r}
 z <- function(f){
-  message("I’m a function factory!")
-  f
+  function(...){
+  tryCatch({
+    f(...)
+  },
+  warning = function(warning)stop("Can't do that chief"))
 }
 
+}
 ```
 
 You can now define a new function:
 
 ```{r}
 z_sqrt <- z(sqrt)
+```
 
+```{r}
 z_sqrt(4)
 ```
 
@@ -537,10 +557,12 @@ Unit: microseconds
   fact_iter(50)  2.000  2.101  2.74599  2.201  2.3510 21.000   100
 ```
 
-We see that the recursive factorial function is 10 times slower then the iterative version. In this particular example it doesn’t make much of a difference,
-because the functions only take microseconds to run. But if you’re working with more complex functions, this is a problem. There is a workaround for this,
-called *trampolining*. I won’t go into details, but if you’re interested, there is an R package that allows you to use trampolining with R,
-aptly called [`{trampoline}`](https://rdinnager.github.io/trampoline/).
+We see that the recursive factorial function is 10 times slower then the iterative version. In this
+particular example it doesn’t make much of a difference, because the functions only take
+microseconds to run. But if you’re working with more complex functions, this is a problem. There is
+a workaround for this, called *trampolining*. I won’t go into details, but if you’re interested,
+there is an R package that allows you to use trampolining with R, aptly called
+[`{trampoline}`](https://rdinnager.github.io/trampoline/).
 
 ### The Unix philosophy applied to R
 
@@ -548,34 +570,70 @@ aptly called [`{trampoline}`](https://rdinnager.github.io/trampoline/).
 
 *Doug McIlroy, in A Quarter Century of Unix*[^1]
 
-[^1] http://www.catb.org/~esr/writings/taoup/html/ch01s06.html
+[^1]: http://www.catb.org/~esr/writings/taoup/html/ch01s06.html
 
 We can take inspiration from the Unix philosophy and rewrite it like this for our purposes:
 
-*Write functions that do one thing and do it well. Write functions that work together. Write functions that handle lists, because that is a universal interface.*
+*Write functions that do one thing and do it well. Write functions that work together. Write
+ functions that handle lists, because that is a universal interface.*
 
-Strive for writing simple functions that only perform one task. Don’t hesitate to split a big function into smaller ones. Small functions that only perform
-one task are easier to maintain, test, document and debug. These smaller functions can then be chained using the `|>` operator. In other words,
-it is preferable to have something like:
+Strive for writing simple functions that only perform one task. Don’t hesitate to split a big
+function into smaller ones. Small functions that only perform one task are easier to maintain,
+test, document and debug. These smaller functions can then be chained using the `|>` operator. In
+other words, it is preferable to have something like:
 
-```
-a |>
-  f() |>
-  g() |>
-  h()
-```
+``` a |> f() |> g() |> h() ```
 
-where `a` is for example a path to a data set, and where `f()`, `g()` and `h()` successively read, clean, and plot the data, than having something like:
+where `a` is for example a path to a data set, and where `f()`, `g()` and `h()` successively read,
+clean, and plot the data, than having something like:
 
-```
-big_function(a)
-```
+``` big_function(a) ```
 
-that does all the steps above in one go. The advantage of splitting `big_function()` into `f()`, `g()` and `h()` is that you can reuse these smaller 
-functions in other projects much more easily. Make them work together by sharing a common interface. The list is usually a good candidate for this.
+that does all the steps above in one go. The advantage of splitting `big_function()` into `f()`,
+`g()` and `h()` is that you can reuse these smaller functions in other projects much more easily.
+Make them work together by sharing a common interface. The list is usually a good candidate for
+this.
 
 ## Lists: a powerful data-structure
 
+Lists are the second important ingredient of functional programming. In the R philosophy inspired
+from UNIX, I stated that *lists are an universal interface* in R, so our functions should handle lists.
+This of course depends exactly on what it is your doing. If you writing functions to handle numbers,
+that there's little value in placing these numbers inside lists. But in practice, you will very likely
+manipulate objects that are more complex than numbers, and this is where lists come into play.
 
+### Lists all the way down
 
+Lists are extremely flexible, and most very complex objects classes that you manipulate are
+actually lists, but just fancier. For example, a data frame is a list:
+
+```{r}
+data(mtcars)
+
+typeof(mtcars)
+```
+
+A fitted model is a list:
+
+```{r}
+my_model <- lm(hp ~ mpg, data = mtcars)
+
+typeof(my_model)
+```
+
+A `ggplot` is a list:
+
+```{r}
+library(ggplot2)
+
+my_plot <- ggplot(data = mtcars) +
+  geom_line(aes(y = hp, x = mpg))
+
+typeof(my_plot)
+```
+
+It's lists all the way down, and it's not a coincidence. It's because, as stated, lists are very
+powerful. So it's important to know what you can do with lists.
+
+### 
 
