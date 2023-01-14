@@ -403,34 +403,95 @@ running this:
 sqrt(-5)
 ```
 
-This only raises a warning and returns `NaN` (Not a Number)
-
-
-For example:
+This only raises a warning and returns `NaN` (Not a Number). This can be quite dangerous, especially
+when working non-interactively, which is what we will be doing a lot later on. It is much better if
+a pipeline fails early due to an error, than dragging an `NaN` value. This also happens with `log()`:
 
 ```{r}
-z <- function(f){
-  function(...){
-  tryCatch({
-    f(...)
-  },
-  warning = function(warning)stop("Can't do that chief"))
-}
+sqrt(-10)
+```
+
+So it could be useful to redefine this functions to raise an error instead, for example like this:
+
+```{r}
+strict_sqrt <- function(x){
+
+  if(x <= 0) stop("x is negative")
+
+  sqrt(x)
 
 }
 ```
+
+This function now throws an error for negative `x`:
+
+```{r}
+strict_sqrt(-10)
+```
+
+However, it can be quite tedious to redefine every function that we need in our pipeline. This is where
+a function factory is useful. We can define a function that takes a function as an argument, converts
+any warning thrown by that function into an error, and returns the new function. For example it could
+look like this:
+
+```{r}
+strictly <- function(f){
+  function(...){
+    tryCatch({
+      f(...)
+    },
+    warning = function(warning)stop("Can't do that chief"))
+  }
+}
+
+```
+
+This function makes use of `tryCatch()` which catches any conditions, like warnings, raised by
+an expression (in this example, `f(...)`) and then does something. So here I made `tryCatch()` raise an
+error (with `stop()`) if the expression raised a warning. It is now possible to define new functions
+like this:
 
 You can now define a new function:
 
 ```{r}
-z_sqrt <- z(sqrt)
+s_sqrt <- strictly(sqrt)
 ```
 
 ```{r}
-z_sqrt(4)
+s_sqrt(-4)
 ```
 
-Functions that return functions are called *functions factories* and they’re incredibly useful.
+```{r}
+s_log <- strictly(log)
+```
+
+```{r}
+s_log(-4)
+```
+
+Functions that return functions are called *functions factories* and they’re incredibly useful. I use this
+so much, that I've written a package, available on CRAN, called `{chronicler}`, that does this:
+
+```{r}
+s_sqrt <- chronicler::record(sqrt)
+```
+
+```{r}
+result <- s_sqrt(-4)
+
+result
+```
+
+Because the expression above resulted in an error, `Nothing` is returned. We can then even read the log
+to see what went wrong:
+
+```{r}
+chronicler::read_log(result)
+```
+
+The `{purrr}` package also comes with function factories that you might find useful
+(`{possibly}`, `{safely}` and `{quietly}`).
+
 
 ### Optional arguments
 
