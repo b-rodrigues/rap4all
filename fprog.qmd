@@ -425,8 +425,12 @@ strict_sqrt <- function(x){
 
 This function now throws an error for negative `x`:
 
-```{r}
+```{r, eval = F}
 strict_sqrt(-10)
+```
+
+```
+Error in strict_sqrt(-10) : x is negative
 ```
 
 However, it can be quite tedious to redefine every function that we need in our pipeline. This is where
@@ -461,12 +465,20 @@ s_sqrt <- strictly(sqrt)
 s_sqrt(-4)
 ```
 
+```
+Error in value[[3L]](cond) : Can't do that chief
+```
+
 ```{r}
 s_log <- strictly(log)
 ```
 
-```{r}
+```{r, eval = FALSE}
 s_log(-4)
+```
+
+```
+Error in value[[3L]](cond) : Can't do that chief
 ```
 
 Functions that return functions are called *functions factories* and they’re incredibly useful. I use this
@@ -482,8 +494,9 @@ result <- s_sqrt(-4)
 result
 ```
 
-Because the expression above resulted in an error, `Nothing` is returned. We can then even read the log
-to see what went wrong:
+Because the expression above resulted in an error, `Nothing` is returned. `Nothing` is a special
+value defined in the `{maybe}` package (check it out, very interesting package!). We can then even
+read the log to see what went wrong:
 
 ```{r}
 chronicler::read_log(result)
