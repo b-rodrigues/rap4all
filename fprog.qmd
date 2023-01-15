@@ -880,7 +880,7 @@ operating on the whole list:
 
 
 ```{r}
-result <- vector(mode = "list", length = 10)
+result <- as.list(seq(1:100))
 for (i in 1:10){
   result[[i]] <- sqrt(result[[i]])
 }
@@ -888,7 +888,7 @@ for (i in 1:10){
 print(result)
 ```
 
-Here again, we have to pollute the global environment by first creating an empty vessel for our results, and then apply the function
+Here again, we have to pollute the global environment by first creating a vessel for our results, and then apply the function
 at each index. We can abstract this process away in a function:
 
 ```{r}
@@ -921,6 +921,7 @@ Of course, R ships with its own, much more efficient, implementation of this fun
 lapply(list(seq(1:10)), sqrt)
 ```
 
-In other programming languages, `lapply()` is often called `map()`.
+In other programming languages, `lapply()` is often called `map()`. The `{purrr}` packages ships with other such useful higher-order
+functions that abstract loops away.
 
 
