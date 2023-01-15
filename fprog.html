@@ -249,6 +249,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <ul class="collapse">
   <li><a href="#lists-all-the-way-down" id="toc-lists-all-the-way-down" class="nav-link" data-scroll-target="#lists-all-the-way-down"><span class="toc-section-number">2.3.1</span>  Lists all the way down</a></li>
   <li><a href="#lists-can-hold-many-things" id="toc-lists-can-hold-many-things" class="nav-link" data-scroll-target="#lists-can-hold-many-things"><span class="toc-section-number">2.3.2</span>  Lists can hold many things</a></li>
+  <li><a href="#lists-as-the-cure-to-loops" id="toc-lists-as-the-cure-to-loops" class="nav-link" data-scroll-target="#lists-as-the-cure-to-loops"><span class="toc-section-number">2.3.3</span>  Lists as the cure to loops</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -653,8 +654,8 @@ To read the log of this object, call read_log(.c).</code></pre>
 <div class="sourceCode cell-code" id="cb73"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a>chronicler<span class="sc">::</span><span class="fu">read_log</span>(result)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "Complete log:"                                                                                
-[2] "NOK! sqrt() ran unsuccessfully with following exception: NaNs produced at 2023-01-15 09:20:27"
-[3] "Total running time: 0.00102829933166504 secs"                                                 </code></pre>
+[2] "NOK! sqrt() ran unsuccessfully with following exception: NaNs produced at 2023-01-15 10:26:41"
+[3] "Total running time: 0.00139093399047852 secs"                                                 </code></pre>
 </div>
 </div>
 <p>The <code>{purrr}</code> package also comes with function factories that you might find useful (<code>{possibly}</code>, <code>{safely}</code> and <code>{quietly}</code>).</p>
@@ -847,7 +848,9 @@ To read the log of this object, call read_log(.c).</code></pre>
 </div>
 <p>This function returns the square root of a number using Newton’s algorithm, as well as the number of steps, or iterations, it took to reach the solution:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb99"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb99-1"><a href="#cb99-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt_newton</span>(<span class="dv">1600</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb99"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb99-1"><a href="#cb99-1" aria-hidden="true" tabindex="-1"></a>result_list <span class="ot">&lt;-</span> <span class="fu">sqrt_newton</span>(<span class="dv">1600</span>)</span>
+<span id="cb99-2"><a href="#cb99-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb99-3"><a href="#cb99-3" aria-hidden="true" tabindex="-1"></a>result_list</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>$result
 [1] 40
@@ -856,6 +859,479 @@ $steps
 [1] 10</code></pre>
 </div>
 </div>
+<p>It is quite common to instead print the number of steps to the console instead of returning them. But the issue with a function that prints something to the console instead of returning it, is that such a function is not pure, as it changes something outside of its scope. It is preferable to instead make the function pure by returning everything inside a neat list. It is then possible to separately save these objects if needed:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb101"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb101-1"><a href="#cb101-1" aria-hidden="true" tabindex="-1"></a>result <span class="ot">&lt;-</span> result_list<span class="sc">$</span>result</span>
+<span id="cb101-2"><a href="#cb101-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb101-3"><a href="#cb101-3" aria-hidden="true" tabindex="-1"></a>result_steps <span class="ot">&lt;-</span> result_list<span class="sc">$</span>steps</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Or you could define functions that know how to deal with the list:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb102"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb102-1"><a href="#cb102-1" aria-hidden="true" tabindex="-1"></a>f <span class="ot">&lt;-</span> <span class="cf">function</span>(result_list){</span>
+<span id="cb102-2"><a href="#cb102-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">list</span>(</span>
+<span id="cb102-3"><a href="#cb102-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"result"</span> <span class="ot">=</span> result_list<span class="sc">$</span>result <span class="sc">*</span> <span class="dv">10</span>,</span>
+<span id="cb102-4"><a href="#cb102-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"steps"</span> <span class="ot">=</span> result_list<span class="sc">$</span>steps <span class="sc">+</span> <span class="dv">1</span></span>
+<span id="cb102-5"><a href="#cb102-5" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb102-6"><a href="#cb102-6" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb102-7"><a href="#cb102-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb102-8"><a href="#cb102-8" aria-hidden="true" tabindex="-1"></a><span class="fu">f</span>(result_list)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$result
+[1] 400
+
+$steps
+[1] 11</code></pre>
+</div>
+</div>
+<p>It all depends on what you want to do. But it is usually better to keep everything neatly inside a list.</p>
+<p>Lists can also hold objects of differen types:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb104"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb104-1"><a href="#cb104-1" aria-hidden="true" tabindex="-1"></a><span class="fu">list</span>(</span>
+<span id="cb104-2"><a href="#cb104-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"a"</span> <span class="ot">=</span> <span class="fu">head</span>(mtcars),</span>
+<span id="cb104-3"><a href="#cb104-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"b"</span> <span class="ot">=</span> <span class="er">~</span><span class="fu">lm</span>(y <span class="sc">~</span> x)</span>
+<span id="cb104-4"><a href="#cb104-4" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$a
+                   mpg cyl disp  hp drat    wt  qsec vs am gear carb
+Mazda RX4         21.0   6  160 110 3.90 2.620 16.46  0  1    4    4
+Mazda RX4 Wag     21.0   6  160 110 3.90 2.875 17.02  0  1    4    4
+Datsun 710        22.8   4  108  93 3.85 2.320 18.61  1  1    4    1
+Hornet 4 Drive    21.4   6  258 110 3.08 3.215 19.44  1  0    3    1
+Hornet Sportabout 18.7   8  360 175 3.15 3.440 17.02  0  0    3    2
+Valiant           18.1   6  225 105 2.76 3.460 20.22  1  0    3    1
+
+$b
+~lm(y ~ x)</code></pre>
+</div>
+</div>
+<p>The list above has two elements, the first is the head of the <code>mtcars</code> data frame, the second is a formula object. Lists can even hold other lists:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb106"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb106-1"><a href="#cb106-1" aria-hidden="true" tabindex="-1"></a><span class="fu">list</span>(</span>
+<span id="cb106-2"><a href="#cb106-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"a"</span> <span class="ot">=</span> <span class="fu">head</span>(mtcars),</span>
+<span id="cb106-3"><a href="#cb106-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"b"</span> <span class="ot">=</span> <span class="fu">list</span>(</span>
+<span id="cb106-4"><a href="#cb106-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"c"</span> <span class="ot">=</span> sqrt,</span>
+<span id="cb106-5"><a href="#cb106-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"d"</span> <span class="ot">=</span> my_plot <span class="co"># Remember this ggplot object from before?</span></span>
+<span id="cb106-6"><a href="#cb106-6" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb106-7"><a href="#cb106-7" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$a
+                   mpg cyl disp  hp drat    wt  qsec vs am gear carb
+Mazda RX4         21.0   6  160 110 3.90 2.620 16.46  0  1    4    4
+Mazda RX4 Wag     21.0   6  160 110 3.90 2.875 17.02  0  1    4    4
+Datsun 710        22.8   4  108  93 3.85 2.320 18.61  1  1    4    1
+Hornet 4 Drive    21.4   6  258 110 3.08 3.215 19.44  1  0    3    1
+Hornet Sportabout 18.7   8  360 175 3.15 3.440 17.02  0  0    3    2
+Valiant           18.1   6  225 105 2.76 3.460 20.22  1  0    3    1
+
+$b
+$b$c
+function (x)  .Primitive("sqrt")
+
+$b$d</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="fprog_files/figure-html/unnamed-chunk-75-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Use this to your advantage.</p>
+</section>
+<section id="lists-as-the-cure-to-loops" class="level3" data-number="2.3.3">
+<h3 data-number="2.3.3" class="anchored" data-anchor-id="lists-as-the-cure-to-loops"><span class="header-section-number">2.3.3</span> Lists as the cure to loops</h3>
+<p>Loops are incredibly useful, and you are likely familiar with them. The problem with loops is that they are a concept from iterative programming, not functional programming, and this is a problem because loops rely on changing the state of your program to function. For example, let’s suppose that you wish to use a for-loop to compute the sum of the first 100 integers:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb108"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb108-1"><a href="#cb108-1" aria-hidden="true" tabindex="-1"></a>result <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb108-2"><a href="#cb108-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>){</span>
+<span id="cb108-3"><a href="#cb108-3" aria-hidden="true" tabindex="-1"></a>  result <span class="ot">&lt;-</span> result <span class="sc">+</span> i</span>
+<span id="cb108-4"><a href="#cb108-4" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb108-5"><a href="#cb108-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb108-6"><a href="#cb108-6" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(result)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 5050</code></pre>
+</div>
+</div>
+<p>If you run <code>ls()</code> now, you should see that there’s a variable <code>i</code> in your global environment. This could cause issues further down in your pipeline if you need to re-use <code>i</code>. Also, writing loops is, in my opinion, quite error prone. But how can we avoid using loops? For looping in a functional programming language, we need to use higher-order functions and lists. A reminder: a higher-order function is a function that takes another function as an argument. Looping is a task like any other, so we can write a function that does the looping for us. We will call it <code>looping()</code>, which will take a function as an argument, as well as list. The list will serve as the container to hold our numbers:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb110"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb110-1"><a href="#cb110-1" aria-hidden="true" tabindex="-1"></a>looping <span class="ot">&lt;-</span> <span class="cf">function</span>(a_list, a_func, <span class="at">init =</span> <span class="cn">NULL</span>, ...){</span>
+<span id="cb110-2"><a href="#cb110-2" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb110-3"><a href="#cb110-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># If the user does not provide an `init` value, set the head of the list as the initial value</span></span>
+<span id="cb110-4"><a href="#cb110-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(<span class="fu">is.null</span>(init)){</span>
+<span id="cb110-5"><a href="#cb110-5" aria-hidden="true" tabindex="-1"></a>    init <span class="ot">&lt;-</span> a_list[[<span class="dv">1</span>]]</span>
+<span id="cb110-6"><a href="#cb110-6" aria-hidden="true" tabindex="-1"></a>    a_list <span class="ot">&lt;-</span> <span class="fu">tail</span>(a_list, <span class="sc">-</span><span class="dv">1</span>)</span>
+<span id="cb110-7"><a href="#cb110-7" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb110-8"><a href="#cb110-8" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb110-9"><a href="#cb110-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Separate the head from the tail of the list and apply the function to the initial value and the head of the list</span></span>
+<span id="cb110-10"><a href="#cb110-10" aria-hidden="true" tabindex="-1"></a>  head_list <span class="ot">=</span> a_list[[<span class="dv">1</span>]]</span>
+<span id="cb110-11"><a href="#cb110-11" aria-hidden="true" tabindex="-1"></a>  tail_list <span class="ot">=</span> <span class="fu">tail</span>(a_list, <span class="sc">-</span><span class="dv">1</span>)</span>
+<span id="cb110-12"><a href="#cb110-12" aria-hidden="true" tabindex="-1"></a>  init <span class="ot">=</span> <span class="fu">a_func</span>(init, head_list, ...)</span>
+<span id="cb110-13"><a href="#cb110-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb110-14"><a href="#cb110-14" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Check if we're done: if there is still some tail, rerun the whole thing until there's no tail left</span></span>
+<span id="cb110-15"><a href="#cb110-15" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(<span class="fu">length</span>(tail_list) <span class="sc">!=</span> <span class="dv">0</span>){</span>
+<span id="cb110-16"><a href="#cb110-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">looping</span>(tail_list, a_func, init, ...)</span>
+<span id="cb110-17"><a href="#cb110-17" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb110-18"><a href="#cb110-18" aria-hidden="true" tabindex="-1"></a>  <span class="cf">else</span> {</span>
+<span id="cb110-19"><a href="#cb110-19" aria-hidden="true" tabindex="-1"></a>    init</span>
+<span id="cb110-20"><a href="#cb110-20" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb110-21"><a href="#cb110-21" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Now, this might seem much more complicated than a for loop. However, now that we have abstracted the loop away inside a function, we can keep reusing this function:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb111"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb111-1"><a href="#cb111-1" aria-hidden="true" tabindex="-1"></a><span class="fu">looping</span>(<span class="fu">as.list</span>(<span class="fu">seq</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>)), <span class="st">`</span><span class="at">+</span><span class="st">`</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 5050</code></pre>
+</div>
+</div>
+<p>Of course, because this is so useful, <code>looping()</code> actually ships with R, and is called <code>Reduce()</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb113"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb113-1"><a href="#cb113-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Reduce</span>(<span class="st">`</span><span class="at">+</span><span class="st">`</span>, <span class="fu">seq</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>)) <span class="co"># the order of the arguments is `function` then `list` for `Reduce()`</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 5050</code></pre>
+</div>
+</div>
+<p>But this is not the only way that we can loop. We can also write a loop that applies a function to each element of a list, instead of operating on the whole list:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb115"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb115-1"><a href="#cb115-1" aria-hidden="true" tabindex="-1"></a>result <span class="ot">&lt;-</span> <span class="fu">as.list</span>(<span class="fu">seq</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>))</span>
+<span id="cb115-2"><a href="#cb115-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>){</span>
+<span id="cb115-3"><a href="#cb115-3" aria-hidden="true" tabindex="-1"></a>  result[[i]] <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(result[[i]])</span>
+<span id="cb115-4"><a href="#cb115-4" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb115-5"><a href="#cb115-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb115-6"><a href="#cb115-6" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(result)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[[1]]
+[1] 1
+
+[[2]]
+[1] 1.414214
+
+[[3]]
+[1] 1.732051
+
+[[4]]
+[1] 2
+
+[[5]]
+[1] 2.236068
+
+[[6]]
+[1] 2.44949
+
+[[7]]
+[1] 2.645751
+
+[[8]]
+[1] 2.828427
+
+[[9]]
+[1] 3
+
+[[10]]
+[1] 3.162278
+
+[[11]]
+[1] 11
+
+[[12]]
+[1] 12
+
+[[13]]
+[1] 13
+
+[[14]]
+[1] 14
+
+[[15]]
+[1] 15
+
+[[16]]
+[1] 16
+
+[[17]]
+[1] 17
+
+[[18]]
+[1] 18
+
+[[19]]
+[1] 19
+
+[[20]]
+[1] 20
+
+[[21]]
+[1] 21
+
+[[22]]
+[1] 22
+
+[[23]]
+[1] 23
+
+[[24]]
+[1] 24
+
+[[25]]
+[1] 25
+
+[[26]]
+[1] 26
+
+[[27]]
+[1] 27
+
+[[28]]
+[1] 28
+
+[[29]]
+[1] 29
+
+[[30]]
+[1] 30
+
+[[31]]
+[1] 31
+
+[[32]]
+[1] 32
+
+[[33]]
+[1] 33
+
+[[34]]
+[1] 34
+
+[[35]]
+[1] 35
+
+[[36]]
+[1] 36
+
+[[37]]
+[1] 37
+
+[[38]]
+[1] 38
+
+[[39]]
+[1] 39
+
+[[40]]
+[1] 40
+
+[[41]]
+[1] 41
+
+[[42]]
+[1] 42
+
+[[43]]
+[1] 43
+
+[[44]]
+[1] 44
+
+[[45]]
+[1] 45
+
+[[46]]
+[1] 46
+
+[[47]]
+[1] 47
+
+[[48]]
+[1] 48
+
+[[49]]
+[1] 49
+
+[[50]]
+[1] 50
+
+[[51]]
+[1] 51
+
+[[52]]
+[1] 52
+
+[[53]]
+[1] 53
+
+[[54]]
+[1] 54
+
+[[55]]
+[1] 55
+
+[[56]]
+[1] 56
+
+[[57]]
+[1] 57
+
+[[58]]
+[1] 58
+
+[[59]]
+[1] 59
+
+[[60]]
+[1] 60
+
+[[61]]
+[1] 61
+
+[[62]]
+[1] 62
+
+[[63]]
+[1] 63
+
+[[64]]
+[1] 64
+
+[[65]]
+[1] 65
+
+[[66]]
+[1] 66
+
+[[67]]
+[1] 67
+
+[[68]]
+[1] 68
+
+[[69]]
+[1] 69
+
+[[70]]
+[1] 70
+
+[[71]]
+[1] 71
+
+[[72]]
+[1] 72
+
+[[73]]
+[1] 73
+
+[[74]]
+[1] 74
+
+[[75]]
+[1] 75
+
+[[76]]
+[1] 76
+
+[[77]]
+[1] 77
+
+[[78]]
+[1] 78
+
+[[79]]
+[1] 79
+
+[[80]]
+[1] 80
+
+[[81]]
+[1] 81
+
+[[82]]
+[1] 82
+
+[[83]]
+[1] 83
+
+[[84]]
+[1] 84
+
+[[85]]
+[1] 85
+
+[[86]]
+[1] 86
+
+[[87]]
+[1] 87
+
+[[88]]
+[1] 88
+
+[[89]]
+[1] 89
+
+[[90]]
+[1] 90
+
+[[91]]
+[1] 91
+
+[[92]]
+[1] 92
+
+[[93]]
+[1] 93
+
+[[94]]
+[1] 94
+
+[[95]]
+[1] 95
+
+[[96]]
+[1] 96
+
+[[97]]
+[1] 97
+
+[[98]]
+[1] 98
+
+[[99]]
+[1] 99
+
+[[100]]
+[1] 100</code></pre>
+</div>
+</div>
+<p>Here again, we have to pollute the global environment by first creating a vessel for our results, and then apply the function at each index. We can abstract this process away in a function:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb117"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb117-1"><a href="#cb117-1" aria-hidden="true" tabindex="-1"></a>applying <span class="ot">&lt;-</span> <span class="cf">function</span>(a_list, a_func, ...){</span>
+<span id="cb117-2"><a href="#cb117-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb117-3"><a href="#cb117-3" aria-hidden="true" tabindex="-1"></a>  head_list <span class="ot">=</span> a_list[[<span class="dv">1</span>]]</span>
+<span id="cb117-4"><a href="#cb117-4" aria-hidden="true" tabindex="-1"></a>  tail_list <span class="ot">=</span> <span class="fu">tail</span>(a_list, <span class="sc">-</span><span class="dv">1</span>)</span>
+<span id="cb117-5"><a href="#cb117-5" aria-hidden="true" tabindex="-1"></a>  result <span class="ot">=</span> <span class="fu">a_func</span>(head_list, ...)</span>
+<span id="cb117-6"><a href="#cb117-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb117-7"><a href="#cb117-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Check if we're done: if there is still some tail, rerun the whole thing until there's no tail left</span></span>
+<span id="cb117-8"><a href="#cb117-8" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(<span class="fu">length</span>(tail_list) <span class="sc">!=</span> <span class="dv">0</span>){</span>
+<span id="cb117-9"><a href="#cb117-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">append</span>(result, <span class="fu">applying</span>(tail_list, a_func, ...))</span>
+<span id="cb117-10"><a href="#cb117-10" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb117-11"><a href="#cb117-11" aria-hidden="true" tabindex="-1"></a>  <span class="cf">else</span> {</span>
+<span id="cb117-12"><a href="#cb117-12" aria-hidden="true" tabindex="-1"></a>    result</span>
+<span id="cb117-13"><a href="#cb117-13" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb117-14"><a href="#cb117-14" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Once again this might seem complicated, and I would agree. Abstraction is complex. But once we have it, we can focus on the task at hand, instead of having to always tell the computer what we want:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb118"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb118-1"><a href="#cb118-1" aria-hidden="true" tabindex="-1"></a><span class="fu">applying</span>(<span class="fu">as.list</span>(<span class="fu">seq</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>)), sqrt)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] 1.000000 1.414214 1.732051 2.000000 2.236068 2.449490 2.645751 2.828427
+ [9] 3.000000 3.162278</code></pre>
+</div>
+</div>
+<p>Of course, R ships with its own, much more efficient, implementation of this function:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb120"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb120-1"><a href="#cb120-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lapply</span>(<span class="fu">list</span>(<span class="fu">seq</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>)), sqrt)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[[1]]
+ [1] 1.000000 1.414214 1.732051 2.000000 2.236068 2.449490 2.645751 2.828427
+ [9] 3.000000 3.162278</code></pre>
+</div>
+</div>
+<p>In other programming languages, <code>lapply()</code> is often called <code>map()</code>. The <code>{purrr}</code> packages ships with other such useful higher-order functions that abstract loops away.</p>
 
 
 </section>
