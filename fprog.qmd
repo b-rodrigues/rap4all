@@ -757,7 +757,48 @@ This function returns the square root of a number using Newton's algorithm, as w
 it took to reach the solution:
 
 ```{r}
-sqrt_newton(1600)
+result_list <- sqrt_newton(1600)
 
+result_list
 ```
+
+It is quite common to instead print the number of steps to the console instead of returning them. But the issue with a function
+that prints something to the console instead of returning it, is that such a function is not pure, as it changes something
+outside of its scope. It is preferable to instead make the function pure by returning everything inside a neat list. It is
+then possible to separately save these objects if needed:
+
+```{r}
+result <- result_list$result
+
+result_steps <- result_list$steps
+```
+
+Or you could define functions that know how to deal with the list:
+
+```{r}
+
+f <- function(result_list){
+  list(
+    "result" = result_list$result * 10,
+    "steps" = result_list$steps + 1
+}
+
+f(result_list)
+```
+
+It all depends on what you want to do. But it is usually better to keep everything neatly inside a list.
+
+Lists can also hold objects of differen types:
+
+```{r}
+list(
+  "a" = head(mtcars),
+  "b" = ~lm(y ~ x)
+  )
+```
+
+The list above has two elements, the first is the head of the `mtcars` data frame, the second is a formula object.
+
+
+
 
