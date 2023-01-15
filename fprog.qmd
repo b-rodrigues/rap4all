@@ -837,7 +837,7 @@ a higher-order function is a function that takes another function as an argument
 write a function that does the looping for us. We will call it `looping()`, which will take a function as an argument, as well
 as list. The list will serve as the container to hold our numbers:
 
-```{r, eval = F}
+```{r}
 looping <- function(a_list, a_func, init = NULL, ...){
   
   # If the user does not provide an `init` value, set the head of the list as the initial value
@@ -868,5 +868,59 @@ we can keep reusing this function:
 ```{r}
 looping(list(seq(1:100)), `+`)
 ```
+
+Of course, because this is so useful, `looping()` actually ships with R, and is called `Reduce()`:
+
+```{r}
+Reduce(`+`, seq(1:100)) # the order of the arguments is `function` then `list` for `Reduce()`
+```
+
+But this is not the only way that we can loop. We can also write a loop that applies a function to each element of a list, instead of 
+operating on the whole list:
+
+
+```{r}
+result <- vector(mode = "list", length = 10)
+for (i in 1:10){
+  result[[i]] <- sqrt(result[[i]])
+}
+
+print(result)
+```
+
+Here again, we have to pollute the global environment by first creating an empty vessel for our results, and then apply the function
+at each index. We can abstract this process away in a function:
+
+```{r}
+applying <- function(a_list, a_func, ...){
+
+  head_list = a_list[[1]]
+  tail_list = tail(a_list, -1)
+  result = a_func(head_list, ...)
+
+  # Check if we're done: if there is still some tail, rerun the whole thing until there's no tail left
+  if(length(tail_list) != 0){
+    append(result, looping(tail_list, a_func, ...))
+  }
+  else {
+    result
+  }
+}
+```
+
+Once again this might seem complicated, and I would agree. Abstraction is complex. But once we have it, we can focus on the task at
+hand, instead of having to always tell the computer what we want:
+
+```{r}
+applying(list(seq(1:10)), sqrt)
+```
+
+Of course, R ships with its own, much more efficient, implementation of this function:
+
+```{r}
+lapply(list(seq(1:10)), sqrt)
+```
+
+In other programming languages, `lapply()` is often called `map()`.
 
 
