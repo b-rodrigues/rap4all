@@ -450,12 +450,9 @@ strictly <- function(f){
 
 ```
 
-This function makes use of `tryCatch()` which catches any conditions, like warnings, raised by
-an expression (in this example, `f(...)`) and then does something. So here I made `tryCatch()` raise an
-error (with `stop()`) if the expression raised a warning. It is now possible to define new functions
-like this:
-
-You can now define a new function:
+This function makes use of `tryCatch()` which catches warnings raised by
+an expression (in this example the expression is `f(...)`) and then raises an error insead with the 
+`stop()` function. It is now possible to define new functions like this:
 
 ```{r}
 s_sqrt <- strictly(sqrt)
@@ -482,7 +479,7 @@ Error in value[[3L]](cond) : Can't do that chief
 ```
 
 Functions that return functions are called *functions factories* and they’re incredibly useful. I use this
-so much, that I've written a package, available on CRAN, called `{chronicler}`, that does this:
+so much that I've written a package, available on CRAN, called `{chronicler}`, that does this:
 
 ```{r}
 s_sqrt <- chronicler::record(sqrt)
@@ -505,7 +502,6 @@ chronicler::read_log(result)
 The `{purrr}` package also comes with function factories that you might find useful
 (`{possibly}`, `{safely}` and `{quietly}`).
 
-
 ### Optional arguments
 
 It is possible to make function arguments optional, by using `NULL`. For example:
@@ -522,7 +518,7 @@ g <- function(x, y = NULL){
 ```
 
 Calling `g(10)` prints the message "Optional argument y is NULL", and returns 10. Calling `g(10, 5)` however, prints "y is present" and returns 15.
-It is also possible to using `missing()`:
+It is also possible to use `missing()`:
 
 ```{r}
 g <- function(x, y){
@@ -559,9 +555,10 @@ What is going on here? I’ll give you a hint: simply type `10000000` in the con
 10000000
 ```
 
-`10000000` gets represented as `1e+07` by R. This number in scientific notation gets then converted into a character "1e+07" by `nchar()`, silently.
+`10000000` gets represented as `1e+07` by R. This number in scientific notation gets then converted into the character "1e+07" by `nchar()`,
+and this conversion happens silently.
 `nchar()` then counts the number of characters, and *correctly* returns 5. The problem is that it doesn’t make sense to provide a number to a function
-that expepects a character. This function should have returned an error message, or at the very least raised a warning that the number got converted
+that expects a character. This function should have returned an error message, or at the very least raised a warning that the number got converted
 into a character. Here is how you could rewrite `nchar()` to make it safer:
 
 ```{r}
@@ -583,14 +580,19 @@ nchar2 <- function(x, result = 0){
 
 This function now returns an error message if the input is not a character:
 
-```{r}
-nchar(10000000)
+```{r, eval = F}
+nchar2(10000000)
+```
+
+```
+Error in nchar2(10000000) : x should be of type 'character', but is of type 'integer' instead. 
 ```
 
 ### Recursive functions
 
-You may have noticed that in the last lines of `nchar2()`, the function calls itself. A function that calls itself in its own body is called a recursive 
-function. It is sometimes easier to write down a function in its recursive form than in an iterative form. The most common example is of course the 
+You may have noticed that in the last lines of `nchar2()`, that `nchar2()` calls itself. 
+A function that calls itself in its own body is called a recursive 
+function. It is sometimes easier to write down a function in its recursive form than in an iterative form. The most common example is the 
 factorial function. However, there is an issue with recursive functions (in the R programming language, other programming languages may not have the same
 problem, like Haskell): while it is sometimes easier to write down a function using a recursive algorithm than an iterative algorithm, like for the 
 factorial function, recursive functions in R are quite slow. Let’s take a look at two definitions of the factorial function, one recursive, the other
@@ -633,10 +635,30 @@ Unit: microseconds
 
 We see that the recursive factorial function is 10 times slower then the iterative version. In this
 particular example it doesn’t make much of a difference, because the functions only take
-microseconds to run. But if you’re working with more complex functions, this is a problem. There is
-a workaround for this, called *trampolining*. I won’t go into details, but if you’re interested,
+microseconds to run. But if you’re working with more complex functions, this is a problem. 
+If you want to keep using the recursive function and not switch to an iterative algorithm,
+there are workarounds. The first is called *trampolining*. I won’t go into details, but if you’re interested,
 there is an R package that allows you to use trampolining with R, aptly called
-[`{trampoline}`](https://rdinnager.github.io/trampoline/).
+[`{trampoline}`](https://rdinnager.github.io/trampoline/). Another solution is using 
+the [`{memoise}`](https://memoise.r-lib.org/) package.
+
+### Anonymous functions
+
+It is possible to define a function and not give it a name. For example:
+
+```{r, eval = F}
+function(x)(x+1)(10)
+```
+
+Since R version 4.1, there iseven a shorthand notationfor anonymous functions:
+
+```{r, eval = F}
+(\(x)(x+1))(10)
+```
+
+Because we don't name them, we cannot reuse them. So why is this useful? Anonymous functions are useful when
+you need to apply a function somewhere inside a pipe once, and don't want to define a function just for this.
+This will become clearer once we learn about lists, but before that, let's philosophize a bit.
 
 ### The Unix philosophy applied to R
 
@@ -661,7 +683,9 @@ other words, it is preferable to have something like:
 where `a` is for example a path to a data set, and where `f()`, `g()` and `h()` successively read,
 clean, and plot the data, than having something like:
 
-``` big_function(a) ```
+```
+big_function(a)
+```
 
 that does all the steps above in one go. The advantage of splitting `big_function()` into `f()`,
 `g()` and `h()` is that you can reuse these smaller functions in other projects much more easily.
@@ -672,8 +696,8 @@ this.
 
 Lists are the second important ingredient of functional programming. In the R philosophy inspired
 from UNIX, I stated that *lists are an universal interface* in R, so our functions should handle lists.
-This of course depends exactly on what it is your doing. If you writing functions to handle numbers,
-that there's little value in placing these numbers inside lists. But in practice, you will very likely
+This of course depends on what it is your doing. If you need functions to handle numbers,
+then there's little value in placing these numbers inside lists. But in practice, you will very likely
 manipulate objects that are more complex than numbers, and this is where lists come into play.
 
 ### Lists all the way down
@@ -709,5 +733,31 @@ typeof(my_plot)
 It's lists all the way down, and it's not a coincidence. It's because, as stated, lists are very
 powerful. So it's important to know what you can do with lists.
 
-### 
+### Lists can hold many things
+
+If you write a function that needs to return many objects, the only solution is to place them
+inside a list. For example, consider this function:
+
+```{r}
+sqrt_newton <- function(a, init = 1, eps = 0.01, steps = 1){
+    stopifnot(a >= 0)
+    while(abs(init**2 - a) > eps){
+        init <- 1/2 *(init + a/init)
+        steps <- steps + 1
+    }
+    list(
+      "result" = init,
+      "steps" = steps
+    )
+}
+
+```
+
+This function returns the square root of a number using Newton's algorithm, as well as the number of steps, or iterations,
+it took to reach the solution:
+
+```{r}
+sqrt_newton(1600)
+
+```
 
