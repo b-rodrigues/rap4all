@@ -866,7 +866,7 @@ Now, this might seem much more complicated than a for loop. However, now that we
 we can keep reusing this function:
 
 ```{r}
-looping(list(seq(1:100)), `+`)
+looping(as.list(seq(1:100)), `+`)
 ```
 
 Of course, because this is so useful, `looping()` actually ships with R, and is called `Reduce()`:
@@ -912,7 +912,7 @@ Once again this might seem complicated, and I would agree. Abstraction is comple
 hand, instead of having to always tell the computer what we want:
 
 ```{r}
-applying(list(seq(1:10)), sqrt)
+applying(as.list(seq(1:10)), sqrt)
 ```
 
 Of course, R ships with its own, much more efficient, implementation of this function:
