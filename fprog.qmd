@@ -900,7 +900,7 @@ applying <- function(a_list, a_func, ...){
 
   # Check if we're done: if there is still some tail, rerun the whole thing until there's no tail left
   if(length(tail_list) != 0){
-    append(result, looping(tail_list, a_func, ...))
+    append(result, applying(tail_list, a_func, ...))
   }
   else {
     result
