@@ -881,7 +881,7 @@ operating on the whole list:
 
 ```{r}
 result <- as.list(seq(1:5))
-for (i in 1:10){
+for (i in seq_along(result)){
   result[[i]] <- sqrt(result[[i]])
 }
 
