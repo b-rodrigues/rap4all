@@ -781,6 +781,7 @@ f <- function(result_list){
   list(
     "result" = result_list$result * 10,
     "steps" = result_list$steps + 1
+    )
 }
 
 f(result_list)
@@ -798,7 +799,74 @@ list(
 ```
 
 The list above has two elements, the first is the head of the `mtcars` data frame, the second is a formula object.
+Lists can even hold other lists:
 
 
+```{r}
+list(
+  "a" = head(mtcars),
+  "b" = list(
+    "c" = sqrt,
+    "d" = my_plot # Remember this ggplot object from before?
+    )
+  )
+```
+
+Use this to your advantage.
+
+### Lists as the cure to loops
+
+Loops are incredibly useful, and you are likely familiar with them. The problem with loops is that they are a concept
+from iterative programming, not functional programming, and this is a problem because loops rely on changing the state
+of your program to function. For example, let's suppose that you wish to use a for-loop to compute the sum of the first
+100 integers:
+
+```{r}
+result <- 0
+for (i in 1:100){
+  result <- result + i
+}
+
+print(result)
+```
+
+If you run `ls()` now, you should see that there's a variable `i` in your global environment. This could cause issues further
+down in your pipeline if you need to re-use `i`. Also, writing loops is, in my opinion, quite error prone. But how can we avoid
+using loops? For looping in a functional programming language, we need to use higher-order functions and lists. A reminder:
+a higher-order function is a function that takes another function as an argument. Looping is a task like any other, so we can
+write a function that does the looping for us. We will call it `looping()`, which will take a function as an argument, as well
+as list. The list will serve as the container to hold our numbers:
+
+```{r, eval = F}
+looping <- function(a_list, a_func, init = NULL, ...){
+  
+  # If the user does not provide an `init` value, set the head of the list as the initial value
+  if(is.null(init)){
+    init <- a_list[[1]]
+    a_list <- tail(a_list, -1)
+  }
+ 
+  # Separate the head from the tail of the list and apply the function to the initial value and the head of the list
+  head_list = a_list[[1]]
+  tail_list = tail(a_list, -1)
+  init = a_func(init, head_list, ...)
+
+  # Check if we're done: if there is still some tail, rerun the whole thing until there's no tail left
+  if(length(tail_list) != 0){
+    looping(tail_list, a_func, init, ...)
+  }
+  else {
+    init
+  }
+}
+
+```
+
+Now, this might seem much more complicated than a for loop. However, now that we have abstracted the loop away inside a function,
+we can keep reusing this function:
+
+```{r}
+looping(list(seq(1:100)), `+`)
+```
 
 
