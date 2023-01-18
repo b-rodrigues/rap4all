@@ -173,7 +173,8 @@ ul.task-list li input[type="checkbox"] {
   </ul></li>
   <li><a href="#quarto-basics" id="toc-quarto-basics" class="nav-link" data-scroll-target="#quarto-basics"><span class="toc-section-number">4.2</span>  Quarto basics</a></li>
   <li><a href="#parametrized-reports" id="toc-parametrized-reports" class="nav-link" data-scroll-target="#parametrized-reports"><span class="toc-section-number">4.3</span>  Parametrized reports</a></li>
-  <li><a href="#your-project-is-done" id="toc-your-project-is-done" class="nav-link" data-scroll-target="#your-project-is-done"><span class="toc-section-number">4.4</span>  Your project is done (?)</a></li>
+  <li><a href="#project-start" id="toc-project-start" class="nav-link" data-scroll-target="#project-start"><span class="toc-section-number">4.4</span>  Project start</a></li>
+  <li><a href="#your-project-is-done" id="toc-your-project-is-done" class="nav-link" data-scroll-target="#your-project-is-done"><span class="toc-section-number">4.5</span>  Your project is done (?)</a></li>
   </ul>
 </nav>
     </div>
@@ -197,7 +198,13 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<p>We suggest to not start with an R script, but start from a Qmd file.</p>
+<p>In order to build a reproducible pipeline, we will be working together on a project. The project itself will be quite simple and will simply consist is getting some data “trapped” inside a Microsoft Excel Workbook into a data frame, and then creating a plot. What will be important for our project is that it satisfies the following requirements:</p>
+<ul>
+<li>Document;</li>
+<li>Tested;</li>
+<li>Reproducible.</li>
+</ul>
+<p>We will start our project like someone with time constraints does, and see how we can reach our goal of having a nice reproducible project as painlessly as possible. There is only one catch; to make the whole process as easy as possible, we will start our analysis by writing a Quarto file, not a standard R script.</p>
 <p><em>What Sébastien said on the matter:</em></p>
 <p>*There seems to be two way of presenting such a workflow:</p>
 <p>What does the complete project looks like at the end and what tools do I need? How do I start working on it?*</p>
@@ -217,8 +224,14 @@ ul.task-list li input[type="checkbox"] {
 <section id="parametrized-reports" class="level2" data-number="4.3">
 <h2 data-number="4.3" class="anchored" data-anchor-id="parametrized-reports"><span class="header-section-number">4.3</span> Parametrized reports</h2>
 </section>
-<section id="your-project-is-done" class="level2" data-number="4.4">
-<h2 data-number="4.4" class="anchored" data-anchor-id="your-project-is-done"><span class="header-section-number">4.4</span> Your project is done (?)</h2>
+<section id="project-start" class="level2" data-number="4.4">
+<h2 data-number="4.4" class="anchored" data-anchor-id="project-start"><span class="header-section-number">4.4</span> Project start</h2>
+<p>hpi: https://ec.europa.eu/eurostat/databrowser/bookmark/e2758aae-6a88-4684-9f6d-d0946cae3f6b?lang=fr</p>
+<p>deflated hpi: https://ec.europa.eu/eurostat/databrowser/view/tipsho10/default/table?lang=en</p>
+<p>prix des logements en euros courants: https://data.public.lu/fr/datasets/r/1d20f982-57e1-4ae2-a278-dc78c88c21dc</p>
+</section>
+<section id="your-project-is-done" class="level2" data-number="4.5">
+<h2 data-number="4.5" class="anchored" data-anchor-id="your-project-is-done"><span class="header-section-number">4.5</span> Your project is done (?)</h2>
 <p><em>So here the project is done, but actually it’s just an Qmd file that gets compiled, so we would need to explain why this is not enough, and motivate the readers to go the full way: developing packages, using targets, and so on</em></p>
 
 

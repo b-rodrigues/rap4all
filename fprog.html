@@ -250,7 +250,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#lists-all-the-way-down" id="toc-lists-all-the-way-down" class="nav-link" data-scroll-target="#lists-all-the-way-down"><span class="toc-section-number">2.3.1</span>  Lists all the way down</a></li>
   <li><a href="#lists-can-hold-many-things" id="toc-lists-can-hold-many-things" class="nav-link" data-scroll-target="#lists-can-hold-many-things"><span class="toc-section-number">2.3.2</span>  Lists can hold many things</a></li>
   <li><a href="#lists-as-the-cure-to-loops" id="toc-lists-as-the-cure-to-loops" class="nav-link" data-scroll-target="#lists-as-the-cure-to-loops"><span class="toc-section-number">2.3.3</span>  Lists as the cure to loops</a></li>
+  <li><a href="#data-frames" id="toc-data-frames" class="nav-link" data-scroll-target="#data-frames"><span class="toc-section-number">2.3.4</span>  Data frames</a></li>
   </ul></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="toc-section-number">2.4</span>  Conclusion</a></li>
   </ul>
 </nav>
     </div>
@@ -654,8 +656,8 @@ To read the log of this object, call read_log(.c).</code></pre>
 <div class="sourceCode cell-code" id="cb73"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a>chronicler<span class="sc">::</span><span class="fu">read_log</span>(result)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "Complete log:"                                                                                
-[2] "NOK! sqrt() ran unsuccessfully with following exception: NaNs produced at 2023-01-15 10:50:59"
-[3] "Total running time: 0.000956535339355469 secs"                                                </code></pre>
+[2] "NOK! sqrt() ran unsuccessfully with following exception: NaNs produced at 2023-01-18 17:21:10"
+[3] "Total running time: 0.00103425979614258 secs"                                                 </code></pre>
 </div>
 </div>
 <p>The <code>{purrr}</code> package also comes with function factories that you might find useful (<code>{possibly}</code>, <code>{safely}</code> and <code>{quietly}</code>).</p>
@@ -1044,10 +1046,342 @@ $b$d</code></pre>
 [1] 1.000000 1.414214 1.732051 2.000000 2.236068</code></pre>
 </div>
 </div>
-<p>In other programming languages, <code>lapply()</code> is often called <code>map()</code>. The <code>{purrr}</code> packages ships with other such useful higher-order functions that abstract loops away.</p>
+<p>In other programming languages, <code>lapply()</code> is often called <code>map()</code>. The <code>{purrr}</code> packages ships with other such useful higher-order functions that abstract loops away. For example, there’s the function called <code>map2()</code>, that maps a function of two arguments to each element of two atomic vectors or lists, two at a time:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb122"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb122-1"><a href="#cb122-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(purrr)</span>
+<span id="cb122-2"><a href="#cb122-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb122-3"><a href="#cb122-3" aria-hidden="true" tabindex="-1"></a><span class="fu">map2</span>(</span>
+<span id="cb122-4"><a href="#cb122-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">.x =</span> <span class="fu">seq</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>),</span>
+<span id="cb122-5"><a href="#cb122-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">.y =</span> <span class="fu">seq</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>),</span>
+<span id="cb122-6"><a href="#cb122-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">.f =</span> <span class="st">`</span><span class="at">+</span><span class="st">`</span></span>
+<span id="cb122-7"><a href="#cb122-7" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[[1]]
+[1] 2
 
+[[2]]
+[1] 4
 
+[[3]]
+[1] 6
+
+[[4]]
+[1] 8
+
+[[5]]
+[1] 10</code></pre>
+</div>
+</div>
+<p>If you have more than two lists, you can use <code>pmap()</code> instead.</p>
 </section>
+<section id="data-frames" class="level3" data-number="2.3.4">
+<h3 data-number="2.3.4" class="anchored" data-anchor-id="data-frames"><span class="header-section-number">2.3.4</span> Data frames</h3>
+<p>As mentioned in the introduction of this section, data frames are a special type of list of atomic vectors. This means that just as I can use <code>lapply()</code> to compute the square root of the elements of an atomic vector, as in the previous example, I can also operate on all the columns of a data frame. For example, it is possible to determine the class of<br>
+every variable like this:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb124"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb124-1"><a href="#cb124-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lapply</span>(iris, class)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$Sepal.Length
+[1] "numeric"
+
+$Sepal.Width
+[1] "numeric"
+
+$Petal.Length
+[1] "numeric"
+
+$Petal.Width
+[1] "numeric"
+
+$Species
+[1] "factor"</code></pre>
+</div>
+</div>
+<p>Unlike a list however, the elements of a data frame must be of the same length. Data frames remain very flexible however, and using what we have learned until now, it is possible to use the data frame as a structure for all our computations. For example, suppose that we have a data frame that contains data on unemployment for the different subnational divisions of the Grand-Duchy of Luxembourg, the country the author of this book hails from. Let’s suppose that I want to generate several plots, per subnational division and per year. Typically, we would use a loop for this, but we can use what we’ve learned here, as well as some functions from the <code>{dplyr}</code>, <code>{purrr}</code>, <code>{ggplot2}</code> and <code>{tidyr}</code> packages. I will be downloading data that I made available inside a package, but instead of installng the package, we will dowload the <code>.rda</code> file (which is the file format of packaged data) and then load that data into our R session:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb126"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb126-1"><a href="#cb126-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a temporary file</span></span>
+<span id="cb126-2"><a href="#cb126-2" aria-hidden="true" tabindex="-1"></a>unemp_path <span class="ot">&lt;-</span> <span class="fu">tempfile</span>(<span class="at">fileext =</span> <span class="st">".rda"</span>)</span>
+<span id="cb126-3"><a href="#cb126-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb126-4"><a href="#cb126-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Download the data and save it to the path of the temporary file</span></span>
+<span id="cb126-5"><a href="#cb126-5" aria-hidden="true" tabindex="-1"></a><span class="fu">download.file</span>(<span class="st">"https://github.com/b-rodrigues/myPackage/raw/main/data/unemp.rda"</span>, <span class="at">destfile =</span> unemp_path)</span>
+<span id="cb126-6"><a href="#cb126-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb126-7"><a href="#cb126-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the data. The data is now available as 'unemp'</span></span>
+<span id="cb126-8"><a href="#cb126-8" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(unemp_path)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Let’s load the required packages and take a look at the data:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb127"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb127-1"><a href="#cb127-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'dplyr'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:stats':
+
+    filter, lag</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:base':
+
+    intersect, setdiff, setequal, union</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb131"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb131-1"><a href="#cb131-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(purrr)</span>
+<span id="cb131-2"><a href="#cb131-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb131-3"><a href="#cb131-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
+<span id="cb131-4"><a href="#cb131-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb131-5"><a href="#cb131-5" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(unemp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 472
+Columns: 9
+$ year                         &lt;dbl&gt; 2013, 2013, 2013, 2013, 2013, 2013, 2013,…
+$ place_name                   &lt;chr&gt; "Luxembourg", "Capellen", "Dippach", "Gar…
+$ level                        &lt;chr&gt; "Country", "Canton", "Commune", "Commune"…
+$ total_employed_population    &lt;dbl&gt; 223407, 17802, 1703, 844, 1431, 4094, 214…
+$ of_which_wage_earners        &lt;dbl&gt; 203535, 15993, 1535, 750, 1315, 3800, 187…
+$ of_which_non_wage_earners    &lt;dbl&gt; 19872, 1809, 168, 94, 116, 294, 272, 113,…
+$ unemployed                   &lt;dbl&gt; 19287, 1071, 114, 25, 74, 261, 98, 45, 66…
+$ active_population            &lt;dbl&gt; 242694, 18873, 1817, 869, 1505, 4355, 224…
+$ unemployment_rate_in_percent &lt;dbl&gt; 7.947044, 5.674773, 6.274078, 2.876870, 4…</code></pre>
+</div>
+</div>
+<p>Column names are self-descriptive, but the <code>level</code> column needs some explanations. The country of Luxembourg is divided into <em>Cantons</em>, and these <em>Cantons</em> themselves into <em>Communes</em>.</p>
+<p>You should know that the word <em>Luxembourg</em> can refer to the country, the canton or the commune of Luxembourg. Now let’s suppose that I want a separate plot for the three communes of Luxembourg, Esch-sur-Alzette and Wiltz. Instead of creating three separate data frames and feeding them to the same ggplot code, I can instead take advantage of the fact that data frames are lists, and are thus quite flexible. Let’s start with filtering:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb133"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb133-1"><a href="#cb133-1" aria-hidden="true" tabindex="-1"></a>filtered_unemp <span class="ot">&lt;-</span> unemp <span class="sc">%&gt;%</span></span>
+<span id="cb133-2"><a href="#cb133-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(</span>
+<span id="cb133-3"><a href="#cb133-3" aria-hidden="true" tabindex="-1"></a>    level <span class="sc">==</span> <span class="st">"Commune"</span>,</span>
+<span id="cb133-4"><a href="#cb133-4" aria-hidden="true" tabindex="-1"></a>    place_name <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Luxembourg"</span>, <span class="st">"Esch-sur-Alzette"</span>, <span class="st">"Wiltz"</span>)</span>
+<span id="cb133-5"><a href="#cb133-5" aria-hidden="true" tabindex="-1"></a>   )</span>
+<span id="cb133-6"><a href="#cb133-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb133-7"><a href="#cb133-7" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(filtered_unemp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 12
+Columns: 9
+$ year                         &lt;dbl&gt; 2013, 2013, 2013, 2014, 2014, 2014, 2015,…
+$ place_name                   &lt;chr&gt; "Esch-sur-Alzette", "Luxembourg", "Wiltz"…
+$ level                        &lt;chr&gt; "Commune", "Commune", "Commune", "Commune…
+$ total_employed_population    &lt;dbl&gt; 12725, 39513, 2344, 13155, 40768, 2377, 1…
+$ of_which_wage_earners        &lt;dbl&gt; 12031, 35531, 2149, 12452, 36661, 2192, 1…
+$ of_which_non_wage_earners    &lt;dbl&gt; 694, 3982, 195, 703, 4107, 185, 710, 4140…
+$ unemployed                   &lt;dbl&gt; 2054, 3855, 318, 1997, 3836, 315, 2031, 3…
+$ active_population            &lt;dbl&gt; 14779, 43368, 2662, 15152, 44604, 2692, 1…
+$ unemployment_rate_in_percent &lt;dbl&gt; 13.898099, 8.889043, 11.945905, 13.179778…</code></pre>
+</div>
+</div>
+<p>We are now going to use the fact that data frames are lists, and that lists can hold any type of object. For example, remember this list from before where one of the elements is a data frame, and the second one a formula:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb135"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb135-1"><a href="#cb135-1" aria-hidden="true" tabindex="-1"></a><span class="fu">list</span>(</span>
+<span id="cb135-2"><a href="#cb135-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"a"</span> <span class="ot">=</span> <span class="fu">head</span>(mtcars),</span>
+<span id="cb135-3"><a href="#cb135-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"b"</span> <span class="ot">=</span> <span class="er">~</span><span class="fu">lm</span>(y <span class="sc">~</span> x)</span>
+<span id="cb135-4"><a href="#cb135-4" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$a
+                   mpg cyl disp  hp drat    wt  qsec vs am gear carb
+Mazda RX4         21.0   6  160 110 3.90 2.620 16.46  0  1    4    4
+Mazda RX4 Wag     21.0   6  160 110 3.90 2.875 17.02  0  1    4    4
+Datsun 710        22.8   4  108  93 3.85 2.320 18.61  1  1    4    1
+Hornet 4 Drive    21.4   6  258 110 3.08 3.215 19.44  1  0    3    1
+Hornet Sportabout 18.7   8  360 175 3.15 3.440 17.02  0  0    3    2
+Valiant           18.1   6  225 105 2.76 3.460 20.22  1  0    3    1
+
+$b
+~lm(y ~ x)</code></pre>
+</div>
+</div>
+<p><code>{dplyr}</code> comes with a function called <code>group_nest()</code> which groups the data frame by a variable (such that the next computations will be performed group-wise) and then nests the other columns into a smaller data frame. Let’s try it and see what happens:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb137"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb137-1"><a href="#cb137-1" aria-hidden="true" tabindex="-1"></a>nested_unemp <span class="ot">&lt;-</span> filtered_unemp <span class="sc">%&gt;%</span></span>
+<span id="cb137-2"><a href="#cb137-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_nest</span>(place_name) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Let’s see how this looks like:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb138"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb138-1"><a href="#cb138-1" aria-hidden="true" tabindex="-1"></a>nested_unemp</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 2
+  place_name                     data
+  &lt;chr&gt;            &lt;list&lt;tibble[,8]&gt;&gt;
+1 Esch-sur-Alzette            [4 × 8]
+2 Luxembourg                  [4 × 8]
+3 Wiltz                       [4 × 8]</code></pre>
+</div>
+</div>
+<p><code>nested_unemp</code> is a new data frame of 3 rows, one per commune (“Esch-sur-Alzette”, “Luxembourg”, “Wiltz”), and of two columns, one for the names of the communes, and the other contains every other variable inside a smaller data frame. So this is a data frame that has one column where each element of that column is itself a data frame. Such a column is called a list-column. This is essentially a list of lists.</p>
+<p>Let’s now think about this for a moment. If the column titled <code>data</code> is a list of data frames, it should be possible to use a function like <code>map()</code> or <code>lapply()</code> to apply a function on each of these data frames. Remember that <code>map()</code> or <code>lapply()</code> require a list of elements of whatever type and a function that accepts objects of this type as input. So this means that we could apply a function that plots the data to each element of the column titled <code>data</code>. Since each element of this column is a data frame, this functions needs a data frame as an input. As a first, simple, example to illustrate this, let’s suppose that we want to determine the number of rows of each data frame. This is how we would do it:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb140"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb140-1"><a href="#cb140-1" aria-hidden="true" tabindex="-1"></a>nested_unemp <span class="sc">%&gt;%</span></span>
+<span id="cb140-2"><a href="#cb140-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">nrows =</span> <span class="fu">map</span>(data, nrow))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 3
+  place_name                     data nrows    
+  &lt;chr&gt;            &lt;list&lt;tibble[,8]&gt;&gt; &lt;list&gt;   
+1 Esch-sur-Alzette            [4 × 8] &lt;int [1]&gt;
+2 Luxembourg                  [4 × 8] &lt;int [1]&gt;
+3 Wiltz                       [4 × 8] &lt;int [1]&gt;</code></pre>
+</div>
+</div>
+<p>The new column, titled <code>nrows</code> is a list of integers. We can simplify it by converting it directly to an atomic vector of integers by using <code>map_int()</code> instead of <code>map()</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb142"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb142-1"><a href="#cb142-1" aria-hidden="true" tabindex="-1"></a>nested_unemp <span class="sc">%&gt;%</span></span>
+<span id="cb142-2"><a href="#cb142-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">nrows =</span> <span class="fu">map_int</span>(data, nrow))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 3
+  place_name                     data nrows
+  &lt;chr&gt;            &lt;list&lt;tibble[,8]&gt;&gt; &lt;int&gt;
+1 Esch-sur-Alzette            [4 × 8]     4
+2 Luxembourg                  [4 × 8]     4
+3 Wiltz                       [4 × 8]     4</code></pre>
+</div>
+</div>
+<p>Let’s try for a more complex example now. What if we want to filter rows? (The simplest way would of course to filter the rows we need before nesting the data frame). We need to apply the function <code>filter()</code> where its first argument is a data frame and the second argument is a predicate:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb144"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb144-1"><a href="#cb144-1" aria-hidden="true" tabindex="-1"></a>nested_unemp <span class="sc">%&gt;%</span></span>
+<span id="cb144-2"><a href="#cb144-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">nrows =</span> <span class="fu">map</span>(data, \(x)<span class="fu">filter</span>(x, year <span class="sc">==</span> <span class="dv">2015</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 3
+  place_name                     data nrows           
+  &lt;chr&gt;            &lt;list&lt;tibble[,8]&gt;&gt; &lt;list&gt;          
+1 Esch-sur-Alzette            [4 × 8] &lt;tibble [1 × 8]&gt;
+2 Luxembourg                  [4 × 8] &lt;tibble [1 × 8]&gt;
+3 Wiltz                       [4 × 8] &lt;tibble [1 × 8]&gt;</code></pre>
+</div>
+</div>
+<p>In this case here, we need to use an anonymous function. This is because <code>filter()</code> has two arguments, and we need to make clear what it is we are mapping over and what argument stays fixed; we are mapping over, or iterating if you will, data frames, but the predicate stays fixed.</p>
+<p>We are now ready to plot our data. The best way to continue is to first get the function right by creating one plot for one single commune. Let’s select the dataset for the commune of <code>Luxembourg</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb146"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb146-1"><a href="#cb146-1" aria-hidden="true" tabindex="-1"></a>lux_data <span class="ot">&lt;-</span> nested_unemp <span class="sc">%&gt;%</span></span>
+<span id="cb146-2"><a href="#cb146-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(place_name <span class="sc">==</span> <span class="st">"Luxembourg"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb146-3"><a href="#cb146-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest</span>(data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>To plot this data, we can now write the required <code>ggplot2()</code> code:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb147"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb147-1"><a href="#cb147-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> lux_data) <span class="sc">+</span></span>
+<span id="cb147-2"><a href="#cb147-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb147-3"><a href="#cb147-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(</span>
+<span id="cb147-4"><a href="#cb147-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(year, unemployment_rate_in_percent, <span class="at">group =</span> <span class="dv">1</span>)</span>
+<span id="cb147-5"><a href="#cb147-5" aria-hidden="true" tabindex="-1"></a>   ) <span class="sc">+</span></span>
+<span id="cb147-6"><a href="#cb147-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Unemployment in Luxembourg"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="fprog_files/figure-html/unnamed-chunk-96-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>To turn the lines of code above into a function, you need to think about how many arguments that function would have. There is an obvious one, the data itself (in the snippet above, the data is the <code>lux_data</code> object). Another one that is less obvious is in the title:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb148"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb148-1"><a href="#cb148-1" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Unemployment in Luxembourg"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$title
+[1] "Unemployment in Luxembourg"
+
+attr(,"class")
+[1] "labels"</code></pre>
+</div>
+</div>
+<p>Ideally, we would want that title to change, depending on the data set. So we could write the function like so:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb150"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb150-1"><a href="#cb150-1" aria-hidden="true" tabindex="-1"></a>make_plot <span class="ot">&lt;-</span> <span class="cf">function</span>(x, y){</span>
+<span id="cb150-2"><a href="#cb150-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="at">data =</span> x) <span class="sc">+</span></span>
+<span id="cb150-3"><a href="#cb150-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb150-4"><a href="#cb150-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>(</span>
+<span id="cb150-5"><a href="#cb150-5" aria-hidden="true" tabindex="-1"></a>      <span class="fu">aes</span>(year, unemployment_rate_in_percent, <span class="at">group =</span> <span class="dv">1</span>)</span>
+<span id="cb150-6"><a href="#cb150-6" aria-hidden="true" tabindex="-1"></a>      ) <span class="sc">+</span></span>
+<span id="cb150-7"><a href="#cb150-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="fu">paste</span>(<span class="st">"Unemployment in"</span>, y))</span>
+<span id="cb150-8"><a href="#cb150-8" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Let’s try it on our data:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb151"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb151-1"><a href="#cb151-1" aria-hidden="true" tabindex="-1"></a><span class="fu">make_plot</span>(lux_data, <span class="st">"Luxembourg"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="fprog_files/figure-html/unnamed-chunk-99-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Ok, so now, we simply need to apply this function to our nested data frame:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb152"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb152-1"><a href="#cb152-1" aria-hidden="true" tabindex="-1"></a>nested_unemp <span class="ot">&lt;-</span> nested_unemp <span class="sc">%&gt;%</span></span>
+<span id="cb152-2"><a href="#cb152-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">plots =</span> <span class="fu">map2</span>(</span>
+<span id="cb152-3"><a href="#cb152-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">.x =</span> data,</span>
+<span id="cb152-4"><a href="#cb152-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">.y =</span> place_name,</span>
+<span id="cb152-5"><a href="#cb152-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">.f =</span> make_plot</span>
+<span id="cb152-6"><a href="#cb152-6" aria-hidden="true" tabindex="-1"></a>  ))</span>
+<span id="cb152-7"><a href="#cb152-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb152-8"><a href="#cb152-8" aria-hidden="true" tabindex="-1"></a>nested_unemp</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 3
+  place_name                     data plots 
+  &lt;chr&gt;            &lt;list&lt;tibble[,8]&gt;&gt; &lt;list&gt;
+1 Esch-sur-Alzette            [4 × 8] &lt;gg&gt;  
+2 Luxembourg                  [4 × 8] &lt;gg&gt;  
+3 Wiltz                       [4 × 8] &lt;gg&gt;  </code></pre>
+</div>
+</div>
+<p>If you look at the <code>plots</code> column, you see that it is a list of <code>gg</code> objects: these are our plots. Let’s take a look at them:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb154"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb154-1"><a href="#cb154-1" aria-hidden="true" tabindex="-1"></a>nested_unemp<span class="sc">$</span>plots</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[[1]]</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="fprog_files/figure-html/unnamed-chunk-101-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+[[2]]</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="fprog_files/figure-html/unnamed-chunk-101-2.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+[[3]]</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="fprog_files/figure-html/unnamed-chunk-101-3.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>We could also have used an anonymous function:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb158"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb158-1"><a href="#cb158-1" aria-hidden="true" tabindex="-1"></a>nested_unemp <span class="sc">%&gt;%</span></span>
+<span id="cb158-2"><a href="#cb158-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">plots2 =</span> <span class="fu">map2</span>(</span>
+<span id="cb158-3"><a href="#cb158-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">.x =</span> data,</span>
+<span id="cb158-4"><a href="#cb158-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">.y =</span> place_name,</span>
+<span id="cb158-5"><a href="#cb158-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">.f =</span> \(.x,.y)(</span>
+<span id="cb158-6"><a href="#cb158-6" aria-hidden="true" tabindex="-1"></a>                <span class="fu">ggplot</span>(<span class="at">data =</span> .x) <span class="sc">+</span></span>
+<span id="cb158-7"><a href="#cb158-7" aria-hidden="true" tabindex="-1"></a>                  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb158-8"><a href="#cb158-8" aria-hidden="true" tabindex="-1"></a>                  <span class="fu">geom_line</span>(</span>
+<span id="cb158-9"><a href="#cb158-9" aria-hidden="true" tabindex="-1"></a>                    <span class="fu">aes</span>(year, unemployment_rate_in_percent, <span class="at">group =</span> <span class="dv">1</span>)</span>
+<span id="cb158-10"><a href="#cb158-10" aria-hidden="true" tabindex="-1"></a>                   ) <span class="sc">+</span></span>
+<span id="cb158-11"><a href="#cb158-11" aria-hidden="true" tabindex="-1"></a>                  <span class="fu">labs</span>(<span class="at">title =</span> <span class="fu">paste</span>(<span class="st">"Unemployment in"</span>, .y))</span>
+<span id="cb158-12"><a href="#cb158-12" aria-hidden="true" tabindex="-1"></a>                  )</span>
+<span id="cb158-13"><a href="#cb158-13" aria-hidden="true" tabindex="-1"></a>           )</span>
+<span id="cb158-14"><a href="#cb158-14" aria-hidden="true" tabindex="-1"></a>         ) <span class="sc">%&gt;%</span></span>
+<span id="cb158-15"><a href="#cb158-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(plots2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[[1]]</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="fprog_files/figure-html/unnamed-chunk-102-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+[[2]]</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="fprog_files/figure-html/unnamed-chunk-102-2.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+[[3]]</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="fprog_files/figure-html/unnamed-chunk-102-3.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>This column-list based workflow is extremely powerful and I highly advise you to take the required time to master it.</p>
+</section>
+</section>
+<section id="conclusion" class="level2" data-number="2.4">
+<h2 data-number="2.4" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">2.4</span> Conclusion</h2>
+<p>If there is only one thing that you should remember from this chapter, it would be pure functions. This is in my opinion not very difficult to do and comes with many benefits. But, avoiding loops and replacing them higher-order functions (<code>apply()</code>, <code>Reduce()</code>, <code>purrr::map()</code> – and its variants –) also pays off.</p>
+
+
 </section>
 <section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr>
