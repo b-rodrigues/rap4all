@@ -921,7 +921,264 @@ Of course, R ships with its own, much more efficient, implementation of this fun
 lapply(list(seq(1:5)), sqrt)
 ```
 
-In other programming languages, `lapply()` is often called `map()`. The `{purrr}` packages ships with other such useful higher-order
-functions that abstract loops away.
+In other programming languages, `lapply()` is often called `map()`. The `{purrr}` packages ships
+with other such useful higher-order functions that abstract loops away. For example, there’s
+the function called `map2()`, that maps a function of two arguments to each element of
+two atomic vectors or lists, two at a time:
+
+```{r}
+library(purrr)
+
+map2(
+  .x = seq(1:5),
+  .y = seq(1:5),
+  .f = `+`
+  )
+```
+
+If you have more than two lists, you can use `pmap()` instead.
+
+### Data frames
+
+As mentioned in the introduction of this section, data frames are a special type of list of
+atomic vectors. This means that just as I can use `lapply()` to compute the square root
+of the elements of an atomic vector, as in the previous example, I can also operate on
+all the columns of a data frame. For example, it is possible to determine the class of   
+every variable like this:
+
+```{r}
+lapply(iris, class)
+```
+
+Unlike a list however, the elements of a data frame must be of the same length. Data frames
+remain very flexible however, and using what we have learned until now, it is possible to
+use the data frame as a structure for all our computations. For example, suppose that we
+have a data frame that contains data on unemployment for the different subnational divisions
+of the Grand-Duchy of Luxembourg, the country the author of this book hails from. Let’s suppose
+that I want to generate several plots, per subnational division and per year. Typically,
+we would use a loop for this, but we can use what we’ve learned here, as well as some
+functions from the `{dplyr}`, `{purrr}`, `{ggplot2}` and `{tidyr}` packages. I will be downloading
+data that I made available inside a package, but instead of installng the package,
+we will dowload the `.rda` file (which is the file format of packaged data) and
+then load that data into our R session:
+
+```{r}
+# Create a temporary file
+unemp_path <- tempfile(fileext = ".rda")
+
+# Download the data and save it to the path of the temporary file
+download.file("https://github.com/b-rodrigues/myPackage/raw/main/data/unemp.rda", destfile = unemp_path)
+
+# Load the data. The data is now available as 'unemp'
+load(unemp_path)
+
+``` 
+
+Let’s load the required packages and take a look at the data:
+
+```{r}
+library(dplyr)
+library(purrr)
+library(ggplot2)
+library(tidyr)
+
+glimpse(unemp)
+
+``` 
+
+Column names are self-descriptive, but the `level` column needs some explanations. The
+country of Luxembourg is divided into *Cantons*, and these *Cantons* themselves into *Communes*.
+
+You should know that the word *Luxembourg* can refer to the country, the canton or the commune of
+Luxembourg. Now let’s suppose that I want a separate plot for the three communes of Luxembourg,
+Esch-sur-Alzette and Wiltz. Instead of creating three separate data frames and feeding
+them to the same ggplot code, I can instead take advantage of the fact that data frames are
+lists, and are thus quite flexible. Let’s start with filtering:
+
+```{r}
+filtered_unemp <- unemp %>%
+  filter(
+    level == "Commune",
+    place_name %in% c("Luxembourg", "Esch-sur-Alzette", "Wiltz")
+   )
+
+glimpse(filtered_unemp)
+```
+
+We are now going to use the fact that data frames are lists, and that lists can hold any
+type of object.  For example, remember this list from before where one of the elements is a
+data frame, and the second one a formula:
+
+```{r}
+list(
+  "a" = head(mtcars),
+  "b" = ~lm(y ~ x)
+  )
+```
+
+`{dplyr}` comes with a function called `group_nest()` which groups the data frame by
+a variable (such that the next computations will be performed group-wise) and then nests
+the other columns into a smaller data frame. Let’s try it and see what happens:
 
 
+```{r}
+nested_unemp <- filtered_unemp %>%
+  group_nest(place_name) 
+```
+
+Let’s see how this looks like:
+
+```{r}
+nested_unemp
+```
+
+`nested_unemp` is a new data frame of 3 rows, one per commune ("Esch-sur-Alzette", "Luxembourg",
+"Wiltz"), and of two columns, one for the names of the communes, and the other contains every other
+variable inside a smaller data frame. So this is a data frame that has one column where each
+element of that column is itself a data frame. Such a column is called a list-column. This is
+essentially a list of lists.
+
+Let’s now think about this for a moment. If the column titled `data` is a list of data frames, it
+should be possible to use a function like `map()` or `lapply()` to apply a function on each of
+these data frames. Remember that `map()` or `lapply()` require a list of elements of whatever type
+and a function that accepts objects of this type as input. So this means that we could apply a function
+that plots the data to each element of the column titled `data`. Since each element of this
+column is a data frame, this functions needs a data frame as an input. As a first, simple, example
+to illustrate this, let’s suppose that we want to determine the number of rows of each data frame.
+This is how we would do it:
+
+```{r}
+nested_unemp %>%
+  mutate(nrows = map(data, nrow))
+```
+
+The new column, titled `nrows` is a list of integers. We can simplify it
+by converting it directly to an atomic vector of integers by using
+`map_int()` instead of `map()`:
+
+```{r}
+nested_unemp %>%
+  mutate(nrows = map_int(data, nrow))
+```
+
+Let’s try for a more complex example now. What if we want to filter rows?
+(The simplest way would of course to filter the rows we need before nesting
+the data frame). We need to apply the function `filter()` where its first
+argument is a data frame and the second argument is a predicate:
+
+
+```{r}
+nested_unemp %>%
+  mutate(nrows = map(data, \(x)filter(x, year == 2015)))
+```
+
+In this case here, we need to use an anonymous function. This is because
+`filter()` has two arguments, and we need to make clear what it is
+we are mapping over and what argument stays fixed; we are mapping over,
+or iterating if you will, data frames, but the predicate stays fixed.
+
+We are now ready to plot our data. The best way to continue is to first
+get the function right by creating one plot for one single commune.
+Let’s select the dataset for the commune of `Luxembourg`:
+
+```{r}
+lux_data <- nested_unemp %>%
+  filter(place_name == "Luxembourg") %>%
+  unnest(data)
+```
+
+To plot this data, we can now write the required `ggplot2()` code:
+
+```{r}
+ggplot(data = lux_data) +
+  theme_minimal() +
+  geom_line(
+    aes(year, unemployment_rate_in_percent, group = 1)
+   ) +
+  labs(title = "Unemployment in Luxembourg")
+
+```
+
+To turn the lines of code above into a function, you need to think about
+how many arguments that function would have. There is an obvious one,
+the data itself (in the snippet above, the data is the `lux_data` object).
+Another one that is less obvious is in the title:
+
+```{r}
+  labs(title = "Unemployment in Luxembourg")
+```
+
+Ideally, we would want that title to change, depending on the data set.
+So we could write the function like so:
+
+
+```{r}
+make_plot <- function(x, y){
+  ggplot(data = x) +
+    theme_minimal() +
+    geom_line(
+      aes(year, unemployment_rate_in_percent, group = 1)
+      ) +
+    labs(title = paste("Unemployment in", y))
+}
+
+```
+
+Let’s try it on our data:
+
+```{r}
+make_plot(lux_data, "Luxembourg")
+```
+
+Ok, so now, we simply need to apply this function to our nested data
+frame:
+
+```{r}
+nested_unemp <- nested_unemp %>%
+  mutate(plots = map2(
+    .x = data,
+    .y = place_name,
+    .f = make_plot
+  ))
+
+nested_unemp
+```
+
+If you look at the `plots` column, you see that it is a list of
+`gg` objects: these are our plots. Let’s take a look at them:
+
+```{r}
+nested_unemp$plots
+```
+
+We could also have used an anonymous function:
+
+```{r}
+nested_unemp %>%
+  mutate(plots2 = map2(
+    .x = data,
+    .y = place_name,
+    .f = \(.x,.y)(
+                ggplot(data = .x) +
+                  theme_minimal() +
+                  geom_line(
+                    aes(year, unemployment_rate_in_percent, group = 1)
+                   ) +
+                  labs(title = paste("Unemployment in", .y))
+                  )
+           )
+         ) %>%
+  pull(plots2)
+
+```
+
+This column-list based workflow is extremely powerful and I highly
+advise you to take the required time to master it.
+
+## Conclusion
+
+If there is only one thing that you should remember from this chapter,
+it would be pure functions. This is in my opinion not very difficult to
+do and comes with many benefits. But, avoiding loops and replacing them
+higher-order functions (`apply()`, `Reduce()`,
+`purrr::map()` -- and its variants --) also pays off.
