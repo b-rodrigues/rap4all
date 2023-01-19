@@ -1175,10 +1175,113 @@ nested_unemp %>%
 This column-list based workflow is extremely powerful and I highly
 advise you to take the required time to master it.
 
+## Functional programming in R
+
+Up until now we focused more on concepts than on specificities of the R programming language when
+it comes to functional programming. In the section, we will be focusing entirely on R-specific
+capabilities and packages for functional programming.
+
+### Base capabilities
+
+R is a functional programming language, as already stated, and as such it comes with many functions
+out of the box to write functional code. We have already discussed `lapply()` and `Reduce()`. You
+should know that depending on what you want to achieve, there are other functions that are similar
+to `lapply()`: `apply()`, `sapply()`, `vapply()`, `mapply()` and `tapply()`. There’s also `Map()`
+which is a wrapper around `mapply()`. Each function performs the same basic task of applying
+a function over all the elements of a list or list-like structure, but it can be hard to keep
+them apart. This is why `{purrr}`, which we will discuss in the next section, is quite an 
+interesting alternative to base R’s offering.
+
+Another one of the quintessential functional programming functions (alongside `Reduce()` and
+`Map()`) that ships with R is `Filter()`. If you know `dplyr::filter()` you should be familiar
+with the concept of filtering rows of a data frame where the elements of one particular column
+satisfy a predicate. `Filter()` works the same way, but focusing on lists instead of data frame:
+
+```{r}
+Filter(is.character,
+       list(
+         seq(1:5),
+         "Hey")
+       )
+```
+
+The call above only returns the elements where `is.character()` evaluates to `TRUE`.
+
+Another useful function is `Negate()` which is a function factory that takes a boolean function 
+as an input and returns the opposite boolean function. As an illustration, suppose that in the
+example above we wanted to get everything *but* the character:
+
+
+```{r}
+Filter(Negate(is.character),
+       list(
+         seq(1:5),
+         "Hey")
+       )
+```
+
+There are some other functions like this that you might want to check out: type `?Negate` in 
+console to read more about them.
+
+Before continuing with R packages that extend R’s functional programming capabilities it’s also
+important to stress that just as R is a functional programming language, it is also an object
+oriented language. In fact, R is what John Chambers called a *functional OOP* language 
+(@chambers2014). We won’t delve too much into what this means (read @wickham2019 for this),
+but as a short discussion, consider the `print()` function. Depending on what type of object
+the user gives it, it seems as if somehow `print()` knows what to do with it:
+
+```{r}
+print(5)
+print(head(mtcars))
+print(str(mtcars))
+```
+ 
+The way this works, is essentially a mixture of functional and object oriented programming,
+so functional OOP. Let’s take a closer look at the source code of `print()` by simply
+typing `print` without brackets, into a console:
+
+```{r}
+print
+```
+
+Quite unexpectedly, the source code of `print()` is one line long and is just 
+`UseMethod("print")`. So all `print()` does is use a generic method called "print". If your
+text editor has autocompletion enabled, you might see that there are actually quite a lot
+of `print()` functions. For example, type `print.data.frame` into a console:
+
+```{r}
+print.data.frame
+```
+
+This is the `print` function for `data.frame` objects. So what `print()` does is look at the class
+of its argument `x`, and then look for the right `print` function. In more traditional OOP
+languages, users would type something like:
+
+```{r}
+mtcars.print()
+```
+
+So if `mtcars` is a data frame, it encapsulates a `print()` method that then does the printing.
+R is different, because classes and methods are kept separate. If a package developer creates
+a new class of object, then the developer also must implement the required methods. For example
+in the `{chronicler}` package, the `chronicler` class is defined and a `print.chronicler()` 
+function is defined to print these objects. 
+
+All of this to say that if you want to extend R by writing packges, learning some OOP essentials
+is also important. But for data analysis, functional programming does the job perfectly.
+To learn more about R’s different OOP systems (yes, R can do OOP in diffirent ways), 
+take a look at @wickham2019. 
+
+### purrr
+
+### withr
+
 ## Conclusion
 
-If there is only one thing that you should remember from this chapter,
-it would be pure functions. This is in my opinion not very difficult to
-do and comes with many benefits. But, avoiding loops and replacing them
-higher-order functions (`apply()`, `Reduce()`,
-`purrr::map()` -- and its variants --) also pays off.
+If there is only one thing that you should remember from this chapter, it would be pure functions.
+This is in my opinion not very difficult to do and comes with many benefits. But, avoiding loops
+and replacing them with higher-order functions (`lapply()`, `Reduce()`, `purrr::map()` -- and its
+variants --) also pays off. While this chapter stresses the advantages of functional programming,
+you should not forget that R is not a pure, and solely, functional programming language and that
+other paradigms, like object oriented programming, are also available to you. It is important
+however to distinguish when you need to use one or the other.
