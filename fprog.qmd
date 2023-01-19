@@ -1257,24 +1257,144 @@ This is the `print` function for `data.frame` objects. So what `print()` does is
 of its argument `x`, and then look for the right `print` function. In more traditional OOP
 languages, users would type something like:
 
-```{r}
+```{r, eval = F}
 mtcars.print()
 ```
 
-So if `mtcars` is a data frame, it encapsulates a `print()` method that then does the printing.
+In these languages, objects encapsulate method (the equivalent of our functions), so if
+`mtcars` is a data frame, it encapsulates a `print()` method that then does the printing.
 R is different, because classes and methods are kept separate. If a package developer creates
 a new class of object, then the developer also must implement the required methods. For example
 in the `{chronicler}` package, the `chronicler` class is defined and a `print.chronicler()` 
-function is defined to print these objects. 
+function is defined to print these objects.
 
-All of this to say that if you want to extend R by writing packges, learning some OOP essentials
+All of this to say that if you want to extend R by writing packages, learning some OOP essentials
 is also important. But for data analysis, functional programming does the job perfectly.
-To learn more about R’s different OOP systems (yes, R can do OOP in diffirent ways), 
-take a look at @wickham2019. 
+To learn more about R’s different OOP systems (yes, R can do OOP in diffirent ways and the 
+one I sketched here is the simplest, but probably the most used as well, one),  take a 
+look at @wickham2019. 
 
 ### purrr
 
+The `{purrr}` package, developed by Posit, contains many functions to make functional programming
+with R more smooth. In the previous section, we discussed the `apply()` family of function; they
+all do a very similar thing, which is looping over a list and applying a function to the elements
+of the list, but it is not quite easy to remember which one does what. Also, for some of these functions
+like `apply()`, the list comes first, and then the function, but in the case of `mapply()`, the function
+comes first. Another issue with these functions is that it is not always easy to know what type the 
+output is going to be. List? Atomic vector? Something else? 
+
+`{purrr}` solves this issue by offering the `map()` family of functions, which behave in a very conistent
+way. The basic function is called `map()` and we’ve already used it:
+
+```{r}
+map(seq(1:5), sqrt)
+```
+
+But there are many interesting variants:
+
+```{r}
+map_dbl(seq(1:5), sqrt)
+```
+
+`map_dbl()` coerces the output to an atomic vector of doubles instead of a list of doubles. Then there’s:
+
+```{r}
+map_chr(letters, toupper)
+```
+
+for when the output needs to be an atomic vector of characters.
+
+There are many others, so take a look at the document with `?map`. There’s also `walk()` which 
+is used if you’re only interested in the side-effect of the function (for example if the function
+takes paths as input and saves something to disk). 
+
+`{purrr}` also has functions to replace `Reduce()`, simply called `reduce()` and `accumulate()`,
+and there are many, many other useful functions. Read through the 
+[documentation of the package](https://purrr.tidyverse.org/reference/index.html) and take the time
+to learn about all it has to offer.
+
 ### withr
+
+`{withr}` is a powerful package that makes it easy to "purify" functions that behave in a way
+that can cause problems. Remember the function from the introduction that randomly gave out a
+recipe Bruno liked? Here it is again:
+
+```{r}
+h <- function(name, food_list = list()){
+
+  food <- sample(c("lasagna", "cassoulet", "feijoada"), 1)
+
+  food_list <- append(food_list, food)
+
+  print(paste0(name, " likes ", food))
+
+  food_list
+}
+```
+
+Because this function returns results that are not consistent for a fixed input, this function
+is not referentially transparent. So we improved the function like this:
+
+```{r}
+h2 <- function(name, food_list = list(), seed = 123){
+
+  # We set the seed, making sure that we get the same selection of food for a given seed
+  set.seed(seed)
+  food <- sample(c("lasagna", "cassoulet", "feijoada"), 1)
+
+  # We now need to unset the seed, because if we don't, guess what, the seed will stay set for the whole session!
+  set.seed(NULL)
+
+  food_list <- append(food_list, food)
+
+  print(paste0(name, " likes ", food))
+
+  food_list
+}
+```
+
+The problem with this approach is that we need to modify our function. We can instead use `withr::with_seed()`
+to achieve the same effect:
+
+```{r}
+withr::with_seed(seed = 123,
+                 h("Bruno"))
+```
+
+It is also easier to create a wrapper if needed:
+
+```{r}
+h3 <- function(..., seed){
+  withr::with_seed(seed = seed,
+                   h(...))
+}
+```
+
+```{r}
+h3("Bruno", seed = 123)
+```
+
+Before we downloaded a dataset and loaded it into memory; we did so by first created a temporary file,
+then downloading it and then loading it. Suppose that instead of loading this data into our session, 
+we simply wanted to test whether the link was still working. We wouldn’t want to keep the loaded data
+in our session, so to avoid having to delete it again manually, we could use `with_tempfile()`:
+
+```{r}
+withr::with_tempfile("unemp", {
+  download.file("https://github.com/b-rodrigues/myPackage/raw/main/data/unemp.rda", destfile = unemp)
+  load(unemp)
+  nrow(unemp)
+  }
+)
+
+```
+
+The data got downloaded, and then loaded, and then we computed the number of rows of the data, without
+touching the global environment, or state, of our current session.
+
+Just like for `{purrr}`, `{withr}` has many useful functions which I encourage you to 
+[familiarize yourself with](https://withr.r-lib.org/reference/index.html).
 
 ## Conclusion
 
@@ -1283,5 +1403,6 @@ This is in my opinion not very difficult to do and comes with many benefits. But
 and replacing them with higher-order functions (`lapply()`, `Reduce()`, `purrr::map()` -- and its
 variants --) also pays off. While this chapter stresses the advantages of functional programming,
 you should not forget that R is not a pure, and solely, functional programming language and that
-other paradigms, like object oriented programming, are also available to you. It is important
-however to distinguish when you need to use one or the other.
+other paradigms, like object oriented programming, are also available to you, and if your goal
+ is to master the language (instead of "just" using it to solve data analysis problems), then you
+ also need to know about R’s OOP capabilities.
