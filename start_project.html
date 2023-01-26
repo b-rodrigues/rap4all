@@ -20,6 +20,25 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1.6em;
   vertical-align: middle;
 }
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
 </style>
 
 
@@ -167,10 +186,7 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#literate-programming" id="toc-literate-programming" class="nav-link active" data-scroll-target="#literate-programming"><span class="toc-section-number">4.1</span>  Literate programming</a>
-  <ul class="collapse">
-  <li><a href="#why-bother" id="toc-why-bother" class="nav-link" data-scroll-target="#why-bother"><span class="toc-section-number">4.1.1</span>  Why bother?</a></li>
-  </ul></li>
+  <li><a href="#literate-programming" id="toc-literate-programming" class="nav-link active" data-scroll-target="#literate-programming"><span class="toc-section-number">4.1</span>  Literate programming</a></li>
   <li><a href="#quarto-basics" id="toc-quarto-basics" class="nav-link" data-scroll-target="#quarto-basics"><span class="toc-section-number">4.2</span>  Quarto basics</a></li>
   <li><a href="#parametrized-reports" id="toc-parametrized-reports" class="nav-link" data-scroll-target="#parametrized-reports"><span class="toc-section-number">4.3</span>  Parametrized reports</a></li>
   <li><a href="#project-start" id="toc-project-start" class="nav-link" data-scroll-target="#project-start"><span class="toc-section-number">4.4</span>  Project start</a></li>
@@ -198,9 +214,9 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<p>In order to build a reproducible pipeline, we will be working together on a project. The project itself will be quite simple and will simply consist is getting some data “trapped” inside a Microsoft Excel Workbook into a data frame, and then creating a plot. What will be important for our project is that it satisfies the following requirements:</p>
+<p>In order to build a reproducible pipeline, we will be working together on a project. The project itself will be quite simple and will simply consist is getting some data “trapped” inside a Microsoft Excel Workbook into a data frame, and then creating a plot. The point is not making this plot, engineering the project in such a way that it is:</p>
 <ul>
-<li>Document;</li>
+<li>Documented;</li>
 <li>Tested;</li>
 <li>Reproducible.</li>
 </ul>
@@ -212,10 +228,41 @@ ul.task-list li input[type="checkbox"] {
 <p><em>Refer to <a href="https://github.com/b-rodrigues/rap4all/issues/1#issuecomment-1327627267">https://github.com/b-rodrigues/rap4all/issues/1#issuecomment-1327627267</a></em></p>
 <section id="literate-programming" class="level2" data-number="4.1">
 <h2 data-number="4.1" class="anchored" data-anchor-id="literate-programming"><span class="header-section-number">4.1</span> Literate programming</h2>
-<section id="why-bother" class="level3" data-number="4.1.1">
-<h3 data-number="4.1.1" class="anchored" data-anchor-id="why-bother"><span class="header-section-number">4.1.1</span> Why bother?</h3>
-<p><em>Allows you to explain what you’re doing as you’re coding. This file can later be inflated, if necessary, to make a package using <code>{fusen}</code>.</em></p>
-</section>
+<p>In literate programming, we mix code and prose together, in a way that makes it easy for both non-technical users and programmers to understand what is going on. Scripts written this way are also very easy to compile, or render, into a variety of document formats like <code>html</code> and <code>docx</code>. R supports several ways of doing literate programming: Sweave, knitr and Quarto.</p>
+<p>Sweave was the first tool available to R (and S) users, and allowed the mixing of R and LaTeX code to create a document. Sweave as was authored by Friedrich Leisch in 2002 and described in his 2002 paper (<span class="citation" data-cites="leisch2002">Leisch (<a href="references.html#ref-leisch2002" role="doc-biblioref">2002</a>)</span>). As Leisch argues, <em>the traditional way of writing a report as part of a statistical data naalysis project uses two separate steps</em>: running the analysis using some software, and then copy and pasting the results into a word processing tool. The problem with this approach is that much time is wasted copy and pasting things, so experimenting with different layouts is very time consuming. Copy and paste mistakes will also happen (it’s not a question of if, but when) and updating reports (for example, when new data comes in) means that someone will have, again, to copy and paste the updated results into a new document.</p>
+<p>Sweave provided a way to embed the analysis in the document itself, in this case a LATEX source file, and R code was executed whenever the document was compiled. This gave statisticians considerable time savings when it was time to update a report (or to experiment with different layouts).</p>
+<p>The snippet below shows the example from Leisch’s paper:</p>
+<pre><code>\documentclass[a4paper]{article}
+
+\begin{document}
+
+In this example we embed parts of the examples from the
+\texttt{kruskal.test} help page into a \LaTeX{} document:
+
+&lt;&lt;&gt;&gt;=
+data (airquality)
+kruskal.test(Ozone ~ Month, data = airquality)
+@
+
+which shows that the location parameter of the Ozone
+distribution varies significantly from month to month.
+Finally we include a boxplot of the data:
+
+\begin{center}
+&lt;&lt;fig=TRUE,echo=FALSE&gt;&gt;=
+boxplot(Ozone ~ Month, data = airquality)
+@
+\end{center}
+
+\end{document}</code></pre>
+<p>Even if you’ve never seen a LATEX source file, you should be able to figure out what’s going on. The first line states what type document of document we’re writing. Then comes <code>\begin{document}</code> which tells the compiler where the document starts. Then comes the content. You can see that it’s a mixture of plain English with R code defined inside a chunk starting with <code>&lt;&lt;&gt;&gt;=</code> and ending with <code>@</code>. Finally, the documents ends with \end{document}. Getting a humand readable PDF from this source is a two-step process: first this source get’s converted into a <code>.tex</code> file and then this <code>.tex</code> file into a PDF. Sweave is included with every R installation since version 1.5.0, and still works to this day. For example, we can test that our Sweave installation works just fine by compiling the example above. This is what the final output looks like:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/hello_sweave.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">More than 20 years later, the output is still the same</figcaption><p></p>
+</figure>
+</div>
+<p>Let us just state that the fact that it is still possible to compile this example more than 20 years later is an incredible testament to how mature and stable this software is (both R, Sweave, and LATEX). But as impressive as this is, LATEX has a steep learning curve, and Leisch even advocated the use of the Emacs text editor to edit Sweave files, which also has a very steep learning curve (but this is entirely optional; for example we edited and compiled the example on the Rstudio IDE).</p>
 </section>
 <section id="quarto-basics" class="level2" data-number="4.2">
 <h2 data-number="4.2" class="anchored" data-anchor-id="quarto-basics"><span class="header-section-number">4.2</span> Quarto basics</h2>
@@ -235,6 +282,11 @@ ul.task-list li input[type="checkbox"] {
 <p><em>So here the project is done, but actually it’s just an Qmd file that gets compiled, so we would need to explain why this is not enough, and motivate the readers to go the full way: developing packages, using targets, and so on</em></p>
 
 
+<div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography" style="display: none">
+<div id="ref-leisch2002" class="csl-entry" role="doc-biblioentry">
+Leisch, Friedrich. 2002. <span>“Sweave: Dynamic Generation of Statistical Reports Using Literate Data Analysis.”</span> In <em>Compstat</em>, edited by Wolfgang Härdle and Bernd Rönz, 575–80. Physica-Verlag HD.
+</div>
+</div>
 </section>
 
 </main> <!-- /main -->
