@@ -3,10 +3,10 @@
 In order to build a reproducible pipeline, we will be working together on a project.
 The project itself will be quite simple and will simply consist is getting some data
 "trapped" inside a Microsoft Excel Workbook into a data frame, and then creating
-a plot. What will be important for our project is that it satisfies the following
-requirements:
+a plot. The point is not making this plot, engineering the project in such a way 
+that it is:
 
-- Document;
+- Documented;
 - Tested;
 - Reproducible.
 
@@ -28,10 +28,76 @@ How do I start working on it?*
 
 ## Literate programming
 
-### Why bother?
+In literate programming, we mix code and prose together, in a way that makes it easy for
+both non-technical users and programmers to understand what is going on. Scripts written this
+way are also very easy to compile, or render, into a variety of document formats like `html` 
+and `docx`. R supports several ways of doing literate programming: Sweave, knitr and Quarto.
 
-*Allows you to explain what you're doing as you're coding. This file can later be inflated, if
-necessary, to make a package using `{fusen}`.*
+Sweave was the first tool available to R (and S) users, and allowed the mixing of R and LaTeX
+code to create a document. Sweave as was authored by Friedrich Leisch in 2002 and described
+in his 2002 paper (@leisch2002). As Leisch argues, *the traditional way of writing a report as 
+part of a statistical data naalysis project uses two separate steps*: running the analysis
+using some software, and then copy and pasting the results into a word processing tool.
+The problem with this approach is that much time is wasted copy and pasting things, so 
+experimenting with different layouts is very time consuming. Copy and paste mistakes will
+also happen (it’s not a question of if, but when) and updating reports (for example, when
+new data comes in) means that someone will have, again, to copy and paste the updated
+results into a new document.
+
+Sweave provided a way to embed the analysis in the document itself, in this case a LATEX
+source file, and R code was executed whenever the document was compiled. This gave statisticians
+considerable time savings when it was time to update a report (or to experiment with different
+layouts).
+
+The snippet below shows the example from Leisch’s paper:
+
+````{verbatim}
+\documentclass[a4paper]{article}
+
+\begin{document}
+
+In this example we embed parts of the examples from the
+\texttt{kruskal.test} help page into a \LaTeX{} document:
+
+<<>>=
+data (airquality)
+kruskal.test(Ozone ~ Month, data = airquality)
+@
+
+which shows that the location parameter of the Ozone
+distribution varies significantly from month to month.
+Finally we include a boxplot of the data:
+
+\begin{center}
+<<fig=TRUE,echo=FALSE>>=
+boxplot(Ozone ~ Month, data = airquality)
+@
+\end{center}
+
+\end{document}
+````
+
+Even if you’ve never seen a LATEX source file, you should be able to figure out what’s going on. The first
+line states what type document of document we’re writing. Then comes `\begin{document}` which tells
+the compiler where the document starts. Then comes the content. You can see that it’s a mixture of plain
+English with R code defined inside a chunk starting with `<<>>=` and ending with `@`. Finally, the
+documents ends with \end{document}. Getting a humand readable PDF from this source is a two-step process:
+first this source get’s converted into a `.tex` file and then this `.tex` file into a PDF. Sweave is 
+included with every R installation since version 1.5.0, and still works to this day. For example,
+we can test that our Sweave installation works just fine by compiling the example above. This
+is what the final output looks like:
+
+![More than 20 years later, the output is still the same](images/hello_sweave.png)
+
+Let us just state that the fact that it is still possible to compile this example more than 20
+years later is an incredible testament to how mature and stable this software is (both R, Sweave,
+and LATEX). But as impressive as this is, LATEX has a steep learning curve, and Leisch even
+advocated the use of the Emacs text editor to edit Sweave files, which also has a very steep
+learning curve (but this is entirely optional; for example we edited and compiled the example on
+the Rstudio IDE).
+
+
+
 
 ## Quarto basics
 
