@@ -573,7 +573,7 @@ the variabled passed to `return_section()`. So calling `return_section(mtcars, "
 print the following in your console:
 
 
-```{r, eval = FALSE}
+```
 ## Frequency table for variable: am
 |am | Freq|
 |:--|----:|
@@ -597,6 +597,8 @@ to `lapply()` is wrapped inside `invisible()`. This is because `return_section()
 just prints something to the console. No object is returned. So if you don’t wrap the call to `lapply()` inside
 `invisible()`, then a bunch of `NULL`s will also get printed. To avoid this, use `invisible()` (and use 
 `purrr::walk()` rather than `purrr::map()`).
+
+Click [here](https://jolly-arithmetic-ce29cf.netlify.app/) to see the output.
 
 This is not an easy topic, so take the time to play around with the example above. Try to print a plot instead 
 of a table, try to generate more complex Markdown code, remove the call to `invisible()` and knit the document
