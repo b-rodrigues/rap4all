@@ -681,8 +681,8 @@ To read the log of this object, call read_log(.c).</code></pre>
 <div class="sourceCode cell-code" id="cb73"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a>chronicler<span class="sc">::</span><span class="fu">read_log</span>(result)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "Complete log:"                                                                                
-[2] "NOK! sqrt() ran unsuccessfully with following exception: NaNs produced at 2023-01-26 20:18:09"
-[3] "Total running time: 0.00103926658630371 secs"                                                 </code></pre>
+[2] "NOK! sqrt() ran unsuccessfully with following exception: NaNs produced at 2023-01-27 19:59:01"
+[3] "Total running time: 0.00112581253051758 secs"                                                 </code></pre>
 </div>
 </div>
 <p>The <code>{purrr}</code> package also comes with function factories that you might find useful (<code>{possibly}</code>, <code>{safely}</code> and <code>{quietly}</code>).</p>
@@ -817,7 +817,9 @@ To read the log of this object, call read_log(.c).</code></pre>
 <p><code>a |&gt; f() |&gt; g() |&gt; h()</code></p>
 <p>where <code>a</code> is for example a path to a data set, and where <code>f()</code>, <code>g()</code> and <code>h()</code> successively read, clean, and plot the data, than having something like:</p>
 <pre><code>big_function(a)</code></pre>
-<p>that does all the steps above in one go. The advantage of splitting <code>big_function()</code> into <code>f()</code>, <code>g()</code> and <code>h()</code> is that you can reuse these smaller functions in other projects much more easily. Make them work together by sharing a common interface. The list is usually a good candidate for this.</p>
+<p>that does all the steps above in one go.</p>
+<p>This idea of splitting the problem into smaller chunks, each chunk in turn split into even smaller units that can be handled by functions and then the results of these function combined into a final output is called composability.</p>
+<p>The advantage of splitting <code>big_function()</code> into <code>f()</code>, <code>g()</code> and <code>h()</code> is that you can tackle big problems <em>one bite at a time</em>, and also reusing these smaller functions in other projects is much easier. So what’s important is that you can make small functions work together by sharing a common interface. The list is usually a good candidate for this.</p>
 </section>
 </section>
 <section id="lists-a-powerful-data-structure" class="level2" data-number="2.3">
@@ -1473,7 +1475,7 @@ NULL</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>function (x, ...) 
 UseMethod("print")
-&lt;bytecode: 0x5561d82a4a50&gt;
+&lt;bytecode: 0x55ffc8142a50&gt;
 &lt;environment: namespace:base&gt;</code></pre>
 </div>
 </div>
@@ -1517,7 +1519,7 @@ UseMethod("print")
     }
     invisible(x)
 }
-&lt;bytecode: 0x5561daa168c8&gt;
+&lt;bytecode: 0x55ffca8b58e8&gt;
 &lt;environment: namespace:base&gt;</code></pre>
 </div>
 </div>
