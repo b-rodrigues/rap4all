@@ -648,18 +648,17 @@ output: pdf
 <span id="cb19-68"><a href="#cb19-68" aria-hidden="true" tabindex="-1"></a>invisible(lapply(colnames(mtcars), return_section, dataset = mtcars))</span>
 <span id="cb19-69"><a href="#cb19-69" aria-hidden="true" tabindex="-1"></a>```</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>The last function, named <code>return_section()</code> uses <code>knitr::knit_expdand()</code>, which is the one that does the heavy lifting. This section return literal R Markdown code. It returns <code>## Frequency table for variable: {{variable}}</code> which creates a level 2 section title with the text <em>Frequency table for variable: xxx</em> where the <code>xxx</code> will get replaced by the variabled passed to <code>return_section()</code>. So calling <code>return_section(mtcars, "am")</code> will print the following in your console:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Frequency table for variable: am</span></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="sc">|</span>am <span class="sc">|</span> Freq<span class="sc">|</span></span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="er">|:</span><span class="sc">--</span><span class="er">|</span><span class="sc">----</span><span class="er">:|</span></span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="er">|</span><span class="dv">0</span>  <span class="sc">|</span>   <span class="dv">19</span><span class="sc">|</span></span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="er">|</span><span class="dv">1</span>  <span class="sc">|</span>   <span class="dv">13</span><span class="sc">|</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
+<pre><code>## Frequency table for variable: am
+|am | Freq|
+|:--|----:|
+|0  |   19|
+|1  |   13|</code></pre>
 <p>We now simply need to find a clever way to apply this function to each variable in the <code>mtcars</code> dataset. For this, we are going to use <code>lapply()</code> which implements a for loop (you could use <code>purrr::map()</code> just as well for this):</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">invisible</span>(<span class="fu">lapply</span>(<span class="fu">colnames</span>(mtcars), return_section, <span class="at">dataset =</span> mtcars))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>This will create, for each variable in <code>mtcars</code>, the same R Markdown code as above. Notice that the R Markdown chunk where the call to <code>lapply()</code> is has the option <code>results = "asis"</code>. This is because the function return literal Markdown code, and we don’t want the parser to have to evaluate it again, results in a mangled result. We tell the parser “don’t worry about this bit of code, it’s already good”. As you see, the call to <code>lapply()</code> is wrapped inside <code>invisible()</code>. This is because <code>return_section()</code> does not return anything, it just prints something to the console. No object is returned. So if you don’t wrap the call to <code>lapply()</code> inside <code>invisible()</code>, then a bunch of <code>NULL</code>s will also get printed. To avoid this, use <code>invisible()</code> (and use <code>purrr::walk()</code> rather than <code>purrr::map()</code>).</p>
+<p>Click <a href="https://jolly-arithmetic-ce29cf.netlify.app/">here</a> to see the output.</p>
 <p>This is not an easy topic, so take the time to play around with the example above. Try to print a plot instead of a table, try to generate more complex Markdown code, remove the call to <code>invisible()</code> and knit the document and see what happens with the output, replace the call to <code>lapply()</code> with <code>purrr::walk()</code> or <code>purrr::map()</code>. Really take the time to understand what is going on.</p>
 </section>
 <section id="parametrized-reports" class="level3" data-number="4.3.2">
