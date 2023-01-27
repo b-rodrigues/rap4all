@@ -1,25 +1,25 @@
 # Functional programming
 
-This chapter will teach you the fundamentals of functional programming. *Functional programming* might
-sound scary, but we will focus on only a handful of concepts that are quite accessible while providing
-many benefits. Using these functional programming concepts will make your code more reliable, easier
-to test, document, share, and ultimately rerun.
+This chapter will teach you the fundamentals of functional programming. *Functional programming*
+might sound scary, but we will focus on only a handful of concepts that are quite accessible while
+providing many benefits. Using these functional programming concepts will make your code more
+reliable, easier to test, document, share, and ultimately rerun.
 
 ## Introduction
 
-You are very likely already familiar with some aspects of functional program. Let's start by discussing
-the two central elements of functional programming: functions and lists.
+You are very likely already familiar with some aspects of functional program. Let's start by
+discussing the two central elements of functional programming: functions and lists.
 
-There are several ways that you can structure a program, called programming paradigms. Functional programming
-is a paradigm that relies exclusively on the evaluation of functions to achieve the desired end result. If you
-have already written your own functions in the past, what follows will not be very new. But in order to write
-a good functional program, the functions that you write and evaluate have to have certain properties. Before
-discussing these properties, let's start by with *state*.
+There are several ways that you can structure a program, called programming paradigms. Functional
+programming is a paradigm that relies exclusively on the evaluation of functions to achieve the
+desired end result. If you have already written your own functions in the past, what follows will
+not be very new. But in order to write a good functional program, the functions that you write and
+evaluate have to have certain properties. Before discussing these properties, let's start by with
+*state*.
 
 ### The state of your program
 
-Let's suppose that you start a fresh R session, and
-immediately run this next line:
+Let's suppose that you start a fresh R session, and immediately run this next line:
 
 ```{r, eval = F}
 ls()
@@ -672,7 +672,7 @@ We can take inspiration from the Unix philosophy and rewrite it like this for ou
 
 *Write functions that do one thing and do it well. Write functions that work together. Write
  functions that handle lists, because that is a universal interface.*
-
+ 
 Strive for writing simple functions that only perform one task. Don’t hesitate to split a big
 function into smaller ones. Small functions that only perform one task are easier to maintain,
 test, document and debug. These smaller functions can then be chained using the `|>` operator. In
@@ -687,10 +687,16 @@ clean, and plot the data, than having something like:
 big_function(a)
 ```
 
-that does all the steps above in one go. The advantage of splitting `big_function()` into `f()`,
-`g()` and `h()` is that you can reuse these smaller functions in other projects much more easily.
-Make them work together by sharing a common interface. The list is usually a good candidate for
-this.
+that does all the steps above in one go. 
+
+This idea of splitting the problem into smaller chunks, each chunk in turn split into even smaller
+units that can be handled by functions and then the results of these function combined into a final
+output is called composability.
+
+The advantage of splitting `big_function()` into `f()`, `g()` and `h()` is that you can tackle big
+problems *one bite at a time*, and also reusing these smaller functions in other projects is much
+easier. So what’s important is that you can make small functions work together by sharing a common
+interface. The list is usually a good candidate for this.
 
 ## Lists: a powerful data-structure
 
@@ -1404,5 +1410,5 @@ and replacing them with higher-order functions (`lapply()`, `Reduce()`, `purrr::
 variants --) also pays off. While this chapter stresses the advantages of functional programming,
 you should not forget that R is not a pure, and solely, functional programming language and that
 other paradigms, like object oriented programming, are also available to you, and if your goal
- is to master the language (instead of "just" using it to solve data analysis problems), then you
- also need to know about R’s OOP capabilities.
+is to master the language (instead of "just" using it to solve data analysis problems), then you
+also need to know about R’s OOP capabilities.

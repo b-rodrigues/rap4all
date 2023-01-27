@@ -5,6 +5,7 @@
     "knuth84"
     "chambers2014"
     "wickham2019"
-    "leisch2002"))
+    "leisch2002"
+    "xie2014"))
  '(or :bibtex :latex))
 
