@@ -57,7 +57,7 @@ The snippet below shows the example from Leisch’s paper:
 \begin{document}
 
 In this example we embed parts of the examples from the
-\texttt{kruskal.test} help page into a \LaTeX{} document:
+\texttt{kruskal.test} help page into a LaTeX document:
 
 <<>>=
 data (airquality)
@@ -112,7 +112,7 @@ output: pdf_document
 ---
 
 In this example we embed parts of the examples from the
-\texttt{kruskal.test} help page into a \LaTeX{} document:
+\texttt{kruskal.test} help page into a LaTeX document:
 
 ```{r}
 data (airquality)
@@ -148,7 +148,7 @@ output: pdf_document
 ---
 
 In this example we embed parts of the examples from the
-\texttt{kruskal.test} help page into a \LaTeX{} document:
+\texttt{kruskal.test} help page into a LaTeX document:
 
 ```{r}
 data (airquality)
@@ -170,12 +170,12 @@ pwd
 ````
 
 (bash’s `pwd` command shows the current working directory). You may have noticed that we also keep
-two \LaTeX{} commands in the source Rmd, `\texttt{}` and `\LaTeX{}`. This is because Rmd files get
-first converted into `\LaTeX{}` files and then into a PDF. If you’re using RStudio, this document
+two LaTeX commands in the source Rmd, `\texttt{}` and `LaTeX`. This is because Rmd files get
+first converted into `LaTeX` files and then into a PDF. If you’re using RStudio, this document
 can be compiled by clicking a button or using a keyboard shortcut, but you can also use the
 `rmarkdown::render()` function. This function does two things transparently: it first converts the
-Rmd file into a source \LaTeX{} file, and then converts it into a PDF. It is of course possible to
-convert the document to a Word document as well however, \LaTeX{} commands will be ignored. Html is
+Rmd file into a source LaTeX file, and then converts it into a PDF. It is of course possible to
+convert the document to a Word document as well however, LaTeX commands will be ignored. Html is
 another widely used output format.
 
 You should know that `{knitr}` makes it possible to author many, many different types of documents.
@@ -208,7 +208,7 @@ output: pdf
 ---
 
 In this example we embed parts of the examples from the
-\texttt{kruskal.test} help page into a \LaTeX{} document:
+\texttt{kruskal.test} help page into a LaTeX document:
 
 ```{r}
 data (airquality)
@@ -274,14 +274,14 @@ install.packages("rmarkdown")
 ```
 
 in an R console. Since `{knitr}` is required to install `{rmarkdown}`, this gets installed
-automatically. If you want to compile PDF documents, you should also have a working \LaTeX{}
+automatically. If you want to compile PDF documents, you should also have a working LaTeX
 distribution. You can skip this next part if you’re only interested in generating PDF and Word
-files. For what follows, we will only be rendering Html documents, so no need to install \LaTeX{}
+files. For what follows, we will only be rendering Html documents, so no need to install LaTeX
 (by the way, you do not need a working Word installation to compile document to the docx format).
-However, if you already have a working \LaTeX{} installation, you shouldn’t have to do anything
-else to generate PDF documents. If you don’t have a working \LaTeX{} distribution, then Yihui Xie,
+However, if you already have a working LaTeX installation, you shouldn’t have to do anything
+else to generate PDF documents. If you don’t have a working LaTeX distribution, then Yihui Xie,
 the creator of `{knitr}` created an R package called `{tinytex}` that makes it extremely easy to
-install a \LaTeX{} distribution. In fact, this is the way we recommend to install \LaTeX{} even if
+install a LaTeX distribution. In fact, this is the way we recommend to install LaTeX even if
 you’re not an R user (it is possible to use the tinytex distribution without R; it’s just that
 the `{tinytex}` R package provides many functions that makes installing and maintaining it very easy). 
 Simply run these commands in an R console to get started:
@@ -291,9 +291,9 @@ install.packages("tinytex")
 tinytex::install_tinytex()
 ```
 
-and that’s it! If you need to install specific \LaTeX{} packages, then refer to the **Maintenance** section
+and that’s it! If you need to install specific LaTeX packages, then refer to the **Maintenance** section
 on [tinytex’s](https://yihui.org/tinytex/#maintenance) website. For example, to compile the example from Leisch’s
-article on Sweave discussed previously, we had to install the `grfext` \LaTeX{} package (as explained by the error
+article on Sweave discussed previously, we had to install the `grfext` LaTeX package (as explained by the error
 output in the console when I tried compiling). So, we simply needed to run the following command to get it:
 
 ```{r, eval = F}
@@ -462,7 +462,7 @@ This sentence has a footnote.[^1]
 
 and that you can write \LaTex{} formulas as well. For example, add the following into the the
 example from before and render either a PDF or a html document (don’t put the \LaTex{} formula
-belowe inside a chunk. This doesn’t work for Word output because Word does not support \LaTeX{}
+belowe inside a chunk. This doesn’t work for Word output because Word does not support LaTeX
 equations):
 
 ````{verbatim}
