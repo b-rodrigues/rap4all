@@ -9,21 +9,20 @@ jobs:
     runs-on: ubuntu-latest
   env:
     RENV_PATHS_ROOT: ~/.local/share/renv
-  
-  steps:
-  - name: Cache packages
-    uses: actions/cache@v1
-    with:
-      path: ${{ env.RENV_PATHS_ROOT }}
-      key: ${{ runner.os }}-renv-${{ hashFiles('**/renv.lock') }}
-      restore-keys: |
-        ${{ runner.os }}-renv-
-  
-  - name: Restore packages
-    shell: Rscript {0}
-    run: |
-      if (!requireNamespace("renv", quietly = TRUE)) install.packages("renv")
-      renv::restore()
+    steps:
+      - name: Cache packages
+        uses: actions/cache@v1
+        with:
+          path: ${{ env.RENV_PATHS_ROOT }}
+          key: ${{ runner.os }}-renv-${{ hashFiles('**/renv.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-renv-
+      
+      - name: Restore packages
+        shell: Rscript {0}
+        run: |
+          if (!requireNamespace("renv", quietly = TRUE)) install.packages("renv")
+          renv::restore()
     steps:
       - uses: actions/checkout@v3
       - uses: r-lib/actions/setup-pandoc@v2
