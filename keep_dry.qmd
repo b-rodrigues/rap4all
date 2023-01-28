@@ -1,4 +1,4 @@
-# Getting started with your project
+# Keeping it DRY with literate programming
 
 In order to build a reproducible pipeline, we will be working together on a project.
 The project itself will be quite simple and will simply consist is getting some data
@@ -626,7 +626,8 @@ library(flextable)
 my_table <- head(mtcars)
 
 flextable(my_table) |>
-  set_caption(caption = "Head of the mtcars dataset")
+  set_caption(caption = "Head of the mtcars dataset") |>
+  theme_booktabs()
 
 ```
 
@@ -659,16 +660,123 @@ which has very detailed documentation.
 
 ### Parametrized reports
 
-## Project start
+We've stressed the importance of not repeating oneself by showing you how you could loop
+over a function that return literate Markdown code. But sometimes you don't want to have
+one section dedicated to each unit of analysis within the same report, but rather, you
+want a complete separate report by unit of analysis. This is also possible thanks to
+parametrized reports.
 
-hpi: https://ec.europa.eu/eurostat/databrowser/bookmark/e2758aae-6a88-4684-9f6d-d0946cae3f6b?lang=fr
+Let's modify the example from before, which consisted in created one section per column
+of the `mtcars` dataset and create a frequency table, and make it now one separate 
+report for each column. The R Markdown file will look like this:
 
-deflated hpi: https://ec.europa.eu/eurostat/databrowser/view/tipsho10/default/table?lang=en
+````{verbatim}
+---
+title: "Report for column `r params$var` of dataset `r params$dataset`"
+output: html_document
+date: "2023-01-27"
+params:
+  dataset: mtcars
+  var: "am"
+---
 
-prix des logements en euros courants: https://data.public.lu/fr/datasets/r/1d20f982-57e1-4ae2-a278-dc78c88c21dc
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
 
-## Your project is done (?)
+## Frequency table for `r params$var`
 
-*So here the project is done, but actually it's just an Qmd file that gets compiled, so we would need
-to explain why this is not enough, and motivate the readers to go the full way: developing packages,
-using targets, and so on*
+```{r, echo = F}
+create_table <- function(dataset, var){
+
+  dataset <- get(dataset)
+
+  table(dataset[var]) |>
+    knitr::kable()
+}
+```
+
+The table below is for variable `r params$var` of dataset `r params$dataset`.
+
+```{r}
+create_table(params$dataset, params$var)
+```
+
+````
+
+It is now possible to knit this document using:
+
+```{r, eval = F}
+
+rmarkdown::render(
+             input = "param_report_example.Rmd",
+             params = list(
+               dataset = "mtcars",
+               var = "cyl"
+             )
+           )
+```
+
+This will pass the list `params` with elements "mtcars" and "cyl" down to the report.
+Every `params$dataset` and `params$var` in the report gets replaced by "mtcars" and "cyl"
+respectively. Also, notice that in the header of the document, we defined default
+values for the params. Something else you need to be aware of, is that the function
+`create_table()` inside the report is slightly different than before. It now starts
+with the following line:
+
+```{r, eval = F}
+dataset <- get(dataset)
+```
+
+Let's break this down. `params$dataset` contains the string "mtcars". I made the decision
+to pass the dataset as a string, so that I could use it in the title of the document. 
+But then, inside the `create_table()` function, I have the following code:
+
+```{r, eval = F}
+dataset[var]
+```
+
+`dataset` can be a string here, but needs to be a variable name, so `mtcars` and not "mtcars".
+This means that I need to *convert* that string into a name. `get()` searches an object by
+name, and then makes it possible to save it to a new variable called `dataset`. The rest
+of the function is then the same as before. This little difficulty can be avoided
+by hardcoding the dataset inside the R Markdown file, or by passing the dataset as the
+`params$dataset` and not the string, in the render function. However, if you pass down the 
+name of the dataset instead of the dataset as a string, then you need to covert it to 
+string if you want to use it in the text (so `mtcars` to "mtcars").
+
+If you now want to create one report per variable, you could compile all the documents
+at once with:
+
+```{r, eval = F}
+columns <- colnames(mtcars)
+
+lapply(columns,
+  (\(x)rmarkdown::render(
+                    input = "param_report_example.Rmd",
+                    output_file = paste0("param_report_example_", x, ".html"),
+                    params = list(
+                      dataset = "mtcars",
+                      var = x
+                    )
+                  )
+  )
+)
+```
+
+By now, this should not intimidate you anymore; we use `lapply()` to loop over a list of 
+column names (that we get using `colnames()`). Because we don't want to overwrite the report
+we need to change the name of the output file. We do so by using `paste0()` which creates
+a new string that contains the variable name, so each report gets its own name. 
+`x` inside the `paste0()` function is each element, one after the other, of the `columns`
+variable we defined first. Think of it as the `i` in a for loop. We then must also
+pass this to the `params` list, hence the `var = x`. The complete call to `rmarkdown::render()`
+is wrapped inside an anonymous function, because we need to use the argument `x` 
+(which is each column defined in the columns list) in different places.
+
+
+Before continuing, we highly recommend that you try running this yourself, and also that you 
+try to build your own little parametrized reports. Maybe even try templating inside a parametrized
+report! 
+
+Remember: keep it DRY.
