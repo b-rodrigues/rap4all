@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.313">
+<meta name="generator" content="quarto-1.2.329">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -172,7 +172,8 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#your-project-is-done" id="toc-your-project-is-done" class="nav-link active" data-scroll-target="#your-project-is-done"><span class="toc-section-number">5.1</span>  Your project is done (?)</a></li>
+  <li><a href="#housing-in-luxembourg" id="toc-housing-in-luxembourg" class="nav-link active" data-scroll-target="#housing-in-luxembourg"><span class="toc-section-number">5.1</span>  Housing in Luxembourg</a></li>
+  <li><a href="#your-project-is-done" id="toc-your-project-is-done" class="nav-link" data-scroll-target="#your-project-is-done"><span class="toc-section-number">5.2</span>  Your project is done (?)</a></li>
   </ul>
 </nav>
     </div>
@@ -196,11 +197,30 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
+<p>In this chapter, we are going to work together on a very simple project. This project will stay with us until the end of the book. For now, we are going to keep it simple; our goal here is to get an analysis done. We are going to download some data, analyze it, and write a little report. Then, we are going to think about how to go from this analysis to something more robust: what’s important to understand, is that everything we will be doing to get our little report can be seen as a <em>proto-pipeline</em>. We are going to download data, write functions, write comments, write some tests along the way to make sure that everything is working well, and put everything into an R Markdown source file that outputs the finalized document in one command line.</p>
+<p>The idea is to take this, and make it more a truly reproducible pipeline. So one of the first steps once we’re done with the analysis is to understand why we are actually not done yet.</p>
+<p>But for now, our main concern is to get our work done.</p>
+<section id="housing-in-luxembourg" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="housing-in-luxembourg"><span class="header-section-number">5.1</span> Housing in Luxembourg</h2>
+<p>We are going to download data about house prices in Luxembourg. Luxembourg is a little Western European country that looks like a shoe and is about the size of .98 Rhode Islands from the author hails from. Did you know that Luxembourg was a constitutional monarchy, and not a kingdom like Belgium, but a Grand-Duchy, and actually the last Grand-Duchy in the Word in the World? Also, what you should know to understand what we will be doing is that the country of Luxembourg is divided into Cantons, and each Cantons into Communes. Basically, if Luxembourg was the USA, Cantons would be States and Communes would be Counties (or Parishes or Boroughs). What’s confusing is that “Luxembourg” is also the name of a Canton, and of a Commune, which also has the status of a city and is the capital of the country. So Luxembourg the country, is divided into Cantons, one of which is called Luxembourg as well, cantons are divided into communes, and inside the canton of Luxembourg there’s the commune of Luxembourg which is also the city of Luxembourg, sometimes called Luxembourg-City, which is the capital of the country.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/lux_rhode_island.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Luxembourg is about as big as the US State of Rhode Island</figcaption><p></p>
+</figure>
+</div>
+<p>What you should also know is that the population is about 645.000 as of writing (January 2023), half of which are foreigners. Around 400.000 persons work in Luxembourg, of which half do not live in Luxembourg; so every morning from Monday to Friday, 200.000 people enter the country to work, and leave on the evening to go back to either Belgium, France or Germany, the neighboring countries. As you can imagine, this puts enormous pressure on the transportation system and on the roads, but also on the housing market; everyone wants to live in Luxembourg to avoid the horrible daily commute, and everyone wants to live either in the capital city, or in the second largest urban area in the south, in a city called Esch-sur-Alzette.</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="project_start_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
 <p>hpi: https://ec.europa.eu/eurostat/databrowser/bookmark/e2758aae-6a88-4684-9f6d-d0946cae3f6b?lang=fr</p>
 <p>deflated hpi: https://ec.europa.eu/eurostat/databrowser/view/tipsho10/default/table?lang=en</p>
 <p>prix des logements en euros courants: https://data.public.lu/fr/datasets/r/1d20f982-57e1-4ae2-a278-dc78c88c21dc</p>
-<section id="your-project-is-done" class="level2" data-number="5.1">
-<h2 data-number="5.1" class="anchored" data-anchor-id="your-project-is-done"><span class="header-section-number">5.1</span> Your project is done (?)</h2>
+</section>
+<section id="your-project-is-done" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="your-project-is-done"><span class="header-section-number">5.2</span> Your project is done (?)</h2>
 <p><em>So here the project is done, but actually it’s just an Qmd file that gets compiled, so we would need to explain why this is not enough, and motivate the readers to go the full way: developing packages, using targets, and so on</em></p>
 
 
