@@ -591,8 +591,8 @@ invisible(lapply(colnames(mtcars), return_section, dataset = mtcars))
 
 This will create, for each variable in `mtcars`, the same R Markdown code as above. Notice that the R Markdown
 chunk where the call to `lapply()` is has the option `results = "asis"`. This is because the function
-return literal Markdown code, and we don’t want the parser to have to evaluate it again, results in a mangled
-result. We tell the parser "don’t worry about this bit of code, it’s already good". As you see, the call
+returns literal Markdown code, and we don’t want the parser to have to parse it again.
+We tell the parser "don’t worry about this bit of code, it’s already good". As you see, the call
 to `lapply()` is wrapped inside `invisible()`. This is because `return_section()` does not return anything, it
 just prints something to the console. No object is returned. So if you don’t wrap the call to `lapply()` inside
 `invisible()`, then a bunch of `NULL`s will also get printed. To avoid this, use `invisible()` (and use 
@@ -604,6 +604,30 @@ This is not an easy topic, so take the time to play around with the example abov
 of a table, try to generate more complex Markdown code, remove the call to `invisible()` and knit the document
 and see what happens with the output, replace the call to `lapply()` with `purrr::walk()` or `purrr::map()`.
 Really take the time to understand what is going on.
+
+### Tables in R Markdown documents
+
+Getting tables right in Rmd documents is not always an easy task. There are several packages specifically
+made just for this task.
+
+In this short section, we want to point you towards two packages that check the following boxes:
+
+- Work the same way regardless of output format we want to knit our document into:
+- Work for any type of table: summary tables, regression tables, two-way tables, etc.
+
+Let's start with the simplest type of table, which would be showing the head of a dataset for example.
+`{knitr}` comes with the `kable()` function, but this function generates a very plain looking output. 
+For something publication-worthy, we recommend the `{flextable}` package:
+
+```{r}
+library(flextable)
+
+my_table <- head(mtcars)
+
+flextable(mtcars) %>%
+  set_caption(ft, caption = "Head of the mtcars dataset")
+
+```
 
 ### Parametrized reports
 
