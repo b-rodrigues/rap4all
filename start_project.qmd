@@ -617,7 +617,8 @@ In this short section, we want to point you towards two packages that check the 
 
 Let's start with the simplest type of table, which would be showing the head of a dataset for example.
 `{knitr}` comes with the `kable()` function, but this function generates a very plain looking output. 
-For something publication-worthy, we recommend the `{flextable}` package:
+For something publication-worthy, we recommend the `{flextable}` package, developed by 
+@gohel23:
 
 ```{r}
 library(flextable)
@@ -632,10 +633,29 @@ flextable(mtcars) %>%
 We won't go into much detail on how `{flextable}` works, but it is very powerful, and the fact that 
 it works for PDF, Html, Word and Powerpoint outputs is really a massive plus.
 If you want to learn more about `{flextable}`, there's a 
-[whole, free, ebook on it](https://ardata-fr.github.io/flextable-book/index.html).
+[whole, free, ebook on it](https://ardata-fr.github.io/flextable-book/index.html). `{flextable}` 
+can create very complicated tables, so really take the time to dig in!
 
-The next package is `{modelsummary}`, and this one focuses on regression tables. It is extremely
-powerful as well, and just like `{flextable}`, works for any type of output.
+The next package is `{modelsummary}`, by @arel22, and this one focuses on regression and summary
+tables. It is extremely powerful as well, and just like `{flextable}`, works for any type of
+output. It is very simple to get started:
+
+```{r}
+library(modelsummary)
+
+model_1 <- lm(mpg ~ hp + am, data = mtcars)
+model_2 <- lm(mpg ~ hp, data = mtcars)
+
+models <- list("Model 1" = model_1,
+               "Model 2" = model_2)
+
+modelsummary(models)
+
+```
+
+Here again, we won't got into much detail, but recommend instead that you read the 
+package's [website](https://vincentarelbundock.github.io/modelsummary/articles/modelsummary.html)
+which has very detailed documentation.
 
 ### Parametrized reports
 
