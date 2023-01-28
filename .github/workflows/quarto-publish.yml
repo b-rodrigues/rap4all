@@ -7,8 +7,6 @@ name: Render and Publish
 jobs:
   build-deploy:
     runs-on: ubuntu-latest
-    env:
-      RENV_PATHS_ROOT: ~/.local/share/renv
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
