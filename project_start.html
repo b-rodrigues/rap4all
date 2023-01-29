@@ -173,7 +173,8 @@ ul.task-list li input[type="checkbox"] {
    
   <ul>
   <li><a href="#housing-in-luxembourg" id="toc-housing-in-luxembourg" class="nav-link active" data-scroll-target="#housing-in-luxembourg"><span class="toc-section-number">5.1</span>  Housing in Luxembourg</a></li>
-  <li><a href="#your-project-is-done" id="toc-your-project-is-done" class="nav-link" data-scroll-target="#your-project-is-done"><span class="toc-section-number">5.2</span>  Your project is done (?)</a></li>
+  <li><a href="#saving-trapped-data-from-excel" id="toc-saving-trapped-data-from-excel" class="nav-link" data-scroll-target="#saving-trapped-data-from-excel"><span class="toc-section-number">5.2</span>  Saving trapped data from Excel</a></li>
+  <li><a href="#your-project-is-done" id="toc-your-project-is-done" class="nav-link" data-scroll-target="#your-project-is-done"><span class="toc-section-number">5.3</span>  Your project is done (?)</a></li>
   </ul>
 </nav>
     </div>
@@ -210,18 +211,33 @@ ul.task-list li input[type="checkbox"] {
 </figure>
 </div>
 <p>What you should also know is that the population is about 645.000 as of writing (January 2023), half of which are foreigners. Around 400.000 persons work in Luxembourg, of which half do not live in Luxembourg; so every morning from Monday to Friday, 200.000 people enter the country to work, and leave on the evening to go back to either Belgium, France or Germany, the neighboring countries. As you can imagine, this puts enormous pressure on the transportation system and on the roads, but also on the housing market; everyone wants to live in Luxembourg to avoid the horrible daily commute, and everyone wants to live either in the capital city, or in the second largest urban area in the south, in a city called Esch-sur-Alzette.</p>
+<p>The plot below shows the value of the House Price Index through time for Luxembourg and the European Union:</p>
 <div class="cell">
 <div class="cell-output-display">
 <p><img src="project_start_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>If you want to download the data, click <a href="https://ec.europa.eu/eurostat/databrowser/view/PRC_HPI_A__custom_4705395/bookmark/table?lang=en&amp;bookmarkId=21530d9a-c423-4ab7-998a-7170326136cd">here</a>.</p>
+<p>Let us paste the definition of the HPI in here (taken from the HPI’s <a href="https://ec.europa.eu/eurostat/cache/metadata/en/prc_hpi_inx_esms.htm">metadata</a> page):</p>
+<p><em>The House Price Index (HPI) measures inflation in the residential property market. The HPI captures price changes of all types of dwellings purchased by households (flats, detached houses, terraced houses, etc.). Only transacted dwellings are considered, self-build dwellings are excluded. The land component of the dwelling is included.</em></p>
+<p>So from the plot, we can see that the price of dwellings more than doubled between 2010 and 2021; the value of the index is 214.81 in 2021 for Luxembourg, and 138.92 for the European Union as a whole.</p>
+<p>There is a lot of heterogeneity though; the capital and the communes immediately next to the capital are much more expensive that communes from the less urbanized north, for example. The south of the country is also more expensive than the north, but not as much as the capital and surrounding communes. Not only is price driven by hand demand, but also by scarcity; in 2021, .5% of residents owned 50% of the buildable land for housing purposes (Source: <em>Observatoire de l’Habitat, Note 29</em>, <a href="https://archive.org/download/note-29/note-29.pdf">archived download link</a>).</p>
+<p>Our project will be quite simple; we are going to download some data, supplied as an Excel file, compiled by the Housing Observatory (<em>Observatoire de l’Habitat</em>), a service from the Ministry of Housing, which monitors the evolution of prices in the housing market, among other useful services like the identification of vacant lots for example. The advantage of their data when compared to Eurostat’s data is that the data is disaggregated by commune. The disadvantage is that they only supply nominal prices, and no index. Nominal prices are the prices that you read on price tags in shops. The problem with nominal prices is that it is difficult to compare them through time. Ask yourself the following question: would you prefer to have had 500€ (or USDs) in 2003 or in 2023? You probably would have preferred them in 2003, as you could purchase a lot more with 500€ then than now. In fact, according to a random inflation calculator I googled, to match the purchasing power of $500 in 2003, you’d need to have $793 in 2023 (and I’d say that we find very similar values for €). But it doesn’t really matter if that calculation is 100% correct: what matters is that the value of money changes, and comparisons through time are difficult, hence why an index is quite useful. So we are going to convert these nominal prices to real prices. Real prices take inflation into account and so allow us to compare prices through time. So we will need to also get some data to achieve this.</p>
+<p>So to summarise; our goal is to:</p>
+<ul>
+<li>Get data trapped inside an Excel file into a neat data frame;</li>
+<li>Convert nominal to real prices using a simple method;</li>
+<li>Make some tables and plots and call it a day (or will we?).</li>
+</ul>
+</section>
+<section id="saving-trapped-data-from-excel" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="saving-trapped-data-from-excel"><span class="header-section-number">5.2</span> Saving trapped data from Excel</h2>
 <p>hpi: https://ec.europa.eu/eurostat/databrowser/bookmark/e2758aae-6a88-4684-9f6d-d0946cae3f6b?lang=fr</p>
 <p>deflated hpi: https://ec.europa.eu/eurostat/databrowser/view/tipsho10/default/table?lang=en</p>
 <p>prix des logements en euros courants: https://data.public.lu/fr/datasets/r/1d20f982-57e1-4ae2-a278-dc78c88c21dc</p>
 </section>
-<section id="your-project-is-done" class="level2" data-number="5.2">
-<h2 data-number="5.2" class="anchored" data-anchor-id="your-project-is-done"><span class="header-section-number">5.2</span> Your project is done (?)</h2>
+<section id="your-project-is-done" class="level2" data-number="5.3">
+<h2 data-number="5.3" class="anchored" data-anchor-id="your-project-is-done"><span class="header-section-number">5.3</span> Your project is done (?)</h2>
 <p><em>So here the project is done, but actually it’s just an Qmd file that gets compiled, so we would need to explain why this is not enough, and motivate the readers to go the full way: developing packages, using targets, and so on</em></p>
 
 
