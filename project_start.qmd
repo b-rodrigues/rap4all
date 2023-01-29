@@ -40,6 +40,9 @@ roads, but also on the housing market; everyone wants to live in Luxembourg to a
 daily commute, and everyone wants to live either in the capital city, or in the second largest
 urban area in the south, in a city called Esch-sur-Alzette.
 
+The plot below shows the value of the House Price Index through time for Luxembourg and the 
+European Union:
+
 ```{r, echo = F}
 #https://ec.europa.eu/eurostat/databrowser/bookmark/21530d9a-c423-4ab7-998a-7170326136cd?lang=en
 housing_lu_eu <- read.csv("datasets/prc_hpi_a__custom_4705395_page_linear.csv.gz")
@@ -59,6 +62,50 @@ withr::with_package("ggplot2",
 ```
 
 If you want to download the data, click [here](https://ec.europa.eu/eurostat/databrowser/view/PRC_HPI_A__custom_4705395/bookmark/table?lang=en&bookmarkId=21530d9a-c423-4ab7-998a-7170326136cd).
+
+Let us paste the definition of the HPI in here (taken from the HPI's
+[metadata](https://ec.europa.eu/eurostat/cache/metadata/en/prc_hpi_inx_esms.htm) page):
+
+*The House Price Index (HPI) measures inflation in the residential property market. The HPI
+captures price changes of all types of dwellings purchased by households (flats, detached houses,
+terraced houses, etc.). Only transacted dwellings are considered, self-build dwellings are
+excluded. The land component of the dwelling is included.*
+
+So from the plot, we can see that the price of dwellings more than doubled between 2010 and 2021;
+the value of the index is 214.81 in 2021 for Luxembourg, and 138.92 for the European Union
+as a whole. 
+
+There is a lot of heterogeneity though; the capital and the communes immediately next to the
+capital are much more expensive that communes from the less urbanized north, for example. The south
+of the country is also more expensive than the north, but not as much as the capital and
+surrounding communes. Not only is price driven by hand demand, but also by scarcity; in 2021, .5%
+of residents owned 50% of the buildable land for housing purposes (Source: *Observatoire de
+l'Habitat, Note 29*, [archived download link](https://archive.org/download/note-29/note-29.pdf)).
+
+Our project will be quite simple; we are going to download some data, supplied as an Excel file,
+compiled by the Housing Observatory (*Observatoire de l'Habitat*), a service from the Ministry of
+Housing, which monitors the evolution of prices in the housing market, among other useful services
+like the identification of vacant lots for example. The advantage of their data when compared to 
+Eurostat's data is that the data is disaggregated by commune. The disadvantage is that they only
+supply nominal prices, and no index. Nominal prices are the prices that you read on price tags in shops.
+The problem with nominal prices is that it is difficult to compare them through time. Ask yourself 
+the following question: would you prefer to have had 500€ (or USDs) in 2003 or in 2023? You
+probably would have preferred them in 2003, as you could purchase a lot more with 500€ then
+than now. In fact, according to a random inflation calculator I googled, to match the 
+purchasing power of $500 in 2003, you'd need to have $793 in 2023 (and I'd say that we find very
+similar values for €). But it doesn't really matter if that calculation is 100% correct:
+what matters is that the value of money changes, and comparisons through time are difficult, hence
+why an index is quite useful. So we are going to convert these nominal prices to real prices. Real
+prices take inflation into account and so allow us to compare prices through time. So we will
+need to also get some data to achieve this.
+
+So to summarise; our goal is to:
+
+- Get data trapped inside an Excel file into a neat data frame;
+- Convert nominal to real prices using a simple method;
+- Make some tables and plots and call it a day (or will we?).
+
+## Saving trapped data from Excel
 
 hpi: https://ec.europa.eu/eurostat/databrowser/bookmark/e2758aae-6a88-4684-9f6d-d0946cae3f6b?lang=fr
 
