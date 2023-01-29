@@ -47,12 +47,18 @@ housing_lu_eu <- read.csv("datasets/prc_hpi_a__custom_4705395_page_linear.csv.gz
 withr::with_package("ggplot2",
   {
     ggplot(data = housing_lu_eu) +
-      geom_line(aes(y = OBS_VALUE, x = TIME_PERIOD, group = geo, colour = geo)) +
-      labs(title = "House price and sales index (2010 = 100)")
+      geom_line(aes(y = OBS_VALUE, x = TIME_PERIOD, group = geo, colour = geo),
+                size = 1.5) +
+      labs(title = "House price and sales index (2010 = 100)",
+           caption = "Source: Eurostat") +
+      theme_minimal() +
+      theme(legend.position = "bottom")
   }
   )
 
 ```
+
+If you want to download the data, click [here](https://ec.europa.eu/eurostat/databrowser/view/PRC_HPI_A__custom_4705395/bookmark/table?lang=en&bookmarkId=21530d9a-c423-4ab7-998a-7170326136cd).
 
 hpi: https://ec.europa.eu/eurostat/databrowser/bookmark/e2758aae-6a88-4684-9f6d-d0946cae3f6b?lang=fr
 
