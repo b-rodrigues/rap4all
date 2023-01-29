@@ -107,6 +107,33 @@ So to summarise; our goal is to:
 
 ## Saving trapped data from Excel
 
+Getting data from Excel into a tidy data frame can be very tricky. This is because very often,
+Excel is used as some kind of dashboarding, or presentation tool. So data is made human-readable,
+in contrast to machine readable. Let us quickly discuss this topic as it is essential to grasp
+the difference between the two (and in our experience, a lot of collective pain inflicted to statisticians
+and researchers could have been avoided if this concept was more well-known). The picture below
+shows an Excel made for human consumption:
+
+![An Excel file meant for human eyes](images/obs_hab_xlsx_overview.png)
+
+So why is this file not machine-readable? Here are some issues:
+
+- The table does not start in the top-left corner of the spreadsheet, which is where most importing tools expect it to be;
+- The spreadsheet start with a head that contains an image and some text;
+- Numbers are text and use "," as the thousands separator;
+- You don't see it in the screenshot, but each year is in a separate sheet.
+
+That being said, this one is still very nice, and going from this Excel to a tidy dataframe will
+not be too difficult. In fact, we suspect that whoever made this Excel file is well aware of the
+contradicting requirements of human and machine readable formatting of data, and strove to find a
+compromise. Because more often than not, getting human readable data into a machine readable
+formatting is a nightmare.
+
+This is actually the file that we are going to use for our project, so if you want to follow along,
+you can download it [here](datasets/vente-maison-2010-2021.xlsx).
+
+
+
 hpi: https://ec.europa.eu/eurostat/databrowser/bookmark/e2758aae-6a88-4684-9f6d-d0946cae3f6b?lang=fr
 
 deflated hpi: https://ec.europa.eu/eurostat/databrowser/view/tipsho10/default/table?lang=en
