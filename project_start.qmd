@@ -136,7 +136,59 @@ you can download it [here](datasets/vente-maison-2010-2021.xlsx) (downloaded on 
 the 
 [luxembourguish open data portal](https://data.public.lu/en/datasets/prix-annonces-des-logements-par-commune/)).
 
+For ease of presentation, we are going to show you each function here separately, but we'll be putting
+everything together in a single Rmd file at the end. So first, let's read in the data. For this,
+we will be using this function here:
 
+```{r, eval = FALSE}
+get_raw_data <- function(url = "https://github.com/b-rodrigues/rap4all/raw/master/datasets/vente-maison-2010-2021.xlsx"){
+  raw_data <- tempfile(fileext = ".xlsx")
+
+  download.file(url, raw_data)
+
+  sheets <- excel_sheets(raw_data)
+
+  read_clean <- function(..., sheet){
+    read_excel(..., sheet = sheet) %>%
+      mutate(year = sheet)
+  }
+
+  raw_data <- map_dfr(sheets,
+                      ~read_clean(raw_data,
+                                  skip = 10,
+                                  sheet = .)) %>%
+    clean_names()
+
+  raw_data %>%
+    rename(locality = commune,
+           n_offers = nombre_doffres,
+           average_price_nominal_euros = prix_moyen_annonce_en_courant,
+           average_price_m2_nominal_euros = prix_moyen_annonce_au_m2_en_courant,
+           average_price_m2_nominal_euros = prix_moyen_annonce_au_m2_en_courant
+           ) %>%
+    mutate(locality = str_trim(locality)) %>%
+    select(year, locality, n_offers, starts_with("average"))
+
+}
+
+```
+
+Let's discuss each part of the function. This function has a single argument, the url pointing
+towards the data. The data is hosted on this book's Github repository, but you could just as well
+replace this url by the one from the Open Data Portal for example. The file gets downloaded to
+a temporary file (created using `tempfile(fileext = ".xlsx")`, and the name of the sheets from
+the file get extracted using `readxl::excel_sheets()`. This is our first dependency: for now, let's
+simply call `library(readxl)` at the start of our Rmd file, as anyone would do.
+
+Then we define a new function, called `read_clean()`. This function is a wrapper around the
+`readxl::read_excel()` function. Remember, our source Excel Workbook contains one sheet per year,
+starting with 2010. Also, remember this huge header on each sheet? We can skip all these useless
+lines using `skip = 10`, which skips the first 10 lines of each sheet. Thankfully, this is
+consistent across the sheets. The sheets are named "2010", "2011", etc. So we take advantage of
+this to read in the required sheet, and then also add a new column with the year which is the name
+of the sheet. So if we would use our function on one sheet, say, "2011", we would have the data
+from the that sheet (because we skip the first 10 lines with the header) and a new column called `year`
+with "2011" everywhere.
 
 hpi: https://ec.europa.eu/eurostat/databrowser/bookmark/e2758aae-6a88-4684-9f6d-d0946cae3f6b?lang=fr
 
