@@ -136,38 +136,49 @@ you can download it [here](datasets/vente-maison-2010-2021.xlsx) (downloaded on 
 the 
 [luxembourguish open data portal](https://data.public.lu/en/datasets/prix-annonces-des-logements-par-commune/)).
 
+Each sheet contains a dataset with the following columns:
+
+- Commune: the commune
+- Nombre d'offres: the total number of selling offers
+- Prix moyen annoncé en Euros courants: Average selling price in nominal Euros
+- Prix moyen annoncé au m2 en Euros courants: Average selling price in square meters in nominal Euros
+
 For ease of presentation, we are going to show you each function here separately, but we'll be putting
 everything together in a single Rmd file at the end. So first, let's read in the data. For this,
 we will be using this function here:
 
-```{r, eval = FALSE}
+```{r}
 get_raw_data <- function(url = "https://github.com/b-rodrigues/rap4all/raw/master/datasets/vente-maison-2010-2021.xlsx"){
   raw_data <- tempfile(fileext = ".xlsx")
 
   download.file(url, raw_data)
 
-  sheets <- excel_sheets(raw_data)
+  sheets <- readxl::excel_sheets(raw_data)
 
   read_clean <- function(..., sheet){
-    read_excel(..., sheet = sheet) %>%
+    readxl::read_excel(..., sheet = sheet) %>%
       mutate(year = sheet)
   }
 
-  raw_data <- map_dfr(sheets,
-                      ~read_clean(raw_data,
-                                  skip = 10,
-                                  sheet = .)) %>%
-    clean_names()
+  raw_data <- purrr::map(
+                       sheets,
+                       ~read_clean(raw_data,
+                                   skip = 10,
+                                   sheet = .)
+                  ) %>%
+  dplyr::bind_rows() %>%
+  janitor::clean_names()
 
   raw_data %>%
-    rename(locality = commune,
-           n_offers = nombre_doffres,
-           average_price_nominal_euros = prix_moyen_annonce_en_courant,
-           average_price_m2_nominal_euros = prix_moyen_annonce_au_m2_en_courant,
-           average_price_m2_nominal_euros = prix_moyen_annonce_au_m2_en_courant
+    dplyr::rename(
+             locality = commune,
+             n_offers = nombre_doffres,
+             average_price_nominal_euros = prix_moyen_annonce_en_courant,
+             average_price_m2_nominal_euros = prix_moyen_annonce_au_m2_en_courant,
+             average_price_m2_nominal_euros = prix_moyen_annonce_au_m2_en_courant
            ) %>%
-    mutate(locality = str_trim(locality)) %>%
-    select(year, locality, n_offers, starts_with("average"))
+    dplyr::mutate(locality = stringr::str_trim(locality)) %>%
+    dplyr::select(year, locality, n_offers, dplyr::starts_with("average"))
 
 }
 
@@ -175,10 +186,12 @@ get_raw_data <- function(url = "https://github.com/b-rodrigues/rap4all/raw/maste
 
 Let's discuss each part of the function. This function has a single argument, the url pointing
 towards the data. The data is hosted on this book's Github repository, but you could just as well
-replace this url by the one from the Open Data Portal for example. The file gets downloaded to
-a temporary file (created using `tempfile(fileext = ".xlsx")`, and the name of the sheets from
-the file get extracted using `readxl::excel_sheets()`. This is our first dependency: for now, let's
-simply call `library(readxl)` at the start of our Rmd file, as anyone would do.
+replace this url by the one from the Open Data Portal for example. The file gets downloaded to a
+temporary file (created using `tempfile(fileext = ".xlsx")`, and the name of the sheets from the
+file get extracted using `readxl::excel_sheets()`. This is our first dependency: here, we're going
+to use the `package::function()` notation to show you clearly from where function come from, but in
+practice, inside your Rmd file, you would be calling `library(readxl)` at the start of the Rmd
+file.
 
 Then we define a new function, called `read_clean()`. This function is a wrapper around the
 `readxl::read_excel()` function. Remember, our source Excel Workbook contains one sheet per year,
@@ -187,14 +200,136 @@ lines using `skip = 10`, which skips the first 10 lines of each sheet. Thankfull
 consistent across the sheets. The sheets are named "2010", "2011", etc. So we take advantage of
 this to read in the required sheet, and then also add a new column with the year which is the name
 of the sheet. So if we would use our function on one sheet, say, "2011", we would have the data
-from the that sheet (because we skip the first 10 lines with the header) and a new column called `year`
-with "2011" everywhere.
+from the that sheet (because we skip the first 10 lines with the header) and a new column called
+`year` with "2011" everywhere. We then map this function to the list of sheets, obtained using
+`excel_sheets()` which results in a list of data frames. These data frames get merged into a single
+data set using `dplyr::bind_rows()` which takes a list of datasets with same columns as an argument
+and returns a single dataset. We also use the `janitor::clean_names()` function to automatically
+clean column names. For example, `clean_names()` turns a column name titled "Nombre d'offres"
+(French for "Total offers") into "nombre_doffres", making it easier to reference in code. Columns
+names then get translated from French to English, white spaces get removed from the `commune`
+column, and only the required columns get selected.
 
-hpi: https://ec.europa.eu/eurostat/databrowser/bookmark/e2758aae-6a88-4684-9f6d-d0946cae3f6b?lang=fr
+Running this function results in an almost tidy dataset:
 
-deflated hpi: https://ec.europa.eu/eurostat/databrowser/view/tipsho10/default/table?lang=en
+```{r}
+# We call get_raw_data() without arguments, since the correct url is provided as a default argument
+raw_data <- get_raw_data()
+```
 
-prix des logements en euros courants: https://data.public.lu/fr/datasets/r/1d20f982-57e1-4ae2-a278-dc78c88c21dc
+Let's take a look at the data:
+
+```{r}
+str(raw_data)
+```
+
+There's a problem already: columns that should be of type numeric are of type character instead
+(`average_price_nominal_euros` and `average_price_m2_nominal_euros`). There's also another issue, which 
+you would eventually catch as you would be exploring the data: naming of the communes is not consistent.
+Let's take a look:
+
+```{r}
+raw_data %>%
+  filter(grepl("Luxembourg", locality)) %>%
+  count(locality)
+```
+
+We can see that the city of Luxembourg is spelled in two different ways. It's the same with another
+commune, Pétange:
+
+```{r}
+raw_data %>%
+  filter(grepl("P.tange", locality)) %>%
+  count(locality)
+```
+
+So sometimes it is spelled correctly, with an "é", sometimes not. Let's write some code to correct
+this:
+
+```{r}
+raw_data <- raw_data %>%
+    mutate(locality = ifelse(grepl("Luxembourg-Ville", locality),
+                             "Luxembourg",
+                             locality),
+           locality = ifelse(grepl("P.tange", locality),
+                             "Pétange",
+                             locality)
+           ) %>%
+    mutate(across(starts_with("average"), as.numeric))
+
+```
+
+Now this is interesting: converting the `average` columns to numeric resulted in some `NA` values.
+Let's see what happened:
+
+```{r}
+raw_data %>%
+  filter(is.na(average_price_nominal_euros))
+```
+
+It turns out that there are no prices for certain communes, but that we also have some rows
+with garbage in there. Let's go back to the raw data to see what this is about:
+
+![Always look at your data](images/obs_hab_xlsx_missing.png)
+
+So it turns out that indeed, there are some rows that we need to remove. We can start by removing
+rows where `locality` is missing. Then we have a row where `locality` is equal to "Total d'offres".
+This is simply the total of every offer from every commune. We could keep that in a separate data
+frame, or even remove it. Finally there's a row, the last one, that states the source of the data,
+which we can remove. 
+
+In the screenshot above, we see another row that we don't see in our filtered data frame: one where
+`n_offers` is missing. This row gives the national average for columns
+`average_prince_nominal_euros` and `average_price_m2_nominal_euros`. What we are going to do is 
+create two datasets: one with data on communes, and the other on national prices. Let's first
+remove the rows stating the sources:
+
+```{r}
+raw_data <- raw_data %>%
+  filter(!grepl("Source", locality))
+```
+
+Let's now only keep the communes in our data:
+
+```{r}
+commune_level_data <- raw_data %>%
+    filter(!grepl("nationale|offres", locality),
+           !is.na(locality))
+```
+
+And let's create a dataset with the national data as well:
+
+```{r}
+country_level <- raw_data %>%
+  filter(grepl("nationale", locality)) %>%
+  select(-n_offers)
+
+offers_country <- raw_data %>%
+  filter(grepl("Total d.offres", locality)) %>%
+  select(year, n_offers)
+
+country_level_data <- full_join(country_level, offers_country) %>%
+  select(year, locality, n_offers, everything()) %>%
+  mutate(locality = "Grand-Duchy of Luxembourg")
+
+```
+
+Now the data looks clean, and we can start the actual analysis... or can we? Before proceeding,
+it would be nice to make sure that we got every commune in there. For this, we need a list
+of communes from Luxembourg. 
+[Thankfully, Wikipedia has such a list.](https://en.wikipedia.org/wiki/List_of_communes_of_Luxembourg)
+
+Let's scrape and save this list:
+
+```{r}
+current_communes <- "https://en.wikipedia.org/wiki/List_of_communes_of_Luxembourg" %>%
+  rvest::read_html() %>%
+  rvest::html_table() %>%
+  pluck(1) %>%
+  clean_names()
+
+```
+
 
 ## Your project is done (?)
 

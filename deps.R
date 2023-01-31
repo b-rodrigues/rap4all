@@ -1,0 +1,7 @@
+library(janitor)
+library(rvest)
+library(ggplot2)
+library(readxl)
+library(dplyr)
+library(purrr)
+library(stringr)
