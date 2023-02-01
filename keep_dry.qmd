@@ -609,6 +609,110 @@ plot instead of a table, try to generate more complex Markdown code, remove the 
 `lapply()` with `purrr::walk()` or `purrr::map()`. Really take the time to understand what is going
 on.
 
+While extremely powerful, this approach using `knitr::knit_expand()` only works if your template
+only contains text. If you need to print something more complicated in the document, you need to
+use child documents instead. For example, suppose that instead of a table we wanted to show a plot
+made using `{ggplot2}`. This would not work, because a ggplot object is not made of text, but is a
+list with many elements. The `print()` method for ggplot object then does the fancy printing into a
+graph. But if you want to show plots using `knitr::knit_expand()`, then the contents of the list
+will be shown, not the plot itself. This is where child documents come in. Child documents are
+exactly what you think they are: they’re smaller documents that get knitted and then embedded into
+the parent document. You can define anything within these child documents, and as such you can even
+use them to print more complex objects, like a ggplot object. Let’s go back to the example from
+before and make use of a child document (for ease of presentation, we will not use a separate
+Rmd file, but will inline the child document into the main document). Read the Rmd example 
+below carefully, as all the steps are explained:
+
+````{verbatim}
+---
+title: "Templating with child documents"
+output: html_document
+date: "2023-01-27"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## A function that creates ggplots
+
+```{r}
+create_plot <- function(dataset, ...){
+  ggplot(dataset) +
+    geom_point(...)
+
+}
+```
+
+The function above takes a dataset and an aesthetic made using `ggplot2::aes()` to
+create a plot:
+
+```{r}
+create_plot(mtcars, aes(y = mpg, x = hp))
+```
+
+Let’s suppose that we want to generate a document that would look like this:
+
+- first a section title, with the aesthetic used;
+- then a plot
+
+So it would look like this:
+
+## Frequency table for variable: aes(y = mpg, x = hp)
+
+```{r}
+create_plot(mtcars, aes(y = mpg, x = hp))
+```
+
+We don’t want to create these sections for every variable by hand.
+
+Instead, we can make use of a child document that gets knitted separately
+and then embedded in the parent document. This is the child document:
+
+```{r}
+
+res <- lapply(c(aes(y = mpg, x = hp),
+                aes(y = mpg, x = hp, size = am)),
+              function(dataset, x){
+
+  knitr::knit_child(text = c(
+
+    '\n',
+    '## Chosen aesthetic: `r quote(x)`',
+    '\n',
+    '```{r, echo = F}',
+    'print(make_plot(dataset, x))',
+    '```'
+
+     ),
+     envir = environment(),
+     quiet = TRUE)
+
+}, dataset = mtcars)
+
+
+cat(unlist(res), sep = "\n")
+```
+
+The child document is the `text` argument to the `knit_child()` function.
+`text` is literal R Markdown code: we define a level 2 header, and then an 
+R chunk. This child document gets knitted, so we need to specify the 
+environment that should get used. This means that the child document will
+get knitted in the same environment as the parent document (our current 
+global environment). This way, every package that get loaded and every function
+or variable that got defined in the parent document will also be available to
+the child document.
+
+We then use `lapply()` to loop over two aesthetics with an anonymous function
+that encapsulates the child document. So we get two child documents that get
+knitted, one per aesthetic. This gets saved into variable `res`. This is thus
+a list of knitted Markdown.
+
+Finally, we need unlist `res` to actually merge the Markdown code from the 
+child documents into the parent document.
+
+````
+
 ### Tables in R Markdown documents
 
 Getting tables right in Rmd documents is not always an easy task. There are several packages

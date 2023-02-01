@@ -1,0 +1,201 @@
+---
+title: "Nominal house prices data in Luxembourg - Data cleaning"
+author: "Bruno Rodrigues"
+date: today
+---
+
+```{r, include=FALSE}
+library(dplyr)
+library(ggplot2)
+library(janitor)
+library(purrr)
+library(readxl)
+library(rvest)
+library(stringr)
+```
+
+## Downloading the data
+
+This data is downloaded from the "Observatoire de l'habitat":
+
+```{r}
+get_raw_data <- function(url = "https://data.public.lu/fr/datasets/r/1d20f982-57e1-4ae2-a278-dc78c88c21dc"){
+
+  raw_data <- tempfile(fileext = ".xlsx")
+
+  download.file(url, raw_data)
+
+  sheets <- excel_sheets(raw_data)
+
+  read_clean <- function(..., sheet){
+    read_excel(..., sheet = sheet) %>%
+      mutate(year = sheet)
+  }
+
+  raw_data <- map_dfr(sheets,
+                      ~read_clean(raw_data,
+                                  skip = 10,
+                                  sheet = .)) %>%
+    clean_names()
+
+  raw_data %>%
+    rename(locality = commune,
+           n_offers = nombre_doffres,
+           average_price_nominal_euros = prix_moyen_annonce_en_courant,
+           average_price_m2_nominal_euros = prix_moyen_annonce_au_m2_en_courant,
+           average_price_m2_nominal_euros = prix_moyen_annonce_au_m2_en_courant
+           ) %>%
+    mutate(locality = str_trim(locality)) %>%
+    select(year, locality, n_offers, starts_with("average"))
+
+}
+
+```
+
+```{r}
+raw_data <- get_raw_data(url = "https://data.public.lu/fr/datasets/r/1d20f982-57e1-4ae2-a278-dc78c88c21dc")
+```
+
+We need clean the data: "Luxembourg" is "Luxembourg-ville" in 2010 and 2011, then "Luxembourg".
+"Pétange" is also spelled non-consistently, and we also need to convert columns to right type. We
+also directly remove rows where the locality contains information on the "Source":
+
+```{r}
+clean_raw_data <- function(raw_data){
+  raw_data %>%
+    mutate(locality = ifelse(grepl("Luxembourg-Ville", locality),
+                             "Luxembourg",
+                             locality),
+           locality = ifelse(grepl("P.tange", locality),
+                             "Pétange",
+                             locality)
+           ) %>%
+    filter(!grepl("Source", locality)) %>%
+    mutate(across(starts_with("average"), as.numeric))
+}
+```
+
+```{r}
+flat_data <- clean_raw_data(raw_data)
+```
+
+We now need to make sure that we got all the communes/localities in there. There were mergers in
+2011, 2015 and 2018. So we need to account for these localities.
+
+We’re now scraping data from wikipedia of former Luxembourguish communes:
+
+```{r}
+get_former_communes <- function(url = "https://en.wikipedia.org/wiki/Communes_of_Luxembourg#Former_communes",
+                                min_year = 2009,
+                                table_position = 3){
+  read_html(url) %>%
+    html_table() %>%
+    pluck(table_position) %>%
+    clean_names() %>%
+    filter(year_dissolved > min_year)
+}
+
+```
+
+```{r}
+former_communes <- get_former_communes()
+```
+
+We can scrape current communes:
+
+```{r}
+get_current_communes <- function(url = "https://en.wikipedia.org/wiki/List_of_communes_of_Luxembourg",
+                                 table_position = 1){
+  read_html(url) %>%
+    html_table() %>%
+    pluck(table_position) %>%
+    clean_names()
+}
+
+```
+
+```{r}
+current_communes <- get_current_communes()
+```
+
+Let’s now create a list of all communes:
+
+```{r}
+get_test_communes <- function(former_communes, current_communes){
+
+  communes <- unique(c(former_communes$name, current_communes$commune))
+  # we need to rename some communes
+
+  # Different spelling of these communes between wikipedia and the data
+
+  communes[which(communes == "Clemency")] <- "Clémency"
+  communes[which(communes == "Redange")] <- "Redange-sur-Attert"
+  communes[which(communes == "Erpeldange-sur-Sûre")] <- "Erpeldange"
+  communes[which(communes == "Luxembourg-City")] <- "Luxembourg"
+  communes[which(communes == "Käerjeng")] <- "Kaerjeng"
+  communes[which(communes == "Petange")] <- "Pétange"
+
+  communes
+}
+
+```
+
+```{r}
+former_communes <- get_former_communes()
+current_communes <- get_current_communes()
+
+communes <- get_test_communes(former_communes, current_communes)
+```
+
+Let’s test to see if all the communes from our dataset are represented.
+
+```{r}
+setdiff(flat_data$locality, communes)
+```
+
+Let’s keep the national average in another dataset:
+
+```{r}
+make_country_level_data <- function(flat_data){
+  country_level <- flat_data %>%
+    filter(grepl("nationale", locality)) %>%
+    select(-n_offers)
+
+  offers_country <- flat_data %>%
+    filter(grepl("Total d.offres", locality)) %>%
+    select(year, n_offers)
+
+  full_join(country_level, offers_country) %>%
+    select(year, locality, n_offers, everything()) %>%
+    mutate(locality = "Grand-Duchy of Luxembourg")
+
+}
+
+```
+
+```{r}
+country_level_data <- make_country_level_data(flat_data)
+```
+
+We can finish cleaning the commune data:
+
+```{r}
+make_commune_level_data <- function(flat_data){
+  flat_data %>%
+    filter(!grepl("nationale|offres", locality),
+           !is.na(locality))
+}
+
+```
+
+```{r}
+commune_level_data <- make_commune_level_data(flat_data)
+```
+
+We now save the dataset in a folder for further analysis (keep chunk option to `eval = F` to avoid running it
+when knitting):
+
+```{r, eval = F}
+write.csv(commune_level_data, "datasets/commune_level_data.csv", row.names = FALSE)
+write.csv(country_level_data, "datasets/country_level_data.csv", row.names = FALSE)
+```

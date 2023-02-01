@@ -1,0 +1,87 @@
+---
+title: "Templating with child documents"
+output: html_document
+date: "2023-01-27"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(ggplot2)
+```
+
+## A function that creates ggplots
+
+```{r}
+create_plot <- function(dataset, ...){
+  ggplot(dataset) +
+    geom_point(...)
+
+}
+```
+
+The function above takes a dataset and an aesthetic made using `ggplot2::aes()` to
+create a plot:
+
+```{r}
+create_plot(mtcars, aes(y = mpg, x = hp))
+```
+
+Let’s suppose that we want to generate a document that would look like this:
+
+- first a section title, with the aesthetic used;
+- then a plot
+
+So it would look like this:
+
+## Plot with aesthetic: aes(y = mpg, x = hp)
+
+```{r}
+create_plot(mtcars, aes(y = mpg, x = hp))
+```
+
+We don’t want to create these sections for every variable by hand.
+
+Instead, we can make use of a child document that gets knitted separately
+and then embedded in the parent document. This is the child document:
+
+```{r, results = "asis"}
+
+res <- lapply(list(aes(y = mpg, x = hp),
+                aes(y = mpg, x = hp, size = am)),
+              function(dataset, x){
+
+  knitr::knit_child(text = c(
+
+    '\n',
+    '## Chosen aesthetic: `r dQuote(x)`',
+    '\n',
+    '```{r, echo = F}',
+    'print(create_plot(dataset, x))',
+    '```'
+
+     ),
+     envir = environment(),
+     quiet = TRUE)
+
+}, dataset = mtcars)
+
+
+cat(unlist(res), sep = "\n")
+```
+
+The child document is the `text` argument to the `knit_child()` function.
+`text` is literal R Markdown code: we define a level 2 header, and then an 
+R chunk. This child document gets knitted, so we need to specify the 
+environment that should get used. This means that the child document will
+get knitted in the same environment as the parent document (our current 
+global environment). This way, every package that get loaded and every function
+or variable that got defined in the parent document will also be available to
+the child document.
+
+We then use `lapply()` to loop over two aesthetics with an anonymous function
+that encapsulates the child document. So we get two child documents that get
+knitted, one per aesthetic. This gets saved into variable `res`. This is thus
+a list of knitted Markdown.
+
+Finally, we need unlist `res` to actually merge the Markdown code from the 
+child documents into the parent document.

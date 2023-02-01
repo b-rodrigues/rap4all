@@ -149,9 +149,11 @@ we will be using this function here:
 
 ```{r}
 get_raw_data <- function(url = "https://github.com/b-rodrigues/rap4all/raw/master/datasets/vente-maison-2010-2021.xlsx"){
-  raw_data <- tempfile(fileext = ".xlsx")
+  #raw_data <- tempfile(fileext = ".xlsx")
 
-  download.file(url, raw_data)
+  #download.file(url, raw_data)
+
+  raw_data <- "c:/Users/LLP685/Downloads/vente-maison-2010-2021.xlsx"
 
   sheets <- readxl::excel_sheets(raw_data)
 
@@ -232,6 +234,7 @@ Let's take a look:
 raw_data %>%
   filter(grepl("Luxembourg", locality)) %>%
   count(locality)
+
 ```
 
 We can see that the city of Luxembourg is spelled in two different ways. It's the same with another
@@ -241,6 +244,7 @@ commune, Pétange:
 raw_data %>%
   filter(grepl("P.tange", locality)) %>%
   count(locality)
+
 ```
 
 So sometimes it is spelled correctly, with an "é", sometimes not. Let's write some code to correct
@@ -259,7 +263,7 @@ raw_data <- raw_data %>%
 
 ```
 
-Now this is interesting: converting the `average` columns to numeric resulted in some `NA` values.
+Now this is interesting -- converting the `average` columns to numeric resulted in some `NA` values.
 Let's see what happened:
 
 ```{r}
@@ -325,10 +329,88 @@ Let's scrape and save this list:
 current_communes <- "https://en.wikipedia.org/wiki/List_of_communes_of_Luxembourg" %>%
   rvest::read_html() %>%
   rvest::html_table() %>%
-  pluck(1) %>%
+  purrr::pluck(1) %>%
   clean_names()
 
 ```
+
+We scrape the table from the Wikipedia page using `{rvest}`. `rvest::html_table()` returns a list
+of tables from the Wikipedia table, and then we use `purrr::pluck()` to keep the first table from
+the website, which is what we need.
+
+Let’s see if we have all the communes in our data:
+
+```{r}
+setdiff(unique(commune_level_data$locality), current_communes$commune)
+```
+
+We see many communes that are in our `commune_level_data`, but not in `current_communes`. There’s
+one obvious reason: differences in spelling, for example, "Kaerjeng" in our data, but "Käerjeng" in
+the table from Wikipedia. But there’s also a less obvious reason; since 2010, several communes
+have merged into new ones. So there are communes that are in our data, say, in 2010 and 2011, but
+disappear from 2012 onwards. So we need to do several things: first, get a list of all existing
+communes from 2010 onwards, and then, harmonise spelling. Here again, we can use a list of 
+Wikipedia:
+
+```{r}
+former_communes <- "https://en.wikipedia.org/wiki/Communes_of_Luxembourg#Former_communes" %>%  
+  read_html() %>%
+  html_table() %>%
+  pluck(3) %>%
+  clean_names() %>%
+  filter(year_dissolved > 2009)
+
+former_communes
+
+```
+
+As you can see, since 2010 many communes have merged to form new ones. We can now combine the list
+of current and former communes, as well as harmonize their names:
+
+```{r}
+communes <- unique(c(former_communes$name, current_communes$commune))
+# we need to rename some communes
+
+# Different spelling of these communes between wikipedia and the data
+
+communes[which(communes == "Clemency")] <- "Clémency"
+communes[which(communes == "Redange")] <- "Redange-sur-Attert"
+communes[which(communes == "Erpeldange-sur-Sûre")] <- "Erpeldange"
+communes[which(communes == "Luxembourg-City")] <- "Luxembourg"
+communes[which(communes == "Käerjeng")] <- "Kaerjeng"
+communes[which(communes == "Petange")] <- "Pétange"
+```
+
+Let’s run our test again:
+
+```{r}
+setdiff(unique(commune_level_data$locality), communes)
+```
+
+Great! When we compare the communes that are in our data with every commune that has existed since
+2010, we don’t have any commune that is unaccounted for. So are we done with cleaning the data? 
+Yes, we can now actually start with analysing the data. But before that let’s now put this into
+an Rmd file. This Rmd file will be dedicated to preparing the data only, so we will need to write
+another one for the analysis proper. What we’re also going to do, is take this as an opportunity
+to refactor the code: you might have noticed that we have not used functions a lot in the code
+snippets before, so let’s use functions instead. 
+
+You can click [here]("rmds/save_data.Rmd") to take a look at the finalized Rmd file. The advantage
+of taking the time to clean up our code and put together an Rmd file, is that we now have some high
+quality documentation about the whole cleaning process. This will also serve as a basis for later,
+when we will actually turn our analysis into a package.
+
+## Analysing the data
+
+We are now going to analyse the data. The first thing we are going to do is compute a Laspeyeres
+price index. This price index allows us to make comparisons through time; for example, the index at
+year 2012 measures how much more expensive (or chaper) housing became relative to the base year
+(2010). However, since we only have one good, this index becomes quite simple to compute: it is
+nothing but the prices at year *t* divided by the prices in 2010 (if we had a basket of goods,
+we would need to use the Laspeyeres index formula to compute the index at all periods).
+
+For this section, we will perform a rather simple analysis. We will immediately show you the Rmd
+file: take a look at it [here]("rmds/analyse_data.Rmd"). 
 
 
 ## Your project is done (?)
