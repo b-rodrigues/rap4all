@@ -2,7 +2,122 @@
 
 What Miles said on the matter:
 
-*There are still a lot of people that find git intimidating and still potential for some things to go badly for a project if git is used in the wrong way. I once had a colleague who assured me they knew how to use git proceed to use a repo like their personal dropbox folder. Perhaps the details of git usage can be basically waved away, but some detail about good git workflow could be incorporated. For example:
-The branching model to use. IMHO trunk-based development works much better than gitflow for analysis teams.
-Version number discipline. Why you always bump the version number when making changes to your packages.
-Why keeping commits small and confined to just one target at a time if possible is useful when tracing problems with a pipeline.*
+*There are still a lot of people that find git intimidating and still potential for some things to
+go badly for a project if git is used in the wrong way. I once had a colleague who assured me they
+knew how to use git proceed to use a repo like their personal dropbox folder. Perhaps the details
+of git usage can be basically waved away, but some detail about good git workflow could be
+incorporated. For example: The branching model to use. IMHO trunk-based development works much
+better than gitflow for analysis teams. Version number discipline. Why you always bump the version
+number when making changes to your packages. Why keeping commits small and confined to just one
+target at a time if possible is useful when tracing problems with a pipeline.*
+
+Modern software development would be impossible without version control systems, and the same
+goes for building analytical pipelines that are reproducible and robust. It doesn’t really
+matter what the output of the pipeline is: a simple graph, a report with a statistical analysis,
+a trained machine learning model that you want to hook to an API... if the code to the project
+is not versioned, you incur major risks.
+
+But what is version control anyway?
+
+Version control tools make it easy to keep track of the changes that were made to text files (like
+R scripts). Any change made to any file of a project is cataloged, making it possible to trace
+back how the file changed, who made the changes, and when these changes were made. Using version
+control it is also quite easy to collaborate on a project by forcing team members to deal
+explicitly with the potential conflicts that might arise when the same file got changed by
+different people at the same time. Should your computer get lost, stolen, or explode, your projects
+are safely backed up on a server: this is because version control tools make use of a server which
+keeps track of all the changes (and in some cases, this *server* is actually your team mates’
+computers!)
+
+Version control tools also make it easy to experiment with new ideas. You can start new *branches*
+which essentially make a copy of your current project. In this new branch, you can safely experiment 
+with new features, and if the experiments are not conclusive, you can simply discard this branch: the
+*original* copy of your project will remain untouched.
+
+There are several version control tools out there, but Git is undoubtedly the most popular one. You
+might have heard of Github; this is service that hosts repositories for your projects, and provides
+other project management tools such as an issue tracker, project wiki, feature requests... and also
+very importantly continuous integration. Don’t worry if this all sounds very abstract: by the end
+of this chapter you will have all the basic knowledge to use Git and Github.com for your projects.
+
+Git is a tool that you must install on your computer to get started. Once Git is installed, you can
+immediately start using it; you don’t need to open an account on Github (or a similar service), but
+it is recommended to make collaboration easier (it is possible to collaborate with several people
+using Git without a service like Github, by setting up a bare repository on a server on network
+drive you control, but this is outside the scope of this book).
+
+You should know that private repositories are available for free, so if you don’t want your work to
+be accessible to the public, you can. Only people that you invite to your private repositories will
+be able to see the code and collaborate with you. It is also possible that your work place has set 
+up a self-hosted Git platform, ask your IT department! Usually these self-hosted platforms are 
+Gitea or Gitlab instances. Gitea, Gitlab, Bitbucket, Codeberg, these are all similar services
+to Github. All have their own advantages and disadvantages. The advantage of Github is twofold:
+
+- It has a very large community of users;
+- Its continuous integration service is incredibly useful, and free for up to 2000 minutes a month.
+
+Disadvantages are:
+
+- It has been bought by Microsoft in 2018;
+- It is not possible to self-host an instance of Github (not for free at least).
+
+The fact it is owned by Microsoft may not seem like an issue, but Microsoft’s track record of
+previous acquisitions is not great (Nokia, Skype), and the [recent discussions about using source
+code hosted on Github to train machine learning
+models (Copilot)](https://web.archive.org/web/20230130103241/https://www.theverge.com/2021/7/7/22561180/github-copilot-legal-copyright-fair-use-public-code)
+can make one uneasy about relying too much on Github.
+
+So while we are going to use Github to host our projects in the remainder of this book, almost
+everything you are going to learn will be easily transeferable to another service such as Gitlab or
+Bitbucket, should you want to switch (or if your workplace has a self-hosted instance from one of
+Github’s competitors). Installing and configuring Git will be exactly the same regardless of the
+hosting service we use, and all the commands we will use to actually interact with our repositories
+will be the same as well. So why did we write *almost everything* is the the same? Well, the two
+advantages we cited above really give Github an edge; many, many developers, researchers and data
+scientists have a Github account and so if one day you need to collaborate with people, chances are
+they have an account on Github. Also, the 2000 minutes of free computing time are really more than
+enough for the continuous integration of your project (which will be one of the last topics we will
+study in this book).
+
+## Installing Git
+
+Git is a program that you install on your computer. If you’re running a Linux distribution, chances
+are Git is already installed. Try to run the following command in a terminal to see if this is the
+case:
+
+```
+which git
+```
+
+If a path like `/usr/bin/git` gets shown, congratulations, you can skip the rest of this 
+paragraph. If something like 
+
+```
+/usr/bin/which: no git in (/home/username/.local/bin:/home/username/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin)
+```
+
+gets shown instead, then this means that Git is not installed on your system. To install Git,
+use your distribution’s package manager, as it is very likely that Git is packaged for your system.
+On Ubuntu, arguably the most popular Linux distribution, this means running:
+
+```
+sudo apt-get update
+sudo apt-get install git
+```
+
+On macOS and Windows, follow the instructions from the 
+[Git Book](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git). It should be as easy
+as running an installer.
+
+Depending on your operating system, a graphical user interface might have been installed with Git.
+It is also possible to use Git from within RStudio, if you use it and many other editors have
+interfaces to Git as well. 
+
+We are not going to use any graphical user interface. This is because there is no common, universal
+graphical user interface; they all work slightly differently. The only universal is the command line.
+Also, learning how to use Git via the command line will make it easier the day you will need to use
+it from a server, which will very likely happen. It also makes our job easier: it is simpler to 
+tell you which commands to run and explain them to you than littering the book with dozens upon dozens
+of screenshots that might get outdated as soon as a new version of the interface gets released.
+
+Don’t worry, using the command line is not as hard as it sounds.

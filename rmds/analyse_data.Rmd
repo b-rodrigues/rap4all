@@ -1,17 +1,17 @@
 ---
 title: "Nominal house prices data in Luxembourg"
 author: "Bruno Rodrigues"
-date: today
+date: "2023-01-28"
 ---
 
-```{r}
+```{r, messages = FALSE}
 library(dplyr)
 library(ggplot2)
 library(purrr)
 library(tidyr)
 ```
 
-Let’s load the data containing commune-level prices:
+Let’s load the datasets:
 
 ```{r}
 commune_level_data <- read.csv("../datasets/commune_level_data.csv")

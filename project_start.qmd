@@ -2,12 +2,12 @@
 
 In this chapter, we are going to work together on a very simple project. This project will stay
 with us until the end of the book. For now, we are going to keep it simple; our goal here is to get
-an analysis done. We are going to download some data, analyze it, and write a little report. Then,
+an analysis done. We are going to download some data, analyse it, and write a little report. Then,
 we are going to think about how to go from this analysis to something more robust: what's
 important to understand, is that everything we will be doing to get our little report can be seen
 as a *proto-pipeline*. We are going to download data, write functions, write comments, write some
 tests along the way to make sure that everything is working well, and put everything into an R
-Markdown source file that outputs the finalized document in one command line.
+Markdown source file that outputs the finalised document in one command line.
 
 The idea is to take this, and make it more a truly reproducible pipeline. So one of the first steps
 once we're done with the analysis is to understand why we are actually not done yet.
@@ -34,7 +34,7 @@ called Luxembourg-City, which is the capital of the country.
 What you should also know is that the population is about 645.000 as of writing (January 2023),
 half of which are foreigners. Around 400.000 persons work in Luxembourg, of which half do not live
 in Luxembourg; so every morning from Monday to Friday, 200.000 people enter the country to work,
-and leave on the evening to go back to either Belgium, France or Germany, the neighboring
+and leave on the evening to go back to either Belgium, France or Germany, the neighbouring
 countries. As you can imagine, this puts enormous pressure on the transportation system and on the
 roads, but also on the housing market; everyone wants to live in Luxembourg to avoid the horrible
 daily commute, and everyone wants to live either in the capital city, or in the second largest
@@ -76,7 +76,7 @@ the value of the index is 214.81 in 2021 for Luxembourg, and 138.92 for the Euro
 as a whole. 
 
 There is a lot of heterogeneity though; the capital and the communes immediately next to the
-capital are much more expensive that communes from the less urbanized north, for example. The south
+capital are much more expensive that communes from the less urbanised north, for example. The south
 of the country is also more expensive than the north, but not as much as the capital and
 surrounding communes. Not only is price driven by hand demand, but also by scarcity; in 2021, .5%
 of residents owned 50% of the buildable land for housing purposes (Source: *Observatoire de
@@ -110,7 +110,7 @@ And we are going to make all of this inside a R Markdown file.
 ## Saving trapped data from Excel
 
 Getting data from Excel into a tidy data frame can be very tricky. This is because very often,
-Excel is used as some kind of dashboarding, or presentation tool. So data is made human-readable,
+Excel is used as some kind of dashboard, or presentation tool. So data is made human-readable,
 in contrast to machine readable. Let us quickly discuss this topic as it is essential to grasp
 the difference between the two (and in our experience, a lot of collective pain inflicted to statisticians
 and researchers could have been avoided if this concept was more well-known). The picture below
@@ -132,7 +132,7 @@ compromise. Because more often than not, getting human readable data into a mach
 formatting is a nightmare.
 
 This is actually the file that we are going to use for our project, so if you want to follow along,
-you can download it [here](datasets/vente-maison-2010-2021.xlsx) (downloaded on january 2023 from
+you can download it [here](datasets/vente-maison-2010-2021.xlsx) (downloaded on January 2023 from
 the 
 [luxembourguish open data portal](https://data.public.lu/en/datasets/prix-annonces-des-logements-par-commune/)).
 
@@ -365,7 +365,7 @@ former_communes
 ```
 
 As you can see, since 2010 many communes have merged to form new ones. We can now combine the list
-of current and former communes, as well as harmonize their names:
+of current and former communes, as well as harmonise their names:
 
 ```{r}
 communes <- unique(c(former_communes$name, current_communes$commune))
@@ -395,7 +395,7 @@ another one for the analysis proper. What we’re also going to do, is take this
 to refactor the code: you might have noticed that we have not used functions a lot in the code
 snippets before, so let’s use functions instead. 
 
-You can click [here]("rmds/save_data.Rmd") to take a look at the finalized Rmd file. The advantage
+You can click [here]("rmds/save_data.Rmd") to take a look at the finalised Rmd file. The advantage
 of taking the time to clean up our code and put together an Rmd file, is that we now have some high
 quality documentation about the whole cleaning process. This will also serve as a basis for later,
 when we will actually turn our analysis into a package.
@@ -412,9 +412,60 @@ we would need to use the Laspeyeres index formula to compute the index at all pe
 For this section, we will perform a rather simple analysis. We will immediately show you the Rmd
 file: take a look at it [here]("rmds/analyse_data.Rmd"). 
 
+This Rmd file makes use of the `knitr::knit_child()` to knit a child document in order to create
+sections for selected communes without needed to copy and paste code.
 
-## Your project is done (?)
+Now, you would very likely stop at this point: after all, we are done with the analysis. However, 
+let’s ask ourselves the following important questions:
 
-*So here the project is done, but actually it's just an Qmd file that gets compiled, so we would need
-to explain why this is not enough, and motivate the readers to go the full way: developing packages,
-using targets, and so on*
+- How easy would it be for someone else to rerun the analysis?
+- How easy would it be to update the analysis once new data gets published?
+- What guarantee do we have that if the documented gets knitted in 5 years, with the same input data, we get the same output?
+
+Let’s answer these questions one by one.
+
+## Your project is not done
+
+### How easy would it be for someone else to rerun the analysis?
+
+The analysis is composed of two R Markdown files, one to prepare the data, another to actually run the analysis
+proper. This might seem quite easy, because each Rmd file contains many explanations as to what is going on.
+However, we are missing any project-level documentation, that would give clear instructions. It might seem obvious
+to you, the author of this analysis, that first the file `save_data.Rmd` should be knitted, and then the file
+called `analyse_data.Rmd`, but that’s not necessarily the case for someone completely outside of the project.
+It might not even be obvious to you in 5 months! Also, you are assuming that the person that should rerun this
+project is familiar with R and knitting Rmd files. That’s not necessarily the case. 
+
+And what about the required dependencies? Many packages were used in the analysis. How should these get installed?
+Ideally, the same versions of the packages you used and the same version of R should get used by that person
+to rerun the analysis.
+
+All of this still needs to get documented.
+
+### How easy would it be to update the project?
+
+If new data gets published, all the points discussed previously are still valid, plus you need to make sure that
+the updated data is still close enough to the previous data that it can pass through the data cleaning steps
+you wrote. You should also make sure that the update did not introduce a mistake in past data, or at least
+alert you if that is the case. Sometimes, when new years get added, data for previous years also get corrected,
+so it would be nice to make sure that you know this. Also, in the specific case of our data, communes might
+get fused into a new one, or maybe even divided into smaller communes (even though this is has not happened
+in a long time, it is not entirely out of the question).
+
+In summary, what is missing from the current project are enough tests to make sure that an update to the data
+can happen smoothly.
+
+### What guarantee do we have that the output is stable?
+
+Now this might seem weird: after all, if we start from the same dataset, does it matter *when* we knit the document?
+We should be getting the same result if we build the project today, in 5 months or in 5 years. Well, not necessarily.
+While it is true that R is quite stable, this cannot necessarily be said of the packages that get used. There is
+no guarantee that the authors of the packages will not change the package’s functions to work differently, or 
+take arguments in a different order, or even that the packages will all be available at all in 5 years.
+And even if the packages are still available and function the same, bugs in the packages might get corrected that
+could now alter the result. True, your results depended on a bug and now that the bug is corrected your results
+should be "correct" as well, but if you need to reproduce the results as-is, mistakes and all, this could actually
+be problematic.
+
+So we also need a way to somehow snapshot and freeze the computational environment that was used to
+create the project originally.

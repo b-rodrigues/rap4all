@@ -15,6 +15,11 @@ see how we can reach our goal of having a nice reproducible project as painlessl
 possible. There is only one catch; to make the whole process as easy as possible, we
 will be using literate programming, and not simply programming.
 
+By the way, you might want to create a new repository and use it for the example documents
+that we are going to work on together in this chapter. But since the goal of this chapter
+is to teach you about literate programming, we won’t tell you when to commit an push, just
+try to do it from time to time, and especially once you’re done with an example!
+
 ## Literate programming
 
 In literate programming, we mix code and prose together, in a way that makes it easy for
@@ -247,6 +252,16 @@ able to follow along without any problems at all, since the Rmd and Qmd formats 
 overlap (but whenever there would be major differences between the two formats, we will highlight
 them).
 
+In the next two sections, we will discuss how to set up and use `{knitr}` as well as give you a
+quick overview of the R Markdown syntax. However, we will very quickly focus on the templating
+capabilities of `{knitr}`: expanding text, using child documents, and parameterised reports. These
+are advanced topics and not easy to tackle if you’re not comfortable with R already. Just as
+functions and higher-order functions like `lapply()` avoid having to repeat yourself, so does
+templating, but for literate programming. The goal is to write functions that returns literal R
+Markdown code, so that you can loop over these functions to build entire sections of your
+documents. However, difficult these features are to master, they are also extremely powerful, as
+they help you focus on what really matters.
+
 ## `{knitr}` basics
 
 This section will be a very small intro to `{knitr}`. We are going to teach you just enough to get started, and
@@ -449,8 +464,9 @@ The iris dataset has `r nrow(iris)` rows.
 ````
 
 The last sentence from this example has an inline code chunk. This quite useful, as it allows to
-parametrize sentences and paragraphs, and thus avoids needing to copy and paste (and we will go
-quite far into how to avoid copy and pasting, thanks to templating and  parametrized reports).
+parameterise sentences and paragraphs, and thus avoids needing to copy and paste (and we will go
+quite far into how to avoid copy and pasting, thanks to more advanced features we will shortly
+discuss).
 
 To finish this crash course, you should know that to use footnotes you need to write the following:
 
@@ -520,9 +536,9 @@ create_table <- function(dataset, var){
 }
 ```
 
-The function above uses the `table()` function to create frequency tables,
-and then this gets passed to the `knitr::kable()` function that produces
-a good looking table for our rendered document:
+The function above uses the `table()` function to create frequency tables, and then this gets
+passed to the `knitr::kable()` function that produces a good looking table for our rendered
+document:
 
 ```{r}
 create_table(mtcars, "am")
@@ -632,14 +648,16 @@ date: "2023-01-27"
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+library(ggplot2)
 ```
 
 ## A function that creates ggplots
 
 ```{r}
-create_plot <- function(dataset, ...){
+create_plot <- function(dataset, aesthetic){
+
   ggplot(dataset) +
-    geom_point(...)
+    geom_point(aesthetic)
 
 }
 ```
@@ -653,35 +671,37 @@ create_plot(mtcars, aes(y = mpg, x = hp))
 
 Let’s suppose that we want to generate a document that would look like this:
 
-- first a section title, with the aesthetic used;
+- first a section title, with the dataset used;
 - then a plot
 
 So it would look like this:
 
-## Frequency table for variable: aes(y = mpg, x = hp)
+## Dataset used: "mtcars"
 
 ```{r}
 create_plot(mtcars, aes(y = mpg, x = hp))
 ```
 
-We don’t want to create these sections for every variable by hand.
+We don’t want to create these sections for every aesthetic by hand.
 
 Instead, we can make use of a child document that gets knitted separately
-and then embedded in the parent document. This is the child document:
+and then embedded in the parent document. The chunk below makes use of this trick:
 
-```{r}
+```{r, results = "asis"}
 
-res <- lapply(c(aes(y = mpg, x = hp),
-                aes(y = mpg, x = hp, size = am)),
+x <- list(aes(y = mpg, x = hp),
+          aes(y = mpg, x = hp, size = am))
+
+res <- lapply(x,
               function(dataset, x){
 
   knitr::knit_child(text = c(
 
     '\n',
-    '## Chosen aesthetic: `r quote(x)`',
+    '## Dataset used: `r deparse(substitute(dataset))`',
     '\n',
     '```{r, echo = F}',
-    'print(make_plot(dataset, x))',
+    'print(create_plot(dataset, x))',
     '```'
 
      ),
@@ -694,24 +714,34 @@ res <- lapply(c(aes(y = mpg, x = hp),
 cat(unlist(res), sep = "\n")
 ```
 
-The child document is the `text` argument to the `knit_child()` function.
-`text` is literal R Markdown code: we define a level 2 header, and then an 
-R chunk. This child document gets knitted, so we need to specify the 
-environment that should get used. This means that the child document will
-get knitted in the same environment as the parent document (our current 
-global environment). This way, every package that get loaded and every function
-or variable that got defined in the parent document will also be available to
-the child document.
+The child document is the `text` argument to the `knit_child()` function. `text` is literal R
+Markdown code: we define a level 2 header, and then an R chunk. This child document gets knitted,
+so we need to specify the environment in which it should get knitted. This means that the child
+document will get knitted in the same environment as the parent document (our current global
+environment). This way, every package that get loaded and every function or variable that got
+defined in the parent document will also be available to the child document.
 
-We then use `lapply()` to loop over two aesthetics with an anonymous function
-that encapsulates the child document. So we get two child documents that get
-knitted, one per aesthetic. This gets saved into variable `res`. This is thus
-a list of knitted Markdown.
+To get the dataset name as a string, we use the `deparse(substitute(dataset))` trick; this
+substitutes "dataset" by its bound value, so `mtcars`. But `mtcars` is an expression and we don’t
+want it to get evaluated, or the contents of the entire dataset would be used in the title of 
+the section. So we use `deparse()` which turns unevaluated expressions into strings.
+
+We then use `lapply()` to loop over two aesthetics with an anonymous function that encapsulates the
+child document. So we get two child documents that get knitted, one per aesthetic. This gets saved
+into variable `res`. This is thus a list of knitted Markdown.
 
 Finally, we need unlist `res` to actually merge the Markdown code from the 
 child documents into the parent document.
 
 ````
+
+Click [here](https://fastidious-bavarois-3b17b9.netlify.app/) to take a look at the output.
+
+Here again, take some time to play with the above example. Change the child document, try
+to print other types of output, really take your time to understand this. To know more
+about child documents, take a look at 
+[this section](https://bookdown.org/yihui/rmarkdown-cookbook/child-document.html#child-document)
+of the R Markdown Cookbook (@xie2020r).
 
 ### Tables in R Markdown documents
 
@@ -770,9 +800,9 @@ These packages can help you keeping it DRY, so take some time to learn them.
 
 ### Parametrized reports
 
-Templating is very powerful, but sometimes you don't want to have one section dedicated to each
-unit of analysis within the same report, but rather, you want a complete separate report by unit of
-analysis. This is also possible thanks to parametrized reports.
+Templating and child documents are very powerful, but sometimes you don't want to have one section
+dedicated to each unit of analysis within the same report, but rather, you want a complete separate
+report by unit of analysis. This is also possible thanks to parameterised reports.
 
 Let's modify the example from before, which consisted in creating one section per column of the
 `mtcars` dataset and a frequency table, and make it now one separate report for each column.
@@ -826,12 +856,12 @@ rmarkdown::render(
 ```
 ````
 
-Save the code above into an Rmd file title something like "param_report_example.Rmd" (preferably
+Save the code above into an Rmd file title something like `param_report_example.Rmd` (preferably
 inside its own folder). At the end of the document, we wrote the lines to render this document
-inside a chunk that does not get shown to the reader, and does not get evaluated:
+inside a chunk that does not get shown to the reader, nor gets evaluated:
 
-```{r, eval = F}
-
+````{verbatim}
+```{r, eval = F, echo = FALSE}
 rmarkdown::render(
              input = "param_report_example.Rmd",
              params = list(
@@ -840,15 +870,15 @@ rmarkdown::render(
              )
            )
 ```
+````
 
 You need to run these lines yourself to knit the document.
 
-This will pass the list `params` with elements "mtcars" and "cyl" down to the report.
-Every `params$dataset` and `params$var` in the report gets replaced by "mtcars" and "cyl"
-respectively. Also, notice that in the header of the document, we defined default
-values for the params. Something else you need to be aware of, is that the function
-`create_table()` inside the report is slightly different than before. It now starts
-with the following line:
+This will pass the list `params` with elements "mtcars" and "cyl" down to the report. Every
+`params$dataset` and `params$var` in the report gets replaced by "mtcars" and "cyl" respectively.
+Also, notice that in the header of the document, we defined default values for the params.
+Something else you need to be aware of, is that the function `create_table()` inside the report is
+slightly different than before. It now starts with the following line:
 
 ```{r, eval = F}
 dataset <- get(dataset)
@@ -865,16 +895,17 @@ dataset[var]
 `dataset` can't be a string here, but needs to be a variable name, so `mtcars` and not "mtcars".
 This means that I need to *convert* that string into a name. `get()` searches an object by name,
 and then makes it possible to save it to a new variable called `dataset`. The rest of the function
-is then the same as before. This little difficulty can be avoided by hardcoding the dataset inside
+is then the same as before. This little difficulty can be avoided by hard-coding the dataset inside
 the R Markdown file, or by passing the dataset as the `params$dataset` and not the string, in the
 render function. However, if you pass down the name of the dataset as a variable instead of the
 dataset name as a string, then you need to covert it to a string if you want to use it in the text
-(so `mtcars` to "mtcars").
+(so `mtcars` to "mtcars", using `deparse(substitute(dataset))` as in child documents example).
 
-If you now want to create one report per variable, you could compile all the documents at once
+If you instead want to create one report per variable, you could compile all the documents at once
 with:
 
-```{r, eval = F}
+````{verbatim}
+```{r, eval = F, echo = F}
 columns <- colnames(mtcars)
 
 lapply(columns,
@@ -889,6 +920,7 @@ lapply(columns,
   )
 )
 ```
+````
 
 By now, this should not intimidate you anymore; we use `lapply()` to loop over a list of 
 column names (that we get using `colnames()`). Because we don't want to overwrite the report
@@ -900,24 +932,24 @@ pass this to the `params` list, hence the `var = x`. The complete call to `rmark
 is wrapped inside an anonymous function, because we need to use the argument `x` 
 (which is each column defined in the columns list) in different places.
 
-Before continuing, we highly recommend that you try running this yourself, and also that you 
-try to build your own little parametrized reports. Maybe start by replacing "mtcars" by "iris"
-in the code to compile the reports and see what happens, and then when you're comfortable with
-parametrized reports, try templating inside a parametrized report! 
+Before continuing, we highly recommend that you try running this yourself, and also that you try to
+build your own little parameterised reports. Maybe start by replacing "mtcars" by "iris" in the code
+to compile the reports and see what happens, and then when you're comfortable with parameterised
+reports, try templating inside a parameterised report!
 
-It is important to not fall to the temptation of copy and pasting sections of your report,
-or parts of your script, instead of using these more advanced features provided by the language.
-It is tempting, especially under time pressure, to just copy and paste bits of code and get things
-done instead of writing what seems to be unnecessary code to finally achieve the same thing.
-The problem however, is that in practice copy and pasting code to simply get things done will
-come bite you sooner rather than later. Especially when you're still in the exploration/drafting
-phase of the project. It make take more time to set up, but once you're done, it is much easier
-to experiment with different parameters, test the code or even re-use the code for other projects.
-Not only that, but forcing you to actually think about how to set up your code in a way that avoids 
-repeating yourself also helps with truly understanding the problem at hand. What part of the problem
-is constant and does not change? What does change? How often, and why? Can you also fix these parts or not?
-What if instead of five sections that I need to copy and paste, I had 50 sections? How could I scale that
-up? 
+It is important to not fall to the temptation of copy and pasting sections of your report, or parts
+of your script, instead of using these more advanced features provided by the language. It is
+tempting, especially under time pressure, to just copy and paste bits of code and get things done
+instead of writing what seems to be unnecessary code to finally achieve the same thing. The problem
+however, is that in practice copy and pasting code to simply get things done will come bite you
+sooner rather than later. Especially when you're still in the exploration/drafting phase of the
+project. It make take more time to set up, but once you're done, it is much easier to experiment
+with different parameters, test the code or even re-use the code for other projects. Not only that,
+but forcing you to actually think about how to set up your code in a way that avoids repeating
+yourself also helps with truly understanding the problem at hand. What part of the problem is
+constant and does not change? What does change? How often, and why? Can you also fix these parts or
+not? What if instead of five sections that I need to copy and paste, I had 50 sections? How could I
+scale that up?
 
 Asking yourself these questions, and solving them, will ultimately make you better programmer.
 
