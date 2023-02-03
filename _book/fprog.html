@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Building reproducible analytical pipelines with the R programming language - 2&nbsp; Functional programming</title>
+<title>Building reproducible analytical pipelines with R - 2&nbsp; Functional programming</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -83,6 +83,25 @@ code span.st { color: #4070a0; } /* String */
 code span.va { color: #19177c; } /* Variable */
 code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
 </style>
 
 
@@ -148,7 +167,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="./">Building reproducible analytical pipelines with the R programming language</a> 
+      <a href="./">Building reproducible analytical pipelines with R</a> 
         <div class="sidebar-tools-main">
   <a href="" class="quarto-color-scheme-toggle sidebar-tool" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
 </div>
@@ -183,37 +202,42 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./start_project.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Getting started with your project</span></a>
+  <a href="./keep_dry.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Keeping it DRY with literate programming</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./testing.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Testing your code</span></a>
+  <a href="./project_start.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Project start</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./packages.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Packaging your code</span></a>
+  <a href="./testing.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Testing your code</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./targets.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Build automation</span></a>
+  <a href="./packages.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Packaging your code</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./repro_intro.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Introduction to reproducibility</span></a>
+  <a href="./targets.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Build automation</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./repro_cont.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Advanced topics in reproducibility</span></a>
+  <a href="./repro_intro.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Introduction to reproducibility</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ci_cd.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Continuous integration and continuous deployment/delivery</span></a>
+  <a href="./repro_cont.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Advanced topics in reproducibility</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ci_cd.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Continuous integration and continuous deployment/delivery</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -242,13 +266,23 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#optional-arguments" id="toc-optional-arguments" class="nav-link" data-scroll-target="#optional-arguments"><span class="toc-section-number">2.2.2</span>  Optional arguments</a></li>
   <li><a href="#safe-functions" id="toc-safe-functions" class="nav-link" data-scroll-target="#safe-functions"><span class="toc-section-number">2.2.3</span>  Safe functions</a></li>
   <li><a href="#recursive-functions" id="toc-recursive-functions" class="nav-link" data-scroll-target="#recursive-functions"><span class="toc-section-number">2.2.4</span>  Recursive functions</a></li>
-  <li><a href="#the-unix-philosophy-applied-to-r" id="toc-the-unix-philosophy-applied-to-r" class="nav-link" data-scroll-target="#the-unix-philosophy-applied-to-r"><span class="toc-section-number">2.2.5</span>  The Unix philosophy applied to R</a></li>
+  <li><a href="#anonymous-functions" id="toc-anonymous-functions" class="nav-link" data-scroll-target="#anonymous-functions"><span class="toc-section-number">2.2.5</span>  Anonymous functions</a></li>
+  <li><a href="#the-unix-philosophy-applied-to-r" id="toc-the-unix-philosophy-applied-to-r" class="nav-link" data-scroll-target="#the-unix-philosophy-applied-to-r"><span class="toc-section-number">2.2.6</span>  The Unix philosophy applied to R</a></li>
   </ul></li>
   <li><a href="#lists-a-powerful-data-structure" id="toc-lists-a-powerful-data-structure" class="nav-link" data-scroll-target="#lists-a-powerful-data-structure"><span class="toc-section-number">2.3</span>  Lists: a powerful data-structure</a>
   <ul class="collapse">
   <li><a href="#lists-all-the-way-down" id="toc-lists-all-the-way-down" class="nav-link" data-scroll-target="#lists-all-the-way-down"><span class="toc-section-number">2.3.1</span>  Lists all the way down</a></li>
-  <li><a href="#section" id="toc-section" class="nav-link" data-scroll-target="#section"><span class="toc-section-number">2.3.2</span>  </a></li>
+  <li><a href="#lists-can-hold-many-things" id="toc-lists-can-hold-many-things" class="nav-link" data-scroll-target="#lists-can-hold-many-things"><span class="toc-section-number">2.3.2</span>  Lists can hold many things</a></li>
+  <li><a href="#lists-as-the-cure-to-loops" id="toc-lists-as-the-cure-to-loops" class="nav-link" data-scroll-target="#lists-as-the-cure-to-loops"><span class="toc-section-number">2.3.3</span>  Lists as the cure to loops</a></li>
+  <li><a href="#data-frames" id="toc-data-frames" class="nav-link" data-scroll-target="#data-frames"><span class="toc-section-number">2.3.4</span>  Data frames</a></li>
   </ul></li>
+  <li><a href="#functional-programming-in-r" id="toc-functional-programming-in-r" class="nav-link" data-scroll-target="#functional-programming-in-r"><span class="toc-section-number">2.4</span>  Functional programming in R</a>
+  <ul class="collapse">
+  <li><a href="#base-capabilities" id="toc-base-capabilities" class="nav-link" data-scroll-target="#base-capabilities"><span class="toc-section-number">2.4.1</span>  Base capabilities</a></li>
+  <li><a href="#purrr" id="toc-purrr" class="nav-link" data-scroll-target="#purrr"><span class="toc-section-number">2.4.2</span>  purrr</a></li>
+  <li><a href="#withr" id="toc-withr" class="nav-link" data-scroll-target="#withr"><span class="toc-section-number">2.4.3</span>  withr</a></li>
+  </ul></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="toc-section-number">2.5</span>  Conclusion</a></li>
   </ul>
 </nav>
     </div>
@@ -613,8 +647,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb63-7"><a href="#cb63-7" aria-hidden="true" tabindex="-1"></a>  }</span>
 <span id="cb63-8"><a href="#cb63-8" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>This function makes use of <code>tryCatch()</code> which catches any conditions, like warnings, raised by an expression (in this example, <code>f(...)</code>) and then does something. So here I made <code>tryCatch()</code> raise an error (with <code>stop()</code>) if the expression raised a warning. It is now possible to define new functions like this:</p>
-<p>You can now define a new function:</p>
+<p>This function makes use of <code>tryCatch()</code> which catches warnings raised by an expression (in this example the expression is <code>f(...)</code>) and then raises an error insead with the <code>stop()</code> function. It is now possible to define new functions like this:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a>s_sqrt <span class="ot">&lt;-</span> <span class="fu">strictly</span>(sqrt)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -629,7 +662,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="fu">s_log</span>(<span class="sc">-</span><span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <pre><code>Error in value[[3L]](cond) : Can't do that chief</code></pre>
-<p>Functions that return functions are called <em>functions factories</em> and they’re incredibly useful. I use this so much, that I’ve written a package, available on CRAN, called <code>{chronicler}</code>, that does this:</p>
+<p>Functions that return functions are called <em>functions factories</em> and they’re incredibly useful. I use this so much that I’ve written a package, available on CRAN, called <code>{chronicler}</code>, that does this:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb70"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a>s_sqrt <span class="ot">&lt;-</span> chronicler<span class="sc">::</span><span class="fu">record</span>(sqrt)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -653,8 +686,8 @@ To read the log of this object, call read_log(.c).</code></pre>
 <div class="sourceCode cell-code" id="cb73"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a>chronicler<span class="sc">::</span><span class="fu">read_log</span>(result)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "Complete log:"                                                                                
-[2] "NOK! sqrt() ran unsuccessfully with following exception: NaNs produced at 2023-01-14 22:53:36"
-[3] "Total running time: 0.000905990600585938 secs"                                                </code></pre>
+[2] "NOK! sqrt() ran unsuccessfully with following exception: NaNs produced at 2023-02-03 17:09:04"
+[3] "Total running time: 0.000901937484741211 secs"                                                </code></pre>
 </div>
 </div>
 <p>The <code>{purrr}</code> package also comes with function factories that you might find useful (<code>{possibly}</code>, <code>{safely}</code> and <code>{quietly}</code>).</p>
@@ -672,7 +705,7 @@ To read the log of this object, call read_log(.c).</code></pre>
 <span id="cb75-7"><a href="#cb75-7" aria-hidden="true" tabindex="-1"></a>  }</span>
 <span id="cb75-8"><a href="#cb75-8" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Calling <code>g(10)</code> prints the message “Optional argument y is NULL”, and returns 10. Calling <code>g(10, 5)</code> however, prints “y is present” and returns 15. It is also possible to using <code>missing()</code>:</p>
+<p>Calling <code>g(10)</code> prints the message “Optional argument y is NULL”, and returns 10. Calling <code>g(10, 5)</code> however, prints “y is present” and returns 15. It is also possible to use <code>missing()</code>:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb76"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a>g <span class="ot">&lt;-</span> <span class="cf">function</span>(x, y){</span>
 <span id="cb76-2"><a href="#cb76-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(<span class="fu">missing</span>(y)){</span>
@@ -708,7 +741,7 @@ To read the log of this object, call read_log(.c).</code></pre>
 <pre><code>[1] 1e+07</code></pre>
 </div>
 </div>
-<p><code>10000000</code> gets represented as <code>1e+07</code> by R. This number in scientific notation gets then converted into a character “1e+07” by <code>nchar()</code>, silently. <code>nchar()</code> then counts the number of characters, and <em>correctly</em> returns 5. The problem is that it doesn’t make sense to provide a number to a function that expepects a character. This function should have returned an error message, or at the very least raised a warning that the number got converted into a character. Here is how you could rewrite <code>nchar()</code> to make it safer:</p>
+<p><code>10000000</code> gets represented as <code>1e+07</code> by R. This number in scientific notation gets then converted into the character “1e+07” by <code>nchar()</code>, and this conversion happens silently. <code>nchar()</code> then counts the number of characters, and <em>correctly</em> returns 5. The problem is that it doesn’t make sense to provide a number to a function that expects a character. This function should have returned an error message, or at the very least raised a warning that the number got converted into a character. Here is how you could rewrite <code>nchar()</code> to make it safer:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb83"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true" tabindex="-1"></a>nchar2 <span class="ot">&lt;-</span> <span class="cf">function</span>(x, <span class="at">result =</span> <span class="dv">0</span>){</span>
 <span id="cb83-2"><a href="#cb83-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -727,15 +760,13 @@ To read the log of this object, call read_log(.c).</code></pre>
 </div>
 <p>This function now returns an error message if the input is not a character:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb84"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a href="#cb84-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nchar</span>(<span class="dv">10000000</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 5</code></pre>
+<div class="sourceCode cell-code" id="cb84"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a href="#cb84-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nchar2</span>(<span class="dv">10000000</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</div>
+<pre><code>Error in nchar2(10000000) : x should be of type 'character', but is of type 'integer' instead. </code></pre>
 </section>
 <section id="recursive-functions" class="level3" data-number="2.2.4">
 <h3 data-number="2.2.4" class="anchored" data-anchor-id="recursive-functions"><span class="header-section-number">2.2.4</span> Recursive functions</h3>
-<p>You may have noticed that in the last lines of <code>nchar2()</code>, the function calls itself. A function that calls itself in its own body is called a recursive function. It is sometimes easier to write down a function in its recursive form than in an iterative form. The most common example is of course the factorial function. However, there is an issue with recursive functions (in the R programming language, other programming languages may not have the same problem, like Haskell): while it is sometimes easier to write down a function using a recursive algorithm than an iterative algorithm, like for the factorial function, recursive functions in R are quite slow. Let’s take a look at two definitions of the factorial function, one recursive, the other iterative:</p>
+<p>You may have noticed that in the last lines of <code>nchar2()</code>, that <code>nchar2()</code> calls itself. A function that calls itself in its own body is called a recursive function. It is sometimes easier to write down a function in its recursive form than in an iterative form. The most common example is the factorial function. However, there is an issue with recursive functions (in the R programming language, other programming languages may not have the same problem, like Haskell): while it is sometimes easier to write down a function using a recursive algorithm than an iterative algorithm, like for the factorial function, recursive functions in R are quite slow. Let’s take a look at two definitions of the factorial function, one recursive, the other iterative:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb86"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb86-1"><a href="#cb86-1" aria-hidden="true" tabindex="-1"></a>fact_iter <span class="ot">&lt;-</span> <span class="cf">function</span>(n){</span>
 <span id="cb86-2"><a href="#cb86-2" aria-hidden="true" tabindex="-1"></a>  result <span class="ot">=</span> <span class="dv">1</span></span>
@@ -765,10 +796,22 @@ To read the log of this object, call read_log(.c).</code></pre>
            expr    min     lq     mean median      uq    max neval
  fact_recur(50) 21.501 21.701 23.82701 21.901 22.0515 68.902   100
   fact_iter(50)  2.000  2.101  2.74599  2.201  2.3510 21.000   100</code></pre>
-<p>We see that the recursive factorial function is 10 times slower then the iterative version. In this particular example it doesn’t make much of a difference, because the functions only take microseconds to run. But if you’re working with more complex functions, this is a problem. There is a workaround for this, called <em>trampolining</em>. I won’t go into details, but if you’re interested, there is an R package that allows you to use trampolining with R, aptly called <a href="https://rdinnager.github.io/trampoline/"><code>{trampoline}</code></a>.</p>
+<p>We see that the recursive factorial function is 10 times slower then the iterative version. In this particular example it doesn’t make much of a difference, because the functions only take microseconds to run. But if you’re working with more complex functions, this is a problem. If you want to keep using the recursive function and not switch to an iterative algorithm, there are workarounds. The first is called <em>trampolining</em>. I won’t go into details, but if you’re interested, there is an R package that allows you to use trampolining with R, aptly called <a href="https://rdinnager.github.io/trampoline/"><code>{trampoline}</code></a>. Another solution is using the <a href="https://memoise.r-lib.org/"><code>{memoise}</code></a> package.</p>
 </section>
-<section id="the-unix-philosophy-applied-to-r" class="level3" data-number="2.2.5">
-<h3 data-number="2.2.5" class="anchored" data-anchor-id="the-unix-philosophy-applied-to-r"><span class="header-section-number">2.2.5</span> The Unix philosophy applied to R</h3>
+<section id="anonymous-functions" class="level3" data-number="2.2.5">
+<h3 data-number="2.2.5" class="anchored" data-anchor-id="anonymous-functions"><span class="header-section-number">2.2.5</span> Anonymous functions</h3>
+<p>It is possible to define a function and not give it a name. For example:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb89"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb89-1"><a href="#cb89-1" aria-hidden="true" tabindex="-1"></a><span class="cf">function</span>(x)(x<span class="sc">+</span><span class="dv">1</span>)(<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Since R version 4.1, there iseven a shorthand notationfor anonymous functions:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb90"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb90-1"><a href="#cb90-1" aria-hidden="true" tabindex="-1"></a>(\(x)(x<span class="sc">+</span><span class="dv">1</span>))(<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Because we don’t name them, we cannot reuse them. So why is this useful? Anonymous functions are useful when you need to apply a function somewhere inside a pipe once, and don’t want to define a function just for this. This will become clearer once we learn about lists, but before that, let’s philosophize a bit.</p>
+</section>
+<section id="the-unix-philosophy-applied-to-r" class="level3" data-number="2.2.6">
+<h3 data-number="2.2.6" class="anchored" data-anchor-id="the-unix-philosophy-applied-to-r"><span class="header-section-number">2.2.6</span> The Unix philosophy applied to R</h3>
 <blockquote class="blockquote">
 <p>This is the Unix philosophy: Write programs that do one thing and do it well. Write programs to work together. Write programs to handle text streams, because that is a universal interface.</p>
 </blockquote>
@@ -778,52 +821,858 @@ To read the log of this object, call read_log(.c).</code></pre>
 <p>Strive for writing simple functions that only perform one task. Don’t hesitate to split a big function into smaller ones. Small functions that only perform one task are easier to maintain, test, document and debug. These smaller functions can then be chained using the <code>|&gt;</code> operator. In other words, it is preferable to have something like:</p>
 <p><code>a |&gt; f() |&gt; g() |&gt; h()</code></p>
 <p>where <code>a</code> is for example a path to a data set, and where <code>f()</code>, <code>g()</code> and <code>h()</code> successively read, clean, and plot the data, than having something like:</p>
-<p><code>big_function(a)</code></p>
-<p>that does all the steps above in one go. The advantage of splitting <code>big_function()</code> into <code>f()</code>, <code>g()</code> and <code>h()</code> is that you can reuse these smaller functions in other projects much more easily. Make them work together by sharing a common interface. The list is usually a good candidate for this.</p>
+<pre><code>big_function(a)</code></pre>
+<p>that does all the steps above in one go.</p>
+<p>This idea of splitting the problem into smaller chunks, each chunk in turn split into even smaller units that can be handled by functions and then the results of these function combined into a final output is called composability.</p>
+<p>The advantage of splitting <code>big_function()</code> into <code>f()</code>, <code>g()</code> and <code>h()</code> is that you can tackle big problems <em>one bite at a time</em>, and also reusing these smaller functions in other projects is much easier. So what’s important is that you can make small functions work together by sharing a common interface. The list is usually a good candidate for this.</p>
 </section>
 </section>
 <section id="lists-a-powerful-data-structure" class="level2" data-number="2.3">
 <h2 data-number="2.3" class="anchored" data-anchor-id="lists-a-powerful-data-structure"><span class="header-section-number">2.3</span> Lists: a powerful data-structure</h2>
-<p>Lists are the second important ingredient of functional programming. In the R philosophy inspired from UNIX, I stated that <em>lists are an universal interface</em> in R, so our functions should handle lists. This of course depends exactly on what it is your doing. If you writing functions to handle numbers, that there’s little value in placing these numbers inside lists. But in practice, you will very likely manipulate objects that are more complex than numbers, and this is where lists come into play.</p>
+<p>Lists are the second important ingredient of functional programming. In the R philosophy inspired from UNIX, I stated that <em>lists are an universal interface</em> in R, so our functions should handle lists. This of course depends on what it is your doing. If you need functions to handle numbers, then there’s little value in placing these numbers inside lists. But in practice, you will very likely manipulate objects that are more complex than numbers, and this is where lists come into play.</p>
 <section id="lists-all-the-way-down" class="level3" data-number="2.3.1">
 <h3 data-number="2.3.1" class="anchored" data-anchor-id="lists-all-the-way-down"><span class="header-section-number">2.3.1</span> Lists all the way down</h3>
 <p>Lists are extremely flexible, and most very complex objects classes that you manipulate are actually lists, but just fancier. For example, a data frame is a list:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb89"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb89-1"><a href="#cb89-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(mtcars)</span>
-<span id="cb89-2"><a href="#cb89-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb89-3"><a href="#cb89-3" aria-hidden="true" tabindex="-1"></a><span class="fu">typeof</span>(mtcars)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb92"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb92-1"><a href="#cb92-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(mtcars)</span>
+<span id="cb92-2"><a href="#cb92-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb92-3"><a href="#cb92-3" aria-hidden="true" tabindex="-1"></a><span class="fu">typeof</span>(mtcars)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "list"</code></pre>
 </div>
 </div>
 <p>A fitted model is a list:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb91"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb91-1"><a href="#cb91-1" aria-hidden="true" tabindex="-1"></a>my_model <span class="ot">&lt;-</span> <span class="fu">lm</span>(hp <span class="sc">~</span> mpg, <span class="at">data =</span> mtcars)</span>
-<span id="cb91-2"><a href="#cb91-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb91-3"><a href="#cb91-3" aria-hidden="true" tabindex="-1"></a><span class="fu">typeof</span>(my_model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb94"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb94-1"><a href="#cb94-1" aria-hidden="true" tabindex="-1"></a>my_model <span class="ot">&lt;-</span> <span class="fu">lm</span>(hp <span class="sc">~</span> mpg, <span class="at">data =</span> mtcars)</span>
+<span id="cb94-2"><a href="#cb94-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb94-3"><a href="#cb94-3" aria-hidden="true" tabindex="-1"></a><span class="fu">typeof</span>(my_model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "list"</code></pre>
 </div>
 </div>
 <p>A <code>ggplot</code> is a list:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb93"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb93-1"><a href="#cb93-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb93-2"><a href="#cb93-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb93-3"><a href="#cb93-3" aria-hidden="true" tabindex="-1"></a>my_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> mtcars) <span class="sc">+</span></span>
-<span id="cb93-4"><a href="#cb93-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> hp, <span class="at">x =</span> mpg))</span>
-<span id="cb93-5"><a href="#cb93-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb93-6"><a href="#cb93-6" aria-hidden="true" tabindex="-1"></a><span class="fu">typeof</span>(my_plot)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb96"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb96-1"><a href="#cb96-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb96-2"><a href="#cb96-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb96-3"><a href="#cb96-3" aria-hidden="true" tabindex="-1"></a>my_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> mtcars) <span class="sc">+</span></span>
+<span id="cb96-4"><a href="#cb96-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> hp, <span class="at">x =</span> mpg))</span>
+<span id="cb96-5"><a href="#cb96-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb96-6"><a href="#cb96-6" aria-hidden="true" tabindex="-1"></a><span class="fu">typeof</span>(my_plot)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "list"</code></pre>
 </div>
 </div>
 <p>It’s lists all the way down, and it’s not a coincidence. It’s because, as stated, lists are very powerful. So it’s important to know what you can do with lists.</p>
 </section>
-<section id="section" class="level3" data-number="2.3.2">
-<h3 data-number="2.3.2" class="anchored" data-anchor-id="section"><span class="header-section-number">2.3.2</span> </h3>
+<section id="lists-can-hold-many-things" class="level3" data-number="2.3.2">
+<h3 data-number="2.3.2" class="anchored" data-anchor-id="lists-can-hold-many-things"><span class="header-section-number">2.3.2</span> Lists can hold many things</h3>
+<p>If you write a function that needs to return many objects, the only solution is to place them inside a list. For example, consider this function:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb98"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb98-1"><a href="#cb98-1" aria-hidden="true" tabindex="-1"></a>sqrt_newton <span class="ot">&lt;-</span> <span class="cf">function</span>(a, <span class="at">init =</span> <span class="dv">1</span>, <span class="at">eps =</span> <span class="fl">0.01</span>, <span class="at">steps =</span> <span class="dv">1</span>){</span>
+<span id="cb98-2"><a href="#cb98-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stopifnot</span>(a <span class="sc">&gt;=</span> <span class="dv">0</span>)</span>
+<span id="cb98-3"><a href="#cb98-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span>(<span class="fu">abs</span>(init<span class="sc">**</span><span class="dv">2</span> <span class="sc">-</span> a) <span class="sc">&gt;</span> eps){</span>
+<span id="cb98-4"><a href="#cb98-4" aria-hidden="true" tabindex="-1"></a>        init <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">/</span><span class="dv">2</span> <span class="sc">*</span>(init <span class="sc">+</span> a<span class="sc">/</span>init)</span>
+<span id="cb98-5"><a href="#cb98-5" aria-hidden="true" tabindex="-1"></a>        steps <span class="ot">&lt;-</span> steps <span class="sc">+</span> <span class="dv">1</span></span>
+<span id="cb98-6"><a href="#cb98-6" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb98-7"><a href="#cb98-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">list</span>(</span>
+<span id="cb98-8"><a href="#cb98-8" aria-hidden="true" tabindex="-1"></a>      <span class="st">"result"</span> <span class="ot">=</span> init,</span>
+<span id="cb98-9"><a href="#cb98-9" aria-hidden="true" tabindex="-1"></a>      <span class="st">"steps"</span> <span class="ot">=</span> steps</span>
+<span id="cb98-10"><a href="#cb98-10" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb98-11"><a href="#cb98-11" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>This function returns the square root of a number using Newton’s algorithm, as well as the number of steps, or iterations, it took to reach the solution:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb99"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb99-1"><a href="#cb99-1" aria-hidden="true" tabindex="-1"></a>result_list <span class="ot">&lt;-</span> <span class="fu">sqrt_newton</span>(<span class="dv">1600</span>)</span>
+<span id="cb99-2"><a href="#cb99-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb99-3"><a href="#cb99-3" aria-hidden="true" tabindex="-1"></a>result_list</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$result
+[1] 40
 
+$steps
+[1] 10</code></pre>
+</div>
+</div>
+<p>It is quite common to instead print the number of steps to the console instead of returning them. But the issue with a function that prints something to the console instead of returning it, is that such a function is not pure, as it changes something outside of its scope. It is preferable to instead make the function pure by returning everything inside a neat list. It is then possible to separately save these objects if needed:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb101"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb101-1"><a href="#cb101-1" aria-hidden="true" tabindex="-1"></a>result <span class="ot">&lt;-</span> result_list<span class="sc">$</span>result</span>
+<span id="cb101-2"><a href="#cb101-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb101-3"><a href="#cb101-3" aria-hidden="true" tabindex="-1"></a>result_steps <span class="ot">&lt;-</span> result_list<span class="sc">$</span>steps</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Or you could define functions that know how to deal with the list:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb102"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb102-1"><a href="#cb102-1" aria-hidden="true" tabindex="-1"></a>f <span class="ot">&lt;-</span> <span class="cf">function</span>(result_list){</span>
+<span id="cb102-2"><a href="#cb102-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">list</span>(</span>
+<span id="cb102-3"><a href="#cb102-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"result"</span> <span class="ot">=</span> result_list<span class="sc">$</span>result <span class="sc">*</span> <span class="dv">10</span>,</span>
+<span id="cb102-4"><a href="#cb102-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"steps"</span> <span class="ot">=</span> result_list<span class="sc">$</span>steps <span class="sc">+</span> <span class="dv">1</span></span>
+<span id="cb102-5"><a href="#cb102-5" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb102-6"><a href="#cb102-6" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb102-7"><a href="#cb102-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb102-8"><a href="#cb102-8" aria-hidden="true" tabindex="-1"></a><span class="fu">f</span>(result_list)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$result
+[1] 400
 
+$steps
+[1] 11</code></pre>
+</div>
+</div>
+<p>It all depends on what you want to do. But it is usually better to keep everything neatly inside a list.</p>
+<p>Lists can also hold objects of differen types:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb104"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb104-1"><a href="#cb104-1" aria-hidden="true" tabindex="-1"></a><span class="fu">list</span>(</span>
+<span id="cb104-2"><a href="#cb104-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"a"</span> <span class="ot">=</span> <span class="fu">head</span>(mtcars),</span>
+<span id="cb104-3"><a href="#cb104-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"b"</span> <span class="ot">=</span> <span class="er">~</span><span class="fu">lm</span>(y <span class="sc">~</span> x)</span>
+<span id="cb104-4"><a href="#cb104-4" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$a
+                   mpg cyl disp  hp drat    wt  qsec vs am gear carb
+Mazda RX4         21.0   6  160 110 3.90 2.620 16.46  0  1    4    4
+Mazda RX4 Wag     21.0   6  160 110 3.90 2.875 17.02  0  1    4    4
+Datsun 710        22.8   4  108  93 3.85 2.320 18.61  1  1    4    1
+Hornet 4 Drive    21.4   6  258 110 3.08 3.215 19.44  1  0    3    1
+Hornet Sportabout 18.7   8  360 175 3.15 3.440 17.02  0  0    3    2
+Valiant           18.1   6  225 105 2.76 3.460 20.22  1  0    3    1
+
+$b
+~lm(y ~ x)</code></pre>
+</div>
+</div>
+<p>The list above has two elements, the first is the head of the <code>mtcars</code> data frame, the second is a formula object. Lists can even hold other lists:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb106"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb106-1"><a href="#cb106-1" aria-hidden="true" tabindex="-1"></a><span class="fu">list</span>(</span>
+<span id="cb106-2"><a href="#cb106-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"a"</span> <span class="ot">=</span> <span class="fu">head</span>(mtcars),</span>
+<span id="cb106-3"><a href="#cb106-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"b"</span> <span class="ot">=</span> <span class="fu">list</span>(</span>
+<span id="cb106-4"><a href="#cb106-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"c"</span> <span class="ot">=</span> sqrt,</span>
+<span id="cb106-5"><a href="#cb106-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"d"</span> <span class="ot">=</span> my_plot <span class="co"># Remember this ggplot object from before?</span></span>
+<span id="cb106-6"><a href="#cb106-6" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb106-7"><a href="#cb106-7" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$a
+                   mpg cyl disp  hp drat    wt  qsec vs am gear carb
+Mazda RX4         21.0   6  160 110 3.90 2.620 16.46  0  1    4    4
+Mazda RX4 Wag     21.0   6  160 110 3.90 2.875 17.02  0  1    4    4
+Datsun 710        22.8   4  108  93 3.85 2.320 18.61  1  1    4    1
+Hornet 4 Drive    21.4   6  258 110 3.08 3.215 19.44  1  0    3    1
+Hornet Sportabout 18.7   8  360 175 3.15 3.440 17.02  0  0    3    2
+Valiant           18.1   6  225 105 2.76 3.460 20.22  1  0    3    1
+
+$b
+$b$c
+function (x)  .Primitive("sqrt")
+
+$b$d</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="fprog_files/figure-html/unnamed-chunk-75-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Use this to your advantage.</p>
 </section>
+<section id="lists-as-the-cure-to-loops" class="level3" data-number="2.3.3">
+<h3 data-number="2.3.3" class="anchored" data-anchor-id="lists-as-the-cure-to-loops"><span class="header-section-number">2.3.3</span> Lists as the cure to loops</h3>
+<p>Loops are incredibly useful, and you are likely familiar with them. The problem with loops is that they are a concept from iterative programming, not functional programming, and this is a problem because loops rely on changing the state of your program to function. For example, let’s suppose that you wish to use a for-loop to compute the sum of the first 100 integers:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb108"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb108-1"><a href="#cb108-1" aria-hidden="true" tabindex="-1"></a>result <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb108-2"><a href="#cb108-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>){</span>
+<span id="cb108-3"><a href="#cb108-3" aria-hidden="true" tabindex="-1"></a>  result <span class="ot">&lt;-</span> result <span class="sc">+</span> i</span>
+<span id="cb108-4"><a href="#cb108-4" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb108-5"><a href="#cb108-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb108-6"><a href="#cb108-6" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(result)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 5050</code></pre>
+</div>
+</div>
+<p>If you run <code>ls()</code> now, you should see that there’s a variable <code>i</code> in your global environment. This could cause issues further down in your pipeline if you need to re-use <code>i</code>. Also, writing loops is, in my opinion, quite error prone. But how can we avoid using loops? For looping in a functional programming language, we need to use higher-order functions and lists. A reminder: a higher-order function is a function that takes another function as an argument. Looping is a task like any other, so we can write a function that does the looping for us. We will call it <code>looping()</code>, which will take a function as an argument, as well as list. The list will serve as the container to hold our numbers:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb110"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb110-1"><a href="#cb110-1" aria-hidden="true" tabindex="-1"></a>looping <span class="ot">&lt;-</span> <span class="cf">function</span>(a_list, a_func, <span class="at">init =</span> <span class="cn">NULL</span>, ...){</span>
+<span id="cb110-2"><a href="#cb110-2" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb110-3"><a href="#cb110-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># If the user does not provide an `init` value, set the head of the list as the initial value</span></span>
+<span id="cb110-4"><a href="#cb110-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(<span class="fu">is.null</span>(init)){</span>
+<span id="cb110-5"><a href="#cb110-5" aria-hidden="true" tabindex="-1"></a>    init <span class="ot">&lt;-</span> a_list[[<span class="dv">1</span>]]</span>
+<span id="cb110-6"><a href="#cb110-6" aria-hidden="true" tabindex="-1"></a>    a_list <span class="ot">&lt;-</span> <span class="fu">tail</span>(a_list, <span class="sc">-</span><span class="dv">1</span>)</span>
+<span id="cb110-7"><a href="#cb110-7" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb110-8"><a href="#cb110-8" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb110-9"><a href="#cb110-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Separate the head from the tail of the list and apply the function to the initial value and the head of the list</span></span>
+<span id="cb110-10"><a href="#cb110-10" aria-hidden="true" tabindex="-1"></a>  head_list <span class="ot">=</span> a_list[[<span class="dv">1</span>]]</span>
+<span id="cb110-11"><a href="#cb110-11" aria-hidden="true" tabindex="-1"></a>  tail_list <span class="ot">=</span> <span class="fu">tail</span>(a_list, <span class="sc">-</span><span class="dv">1</span>)</span>
+<span id="cb110-12"><a href="#cb110-12" aria-hidden="true" tabindex="-1"></a>  init <span class="ot">=</span> <span class="fu">a_func</span>(init, head_list, ...)</span>
+<span id="cb110-13"><a href="#cb110-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb110-14"><a href="#cb110-14" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Check if we're done: if there is still some tail, rerun the whole thing until there's no tail left</span></span>
+<span id="cb110-15"><a href="#cb110-15" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(<span class="fu">length</span>(tail_list) <span class="sc">!=</span> <span class="dv">0</span>){</span>
+<span id="cb110-16"><a href="#cb110-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">looping</span>(tail_list, a_func, init, ...)</span>
+<span id="cb110-17"><a href="#cb110-17" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb110-18"><a href="#cb110-18" aria-hidden="true" tabindex="-1"></a>  <span class="cf">else</span> {</span>
+<span id="cb110-19"><a href="#cb110-19" aria-hidden="true" tabindex="-1"></a>    init</span>
+<span id="cb110-20"><a href="#cb110-20" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb110-21"><a href="#cb110-21" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Now, this might seem much more complicated than a for loop. However, now that we have abstracted the loop away inside a function, we can keep reusing this function:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb111"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb111-1"><a href="#cb111-1" aria-hidden="true" tabindex="-1"></a><span class="fu">looping</span>(<span class="fu">as.list</span>(<span class="fu">seq</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>)), <span class="st">`</span><span class="at">+</span><span class="st">`</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 5050</code></pre>
+</div>
+</div>
+<p>Of course, because this is so useful, <code>looping()</code> actually ships with R, and is called <code>Reduce()</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb113"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb113-1"><a href="#cb113-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Reduce</span>(<span class="st">`</span><span class="at">+</span><span class="st">`</span>, <span class="fu">seq</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>)) <span class="co"># the order of the arguments is `function` then `list` for `Reduce()`</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 5050</code></pre>
+</div>
+</div>
+<p>But this is not the only way that we can loop. We can also write a loop that applies a function to each element of a list, instead of operating on the whole list:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb115"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb115-1"><a href="#cb115-1" aria-hidden="true" tabindex="-1"></a>result <span class="ot">&lt;-</span> <span class="fu">as.list</span>(<span class="fu">seq</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>))</span>
+<span id="cb115-2"><a href="#cb115-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq_along</span>(result)){</span>
+<span id="cb115-3"><a href="#cb115-3" aria-hidden="true" tabindex="-1"></a>  result[[i]] <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(result[[i]])</span>
+<span id="cb115-4"><a href="#cb115-4" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb115-5"><a href="#cb115-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb115-6"><a href="#cb115-6" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(result)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[[1]]
+[1] 1
+
+[[2]]
+[1] 1.414214
+
+[[3]]
+[1] 1.732051
+
+[[4]]
+[1] 2
+
+[[5]]
+[1] 2.236068</code></pre>
+</div>
+</div>
+<p>Here again, we have to pollute the global environment by first creating a vessel for our results, and then apply the function at each index. We can abstract this process away in a function:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb117"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb117-1"><a href="#cb117-1" aria-hidden="true" tabindex="-1"></a>applying <span class="ot">&lt;-</span> <span class="cf">function</span>(a_list, a_func, ...){</span>
+<span id="cb117-2"><a href="#cb117-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb117-3"><a href="#cb117-3" aria-hidden="true" tabindex="-1"></a>  head_list <span class="ot">=</span> a_list[[<span class="dv">1</span>]]</span>
+<span id="cb117-4"><a href="#cb117-4" aria-hidden="true" tabindex="-1"></a>  tail_list <span class="ot">=</span> <span class="fu">tail</span>(a_list, <span class="sc">-</span><span class="dv">1</span>)</span>
+<span id="cb117-5"><a href="#cb117-5" aria-hidden="true" tabindex="-1"></a>  result <span class="ot">=</span> <span class="fu">a_func</span>(head_list, ...)</span>
+<span id="cb117-6"><a href="#cb117-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb117-7"><a href="#cb117-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Check if we're done: if there is still some tail, rerun the whole thing until there's no tail left</span></span>
+<span id="cb117-8"><a href="#cb117-8" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(<span class="fu">length</span>(tail_list) <span class="sc">!=</span> <span class="dv">0</span>){</span>
+<span id="cb117-9"><a href="#cb117-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">append</span>(result, <span class="fu">applying</span>(tail_list, a_func, ...))</span>
+<span id="cb117-10"><a href="#cb117-10" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb117-11"><a href="#cb117-11" aria-hidden="true" tabindex="-1"></a>  <span class="cf">else</span> {</span>
+<span id="cb117-12"><a href="#cb117-12" aria-hidden="true" tabindex="-1"></a>    result</span>
+<span id="cb117-13"><a href="#cb117-13" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb117-14"><a href="#cb117-14" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Once again this might seem complicated, and I would agree. Abstraction is complex. But once we have it, we can focus on the task at hand, instead of having to always tell the computer what we want:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb118"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb118-1"><a href="#cb118-1" aria-hidden="true" tabindex="-1"></a><span class="fu">applying</span>(<span class="fu">as.list</span>(<span class="fu">seq</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>)), sqrt)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1.000000 1.414214 1.732051 2.000000 2.236068</code></pre>
+</div>
+</div>
+<p>Of course, R ships with its own, much more efficient, implementation of this function:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb120"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb120-1"><a href="#cb120-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lapply</span>(<span class="fu">list</span>(<span class="fu">seq</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>)), sqrt)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[[1]]
+[1] 1.000000 1.414214 1.732051 2.000000 2.236068</code></pre>
+</div>
+</div>
+<p>In other programming languages, <code>lapply()</code> is often called <code>map()</code>. The <code>{purrr}</code> packages ships with other such useful higher-order functions that abstract loops away. For example, there’s the function called <code>map2()</code>, that maps a function of two arguments to each element of two atomic vectors or lists, two at a time:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb122"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb122-1"><a href="#cb122-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(purrr)</span>
+<span id="cb122-2"><a href="#cb122-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb122-3"><a href="#cb122-3" aria-hidden="true" tabindex="-1"></a><span class="fu">map2</span>(</span>
+<span id="cb122-4"><a href="#cb122-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">.x =</span> <span class="fu">seq</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>),</span>
+<span id="cb122-5"><a href="#cb122-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">.y =</span> <span class="fu">seq</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>),</span>
+<span id="cb122-6"><a href="#cb122-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">.f =</span> <span class="st">`</span><span class="at">+</span><span class="st">`</span></span>
+<span id="cb122-7"><a href="#cb122-7" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[[1]]
+[1] 2
+
+[[2]]
+[1] 4
+
+[[3]]
+[1] 6
+
+[[4]]
+[1] 8
+
+[[5]]
+[1] 10</code></pre>
+</div>
+</div>
+<p>If you have more than two lists, you can use <code>pmap()</code> instead.</p>
+</section>
+<section id="data-frames" class="level3" data-number="2.3.4">
+<h3 data-number="2.3.4" class="anchored" data-anchor-id="data-frames"><span class="header-section-number">2.3.4</span> Data frames</h3>
+<p>As mentioned in the introduction of this section, data frames are a special type of list of atomic vectors. This means that just as I can use <code>lapply()</code> to compute the square root of the elements of an atomic vector, as in the previous example, I can also operate on all the columns of a data frame. For example, it is possible to determine the class of<br>
+every variable like this:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb124"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb124-1"><a href="#cb124-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lapply</span>(iris, class)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$Sepal.Length
+[1] "numeric"
+
+$Sepal.Width
+[1] "numeric"
+
+$Petal.Length
+[1] "numeric"
+
+$Petal.Width
+[1] "numeric"
+
+$Species
+[1] "factor"</code></pre>
+</div>
+</div>
+<p>Unlike a list however, the elements of a data frame must be of the same length. Data frames remain very flexible however, and using what we have learned until now, it is possible to use the data frame as a structure for all our computations. For example, suppose that we have a data frame that contains data on unemployment for the different subnational divisions of the Grand-Duchy of Luxembourg, the country the author of this book hails from. Let’s suppose that I want to generate several plots, per subnational division and per year. Typically, we would use a loop for this, but we can use what we’ve learned here, as well as some functions from the <code>{dplyr}</code>, <code>{purrr}</code>, <code>{ggplot2}</code> and <code>{tidyr}</code> packages. I will be downloading data that I made available inside a package, but instead of installng the package, we will dowload the <code>.rda</code> file (which is the file format of packaged data) and then load that data into our R session:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb126"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb126-1"><a href="#cb126-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a temporary file</span></span>
+<span id="cb126-2"><a href="#cb126-2" aria-hidden="true" tabindex="-1"></a>unemp_path <span class="ot">&lt;-</span> <span class="fu">tempfile</span>(<span class="at">fileext =</span> <span class="st">".rda"</span>)</span>
+<span id="cb126-3"><a href="#cb126-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb126-4"><a href="#cb126-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Download the data and save it to the path of the temporary file</span></span>
+<span id="cb126-5"><a href="#cb126-5" aria-hidden="true" tabindex="-1"></a><span class="fu">download.file</span>(<span class="st">"https://github.com/b-rodrigues/myPackage/raw/main/data/unemp.rda"</span>, <span class="at">destfile =</span> unemp_path)</span>
+<span id="cb126-6"><a href="#cb126-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb126-7"><a href="#cb126-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the data. The data is now available as 'unemp'</span></span>
+<span id="cb126-8"><a href="#cb126-8" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(unemp_path)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Let’s load the required packages and take a look at the data:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb127"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb127-1"><a href="#cb127-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'dplyr'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:stats':
+
+    filter, lag</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:base':
+
+    intersect, setdiff, setequal, union</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb131"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb131-1"><a href="#cb131-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(purrr)</span>
+<span id="cb131-2"><a href="#cb131-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb131-3"><a href="#cb131-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
+<span id="cb131-4"><a href="#cb131-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb131-5"><a href="#cb131-5" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(unemp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 472
+Columns: 9
+$ year                         &lt;dbl&gt; 2013, 2013, 2013, 2013, 2013, 2013, 2013,…
+$ place_name                   &lt;chr&gt; "Luxembourg", "Capellen", "Dippach", "Gar…
+$ level                        &lt;chr&gt; "Country", "Canton", "Commune", "Commune"…
+$ total_employed_population    &lt;dbl&gt; 223407, 17802, 1703, 844, 1431, 4094, 214…
+$ of_which_wage_earners        &lt;dbl&gt; 203535, 15993, 1535, 750, 1315, 3800, 187…
+$ of_which_non_wage_earners    &lt;dbl&gt; 19872, 1809, 168, 94, 116, 294, 272, 113,…
+$ unemployed                   &lt;dbl&gt; 19287, 1071, 114, 25, 74, 261, 98, 45, 66…
+$ active_population            &lt;dbl&gt; 242694, 18873, 1817, 869, 1505, 4355, 224…
+$ unemployment_rate_in_percent &lt;dbl&gt; 7.947044, 5.674773, 6.274078, 2.876870, 4…</code></pre>
+</div>
+</div>
+<p>Column names are self-descriptive, but the <code>level</code> column needs some explanations. The country of Luxembourg is divided into <em>Cantons</em>, and these <em>Cantons</em> themselves into <em>Communes</em>.</p>
+<p>You should know that the word <em>Luxembourg</em> can refer to the country, the canton or the commune of Luxembourg. Now let’s suppose that I want a separate plot for the three communes of Luxembourg, Esch-sur-Alzette and Wiltz. Instead of creating three separate data frames and feeding them to the same ggplot code, I can instead take advantage of the fact that data frames are lists, and are thus quite flexible. Let’s start with filtering:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb133"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb133-1"><a href="#cb133-1" aria-hidden="true" tabindex="-1"></a>filtered_unemp <span class="ot">&lt;-</span> unemp <span class="sc">%&gt;%</span></span>
+<span id="cb133-2"><a href="#cb133-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(</span>
+<span id="cb133-3"><a href="#cb133-3" aria-hidden="true" tabindex="-1"></a>    level <span class="sc">==</span> <span class="st">"Commune"</span>,</span>
+<span id="cb133-4"><a href="#cb133-4" aria-hidden="true" tabindex="-1"></a>    place_name <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Luxembourg"</span>, <span class="st">"Esch-sur-Alzette"</span>, <span class="st">"Wiltz"</span>)</span>
+<span id="cb133-5"><a href="#cb133-5" aria-hidden="true" tabindex="-1"></a>   )</span>
+<span id="cb133-6"><a href="#cb133-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb133-7"><a href="#cb133-7" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(filtered_unemp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 12
+Columns: 9
+$ year                         &lt;dbl&gt; 2013, 2013, 2013, 2014, 2014, 2014, 2015,…
+$ place_name                   &lt;chr&gt; "Esch-sur-Alzette", "Luxembourg", "Wiltz"…
+$ level                        &lt;chr&gt; "Commune", "Commune", "Commune", "Commune…
+$ total_employed_population    &lt;dbl&gt; 12725, 39513, 2344, 13155, 40768, 2377, 1…
+$ of_which_wage_earners        &lt;dbl&gt; 12031, 35531, 2149, 12452, 36661, 2192, 1…
+$ of_which_non_wage_earners    &lt;dbl&gt; 694, 3982, 195, 703, 4107, 185, 710, 4140…
+$ unemployed                   &lt;dbl&gt; 2054, 3855, 318, 1997, 3836, 315, 2031, 3…
+$ active_population            &lt;dbl&gt; 14779, 43368, 2662, 15152, 44604, 2692, 1…
+$ unemployment_rate_in_percent &lt;dbl&gt; 13.898099, 8.889043, 11.945905, 13.179778…</code></pre>
+</div>
+</div>
+<p>We are now going to use the fact that data frames are lists, and that lists can hold any type of object. For example, remember this list from before where one of the elements is a data frame, and the second one a formula:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb135"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb135-1"><a href="#cb135-1" aria-hidden="true" tabindex="-1"></a><span class="fu">list</span>(</span>
+<span id="cb135-2"><a href="#cb135-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"a"</span> <span class="ot">=</span> <span class="fu">head</span>(mtcars),</span>
+<span id="cb135-3"><a href="#cb135-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"b"</span> <span class="ot">=</span> <span class="er">~</span><span class="fu">lm</span>(y <span class="sc">~</span> x)</span>
+<span id="cb135-4"><a href="#cb135-4" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$a
+                   mpg cyl disp  hp drat    wt  qsec vs am gear carb
+Mazda RX4         21.0   6  160 110 3.90 2.620 16.46  0  1    4    4
+Mazda RX4 Wag     21.0   6  160 110 3.90 2.875 17.02  0  1    4    4
+Datsun 710        22.8   4  108  93 3.85 2.320 18.61  1  1    4    1
+Hornet 4 Drive    21.4   6  258 110 3.08 3.215 19.44  1  0    3    1
+Hornet Sportabout 18.7   8  360 175 3.15 3.440 17.02  0  0    3    2
+Valiant           18.1   6  225 105 2.76 3.460 20.22  1  0    3    1
+
+$b
+~lm(y ~ x)</code></pre>
+</div>
+</div>
+<p><code>{dplyr}</code> comes with a function called <code>group_nest()</code> which groups the data frame by a variable (such that the next computations will be performed group-wise) and then nests the other columns into a smaller data frame. Let’s try it and see what happens:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb137"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb137-1"><a href="#cb137-1" aria-hidden="true" tabindex="-1"></a>nested_unemp <span class="ot">&lt;-</span> filtered_unemp <span class="sc">%&gt;%</span></span>
+<span id="cb137-2"><a href="#cb137-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_nest</span>(place_name) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Let’s see how this looks like:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb138"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb138-1"><a href="#cb138-1" aria-hidden="true" tabindex="-1"></a>nested_unemp</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 2
+  place_name                     data
+  &lt;chr&gt;            &lt;list&lt;tibble[,8]&gt;&gt;
+1 Esch-sur-Alzette            [4 × 8]
+2 Luxembourg                  [4 × 8]
+3 Wiltz                       [4 × 8]</code></pre>
+</div>
+</div>
+<p><code>nested_unemp</code> is a new data frame of 3 rows, one per commune (“Esch-sur-Alzette”, “Luxembourg”, “Wiltz”), and of two columns, one for the names of the communes, and the other contains every other variable inside a smaller data frame. So this is a data frame that has one column where each element of that column is itself a data frame. Such a column is called a list-column. This is essentially a list of lists.</p>
+<p>Let’s now think about this for a moment. If the column titled <code>data</code> is a list of data frames, it should be possible to use a function like <code>map()</code> or <code>lapply()</code> to apply a function on each of these data frames. Remember that <code>map()</code> or <code>lapply()</code> require a list of elements of whatever type and a function that accepts objects of this type as input. So this means that we could apply a function that plots the data to each element of the column titled <code>data</code>. Since each element of this column is a data frame, this functions needs a data frame as an input. As a first, simple, example to illustrate this, let’s suppose that we want to determine the number of rows of each data frame. This is how we would do it:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb140"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb140-1"><a href="#cb140-1" aria-hidden="true" tabindex="-1"></a>nested_unemp <span class="sc">%&gt;%</span></span>
+<span id="cb140-2"><a href="#cb140-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">nrows =</span> <span class="fu">map</span>(data, nrow))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 3
+  place_name                     data nrows    
+  &lt;chr&gt;            &lt;list&lt;tibble[,8]&gt;&gt; &lt;list&gt;   
+1 Esch-sur-Alzette            [4 × 8] &lt;int [1]&gt;
+2 Luxembourg                  [4 × 8] &lt;int [1]&gt;
+3 Wiltz                       [4 × 8] &lt;int [1]&gt;</code></pre>
+</div>
+</div>
+<p>The new column, titled <code>nrows</code> is a list of integers. We can simplify it by converting it directly to an atomic vector of integers by using <code>map_int()</code> instead of <code>map()</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb142"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb142-1"><a href="#cb142-1" aria-hidden="true" tabindex="-1"></a>nested_unemp <span class="sc">%&gt;%</span></span>
+<span id="cb142-2"><a href="#cb142-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">nrows =</span> <span class="fu">map_int</span>(data, nrow))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 3
+  place_name                     data nrows
+  &lt;chr&gt;            &lt;list&lt;tibble[,8]&gt;&gt; &lt;int&gt;
+1 Esch-sur-Alzette            [4 × 8]     4
+2 Luxembourg                  [4 × 8]     4
+3 Wiltz                       [4 × 8]     4</code></pre>
+</div>
+</div>
+<p>Let’s try for a more complex example now. What if we want to filter rows? (The simplest way would of course to filter the rows we need before nesting the data frame). We need to apply the function <code>filter()</code> where its first argument is a data frame and the second argument is a predicate:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb144"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb144-1"><a href="#cb144-1" aria-hidden="true" tabindex="-1"></a>nested_unemp <span class="sc">%&gt;%</span></span>
+<span id="cb144-2"><a href="#cb144-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">nrows =</span> <span class="fu">map</span>(data, \(x)<span class="fu">filter</span>(x, year <span class="sc">==</span> <span class="dv">2015</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 3
+  place_name                     data nrows           
+  &lt;chr&gt;            &lt;list&lt;tibble[,8]&gt;&gt; &lt;list&gt;          
+1 Esch-sur-Alzette            [4 × 8] &lt;tibble [1 × 8]&gt;
+2 Luxembourg                  [4 × 8] &lt;tibble [1 × 8]&gt;
+3 Wiltz                       [4 × 8] &lt;tibble [1 × 8]&gt;</code></pre>
+</div>
+</div>
+<p>In this case here, we need to use an anonymous function. This is because <code>filter()</code> has two arguments, and we need to make clear what it is we are mapping over and what argument stays fixed; we are mapping over, or iterating if you will, data frames, but the predicate stays fixed.</p>
+<p>We are now ready to plot our data. The best way to continue is to first get the function right by creating one plot for one single commune. Let’s select the dataset for the commune of <code>Luxembourg</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb146"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb146-1"><a href="#cb146-1" aria-hidden="true" tabindex="-1"></a>lux_data <span class="ot">&lt;-</span> nested_unemp <span class="sc">%&gt;%</span></span>
+<span id="cb146-2"><a href="#cb146-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(place_name <span class="sc">==</span> <span class="st">"Luxembourg"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb146-3"><a href="#cb146-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest</span>(data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>To plot this data, we can now write the required <code>ggplot2()</code> code:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb147"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb147-1"><a href="#cb147-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> lux_data) <span class="sc">+</span></span>
+<span id="cb147-2"><a href="#cb147-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb147-3"><a href="#cb147-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(</span>
+<span id="cb147-4"><a href="#cb147-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(year, unemployment_rate_in_percent, <span class="at">group =</span> <span class="dv">1</span>)</span>
+<span id="cb147-5"><a href="#cb147-5" aria-hidden="true" tabindex="-1"></a>   ) <span class="sc">+</span></span>
+<span id="cb147-6"><a href="#cb147-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Unemployment in Luxembourg"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="fprog_files/figure-html/unnamed-chunk-96-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>To turn the lines of code above into a function, you need to think about how many arguments that function would have. There is an obvious one, the data itself (in the snippet above, the data is the <code>lux_data</code> object). Another one that is less obvious is in the title:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb148"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb148-1"><a href="#cb148-1" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Unemployment in Luxembourg"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$title
+[1] "Unemployment in Luxembourg"
+
+attr(,"class")
+[1] "labels"</code></pre>
+</div>
+</div>
+<p>Ideally, we would want that title to change, depending on the data set. So we could write the function like so:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb150"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb150-1"><a href="#cb150-1" aria-hidden="true" tabindex="-1"></a>make_plot <span class="ot">&lt;-</span> <span class="cf">function</span>(x, y){</span>
+<span id="cb150-2"><a href="#cb150-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="at">data =</span> x) <span class="sc">+</span></span>
+<span id="cb150-3"><a href="#cb150-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb150-4"><a href="#cb150-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>(</span>
+<span id="cb150-5"><a href="#cb150-5" aria-hidden="true" tabindex="-1"></a>      <span class="fu">aes</span>(year, unemployment_rate_in_percent, <span class="at">group =</span> <span class="dv">1</span>)</span>
+<span id="cb150-6"><a href="#cb150-6" aria-hidden="true" tabindex="-1"></a>      ) <span class="sc">+</span></span>
+<span id="cb150-7"><a href="#cb150-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="fu">paste</span>(<span class="st">"Unemployment in"</span>, y))</span>
+<span id="cb150-8"><a href="#cb150-8" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Let’s try it on our data:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb151"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb151-1"><a href="#cb151-1" aria-hidden="true" tabindex="-1"></a><span class="fu">make_plot</span>(lux_data, <span class="st">"Luxembourg"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="fprog_files/figure-html/unnamed-chunk-99-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Ok, so now, we simply need to apply this function to our nested data frame:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb152"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb152-1"><a href="#cb152-1" aria-hidden="true" tabindex="-1"></a>nested_unemp <span class="ot">&lt;-</span> nested_unemp <span class="sc">%&gt;%</span></span>
+<span id="cb152-2"><a href="#cb152-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">plots =</span> <span class="fu">map2</span>(</span>
+<span id="cb152-3"><a href="#cb152-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">.x =</span> data,</span>
+<span id="cb152-4"><a href="#cb152-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">.y =</span> place_name,</span>
+<span id="cb152-5"><a href="#cb152-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">.f =</span> make_plot</span>
+<span id="cb152-6"><a href="#cb152-6" aria-hidden="true" tabindex="-1"></a>  ))</span>
+<span id="cb152-7"><a href="#cb152-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb152-8"><a href="#cb152-8" aria-hidden="true" tabindex="-1"></a>nested_unemp</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 3
+  place_name                     data plots 
+  &lt;chr&gt;            &lt;list&lt;tibble[,8]&gt;&gt; &lt;list&gt;
+1 Esch-sur-Alzette            [4 × 8] &lt;gg&gt;  
+2 Luxembourg                  [4 × 8] &lt;gg&gt;  
+3 Wiltz                       [4 × 8] &lt;gg&gt;  </code></pre>
+</div>
+</div>
+<p>If you look at the <code>plots</code> column, you see that it is a list of <code>gg</code> objects: these are our plots. Let’s take a look at them:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb154"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb154-1"><a href="#cb154-1" aria-hidden="true" tabindex="-1"></a>nested_unemp<span class="sc">$</span>plots</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[[1]]</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="fprog_files/figure-html/unnamed-chunk-101-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+[[2]]</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="fprog_files/figure-html/unnamed-chunk-101-2.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+[[3]]</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="fprog_files/figure-html/unnamed-chunk-101-3.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>We could also have used an anonymous function:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb158"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb158-1"><a href="#cb158-1" aria-hidden="true" tabindex="-1"></a>nested_unemp <span class="sc">%&gt;%</span></span>
+<span id="cb158-2"><a href="#cb158-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">plots2 =</span> <span class="fu">map2</span>(</span>
+<span id="cb158-3"><a href="#cb158-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">.x =</span> data,</span>
+<span id="cb158-4"><a href="#cb158-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">.y =</span> place_name,</span>
+<span id="cb158-5"><a href="#cb158-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">.f =</span> \(.x,.y)(</span>
+<span id="cb158-6"><a href="#cb158-6" aria-hidden="true" tabindex="-1"></a>                <span class="fu">ggplot</span>(<span class="at">data =</span> .x) <span class="sc">+</span></span>
+<span id="cb158-7"><a href="#cb158-7" aria-hidden="true" tabindex="-1"></a>                  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb158-8"><a href="#cb158-8" aria-hidden="true" tabindex="-1"></a>                  <span class="fu">geom_line</span>(</span>
+<span id="cb158-9"><a href="#cb158-9" aria-hidden="true" tabindex="-1"></a>                    <span class="fu">aes</span>(year, unemployment_rate_in_percent, <span class="at">group =</span> <span class="dv">1</span>)</span>
+<span id="cb158-10"><a href="#cb158-10" aria-hidden="true" tabindex="-1"></a>                   ) <span class="sc">+</span></span>
+<span id="cb158-11"><a href="#cb158-11" aria-hidden="true" tabindex="-1"></a>                  <span class="fu">labs</span>(<span class="at">title =</span> <span class="fu">paste</span>(<span class="st">"Unemployment in"</span>, .y))</span>
+<span id="cb158-12"><a href="#cb158-12" aria-hidden="true" tabindex="-1"></a>                  )</span>
+<span id="cb158-13"><a href="#cb158-13" aria-hidden="true" tabindex="-1"></a>           )</span>
+<span id="cb158-14"><a href="#cb158-14" aria-hidden="true" tabindex="-1"></a>         ) <span class="sc">%&gt;%</span></span>
+<span id="cb158-15"><a href="#cb158-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(plots2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[[1]]</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="fprog_files/figure-html/unnamed-chunk-102-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+[[2]]</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="fprog_files/figure-html/unnamed-chunk-102-2.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+[[3]]</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="fprog_files/figure-html/unnamed-chunk-102-3.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>This column-list based workflow is extremely powerful and I highly advise you to take the required time to master it.</p>
+</section>
+</section>
+<section id="functional-programming-in-r" class="level2" data-number="2.4">
+<h2 data-number="2.4" class="anchored" data-anchor-id="functional-programming-in-r"><span class="header-section-number">2.4</span> Functional programming in R</h2>
+<p>Up until now we focused more on concepts than on specificities of the R programming language when it comes to functional programming. In the section, we will be focusing entirely on R-specific capabilities and packages for functional programming.</p>
+<section id="base-capabilities" class="level3" data-number="2.4.1">
+<h3 data-number="2.4.1" class="anchored" data-anchor-id="base-capabilities"><span class="header-section-number">2.4.1</span> Base capabilities</h3>
+<p>R is a functional programming language, as already stated, and as such it comes with many functions out of the box to write functional code. We have already discussed <code>lapply()</code> and <code>Reduce()</code>. You should know that depending on what you want to achieve, there are other functions that are similar to <code>lapply()</code>: <code>apply()</code>, <code>sapply()</code>, <code>vapply()</code>, <code>mapply()</code> and <code>tapply()</code>. There’s also <code>Map()</code> which is a wrapper around <code>mapply()</code>. Each function performs the same basic task of applying a function over all the elements of a list or list-like structure, but it can be hard to keep them apart. This is why <code>{purrr}</code>, which we will discuss in the next section, is quite an interesting alternative to base R’s offering.</p>
+<p>Another one of the quintessential functional programming functions (alongside <code>Reduce()</code> and <code>Map()</code>) that ships with R is <code>Filter()</code>. If you know <code>dplyr::filter()</code> you should be familiar with the concept of filtering rows of a data frame where the elements of one particular column satisfy a predicate. <code>Filter()</code> works the same way, but focusing on lists instead of data frame:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb162"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb162-1"><a href="#cb162-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Filter</span>(is.character,</span>
+<span id="cb162-2"><a href="#cb162-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">list</span>(</span>
+<span id="cb162-3"><a href="#cb162-3" aria-hidden="true" tabindex="-1"></a>         <span class="fu">seq</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>),</span>
+<span id="cb162-4"><a href="#cb162-4" aria-hidden="true" tabindex="-1"></a>         <span class="st">"Hey"</span>)</span>
+<span id="cb162-5"><a href="#cb162-5" aria-hidden="true" tabindex="-1"></a>       )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[[1]]
+[1] "Hey"</code></pre>
+</div>
+</div>
+<p>The call above only returns the elements where <code>is.character()</code> evaluates to <code>TRUE</code>.</p>
+<p>Another useful function is <code>Negate()</code> which is a function factory that takes a boolean function as an input and returns the opposite boolean function. As an illustration, suppose that in the example above we wanted to get everything <em>but</em> the character:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb164"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb164-1"><a href="#cb164-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Filter</span>(<span class="fu">Negate</span>(is.character),</span>
+<span id="cb164-2"><a href="#cb164-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">list</span>(</span>
+<span id="cb164-3"><a href="#cb164-3" aria-hidden="true" tabindex="-1"></a>         <span class="fu">seq</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>),</span>
+<span id="cb164-4"><a href="#cb164-4" aria-hidden="true" tabindex="-1"></a>         <span class="st">"Hey"</span>)</span>
+<span id="cb164-5"><a href="#cb164-5" aria-hidden="true" tabindex="-1"></a>       )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[[1]]
+[1] 1 2 3 4 5</code></pre>
+</div>
+</div>
+<p>There are some other functions like this that you might want to check out: type <code>?Negate</code> in console to read more about them.</p>
+<p>Before continuing with R packages that extend R’s functional programming capabilities it’s also important to stress that just as R is a functional programming language, it is also an object oriented language. In fact, R is what John Chambers called a <em>functional OOP</em> language (<span class="citation" data-cites="chambers2014">Chambers (<a href="#ref-chambers2014" role="doc-biblioref">2014</a>)</span>). We won’t delve too much into what this means (read <span class="citation" data-cites="wickham2019">Wickham (<a href="#ref-wickham2019" role="doc-biblioref">2019</a>)</span> for this), but as a short discussion, consider the <code>print()</code> function. Depending on what type of object the user gives it, it seems as if somehow <code>print()</code> knows what to do with it:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb166"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb166-1"><a href="#cb166-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 5</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb168"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb168-1"><a href="#cb168-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">head</span>(mtcars))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                   mpg cyl disp  hp drat    wt  qsec vs am gear carb
+Mazda RX4         21.0   6  160 110 3.90 2.620 16.46  0  1    4    4
+Mazda RX4 Wag     21.0   6  160 110 3.90 2.875 17.02  0  1    4    4
+Datsun 710        22.8   4  108  93 3.85 2.320 18.61  1  1    4    1
+Hornet 4 Drive    21.4   6  258 110 3.08 3.215 19.44  1  0    3    1
+Hornet Sportabout 18.7   8  360 175 3.15 3.440 17.02  0  0    3    2
+Valiant           18.1   6  225 105 2.76 3.460 20.22  1  0    3    1</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb170"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb170-1"><a href="#cb170-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">str</span>(mtcars))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>'data.frame':   32 obs. of  11 variables:
+ $ mpg : num  21 21 22.8 21.4 18.7 18.1 14.3 24.4 22.8 19.2 ...
+ $ cyl : num  6 6 4 6 8 6 8 4 4 6 ...
+ $ disp: num  160 160 108 258 360 ...
+ $ hp  : num  110 110 93 110 175 105 245 62 95 123 ...
+ $ drat: num  3.9 3.9 3.85 3.08 3.15 2.76 3.21 3.69 3.92 3.92 ...
+ $ wt  : num  2.62 2.88 2.32 3.21 3.44 ...
+ $ qsec: num  16.5 17 18.6 19.4 17 ...
+ $ vs  : num  0 0 1 1 0 1 0 1 1 1 ...
+ $ am  : num  1 1 1 0 0 0 0 0 0 0 ...
+ $ gear: num  4 4 4 3 3 3 3 4 4 4 ...
+ $ carb: num  4 4 1 1 2 1 4 2 2 4 ...
+NULL</code></pre>
+</div>
+</div>
+<p>The way this works, is essentially a mixture of functional and object oriented programming, so functional OOP. Let’s take a closer look at the source code of <code>print()</code> by simply typing <code>print</code> without brackets, into a console:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb172"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb172-1"><a href="#cb172-1" aria-hidden="true" tabindex="-1"></a>print</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>function (x, ...) 
+UseMethod("print")
+&lt;bytecode: 0x55a429e975f8&gt;
+&lt;environment: namespace:base&gt;</code></pre>
+</div>
+</div>
+<p>Quite unexpectedly, the source code of <code>print()</code> is one line long and is just <code>UseMethod("print")</code>. So all <code>print()</code> does is use a generic method called “print”. If your text editor has autocompletion enabled, you might see that there are actually quite a lot of <code>print()</code> functions. For example, type <code>print.data.frame</code> into a console:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb174"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb174-1"><a href="#cb174-1" aria-hidden="true" tabindex="-1"></a>print.data.frame</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>function (x, ..., digits = NULL, quote = FALSE, right = TRUE, 
+    row.names = TRUE, max = NULL) 
+{
+    n &lt;- length(row.names(x))
+    if (length(x) == 0L) {
+        cat(sprintf(ngettext(n, "data frame with 0 columns and %d row", 
+            "data frame with 0 columns and %d rows"), n), "\n", 
+            sep = "")
+    }
+    else if (n == 0L) {
+        print.default(names(x), quote = FALSE)
+        cat(gettext("&lt;0 rows&gt; (or 0-length row.names)\n"))
+    }
+    else {
+        if (is.null(max)) 
+            max &lt;- getOption("max.print", 99999L)
+        if (!is.finite(max)) 
+            stop("invalid 'max' / getOption(\"max.print\"): ", 
+                max)
+        omit &lt;- (n0 &lt;- max%/%length(x)) &lt; n
+        m &lt;- as.matrix(format.data.frame(if (omit) 
+            x[seq_len(n0), , drop = FALSE]
+        else x, digits = digits, na.encode = FALSE))
+        if (!isTRUE(row.names)) 
+            dimnames(m)[[1L]] &lt;- if (isFALSE(row.names)) 
+                rep.int("", if (omit) 
+                  n0
+                else n)
+            else row.names
+        print(m, ..., quote = quote, right = right, max = max)
+        if (omit) 
+            cat(" [ reached 'max' / getOption(\"max.print\") -- omitted", 
+                n - n0, "rows ]\n")
+    }
+    invisible(x)
+}
+&lt;bytecode: 0x55a42c648638&gt;
+&lt;environment: namespace:base&gt;</code></pre>
+</div>
+</div>
+<p>This is the <code>print</code> function for <code>data.frame</code> objects. So what <code>print()</code> does is look at the class of its argument <code>x</code>, and then look for the right <code>print</code> function. In more traditional OOP languages, users would type something like:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb176"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb176-1"><a href="#cb176-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mtcars.print</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>In these languages, objects encapsulate method (the equivalent of our functions), so if <code>mtcars</code> is a data frame, it encapsulates a <code>print()</code> method that then does the printing. R is different, because classes and methods are kept separate. If a package developer creates a new class of object, then the developer also must implement the required methods. For example in the <code>{chronicler}</code> package, the <code>chronicler</code> class is defined and a <code>print.chronicler()</code> function is defined to print these objects.</p>
+<p>All of this to say that if you want to extend R by writing packages, learning some OOP essentials is also important. But for data analysis, functional programming does the job perfectly. To learn more about R’s different OOP systems (yes, R can do OOP in diffirent ways and the one I sketched here is the simplest, but probably the most used as well, one), take a look at <span class="citation" data-cites="wickham2019">Wickham (<a href="#ref-wickham2019" role="doc-biblioref">2019</a>)</span>.</p>
+</section>
+<section id="purrr" class="level3" data-number="2.4.2">
+<h3 data-number="2.4.2" class="anchored" data-anchor-id="purrr"><span class="header-section-number">2.4.2</span> purrr</h3>
+<p>The <code>{purrr}</code> package, developed by Posit, contains many functions to make functional programming with R more smooth. In the previous section, we discussed the <code>apply()</code> family of function; they all do a very similar thing, which is looping over a list and applying a function to the elements of the list, but it is not quite easy to remember which one does what. Also, for some of these functions like <code>apply()</code>, the list comes first, and then the function, but in the case of <code>mapply()</code>, the function comes first. Another issue with these functions is that it is not always easy to know what type the output is going to be. List? Atomic vector? Something else?</p>
+<p><code>{purrr}</code> solves this issue by offering the <code>map()</code> family of functions, which behave in a very conistent way. The basic function is called <code>map()</code> and we’ve already used it:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb177"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb177-1"><a href="#cb177-1" aria-hidden="true" tabindex="-1"></a><span class="fu">map</span>(<span class="fu">seq</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>), sqrt)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[[1]]
+[1] 1
+
+[[2]]
+[1] 1.414214
+
+[[3]]
+[1] 1.732051
+
+[[4]]
+[1] 2
+
+[[5]]
+[1] 2.236068</code></pre>
+</div>
+</div>
+<p>But there are many interesting variants:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb179"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb179-1"><a href="#cb179-1" aria-hidden="true" tabindex="-1"></a><span class="fu">map_dbl</span>(<span class="fu">seq</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>), sqrt)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1.000000 1.414214 1.732051 2.000000 2.236068</code></pre>
+</div>
+</div>
+<p><code>map_dbl()</code> coerces the output to an atomic vector of doubles instead of a list of doubles. Then there’s:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb181"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb181-1"><a href="#cb181-1" aria-hidden="true" tabindex="-1"></a><span class="fu">map_chr</span>(letters, toupper)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "A" "B" "C" "D" "E" "F" "G" "H" "I" "J" "K" "L" "M" "N" "O" "P" "Q" "R" "S"
+[20] "T" "U" "V" "W" "X" "Y" "Z"</code></pre>
+</div>
+</div>
+<p>for when the output needs to be an atomic vector of characters.</p>
+<p>There are many others, so take a look at the document with <code>?map</code>. There’s also <code>walk()</code> which is used if you’re only interested in the side-effect of the function (for example if the function takes paths as input and saves something to disk).</p>
+<p><code>{purrr}</code> also has functions to replace <code>Reduce()</code>, simply called <code>reduce()</code> and <code>accumulate()</code>, and there are many, many other useful functions. Read through the <a href="https://purrr.tidyverse.org/reference/index.html">documentation of the package</a> and take the time to learn about all it has to offer.</p>
+</section>
+<section id="withr" class="level3" data-number="2.4.3">
+<h3 data-number="2.4.3" class="anchored" data-anchor-id="withr"><span class="header-section-number">2.4.3</span> withr</h3>
+<p><code>{withr}</code> is a powerful package that makes it easy to “purify” functions that behave in a way that can cause problems. Remember the function from the introduction that randomly gave out a recipe Bruno liked? Here it is again:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb183"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb183-1"><a href="#cb183-1" aria-hidden="true" tabindex="-1"></a>h <span class="ot">&lt;-</span> <span class="cf">function</span>(name, <span class="at">food_list =</span> <span class="fu">list</span>()){</span>
+<span id="cb183-2"><a href="#cb183-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb183-3"><a href="#cb183-3" aria-hidden="true" tabindex="-1"></a>  food <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="st">"lasagna"</span>, <span class="st">"cassoulet"</span>, <span class="st">"feijoada"</span>), <span class="dv">1</span>)</span>
+<span id="cb183-4"><a href="#cb183-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb183-5"><a href="#cb183-5" aria-hidden="true" tabindex="-1"></a>  food_list <span class="ot">&lt;-</span> <span class="fu">append</span>(food_list, food)</span>
+<span id="cb183-6"><a href="#cb183-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb183-7"><a href="#cb183-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="fu">paste0</span>(name, <span class="st">" likes "</span>, food))</span>
+<span id="cb183-8"><a href="#cb183-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb183-9"><a href="#cb183-9" aria-hidden="true" tabindex="-1"></a>  food_list</span>
+<span id="cb183-10"><a href="#cb183-10" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Because this function returns results that are not consistent for a fixed input, this function is not referentially transparent. So we improved the function like this:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb184"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb184-1"><a href="#cb184-1" aria-hidden="true" tabindex="-1"></a>h2 <span class="ot">&lt;-</span> <span class="cf">function</span>(name, <span class="at">food_list =</span> <span class="fu">list</span>(), <span class="at">seed =</span> <span class="dv">123</span>){</span>
+<span id="cb184-2"><a href="#cb184-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb184-3"><a href="#cb184-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># We set the seed, making sure that we get the same selection of food for a given seed</span></span>
+<span id="cb184-4"><a href="#cb184-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set.seed</span>(seed)</span>
+<span id="cb184-5"><a href="#cb184-5" aria-hidden="true" tabindex="-1"></a>  food <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="st">"lasagna"</span>, <span class="st">"cassoulet"</span>, <span class="st">"feijoada"</span>), <span class="dv">1</span>)</span>
+<span id="cb184-6"><a href="#cb184-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb184-7"><a href="#cb184-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># We now need to unset the seed, because if we don't, guess what, the seed will stay set for the whole session!</span></span>
+<span id="cb184-8"><a href="#cb184-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set.seed</span>(<span class="cn">NULL</span>)</span>
+<span id="cb184-9"><a href="#cb184-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb184-10"><a href="#cb184-10" aria-hidden="true" tabindex="-1"></a>  food_list <span class="ot">&lt;-</span> <span class="fu">append</span>(food_list, food)</span>
+<span id="cb184-11"><a href="#cb184-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb184-12"><a href="#cb184-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="fu">paste0</span>(name, <span class="st">" likes "</span>, food))</span>
+<span id="cb184-13"><a href="#cb184-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb184-14"><a href="#cb184-14" aria-hidden="true" tabindex="-1"></a>  food_list</span>
+<span id="cb184-15"><a href="#cb184-15" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The problem with this approach is that we need to modify our function. We can instead use <code>withr::with_seed()</code> to achieve the same effect:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb185"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb185-1"><a href="#cb185-1" aria-hidden="true" tabindex="-1"></a>withr<span class="sc">::</span><span class="fu">with_seed</span>(<span class="at">seed =</span> <span class="dv">123</span>,</span>
+<span id="cb185-2"><a href="#cb185-2" aria-hidden="true" tabindex="-1"></a>                 <span class="fu">h</span>(<span class="st">"Bruno"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Bruno likes feijoada"</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[[1]]
+[1] "feijoada"</code></pre>
+</div>
+</div>
+<p>It is also easier to create a wrapper if needed:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb188"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb188-1"><a href="#cb188-1" aria-hidden="true" tabindex="-1"></a>h3 <span class="ot">&lt;-</span> <span class="cf">function</span>(..., seed){</span>
+<span id="cb188-2"><a href="#cb188-2" aria-hidden="true" tabindex="-1"></a>  withr<span class="sc">::</span><span class="fu">with_seed</span>(<span class="at">seed =</span> seed,</span>
+<span id="cb188-3"><a href="#cb188-3" aria-hidden="true" tabindex="-1"></a>                   <span class="fu">h</span>(...))</span>
+<span id="cb188-4"><a href="#cb188-4" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb189"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb189-1"><a href="#cb189-1" aria-hidden="true" tabindex="-1"></a><span class="fu">h3</span>(<span class="st">"Bruno"</span>, <span class="at">seed =</span> <span class="dv">123</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Bruno likes feijoada"</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[[1]]
+[1] "feijoada"</code></pre>
+</div>
+</div>
+<p>Before we downloaded a dataset and loaded it into memory; we did so by first created a temporary file, then downloading it and then loading it. Suppose that instead of loading this data into our session, we simply wanted to test whether the link was still working. We wouldn’t want to keep the loaded data in our session, so to avoid having to delete it again manually, we could use <code>with_tempfile()</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb192"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb192-1"><a href="#cb192-1" aria-hidden="true" tabindex="-1"></a>withr<span class="sc">::</span><span class="fu">with_tempfile</span>(<span class="st">"unemp"</span>, {</span>
+<span id="cb192-2"><a href="#cb192-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">download.file</span>(<span class="st">"https://github.com/b-rodrigues/myPackage/raw/main/data/unemp.rda"</span>, <span class="at">destfile =</span> unemp)</span>
+<span id="cb192-3"><a href="#cb192-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">load</span>(unemp)</span>
+<span id="cb192-4"><a href="#cb192-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">nrow</span>(unemp)</span>
+<span id="cb192-5"><a href="#cb192-5" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb192-6"><a href="#cb192-6" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in unlink(mget(new, envir = env), recursive = TRUE): expanded path length 35189 would be too long for
+list(year = c(2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 
+2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2014, 2014, 2014, 2014, 2014, 2014, 2014, 2014, 2014, 2014, 2014, 2014, 2014, 2014, 2014, 2014, 2014, 2014, 2014, 2014, 2014, 2014, 2014, 2014, 2014, 2014, 2014, 2014, 2014, 2014, 2014, 2014, 2014, 2014, 2014, 2014, 2014, 2014,  [... truncated]</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 472</code></pre>
+</div>
+</div>
+<p>The data got downloaded, and then loaded, and then we computed the number of rows of the data, without touching the global environment, or state, of our current session.</p>
+<p>Just like for <code>{purrr}</code>, <code>{withr}</code> has many useful functions which I encourage you to <a href="https://withr.r-lib.org/reference/index.html">familiarize yourself with</a>.</p>
+</section>
+</section>
+<section id="conclusion" class="level2" data-number="2.5">
+<h2 data-number="2.5" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">2.5</span> Conclusion</h2>
+<p>If there is only one thing that you should remember from this chapter, it would be pure functions. This is in my opinion not very difficult to do and comes with many benefits. But, avoiding loops and replacing them with higher-order functions (<code>lapply()</code>, <code>Reduce()</code>, <code>purrr::map()</code> – and its variants –) also pays off. While this chapter stresses the advantages of functional programming, you should not forget that R is not a pure, and solely, functional programming language and that other paradigms, like object oriented programming, are also available to you, and if your goal is to master the language (instead of “just” using it to solve data analysis problems), then you also need to know about R’s OOP capabilities.</p>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
+<div id="ref-chambers2014" class="csl-entry" role="doc-biblioentry">
+Chambers, John M. 2014. <span>“<span class="nocase">Object-Oriented Programming, Functional Programming and R</span>.”</span> <em>Statistical Science</em> 29 (2): 167–80. <a href="https://doi.org/10.1214/13-STS452">https://doi.org/10.1214/13-STS452</a>.
+</div>
+<div id="ref-wickham2019" class="csl-entry" role="doc-biblioentry">
+Wickham, Hadley. 2019. <em>Advanced r</em>. CRC press.
+</div>
+</div>
 </section>
 <section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr>

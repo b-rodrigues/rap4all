@@ -147,19 +147,21 @@ For ease of presentation, we are going to show you each function here separately
 everything together in a single Rmd file at the end. So first, let's read in the data. For this,
 we will be using this function here:
 
+```{r, include = FALSE}
+library(dplyr)
+```
+
 ```{r}
 get_raw_data <- function(url = "https://github.com/b-rodrigues/rap4all/raw/master/datasets/vente-maison-2010-2021.xlsx"){
-  #raw_data <- tempfile(fileext = ".xlsx")
+  raw_data <- tempfile(fileext = ".xlsx")
 
-  #download.file(url, raw_data)
-
-  raw_data <- "c:/Users/LLP685/Downloads/vente-maison-2010-2021.xlsx"
+  download.file(url, raw_data)
 
   sheets <- readxl::excel_sheets(raw_data)
 
   read_clean <- function(..., sheet){
-    readxl::read_excel(..., sheet = sheet) %>%
-      mutate(year = sheet)
+    readxl::read_excel(..., sheet = sheet) |>
+      dplyr::mutate(year = sheet)
   }
 
   raw_data <- purrr::map(
@@ -167,19 +169,19 @@ get_raw_data <- function(url = "https://github.com/b-rodrigues/rap4all/raw/maste
                        ~read_clean(raw_data,
                                    skip = 10,
                                    sheet = .)
-                  ) %>%
-  dplyr::bind_rows() %>%
+                  ) |>
+  dplyr::bind_rows() |>
   janitor::clean_names()
 
-  raw_data %>%
+  raw_data |>
     dplyr::rename(
              locality = commune,
              n_offers = nombre_doffres,
              average_price_nominal_euros = prix_moyen_annonce_en_courant,
              average_price_m2_nominal_euros = prix_moyen_annonce_au_m2_en_courant,
              average_price_m2_nominal_euros = prix_moyen_annonce_au_m2_en_courant
-           ) %>%
-    dplyr::mutate(locality = stringr::str_trim(locality)) %>%
+           ) |>
+    dplyr::mutate(locality = stringr::str_trim(locality)) |>
     dplyr::select(year, locality, n_offers, dplyr::starts_with("average"))
 
 }
@@ -231,9 +233,9 @@ you would eventually catch as you would be exploring the data: naming of the com
 Let's take a look:
 
 ```{r}
-raw_data %>%
-  filter(grepl("Luxembourg", locality)) %>%
-  count(locality)
+raw_data |>
+  dplyr::filter(grepl("Luxembourg", locality)) |>
+  dplyr::count(locality)
 
 ```
 
@@ -241,9 +243,9 @@ We can see that the city of Luxembourg is spelled in two different ways. It's th
 commune, Pétange:
 
 ```{r}
-raw_data %>%
-  filter(grepl("P.tange", locality)) %>%
-  count(locality)
+raw_data |>
+  dplyr::filter(grepl("P.tange", locality)) |>
+  dplyr::count(locality)
 
 ```
 
@@ -251,14 +253,14 @@ So sometimes it is spelled correctly, with an "é", sometimes not. Let's write s
 this:
 
 ```{r}
-raw_data <- raw_data %>%
+raw_data <- raw_data |>
     mutate(locality = ifelse(grepl("Luxembourg-Ville", locality),
                              "Luxembourg",
                              locality),
            locality = ifelse(grepl("P.tange", locality),
                              "Pétange",
                              locality)
-           ) %>%
+           ) |>
     mutate(across(starts_with("average"), as.numeric))
 
 ```
@@ -267,7 +269,7 @@ Now this is interesting -- converting the `average` columns to numeric resulted 
 Let's see what happened:
 
 ```{r}
-raw_data %>%
+raw_data |>
   filter(is.na(average_price_nominal_euros))
 ```
 
@@ -289,14 +291,14 @@ create two datasets: one with data on communes, and the other on national prices
 remove the rows stating the sources:
 
 ```{r}
-raw_data <- raw_data %>%
+raw_data <- raw_data |>
   filter(!grepl("Source", locality))
 ```
 
 Let's now only keep the communes in our data:
 
 ```{r}
-commune_level_data <- raw_data %>%
+commune_level_data <- raw_data |>
     filter(!grepl("nationale|offres", locality),
            !is.na(locality))
 ```
@@ -304,16 +306,16 @@ commune_level_data <- raw_data %>%
 And let's create a dataset with the national data as well:
 
 ```{r}
-country_level <- raw_data %>%
-  filter(grepl("nationale", locality)) %>%
+country_level <- raw_data |>
+  filter(grepl("nationale", locality)) |>
   select(-n_offers)
 
-offers_country <- raw_data %>%
-  filter(grepl("Total d.offres", locality)) %>%
+offers_country <- raw_data |>
+  filter(grepl("Total d.offres", locality)) |>
   select(year, n_offers)
 
-country_level_data <- full_join(country_level, offers_country) %>%
-  select(year, locality, n_offers, everything()) %>%
+country_level_data <- full_join(country_level, offers_country) |>
+  select(year, locality, n_offers, everything()) |>
   mutate(locality = "Grand-Duchy of Luxembourg")
 
 ```
@@ -326,11 +328,11 @@ of communes from Luxembourg.
 Let's scrape and save this list:
 
 ```{r}
-current_communes <- "https://en.wikipedia.org/wiki/List_of_communes_of_Luxembourg" %>%
-  rvest::read_html() %>%
-  rvest::html_table() %>%
-  purrr::pluck(1) %>%
-  clean_names()
+current_communes <- "https://en.wikipedia.org/wiki/List_of_communes_of_Luxembourg" |>
+  rvest::read_html() |>
+  rvest::html_table() |>
+  purrr::pluck(1) |>
+  janitor::clean_names()
 
 ```
 
@@ -353,12 +355,12 @@ communes from 2010 onwards, and then, harmonise spelling. Here again, we can use
 Wikipedia:
 
 ```{r}
-former_communes <- "https://en.wikipedia.org/wiki/Communes_of_Luxembourg#Former_communes" %>%  
-  read_html() %>%
-  html_table() %>%
-  pluck(3) %>%
-  clean_names() %>%
-  filter(year_dissolved > 2009)
+former_communes <- "https://en.wikipedia.org/wiki/Communes_of_Luxembourg#Former_communes" |>  
+  rvest::read_html() |>
+  rvest::html_table() |>
+  purrr::pluck(3) |>
+  janitor::clean_names() |>
+  dplyr::filter(year_dissolved > 2009)
 
 former_communes
 
