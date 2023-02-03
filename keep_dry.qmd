@@ -536,9 +536,9 @@ create_table <- function(dataset, var){
 }
 ```
 
-The function above uses the `table()` function to create frequency tables, and then this gets
-passed to the `knitr::kable()` function that produces a good looking table for our rendered
-document:
+The function above uses the `table()` function to create frequency tables, 
+and then this gets passed to the `knitr::kable()` function that produces a 
+good looking table for our rendered document:
 
 ```{r}
 create_table(mtcars, "am")
@@ -714,21 +714,26 @@ res <- lapply(x,
 cat(unlist(res), sep = "\n")
 ```
 
-The child document is the `text` argument to the `knit_child()` function. `text` is literal R
-Markdown code: we define a level 2 header, and then an R chunk. This child document gets knitted,
-so we need to specify the environment in which it should get knitted. This means that the child
-document will get knitted in the same environment as the parent document (our current global
-environment). This way, every package that get loaded and every function or variable that got
-defined in the parent document will also be available to the child document.
+The child document is the `text` argument to the `knit_child()` function. 
+`text` is literal R Markdown code: we define a level 2 header, and then 
+an R chunk. This child document gets knitted, so we need to specify the 
+environment in which it should get knitted. This means that the child
+document will get knitted in the same environment as the parent document 
+(our current global environment). This way, every package that get loaded 
+and every function or variable that got defined in the parent document 
+will also be available to the child document.
 
-To get the dataset name as a string, we use the `deparse(substitute(dataset))` trick; this
-substitutes "dataset" by its bound value, so `mtcars`. But `mtcars` is an expression and we don’t
-want it to get evaluated, or the contents of the entire dataset would be used in the title of 
-the section. So we use `deparse()` which turns unevaluated expressions into strings.
+To get the dataset name as a string, we use the 
+`deparse(substitute(dataset))` trick; this substitutes "dataset" by its 
+bound value, so `mtcars`. But `mtcars` is an expression and we don’t
+want it to get evaluated, or the contents of the entire dataset would 
+be used in the title of the section. So we use `deparse()` which turns 
+unevaluated expressions into strings.
 
-We then use `lapply()` to loop over two aesthetics with an anonymous function that encapsulates the
-child document. So we get two child documents that get knitted, one per aesthetic. This gets saved
-into variable `res`. This is thus a list of knitted Markdown.
+We then use `lapply()` to loop over two aesthetics with an anonymous function 
+that encapsulates the child document. So we get two child documents that get
+knitted, one per aesthetic. This gets saved into variable `res`. This is thus
+a list of knitted Markdown.
 
 Finally, we need unlist `res` to actually merge the Markdown code from the 
 child documents into the parent document.

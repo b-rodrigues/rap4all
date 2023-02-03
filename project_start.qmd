@@ -152,7 +152,8 @@ library(dplyr)
 ```
 
 ```{r}
-get_raw_data <- function(url = "https://github.com/b-rodrigues/rap4all/raw/master/datasets/vente-maison-2010-2021.xlsx"){
+get_raw_data <- function(
+          url = "https://github.com/b-rodrigues/rap4all/raw/master/datasets/vente-maison-2010-2021.xlsx"){
   raw_data <- tempfile(fileext = ".xlsx")
 
   download.file(url, raw_data)
