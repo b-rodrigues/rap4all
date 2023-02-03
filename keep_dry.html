@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.313">
+<meta name="generator" content="quarto-1.2.335">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Building reproducible analytical pipelines with the R programming language - 4&nbsp; Keeping it DRY with literate programming</title>
+<title>Building reproducible analytical pipelines with R - 4&nbsp; Keeping it DRY with literate programming</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -171,7 +171,7 @@ div.csl-indent {
   <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="./">Building reproducible analytical pipelines with the R programming language</a> 
+      <a href="./">Building reproducible analytical pipelines with R</a> 
         <div class="sidebar-tools-main">
   <a href="" class="quarto-color-scheme-toggle sidebar-tool" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
 </div>
@@ -300,6 +300,7 @@ div.csl-indent {
 <li>Reproducible.</li>
 </ul>
 <p>We will start our project like someone with time constraints does, and see how we can reach our goal of having a nice reproducible project as painlessly as possible. There is only one catch; to make the whole process as easy as possible, we will be using literate programming, and not simply programming.</p>
+<p>By the way, you might want to create a new repository and use it for the example documents that we are going to work on together in this chapter. But since the goal of this chapter is to teach you about literate programming, we won’t tell you when to commit an push, just try to do it from time to time, and especially once you’re done with an example!</p>
 <section id="literate-programming" class="level2" data-number="4.1">
 <h2 data-number="4.1" class="anchored" data-anchor-id="literate-programming"><span class="header-section-number">4.1</span> Literate programming</h2>
 <p>In literate programming, we mix code and prose together, in a way that makes it easy for both non-technical users and programmers to understand what is going on. Scripts written this way are also very easy to compile, or render, into a variety of document formats like <code>html</code> and <code>docx</code>. R supports several ways of doing literate programming: Sweave, knitr and Quarto.</p>
@@ -433,6 +434,7 @@ output: pdf
 ---
 </code></pre>
 <p>While Quarto is the latest option in literate programming, it is quite recent, and as such, we feel it might be better to stick with <code>{knitr}</code> and the Rmd format for now, so that’s what we’re going to use going forward. Also, the <code>{knitr}</code> and the Rmd format are here to stay, so there’s little risk in keeping using it, and anyways, as already stated, if switching to Quarto becomes a necessity, the cost of switch would be very, very low. In what follows, we won’t be focused on anything really <code>{knitr}</code> or Rmd specific, so should you want to use Quarto instead, you should be able to follow along without any problems at all, since the Rmd and Qmd formats have so much overlap (but whenever there would be major differences between the two formats, we will highlight them).</p>
+<p>In the next two sections, we will discuss how to set up and use <code>{knitr}</code> as well as give you a quick overview of the R Markdown syntax. However, we will very quickly focus on the templating capabilities of <code>{knitr}</code>: expanding text, using child documents, and parameterised reports. These are advanced topics and not easy to tackle if you’re not comfortable with R already. Just as functions and higher-order functions like <code>lapply()</code> avoid having to repeat yourself, so does templating, but for literate programming. The goal is to write functions that returns literal R Markdown code, so that you can loop over these functions to build entire sections of your documents. However, difficult these features are to master, they are also extremely powerful, as they help you focus on what really matters.</p>
 </section>
 <section id="knitr-basics" class="level2" data-number="4.2">
 <h2 data-number="4.2" class="anchored" data-anchor-id="knitr-basics"><span class="header-section-number">4.2</span> <code>{knitr}</code> basics</h2>
@@ -553,7 +555,7 @@ output: pdf
 <span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>The iris dataset has `r nrow(iris)` rows.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>The last sentence from this example has an inline code chunk. This quite useful, as it allows to parametrize sentences and paragraphs, and thus avoids needing to copy and paste (and we will go quite far into how to avoid copy and pasting, thanks to templating and parametrized reports).</p>
+<p>The last sentence from this example has an inline code chunk. This quite useful, as it allows to parameterise sentences and paragraphs, and thus avoids needing to copy and paste (and we will go quite far into how to avoid copy and pasting, thanks to more advanced features we will shortly discuss).</p>
 <p>To finish this crash course, you should know that to use footnotes you need to write the following:</p>
 <div class="sourceCode" id="cb17"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>This sentence has a footnote.[^1]</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -604,9 +606,9 @@ output: pdf
 <span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a>```</span>
 <span id="cb19-20"><a href="#cb19-20" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb19-21"><a href="#cb19-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-22"><a href="#cb19-22" aria-hidden="true" tabindex="-1"></a>The function above uses the `table()` function to create frequency tables,</span>
-<span id="cb19-23"><a href="#cb19-23" aria-hidden="true" tabindex="-1"></a>and then this gets passed to the `knitr::kable()` function that produces</span>
-<span id="cb19-24"><a href="#cb19-24" aria-hidden="true" tabindex="-1"></a>a good looking table for our rendered document:</span>
+<span id="cb19-22"><a href="#cb19-22" aria-hidden="true" tabindex="-1"></a>The function above uses the `table()` function to create frequency tables, and then this gets</span>
+<span id="cb19-23"><a href="#cb19-23" aria-hidden="true" tabindex="-1"></a>passed to the `knitr::kable()` function that produces a good looking table for our rendered</span>
+<span id="cb19-24"><a href="#cb19-24" aria-hidden="true" tabindex="-1"></a>document:</span>
 <span id="cb19-25"><a href="#cb19-25" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb19-26"><a href="#cb19-26" aria-hidden="true" tabindex="-1"></a>```{r}</span>
 <span id="cb19-27"><a href="#cb19-27" aria-hidden="true" tabindex="-1"></a>create_table(mtcars, "am")</span>
@@ -667,6 +669,101 @@ output: pdf
 <p>This will create, for each variable in <code>mtcars</code>, the same R Markdown code as above. Notice that the R Markdown chunk where the call to <code>lapply()</code> is has the option <code>results = "asis"</code>. This is because the function returns literal Markdown code, and we don’t want the parser to have to parse it again. We tell the parser “don’t worry about this bit of code, it’s already good”. As you see, the call to <code>lapply()</code> is wrapped inside <code>invisible()</code>. This is because <code>return_section()</code> does not return anything, it just prints something to the console. No object is returned. So if you don’t wrap the call to <code>lapply()</code> inside <code>invisible()</code>, then a bunch of <code>NULL</code>s will also get printed. To avoid this, use <code>invisible()</code> (and use <code>purrr::walk()</code> rather than <code>purrr::map()</code>).</p>
 <p>Click <a href="https://jolly-arithmetic-ce29cf.netlify.app/">here</a> to see the output.</p>
 <p>This is not an easy topic, so take the time to play around with the example above. Try to print a plot instead of a table, try to generate more complex Markdown code, remove the call to <code>invisible()</code> and knit the document and see what happens with the output, replace the call to <code>lapply()</code> with <code>purrr::walk()</code> or <code>purrr::map()</code>. Really take the time to understand what is going on.</p>
+<p>While extremely powerful, this approach using <code>knitr::knit_expand()</code> only works if your template only contains text. If you need to print something more complicated in the document, you need to use child documents instead. For example, suppose that instead of a table we wanted to show a plot made using <code>{ggplot2}</code>. This would not work, because a ggplot object is not made of text, but is a list with many elements. The <code>print()</code> method for ggplot object then does the fancy printing into a graph. But if you want to show plots using <code>knitr::knit_expand()</code>, then the contents of the list will be shown, not the plot itself. This is where child documents come in. Child documents are exactly what you think they are: they’re smaller documents that get knitted and then embedded into the parent document. You can define anything within these child documents, and as such you can even use them to print more complex objects, like a ggplot object. Let’s go back to the example from before and make use of a child document (for ease of presentation, we will not use a separate Rmd file, but will inline the child document into the main document). Read the Rmd example below carefully, as all the steps are explained:</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>title: "Templating with child documents"</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>output: html_document</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>date: "2023-01-27"</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>```{r setup, include=FALSE}</span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>knitr::opts_chunk$set(echo = TRUE)</span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>library(ggplot2)</span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>```</span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>## A function that creates ggplots</span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a>```{r}</span>
+<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a>create_plot &lt;- function(dataset, aesthetic){</span>
+<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a>  ggplot(dataset) +</span>
+<span id="cb22-18"><a href="#cb22-18" aria-hidden="true" tabindex="-1"></a>    geom_point(aesthetic)</span>
+<span id="cb22-19"><a href="#cb22-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-20"><a href="#cb22-20" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb22-21"><a href="#cb22-21" aria-hidden="true" tabindex="-1"></a>```</span>
+<span id="cb22-22"><a href="#cb22-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-23"><a href="#cb22-23" aria-hidden="true" tabindex="-1"></a>The function above takes a dataset and an aesthetic made using `ggplot2::aes()` to</span>
+<span id="cb22-24"><a href="#cb22-24" aria-hidden="true" tabindex="-1"></a>create a plot:</span>
+<span id="cb22-25"><a href="#cb22-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-26"><a href="#cb22-26" aria-hidden="true" tabindex="-1"></a>```{r}</span>
+<span id="cb22-27"><a href="#cb22-27" aria-hidden="true" tabindex="-1"></a>create_plot(mtcars, aes(y = mpg, x = hp))</span>
+<span id="cb22-28"><a href="#cb22-28" aria-hidden="true" tabindex="-1"></a>```</span>
+<span id="cb22-29"><a href="#cb22-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-30"><a href="#cb22-30" aria-hidden="true" tabindex="-1"></a>Let’s suppose that we want to generate a document that would look like this:</span>
+<span id="cb22-31"><a href="#cb22-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-32"><a href="#cb22-32" aria-hidden="true" tabindex="-1"></a>- first a section title, with the dataset used;</span>
+<span id="cb22-33"><a href="#cb22-33" aria-hidden="true" tabindex="-1"></a>- then a plot</span>
+<span id="cb22-34"><a href="#cb22-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-35"><a href="#cb22-35" aria-hidden="true" tabindex="-1"></a>So it would look like this:</span>
+<span id="cb22-36"><a href="#cb22-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-37"><a href="#cb22-37" aria-hidden="true" tabindex="-1"></a>## Dataset used: "mtcars"</span>
+<span id="cb22-38"><a href="#cb22-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-39"><a href="#cb22-39" aria-hidden="true" tabindex="-1"></a>```{r}</span>
+<span id="cb22-40"><a href="#cb22-40" aria-hidden="true" tabindex="-1"></a>create_plot(mtcars, aes(y = mpg, x = hp))</span>
+<span id="cb22-41"><a href="#cb22-41" aria-hidden="true" tabindex="-1"></a>```</span>
+<span id="cb22-42"><a href="#cb22-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-43"><a href="#cb22-43" aria-hidden="true" tabindex="-1"></a>We don’t want to create these sections for every aesthetic by hand.</span>
+<span id="cb22-44"><a href="#cb22-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-45"><a href="#cb22-45" aria-hidden="true" tabindex="-1"></a>Instead, we can make use of a child document that gets knitted separately</span>
+<span id="cb22-46"><a href="#cb22-46" aria-hidden="true" tabindex="-1"></a>and then embedded in the parent document. The chunk below makes use of this trick:</span>
+<span id="cb22-47"><a href="#cb22-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-48"><a href="#cb22-48" aria-hidden="true" tabindex="-1"></a>```{r, results = "asis"}</span>
+<span id="cb22-49"><a href="#cb22-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-50"><a href="#cb22-50" aria-hidden="true" tabindex="-1"></a>x &lt;- list(aes(y = mpg, x = hp),</span>
+<span id="cb22-51"><a href="#cb22-51" aria-hidden="true" tabindex="-1"></a>          aes(y = mpg, x = hp, size = am))</span>
+<span id="cb22-52"><a href="#cb22-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-53"><a href="#cb22-53" aria-hidden="true" tabindex="-1"></a>res &lt;- lapply(x,</span>
+<span id="cb22-54"><a href="#cb22-54" aria-hidden="true" tabindex="-1"></a>              function(dataset, x){</span>
+<span id="cb22-55"><a href="#cb22-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-56"><a href="#cb22-56" aria-hidden="true" tabindex="-1"></a>  knitr::knit_child(text = c(</span>
+<span id="cb22-57"><a href="#cb22-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-58"><a href="#cb22-58" aria-hidden="true" tabindex="-1"></a>    '\n',</span>
+<span id="cb22-59"><a href="#cb22-59" aria-hidden="true" tabindex="-1"></a>    '## Dataset used: `r deparse(substitute(dataset))`',</span>
+<span id="cb22-60"><a href="#cb22-60" aria-hidden="true" tabindex="-1"></a>    '\n',</span>
+<span id="cb22-61"><a href="#cb22-61" aria-hidden="true" tabindex="-1"></a>    '```{r, echo = F}',</span>
+<span id="cb22-62"><a href="#cb22-62" aria-hidden="true" tabindex="-1"></a>    'print(create_plot(dataset, x))',</span>
+<span id="cb22-63"><a href="#cb22-63" aria-hidden="true" tabindex="-1"></a>    '```'</span>
+<span id="cb22-64"><a href="#cb22-64" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-65"><a href="#cb22-65" aria-hidden="true" tabindex="-1"></a>     ),</span>
+<span id="cb22-66"><a href="#cb22-66" aria-hidden="true" tabindex="-1"></a>     envir = environment(),</span>
+<span id="cb22-67"><a href="#cb22-67" aria-hidden="true" tabindex="-1"></a>     quiet = TRUE)</span>
+<span id="cb22-68"><a href="#cb22-68" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-69"><a href="#cb22-69" aria-hidden="true" tabindex="-1"></a>}, dataset = mtcars)</span>
+<span id="cb22-70"><a href="#cb22-70" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-71"><a href="#cb22-71" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-72"><a href="#cb22-72" aria-hidden="true" tabindex="-1"></a>cat(unlist(res), sep = "\n")</span>
+<span id="cb22-73"><a href="#cb22-73" aria-hidden="true" tabindex="-1"></a>```</span>
+<span id="cb22-74"><a href="#cb22-74" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-75"><a href="#cb22-75" aria-hidden="true" tabindex="-1"></a>The child document is the `text` argument to the `knit_child()` function. `text` is literal R</span>
+<span id="cb22-76"><a href="#cb22-76" aria-hidden="true" tabindex="-1"></a>Markdown code: we define a level 2 header, and then an R chunk. This child document gets knitted,</span>
+<span id="cb22-77"><a href="#cb22-77" aria-hidden="true" tabindex="-1"></a>so we need to specify the environment in which it should get knitted. This means that the child</span>
+<span id="cb22-78"><a href="#cb22-78" aria-hidden="true" tabindex="-1"></a>document will get knitted in the same environment as the parent document (our current global</span>
+<span id="cb22-79"><a href="#cb22-79" aria-hidden="true" tabindex="-1"></a>environment). This way, every package that get loaded and every function or variable that got</span>
+<span id="cb22-80"><a href="#cb22-80" aria-hidden="true" tabindex="-1"></a>defined in the parent document will also be available to the child document.</span>
+<span id="cb22-81"><a href="#cb22-81" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-82"><a href="#cb22-82" aria-hidden="true" tabindex="-1"></a>To get the dataset name as a string, we use the `deparse(substitute(dataset))` trick; this</span>
+<span id="cb22-83"><a href="#cb22-83" aria-hidden="true" tabindex="-1"></a>substitutes "dataset" by its bound value, so `mtcars`. But `mtcars` is an expression and we don’t</span>
+<span id="cb22-84"><a href="#cb22-84" aria-hidden="true" tabindex="-1"></a>want it to get evaluated, or the contents of the entire dataset would be used in the title of </span>
+<span id="cb22-85"><a href="#cb22-85" aria-hidden="true" tabindex="-1"></a>the section. So we use `deparse()` which turns unevaluated expressions into strings.</span>
+<span id="cb22-86"><a href="#cb22-86" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-87"><a href="#cb22-87" aria-hidden="true" tabindex="-1"></a>We then use `lapply()` to loop over two aesthetics with an anonymous function that encapsulates the</span>
+<span id="cb22-88"><a href="#cb22-88" aria-hidden="true" tabindex="-1"></a>child document. So we get two child documents that get knitted, one per aesthetic. This gets saved</span>
+<span id="cb22-89"><a href="#cb22-89" aria-hidden="true" tabindex="-1"></a>into variable `res`. This is thus a list of knitted Markdown.</span>
+<span id="cb22-90"><a href="#cb22-90" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-91"><a href="#cb22-91" aria-hidden="true" tabindex="-1"></a>Finally, we need unlist `res` to actually merge the Markdown code from the </span>
+<span id="cb22-92"><a href="#cb22-92" aria-hidden="true" tabindex="-1"></a>child documents into the parent document.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Click <a href="https://fastidious-bavarois-3b17b9.netlify.app/">here</a> to take a look at the output.</p>
+<p>Here again, take some time to play with the above example. Change the child document, try to print other types of output, really take your time to understand this. To know more about child documents, take a look at <a href="https://bookdown.org/yihui/rmarkdown-cookbook/child-document.html#child-document">this section</a> of the R Markdown Cookbook (<span class="citation" data-cites="xie2020r">Xie, Dervieux, and Riederer (<a href="references.html#ref-xie2020r" role="doc-biblioref">2020</a>)</span>).</p>
 </section>
 <section id="tables-in-r-markdown-documents" class="level3" data-number="4.3.2">
 <h3 data-number="4.3.2" class="anchored" data-anchor-id="tables-in-r-markdown-documents"><span class="header-section-number">4.3.2</span> Tables in R Markdown documents</h3>
@@ -678,30 +775,30 @@ output: pdf
 </ul>
 <p>Let’s start with the simplest type of table, which would be showing the head of a dataset for example. <code>{knitr}</code> comes with the <code>kable()</code> function, but this function generates a very plain looking output. For something publication-worthy, we recommend the <code>{flextable}</code> package, developed by <span class="citation" data-cites="gohel23">Gohel and Skintzos (<a href="references.html#ref-gohel23" role="doc-biblioref">2023</a>)</span>:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(flextable)</span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>my_table <span class="ot">&lt;-</span> <span class="fu">head</span>(mtcars)</span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="fu">flextable</span>(my_table) <span class="sc">|&gt;</span></span>
-<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_caption</span>(<span class="at">caption =</span> <span class="st">"Head of the mtcars dataset"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_booktabs</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(flextable)</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>my_table <span class="ot">&lt;-</span> <span class="fu">head</span>(mtcars)</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="fu">flextable</span>(my_table) <span class="sc">|&gt;</span></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_caption</span>(<span class="at">caption =</span> <span class="st">"Head of the mtcars dataset"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_booktabs</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
-<div class="tabwid"><style>.cl-5ae9ec1c{}.cl-5ae0f5bc{font-family:'DejaVu Sans';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-5ae4a16c{margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-5ae4bb16{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 2pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-5ae4bb20{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-5ae4bb21{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style><table data-quarto-disable-processing="true" class="cl-5ae9ec1c"><caption></caption><thead><tr style="overflow-wrap:break-word;"><th class="cl-5ae4bb16"><p class="cl-5ae4a16c"><span class="cl-5ae0f5bc">mpg</span></p></th><th class="cl-5ae4bb16"><p class="cl-5ae4a16c"><span class="cl-5ae0f5bc">cyl</span></p></th><th class="cl-5ae4bb16"><p class="cl-5ae4a16c"><span class="cl-5ae0f5bc">disp</span></p></th><th class="cl-5ae4bb16"><p class="cl-5ae4a16c"><span class="cl-5ae0f5bc">hp</span></p></th><th class="cl-5ae4bb16"><p class="cl-5ae4a16c"><span class="cl-5ae0f5bc">drat</span></p></th><th class="cl-5ae4bb16"><p class="cl-5ae4a16c"><span class="cl-5ae0f5bc">wt</span></p></th><th class="cl-5ae4bb16"><p class="cl-5ae4a16c"><span class="cl-5ae0f5bc">qsec</span></p></th><th class="cl-5ae4bb16"><p class="cl-5ae4a16c"><span class="cl-5ae0f5bc">vs</span></p></th><th class="cl-5ae4bb16"><p class="cl-5ae4a16c"><span class="cl-5ae0f5bc">am</span></p></th><th class="cl-5ae4bb16"><p class="cl-5ae4a16c"><span class="cl-5ae0f5bc">gear</span></p></th><th class="cl-5ae4bb16"><p class="cl-5ae4a16c"><span class="cl-5ae0f5bc">carb</span></p></th></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-5ae4bb20"><p class="cl-5ae4a16c"><span class="cl-5ae0f5bc">21.0</span></p></td><td class="cl-5ae4bb20"><p class="cl-5ae4a16c"><span class="cl-5ae0f5bc">6</span></p></td><td class="cl-5ae4bb20"><p class="cl-5ae4a16c"><span class="cl-5ae0f5bc">160</span></p></td><td class="cl-5ae4bb20"><p class="cl-5ae4a16c"><span class="cl-5ae0f5bc">110</span></p></td><td class="cl-5ae4bb20"><p class="cl-5ae4a16c"><span class="cl-5ae0f5bc">3.90</span></p></td><td class="cl-5ae4bb20"><p class="cl-5ae4a16c"><span class="cl-5ae0f5bc">2.620</span></p></td><td class="cl-5ae4bb20"><p class="cl-5ae4a16c"><span class="cl-5ae0f5bc">16.46</span></p></td><td class="cl-5ae4bb20"><p class="cl-5ae4a16c"><span class="cl-5ae0f5bc">0</span></p></td><td class="cl-5ae4bb20"><p class="cl-5ae4a16c"><span class="cl-5ae0f5bc">1</span></p></td><td class="cl-5ae4bb20"><p class="cl-5ae4a16c"><span class="cl-5ae0f5bc">4</span></p></td><td class="cl-5ae4bb20"><p class="cl-5ae4a16c"><span class="cl-5ae0f5bc">4</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-5ae4bb20"><p class="cl-5ae4a16c"><span class="cl-5ae0f5bc">21.0</span></p></td><td class="cl-5ae4bb20"><p class="cl-5ae4a16c"><span class="cl-5ae0f5bc">6</span></p></td><td class="cl-5ae4bb20"><p class="cl-5ae4a16c"><span class="cl-5ae0f5bc">160</span></p></td><td class="cl-5ae4bb20"><p class="cl-5ae4a16c"><span class="cl-5ae0f5bc">110</span></p></td><td class="cl-5ae4bb20"><p class="cl-5ae4a16c"><span class="cl-5ae0f5bc">3.90</span></p></td><td class="cl-5ae4bb20"><p class="cl-5ae4a16c"><span class="cl-5ae0f5bc">2.875</span></p></td><td class="cl-5ae4bb20"><p class="cl-5ae4a16c"><span class="cl-5ae0f5bc">17.02</span></p></td><td class="cl-5ae4bb20"><p class="cl-5ae4a16c"><span class="cl-5ae0f5bc">0</span></p></td><td class="cl-5ae4bb20"><p class="cl-5ae4a16c"><span class="cl-5ae0f5bc">1</span></p></td><td class="cl-5ae4bb20"><p class="cl-5ae4a16c"><span class="cl-5ae0f5bc">4</span></p></td><td class="cl-5ae4bb20"><p class="cl-5ae4a16c"><span class="cl-5ae0f5bc">4</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-5ae4bb20"><p class="cl-5ae4a16c"><span class="cl-5ae0f5bc">22.8</span></p></td><td class="cl-5ae4bb20"><p class="cl-5ae4a16c"><span class="cl-5ae0f5bc">4</span></p></td><td class="cl-5ae4bb20"><p class="cl-5ae4a16c"><span class="cl-5ae0f5bc">108</span></p></td><td class="cl-5ae4bb20"><p class="cl-5ae4a16c"><span class="cl-5ae0f5bc">93</span></p></td><td class="cl-5ae4bb20"><p class="cl-5ae4a16c"><span class="cl-5ae0f5bc">3.85</span></p></td><td class="cl-5ae4bb20"><p class="cl-5ae4a16c"><span class="cl-5ae0f5bc">2.320</span></p></td><td class="cl-5ae4bb20"><p class="cl-5ae4a16c"><span class="cl-5ae0f5bc">18.61</span></p></td><td class="cl-5ae4bb20"><p class="cl-5ae4a16c"><span class="cl-5ae0f5bc">1</span></p></td><td class="cl-5ae4bb20"><p class="cl-5ae4a16c"><span class="cl-5ae0f5bc">1</span></p></td><td class="cl-5ae4bb20"><p class="cl-5ae4a16c"><span class="cl-5ae0f5bc">4</span></p></td><td class="cl-5ae4bb20"><p class="cl-5ae4a16c"><span class="cl-5ae0f5bc">1</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-5ae4bb20"><p class="cl-5ae4a16c"><span class="cl-5ae0f5bc">21.4</span></p></td><td class="cl-5ae4bb20"><p class="cl-5ae4a16c"><span class="cl-5ae0f5bc">6</span></p></td><td class="cl-5ae4bb20"><p class="cl-5ae4a16c"><span class="cl-5ae0f5bc">258</span></p></td><td class="cl-5ae4bb20"><p class="cl-5ae4a16c"><span class="cl-5ae0f5bc">110</span></p></td><td class="cl-5ae4bb20"><p class="cl-5ae4a16c"><span class="cl-5ae0f5bc">3.08</span></p></td><td class="cl-5ae4bb20"><p class="cl-5ae4a16c"><span class="cl-5ae0f5bc">3.215</span></p></td><td class="cl-5ae4bb20"><p class="cl-5ae4a16c"><span class="cl-5ae0f5bc">19.44</span></p></td><td class="cl-5ae4bb20"><p class="cl-5ae4a16c"><span class="cl-5ae0f5bc">1</span></p></td><td class="cl-5ae4bb20"><p class="cl-5ae4a16c"><span class="cl-5ae0f5bc">0</span></p></td><td class="cl-5ae4bb20"><p class="cl-5ae4a16c"><span class="cl-5ae0f5bc">3</span></p></td><td class="cl-5ae4bb20"><p class="cl-5ae4a16c"><span class="cl-5ae0f5bc">1</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-5ae4bb20"><p class="cl-5ae4a16c"><span class="cl-5ae0f5bc">18.7</span></p></td><td class="cl-5ae4bb20"><p class="cl-5ae4a16c"><span class="cl-5ae0f5bc">8</span></p></td><td class="cl-5ae4bb20"><p class="cl-5ae4a16c"><span class="cl-5ae0f5bc">360</span></p></td><td class="cl-5ae4bb20"><p class="cl-5ae4a16c"><span class="cl-5ae0f5bc">175</span></p></td><td class="cl-5ae4bb20"><p class="cl-5ae4a16c"><span class="cl-5ae0f5bc">3.15</span></p></td><td class="cl-5ae4bb20"><p class="cl-5ae4a16c"><span class="cl-5ae0f5bc">3.440</span></p></td><td class="cl-5ae4bb20"><p class="cl-5ae4a16c"><span class="cl-5ae0f5bc">17.02</span></p></td><td class="cl-5ae4bb20"><p class="cl-5ae4a16c"><span class="cl-5ae0f5bc">0</span></p></td><td class="cl-5ae4bb20"><p class="cl-5ae4a16c"><span class="cl-5ae0f5bc">0</span></p></td><td class="cl-5ae4bb20"><p class="cl-5ae4a16c"><span class="cl-5ae0f5bc">3</span></p></td><td class="cl-5ae4bb20"><p class="cl-5ae4a16c"><span class="cl-5ae0f5bc">2</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-5ae4bb21"><p class="cl-5ae4a16c"><span class="cl-5ae0f5bc">18.1</span></p></td><td class="cl-5ae4bb21"><p class="cl-5ae4a16c"><span class="cl-5ae0f5bc">6</span></p></td><td class="cl-5ae4bb21"><p class="cl-5ae4a16c"><span class="cl-5ae0f5bc">225</span></p></td><td class="cl-5ae4bb21"><p class="cl-5ae4a16c"><span class="cl-5ae0f5bc">105</span></p></td><td class="cl-5ae4bb21"><p class="cl-5ae4a16c"><span class="cl-5ae0f5bc">2.76</span></p></td><td class="cl-5ae4bb21"><p class="cl-5ae4a16c"><span class="cl-5ae0f5bc">3.460</span></p></td><td class="cl-5ae4bb21"><p class="cl-5ae4a16c"><span class="cl-5ae0f5bc">20.22</span></p></td><td class="cl-5ae4bb21"><p class="cl-5ae4a16c"><span class="cl-5ae0f5bc">1</span></p></td><td class="cl-5ae4bb21"><p class="cl-5ae4a16c"><span class="cl-5ae0f5bc">0</span></p></td><td class="cl-5ae4bb21"><p class="cl-5ae4a16c"><span class="cl-5ae0f5bc">3</span></p></td><td class="cl-5ae4bb21"><p class="cl-5ae4a16c"><span class="cl-5ae0f5bc">1</span></p></td></tr></tbody></table></div>
+<div class="tabwid"><style>.cl-b504ce6e{}.cl-b4fadb5c{font-family:'DejaVu Sans';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-b4fedfea{margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-b4fefc32{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 2pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b4fefc3c{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b4fefc3d{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style><table data-quarto-disable-processing="true" class="cl-b504ce6e"><caption></caption><thead><tr style="overflow-wrap:break-word;"><th class="cl-b4fefc32"><p class="cl-b4fedfea"><span class="cl-b4fadb5c">mpg</span></p></th><th class="cl-b4fefc32"><p class="cl-b4fedfea"><span class="cl-b4fadb5c">cyl</span></p></th><th class="cl-b4fefc32"><p class="cl-b4fedfea"><span class="cl-b4fadb5c">disp</span></p></th><th class="cl-b4fefc32"><p class="cl-b4fedfea"><span class="cl-b4fadb5c">hp</span></p></th><th class="cl-b4fefc32"><p class="cl-b4fedfea"><span class="cl-b4fadb5c">drat</span></p></th><th class="cl-b4fefc32"><p class="cl-b4fedfea"><span class="cl-b4fadb5c">wt</span></p></th><th class="cl-b4fefc32"><p class="cl-b4fedfea"><span class="cl-b4fadb5c">qsec</span></p></th><th class="cl-b4fefc32"><p class="cl-b4fedfea"><span class="cl-b4fadb5c">vs</span></p></th><th class="cl-b4fefc32"><p class="cl-b4fedfea"><span class="cl-b4fadb5c">am</span></p></th><th class="cl-b4fefc32"><p class="cl-b4fedfea"><span class="cl-b4fadb5c">gear</span></p></th><th class="cl-b4fefc32"><p class="cl-b4fedfea"><span class="cl-b4fadb5c">carb</span></p></th></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-b4fefc3c"><p class="cl-b4fedfea"><span class="cl-b4fadb5c">21.0</span></p></td><td class="cl-b4fefc3c"><p class="cl-b4fedfea"><span class="cl-b4fadb5c">6</span></p></td><td class="cl-b4fefc3c"><p class="cl-b4fedfea"><span class="cl-b4fadb5c">160</span></p></td><td class="cl-b4fefc3c"><p class="cl-b4fedfea"><span class="cl-b4fadb5c">110</span></p></td><td class="cl-b4fefc3c"><p class="cl-b4fedfea"><span class="cl-b4fadb5c">3.90</span></p></td><td class="cl-b4fefc3c"><p class="cl-b4fedfea"><span class="cl-b4fadb5c">2.620</span></p></td><td class="cl-b4fefc3c"><p class="cl-b4fedfea"><span class="cl-b4fadb5c">16.46</span></p></td><td class="cl-b4fefc3c"><p class="cl-b4fedfea"><span class="cl-b4fadb5c">0</span></p></td><td class="cl-b4fefc3c"><p class="cl-b4fedfea"><span class="cl-b4fadb5c">1</span></p></td><td class="cl-b4fefc3c"><p class="cl-b4fedfea"><span class="cl-b4fadb5c">4</span></p></td><td class="cl-b4fefc3c"><p class="cl-b4fedfea"><span class="cl-b4fadb5c">4</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b4fefc3c"><p class="cl-b4fedfea"><span class="cl-b4fadb5c">21.0</span></p></td><td class="cl-b4fefc3c"><p class="cl-b4fedfea"><span class="cl-b4fadb5c">6</span></p></td><td class="cl-b4fefc3c"><p class="cl-b4fedfea"><span class="cl-b4fadb5c">160</span></p></td><td class="cl-b4fefc3c"><p class="cl-b4fedfea"><span class="cl-b4fadb5c">110</span></p></td><td class="cl-b4fefc3c"><p class="cl-b4fedfea"><span class="cl-b4fadb5c">3.90</span></p></td><td class="cl-b4fefc3c"><p class="cl-b4fedfea"><span class="cl-b4fadb5c">2.875</span></p></td><td class="cl-b4fefc3c"><p class="cl-b4fedfea"><span class="cl-b4fadb5c">17.02</span></p></td><td class="cl-b4fefc3c"><p class="cl-b4fedfea"><span class="cl-b4fadb5c">0</span></p></td><td class="cl-b4fefc3c"><p class="cl-b4fedfea"><span class="cl-b4fadb5c">1</span></p></td><td class="cl-b4fefc3c"><p class="cl-b4fedfea"><span class="cl-b4fadb5c">4</span></p></td><td class="cl-b4fefc3c"><p class="cl-b4fedfea"><span class="cl-b4fadb5c">4</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b4fefc3c"><p class="cl-b4fedfea"><span class="cl-b4fadb5c">22.8</span></p></td><td class="cl-b4fefc3c"><p class="cl-b4fedfea"><span class="cl-b4fadb5c">4</span></p></td><td class="cl-b4fefc3c"><p class="cl-b4fedfea"><span class="cl-b4fadb5c">108</span></p></td><td class="cl-b4fefc3c"><p class="cl-b4fedfea"><span class="cl-b4fadb5c">93</span></p></td><td class="cl-b4fefc3c"><p class="cl-b4fedfea"><span class="cl-b4fadb5c">3.85</span></p></td><td class="cl-b4fefc3c"><p class="cl-b4fedfea"><span class="cl-b4fadb5c">2.320</span></p></td><td class="cl-b4fefc3c"><p class="cl-b4fedfea"><span class="cl-b4fadb5c">18.61</span></p></td><td class="cl-b4fefc3c"><p class="cl-b4fedfea"><span class="cl-b4fadb5c">1</span></p></td><td class="cl-b4fefc3c"><p class="cl-b4fedfea"><span class="cl-b4fadb5c">1</span></p></td><td class="cl-b4fefc3c"><p class="cl-b4fedfea"><span class="cl-b4fadb5c">4</span></p></td><td class="cl-b4fefc3c"><p class="cl-b4fedfea"><span class="cl-b4fadb5c">1</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b4fefc3c"><p class="cl-b4fedfea"><span class="cl-b4fadb5c">21.4</span></p></td><td class="cl-b4fefc3c"><p class="cl-b4fedfea"><span class="cl-b4fadb5c">6</span></p></td><td class="cl-b4fefc3c"><p class="cl-b4fedfea"><span class="cl-b4fadb5c">258</span></p></td><td class="cl-b4fefc3c"><p class="cl-b4fedfea"><span class="cl-b4fadb5c">110</span></p></td><td class="cl-b4fefc3c"><p class="cl-b4fedfea"><span class="cl-b4fadb5c">3.08</span></p></td><td class="cl-b4fefc3c"><p class="cl-b4fedfea"><span class="cl-b4fadb5c">3.215</span></p></td><td class="cl-b4fefc3c"><p class="cl-b4fedfea"><span class="cl-b4fadb5c">19.44</span></p></td><td class="cl-b4fefc3c"><p class="cl-b4fedfea"><span class="cl-b4fadb5c">1</span></p></td><td class="cl-b4fefc3c"><p class="cl-b4fedfea"><span class="cl-b4fadb5c">0</span></p></td><td class="cl-b4fefc3c"><p class="cl-b4fedfea"><span class="cl-b4fadb5c">3</span></p></td><td class="cl-b4fefc3c"><p class="cl-b4fedfea"><span class="cl-b4fadb5c">1</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b4fefc3c"><p class="cl-b4fedfea"><span class="cl-b4fadb5c">18.7</span></p></td><td class="cl-b4fefc3c"><p class="cl-b4fedfea"><span class="cl-b4fadb5c">8</span></p></td><td class="cl-b4fefc3c"><p class="cl-b4fedfea"><span class="cl-b4fadb5c">360</span></p></td><td class="cl-b4fefc3c"><p class="cl-b4fedfea"><span class="cl-b4fadb5c">175</span></p></td><td class="cl-b4fefc3c"><p class="cl-b4fedfea"><span class="cl-b4fadb5c">3.15</span></p></td><td class="cl-b4fefc3c"><p class="cl-b4fedfea"><span class="cl-b4fadb5c">3.440</span></p></td><td class="cl-b4fefc3c"><p class="cl-b4fedfea"><span class="cl-b4fadb5c">17.02</span></p></td><td class="cl-b4fefc3c"><p class="cl-b4fedfea"><span class="cl-b4fadb5c">0</span></p></td><td class="cl-b4fefc3c"><p class="cl-b4fedfea"><span class="cl-b4fadb5c">0</span></p></td><td class="cl-b4fefc3c"><p class="cl-b4fedfea"><span class="cl-b4fadb5c">3</span></p></td><td class="cl-b4fefc3c"><p class="cl-b4fedfea"><span class="cl-b4fadb5c">2</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b4fefc3d"><p class="cl-b4fedfea"><span class="cl-b4fadb5c">18.1</span></p></td><td class="cl-b4fefc3d"><p class="cl-b4fedfea"><span class="cl-b4fadb5c">6</span></p></td><td class="cl-b4fefc3d"><p class="cl-b4fedfea"><span class="cl-b4fadb5c">225</span></p></td><td class="cl-b4fefc3d"><p class="cl-b4fedfea"><span class="cl-b4fadb5c">105</span></p></td><td class="cl-b4fefc3d"><p class="cl-b4fedfea"><span class="cl-b4fadb5c">2.76</span></p></td><td class="cl-b4fefc3d"><p class="cl-b4fedfea"><span class="cl-b4fadb5c">3.460</span></p></td><td class="cl-b4fefc3d"><p class="cl-b4fedfea"><span class="cl-b4fadb5c">20.22</span></p></td><td class="cl-b4fefc3d"><p class="cl-b4fedfea"><span class="cl-b4fadb5c">1</span></p></td><td class="cl-b4fefc3d"><p class="cl-b4fedfea"><span class="cl-b4fadb5c">0</span></p></td><td class="cl-b4fefc3d"><p class="cl-b4fedfea"><span class="cl-b4fadb5c">3</span></p></td><td class="cl-b4fefc3d"><p class="cl-b4fedfea"><span class="cl-b4fadb5c">1</span></p></td></tr></tbody></table></div>
 </div>
 </div>
 <p>We won’t go into much detail on how <code>{flextable}</code> works, but it is very powerful, and the fact that it works for PDF, Html, Word and Powerpoint outputs is really a massive plus. If you want to learn more about <code>{flextable}</code>, there’s a <a href="https://ardata-fr.github.io/flextable-book/index.html">whole, free, ebook on it</a>. <code>{flextable}</code> can create very complicated tables, so really take the time to dig in!</p>
 <p>The next package is <code>{modelsummary}</code>, by <span class="citation" data-cites="arel22">Arel-Bundock (<a href="references.html#ref-arel22" role="doc-biblioref">2022</a>)</span>, and this one focuses on regression and summary tables. It is extremely powerful as well, and just like <code>{flextable}</code>, works for any type of output. It is very simple to get started:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(modelsummary)</span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>model_1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg <span class="sc">~</span> hp <span class="sc">+</span> am, <span class="at">data =</span> mtcars)</span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>model_2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg <span class="sc">~</span> hp, <span class="at">data =</span> mtcars)</span>
-<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>models <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="st">"Model 1"</span> <span class="ot">=</span> model_1,</span>
-<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>               <span class="st">"Model 2"</span> <span class="ot">=</span> model_2)</span>
-<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a><span class="fu">modelsummary</span>(models)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(modelsummary)</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>model_1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg <span class="sc">~</span> hp <span class="sc">+</span> am, <span class="at">data =</span> mtcars)</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>model_2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg <span class="sc">~</span> hp, <span class="at">data =</span> mtcars)</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>models <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="st">"Model 1"</span> <span class="ot">=</span> model_1,</span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>               <span class="st">"Model 2"</span> <span class="ot">=</span> model_2)</span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a><span class="fu">modelsummary</span>(models)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
 <table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
@@ -788,90 +885,92 @@ output: pdf
 </section>
 <section id="parametrized-reports" class="level3" data-number="4.3.3">
 <h3 data-number="4.3.3" class="anchored" data-anchor-id="parametrized-reports"><span class="header-section-number">4.3.3</span> Parametrized reports</h3>
-<p>Templating is very powerful, but sometimes you don’t want to have one section dedicated to each unit of analysis within the same report, but rather, you want a complete separate report by unit of analysis. This is also possible thanks to parametrized reports.</p>
+<p>Templating and child documents are very powerful, but sometimes you don’t want to have one section dedicated to each unit of analysis within the same report, but rather, you want a complete separate report by unit of analysis. This is also possible thanks to parameterised reports.</p>
 <p>Let’s modify the example from before, which consisted in creating one section per column of the <code>mtcars</code> dataset and a frequency table, and make it now one separate report for each column. The R Markdown file will look like this:</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>---</span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>title: "Report for column `r params$var` of dataset `r params$dataset`"</span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>output: html_document</span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>date: "2023-01-27"</span>
-<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>params:</span>
-<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>  dataset: mtcars</span>
-<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>  var: "am"</span>
-<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>---</span>
-<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>```{r setup, include=FALSE}</span>
-<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a>knitr::opts_chunk$set(echo = TRUE)</span>
-<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a>```</span>
-<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a>## Frequency table for `r params$var`</span>
-<span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-16"><a href="#cb24-16" aria-hidden="true" tabindex="-1"></a>```{r, echo = F}</span>
-<span id="cb24-17"><a href="#cb24-17" aria-hidden="true" tabindex="-1"></a>create_table &lt;- function(dataset, var){</span>
-<span id="cb24-18"><a href="#cb24-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-19"><a href="#cb24-19" aria-hidden="true" tabindex="-1"></a>  dataset &lt;- get(dataset)</span>
-<span id="cb24-20"><a href="#cb24-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-21"><a href="#cb24-21" aria-hidden="true" tabindex="-1"></a>  table(dataset[var]) |&gt;</span>
-<span id="cb24-22"><a href="#cb24-22" aria-hidden="true" tabindex="-1"></a>    knitr::kable()</span>
-<span id="cb24-23"><a href="#cb24-23" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb24-24"><a href="#cb24-24" aria-hidden="true" tabindex="-1"></a>```</span>
-<span id="cb24-25"><a href="#cb24-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-26"><a href="#cb24-26" aria-hidden="true" tabindex="-1"></a>The table below is for variable `r params$var` of dataset `r params$dataset`.</span>
-<span id="cb24-27"><a href="#cb24-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-28"><a href="#cb24-28" aria-hidden="true" tabindex="-1"></a>```{r}</span>
-<span id="cb24-29"><a href="#cb24-29" aria-hidden="true" tabindex="-1"></a>create_table(params$dataset, params$var)</span>
-<span id="cb24-30"><a href="#cb24-30" aria-hidden="true" tabindex="-1"></a>```</span>
-<span id="cb24-31"><a href="#cb24-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-32"><a href="#cb24-32" aria-hidden="true" tabindex="-1"></a>```{r, eval = FALSE, echo = FALSE}</span>
-<span id="cb24-33"><a href="#cb24-33" aria-hidden="true" tabindex="-1"></a># Run these lines to compile the document</span>
-<span id="cb24-34"><a href="#cb24-34" aria-hidden="true" tabindex="-1"></a># Set eval and echo to FALSE, so that this does not appear</span>
-<span id="cb24-35"><a href="#cb24-35" aria-hidden="true" tabindex="-1"></a># in the output, and does not get evaluated when knitting</span>
-<span id="cb24-36"><a href="#cb24-36" aria-hidden="true" tabindex="-1"></a>rmarkdown::render(</span>
-<span id="cb24-37"><a href="#cb24-37" aria-hidden="true" tabindex="-1"></a>             input = "param_report_example.Rmd",</span>
-<span id="cb24-38"><a href="#cb24-38" aria-hidden="true" tabindex="-1"></a>             params = list(</span>
-<span id="cb24-39"><a href="#cb24-39" aria-hidden="true" tabindex="-1"></a>               dataset = "mtcars",</span>
-<span id="cb24-40"><a href="#cb24-40" aria-hidden="true" tabindex="-1"></a>               var = "cyl"</span>
-<span id="cb24-41"><a href="#cb24-41" aria-hidden="true" tabindex="-1"></a>             )</span>
-<span id="cb24-42"><a href="#cb24-42" aria-hidden="true" tabindex="-1"></a>           )</span>
-<span id="cb24-43"><a href="#cb24-43" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-44"><a href="#cb24-44" aria-hidden="true" tabindex="-1"></a>```</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Save the code above into an Rmd file title something like “param_report_example.Rmd” (preferably inside its own folder). At the end of the document, we wrote the lines to render this document inside a chunk that does not get shown to the reader, and does not get evaluated:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>rmarkdown<span class="sc">::</span><span class="fu">render</span>(</span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>             <span class="at">input =</span> <span class="st">"param_report_example.Rmd"</span>,</span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">params =</span> <span class="fu">list</span>(</span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>               <span class="at">dataset =</span> <span class="st">"mtcars"</span>,</span>
-<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>               <span class="at">var =</span> <span class="st">"cyl"</span></span>
-<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>             )</span>
-<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>           )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>title: "Report for column `r params$var` of dataset `r params$dataset`"</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>output: html_document</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>date: "2023-01-27"</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>params:</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>  dataset: mtcars</span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>  var: "am"</span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>```{r setup, include=FALSE}</span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>knitr::opts_chunk$set(echo = TRUE)</span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>```</span>
+<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a>## Frequency table for `r params$var`</span>
+<span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-17"><a href="#cb25-17" aria-hidden="true" tabindex="-1"></a>```{r, echo = F}</span>
+<span id="cb25-18"><a href="#cb25-18" aria-hidden="true" tabindex="-1"></a>create_table &lt;- function(dataset, var){</span>
+<span id="cb25-19"><a href="#cb25-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-20"><a href="#cb25-20" aria-hidden="true" tabindex="-1"></a>  dataset &lt;- get(dataset)</span>
+<span id="cb25-21"><a href="#cb25-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-22"><a href="#cb25-22" aria-hidden="true" tabindex="-1"></a>  table(dataset[var]) |&gt;</span>
+<span id="cb25-23"><a href="#cb25-23" aria-hidden="true" tabindex="-1"></a>    knitr::kable()</span>
+<span id="cb25-24"><a href="#cb25-24" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb25-25"><a href="#cb25-25" aria-hidden="true" tabindex="-1"></a>```</span>
+<span id="cb25-26"><a href="#cb25-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-27"><a href="#cb25-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-28"><a href="#cb25-28" aria-hidden="true" tabindex="-1"></a>The table below is for variable `r params$var` of dataset `r params$dataset`.</span>
+<span id="cb25-29"><a href="#cb25-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-30"><a href="#cb25-30" aria-hidden="true" tabindex="-1"></a>```{r}</span>
+<span id="cb25-31"><a href="#cb25-31" aria-hidden="true" tabindex="-1"></a>create_table(params$dataset, params$var)</span>
+<span id="cb25-32"><a href="#cb25-32" aria-hidden="true" tabindex="-1"></a>```</span>
+<span id="cb25-33"><a href="#cb25-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-34"><a href="#cb25-34" aria-hidden="true" tabindex="-1"></a>```{r, eval = FALSE, echo = FALSE}</span>
+<span id="cb25-35"><a href="#cb25-35" aria-hidden="true" tabindex="-1"></a># Run these lines to compile the document</span>
+<span id="cb25-36"><a href="#cb25-36" aria-hidden="true" tabindex="-1"></a># Set eval and echo to FALSE, so that this does not appear</span>
+<span id="cb25-37"><a href="#cb25-37" aria-hidden="true" tabindex="-1"></a># in the output, and does not get evaluated when knitting</span>
+<span id="cb25-38"><a href="#cb25-38" aria-hidden="true" tabindex="-1"></a>rmarkdown::render(</span>
+<span id="cb25-39"><a href="#cb25-39" aria-hidden="true" tabindex="-1"></a>             input = "param_report_example.Rmd",</span>
+<span id="cb25-40"><a href="#cb25-40" aria-hidden="true" tabindex="-1"></a>             params = list(</span>
+<span id="cb25-41"><a href="#cb25-41" aria-hidden="true" tabindex="-1"></a>               dataset = "mtcars",</span>
+<span id="cb25-42"><a href="#cb25-42" aria-hidden="true" tabindex="-1"></a>               var = "cyl"</span>
+<span id="cb25-43"><a href="#cb25-43" aria-hidden="true" tabindex="-1"></a>             )</span>
+<span id="cb25-44"><a href="#cb25-44" aria-hidden="true" tabindex="-1"></a>           )</span>
+<span id="cb25-45"><a href="#cb25-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-46"><a href="#cb25-46" aria-hidden="true" tabindex="-1"></a>```</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Save the code above into an Rmd file title something like <code>param_report_example.Rmd</code> (preferably inside its own folder). At the end of the document, we wrote the lines to render this document inside a chunk that does not get shown to the reader, nor gets evaluated:</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>```{r, eval = F, echo = FALSE}</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>rmarkdown::render(</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>             input = "param_report_example.Rmd",</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>             params = list(</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>               dataset = "mtcars",</span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>               var = "cyl"</span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>             )</span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>           )</span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>```</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>You need to run these lines yourself to knit the document.</p>
 <p>This will pass the list <code>params</code> with elements “mtcars” and “cyl” down to the report. Every <code>params$dataset</code> and <code>params$var</code> in the report gets replaced by “mtcars” and “cyl” respectively. Also, notice that in the header of the document, we defined default values for the params. Something else you need to be aware of, is that the function <code>create_table()</code> inside the report is slightly different than before. It now starts with the following line:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>dataset <span class="ot">&lt;-</span> <span class="fu">get</span>(dataset)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>dataset <span class="ot">&lt;-</span> <span class="fu">get</span>(dataset)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Let’s break this down. <code>params$dataset</code> contains the string “mtcars”. I made the decision to pass the dataset as a string, so that I could use it in the title of the document. But then, inside the <code>create_table()</code> function, I have the following code:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>dataset[var]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>dataset[var]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p><code>dataset</code> can’t be a string here, but needs to be a variable name, so <code>mtcars</code> and not “mtcars”. This means that I need to <em>convert</em> that string into a name. <code>get()</code> searches an object by name, and then makes it possible to save it to a new variable called <code>dataset</code>. The rest of the function is then the same as before. This little difficulty can be avoided by hardcoding the dataset inside the R Markdown file, or by passing the dataset as the <code>params$dataset</code> and not the string, in the render function. However, if you pass down the name of the dataset as a variable instead of the dataset name as a string, then you need to covert it to a string if you want to use it in the text (so <code>mtcars</code> to “mtcars”).</p>
-<p>If you now want to create one report per variable, you could compile all the documents at once with:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>columns <span class="ot">&lt;-</span> <span class="fu">colnames</span>(mtcars)</span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="fu">lapply</span>(columns,</span>
-<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>  (\(x)rmarkdown<span class="sc">::</span><span class="fu">render</span>(</span>
-<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>                    <span class="at">input =</span> <span class="st">"param_report_example.Rmd"</span>,</span>
-<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>                    <span class="at">output_file =</span> <span class="fu">paste0</span>(<span class="st">"param_report_example_"</span>, x, <span class="st">".html"</span>),</span>
-<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>                    <span class="at">params =</span> <span class="fu">list</span>(</span>
-<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>                      <span class="at">dataset =</span> <span class="st">"mtcars"</span>,</span>
-<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>                      <span class="at">var =</span> x</span>
-<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a>                    )</span>
-<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a>                  )</span>
-<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
+<p><code>dataset</code> can’t be a string here, but needs to be a variable name, so <code>mtcars</code> and not “mtcars”. This means that I need to <em>convert</em> that string into a name. <code>get()</code> searches an object by name, and then makes it possible to save it to a new variable called <code>dataset</code>. The rest of the function is then the same as before. This little difficulty can be avoided by hard-coding the dataset inside the R Markdown file, or by passing the dataset as the <code>params$dataset</code> and not the string, in the render function. However, if you pass down the name of the dataset as a variable instead of the dataset name as a string, then you need to covert it to a string if you want to use it in the text (so <code>mtcars</code> to “mtcars”, using <code>deparse(substitute(dataset))</code> as in child documents example).</p>
+<p>If you instead want to create one report per variable, you could compile all the documents at once with:</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>```{r, eval = F, echo = F}</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>columns &lt;- colnames(mtcars)</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>lapply(columns,</span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>  (\(x)rmarkdown::render(</span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>                    input = "param_report_example.Rmd",</span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>                    output_file = paste0("param_report_example_", x, ".html"),</span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>                    params = list(</span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>                      dataset = "mtcars",</span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>                      var = x</span>
+<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a>                    )</span>
+<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a>                  )</span>
+<span id="cb29-13"><a href="#cb29-13" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb29-14"><a href="#cb29-14" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb29-15"><a href="#cb29-15" aria-hidden="true" tabindex="-1"></a>```</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>By now, this should not intimidate you anymore; we use <code>lapply()</code> to loop over a list of column names (that we get using <code>colnames()</code>). Because we don’t want to overwrite the report we need to change the name of the output file. We do so by using <code>paste0()</code> which creates a new string that contains the variable name, so each report gets its own name. <code>x</code> inside the <code>paste0()</code> function is each element, one after the other, of the <code>columns</code> variable we defined first. Think of it as the <code>i</code> in a for loop. We then must also pass this to the <code>params</code> list, hence the <code>var = x</code>. The complete call to <code>rmarkdown::render()</code> is wrapped inside an anonymous function, because we need to use the argument <code>x</code> (which is each column defined in the columns list) in different places.</p>
-<p>Before continuing, we highly recommend that you try running this yourself, and also that you try to build your own little parametrized reports. Maybe start by replacing “mtcars” by “iris” in the code to compile the reports and see what happens, and then when you’re comfortable with parametrized reports, try templating inside a parametrized report!</p>
+<p>Before continuing, we highly recommend that you try running this yourself, and also that you try to build your own little parameterised reports. Maybe start by replacing “mtcars” by “iris” in the code to compile the reports and see what happens, and then when you’re comfortable with parameterised reports, try templating inside a parameterised report!</p>
 <p>It is important to not fall to the temptation of copy and pasting sections of your report, or parts of your script, instead of using these more advanced features provided by the language. It is tempting, especially under time pressure, to just copy and paste bits of code and get things done instead of writing what seems to be unnecessary code to finally achieve the same thing. The problem however, is that in practice copy and pasting code to simply get things done will come bite you sooner rather than later. Especially when you’re still in the exploration/drafting phase of the project. It make take more time to set up, but once you’re done, it is much easier to experiment with different parameters, test the code or even re-use the code for other projects. Not only that, but forcing you to actually think about how to set up your code in a way that avoids repeating yourself also helps with truly understanding the problem at hand. What part of the problem is constant and does not change? What does change? How often, and why? Can you also fix these parts or not? What if instead of five sections that I need to copy and paste, I had 50 sections? How could I scale that up?</p>
 <p>Asking yourself these questions, and solving them, will ultimately make you better programmer.</p>
 <p>Remember: keep it DRY.</p>
@@ -889,6 +988,9 @@ Leisch, Friedrich. 2002. <span>“Sweave: Dynamic Generation of Statistical Repo
 </div>
 <div id="ref-xie2014" class="csl-entry" role="doc-biblioentry">
 Xie, Yihui. 2014. <span>“Knitr: A Comprehensive Tool for Reproducible Research in <span>R</span>.”</span> In <em>Implementing Reproducible Computational Research</em>, edited by Victoria Stodden, Friedrich Leisch, and Roger D. Peng. Chapman; Hall/CRC. <a href="http://www.crcpress.com/product/isbn/9781466561595">http://www.crcpress.com/product/isbn/9781466561595</a>.
+</div>
+<div id="ref-xie2020r" class="csl-entry" role="doc-biblioentry">
+Xie, Yihui, Christophe Dervieux, and Emily Riederer. 2020. <em>R Markdown Cookbook</em>. Chapman; Hall/CRC.
 </div>
 </div>
 </section>
