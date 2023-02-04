@@ -94,7 +94,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
 <link href="./git.html" rel="next">
-<link href="./intro.html" rel="prev">
+<link href="./part1_intro.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -173,7 +173,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">Part 1</a>
+            <a href="./part1_intro.html" class="sidebar-item-text sidebar-link">Part 1: learning the fundamental ingredients of reproducibility</a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -299,7 +299,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 </header>
 
-<p>In this chapter, we are going to work together on a very simple project. This project will stay with us until the end of the book. For now, we are going to keep it simple; our goal here is to get an analysis done. We are going to download some data, and analyse it. Once this is done, we are going to think about the issues with our approach, and improve our analysis after we have learned about a new topic, as explained in the intro. At the end of each chapter, we will improve our analysis by directly applying what we’ve learned.</p>
+<p>In this chapter, we are going to work together on a very simple project. This project will stay with us until the end of the book. For now, we are going to keep it simple; our goal here is to get an analysis done. We are going to download some data, and analyse it. After we’re done with our analysis, we are going to keep it on the side for some time: we will then learn about tools and new programming paradigms and then rewrite our analysis at the start of the second part of this book using the techniques we’ve learned from part 1.</p>
 <p>But for now, our main concern is to get our work done.</p>
 <section id="housing-in-luxembourg" class="level2" data-number="2.1">
 <h2 data-number="2.1" class="anchored" data-anchor-id="housing-in-luxembourg"><span class="header-section-number">2.1</span> Housing in Luxembourg</h2>
@@ -620,12 +620,12 @@ Warning in mask$eval_all_mutate(quo): NAs introduced by coercion</code></pre>
 <pre><code>character(0)</code></pre>
 </div>
 </div>
-<p>Great! When we compare the communes that are in our data with every commune that has existed since 2010, we don’t have any commune that is unaccounted for. So are we done with cleaning the data? Yes, we can now actually start with analysing the data. Take a look <a href="scripts/save_data.R">here</a> to see the finalized script. Also read some of the comments the we’ve added. This is a typical R script, and at first glance, one might wonder what is wrong with it. Actually, not much, but the problem if you leave this script as it is, is that it is very likely that we will have problems rerunning it in the future. As it turns out, this script is not reproducible. But we will discuss this in much more detail later on. For now, let’s analyze our cleaned data.</p>
+<p>Great! When we compare the communes that are in our data with every commune that has existed since 2010, we don’t have any commune that is unaccounted for. So are we done with cleaning the data? Yes, we can now actually start with analysing the data. Take a look <a href="https://raw.githubusercontent.com/b-rodrigues/rap4all/master/scripts/save_data.R">here</a> to see the finalized script. Also read some of the comments the we’ve added. This is a typical R script, and at first glance, one might wonder what is wrong with it. Actually, not much, but the problem if you leave this script as it is, is that it is very likely that we will have problems rerunning it in the future. As it turns out, this script is not reproducible. But we will discuss this in much more detail later on. For now, let’s analyze our cleaned data.</p>
 </section>
 <section id="analysing-the-data" class="level2" data-number="2.3">
 <h2 data-number="2.3" class="anchored" data-anchor-id="analysing-the-data"><span class="header-section-number">2.3</span> Analysing the data</h2>
 <p>We are now going to analyse the data. The first thing we are going to do is compute a Laspeyeres price index. This price index allows us to make comparisons through time; for example, the index at year 2012 measures how much more expensive (or cheaper) housing became relative to the base year (2010). However, since we only have one good, this index becomes quite simple to compute: it is nothing but the prices at year <em>t</em> divided by the prices in 2010 (if we had a basket of goods, we would need to use the Laspeyeres index formula to compute the index at all periods).</p>
-<p>For this section, we will perform a rather simple analysis. We will immediately show you the R script: take a look at it <a href="&quot;scripts/analysis.R&quot;">here</a>. For our analysis we selected 5 communes and plotted the evolution of prices compared to the national average.</p>
+<p>For this section, we will perform a rather simple analysis. We will immediately show you the R script: take a look at it <a href="https://raw.githubusercontent.com/b-rodrigues/rap4all/master/scripts/analysis.R">here</a>. For our analysis we selected 5 communes and plotted the evolution of prices compared to the national average.</p>
 <p>This analysis might seem trivially simple, but it contains all the needed ingredients to illustrate everything else that we’re going to teach you in this book.</p>
 <p>Most analyses would stop here: after all, we have what we need; our goal was to get the plots for the 5 communes of Luxemourg, Esch-sur-Alzette, Mamer, Schengen (which gave its name to the <a href="https://en.wikipedia.org/wiki/Schengen_Area">Schengen Area</a> and Wincrange. However, let’s ask ourselves the following important questions:</p>
 <ul>
@@ -918,8 +918,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./intro.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span>
+      <a href="./part1_intro.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Part 1: learning the fundamental ingredients of reproducibility</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">

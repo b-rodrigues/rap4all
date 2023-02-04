@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Building reproducible analytical pipelines with R - 12&nbsp; Advanced topics in reproducibility</title>
+<title>Building reproducible analytical pipelines with R - Part 1: learning the fundamental ingredients of reproducibility</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -30,8 +30,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./ci_cd.html" rel="next">
-<link href="./repro_intro.html" rel="prev">
+<link href="./project_start.html" rel="next">
+<link href="./intro.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -72,7 +72,7 @@ ul.task-list li input[type="checkbox"] {
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
     <div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Advanced topics in reproducibility</span></h1>
+      <h1 class="quarto-secondary-nav-title">Part 1: learning the fundamental ingredients of reproducibility</h1>
       <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
         <i class="bi bi-chevron-right"></i>
       </button>
@@ -110,7 +110,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="./part1_intro.html" class="sidebar-item-text sidebar-link">Part 1: learning the fundamental ingredients of reproducibility</a>
+            <a href="./part1_intro.html" class="sidebar-item-text sidebar-link active">Part 1: learning the fundamental ingredients of reproducibility</a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -178,7 +178,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./repro_cont.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Advanced topics in reproducibility</span></a>
+  <a href="./repro_cont.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Advanced topics in reproducibility</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -202,9 +202,7 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#first-steps-with-docker" id="toc-first-steps-with-docker" class="nav-link active" data-scroll-target="#first-steps-with-docker"><span class="toc-section-number">12.1</span>  First steps with Docker</a></li>
-  <li><a href="#a-primer-on-the-linux-command-line" id="toc-a-primer-on-the-linux-command-line" class="nav-link" data-scroll-target="#a-primer-on-the-linux-command-line"><span class="toc-section-number">12.2</span>  A primer on the Linux command line</a></li>
-  <li><a href="#dockrizing-your-project" id="toc-dockrizing-your-project" class="nav-link" data-scroll-target="#dockrizing-your-project"><span class="toc-section-number">12.3</span>  Dockrizing your project</a></li>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
   </ul>
 </nav>
     </div>
@@ -213,7 +211,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Advanced topics in reproducibility</span></h1>
+<h1 class="title d-none d-lg-block">Part 1: learning the fundamental ingredients of reproducibility</h1>
 </div>
 
 
@@ -228,16 +226,18 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<p><em>Now that the readers are familiar with renv, but also its shortcomings, we can go a step further and introduce Docker. I think some primer on the Linux command line could be included here</em></p>
-<section id="first-steps-with-docker" class="level2" data-number="12.1">
-<h2 data-number="12.1" class="anchored" data-anchor-id="first-steps-with-docker"><span class="header-section-number">12.1</span> First steps with Docker</h2>
-<p><em>To write your own Dockerfile, you need some familiarity with the Linux cli, so here’s…</em></p>
-</section>
-<section id="a-primer-on-the-linux-command-line" class="level2" data-number="12.2">
-<h2 data-number="12.2" class="anchored" data-anchor-id="a-primer-on-the-linux-command-line"><span class="header-section-number">12.2</span> A primer on the Linux command line</h2>
-</section>
-<section id="dockrizing-your-project" class="level2" data-number="12.3">
-<h2 data-number="12.3" class="anchored" data-anchor-id="dockrizing-your-project"><span class="header-section-number">12.3</span> Dockrizing your project</h2>
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<p>Part 1 will focus on teaching you the fundamental ingredients to reproducibility. By fundamental ingredients we mean those tools that you absolutely need to have in your toolbox to before even attempting to make a project reproducible. These tools are so important, that a good chunk of this book is dedicated to them:</p>
+<ul>
+<li>Version control;</li>
+<li>Functional programming;</li>
+<li>Testing your code;</li>
+<li>Literate programming.</li>
+</ul>
+<p>You might already be familiar with some of these tools, and maybe already use them in your day to day. If that’s the case, you still might want to at least skim these chapter before tackling part 2 of the book, which will focus on another set of tools to actually build reproducible pipelines.</p>
+<p>So this means that part 1 will not teach you how to build reproducible pipelines. But we cannot immediately start building reproducible analytical pipelines without first making sure that we understand the core concepts laid out above. To help us undertant these concepts, we will start by writing an analysis. We are going to download, clean and plot some data, and write two scripts to achieve this. These scripts will be written in a very “typical non software engineery” way, as to mimic how analysts, data scientists or researchers without any formal training in computer science would perform such an analysis. This does not mean that the quality of the analysis will be low. But it means that, typically, this group of programmers have as a priority delivering the analysis as fast as possible, in whatever way possible. Our goal with this book is to show you, and hopefully convince you, that by adopting certain simple ideas from software engineering we can actually deliver just as fast as before, but in a more consistent and robust way.</p>
+<p>Let’s get started!</p>
 
 
 </section>
@@ -493,13 +493,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./repro_intro.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Introduction to reproducibility</span></span>
+      <a href="./intro.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./ci_cd.html" class="pagination-link">
-        <span class="nav-page-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Continuous integration and continuous deployment/delivery</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./project_start.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Project start</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
