@@ -1,31 +1,23 @@
 # Keeping it DRY with literate programming
 
-In order to build a reproducible pipeline, we will be working together on a project.
-The project itself will be quite simple and will simply consist in getting some data
-"trapped" inside a Microsoft Excel Workbook into a data frame, and then creating
-a plot. The point of this book is not to teach you data analysis no data 
-visualization, but instead, engineering the project in such a way that it is:
+We now know about version control, functional programming, and how to test our code in a more
+consisted manner. Version control helps us keep track of the changes made to our code, functional
+programming makes it easier for use to reason about our project by using functions, and the
+strategies we’ve learned in the chapter on testing give us confidence that we did not conclude
+anything wrong from an erroneous analysis.
 
-- Documented;
-- Tested;
-- Reproducible.
-
-We will start our project like someone with time constraints does, and
-see how we can reach our goal of having a nice reproducible project as painlessly as
-possible. There is only one catch; to make the whole process as easy as possible, we
-will be using literate programming, and not simply programming.
-
-By the way, you might want to create a new repository and use it for the example documents
-that we are going to work on together in this chapter. But since the goal of this chapter
-is to teach you about literate programming, we won’t tell you when to commit an push, just
-try to do it from time to time, and especially once you’re done with an example!
+What else could we do to improve our project? You might be asking yourself how everything that
+we’ve learned until now really helps us in building a reproducible pipeline. Maybe you see how
+functional programming helps with the pipeline part. But maybe you don’t really feel like version
+control and testing are really needed, albeit neat tools. Well, the next step in our journey will
+focus on literate programming, which will make reaching our goal towards reproducibility easier.
 
 ## Literate programming
 
-In literate programming, we mix code and prose together, in a way that makes it easy for
-both non-technical users and programmers to understand what is going on. Scripts written this
-way are also very easy to compile, or render, into a variety of document formats like `html` 
-and `docx`. R supports several ways of doing literate programming: Sweave, knitr and Quarto.
+In literate programming, we mix code and prose together, in a way that makes it easy for both
+non-technical users and programmers to understand what is going on. Scripts written this way are
+also very easy to compile, or render, into a variety of document formats like `html` and `docx`. R
+supports several ways of doing literate programming: Sweave, knitr and Quarto.
 
 Sweave was the first tool available to R (and S) users, and allowed the mixing of R and LaTeX code
 to create a document. Friedrich Leisch developed Sweave in 2002 and described it in his 2002 paper
@@ -264,16 +256,16 @@ they help you focus on what really matters.
 
 ## `{knitr}` basics
 
-This section will be a very small intro to `{knitr}`. We are going to teach you just enough to get started, and
-we are going to focus on the Rmd format. There are many resources out there that you can use if you
-want to dig deeper, for instance the [R Markdown website](https://rmarkdown.rstudio.com/lesson-1.html) 
-from Posit, or the [R Markdown: The Definitive Guide](https://bookdown.org/yihui/rmarkdown/) 
-and [R Markdown Cookbook](https://bookdown.org/yihui/rmarkdown-cookbook/) eBooks.
-We will also not assume that you are using the RStudio IDE and give you instead the lower
-level commands to render documents. If you use RStudio and want to know how to use it effectively to author
-Rmd documents, you should take a look at [Quick Tour](https://rmarkdown.rstudio.com/authoring_quick_tour.html)
-page. In fact, this section will basically focus on the same topics, but without focusing on how to use 
-RStudio.
+This section will be a very small intro to `{knitr}`. We are going to teach you just enough to get
+started, and we are going to focus on the Rmd format. There are many resources out there that you
+can use if you want to dig deeper, for instance the [R Markdown
+website](https://rmarkdown.rstudio.com/lesson-1.html) from Posit, or the [R Markdown: The
+Definitive Guide](https://bookdown.org/yihui/rmarkdown/) and [R Markdown
+Cookbook](https://bookdown.org/yihui/rmarkdown-cookbook/) eBooks. We will also not assume that you
+are using the RStudio IDE and give you instead the lower level commands to render documents. If you
+use RStudio and want to know how to use it effectively to author Rmd documents, you should take a
+look at [Quick Tour](https://rmarkdown.rstudio.com/authoring_quick_tour.html) page. In fact, this
+section will basically focus on the same topics, but without focusing on how to use RStudio.
 
 ### Set up
 
@@ -286,14 +278,14 @@ install.packages("rmarkdown")
 in an R console. Since `{knitr}` is required to install `{rmarkdown}`, it gets installed
 automatically. If you want to compile PDF documents, you should also have a working LaTeX
 distribution. You can skip this next part if you’re only interested in generating PDF and Word
-files. For what follows, we will only be rendering Html documents, so no need to install LaTeX
-(by the way, you do not need a working Word installation to compile documents to the docx format).
-However, if you already have a working LaTeX installation, you shouldn’t have to do anything
-else to generate PDF documents. If you don’t have a working LaTeX distribution, then Yihui Xie,
-the creator of `{knitr}` created an R package called `{tinytex}` that makes it extremely easy to
-install a LaTeX distribution. In fact, this is the way we recommend installing LaTeX even if
-you’re not an R user (it is possible to use the tinytex distribution without R; it’s just that
-the `{tinytex}` R package provides many functions that makes installing and maintaining it very easy). 
+files. For what follows, we will only be rendering Html documents, so no need to install LaTeX (by
+the way, you do not need a working Word installation to compile documents to the docx format).
+However, if you already have a working LaTeX installation, you shouldn’t have to do anything else
+to generate PDF documents. If you don’t have a working LaTeX distribution, then Yihui Xie, the
+creator of `{knitr}` created an R package called `{tinytex}` that makes it extremely easy to
+install a LaTeX distribution. In fact, this is the way we recommend installing LaTeX even if you’re
+not an R user (it is possible to use the tinytex distribution without R; it’s just that the
+`{tinytex}` R package provides many functions that makes installing and maintaining it very easy).
 Simply run these commands in an R console to get started:
 
 ```{r, eval = F}
@@ -714,29 +706,24 @@ res <- lapply(x,
 cat(unlist(res), sep = "\n")
 ```
 
-The child document is the `text` argument to the `knit_child()` function. 
-`text` is literal R Markdown code: we define a level 2 header, and then 
-an R chunk. This child document gets knitted, so we need to specify the 
-environment in which it should get knitted. This means that the child
-document will get knitted in the same environment as the parent document 
-(our current global environment). This way, every package that get loaded 
-and every function or variable that got defined in the parent document 
-will also be available to the child document.
+The child document is the `text` argument to the `knit_child()` function. `text` is literal R
+Markdown code: we define a level 2 header, and then an R chunk. This child document gets knitted,
+so we need to specify the environment in which it should get knitted. This means that the child
+document will get knitted in the same environment as the parent document (our current global
+environment). This way, every package that get loaded and every function or variable that got
+defined in the parent document will also be available to the child document.
 
-To get the dataset name as a string, we use the 
-`deparse(substitute(dataset))` trick; this substitutes "dataset" by its 
-bound value, so `mtcars`. But `mtcars` is an expression and we don’t
-want it to get evaluated, or the contents of the entire dataset would 
-be used in the title of the section. So we use `deparse()` which turns 
-unevaluated expressions into strings.
+To get the dataset name as a string, we use the `deparse(substitute(dataset))` trick; this
+substitutes "dataset" by its bound value, so `mtcars`. But `mtcars` is an expression and we don’t
+want it to get evaluated, or the contents of the entire dataset would be used in the title of the
+section. So we use `deparse()` which turns unevaluated expressions into strings.
 
-We then use `lapply()` to loop over two aesthetics with an anonymous function 
-that encapsulates the child document. So we get two child documents that get
-knitted, one per aesthetic. This gets saved into variable `res`. This is thus
-a list of knitted Markdown.
+We then use `lapply()` to loop over two aesthetics with an anonymous function that encapsulates the
+child document. So we get two child documents that get knitted, one per aesthetic. This gets saved
+into variable `res`. This is thus a list of knitted Markdown.
 
-Finally, we need unlist `res` to actually merge the Markdown code from the 
-child documents into the parent document.
+Finally, we need unlist `res` to actually merge the Markdown code from the child documents into the
+parent document.
 
 ````
 
