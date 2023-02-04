@@ -369,7 +369,8 @@ setdiff(unique(commune_level_data$locality), communes)
 
 Great! When we compare the communes that are in our data with every commune that has existed since
 2010, we don’t have any commune that is unaccounted for. So are we done with cleaning the data?
-Yes, we can now actually start with analysing the data. Take a look [here](scripts/save_data.R) to
+Yes, we can now actually start with analysing the data. Take a look
+[here](https://raw.githubusercontent.com/b-rodrigues/rap4all/master/scripts/save_data.R) to
 see the finalized script. Also read some of the comments the we’ve added.
 This is a typical R script, and at first glance, one might wonder what is wrong with it. Actually,
 not much, but the problem if you leave this script as it is, is that it is very likely that we 
@@ -385,9 +386,11 @@ year 2012 measures how much more expensive (or cheaper) housing became relative 
 nothing but the prices at year *t* divided by the prices in 2010 (if we had a basket of goods,
 we would need to use the Laspeyeres index formula to compute the index at all periods).
 
-For this section, we will perform a rather simple analysis. We will immediately show you the R script:
-take a look at it [here]("scripts/analysis.R"). For our analysis we selected 5 communes and plotted
-the evolution of prices compared to the national average.
+For this section, we will perform a rather simple analysis. We will immediately show you the R
+script: take a look at it
+[here](https://raw.githubusercontent.com/b-rodrigues/rap4all/master/scripts/analysis.R). For our
+analysis we selected 5 communes and plotted the evolution of prices compared to the national
+average.
 
 This analysis might seem trivially simple, but it contains all the needed ingredients to illustrate
 everything else that we’re going to teach you in this book.
