@@ -9,16 +9,20 @@ book:
   chapters:
     - index.qmd
     - intro.qmd
-    - fprog.qmd
-    - git.qmd
-    - keep_dry.qmd
-    - project_start.qmd
-    - testing.qmd
-    - packages.qmd
-    - targets.qmd
-    - repro_intro.qmd
-    - repro_cont.qmd
-    - ci_cd.qmd
+    - part: "Part 1"
+      chapters:
+        - project_start.qmd
+        - git.qmd
+        - fprog.qmd
+        - testing.qmd
+        - keep_dry.qmd
+    - part: "Part 2"
+      chapters:
+        - packages.qmd
+        - targets.qmd
+        - repro_intro.qmd
+        - repro_cont.qmd
+        - ci_cd.qmd
     - references.qmd
   page-navigation: true
 

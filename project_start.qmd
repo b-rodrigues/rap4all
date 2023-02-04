@@ -2,15 +2,10 @@
 
 In this chapter, we are going to work together on a very simple project. This project will stay
 with us until the end of the book. For now, we are going to keep it simple; our goal here is to get
-an analysis done. We are going to download some data, analyse it, and write a little report. Then,
-we are going to think about how to go from this analysis to something more robust: what's
-important to understand, is that everything we will be doing to get our little report can be seen
-as a *proto-pipeline*. We are going to download data, write functions, write comments, write some
-tests along the way to make sure that everything is working well, and put everything into an R
-Markdown source file that outputs the finalised document in one command line.
-
-The idea is to take this, and make it more a truly reproducible pipeline. So one of the first steps
-once we're done with the analysis is to understand why we are actually not done yet.
+an analysis done. We are going to download some data, and analyse it. Once this is done, we 
+are going to think about the issues with our approach, and improve our analysis after we have
+learned about a new topic, as explained in the intro. At the end of each chapter, we will 
+improve our analysis by directly applying what we’ve learned.
 
 But for now, our main concern is to get our work done.
 
@@ -103,9 +98,10 @@ So to summarise; our goal is to:
 
 - Get data trapped inside an Excel file into a neat data frame;
 - Convert nominal to real prices using a simple method;
-- Make some tables and plots and call it a day (or will we?).
+- Make some tables and plots and call it a day (for now).
 
-And we are going to make all of this inside a R Markdown file.
+We are going to start in the most basic way possible; we are simply going to write a script
+and deal with each step separataley.
 
 ## Saving trapped data from Excel
 
@@ -143,92 +139,73 @@ Each sheet contains a dataset with the following columns:
 - Prix moyen annoncé en Euros courants: Average selling price in nominal Euros
 - Prix moyen annoncé au m2 en Euros courants: Average selling price in square meters in nominal Euros
 
-For ease of presentation, we are going to show you each function here separately, but we'll be putting
-everything together in a single Rmd file at the end. So first, let's read in the data. For this,
-we will be using this function here:
+For ease of presentation, we are going to show you each function here separately, but we'll be
+putting everything together in a single script once we’re done explaining each step. So first,
+let's read in the data. The following lines do just that:
 
-```{r, include = FALSE}
+```{r, messages = FALSE}
 library(dplyr)
+library(purrr)
+library(readxl)
+library(stringr)
+library(janitor)
 ```
 
 ```{r}
-get_raw_data <- function(
-          url = "https://github.com/b-rodrigues/rap4all/raw/master/datasets/vente-maison-2010-2021.xlsx"){
-  raw_data <- tempfile(fileext = ".xlsx")
+url <- "https://github.com/b-rodrigues/rap4all/raw/master/datasets/vente-maison-2010-2021.xlsx")
 
-  download.file(url, raw_data)
+raw_data <- tempfile(fileext = ".xlsx")
 
-  sheets <- readxl::excel_sheets(raw_data)
+download.file(url, raw_data)
 
-  read_clean <- function(..., sheet){
-    readxl::read_excel(..., sheet = sheet) |>
-      dplyr::mutate(year = sheet)
-  }
+sheets <- excel_sheets(raw_data)
 
-  raw_data <- purrr::map(
-                       sheets,
-                       ~read_clean(raw_data,
-                                   skip = 10,
-                                   sheet = .)
-                  ) |>
-  dplyr::bind_rows() |>
-  janitor::clean_names()
-
-  raw_data |>
-    dplyr::rename(
-             locality = commune,
-             n_offers = nombre_doffres,
-             average_price_nominal_euros = prix_moyen_annonce_en_courant,
-             average_price_m2_nominal_euros = prix_moyen_annonce_au_m2_en_courant,
-             average_price_m2_nominal_euros = prix_moyen_annonce_au_m2_en_courant
-           ) |>
-    dplyr::mutate(locality = stringr::str_trim(locality)) |>
-    dplyr::select(year, locality, n_offers, dplyr::starts_with("average"))
-
+read_clean <- function(..., sheet){
+  read_excel(..., sheet = sheet) |>
+    mutate(year = sheet)
 }
 
+raw_data <- map(
+  sheets,
+  ~read_clean(raw_data,
+              skip = 10,
+              sheet = .)
+                   ) |>
+  bind_rows() |>
+  clean_names()
+
+raw_data <- raw_data |>
+  rename(
+    locality = commune,
+    n_offers = nombre_doffres,
+    average_price_nominal_euros = prix_moyen_annonce_en_courant,
+    average_price_m2_nominal_euros = prix_moyen_annonce_au_m2_en_courant,
+    average_price_m2_nominal_euros = prix_moyen_annonce_au_m2_en_courant
+  ) |>
+  mutate(locality = str_trim(locality)) |>
+  select(year, locality, n_offers, starts_with("average"))
 ```
 
-Let's discuss each part of the function. This function has a single argument, the url pointing
-towards the data. The data is hosted on this book's Github repository, but you could just as well
-replace this url by the one from the Open Data Portal for example. The file gets downloaded to a
-temporary file (created using `tempfile(fileext = ".xlsx")`, and the name of the sheets from the
-file get extracted using `readxl::excel_sheets()`. This is our first dependency: here, we're going
-to use the `package::function()` notation to show you clearly from where function come from, but in
-practice, inside your Rmd file, you would be calling `library(readxl)` at the start of the Rmd
-file.
+If you are familiar with the `{tidyverse}` the above code should be quite easy to follow.
+We start by downloading the raw Excel file and save the sheet names into a variable.
+We then use a function called `read_clean()`, which takes the path to the Excel file and 
+the sheet names as an argument to read the required sheet into a data frame. We use 
+`skip = 10` to skip the first 10 lines in each Excel sheet because the first 10 lines contain
+a header. The last thing this function is add a new column called `year` which contains the year
+of the data. We’re lucky, because the sheet names are simply years: "2010", "2011" and so on.
+We then map this function to the list of sheet names, thus reading in all the data from all the sheets
+into one list of data frames, which then bind by row into a new data frame. 
+Finally, we remane the columns (by translating their names from French to English) and only select
+the required columns.
 
-Then we define a new function, called `read_clean()`. This function is a wrapper around the
-`readxl::read_excel()` function. Remember, our source Excel Workbook contains one sheet per year,
-starting with 2010. Also, remember this huge header on each sheet? We can skip all these useless
-lines using `skip = 10`, which skips the first 10 lines of each sheet. Thankfully, this is
-consistent across the sheets. The sheets are named "2010", "2011", etc. So we take advantage of
-this to read in the required sheet, and then also add a new column with the year which is the name
-of the sheet. So if we would use our function on one sheet, say, "2011", we would have the data
-from the that sheet (because we skip the first 10 lines with the header) and a new column called
-`year` with "2011" everywhere. We then map this function to the list of sheets, obtained using
-`excel_sheets()` which results in a list of data frames. These data frames get merged into a single
-data set using `dplyr::bind_rows()` which takes a list of datasets with same columns as an argument
-and returns a single dataset. We also use the `janitor::clean_names()` function to automatically
-clean column names. For example, `clean_names()` turns a column name titled "Nombre d'offres"
-(French for "Total offers") into "nombre_doffres", making it easier to reference in code. Columns
-names then get translated from French to English, white spaces get removed from the `commune`
-column, and only the required columns get selected.
-
-Running this function results in an almost tidy dataset:
-
-```{r}
-# We call get_raw_data() without arguments, since the correct url is provided as a default argument
-raw_data <- get_raw_data()
-```
-
-Let's take a look at the data:
+Running this code results in a neat data set:
 
 ```{r}
 str(raw_data)
 ```
 
-There's a problem already: columns that should be of type numeric are of type character instead
+
+But there’s a problem: columns that should be of type numeric are of type character instead
 (`average_price_nominal_euros` and `average_price_m2_nominal_euros`). There's also another issue, which 
 you would eventually catch as you would be exploring the data: naming of the communes is not consistent.
 Let's take a look:
@@ -255,14 +232,14 @@ this:
 
 ```{r}
 raw_data <- raw_data |>
-    mutate(locality = ifelse(grepl("Luxembourg-Ville", locality),
-                             "Luxembourg",
-                             locality),
-           locality = ifelse(grepl("P.tange", locality),
-                             "Pétange",
-                             locality)
-           ) |>
-    mutate(across(starts_with("average"), as.numeric))
+  mutate(locality = ifelse(grepl("Luxembourg-Ville", locality),
+                           "Luxembourg",
+                           locality),
+         locality = ifelse(grepl("P.tange", locality),
+                           "Pétange",
+                           locality)
+         ) |>
+  mutate(across(starts_with("average"), as.numeric))
 
 ```
 
@@ -323,7 +300,7 @@ country_level_data <- full_join(country_level, offers_country) |>
 
 Now the data looks clean, and we can start the actual analysis... or can we? Before proceeding,
 it would be nice to make sure that we got every commune in there. For this, we need a list
-of communes from Luxembourg. 
+of communes from Luxembourg.
 [Thankfully, Wikipedia has such a list.](https://en.wikipedia.org/wiki/List_of_communes_of_Luxembourg)
 
 Let's scrape and save this list:
@@ -391,17 +368,13 @@ setdiff(unique(commune_level_data$locality), communes)
 ```
 
 Great! When we compare the communes that are in our data with every commune that has existed since
-2010, we don’t have any commune that is unaccounted for. So are we done with cleaning the data? 
-Yes, we can now actually start with analysing the data. But before that let’s now put this into
-an Rmd file. This Rmd file will be dedicated to preparing the data only, so we will need to write
-another one for the analysis proper. What we’re also going to do, is take this as an opportunity
-to refactor the code: you might have noticed that we have not used functions a lot in the code
-snippets before, so let’s use functions instead. 
-
-You can click [here]("rmds/save_data.Rmd") to take a look at the finalised Rmd file. The advantage
-of taking the time to clean up our code and put together an Rmd file, is that we now have some high
-quality documentation about the whole cleaning process. This will also serve as a basis for later,
-when we will actually turn our analysis into a package.
+2010, we don’t have any commune that is unaccounted for. So are we done with cleaning the data?
+Yes, we can now actually start with analysing the data. Take a look [here](scripts/save_data.R) to
+see the finalized script. Also read some of the comments the we’ve added.
+This is a typical R script, and at first glance, one might wonder what is wrong with it. Actually,
+not much, but the problem if you leave this script as it is, is that it is very likely that we 
+will have problems rerunning it in the future. As it turns out, this script is not reproducible.
+But we will discuss this in much more detail later on. For now, let’s analyze our cleaned data.
 
 ## Analysing the data
 
