@@ -262,8 +262,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <ul class="collapse">
   <li><a href="#how-easy-would-it-be-for-someone-else-to-rerun-the-analysis" id="toc-how-easy-would-it-be-for-someone-else-to-rerun-the-analysis" class="nav-link" data-scroll-target="#how-easy-would-it-be-for-someone-else-to-rerun-the-analysis"><span class="toc-section-number">2.4.1</span>  How easy would it be for someone else to rerun the analysis?</a></li>
   <li><a href="#how-easy-would-it-be-to-update-the-project" id="toc-how-easy-would-it-be-to-update-the-project" class="nav-link" data-scroll-target="#how-easy-would-it-be-to-update-the-project"><span class="toc-section-number">2.4.2</span>  How easy would it be to update the project?</a></li>
-  <li><a href="#what-guarantee-do-we-have-that-the-output-is-stable" id="toc-what-guarantee-do-we-have-that-the-output-is-stable" class="nav-link" data-scroll-target="#what-guarantee-do-we-have-that-the-output-is-stable"><span class="toc-section-number">2.4.3</span>  What guarantee do we have that the output is stable?</a></li>
+  <li><a href="#how-easy-would-it-be-to-reuse-this-code-for-another-project" id="toc-how-easy-would-it-be-to-reuse-this-code-for-another-project" class="nav-link" data-scroll-target="#how-easy-would-it-be-to-reuse-this-code-for-another-project"><span class="toc-section-number">2.4.3</span>  How easy would it be to reuse this code for another project?</a></li>
+  <li><a href="#what-guarantee-do-we-have-that-the-output-is-stable" id="toc-what-guarantee-do-we-have-that-the-output-is-stable" class="nav-link" data-scroll-target="#what-guarantee-do-we-have-that-the-output-is-stable"><span class="toc-section-number">2.4.4</span>  What guarantee do we have that the output is stable?</a></li>
   </ul></li>
+  <li><a href="#chapter-conclusion" id="toc-chapter-conclusion" class="nav-link" data-scroll-target="#chapter-conclusion"><span class="toc-section-number">2.5</span>  Chapter conclusion</a></li>
   </ul>
 </nav>
     </div>
@@ -612,14 +614,15 @@ Warning in mask$eval_all_mutate(quo): NAs introduced by coercion</code></pre>
 </section>
 <section id="analysing-the-data" class="level2" data-number="2.3">
 <h2 data-number="2.3" class="anchored" data-anchor-id="analysing-the-data"><span class="header-section-number">2.3</span> Analysing the data</h2>
-<p>We are now going to analyse the data. The first thing we are going to do is compute a Laspeyeres price index. This price index allows us to make comparisons through time; for example, the index at year 2012 measures how much more expensive (or chaper) housing became relative to the base year (2010). However, since we only have one good, this index becomes quite simple to compute: it is nothing but the prices at year <em>t</em> divided by the prices in 2010 (if we had a basket of goods, we would need to use the Laspeyeres index formula to compute the index at all periods).</p>
-<p>For this section, we will perform a rather simple analysis. We will immediately show you the Rmd file: take a look at it <a href="&quot;rmds/analyse_data.Rmd&quot;">here</a>.</p>
-<p>This Rmd file makes use of the <code>knitr::knit_child()</code> to knit a child document in order to create sections for selected communes without needed to copy and paste code.</p>
-<p>Now, you would very likely stop at this point: after all, we are done with the analysis. However, let’s ask ourselves the following important questions:</p>
+<p>We are now going to analyse the data. The first thing we are going to do is compute a Laspeyeres price index. This price index allows us to make comparisons through time; for example, the index at year 2012 measures how much more expensive (or cheaper) housing became relative to the base year (2010). However, since we only have one good, this index becomes quite simple to compute: it is nothing but the prices at year <em>t</em> divided by the prices in 2010 (if we had a basket of goods, we would need to use the Laspeyeres index formula to compute the index at all periods).</p>
+<p>For this section, we will perform a rather simple analysis. We will immediately show you the R script: take a look at it <a href="&quot;scripts/analysis.R&quot;">here</a>. For our analysis we selected 5 communes and plotted the evolution of prices compared to the national average.</p>
+<p>This analysis might seem trivially simple, but it contains all the needed ingredients to illustrate everything else that we’re going to teach you in this book.</p>
+<p>Most analyses would stop here: after all, we have what we need; our goal was to get the plots for the 5 communes of Luxemourg, Esch-sur-Alzette, Mamer, Schengen (which gave its name to the <a href="https://en.wikipedia.org/wiki/Schengen_Area">Schengen Area</a> and Wincrange. However, let’s ask ourselves the following important questions:</p>
 <ul>
 <li>How easy would it be for someone else to rerun the analysis?</li>
 <li>How easy would it be to update the analysis once new data gets published?</li>
-<li>What guarantee do we have that if the documented gets knitted in 5 years, with the same input data, we get the same output?</li>
+<li>How easy would it be to reuse this code for other projects?</li>
+<li>What guarantee do we have that if the scripts get run in 5 years, with the same input data, we get the same output?</li>
 </ul>
 <p>Let’s answer these questions one by one.</p>
 </section>
@@ -627,7 +630,7 @@ Warning in mask$eval_all_mutate(quo): NAs introduced by coercion</code></pre>
 <h2 data-number="2.4" class="anchored" data-anchor-id="your-project-is-not-done"><span class="header-section-number">2.4</span> Your project is not done</h2>
 <section id="how-easy-would-it-be-for-someone-else-to-rerun-the-analysis" class="level3" data-number="2.4.1">
 <h3 data-number="2.4.1" class="anchored" data-anchor-id="how-easy-would-it-be-for-someone-else-to-rerun-the-analysis"><span class="header-section-number">2.4.1</span> How easy would it be for someone else to rerun the analysis?</h3>
-<p>The analysis is composed of two R Markdown files, one to prepare the data, another to actually run the analysis proper. This might seem quite easy, because each Rmd file contains many explanations as to what is going on. However, we are missing any project-level documentation, that would give clear instructions. It might seem obvious to you, the author of this analysis, that first the file <code>save_data.Rmd</code> should be knitted, and then the file called <code>analyse_data.Rmd</code>, but that’s not necessarily the case for someone completely outside of the project. It might not even be obvious to you in 5 months! Also, you are assuming that the person that should rerun this project is familiar with R and knitting Rmd files. That’s not necessarily the case.</p>
+<p>The analysis is composed of two R scripts, one to prepare the data, another to actually run the analysis proper. This might seem quite easy, because each script contains comments as to what is going on, and the code is not that complicated. However, we are missing any project-level documentation, that would provide clear instructions as to how to run it. This might seem simple for us who wrote these scripts, but we are familiar with R, and this is still fresh in our brains. Should someone less familiar with R have to run the script, there is no clue for them as to how they should do it. And of course, should the analysis be more complex (suppose it’s composed of a dozens scripts), this gets even worse. It might not even be easy for you to remember how to run this in 5 months!</p>
 <p>And what about the required dependencies? Many packages were used in the analysis. How should these get installed? Ideally, the same versions of the packages you used and the same version of R should get used by that person to rerun the analysis.</p>
 <p>All of this still needs to get documented.</p>
 </section>
@@ -636,13 +639,22 @@ Warning in mask$eval_all_mutate(quo): NAs introduced by coercion</code></pre>
 <p>If new data gets published, all the points discussed previously are still valid, plus you need to make sure that the updated data is still close enough to the previous data that it can pass through the data cleaning steps you wrote. You should also make sure that the update did not introduce a mistake in past data, or at least alert you if that is the case. Sometimes, when new years get added, data for previous years also get corrected, so it would be nice to make sure that you know this. Also, in the specific case of our data, communes might get fused into a new one, or maybe even divided into smaller communes (even though this is has not happened in a long time, it is not entirely out of the question).</p>
 <p>In summary, what is missing from the current project are enough tests to make sure that an update to the data can happen smoothly.</p>
 </section>
-<section id="what-guarantee-do-we-have-that-the-output-is-stable" class="level3" data-number="2.4.3">
-<h3 data-number="2.4.3" class="anchored" data-anchor-id="what-guarantee-do-we-have-that-the-output-is-stable"><span class="header-section-number">2.4.3</span> What guarantee do we have that the output is stable?</h3>
-<p>Now this might seem weird: after all, if we start from the same dataset, does it matter <em>when</em> we knit the document? We should be getting the same result if we build the project today, in 5 months or in 5 years. Well, not necessarily. While it is true that R is quite stable, this cannot necessarily be said of the packages that get used. There is no guarantee that the authors of the packages will not change the package’s functions to work differently, or take arguments in a different order, or even that the packages will all be available at all in 5 years. And even if the packages are still available and function the same, bugs in the packages might get corrected that could now alter the result. True, your results depended on a bug and now that the bug is corrected your results should be “correct” as well, but if you need to reproduce the results as-is, mistakes and all, this could actually be problematic.</p>
-<p>So we also need a way to somehow snapshot and freeze the computational environment that was used to create the project originally.</p>
-
-
+<section id="how-easy-would-it-be-to-reuse-this-code-for-another-project" class="level3" data-number="2.4.3">
+<h3 data-number="2.4.3" class="anchored" data-anchor-id="how-easy-would-it-be-to-reuse-this-code-for-another-project"><span class="header-section-number">2.4.3</span> How easy would it be to reuse this code for another project?</h3>
+<p>Said plainly, not very easy. With code in this state you have no choice but to copy and paste it into a new script and change it adequately. For reusability, nothing beat structuring your code into functions and ideally you would even package them. We are going to learn just that in future chapters of this book.</p>
+<p>But sometimes you might not be interested in reusing code for another project: however, even if that’s the case, structuring your code into functions and package them makes it easy to reuse even inside the same project. Look at the last part of the <code>analysis.R</code> script: we copy and pasted the same code 5 times and only slightly changed it. We are going to learn how not to repeat ourselves by using functions and you will immediately see the benefits of writing functions, even when simply to reuse inside the same project.</p>
 </section>
+<section id="what-guarantee-do-we-have-that-the-output-is-stable" class="level3" data-number="2.4.4">
+<h3 data-number="2.4.4" class="anchored" data-anchor-id="what-guarantee-do-we-have-that-the-output-is-stable"><span class="header-section-number">2.4.4</span> What guarantee do we have that the output is stable?</h3>
+<p>Now this might seem weird: after all, if we start from the same dataset, does it matter <em>when</em> we run the scripts? We should be getting the same result if we build the project today, in 5 months or in 5 years. Well, not necessarily. While it is true that R is quite stable, this cannot necessarily be said of the packages that get used. There is no guarantee that the authors of the packages will not change the package’s functions to work differently, or take arguments in a different order, or even that the packages will all be available at all in 5 years. And even if the packages are still available and work the same, bugs in the packages might get corrected that could now alter the result. This might seem like a non-problem; after all, if bugs get corrected, should you be happy to update your results as well? But this depends on what it is we’re talking about. Sometimes it is necessary to reproduce results exactly as they were, if it they were wrong.</p>
+<p>So we also need a way to somehow snapshot and freeze the computational environment that was used to create the project originally.</p>
+</section>
+</section>
+<section id="chapter-conclusion" class="level2" data-number="2.5">
+<h2 data-number="2.5" class="anchored" data-anchor-id="chapter-conclusion"><span class="header-section-number">2.5</span> Chapter conclusion</h2>
+<p>We now have a basic analysis that has all we need to get started. In the coming chapters, we are going to learn about topics that will make it easy to write code that is more robust, better documented and tested, and most importantly easy to rerun (and thus to reproduce the results). The first step will actually not involve having to start rewriting our scripts though; next we are going to learn about Git, a tool that will make our life easier by versioning our code.</p>
+
+
 </section>
 
 </main> <!-- /main -->
