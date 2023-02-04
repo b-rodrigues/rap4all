@@ -376,28 +376,31 @@ not much, but the problem if you leave this script as it is, is that it is very 
 will have problems rerunning it in the future. As it turns out, this script is not reproducible.
 But we will discuss this in much more detail later on. For now, let’s analyze our cleaned data.
 
-
 ## Analysing the data
 
 We are now going to analyse the data. The first thing we are going to do is compute a Laspeyeres
 price index. This price index allows us to make comparisons through time; for example, the index at
-year 2012 measures how much more expensive (or chaper) housing became relative to the base year
+year 2012 measures how much more expensive (or cheaper) housing became relative to the base year
 (2010). However, since we only have one good, this index becomes quite simple to compute: it is
 nothing but the prices at year *t* divided by the prices in 2010 (if we had a basket of goods,
 we would need to use the Laspeyeres index formula to compute the index at all periods).
 
-For this section, we will perform a rather simple analysis. We will immediately show you the Rmd
-file: take a look at it [here]("rmds/analyse_data.Rmd"). 
+For this section, we will perform a rather simple analysis. We will immediately show you the R script:
+take a look at it [here]("scripts/analysis.R"). For our analysis we selected 5 communes and plotted
+the evolution of prices compared to the national average.
 
-This Rmd file makes use of the `knitr::knit_child()` to knit a child document in order to create
-sections for selected communes without needed to copy and paste code.
+This analysis might seem trivially simple, but it contains all the needed ingredients to illustrate
+everything else that we’re going to teach you in this book.
 
-Now, you would very likely stop at this point: after all, we are done with the analysis. However, 
-let’s ask ourselves the following important questions:
+Most analyses would stop here: after all, we have what we need; our goal was to get the plots for
+the 5 communes of Luxemourg, Esch-sur-Alzette, Mamer, Schengen (which gave its name to the
+[Schengen Area](https://en.wikipedia.org/wiki/Schengen_Area) and Wincrange. However, let’s ask
+ourselves the following important questions:
 
 - How easy would it be for someone else to rerun the analysis?
 - How easy would it be to update the analysis once new data gets published?
-- What guarantee do we have that if the documented gets knitted in 5 years, with the same input data, we get the same output?
+- How easy would it be to reuse this code for other projects?
+- What guarantee do we have that if the scripts get run in 5 years, with the same input data, we get the same output?
 
 Let’s answer these questions one by one.
 
@@ -405,44 +408,70 @@ Let’s answer these questions one by one.
 
 ### How easy would it be for someone else to rerun the analysis?
 
-The analysis is composed of two R Markdown files, one to prepare the data, another to actually run the analysis
-proper. This might seem quite easy, because each Rmd file contains many explanations as to what is going on.
-However, we are missing any project-level documentation, that would give clear instructions. It might seem obvious
-to you, the author of this analysis, that first the file `save_data.Rmd` should be knitted, and then the file
-called `analyse_data.Rmd`, but that’s not necessarily the case for someone completely outside of the project.
-It might not even be obvious to you in 5 months! Also, you are assuming that the person that should rerun this
-project is familiar with R and knitting Rmd files. That’s not necessarily the case. 
+The analysis is composed of two R scripts, one to prepare the data, another to actually run the
+analysis proper. This might seem quite easy, because each script contains comments as to what is
+going on, and the code is not that complicated. However, we are missing any project-level
+documentation, that would provide clear instructions as to how to run it. This might seem simple
+for us who wrote these scripts, but we are familiar with R, and this is still fresh in our brains.
+Should someone less familiar with R have to run the script, there is no clue for them as to how
+they should do it. And of course, should the analysis be more complex (suppose it’s composed of a
+dozens scripts), this gets even worse. It might not even be easy for you to remember how to run
+this in 5 months!
 
-And what about the required dependencies? Many packages were used in the analysis. How should these get installed?
-Ideally, the same versions of the packages you used and the same version of R should get used by that person
-to rerun the analysis.
+And what about the required dependencies? Many packages were used in the analysis. How should these
+get installed? Ideally, the same versions of the packages you used and the same version of R should
+get used by that person to rerun the analysis.
 
 All of this still needs to get documented.
 
 ### How easy would it be to update the project?
 
-If new data gets published, all the points discussed previously are still valid, plus you need to make sure that
-the updated data is still close enough to the previous data that it can pass through the data cleaning steps
-you wrote. You should also make sure that the update did not introduce a mistake in past data, or at least
-alert you if that is the case. Sometimes, when new years get added, data for previous years also get corrected,
-so it would be nice to make sure that you know this. Also, in the specific case of our data, communes might
-get fused into a new one, or maybe even divided into smaller communes (even though this is has not happened
-in a long time, it is not entirely out of the question).
+If new data gets published, all the points discussed previously are still valid, plus you need to
+make sure that the updated data is still close enough to the previous data that it can pass through
+the data cleaning steps you wrote. You should also make sure that the update did not introduce a
+mistake in past data, or at least alert you if that is the case. Sometimes, when new years get
+added, data for previous years also get corrected, so it would be nice to make sure that you know
+this. Also, in the specific case of our data, communes might get fused into a new one, or maybe
+even divided into smaller communes (even though this is has not happened in a long time, it is not
+entirely out of the question).
 
-In summary, what is missing from the current project are enough tests to make sure that an update to the data
-can happen smoothly.
+In summary, what is missing from the current project are enough tests to make sure that an update
+to the data can happen smoothly.
+
+### How easy would it be to reuse this code for another project?
+
+Said plainly, not very easy. With code in this state you have no choice but to copy and paste it
+into a new script and change it adequately. For reusability, nothing beat structuring your code
+into functions and ideally you would even package them. We are going to learn just that in 
+future chapters of this book.
+
+But sometimes you might not be interested in reusing code for another project: however, even if
+that’s the case, structuring your code into functions and package them makes it easy to reuse
+even inside the same project. Look at the last part of the `analysis.R` script: we copy and pasted
+the same code 5 times and only slightly changed it. We are going to learn how not to repeat ourselves
+by using functions and you will immediately see the benefits of writing functions, even when simply
+to reuse inside the same project.
 
 ### What guarantee do we have that the output is stable?
 
-Now this might seem weird: after all, if we start from the same dataset, does it matter *when* we knit the document?
-We should be getting the same result if we build the project today, in 5 months or in 5 years. Well, not necessarily.
-While it is true that R is quite stable, this cannot necessarily be said of the packages that get used. There is
-no guarantee that the authors of the packages will not change the package’s functions to work differently, or 
-take arguments in a different order, or even that the packages will all be available at all in 5 years.
-And even if the packages are still available and function the same, bugs in the packages might get corrected that
-could now alter the result. True, your results depended on a bug and now that the bug is corrected your results
-should be "correct" as well, but if you need to reproduce the results as-is, mistakes and all, this could actually
-be problematic.
+Now this might seem weird: after all, if we start from the same dataset, does it matter *when* we
+run the scripts? We should be getting the same result if we build the project today, in 5 months
+or in 5 years. Well, not necessarily. While it is true that R is quite stable, this cannot
+necessarily be said of the packages that get used. There is no guarantee that the authors of the
+packages will not change the package’s functions to work differently, or take arguments in a
+different order, or even that the packages will all be available at all in 5 years. And even if the
+packages are still available and work the same, bugs in the packages might get corrected that
+could now alter the result. This might seem like a non-problem; after all, if bugs get corrected, should
+you be happy to update your results as well? But this depends on what it is we’re talking about. Sometimes
+it is necessary to reproduce results exactly as they were, if it they were wrong.
 
 So we also need a way to somehow snapshot and freeze the computational environment that was used to
 create the project originally.
+
+## Chapter conclusion
+
+We now have a basic analysis that has all we need to get started. In the coming chapters, we are going to
+learn about topics that will make it easy to write code that is more robust, better documented and tested,
+and most importantly easy to rerun (and thus to reproduce the results). The first step will actually not 
+involve having to start rewriting our scripts though; next we are going to learn about Git, a tool that 
+will make our life easier by versioning our code.
