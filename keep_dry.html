@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Building reproducible analytical pipelines with R - 4&nbsp; Keeping it DRY with literate programming</title>
+<title>Building reproducible analytical pipelines with R - 6&nbsp; Keeping it DRY with literate programming</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -112,8 +112,8 @@ div.csl-indent {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./project_start.html" rel="next">
-<link href="./git.html" rel="prev">
+<link href="./packages.html" rel="next">
+<link href="./testing.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -158,7 +158,7 @@ div.csl-indent {
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
     <div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Keeping it DRY with literate programming</span></h1>
+      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Keeping it DRY with literate programming</span></h1>
       <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
         <i class="bi bi-chevron-right"></i>
       </button>
@@ -194,56 +194,76 @@ div.csl-indent {
   <a href="./intro.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">Part 1</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./fprog.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Functional programming</span></a>
+  <a href="./project_start.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Project start</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./git.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Version control</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./keep_dry.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Keeping it DRY with literate programming</span></a>
+  <a href="./fprog.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Functional programming</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./project_start.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Project start</span></a>
+  <a href="./testing.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Testing your code</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./testing.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Testing your code</span></a>
+  <a href="./keep_dry.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Keeping it DRY with literate programming</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">Part 2</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./packages.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Packaging your code</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./targets.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Build automation</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./repro_intro.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Introduction to reproducibility</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./repro_cont.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Advanced topics in reproducibility</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./ci_cd.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Continuous integration and continuous deployment/delivery</span></a>
   </div>
 </li>
+      </ul>
+  </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./references.html" class="sidebar-item-text sidebar-link">References</a>
@@ -258,17 +278,17 @@ div.csl-indent {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#literate-programming" id="toc-literate-programming" class="nav-link active" data-scroll-target="#literate-programming"><span class="toc-section-number">4.1</span>  Literate programming</a></li>
-  <li><a href="#knitr-basics" id="toc-knitr-basics" class="nav-link" data-scroll-target="#knitr-basics"><span class="toc-section-number">4.2</span>  <code>{knitr}</code> basics</a>
+  <li><a href="#literate-programming" id="toc-literate-programming" class="nav-link active" data-scroll-target="#literate-programming"><span class="toc-section-number">6.1</span>  Literate programming</a></li>
+  <li><a href="#knitr-basics" id="toc-knitr-basics" class="nav-link" data-scroll-target="#knitr-basics"><span class="toc-section-number">6.2</span>  <code>{knitr}</code> basics</a>
   <ul class="collapse">
-  <li><a href="#set-up" id="toc-set-up" class="nav-link" data-scroll-target="#set-up"><span class="toc-section-number">4.2.1</span>  Set up</a></li>
-  <li><a href="#markdown-ultrabasics" id="toc-markdown-ultrabasics" class="nav-link" data-scroll-target="#markdown-ultrabasics"><span class="toc-section-number">4.2.2</span>  Markdown ultrabasics</a></li>
+  <li><a href="#set-up" id="toc-set-up" class="nav-link" data-scroll-target="#set-up"><span class="toc-section-number">6.2.1</span>  Set up</a></li>
+  <li><a href="#markdown-ultrabasics" id="toc-markdown-ultrabasics" class="nav-link" data-scroll-target="#markdown-ultrabasics"><span class="toc-section-number">6.2.2</span>  Markdown ultrabasics</a></li>
   </ul></li>
-  <li><a href="#keeping-it-dry" id="toc-keeping-it-dry" class="nav-link" data-scroll-target="#keeping-it-dry"><span class="toc-section-number">4.3</span>  Keeping it DRY</a>
+  <li><a href="#keeping-it-dry" id="toc-keeping-it-dry" class="nav-link" data-scroll-target="#keeping-it-dry"><span class="toc-section-number">6.3</span>  Keeping it DRY</a>
   <ul class="collapse">
-  <li><a href="#generating-r-markdown-code-from-code" id="toc-generating-r-markdown-code-from-code" class="nav-link" data-scroll-target="#generating-r-markdown-code-from-code"><span class="toc-section-number">4.3.1</span>  Generating R Markdown code from code</a></li>
-  <li><a href="#tables-in-r-markdown-documents" id="toc-tables-in-r-markdown-documents" class="nav-link" data-scroll-target="#tables-in-r-markdown-documents"><span class="toc-section-number">4.3.2</span>  Tables in R Markdown documents</a></li>
-  <li><a href="#parametrized-reports" id="toc-parametrized-reports" class="nav-link" data-scroll-target="#parametrized-reports"><span class="toc-section-number">4.3.3</span>  Parametrized reports</a></li>
+  <li><a href="#generating-r-markdown-code-from-code" id="toc-generating-r-markdown-code-from-code" class="nav-link" data-scroll-target="#generating-r-markdown-code-from-code"><span class="toc-section-number">6.3.1</span>  Generating R Markdown code from code</a></li>
+  <li><a href="#tables-in-r-markdown-documents" id="toc-tables-in-r-markdown-documents" class="nav-link" data-scroll-target="#tables-in-r-markdown-documents"><span class="toc-section-number">6.3.2</span>  Tables in R Markdown documents</a></li>
+  <li><a href="#parametrized-reports" id="toc-parametrized-reports" class="nav-link" data-scroll-target="#parametrized-reports"><span class="toc-section-number">6.3.3</span>  Parametrized reports</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -278,7 +298,7 @@ div.csl-indent {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Keeping it DRY with literate programming</span></h1>
+<h1 class="title d-none d-lg-block"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Keeping it DRY with literate programming</span></h1>
 </div>
 
 
@@ -301,8 +321,8 @@ div.csl-indent {
 </ul>
 <p>We will start our project like someone with time constraints does, and see how we can reach our goal of having a nice reproducible project as painlessly as possible. There is only one catch; to make the whole process as easy as possible, we will be using literate programming, and not simply programming.</p>
 <p>By the way, you might want to create a new repository and use it for the example documents that we are going to work on together in this chapter. But since the goal of this chapter is to teach you about literate programming, we won’t tell you when to commit an push, just try to do it from time to time, and especially once you’re done with an example!</p>
-<section id="literate-programming" class="level2" data-number="4.1">
-<h2 data-number="4.1" class="anchored" data-anchor-id="literate-programming"><span class="header-section-number">4.1</span> Literate programming</h2>
+<section id="literate-programming" class="level2" data-number="6.1">
+<h2 data-number="6.1" class="anchored" data-anchor-id="literate-programming"><span class="header-section-number">6.1</span> Literate programming</h2>
 <p>In literate programming, we mix code and prose together, in a way that makes it easy for both non-technical users and programmers to understand what is going on. Scripts written this way are also very easy to compile, or render, into a variety of document formats like <code>html</code> and <code>docx</code>. R supports several ways of doing literate programming: Sweave, knitr and Quarto.</p>
 <p>Sweave was the first tool available to R (and S) users, and allowed the mixing of R and LaTeX code to create a document. Friedrich Leisch developed Sweave in 2002 and described it in his 2002 paper (<span class="citation" data-cites="leisch2002">Leisch (<a href="references.html#ref-leisch2002" role="doc-biblioref">2002</a>)</span>). As Leisch argues, <em>the traditional way of writing a report as part of a statistical data analysis project uses two separate steps</em>: running the analysis using some software, and then copy and pasting the results into a word processing tool. The problem with this approach is that much time is wasted copy and pasting things, so experimenting with different layouts or data analysis techniques is very time consuming. Copy and paste mistakes will also happen (it’s not a question of if, but when) and updating reports (for example, when new data comes in) means that someone will have, again, to copy and paste the updated results into a new document.</p>
 <p>Sweave provided (and still provides, as it is still well functioning!) a way to embed the analysis in the document itself, in this case a LaTeX source file, and R code was executed whenever the document was compiled. This gave researchers considerable time savings when it was time to update a report or drafting a research paper.</p>
@@ -436,11 +456,11 @@ output: pdf
 <p>While Quarto is the latest option in literate programming, it is quite recent, and as such, we feel it might be better to stick with <code>{knitr}</code> and the Rmd format for now, so that’s what we’re going to use going forward. Also, the <code>{knitr}</code> and the Rmd format are here to stay, so there’s little risk in keeping using it, and anyways, as already stated, if switching to Quarto becomes a necessity, the cost of switch would be very, very low. In what follows, we won’t be focused on anything really <code>{knitr}</code> or Rmd specific, so should you want to use Quarto instead, you should be able to follow along without any problems at all, since the Rmd and Qmd formats have so much overlap (but whenever there would be major differences between the two formats, we will highlight them).</p>
 <p>In the next two sections, we will discuss how to set up and use <code>{knitr}</code> as well as give you a quick overview of the R Markdown syntax. However, we will very quickly focus on the templating capabilities of <code>{knitr}</code>: expanding text, using child documents, and parameterised reports. These are advanced topics and not easy to tackle if you’re not comfortable with R already. Just as functions and higher-order functions like <code>lapply()</code> avoid having to repeat yourself, so does templating, but for literate programming. The goal is to write functions that returns literal R Markdown code, so that you can loop over these functions to build entire sections of your documents. However, difficult these features are to master, they are also extremely powerful, as they help you focus on what really matters.</p>
 </section>
-<section id="knitr-basics" class="level2" data-number="4.2">
-<h2 data-number="4.2" class="anchored" data-anchor-id="knitr-basics"><span class="header-section-number">4.2</span> <code>{knitr}</code> basics</h2>
+<section id="knitr-basics" class="level2" data-number="6.2">
+<h2 data-number="6.2" class="anchored" data-anchor-id="knitr-basics"><span class="header-section-number">6.2</span> <code>{knitr}</code> basics</h2>
 <p>This section will be a very small intro to <code>{knitr}</code>. We are going to teach you just enough to get started, and we are going to focus on the Rmd format. There are many resources out there that you can use if you want to dig deeper, for instance the <a href="https://rmarkdown.rstudio.com/lesson-1.html">R Markdown website</a> from Posit, or the <a href="https://bookdown.org/yihui/rmarkdown/">R Markdown: The Definitive Guide</a> and <a href="https://bookdown.org/yihui/rmarkdown-cookbook/">R Markdown Cookbook</a> eBooks. We will also not assume that you are using the RStudio IDE and give you instead the lower level commands to render documents. If you use RStudio and want to know how to use it effectively to author Rmd documents, you should take a look at <a href="https://rmarkdown.rstudio.com/authoring_quick_tour.html">Quick Tour</a> page. In fact, this section will basically focus on the same topics, but without focusing on how to use RStudio.</p>
-<section id="set-up" class="level3" data-number="4.2.1">
-<h3 data-number="4.2.1" class="anchored" data-anchor-id="set-up"><span class="header-section-number">4.2.1</span> Set up</h3>
+<section id="set-up" class="level3" data-number="6.2.1">
+<h3 data-number="6.2.1" class="anchored" data-anchor-id="set-up"><span class="header-section-number">6.2.1</span> Set up</h3>
 <p>The first step is to install the <code>{knitr}</code> and the <code>{rmarkdown}</code> packages. Simple type:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"rmarkdown"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -481,8 +501,8 @@ output: pdf
 </div>
 <p>Congratulations, you just <em>knitted</em> your first Rmd document!</p>
 </section>
-<section id="markdown-ultrabasics" class="level3" data-number="4.2.2">
-<h3 data-number="4.2.2" class="anchored" data-anchor-id="markdown-ultrabasics"><span class="header-section-number">4.2.2</span> Markdown ultrabasics</h3>
+<section id="markdown-ultrabasics" class="level3" data-number="6.2.2">
+<h3 data-number="6.2.2" class="anchored" data-anchor-id="markdown-ultrabasics"><span class="header-section-number">6.2.2</span> Markdown ultrabasics</h3>
 <p>R Markdown is a flavour of Markdown, which means that you should know some Markdown to really take full advantage of R Markdown. The document from before should have already shown you some basics: titles, sections and subsections all start with a <code>#</code> and the depth level is determined by the number of <code>#</code>s. For bold text, simply put the words in between <code>**</code> and for italics use only one <code>*</code>. If you want <strong><em>bold and italics</em></strong>, use <code>***</code>. The original designer of Markdown did not think that underlining text was important, so there is no <em>easy</em> way of doing it unfortunately. For this, you need to use a somewhat hidden feature; without going into too much technical details, the program that converts Rmd files to the final output format is called Pandoc, and it’s possible to use some of Pandoc’s features to format text. For example, for underlining:</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>[This is some underlined text in a R Markdown document]{.underline}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>This will underline the text between square brackets.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
@@ -568,8 +588,8 @@ output: pdf
 <span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>\end{align*}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 </section>
-<section id="keeping-it-dry" class="level2" data-number="4.3">
-<h2 data-number="4.3" class="anchored" data-anchor-id="keeping-it-dry"><span class="header-section-number">4.3</span> Keeping it DRY</h2>
+<section id="keeping-it-dry" class="level2" data-number="6.3">
+<h2 data-number="6.3" class="anchored" data-anchor-id="keeping-it-dry"><span class="header-section-number">6.3</span> Keeping it DRY</h2>
 <p>We’re now coming to why this chapter is titled as it is.</p>
 <p>Whatever you’re doing, you should keep it DRY - DRY stands for <em>don’t repeat yourself</em>. Repeating yourself by, say, copy and pasting, leads to errors and makes reading and understanding your code more difficult. This can be avoided by using functions, as we discussed in the previous chapter, but what if you need to write a document that has the following structure:</p>
 <ul>
@@ -582,8 +602,8 @@ output: pdf
 <li>Yet another table inside this section</li>
 </ul>
 <p>Is there a way to automate the creation of such a document by taking advantage of the repeating structure? Of course there is. The question is not, <em>is it possible to do X?</em>, but <em>how to do X?</em>.</p>
-<section id="generating-r-markdown-code-from-code" class="level3" data-number="4.3.1">
-<h3 data-number="4.3.1" class="anchored" data-anchor-id="generating-r-markdown-code-from-code"><span class="header-section-number">4.3.1</span> Generating R Markdown code from code</h3>
+<section id="generating-r-markdown-code-from-code" class="level3" data-number="6.3.1">
+<h3 data-number="6.3.1" class="anchored" data-anchor-id="generating-r-markdown-code-from-code"><span class="header-section-number">6.3.1</span> Generating R Markdown code from code</h3>
 <p>The example below is a fully working minimal example of this. Copy it inside a document titled something like <code>rmd_templating.Rmd</code> and render it. You will see that the output contains more sections than defined in the source. This is because we use templating at the end. Take some time to read the document, as the text inside explains what is going on:</p>
 <div class="sourceCode" id="cb19"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>---</span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>title: "Templating"</span>
@@ -770,8 +790,8 @@ output: pdf
 <p>Click <a href="https://fastidious-bavarois-3b17b9.netlify.app/">here</a> to take a look at the output.</p>
 <p>Here again, take some time to play with the above example. Change the child document, try to print other types of output, really take your time to understand this. To know more about child documents, take a look at <a href="https://bookdown.org/yihui/rmarkdown-cookbook/child-document.html#child-document">this section</a> of the R Markdown Cookbook (<span class="citation" data-cites="xie2020r">Xie, Dervieux, and Riederer (<a href="references.html#ref-xie2020r" role="doc-biblioref">2020</a>)</span>).</p>
 </section>
-<section id="tables-in-r-markdown-documents" class="level3" data-number="4.3.2">
-<h3 data-number="4.3.2" class="anchored" data-anchor-id="tables-in-r-markdown-documents"><span class="header-section-number">4.3.2</span> Tables in R Markdown documents</h3>
+<section id="tables-in-r-markdown-documents" class="level3" data-number="6.3.2">
+<h3 data-number="6.3.2" class="anchored" data-anchor-id="tables-in-r-markdown-documents"><span class="header-section-number">6.3.2</span> Tables in R Markdown documents</h3>
 <p>Getting tables right in Rmd documents is not always an easy task. There are several packages specifically made just for this task.</p>
 <p>In this short section, we want to point you towards two packages that check the following boxes:</p>
 <ul>
@@ -789,7 +809,7 @@ output: pdf
 <span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_booktabs</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
-<div class="tabwid"><style>.cl-1fecef4e{}.cl-1fe40514{font-family:'DejaVu Sans';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-1fe7b614{margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-1fe7cf64{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 2pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1fe7cf6e{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1fe7cf6f{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style><table data-quarto-disable-processing="true" class="cl-1fecef4e"><caption></caption><thead><tr style="overflow-wrap:break-word;"><th class="cl-1fe7cf64"><p class="cl-1fe7b614"><span class="cl-1fe40514">mpg</span></p></th><th class="cl-1fe7cf64"><p class="cl-1fe7b614"><span class="cl-1fe40514">cyl</span></p></th><th class="cl-1fe7cf64"><p class="cl-1fe7b614"><span class="cl-1fe40514">disp</span></p></th><th class="cl-1fe7cf64"><p class="cl-1fe7b614"><span class="cl-1fe40514">hp</span></p></th><th class="cl-1fe7cf64"><p class="cl-1fe7b614"><span class="cl-1fe40514">drat</span></p></th><th class="cl-1fe7cf64"><p class="cl-1fe7b614"><span class="cl-1fe40514">wt</span></p></th><th class="cl-1fe7cf64"><p class="cl-1fe7b614"><span class="cl-1fe40514">qsec</span></p></th><th class="cl-1fe7cf64"><p class="cl-1fe7b614"><span class="cl-1fe40514">vs</span></p></th><th class="cl-1fe7cf64"><p class="cl-1fe7b614"><span class="cl-1fe40514">am</span></p></th><th class="cl-1fe7cf64"><p class="cl-1fe7b614"><span class="cl-1fe40514">gear</span></p></th><th class="cl-1fe7cf64"><p class="cl-1fe7b614"><span class="cl-1fe40514">carb</span></p></th></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-1fe7cf6e"><p class="cl-1fe7b614"><span class="cl-1fe40514">21.0</span></p></td><td class="cl-1fe7cf6e"><p class="cl-1fe7b614"><span class="cl-1fe40514">6</span></p></td><td class="cl-1fe7cf6e"><p class="cl-1fe7b614"><span class="cl-1fe40514">160</span></p></td><td class="cl-1fe7cf6e"><p class="cl-1fe7b614"><span class="cl-1fe40514">110</span></p></td><td class="cl-1fe7cf6e"><p class="cl-1fe7b614"><span class="cl-1fe40514">3.90</span></p></td><td class="cl-1fe7cf6e"><p class="cl-1fe7b614"><span class="cl-1fe40514">2.620</span></p></td><td class="cl-1fe7cf6e"><p class="cl-1fe7b614"><span class="cl-1fe40514">16.46</span></p></td><td class="cl-1fe7cf6e"><p class="cl-1fe7b614"><span class="cl-1fe40514">0</span></p></td><td class="cl-1fe7cf6e"><p class="cl-1fe7b614"><span class="cl-1fe40514">1</span></p></td><td class="cl-1fe7cf6e"><p class="cl-1fe7b614"><span class="cl-1fe40514">4</span></p></td><td class="cl-1fe7cf6e"><p class="cl-1fe7b614"><span class="cl-1fe40514">4</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-1fe7cf6e"><p class="cl-1fe7b614"><span class="cl-1fe40514">21.0</span></p></td><td class="cl-1fe7cf6e"><p class="cl-1fe7b614"><span class="cl-1fe40514">6</span></p></td><td class="cl-1fe7cf6e"><p class="cl-1fe7b614"><span class="cl-1fe40514">160</span></p></td><td class="cl-1fe7cf6e"><p class="cl-1fe7b614"><span class="cl-1fe40514">110</span></p></td><td class="cl-1fe7cf6e"><p class="cl-1fe7b614"><span class="cl-1fe40514">3.90</span></p></td><td class="cl-1fe7cf6e"><p class="cl-1fe7b614"><span class="cl-1fe40514">2.875</span></p></td><td class="cl-1fe7cf6e"><p class="cl-1fe7b614"><span class="cl-1fe40514">17.02</span></p></td><td class="cl-1fe7cf6e"><p class="cl-1fe7b614"><span class="cl-1fe40514">0</span></p></td><td class="cl-1fe7cf6e"><p class="cl-1fe7b614"><span class="cl-1fe40514">1</span></p></td><td class="cl-1fe7cf6e"><p class="cl-1fe7b614"><span class="cl-1fe40514">4</span></p></td><td class="cl-1fe7cf6e"><p class="cl-1fe7b614"><span class="cl-1fe40514">4</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-1fe7cf6e"><p class="cl-1fe7b614"><span class="cl-1fe40514">22.8</span></p></td><td class="cl-1fe7cf6e"><p class="cl-1fe7b614"><span class="cl-1fe40514">4</span></p></td><td class="cl-1fe7cf6e"><p class="cl-1fe7b614"><span class="cl-1fe40514">108</span></p></td><td class="cl-1fe7cf6e"><p class="cl-1fe7b614"><span class="cl-1fe40514">93</span></p></td><td class="cl-1fe7cf6e"><p class="cl-1fe7b614"><span class="cl-1fe40514">3.85</span></p></td><td class="cl-1fe7cf6e"><p class="cl-1fe7b614"><span class="cl-1fe40514">2.320</span></p></td><td class="cl-1fe7cf6e"><p class="cl-1fe7b614"><span class="cl-1fe40514">18.61</span></p></td><td class="cl-1fe7cf6e"><p class="cl-1fe7b614"><span class="cl-1fe40514">1</span></p></td><td class="cl-1fe7cf6e"><p class="cl-1fe7b614"><span class="cl-1fe40514">1</span></p></td><td class="cl-1fe7cf6e"><p class="cl-1fe7b614"><span class="cl-1fe40514">4</span></p></td><td class="cl-1fe7cf6e"><p class="cl-1fe7b614"><span class="cl-1fe40514">1</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-1fe7cf6e"><p class="cl-1fe7b614"><span class="cl-1fe40514">21.4</span></p></td><td class="cl-1fe7cf6e"><p class="cl-1fe7b614"><span class="cl-1fe40514">6</span></p></td><td class="cl-1fe7cf6e"><p class="cl-1fe7b614"><span class="cl-1fe40514">258</span></p></td><td class="cl-1fe7cf6e"><p class="cl-1fe7b614"><span class="cl-1fe40514">110</span></p></td><td class="cl-1fe7cf6e"><p class="cl-1fe7b614"><span class="cl-1fe40514">3.08</span></p></td><td class="cl-1fe7cf6e"><p class="cl-1fe7b614"><span class="cl-1fe40514">3.215</span></p></td><td class="cl-1fe7cf6e"><p class="cl-1fe7b614"><span class="cl-1fe40514">19.44</span></p></td><td class="cl-1fe7cf6e"><p class="cl-1fe7b614"><span class="cl-1fe40514">1</span></p></td><td class="cl-1fe7cf6e"><p class="cl-1fe7b614"><span class="cl-1fe40514">0</span></p></td><td class="cl-1fe7cf6e"><p class="cl-1fe7b614"><span class="cl-1fe40514">3</span></p></td><td class="cl-1fe7cf6e"><p class="cl-1fe7b614"><span class="cl-1fe40514">1</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-1fe7cf6e"><p class="cl-1fe7b614"><span class="cl-1fe40514">18.7</span></p></td><td class="cl-1fe7cf6e"><p class="cl-1fe7b614"><span class="cl-1fe40514">8</span></p></td><td class="cl-1fe7cf6e"><p class="cl-1fe7b614"><span class="cl-1fe40514">360</span></p></td><td class="cl-1fe7cf6e"><p class="cl-1fe7b614"><span class="cl-1fe40514">175</span></p></td><td class="cl-1fe7cf6e"><p class="cl-1fe7b614"><span class="cl-1fe40514">3.15</span></p></td><td class="cl-1fe7cf6e"><p class="cl-1fe7b614"><span class="cl-1fe40514">3.440</span></p></td><td class="cl-1fe7cf6e"><p class="cl-1fe7b614"><span class="cl-1fe40514">17.02</span></p></td><td class="cl-1fe7cf6e"><p class="cl-1fe7b614"><span class="cl-1fe40514">0</span></p></td><td class="cl-1fe7cf6e"><p class="cl-1fe7b614"><span class="cl-1fe40514">0</span></p></td><td class="cl-1fe7cf6e"><p class="cl-1fe7b614"><span class="cl-1fe40514">3</span></p></td><td class="cl-1fe7cf6e"><p class="cl-1fe7b614"><span class="cl-1fe40514">2</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-1fe7cf6f"><p class="cl-1fe7b614"><span class="cl-1fe40514">18.1</span></p></td><td class="cl-1fe7cf6f"><p class="cl-1fe7b614"><span class="cl-1fe40514">6</span></p></td><td class="cl-1fe7cf6f"><p class="cl-1fe7b614"><span class="cl-1fe40514">225</span></p></td><td class="cl-1fe7cf6f"><p class="cl-1fe7b614"><span class="cl-1fe40514">105</span></p></td><td class="cl-1fe7cf6f"><p class="cl-1fe7b614"><span class="cl-1fe40514">2.76</span></p></td><td class="cl-1fe7cf6f"><p class="cl-1fe7b614"><span class="cl-1fe40514">3.460</span></p></td><td class="cl-1fe7cf6f"><p class="cl-1fe7b614"><span class="cl-1fe40514">20.22</span></p></td><td class="cl-1fe7cf6f"><p class="cl-1fe7b614"><span class="cl-1fe40514">1</span></p></td><td class="cl-1fe7cf6f"><p class="cl-1fe7b614"><span class="cl-1fe40514">0</span></p></td><td class="cl-1fe7cf6f"><p class="cl-1fe7b614"><span class="cl-1fe40514">3</span></p></td><td class="cl-1fe7cf6f"><p class="cl-1fe7b614"><span class="cl-1fe40514">1</span></p></td></tr></tbody></table></div>
+<div class="tabwid"><style>.cl-9f9a18c6{}.cl-9f8ebef4{font-family:'DejaVu Sans';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-9f935c70{margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-9f937bb0{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 2pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-9f937bba{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-9f937bc4{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style><table data-quarto-disable-processing="true" class="cl-9f9a18c6"><caption></caption><thead><tr style="overflow-wrap:break-word;"><th class="cl-9f937bb0"><p class="cl-9f935c70"><span class="cl-9f8ebef4">mpg</span></p></th><th class="cl-9f937bb0"><p class="cl-9f935c70"><span class="cl-9f8ebef4">cyl</span></p></th><th class="cl-9f937bb0"><p class="cl-9f935c70"><span class="cl-9f8ebef4">disp</span></p></th><th class="cl-9f937bb0"><p class="cl-9f935c70"><span class="cl-9f8ebef4">hp</span></p></th><th class="cl-9f937bb0"><p class="cl-9f935c70"><span class="cl-9f8ebef4">drat</span></p></th><th class="cl-9f937bb0"><p class="cl-9f935c70"><span class="cl-9f8ebef4">wt</span></p></th><th class="cl-9f937bb0"><p class="cl-9f935c70"><span class="cl-9f8ebef4">qsec</span></p></th><th class="cl-9f937bb0"><p class="cl-9f935c70"><span class="cl-9f8ebef4">vs</span></p></th><th class="cl-9f937bb0"><p class="cl-9f935c70"><span class="cl-9f8ebef4">am</span></p></th><th class="cl-9f937bb0"><p class="cl-9f935c70"><span class="cl-9f8ebef4">gear</span></p></th><th class="cl-9f937bb0"><p class="cl-9f935c70"><span class="cl-9f8ebef4">carb</span></p></th></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-9f937bba"><p class="cl-9f935c70"><span class="cl-9f8ebef4">21.0</span></p></td><td class="cl-9f937bba"><p class="cl-9f935c70"><span class="cl-9f8ebef4">6</span></p></td><td class="cl-9f937bba"><p class="cl-9f935c70"><span class="cl-9f8ebef4">160</span></p></td><td class="cl-9f937bba"><p class="cl-9f935c70"><span class="cl-9f8ebef4">110</span></p></td><td class="cl-9f937bba"><p class="cl-9f935c70"><span class="cl-9f8ebef4">3.90</span></p></td><td class="cl-9f937bba"><p class="cl-9f935c70"><span class="cl-9f8ebef4">2.620</span></p></td><td class="cl-9f937bba"><p class="cl-9f935c70"><span class="cl-9f8ebef4">16.46</span></p></td><td class="cl-9f937bba"><p class="cl-9f935c70"><span class="cl-9f8ebef4">0</span></p></td><td class="cl-9f937bba"><p class="cl-9f935c70"><span class="cl-9f8ebef4">1</span></p></td><td class="cl-9f937bba"><p class="cl-9f935c70"><span class="cl-9f8ebef4">4</span></p></td><td class="cl-9f937bba"><p class="cl-9f935c70"><span class="cl-9f8ebef4">4</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-9f937bba"><p class="cl-9f935c70"><span class="cl-9f8ebef4">21.0</span></p></td><td class="cl-9f937bba"><p class="cl-9f935c70"><span class="cl-9f8ebef4">6</span></p></td><td class="cl-9f937bba"><p class="cl-9f935c70"><span class="cl-9f8ebef4">160</span></p></td><td class="cl-9f937bba"><p class="cl-9f935c70"><span class="cl-9f8ebef4">110</span></p></td><td class="cl-9f937bba"><p class="cl-9f935c70"><span class="cl-9f8ebef4">3.90</span></p></td><td class="cl-9f937bba"><p class="cl-9f935c70"><span class="cl-9f8ebef4">2.875</span></p></td><td class="cl-9f937bba"><p class="cl-9f935c70"><span class="cl-9f8ebef4">17.02</span></p></td><td class="cl-9f937bba"><p class="cl-9f935c70"><span class="cl-9f8ebef4">0</span></p></td><td class="cl-9f937bba"><p class="cl-9f935c70"><span class="cl-9f8ebef4">1</span></p></td><td class="cl-9f937bba"><p class="cl-9f935c70"><span class="cl-9f8ebef4">4</span></p></td><td class="cl-9f937bba"><p class="cl-9f935c70"><span class="cl-9f8ebef4">4</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-9f937bba"><p class="cl-9f935c70"><span class="cl-9f8ebef4">22.8</span></p></td><td class="cl-9f937bba"><p class="cl-9f935c70"><span class="cl-9f8ebef4">4</span></p></td><td class="cl-9f937bba"><p class="cl-9f935c70"><span class="cl-9f8ebef4">108</span></p></td><td class="cl-9f937bba"><p class="cl-9f935c70"><span class="cl-9f8ebef4">93</span></p></td><td class="cl-9f937bba"><p class="cl-9f935c70"><span class="cl-9f8ebef4">3.85</span></p></td><td class="cl-9f937bba"><p class="cl-9f935c70"><span class="cl-9f8ebef4">2.320</span></p></td><td class="cl-9f937bba"><p class="cl-9f935c70"><span class="cl-9f8ebef4">18.61</span></p></td><td class="cl-9f937bba"><p class="cl-9f935c70"><span class="cl-9f8ebef4">1</span></p></td><td class="cl-9f937bba"><p class="cl-9f935c70"><span class="cl-9f8ebef4">1</span></p></td><td class="cl-9f937bba"><p class="cl-9f935c70"><span class="cl-9f8ebef4">4</span></p></td><td class="cl-9f937bba"><p class="cl-9f935c70"><span class="cl-9f8ebef4">1</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-9f937bba"><p class="cl-9f935c70"><span class="cl-9f8ebef4">21.4</span></p></td><td class="cl-9f937bba"><p class="cl-9f935c70"><span class="cl-9f8ebef4">6</span></p></td><td class="cl-9f937bba"><p class="cl-9f935c70"><span class="cl-9f8ebef4">258</span></p></td><td class="cl-9f937bba"><p class="cl-9f935c70"><span class="cl-9f8ebef4">110</span></p></td><td class="cl-9f937bba"><p class="cl-9f935c70"><span class="cl-9f8ebef4">3.08</span></p></td><td class="cl-9f937bba"><p class="cl-9f935c70"><span class="cl-9f8ebef4">3.215</span></p></td><td class="cl-9f937bba"><p class="cl-9f935c70"><span class="cl-9f8ebef4">19.44</span></p></td><td class="cl-9f937bba"><p class="cl-9f935c70"><span class="cl-9f8ebef4">1</span></p></td><td class="cl-9f937bba"><p class="cl-9f935c70"><span class="cl-9f8ebef4">0</span></p></td><td class="cl-9f937bba"><p class="cl-9f935c70"><span class="cl-9f8ebef4">3</span></p></td><td class="cl-9f937bba"><p class="cl-9f935c70"><span class="cl-9f8ebef4">1</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-9f937bba"><p class="cl-9f935c70"><span class="cl-9f8ebef4">18.7</span></p></td><td class="cl-9f937bba"><p class="cl-9f935c70"><span class="cl-9f8ebef4">8</span></p></td><td class="cl-9f937bba"><p class="cl-9f935c70"><span class="cl-9f8ebef4">360</span></p></td><td class="cl-9f937bba"><p class="cl-9f935c70"><span class="cl-9f8ebef4">175</span></p></td><td class="cl-9f937bba"><p class="cl-9f935c70"><span class="cl-9f8ebef4">3.15</span></p></td><td class="cl-9f937bba"><p class="cl-9f935c70"><span class="cl-9f8ebef4">3.440</span></p></td><td class="cl-9f937bba"><p class="cl-9f935c70"><span class="cl-9f8ebef4">17.02</span></p></td><td class="cl-9f937bba"><p class="cl-9f935c70"><span class="cl-9f8ebef4">0</span></p></td><td class="cl-9f937bba"><p class="cl-9f935c70"><span class="cl-9f8ebef4">0</span></p></td><td class="cl-9f937bba"><p class="cl-9f935c70"><span class="cl-9f8ebef4">3</span></p></td><td class="cl-9f937bba"><p class="cl-9f935c70"><span class="cl-9f8ebef4">2</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-9f937bc4"><p class="cl-9f935c70"><span class="cl-9f8ebef4">18.1</span></p></td><td class="cl-9f937bc4"><p class="cl-9f935c70"><span class="cl-9f8ebef4">6</span></p></td><td class="cl-9f937bc4"><p class="cl-9f935c70"><span class="cl-9f8ebef4">225</span></p></td><td class="cl-9f937bc4"><p class="cl-9f935c70"><span class="cl-9f8ebef4">105</span></p></td><td class="cl-9f937bc4"><p class="cl-9f935c70"><span class="cl-9f8ebef4">2.76</span></p></td><td class="cl-9f937bc4"><p class="cl-9f935c70"><span class="cl-9f8ebef4">3.460</span></p></td><td class="cl-9f937bc4"><p class="cl-9f935c70"><span class="cl-9f8ebef4">20.22</span></p></td><td class="cl-9f937bc4"><p class="cl-9f935c70"><span class="cl-9f8ebef4">1</span></p></td><td class="cl-9f937bc4"><p class="cl-9f935c70"><span class="cl-9f8ebef4">0</span></p></td><td class="cl-9f937bc4"><p class="cl-9f935c70"><span class="cl-9f8ebef4">3</span></p></td><td class="cl-9f937bc4"><p class="cl-9f935c70"><span class="cl-9f8ebef4">1</span></p></td></tr></tbody></table></div>
 </div>
 </div>
 <p>We won’t go into much detail on how <code>{flextable}</code> works, but it is very powerful, and the fact that it works for PDF, Html, Word and Powerpoint outputs is really a massive plus. If you want to learn more about <code>{flextable}</code>, there’s a <a href="https://ardata-fr.github.io/flextable-book/index.html">whole, free, ebook on it</a>. <code>{flextable}</code> can create very complicated tables, so really take the time to dig in!</p>
@@ -888,8 +908,8 @@ output: pdf
 <p>Here again, we won’t got into much detail, but recommend instead that you read the package’s <a href="https://vincentarelbundock.github.io/modelsummary/articles/modelsummary.html">website</a> which has very detailed documentation.</p>
 <p>These packages can help you keeping it DRY, so take some time to learn them.</p>
 </section>
-<section id="parametrized-reports" class="level3" data-number="4.3.3">
-<h3 data-number="4.3.3" class="anchored" data-anchor-id="parametrized-reports"><span class="header-section-number">4.3.3</span> Parametrized reports</h3>
+<section id="parametrized-reports" class="level3" data-number="6.3.3">
+<h3 data-number="6.3.3" class="anchored" data-anchor-id="parametrized-reports"><span class="header-section-number">6.3.3</span> Parametrized reports</h3>
 <p>Templating and child documents are very powerful, but sometimes you don’t want to have one section dedicated to each unit of analysis within the same report, but rather, you want a complete separate report by unit of analysis. This is also possible thanks to parameterised reports.</p>
 <p>Let’s modify the example from before, which consisted in creating one section per column of the <code>mtcars</code> dataset and a frequency table, and make it now one separate report for each column. The R Markdown file will look like this:</p>
 <div class="sourceCode" id="cb25"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>---</span>
@@ -1258,13 +1278,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./git.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Version control</span></span>
+      <a href="./testing.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Testing your code</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./project_start.html" class="pagination-link">
-        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Project start</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./packages.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Packaging your code</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
