@@ -152,7 +152,7 @@ library(janitor)
 ```
 
 ```{r}
-url <- "https://github.com/b-rodrigues/rap4all/raw/master/datasets/vente-maison-2010-2021.xlsx")
+url <- "https://github.com/b-rodrigues/rap4all/raw/master/datasets/vente-maison-2010-2021.xlsx"
 
 raw_data <- tempfile(fileext = ".xlsx")
 
@@ -375,6 +375,7 @@ This is a typical R script, and at first glance, one might wonder what is wrong 
 not much, but the problem if you leave this script as it is, is that it is very likely that we 
 will have problems rerunning it in the future. As it turns out, this script is not reproducible.
 But we will discuss this in much more detail later on. For now, let’s analyze our cleaned data.
+
 
 ## Analysing the data
 
