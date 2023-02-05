@@ -79,7 +79,21 @@ they have an account on Github. Also, the 2000 minutes of free computing time ar
 enough for the continuous integration of your project (which will be one of the last topics we will
 study in this book).
 
-## Installing Git
+By the way, if you're using a cloud service like Dropbox, Onedrive and the like, DO NOT put
+projects tracked by Git in them! We really need to stress this: do not track projects with both
+something like Drobox and Git. This is because Dropbox and similar services do not deal gracefully
+with conflicts: if two collaborators change the same file, Dropbox makes two copies of the files.
+One of the collaborators then has to manually deal with this. The issue is that inside a project
+that is being tracked by Git, there are hidden folder with many files that get used for synching
+the project and making sure that everything runs smoothly. If you put a Git-enabled project
+inside a Dropbox folder, these files will get accessed simultaneously by different people, and 
+and Dropbox will start making copies of these. This really messes up the project and can lead
+to data loss. Let Git handle the tracking and collaborating parts for you. It might seem more
+complex than a service like Dropbox, and it is, but it is immensely more powerful, and what steep
+learning curve it might have, it more than makes up for it with the many features it makes available
+at your finger tips.
+
+## Installing Git and opening a Github account
 
 Git is a program that you install on your computer. If you’re running a Linux distribution, chances
 are Git is already installed. Try to run the following command in a terminal to see if this is the
@@ -121,3 +135,391 @@ tell you which commands to run and explain them to you than littering the book w
 of screenshots that might get outdated as soon as a new version of the interface gets released.
 
 Don’t worry, using the command line is not as hard as it sounds.
+
+If you don't have already a Github account, now is the time to create one. Just go over to 
+[https://github.com/](https://github.com/) and simply follow the instructions and select
+the free tier to open your account.
+
+![This is your Github dashboard](images/git_1.png)
+
+Now that we have an opened account, we can go to the folder that contains the two scripts we wrote
+at the start of the book.
+
+## Git superbasics
+
+Open the folder that contains the two scripts in a file explorer. On most Linux desktop
+environments you should be able to right click anywhere and select an option titled something like
+"Open Terminal here". On Windows, do the same, but the option is titled "Open Git Bash here". On
+macOS, you need to first activate this option. Simply google for "open terminal at folder macOS"
+and follow the instructions. It is also possible to drag and drop a folder into a terminal which
+will then open the correct path in the terminal. Another option, of course, is to simply open a
+terminal and navigate to the correct folder using `cd` (**c**hange **d**irectory:
+
+```{bash, eval = F}
+cd /home/user/housing/
+```
+
+(The above command assumes that our project is inside a folder called "housing"). Make sure
+that you are in the right folder by **l**i**s**ting the contents of the folder:
+
+```{bash, eval = F}
+ls
+```
+
+```{bash, eval = F}
+user@localhost ➤ ls
+analysis.R save_data.R
+```
+
+(on Linux you could also try `ll` which is often available. It is an alias for `ls -l` which provides
+a more detailed view. There's also `ls -la` which also lists hidden files).
+
+It's now time to start tracking these files using Git. In the same window in which we ran `ls`, run
+now the following `git` command:
+
+```{bash, eval = F}
+git init
+```
+
+```{bash, eval = F}
+user@localhost ➤ git init
+```
+
+```
+hint: Using 'master' as the name for the initial branch. This default branch name
+hint: is subject to change. To configure the initial branch name to use in all
+hint: of your new repositories, which will suppress this warning, call:
+hint: 
+hint:   git config --global init.defaultBranch <name>
+hint: 
+hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+hint: 'development'. The just-created branch can be renamed via this command:
+hint: 
+hint:   git branch -m <name>
+Initialized empty Git repository in /home/cbrunos/six_to/housing/.git/
+```
+
+Take some time to read the hints. Many `git` commands give you hints and it's always a good idea to
+read them. This hind here tells us that the default branch name is "master" and that this is
+subject to change. As it turns out, Git uses "main" by default. So if instead of starting a branch
+on your computer with `git init` you create a new, empty branch on Github, the default branch will
+be called "main". You need to pay attention to this, because when we will start interacting with
+our Github repository, we need to make sure that we have the right branch name in mind. Let's now
+run this other `git` command:
+
+```{bash, eval = F}
+user@localhost ➤ git status
+```
+
+```
+On branch master
+
+No commits yet
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+        analysis.R
+        save_data.R
+
+nothing added to commit but untracked files present (use "git add" to track)
+```
+
+Git tells us quite clearly that it sees two files, but that they're currently untracked. So if we would
+modify them, Git would not keep track of the changes. So it's a good idea to just do what Git tells
+us to do, let's *add* them so that Git can track them:
+
+```{bash, eval = F}
+user@localhost ➤ git add
+```
+
+```
+Nothing specified, nothing added.
+hint: Maybe you wanted to say 'git add .'?
+hint: Turn this message off by running
+hint: "git config advice.addEmptyPathspec false"
+```
+
+Shoot, simply running `git add` does do us any good. We need to specify which files we want to add.
+We can name them one by one, for example `git add file1.R file2.txt` etc, but if we simply want to
+track all the files in the folder, we can simply use a `.` placeholder:
+
+```{bash, eval = F}
+user@localhost ➤ git add .
+```
+
+No message this time... is that a good thing? Let's run `git status` and see what's going on:
+
+```{bash, eval = F}
+user@localhost ➤ git status
+```
+
+
+```
+On branch master
+
+No commits yet
+
+Changes to be committed:
+  (use "git rm --cached <file>..." to unstage)
+        new file:   analysis.R
+        new file:   save_data.R
+```
+
+Nice! Our two files are being tracked now, we can commit the changes. *Committing* means that we
+are happy with our work, so we can snapshot it. These snapshots then get uploaded to Github by
+pushing them. This way, the changes will be available for our coworkers for them to pull. Don't
+worry if this is confusing, it won't be by the end of the chapter. So let's commit them, but I need 
+to tell you something else first: each commit must have a commit message, and we can write this
+message as an option to the `git commit` command:
+
+```{bash, eval = F}
+user@localhost ➤ git commit -am "Project start"
+```
+
+Apparently the `-am` option stands for *apply mailbox*, which we're sure makes sense to some people,
+but we prefer to think of `-am` as standing for *a*dd *m*essage. All that remains is pushing this
+commit to Github. But let's run `git status` again:
+
+```{bash, eval = F}
+user@localhost ➤ git status
+```
+
+```
+On branch master
+nothing to commit, working tree clean
+```
+
+This means that every change is accounted for in a commit. So if we were to push now, we could then
+set our computer on fire: every change would be safely backed up on Github.com.
+
+Before pushing, let's see what happens if we change on file. Open the "analysis.R" in any editor and
+simply change the start of the script by adding one line. So go from:
+
+```
+library(dplyr)
+library(ggplot2)
+library(purrr)
+library(tidyr)
+```
+
+To:
+
+```
+# This script analyses housing data for Luxembourg
+
+library(dplyr)
+library(ggplot2)
+library(purrr)
+library(tidyr)
+```
+
+and now run `git status` again:
+
+```{bash, eval = F}
+user@localhost ➤ git status
+```
+
+
+```
+On branch master
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+        modified:   analysis.R
+
+no changes added to commit (use "git add" and/or "git commit -a")
+```
+
+Because the file is being tracked, Git can now tell us that something changed and that
+we did not commit this change. So if our computer would self-combust, these changes
+would get lost forever. Better commit them and push them to Github.com as soon as possible!
+
+So first, we need to add these changes to a commit using `git add .`:
+
+```{bash, eval = F}
+user@localhost ➤ git add .
+```
+
+(You can run `git status` at this point to check if the file was correctly added to be committed.)
+
+Then, we need to commit the changes and add a nice commit message:
+
+```{bash, eval = F}
+user@localhost ➤ git commit -am "Added a comment to analysis.R"
+```
+
+Try to keep commit message as short and as explicit as possible. This is not always easy, but it really
+pays off to strive for short, clear messages. Also, ideally, you would want to keep commits as small as
+possible. For example, if you're adding and amending comments in scripts, once you're done with that
+make this a commit. Then, maybe clean up some code. That's another, separate commit. This makes 
+rolling back changes much easier. It is generally not a good idea to code all day and then only
+push one single big fat commit at the end of the day.
+
+By the way, even if our changes are still not on Github.com, we can still now roll back to previous
+commits. For example, suppose that I delete the file accidentally by running `rm analysis.R`:
+
+```
+On branch master
+Changes not staged for commit:
+  (use "git add/rm <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+        deleted:    analysis.R
+
+no changes added to commit (use "git add" and/or "git commit -a")
+```
+
+Yep, `analysis.R` is gone. And deleting on the console usually means that the file is gone 
+forever. But thankfully, we were using Git! Because we did not commit the deletion of the file,
+we can simple tell Git to ignore our changes. A simple way to achieve this is to stash the changes,
+and then *drop* (or delete) the stash:
+
+```{bash, eval = F}
+user@localhost ➤ git stash
+```
+
+```
+Saved working directory and index state WIP on master: ab43b4b Added a comment to analysis.R
+```
+
+So the deletion was stashed away, (so in case we want it back we could get it back with `git stash pop`)
+and our project was rolled back to the previous commit. Simply take a look at the files:
+
+```{bash, eval = F}
+user@localhost ➤ ls
+```
+
+
+```
+analysis.R save_data.R
+```
+
+There it is! You can get rid of the stash with `git stash drop`. But what if we had deleted the
+file and committed the change? In this scenario we could not use `git stash`, but we would need to
+revert back to a commit. Let's try, first let me remove the file:
+
+```{bash, eval = F}
+user@localhost ➤ rm analysis.R
+```
+
+and check the status with `git status`:
+
+
+```
+On branch master
+Changes not staged for commit:
+  (use "git add/rm <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+        deleted:    analysis.R
+
+no changes added to commit (use "git add" and/or "git commit -a")
+```
+
+Let's add these changes and commit them:
+
+```{bash, eval = F}
+user@localhost ➤ git add .
+user@localhost ➤ git commit -am "Removed analysis.R"
+```
+
+```
+[master 8e51867] Removed analysis.R
+ 1 file changed, 131 deletions(-)
+ delete mode 100644 analysis.R
+```
+
+What the status now?
+
+```{bash, eval = F}
+user@localhost ➤ git status
+```
+
+```
+On branch master
+nothing to commit, working tree clean
+```
+
+Now, we've done it! `git stash` won't be of any help now. So how to recover our file? For this,
+we need to know to which commit we want to roll back. Each commit not only has a message, but 
+also an unique identifier that you can access with `git log`:
+
+```{bash, eval = F}
+user@localhost ➤ git log
+```
+
+```
+commit 8e51867dc5ae89e5f2ab2798be8920e703f73455 (HEAD -> master)
+Author: User <user@mailbox.com>
+Date:   Sun Feb 5 17:54:30 2023 +0100
+
+    Removed analysis.R
+
+commit ab43b4b1069cd987685253632827f19d7a402b27
+Author: User <user@mailbox.com>
+Date:   Sun Feb 5 17:41:52 2023 +0100
+
+    Added a comment to analysis.R
+
+commit df2beecba0101304f1b56e300a3cd713ce7366e5
+Author: User <user@mailbox.com>
+Date:   Sun Feb 5 17:32:26 2023 +0100
+
+    Project start
+
+```
+
+
+The first one from the top is the last commit we've made. We would like to go back to 
+the one with the message "Added a comment to analysis.R". See the very long string
+of characters after "commit"? That's the commit unique identifier, called hash.
+You need to copy it (or only like the first 10 or so characters, that's enough as well).
+By the way, depending on your terminal and operating system, `git log` may open `less` to
+view the log. `less` is a program that makes it easy to view long documents. Quit it by simply
+pressing `q` on your keyboard. We are now ready to revert back to the right commit with the
+following command:
+
+```{bash, eval = F}
+user@localhost ➤ git revert ab43b4b1069cd98768..HEAD
+```
+
+and we're done! Check that all is right by running `ls` to say the file magically there,
+and `git log` to read the log of what happened:
+
+```{bash, eval = F}
+user@localhost ➤ git log
+```
+
+```
+commit b7f82ee119df52550e9ca1a8da2d81281e6aac58 (HEAD -> master)
+Author: User <user@mailbox.com>
+Date:   Sun Feb 5 18:03:37 2023 +0100
+
+    Revert "Removed analysis.R"
+    
+    This reverts commit 8e51867dc5ae89e5f2ab2798be8920e703f73455.
+
+commit 8e51867dc5ae89e5f2ab2798be8920e703f73455 (HEAD -> master)
+Author: User <user@mailbox.com>
+Date:   Sun Feb 5 17:54:30 2023 +0100
+
+    Removed analysis.R
+
+commit ab43b4b1069cd987685253632827f19d7a402b27
+Author: User <user@mailbox.com>
+Date:   Sun Feb 5 17:41:52 2023 +0100
+
+    Added a comment to analysis.R
+
+commit df2beecba0101304f1b56e300a3cd713ce7366e5
+Author: User <user@mailbox.com>
+Date:   Sun Feb 5 17:32:26 2023 +0100
+
+    Project start
+```
+
+This small example illustrates how useful Git is, even without using Github, and even
+if working alone on a project. At the very least it offers you a way to simply walk back
+changes and gives you a nice timeline of your project. Maybe this does not impress you much,
+because we live in a world where cloud services like Dropbox made things like this very
+accessible. But where Git (with the help of a service like Github) really shines is when
+collaboration is needed. So next we need to start interacting with Github.
+
