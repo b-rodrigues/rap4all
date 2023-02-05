@@ -155,18 +155,18 @@ and follow the instructions. It is also possible to drag and drop a folder into 
 will then open the correct path in the terminal. Another option, of course, is to simply open a
 terminal and navigate to the correct folder using `cd` (**c**hange **d**irectory:
 
-```{bash, eval = F}
+```
 cd /home/user/housing/
 ```
 
 (The above command assumes that our project is inside a folder called "housing"). Make sure
 that you are in the right folder by **l**i**s**ting the contents of the folder:
 
-```{bash, eval = F}
+```
 ls
 ```
 
-```{bash, eval = F}
+```
 user@localhost ➤ ls
 analysis.R save_data.R
 ```
@@ -177,11 +177,11 @@ a more detailed view. There's also `ls -la` which also lists hidden files).
 It's now time to start tracking these files using Git. In the same window in which we ran `ls`, run
 now the following `git` command:
 
-```{bash, eval = F}
+```
 git init
 ```
 
-```{bash, eval = F}
+```
 user@localhost ➤ git init
 ```
 
@@ -207,7 +207,7 @@ be called "main". You need to pay attention to this, because when we will start 
 our Github repository, we need to make sure that we have the right branch name in mind. Let's now
 run this other `git` command:
 
-```{bash, eval = F}
+```
 user@localhost ➤ git status
 ```
 
@@ -228,7 +228,7 @@ Git tells us quite clearly that it sees two files, but that they're currently un
 modify them, Git would not keep track of the changes. So it's a good idea to just do what Git tells
 us to do, let's *add* them so that Git can track them:
 
-```{bash, eval = F}
+```
 user@localhost ➤ git add
 ```
 
@@ -243,13 +243,13 @@ Shoot, simply running `git add` does do us any good. We need to specify which fi
 We can name them one by one, for example `git add file1.R file2.txt` etc, but if we simply want to
 track all the files in the folder, we can simply use a `.` placeholder:
 
-```{bash, eval = F}
+```
 user@localhost ➤ git add .
 ```
 
 No message this time... is that a good thing? Let's run `git status` and see what's going on:
 
-```{bash, eval = F}
+```
 user@localhost ➤ git status
 ```
 
@@ -272,7 +272,7 @@ worry if this is confusing, it won't be by the end of the chapter. So let's comm
 to tell you something else first: each commit must have a commit message, and we can write this
 message as an option to the `git commit` command:
 
-```{bash, eval = F}
+```
 user@localhost ➤ git commit -am "Project start"
 ```
 
@@ -280,7 +280,7 @@ Apparently the `-am` option stands for *apply mailbox*, which we're sure makes s
 but we prefer to think of `-am` as standing for *a*dd *m*essage. All that remains is pushing this
 commit to Github. But let's run `git status` again:
 
-```{bash, eval = F}
+```
 user@localhost ➤ git status
 ```
 
@@ -315,7 +315,7 @@ library(tidyr)
 
 and now run `git status` again:
 
-```{bash, eval = F}
+```
 user@localhost ➤ git status
 ```
 
@@ -336,7 +336,7 @@ would get lost forever. Better commit them and push them to Github.com as soon a
 
 So first, we need to add these changes to a commit using `git add .`:
 
-```{bash, eval = F}
+```
 user@localhost ➤ git add .
 ```
 
@@ -344,7 +344,7 @@ user@localhost ➤ git add .
 
 Then, we need to commit the changes and add a nice commit message:
 
-```{bash, eval = F}
+```
 user@localhost ➤ git commit -am "Added a comment to analysis.R"
 ```
 
@@ -373,7 +373,7 @@ forever. But thankfully, we were using Git! Because we did not commit the deleti
 we can simple tell Git to ignore our changes. A simple way to achieve this is to stash the changes,
 and then *drop* (or delete) the stash:
 
-```{bash, eval = F}
+```
 user@localhost ➤ git stash
 ```
 
@@ -384,7 +384,7 @@ Saved working directory and index state WIP on master: ab43b4b Added a comment t
 So the deletion was stashed away, (so in case we want it back we could get it back with `git stash pop`)
 and our project was rolled back to the previous commit. Simply take a look at the files:
 
-```{bash, eval = F}
+```
 user@localhost ➤ ls
 ```
 
@@ -397,7 +397,7 @@ There it is! You can get rid of the stash with `git stash drop`. But what if we 
 file and committed the change? In this scenario we could not use `git stash`, but we would need to
 revert back to a commit. Let's try, first let me remove the file:
 
-```{bash, eval = F}
+```
 user@localhost ➤ rm analysis.R
 ```
 
@@ -416,7 +416,7 @@ no changes added to commit (use "git add" and/or "git commit -a")
 
 Let's add these changes and commit them:
 
-```{bash, eval = F}
+```
 user@localhost ➤ git add .
 user@localhost ➤ git commit -am "Removed analysis.R"
 ```
@@ -429,7 +429,7 @@ user@localhost ➤ git commit -am "Removed analysis.R"
 
 What the status now?
 
-```{bash, eval = F}
+```
 user@localhost ➤ git status
 ```
 
@@ -442,7 +442,7 @@ Now, we've done it! `git stash` won't be of any help now. So how to recover our 
 we need to know to which commit we want to roll back. Each commit not only has a message, but 
 also an unique identifier that you can access with `git log`:
 
-```{bash, eval = F}
+```
 user@localhost ➤ git log
 ```
 
@@ -477,14 +477,14 @@ view the log. `less` is a program that makes it easy to view long documents. Qui
 pressing `q` on your keyboard. We are now ready to revert back to the right commit with the
 following command:
 
-```{bash, eval = F}
+```
 user@localhost ➤ git revert ab43b4b1069cd98768..HEAD
 ```
 
 and we're done! Check that all is right by running `ls` to say the file magically there,
 and `git log` to read the log of what happened:
 
-```{bash, eval = F}
+```
 user@localhost ➤ git log
 ```
 
