@@ -249,6 +249,8 @@ ul.task-list li input[type="checkbox"] {
 <p>The fact it is owned by Microsoft may not seem like an issue, but Microsoft’s track record of previous acquisitions is not great (Nokia, Skype), and the <a href="https://web.archive.org/web/20230130103241/https://www.theverge.com/2021/7/7/22561180/github-copilot-legal-copyright-fair-use-public-code">recent discussions about using source code hosted on Github to train machine learning models (Copilot)</a> can make one uneasy about relying too much on Github.</p>
 <p>So while we are going to use Github to host our projects in the remainder of this book, almost everything you are going to learn will be easily transeferable to another service such as Gitlab or Bitbucket, should you want to switch (or if your workplace has a self-hosted instance from one of Github’s competitors). Installing and configuring Git will be exactly the same regardless of the hosting service we use, and all the commands we will use to actually interact with our repositories will be the same as well. So why did we write <em>almost everything</em> is the the same? Well, the two advantages we cited above really give Github an edge; many, many developers, researchers and data scientists have a Github account and so if one day you need to collaborate with people, chances are they have an account on Github. Also, the 2000 minutes of free computing time are really more than enough for the continuous integration of your project (which will be one of the last topics we will study in this book).</p>
 <p>By the way, if you’re using a cloud service like Dropbox, Onedrive and the like, DO NOT put projects tracked by Git in them! We really need to stress this: do not track projects with both something like Drobox and Git. This is because Dropbox and similar services do not deal gracefully with conflicts: if two collaborators change the same file, Dropbox makes two copies of the files. One of the collaborators then has to manually deal with this. The issue is that inside a project that is being tracked by Git, there are hidden folder with many files that get used for synching the project and making sure that everything runs smoothly. If you put a Git-enabled project inside a Dropbox folder, these files will get accessed simultaneously by different people, and and Dropbox will start making copies of these. This really messes up the project and can lead to data loss. Let Git handle the tracking and collaborating parts for you. It might seem more complex than a service like Dropbox, and it is, but it is immensely more powerful, and what steep learning curve it might have, it more than makes up for it with the many features it makes available at your finger tips.</p>
+<p>Finally, before starting, there is something important that you need to understand, and people sometimes get confused by it: if a repository is public, this does not mean that anyone can make changes to the code. What this means is that anyone can fork the repository (essentially making a copy of the repository to their Github account) and then <em>suggest</em> some edits in a so-called pull request. The maintainer and owner of the original project can then accept these edits or not.</p>
+<p>Ok, enough theory, let’s get our hands dirty with some code.</p>
 <section id="installing-git-and-opening-a-github-account" class="level2" data-number="3.1">
 <h2 data-number="3.1" class="anchored" data-anchor-id="installing-git-and-opening-a-github-account"><span class="header-section-number">3.1</span> Installing Git and opening a Github account</h2>
 <p>Git is a program that you install on your computer. If you’re running a Linux distribution, chances are Git is already installed. Try to run the following command in a terminal to see if this is the case:</p>
@@ -455,10 +457,114 @@ Date:   Sun Feb 5 17:32:26 2023 +0100
 <p></p><figcaption class="figure-caption">Creating a new repository from your dashboard</figcaption><p></p>
 </figure>
 </div>
+<p>You will then land on this page:</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="images/git_new_repo_2.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Creating a new repository from your dashboard</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Name your repository and choose whether it’s a public or private repository</figcaption><p></p>
+</figure>
+</div>
+<p>Name your repository, and choose whether it should be open to the word or if it should be private and only accessible to your coworkers. We are going to make it a public repository, but you could make it private and follow along, this would change nothing to what we’re going to learn.</p>
+<p>We then land on this page:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/git_repo_start.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Some instructions to get you started</figcaption><p></p>
+</figure>
+</div>
+<p>We get some instructions on how to actually get started with our project. The first thing you need to do though is click on “SSH”:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/git_repo_start_ssh.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Some instructions to get you started</figcaption><p></p>
+</figure>
+</div>
+<p>This will changes the links in the instructions from <code>https</code> to <code>ssh</code>. We will explain why this is important in a couple paragraphs. For now, let’s read the instructions. Since we have already started working, we need to follow the instructions title “…or push an existing repository from the command line”. Let’s review these commands. This is what Github suggests we run:</p>
+<pre><code>git remote add origin git@github.com:rap4all/housing.git
+git branch -M main
+git push -u origin main</code></pre>
+<p>What’s really important is the first command and last command. The first command adds a remote that we name <em>origin</em>. The link you see is the link to our repository. This links our folder in our machine to the Github repository online. So now, every time we push, our changes will get uploaded to Github. The second line renames the branch from “master” to “main”. You are of course free to do so. We will not do it ourselves, since the default branch Git creates is called “master” so we are going to keep using it to avoid confusion. The last command pushes our changes to the “main” branch (but we need to change “main” to “master”).</p>
+<p>Let’s do just that:</p>
+<pre><code>user@localhost ➤ git remote add origin git@github.com:rap4all/housing.git</code></pre>
+<p>This produces no output. We’re now ready to push:</p>
+<pre><code>user@localhost ➤ git push -u origin master</code></pre>
+<p>and it fails:</p>
+<pre><code>ERROR: Permission to rap4all/housing.git denied to b-rodrigues.
+fatal: Could not read from remote repository.
+
+Please make sure you have the correct access rights
+and the repository exists.</code></pre>
+<p>The reason is quite simple: Github has absolutely no idea who we are! Remember, if the repository is public, anyone can clone it. But that doesn’t mean that anyone can simply push code to the repo! This means that we need a way to tell Github that we are the owner of the repository. For this, we need a way to login securely, and we will do so using a public/private rsa key pair. The idea is quite simple; we are going to generate two files on our computer. These two files form a public/private key pair. We are going to upload the public key to Github; and every time we want to interact with Github, Github will check the public key to the private key that we keep on our machine (never, ever, send the private key to anyone). If they match, Github knows that we are who we claim to be and will let us push to the repository. Let’s generate a public/private rsa key pair. Open a terminal on Linux or macOS, or Git Bash on Windows and run the following command:</p>
+<pre><code>user@localhost ➤ ssh-keygen</code></pre>
+<p>The following lines will appear in your terminal:</p>
+<pre><code>Generating public/private rsa key pair.
+Enter file in which to save the key (/home/user/.ssh/id_rsa): </code></pre>
+<p>Simply leave this empty and press enter. This next message now appears:</p>
+<pre><code>Enter passphrase (empty for no passphrase): </code></pre>
+<p>Leave it empty as well. Entering a passphrase is not really needed, since the ssh key pair itself will deal with the login. In some situations a passphrase might be useful, if you’re worried that someone might get physical access to your machine and push code by impersonating you. But if you work with such sensitive data and code that this is a real worry, maybe don’t use Github?</p>
+<p>So once you pressed enter, you get asked to confirm the passphrase:</p>
+<pre><code>Enter same passphrase again: </code></pre>
+<p>Here again, simply leave it empty and press enter on your keyboard. Once this is done, you should see this:</p>
+<pre><code>Your identification has been saved in /home/user/.ssh/id_rsa
+Your public key has been saved in /home/user/.ssh/id_rsa.pub
+The key fingerprint is:
+SHA256:tPZnR7qdN06mV53Mc36F3mASIyD55ktQJFBAVqJXNQw user@localhost
+The key's randomart image is:
++---[RSA 3072]----+
+|   .*=E*=.       |
+|   o o.oo.. .    |
+|  . .  o.  o o   |
+|   .  ..o.  . o  |
+|       +S    o.+.|
+|       .o.   o.o*|
+|       . o. + +=*|
+|        .  o ++*=|
+|            ..=oo|
++----[SHA256]-----+</code></pre>
+<p>If now you go to the specified path on the first line (so in our case <code>/home/user/.ssh/</code> you should see two files, <code>id_rsa</code> and <code>id_rsa.pub</code>, the private and public keys respectively. We’re almost done: what you need to do now is copy the contents of the <code>id_rsa.pub</code> file to Github. Go to your profile settings:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/github_settings.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Click on your user profile’s image in the top-right corner</figcaption><p></p>
+</figure>
+</div>
+<p>And then click on “SSH and GPG keys”:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/github_gpg.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Go to your user settings and choose “SSH and GPG keys”</figcaption><p></p>
+</figure>
+</div>
+<p>and then click on “New SSH key”. Name this key (it’s a good idea to write something that makes recognizing the machine the key was generated easy) and paste the contents of <code>id_rsa.pub</code> in the text box and click on “add SSH key”:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/github_add_ssh.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Copy the contents of the public key in here</figcaption><p></p>
+</figure>
+</div>
+<p>We can now go back to our terminal and try to push again:</p>
+<pre><code>user@localhost ➤ git push -u origin master</code></pre>
+<p>The following message gets printed:</p>
+<pre><code>The authenticity of host 'github.com (140.82.121.3)' can't be established.
+ED25519 key fingerprint is SHA256:+DiY3wvvV6TuJJhbpZisF/zLDA0zPMSvHdkr4UvCOqU.
+This key is not known by any other names
+Are you sure you want to continue connecting (yes/no/[fingerprint])?</code></pre>
+<p>Type <code>yes</code> and then you should see the following:</p>
+<pre><code>Enumerating objects: 10, done.
+Counting objects: 100% (10/10), done.
+Delta compression using up to 4 threads
+Compressing objects: 100% (9/9), done.
+Writing objects: 100% (10/10), 2.77 KiB | 2.77 MiB/s, done.
+Total 10 (delta 2), reused 0 (delta 0), pack-reused 0
+remote: Resolving deltas: 100% (2/2), done.
+To github.com:rap4all/housing.git
+ * [new branch]      master -&gt; master
+Branch 'master' set up to track remote branch 'master' from 'origin'.</code></pre>
+<p>And we’re done! Our commits are now safely backed up on Github. If we go to our repository’s main page, we should see the following:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/github_repo_1.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Finally!</figcaption><p></p>
 </figure>
 </div>
 
