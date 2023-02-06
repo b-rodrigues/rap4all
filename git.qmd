@@ -93,6 +93,14 @@ complex than a service like Dropbox, and it is, but it is immensely more powerfu
 learning curve it might have, it more than makes up for it with the many features it makes available
 at your finger tips.
 
+Finally, before starting, there is something important that you need to understand, and people
+sometimes get confused by it: if a repository is public, this does not mean that anyone can 
+make changes to the code. What this means is that anyone can fork the repository (essentially
+making a copy of the repository to their Github account) and then *suggest* some edits in a so-called
+pull request. The maintainer and owner of the original project can then accept these edits or not.
+
+Ok, enough theory, let's get our hands dirty with some code.
+
 ## Installing Git and opening a Github account
 
 Git is a program that you install on your computer. If you’re running a Linux distribution, chances
@@ -542,5 +550,174 @@ So, let's first go back to [https://github.com/](https://github.com/) and create
 
 ![Creating a new repository from your dashboard](images/git_new_repo.png)
 
-![Creating a new repository from your dashboard](images/git_new_repo_2.png)
+You will then land on this page:
 
+![Name your repository and choose whether it's a public or private repository](images/git_new_repo_2.png)
+
+Name your repository, and choose whether it should be open to the word or if it should be private and
+only accessible to your coworkers. We are going to make it a public repository, but you could make it
+private and follow along, this would change nothing to what we're going to learn.
+
+We then land on this page:
+
+![Some instructions to get you started](images/git_repo_start.png)
+
+We get some instructions on how to actually get started with our project. The first thing you need
+to do though is click on "SSH":
+
+![Some instructions to get you started](images/git_repo_start_ssh.png)
+
+This will changes the links in the instructions from `https` to `ssh`. We will explain why this is
+important in a couple paragraphs. For now, let's read the instructions. Since we have already
+started working, we need to follow the instructions title "...or push an existing repository from
+the command line". Let's review these commands. This is what Github suggests we run:
+
+```
+git remote add origin git@github.com:rap4all/housing.git
+git branch -M main
+git push -u origin main
+```
+
+What's really important is the first command and last command. The first command adds a remote
+that we name *origin*. The link you see is the link to our repository. This links our folder in our
+machine to the Github repository online. So now, every time we push, our changes will get uploaded
+to Github. The second line renames the branch from "master" to "main". You are of course free to
+do so. We will not do it ourselves, since the default branch Git creates is called "master" so we 
+are going to keep using it to avoid confusion. The last command pushes our changes to the 
+"main" branch (but we need to change "main" to "master").
+
+Let's do just that:
+
+```
+user@localhost ➤ git remote add origin git@github.com:rap4all/housing.git
+```
+
+This produces no output. We're now ready to push:
+
+```
+user@localhost ➤ git push -u origin master
+```
+
+and it fails:
+
+```
+ERROR: Permission to rap4all/housing.git denied to b-rodrigues.
+fatal: Could not read from remote repository.
+
+Please make sure you have the correct access rights
+and the repository exists.
+```
+
+The reason is quite simple: Github has absolutely no idea who we are! Remember, if the repository
+is public, anyone can clone it. But that doesn't mean that anyone can simply push code to the repo!
+This means that we need a way to tell Github that we are the owner of the repository.
+For this, we need a way to login securely, and we will do so using a public/private rsa key pair.
+The idea is quite simple; we are going to generate two files on our computer. These two files form
+a public/private key pair. We are going to upload the public key to Github; and every time we want
+to interact with Github, Github will check the public key to the private key that we keep on our
+machine (never, ever, send the private key to anyone). If they match, Github knows that we are
+who we claim to be and will let us push to the repository. Let's generate a public/private rsa
+key pair. Open a terminal on Linux or macOS, or Git Bash on Windows and run the following 
+command:
+
+```
+user@localhost ➤ ssh-keygen
+```
+
+The following lines will appear in your terminal:
+
+```
+Generating public/private rsa key pair.
+Enter file in which to save the key (/home/user/.ssh/id_rsa): 
+```
+
+Simply leave this empty and press enter. This next message now appears:
+
+```
+Enter passphrase (empty for no passphrase): 
+```
+
+Leave it empty as well. Entering a passphrase is not really needed, since the ssh key pair itself
+will deal with the login. In some situations a passphrase might be useful, if you're worried that
+someone might get physical access to your machine and push code by impersonating you. But if you
+work with such sensitive data and code that this is a real worry, maybe don't use Github?
+
+So once you pressed enter, you get asked to confirm the passphrase:
+
+```
+Enter same passphrase again: 
+```
+
+Here again, simply leave it empty and press enter on your keyboard. Once this is done, you should
+see this:
+
+```
+Your identification has been saved in /home/user/.ssh/id_rsa
+Your public key has been saved in /home/user/.ssh/id_rsa.pub
+The key fingerprint is:
+SHA256:tPZnR7qdN06mV53Mc36F3mASIyD55ktQJFBAVqJXNQw user@localhost
+The key's randomart image is:
++---[RSA 3072]----+
+|   .*=E*=.       |
+|   o o.oo.. .    |
+|  . .  o.  o o   |
+|   .  ..o.  . o  |
+|       +S    o.+.|
+|       .o.   o.o*|
+|       . o. + +=*|
+|        .  o ++*=|
+|            ..=oo|
++----[SHA256]-----+
+```
+
+If now you go to the specified path on the first line (so in our case `/home/user/.ssh/` you should
+see two files, `id_rsa` and `id_rsa.pub`, the private and public keys respectively. We're almost
+done: what you need to do now is copy the contents of the `id_rsa.pub` file to Github. Go to your 
+profile settings:
+
+![Click on your user profile's image in the top-right corner](images/github_settings.png)
+
+And then click on "SSH and GPG keys":
+
+![Go to your user settings and choose "SSH and GPG keys"](images/github_gpg.png)
+
+and then click on "New SSH key". Name this key (it's a good idea to write something that makes
+recognizing the machine the key was generated easy) and paste the contents of `id_rsa.pub` in the
+text box and click on "add SSH key":
+
+![Copy the contents of the public key in here](images/github_add_ssh.png)
+
+We can now go back to our terminal and try to push again:
+
+```
+user@localhost ➤ git push -u origin master
+```
+
+The following message gets printed:
+
+```
+The authenticity of host 'github.com (140.82.121.3)' can't be established.
+ED25519 key fingerprint is SHA256:+DiY3wvvV6TuJJhbpZisF/zLDA0zPMSvHdkr4UvCOqU.
+This key is not known by any other names
+Are you sure you want to continue connecting (yes/no/[fingerprint])?
+```
+
+Type `yes` and then you should see the following:
+
+```
+Enumerating objects: 10, done.
+Counting objects: 100% (10/10), done.
+Delta compression using up to 4 threads
+Compressing objects: 100% (9/9), done.
+Writing objects: 100% (10/10), 2.77 KiB | 2.77 MiB/s, done.
+Total 10 (delta 2), reused 0 (delta 0), pack-reused 0
+remote: Resolving deltas: 100% (2/2), done.
+To github.com:rap4all/housing.git
+ * [new branch]      master -> master
+Branch 'master' set up to track remote branch 'master' from 'origin'.
+```
+
+And we're done! Our commits are now safely backed up on Github. If we go to our repository's main
+page, we should see the following:
+
+![Finally!](images/github_repo_1.png)
