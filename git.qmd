@@ -11,11 +11,11 @@ better than gitflow for analysis teams. Version number discipline. Why you alway
 number when making changes to your packages. Why keeping commits small and confined to just one
 target at a time if possible is useful when tracing problems with a pipeline.*
 
-Modern software development would be impossible without version control systems, and the same
-goes for building analytical pipelines that are reproducible and robust. It doesn’t really
-matter what the output of the pipeline is: a simple graph, a report with a statistical analysis,
-a trained machine learning model that you want to hook to an API... if the code to the project
-is not versioned, you incur major risks.
+Modern software development would be impossible without version control systems, and the same goes
+for building analytical pipelines that are reproducible and robust. It doesn’t really matter what
+the output of the pipeline is: a simple graph, a report with a statistical analysis, a scientific
+publication, a trained machine learning model that you want to hook to an API... if the code to the
+project is not versioned, you incur major risks.
 
 But what is version control anyway?
 
@@ -35,7 +35,7 @@ with new features, and if the experiments are not conclusive, you can simply dis
 *original* copy of your project will remain untouched.
 
 There are several version control tools out there, but Git is undoubtedly the most popular one. You
-might have heard of Github; this is service that hosts repositories for your projects, and provides
+might have heard of Github; this is a service that hosts repositories for your projects, and provides
 other project management tools such as an issue tracker, project wiki, feature requests... and also
 very importantly continuous integration. Don’t worry if this all sounds very abstract: by the end
 of this chapter you will have all the basic knowledge to use Git and Github.com for your projects.
@@ -46,12 +46,13 @@ it is recommended to make collaboration easier (it is possible to collaborate wi
 using Git without a service like Github, by setting up a bare repository on a server on network
 drive you control, but this is outside the scope of this book).
 
-You should know that private repositories are available for free, so if you don’t want your work to
-be accessible to the public, you can. Only people that you invite to your private repositories will
-be able to see the code and collaborate with you. It is also possible that your work place has set 
-up a self-hosted Git platform, ask your IT department! Usually these self-hosted platforms are 
-Gitea or Gitlab instances. Gitea, Gitlab, Bitbucket, Codeberg, these are all similar services
-to Github. All have their own advantages and disadvantages. The advantage of Github is twofold:
+You should know Github offers private repositories for free, so if you don’t want your work to be
+accessible to the public, that is possible. Only people that you invite to your private
+repositories will be able to see the code and collaborate with you. It is also possible that your
+work place has set up a self-hosted Git platform, ask your IT department! Usually these self-hosted
+platforms are Gitea or Gitlab instances. Gitea, Gitlab, Bitbucket, Codeberg, these are all similar
+services to Github. All have their own advantages and disadvantages. The advantages of Github is
+twofold:
 
 - It has a very large community of users;
 - Its continuous integration service is incredibly useful, and free for up to 2000 minutes a month.
@@ -68,30 +69,32 @@ models (Copilot)](https://web.archive.org/web/20230130103241/https://www.theverg
 can make one uneasy about relying too much on Github.
 
 So while we are going to use Github to host our projects in the remainder of this book, almost
-everything you are going to learn will be easily transeferable to another service such as Gitlab or
-Bitbucket, should you want to switch (or if your workplace has a self-hosted instance from one of
-Github’s competitors). Installing and configuring Git will be exactly the same regardless of the
-hosting service we use, and all the commands we will use to actually interact with our repositories
-will be the same as well. So why did we write *almost everything* is the the same? Well, the two
-advantages we cited above really give Github an edge; many, many developers, researchers and data
-scientists have a Github account and so if one day you need to collaborate with people, chances are
-they have an account on Github. Also, the 2000 minutes of free computing time are really more than
-enough for the continuous integration of your project (which will be one of the last topics we will
-study in this book).
+everything you are going to learn will be easily transferable to another code hosting platform such
+as Gitlab or Bitbucket, should you want to switch (or if your workplace has a self-hosted instance
+from one of Github’s competitors). Installing and configuring Git will be exactly the same
+regardless of the hosting service we use, and all the commands we will use to actually interact
+with our repositories will be the same as well. So why did we write *almost everything* is the same
+across any of the code hosting platforms? Well, the two advantages we cited above really give
+Github an edge; many developers, researchers and data scientists have a Github account already and
+so if one day you need to collaborate with people, chances are they have an account on Github and
+not on another code hosting platform.
+
+Also, the 2000 minutes of free computing time are really more than enough for the continuous
+integration of your project (which will be one of the last topics we will study in this book).
 
 By the way, if you're using a cloud service like Dropbox, Onedrive and the like, DO NOT put
 projects tracked by Git in them! We really need to stress this: do not track projects with both
-something like Drobox and Git. This is because Dropbox and similar services do not deal gracefully
+something like Dropbox and Git. This is because Dropbox and similar services do not deal gracefully
 with conflicts: if two collaborators change the same file, Dropbox makes two copies of the files.
 One of the collaborators then has to manually deal with this. The issue is that inside a project
-that is being tracked by Git, there are hidden folder with many files that get used for synching
-the project and making sure that everything runs smoothly. If you put a Git-enabled project
-inside a Dropbox folder, these files will get accessed simultaneously by different people, and 
-and Dropbox will start making copies of these. This really messes up the project and can lead
-to data loss. Let Git handle the tracking and collaborating parts for you. It might seem more
+that is being tracked by Git, there is a hidden folder with many files that get used for synching
+the project and making sure that everything runs smoothly. If you put a Git-enabled project inside
+a Dropbox folder, these files will get accessed simultaneously by different people, and Dropbox
+will start making copies of these because of conflicts. This really messes up the project and can
+lead to data loss. Let Git handle the tracking and the collaborating for you. It might seem more
 complex than a service like Dropbox, and it is, but it is immensely more powerful, and what steep
-learning curve it might have, it more than makes up for it with the many features it makes available
-at your finger tips.
+learning curve it might have, it more than makes up for it with the many features it makes
+available at your finger tips.
 
 Finally, before starting, there is something important that you need to understand, and people
 sometimes get confused by it: if a repository is public, this does not mean that anyone can 
@@ -99,7 +102,12 @@ make changes to the code. What this means is that anyone can fork the repository
 making a copy of the repository to their Github account) and then *suggest* some edits in a so-called
 pull request. The maintainer and owner of the original project can then accept these edits or not.
 
-Ok, enough theory, let's get our hands dirty with some code.
+In the remainder of this chapter, you are going to learn how to set up Git on your machine, open a 
+Github account, and start using it right away. Then, we are going to show you several scenarios:
+
+- How to collaborate, as a team, on a project;
+- How to contribute to someone else’s project;
+- Some best practices and Github features that you need to be aware of.
 
 ## Installing Git and opening a Github account
 
@@ -111,8 +119,8 @@ case:
 which git
 ```
 
-If a path like `/usr/bin/git` gets shown, congratulations, you can skip the rest of this 
-paragraph. If something like 
+If a path like `/usr/bin/git` gets shown, congratulations, you can skip the rest of this paragraph.
+If something like:
 
 ```
 /usr/bin/which: no git in (/home/username/.local/bin:/home/username/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin)
@@ -131,16 +139,17 @@ On macOS and Windows, follow the instructions from the
 [Git Book](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git). It should be as easy
 as running an installer.
 
-Depending on your operating system, a graphical user interface might have been installed with Git.
-It is also possible to use Git from within RStudio, if you use it and many other editors have
-interfaces to Git as well. 
+Depending on your operating system, a graphical user interface might have been installed with Git,
+making it possible to interact with Git outside of the command line. It is also possible to use Git
+from within RStudio and many other editors have interfaces to Git as well.
 
-We are not going to use any graphical user interface. This is because there is no common, universal
-graphical user interface; they all work slightly differently. The only universal is the command line.
-Also, learning how to use Git via the command line will make it easier the day you will need to use
-it from a server, which will very likely happen. It also makes our job easier: it is simpler to 
-tell you which commands to run and explain them to you than littering the book with dozens upon dozens
-of screenshots that might get outdated as soon as a new version of the interface gets released.
+We are not going to use any graphical user interface however. This is because there is no common,
+universal graphical user interface; they all work slightly differently. The only universal is the
+command line. Also, learning how to use Git via the command line will make it easier the day you
+will need to use it from a server, which will very likely happen. It also makes our job easier: it
+is simpler to tell you which commands to run and explain them to you than littering the book with
+dozens upon dozens of screenshots that might get outdated as soon as a new version of the interface
+gets released.
 
 Don’t worry, using the command line is not as hard as it sounds.
 
@@ -156,12 +165,12 @@ at the start of the book.
 ## Git superbasics
 
 Open the folder that contains the two scripts in a file explorer. On most Linux desktop
-environments you should be able to right click anywhere and select an option titled something like
-"Open Terminal here". On Windows, do the same, but the option is titled "Open Git Bash here". On
-macOS, you need to first activate this option. Simply google for "open terminal at folder macOS"
-and follow the instructions. It is also possible to drag and drop a folder into a terminal which
-will then open the correct path in the terminal. Another option, of course, is to simply open a
-terminal and navigate to the correct folder using `cd` (**c**hange **d**irectory:
+environments you should be able to right click inside that folder anywhere and select an option
+titled something like "Open Terminal here". On Windows, do the same, but the option is titled "Open
+Git Bash here". On macOS, you need to first activate this option. Simply google for "open terminal
+at folder macOS" and follow the instructions. It is also possible to drag and drop a folder into a
+terminal which will then open the correct path in the terminal. Another option, of course, is to
+simply open a terminal and navigate to the correct folder using `cd` (**c**hange **d**irectory:
 
 ```
 cd /home/user/housing/
@@ -208,12 +217,11 @@ Initialized empty Git repository in /home/cbrunos/six_to/housing/.git/
 ```
 
 Take some time to read the hints. Many `git` commands give you hints and it's always a good idea to
-read them. This hind here tells us that the default branch name is "master" and that this is
-subject to change. As it turns out, Git uses "main" by default. So if instead of starting a branch
-on your computer with `git init` you create a new, empty branch on Github, the default branch will
-be called "main". You need to pay attention to this, because when we will start interacting with
-our Github repository, we need to make sure that we have the right branch name in mind. Let's now
-run this other `git` command:
+read them. This hint here tells us that the default branch name is "master" and that this is
+subject to change. For example, if you create a repository on Github, they suggest "main" as the
+name for the default branch. You need to pay attention to this, because when we will start
+interacting with our Github repository, we need to make sure that we have the right branch name in
+mind. Let's now run this other `git` command:
 
 ```
 user@localhost ➤ git status
@@ -232,9 +240,9 @@ Untracked files:
 nothing added to commit but untracked files present (use "git add" to track)
 ```
 
-Git tells us quite clearly that it sees two files, but that they're currently untracked. So if we would
-modify them, Git would not keep track of the changes. So it's a good idea to just do what Git tells
-us to do, let's *add* them so that Git can track them:
+Git tells us quite clearly that it sees two files, but that they're currently not being tracked. So
+if we would modify them, Git would not keep track of the changes. So it's a good idea to just do
+what Git tells us to do, let's *add* them so that Git can track them:
 
 ```
 user@localhost ➤ git add
@@ -260,7 +268,6 @@ No message this time... is that a good thing? Let's run `git status` and see wha
 ```
 user@localhost ➤ git status
 ```
-
 
 ```
 On branch master
@@ -300,7 +307,7 @@ nothing to commit, working tree clean
 This means that every change is accounted for in a commit. So if we were to push now, we could then
 set our computer on fire: every change would be safely backed up on Github.com.
 
-Before pushing, let's see what happens if we change on file. Open the "analysis.R" in any editor and
+Before pushing, let's see what happens if we change one file. Open "analysis.R" in any editor and
 simply change the start of the script by adding one line. So go from:
 
 ```
@@ -367,6 +374,10 @@ By the way, even if our changes are still not on Github.com, we can still now ro
 commits. For example, suppose that I delete the file accidentally by running `rm analysis.R`:
 
 ```
+user@localhost ➤ rm analysis.R
+```
+
+```
 On branch master
 Changes not staged for commit:
   (use "git add/rm <file>..." to update what will be committed)
@@ -411,7 +422,6 @@ user@localhost ➤ rm analysis.R
 
 and check the status with `git status`:
 
-
 ```
 On branch master
 Changes not staged for commit:
@@ -435,7 +445,7 @@ user@localhost ➤ git commit -am "Removed analysis.R"
  delete mode 100644 analysis.R
 ```
 
-What the status now?
+What’s the status now?
 
 ```
 user@localhost ➤ git status
@@ -475,21 +485,19 @@ Date:   Sun Feb 5 17:32:26 2023 +0100
 
 ```
 
-
-The first one from the top is the last commit we've made. We would like to go back to 
-the one with the message "Added a comment to analysis.R". See the very long string
-of characters after "commit"? That's the commit unique identifier, called hash.
-You need to copy it (or only like the first 10 or so characters, that's enough as well).
-By the way, depending on your terminal and operating system, `git log` may open `less` to
-view the log. `less` is a program that makes it easy to view long documents. Quit it by simply
-pressing `q` on your keyboard. We are now ready to revert back to the right commit with the
-following command:
+The first one from the top is the last commit we've made. We would like to go back to the one with
+the message "Added a comment to analysis.R". See the very long string of characters after "commit"?
+That's the commit unique identifier, called hash. You need to copy it (or only like the first 10 or
+so characters, that's enough as well). By the way, depending on your terminal and operating system,
+`git log` may open `less` to view the log. `less` is a program that makes it easy to view long
+documents. Quit it by simply pressing `q` on your keyboard. We are now ready to revert back to the
+right commit with the following command:
 
 ```
 user@localhost ➤ git revert ab43b4b1069cd98768..HEAD
 ```
 
-and we're done! Check that all is right by running `ls` to say the file magically there,
+and we're done! Check that all is right by running `ls` to see that the file magically returned,
 and `git log` to read the log of what happened:
 
 ```
@@ -524,12 +532,16 @@ Date:   Sun Feb 5 17:32:26 2023 +0100
     Project start
 ```
 
-This small example illustrates how useful Git is, even without using Github, and even
-if working alone on a project. At the very least it offers you a way to simply walk back
-changes and gives you a nice timeline of your project. Maybe this does not impress you much,
-because we live in a world where cloud services like Dropbox made things like this very
-accessible. But where Git (with the help of a service like Github) really shines is when
-collaboration is needed. So next we need to start interacting with Github.
+This small example illustrates how useful Git is, even without using Github, and even if working
+alone on a project. At the very least it offers you a way to simply walk back changes and gives you
+a nice timeline of your project. Maybe this does not impress you much, because we live in a world
+where cloud services like Dropbox made things like this very accessible. But where Git (with the
+help of a service like Github) really shines is when collaboration is needed. Git and code housting
+services like Github make it possible to collaborate at very large scale: thousands of developers
+contribute to the Linux kernel, arguably the most successful open source project ever, powering
+most of today’s smartphones, servers, super computers and embedded computers.[^1].
+
+[1: https://www.zdnet.com/article/who-writes-linux-almost-10000-developers/]
 
 ## Git and Github
 
@@ -538,13 +550,13 @@ these commits to Github. "Pushing" means essentially uploading these changes to 
 This makes them available to your coworkers if you're pushing to a private repository,
 or makes them available to the world if you're pushing to a public repository.
 
-Before pushing anything to Github, we need to create a new repository. This repository will contain
-the code to our project, as well as all the changes that Git has been tracking on our machine. So
-if a new team member joins for instance, he or she will be able to clone the repository to his or
-her computer and every change, every commit message, every single bit of history of the project
-will be accessible. If it's a public repository, anyone will be able to clone the repository and
-contribute code to it. We are going to walk you true some examples of how to collaborate with Git
-using Github in the remained of this chapter.
+Before pushing anything to Github though, we need to create a new repository. This repository will
+contain the code to our project, as well as all the changes that Git has been tracking on our
+machine. So if, for example, a new team member joins, he or she will be able to clone the repository
+to his or her computer and every change, every commit message, every single bit of history of the
+project will be accessible. If it's a public repository, anyone will be able to clone the
+repository and contribute code to it. We are going to walk you true some examples of how to
+collaborate with Git using Github in the remained of this chapter.
 
 So, let's first go back to [https://github.com/](https://github.com/) and create a new repository:
 
@@ -610,15 +622,19 @@ and the repository exists.
 
 The reason is quite simple: Github has absolutely no idea who we are! Remember, if the repository
 is public, anyone can clone it. But that doesn't mean that anyone can simply push code to the repo!
-This means that we need a way to tell Github that we are the owner of the repository.
-For this, we need a way to login securely, and we will do so using a public/private rsa key pair.
-The idea is quite simple; we are going to generate two files on our computer. These two files form
-a public/private key pair. We are going to upload the public key to Github; and every time we want
-to interact with Github, Github will check the public key to the private key that we keep on our
-machine (never, ever, send the private key to anyone). If they match, Github knows that we are
-who we claim to be and will let us push to the repository. Let's generate a public/private rsa
-key pair. Open a terminal on Linux or macOS, or Git Bash on Windows and run the following 
-command:
+This means that we need a way to tell Github that we are the owner of the repository. For this, we
+need a way to login securely, and we will do so using a public/private rsa key pair. The idea is
+quite simple; we are going to generate two files on our computer. These two files form a
+public/private key pair. We are going to upload the public key to Github; and every time we want to
+interact with Github, Github will check the public key to the private key that we keep on our
+machine (never, ever, send the private key to anyone). If they match, Github knows that we are who
+we claim to be and will let us push to the repository. This is why we switched from `https` to
+`ssh` before. `https` would allow us to login by typing a password each time we push (but actually,
+not anymore password login was turned off some years ago). It is much easier to not have to login
+manually and let our key pair do the job for us. 
+
+Let's generate a public/private rsa key pair. Open a terminal on Linux or macOS, or Git Bash on
+Windows and run the following command:
 
 ```
 user@localhost ➤ ssh-keygen
