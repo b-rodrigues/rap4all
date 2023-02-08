@@ -539,9 +539,9 @@ where cloud services like Dropbox made things like this very accessible. But whe
 help of a service like Github) really shines is when collaboration is needed. Git and code housting
 services like Github make it possible to collaborate at very large scale: thousands of developers
 contribute to the Linux kernel, arguably the most successful open source project ever, powering
-most of today’s smartphones, servers, super computers and embedded computers.[^1].
+most of today’s smartphones, servers, super computers and embedded computers.[^].
 
-[1: https://www.zdnet.com/article/who-writes-linux-almost-10000-developers/]
+^[https://www.zdnet.com/article/who-writes-linux-almost-10000-developers/]
 
 ## Git and Github
 
@@ -737,3 +737,12 @@ And we're done! Our commits are now safely backed up on Github. If we go to our 
 page, we should see the following:
 
 ![Finally!](images/github_repo_1.png)
+
+## Github
+
+We have succeeded in successfully installing Git and making it work with our Github account. If you
+use another machine for development, you will need to generate another rsa key pair on that machine
+and add the public key to Github. If you use another code hosting platform, you can use the same
+rsa key pair, but will need to add the public key to this other code hosting platform. Before
+continuing with Git itself, and learn about collaborating using Git, we are going to take a little tour
+of Github itself.
