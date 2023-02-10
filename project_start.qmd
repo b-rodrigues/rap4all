@@ -101,7 +101,7 @@ So to summarise; our goal is to:
 - Make some tables and plots and call it a day (for now).
 
 We are going to start in the most basic way possible; we are simply going to write a script
-and deal with each step separataley.
+and deal with each step separately.
 
 ## Saving trapped data from Excel
 
@@ -121,7 +121,7 @@ So why is this file not machine-readable? Here are some issues:
 - Numbers are text and use "," as the thousands separator;
 - You don't see it in the screenshot, but each year is in a separate sheet.
 
-That being said, this one is still very nice, and going from this Excel to a tidy dataframe will
+That being said, this one is still very nice, and going from this Excel to a tidy data frame will
 not be too difficult. In fact, we suspect that whoever made this Excel file is well aware of the
 contradicting requirements of human and machine readable formatting of data, and strove to find a
 compromise. Because more often than not, getting human readable data into a machine readable
@@ -186,17 +186,16 @@ raw_data <- raw_data |>
   select(year, locality, n_offers, starts_with("average"))
 ```
 
-If you are familiar with the `{tidyverse}` the above code should be quite easy to follow.
-We start by downloading the raw Excel file and save the sheet names into a variable.
-We then use a function called `read_clean()`, which takes the path to the Excel file and 
-the sheet names as an argument to read the required sheet into a data frame. We use 
-`skip = 10` to skip the first 10 lines in each Excel sheet because the first 10 lines contain
-a header. The last thing this function is add a new column called `year` which contains the year
-of the data. We’re lucky, because the sheet names are simply years: "2010", "2011" and so on.
-We then map this function to the list of sheet names, thus reading in all the data from all the sheets
-into one list of data frames, which then bind by row into a new data frame. 
-Finally, we remane the columns (by translating their names from French to English) and only select
-the required columns.
+If you are familiar with the `{tidyverse}` the above code should be quite easy to follow. We start
+by downloading the raw Excel file and save the sheet names into a variable. We then use a function
+called `read_clean()`, which takes the path to the Excel file and the sheet names as an argument to
+read the required sheet into a data frame. We use `skip = 10` to skip the first 10 lines in each
+Excel sheet because the first 10 lines contain a header. The last thing this function is add a new
+column called `year` which contains the year of the data. We’re lucky, because the sheet names are
+simply years: "2010", "2011" and so on. We then map this function to the list of sheet names, thus
+reading in all the data from all the sheets into one list of data frames, which then bind by row
+into a new data frame. Finally, we rename the columns (by translating their names from French to
+English) and only select the required columns.
 
 Running this code results in a neat data set:
 
@@ -444,7 +443,7 @@ to the data can happen smoothly.
 ### How easy would it be to reuse this code for another project?
 
 Said plainly, not very easy. With code in this state you have no choice but to copy and paste it
-into a new script and change it adequately. For reusability, nothing beat structuring your code
+into a new script and change it adequately. For re-usability, nothing beats structuring your code
 into functions and ideally you would even package them. We are going to learn just that in 
 future chapters of this book.
 
