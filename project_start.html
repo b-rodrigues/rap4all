@@ -329,7 +329,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>Convert nominal to real prices using a simple method;</li>
 <li>Make some tables and plots and call it a day (for now).</li>
 </ul>
-<p>We are going to start in the most basic way possible; we are simply going to write a script and deal with each step separataley.</p>
+<p>We are going to start in the most basic way possible; we are simply going to write a script and deal with each step separately.</p>
 </section>
 <section id="saving-trapped-data-from-excel" class="level2" data-number="2.2">
 <h2 data-number="2.2" class="anchored" data-anchor-id="saving-trapped-data-from-excel"><span class="header-section-number">2.2</span> Saving trapped data from Excel</h2>
@@ -347,7 +347,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>Numbers are text and use “,” as the thousands separator;</li>
 <li>You don’t see it in the screenshot, but each year is in a separate sheet.</li>
 </ul>
-<p>That being said, this one is still very nice, and going from this Excel to a tidy dataframe will not be too difficult. In fact, we suspect that whoever made this Excel file is well aware of the contradicting requirements of human and machine readable formatting of data, and strove to find a compromise. Because more often than not, getting human readable data into a machine readable formatting is a nightmare.</p>
+<p>That being said, this one is still very nice, and going from this Excel to a tidy data frame will not be too difficult. In fact, we suspect that whoever made this Excel file is well aware of the contradicting requirements of human and machine readable formatting of data, and strove to find a compromise. Because more often than not, getting human readable data into a machine readable formatting is a nightmare.</p>
 <p>This is actually the file that we are going to use for our project, so if you want to follow along, you can download it <a href="datasets/vente-maison-2010-2021.xlsx">here</a> (downloaded on January 2023 from the <a href="https://data.public.lu/en/datasets/prix-annonces-des-logements-par-commune/">luxembourguish open data portal</a>).</p>
 <p>Each sheet contains a dataset with the following columns:</p>
 <ul>
@@ -425,7 +425,7 @@ Attaching package: 'janitor'</code></pre>
 <span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">locality =</span> <span class="fu">str_trim</span>(locality)) <span class="sc">|&gt;</span></span>
 <span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(year, locality, n_offers, <span class="fu">starts_with</span>(<span class="st">"average"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>If you are familiar with the <code>{tidyverse}</code> the above code should be quite easy to follow. We start by downloading the raw Excel file and save the sheet names into a variable. We then use a function called <code>read_clean()</code>, which takes the path to the Excel file and the sheet names as an argument to read the required sheet into a data frame. We use <code>skip = 10</code> to skip the first 10 lines in each Excel sheet because the first 10 lines contain a header. The last thing this function is add a new column called <code>year</code> which contains the year of the data. We’re lucky, because the sheet names are simply years: “2010”, “2011” and so on. We then map this function to the list of sheet names, thus reading in all the data from all the sheets into one list of data frames, which then bind by row into a new data frame. Finally, we remane the columns (by translating their names from French to English) and only select the required columns.</p>
+<p>If you are familiar with the <code>{tidyverse}</code> the above code should be quite easy to follow. We start by downloading the raw Excel file and save the sheet names into a variable. We then use a function called <code>read_clean()</code>, which takes the path to the Excel file and the sheet names as an argument to read the required sheet into a data frame. We use <code>skip = 10</code> to skip the first 10 lines in each Excel sheet because the first 10 lines contain a header. The last thing this function is add a new column called <code>year</code> which contains the year of the data. We’re lucky, because the sheet names are simply years: “2010”, “2011” and so on. We then map this function to the list of sheet names, thus reading in all the data from all the sheets into one list of data frames, which then bind by row into a new data frame. Finally, we rename the columns (by translating their names from French to English) and only select the required columns.</p>
 <p>Running this code results in a neat data set:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(raw_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -651,7 +651,7 @@ Warning in mask$eval_all_mutate(quo): NAs introduced by coercion</code></pre>
 </section>
 <section id="how-easy-would-it-be-to-reuse-this-code-for-another-project" class="level3" data-number="2.4.3">
 <h3 data-number="2.4.3" class="anchored" data-anchor-id="how-easy-would-it-be-to-reuse-this-code-for-another-project"><span class="header-section-number">2.4.3</span> How easy would it be to reuse this code for another project?</h3>
-<p>Said plainly, not very easy. With code in this state you have no choice but to copy and paste it into a new script and change it adequately. For reusability, nothing beat structuring your code into functions and ideally you would even package them. We are going to learn just that in future chapters of this book.</p>
+<p>Said plainly, not very easy. With code in this state you have no choice but to copy and paste it into a new script and change it adequately. For re-usability, nothing beats structuring your code into functions and ideally you would even package them. We are going to learn just that in future chapters of this book.</p>
 <p>But sometimes you might not be interested in reusing code for another project: however, even if that’s the case, structuring your code into functions and package them makes it easy to reuse even inside the same project. Look at the last part of the <code>analysis.R</code> script: we copy and pasted the same code 5 times and only slightly changed it. We are going to learn how not to repeat ourselves by using functions and you will immediately see the benefits of writing functions, even when simply to reuse inside the same project.</p>
 </section>
 <section id="what-guarantee-do-we-have-that-the-output-is-stable" class="level3" data-number="2.4.4">
