@@ -103,14 +103,12 @@ make changes to the code. What this means is that anyone can fork the repository
 making a copy of the repository to their Github account) and then *suggest* some edits in a so-called
 pull request. The maintainer and owner of the original project can then accept these edits or not.
 
-In the remainder of this chapter, you are going to learn how to set up Git on your machine, open a
-Github account, and start using it right away. 
+In the remainder of this chapter, you are going to learn how to set up Git on your machine, open a 
+Github account, and start using it right away. Then, we are going to show you several scenarios:
 
-In the next chapter, we are going to learn the basics and some best practices of collaboration using Git and Github
-by studying the following two scenarios:
-
-- How to collaborate, as a team, on a project using trunk-based development;
-- How to contribute to someone else’s project.
+- How to collaborate, as a team, on a project;
+- How to contribute to someone else’s project;
+- Some best practices and Github features that you need to be aware of.
 
 ## Installing Git and opening a Github account
 
@@ -845,137 +843,3 @@ keyboard and the chair](https://en.wikipedia.org/wiki/User_error#PEBKAC/PEBCAK/P
 
 So don't underestimate the usefulness of creating high quality MREs for your issues! One package
 that can assist you with this is {reprex} (read about it [here](https://reprex.tidyverse.org/)).
-
-## Collaborating with Github
-
-As already mentioned several times, there are two ways of collaborating with Git (and Github):
-either as a team, or either as an external dev (external, as in, not part of the development team)
-who wishes to provide some code to a project (this only works for repositories that are public).
-
-### Collaborating as a team using *trunk-based development*
-
-Remember the issue we opened and assigned to Bruno? Bruno will now solve this issue by adding a
-Readme. This will be also the opportunity to introduce trunk-based development. The idea of
-trunk-based development is simple; team members should work on separate branches to add features or
-fix bugs, and then merge their branch to the "trunk" (in our case the *master* branch) to add their
-changes back to the main code-base. And this process should happen quickly, ideally every day, or
-as soon as some code is ready. This way, if conflicts arise, they can be dealt with quickly. This
-also makes code review much easier, because the reviewer only needs to review little bits of code
-at a time. The alternative would be for each team member to work on his or her own branch for days,
-or even weeks. Once the branches get merged to the trunk, the conflicts that will need to be solved
-and reviewing all these changes would be very painful. To avoid this, it is best to merge every day,
-or each time a piece of code is added, and, **very importantly**, this code does not break the whole
-project (we will be using unit tests for this later).
-
-So in summary: to avoid a lot of pain later by merging branches that moved away too much from the
-trunk, we will create branches, add our code, and merge them to the trunk as soon as possible. *As
-soon as possible* can mean several things, but usually this means as soon as the feature was added,
-the bug fixed, or as soon as we added some code that does not break the whole project, even if the
-feature we wanted to add is not done yet. The philosophy is that if merging fails, it should fail
-as early as possible. Early failures are easy to deal with.
-
-So, back to our issue. First, Bruno needs to clone the repository:
-
-```
-git clone git@github.com:rap4all/housing.git
-```
-
-Because Bruno was added as a collaborator, Bruno can work on the repository just like the author.
-
-Bruno will now create a new branch by using the `git checkout` command with the 
-`-b` flag:
-
-```
-bruno@computer ➤ git checkout -b "add_readme"
-```
-
-The project automatically switches to the new branch:
-
-```
-Switched to a new branch 'add_readme'
-```
-
-We can also run `git status` to double-check:
-
-```
-bruno@computer ➤ git status
-```
-
-```
-On branch add_readme
-nothing to commit, working tree clean
-```
-
-Let's add a file called `README.md` and add the following in it:
-
-```
-# Housing data for Luxembourg
-
-These scripts for the R programming language download nominal housing prices
-from the *Observatoire de l'Habitat* and tidy them up into a flat data frame.
-
-- save_data.R: downloads, cleans, and creates data frames from the data
-- analysis.R: creates plots of the data
-```
-
-Let's save this and run `git status` to see what happened:
-
-```
-bruno@computer ➤ git status
-```
-
-Git tells us that the `README.md` file is not being tracked:
-
-```
-On branch add_readme
-Untracked files:
-  (use "git add <file>..." to include in what will be committed)
-        README.md
-
-nothing added to commit but untracked files present (use "git add" to track)
-```
-
-So next we are going to track it, and push the changes. Also, we are going to use a neat trick when
-pushing: we are going to use the commit message to state the issue was fixed, which will automatically
-close the issue for us:
-
-```
-bruno@computer ➤ git add .
-bruno@computer ➤ git commit -am "fixed #1"
-```
-
-`#1` refers to the number of the issue. Because it's the first issue, it can be simply be referred
-to as `#1`. Bruno will now push:
-
-```
-bruno@computer ➤ git push origin add_readme
-```
-
-As you can see from the command above, Bruno pushes to "add_readme", not "master". If he tried to push
-to "master" a message saying that "master" is up-to-date would get printed. Let's see the output of
-pushing to "add_readme":
-
-```
-Enumerating objects: 4, done.
-Counting objects: 100% (4/4), done.
-Delta compression using up to 12 threads
-Compressing objects: 100% (3/3), done.
-Writing objects: 100% (3/3), 501 bytes | 501.00 KiB/s, done.
-Total 3 (delta 0), reused 0 (delta 0), pack-reused 0
-remote: 
-remote: Create a pull request for 'add_readme' on GitHub by visiting:
-remote:      https://github.com/rap4all/housing/pull/new/add_readme
-remote: 
-To github.com:rap4all/housing.git
- * [new branch]      add_readme -> add_readme
-```
-
-Git tells us that we now need to create a pull request. What is that? Well, if we want to merge
-our brunch back to the trunk, we need to do so by using a pull request. Let's see what
-Bruno sees on Github:
-
-![Bruno sees that the "add_readme" branch has been recently updated](images/github_add_readme_recent_push.png)
-
-
-We are now ready to learn about actually collaborating with Git and Github. We are going to learn about
-trunk-based development, an approach that focuses on getting things done in an orderly manner.
