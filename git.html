@@ -208,7 +208,7 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#getting-to-know-github" id="toc-getting-to-know-github" class="nav-link" data-scroll-target="#getting-to-know-github"><span class="toc-section-number">3.4</span>  Getting to know Github</a></li>
   <li><a href="#collaborating-with-github" id="toc-collaborating-with-github" class="nav-link" data-scroll-target="#collaborating-with-github"><span class="toc-section-number">3.5</span>  Collaborating with Github</a>
   <ul class="collapse">
-  <li><a href="#collaborating-as-a-team" id="toc-collaborating-as-a-team" class="nav-link" data-scroll-target="#collaborating-as-a-team"><span class="toc-section-number">3.5.1</span>  Collaborating as a team</a></li>
+  <li><a href="#collaborating-as-a-team-using-trunk-based-development" id="toc-collaborating-as-a-team-using-trunk-based-development" class="nav-link" data-scroll-target="#collaborating-as-a-team-using-trunk-based-development"><span class="toc-section-number">3.5.1</span>  Collaborating as a team using <em>trunk-based development</em></a></li>
   </ul></li>
   </ul>
 </nav>
@@ -238,7 +238,7 @@ ul.task-list li input[type="checkbox"] {
 <p>Modern software development would be impossible without version control systems, and the same goes for building analytical pipelines that are reproducible and robust. It doesn’t really matter what the output of the pipeline is: a simple graph, a report with a statistical analysis, a scientific publication, a trained machine learning model that you want to hook to an API… if the code to the project is not versioned, you incur major risks.</p>
 <p>But what is version control anyway?</p>
 <p>Version control tools make it easy to keep track of the changes that were made to text files (like R scripts). Any change made to any file of a project is cataloged, making it possible to trace back how the file changed, who made the changes, and when these changes were made. Using version control it is also quite easy to collaborate on a project by forcing team members to deal explicitly with the potential conflicts that might arise when the same file got changed by different people at the same time. Should your computer get lost, stolen, or explode, your projects are safely backed up on a server: this is because version control tools make use of a server which keeps track of all the changes (and in some cases, this <em>server</em> is actually your team mates’ computers!)</p>
-<p>Version control tools also make it easy to experiment with new ideas. You can start new <em>branches</em> which essentially make a copy of your current project. In this new branch, you can safely experiment with new features, and if the experiments are not conclusive, you can simply discard this branch: the <em>original</em> copy of your project will remain untouched.</p>
+<p>Version control tools also make it easy to experiment with new ideas. You can start new <em>branches</em> which essentially make a copy of your current project. In this new branch, you can safely experiment with new features, and if the experiments are not conclusive, you can simply discard this branch: the <em>original</em> copy of your project will remain untouched. We will also use branches to implement features and fix bugs quickly, in a paradigm called <em>trunk-based development</em>.</p>
 <p>There are several version control tools out there, but Git is undoubtedly the most popular one. You might have heard of Github; this is a service that hosts repositories for your projects, and provides other project management tools such as an issue tracker, project wiki, feature requests… and also very importantly continuous integration. Don’t worry if this all sounds very abstract: by the end of this chapter you will have all the basic knowledge to use Git and Github.com for your projects.</p>
 <p>Git is a tool that you must install on your computer to get started. Once Git is installed, you can immediately start using it; you don’t need to open an account on Github (or a similar service), but it is recommended to make collaboration easier (it is possible to collaborate with several people using Git without a service like Github, by setting up a bare repository on a server on network drive you control, but this is outside the scope of this book).</p>
 <p>You should know Github offers private repositories for free, so if you don’t want your work to be accessible to the public, that is possible. Only people that you invite to your private repositories will be able to see the code and collaborate with you. It is also possible that your work place has set up a self-hosted Git platform, ask your IT department! Usually these self-hosted platforms are Gitea or Gitlab instances. Gitea, Gitlab, Bitbucket, Codeberg, these are all similar services to Github. All have their own advantages and disadvantages. The advantages of Github is twofold:</p>
@@ -306,8 +306,8 @@ hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
 hint: 'development'. The just-created branch can be renamed via this command:
 hint: 
 hint:   git branch -m &lt;name&gt;
-Initialized empty Git repository in /home/cbrunos/six_to/housing/.git/</code></pre>
-<p>Take some time to read the hints. Many <code>git</code> commands give you hints and it’s always a good idea to read them. This hint here tells us that the default branch name is “master” and that this is subject to change. For example, if you create a repository on Github, they suggest “main” as the name for the default branch. You need to pay attention to this, because when we will start interacting with our Github repository, we need to make sure that we have the right branch name in mind. Let’s now run this other <code>git</code> command:</p>
+Initialized empty Git repository in /home/user/six_to/housing/.git/</code></pre>
+<p>Take some time to read the hints. Many <code>git</code> commands give you hints and it’s always a good idea to read them. This hint here tells us that the default branch name is “master” and that this is subject to change. For example, if you create a repository on Github, they suggest “main” as the name for the default branch. You need to pay attention to this, because when we will start interacting with our Github repository, we need to make sure that we have the right branch name in mind. Also, note that because the “master” branch is the most important branch, it get sometimes referred to as the “trunk”. Let’s now run this other <code>git</code> command:</p>
 <pre><code>user@localhost ➤ git status</code></pre>
 <pre><code>On branch master
 
@@ -661,9 +661,63 @@ Branch 'master' set up to track remote branch 'master' from 'origin'.</code></pr
 <section id="collaborating-with-github" class="level2" data-number="3.5">
 <h2 data-number="3.5" class="anchored" data-anchor-id="collaborating-with-github"><span class="header-section-number">3.5</span> Collaborating with Github</h2>
 <p>As already mentioned several times, there are two ways of collaborating with Git (and Github): either as a team, or either as an external dev (external, as in, not part of the development team) who wishes to provide some code to a project (this only works for repositories that are public).</p>
-<section id="collaborating-as-a-team" class="level3" data-number="3.5.1">
-<h3 data-number="3.5.1" class="anchored" data-anchor-id="collaborating-as-a-team"><span class="header-section-number">3.5.1</span> Collaborating as a team</h3>
-<p>Remember the</p>
+<section id="collaborating-as-a-team-using-trunk-based-development" class="level3" data-number="3.5.1">
+<h3 data-number="3.5.1" class="anchored" data-anchor-id="collaborating-as-a-team-using-trunk-based-development"><span class="header-section-number">3.5.1</span> Collaborating as a team using <em>trunk-based development</em></h3>
+<p>Remember the issue we opened and assigned to Bruno? Bruno will now solve this issue by adding a Readme. This will be also the opportunity to introduce trunk-based development. The idea of trunk-based development is simple; team members should work on separate branches to add features or fix bugs, and then merge their branch to the “trunk” (in our case the <em>master</em> branch) to add their changes back to the main code-base. And this process should happen quickly, ideally every day, or as soon as some code is ready. This way, if conflicts arise, they can be dealt with quickly. This also makes code review much easier, because the reviewer only needs to review little bits of code at a time. The alternative would be for each team member to work on his or her own branch for days, or even weeks. Once the branches get merged to the trunk, the conflicts that will need to be solved and reviewing all these changes would be very painful. To avoid this, it is best to merge every day, or each time a piece of code is added, and, <strong>very importantly</strong>, this code does not break the whole project (we will be using unit tests for this later).</p>
+<p>So in summary: to avoid a lot of pain later by merging branches that moved away too much from the trunk, we will create branches, add our code, and merge them to the trunk as soon as possible. <em>As soon as possible</em> can mean several things, but usually this means as soon as the feature was added, the bug fixed, or as soon as we added some code that does not break the whole project, even if the feature we wanted to add is not done yet. The philosophy is that if merging fails, it should fail as early as possible. Early failures are easy to deal with.</p>
+<p>So, back to our issue. First, Bruno needs to clone the repository:</p>
+<pre><code>git clone git@github.com:rap4all/housing.git</code></pre>
+<p>Because Bruno was added as a collaborator, Bruno can work on the repository just like the author.</p>
+<p>Bruno will now create a new branch by using the <code>git checkout</code> command with the <code>-b</code> flag:</p>
+<pre><code>bruno@computer ➤ git checkout -b "add_readme"</code></pre>
+<p>The project automatically switches to the new branch:</p>
+<pre><code>Switched to a new branch 'add_readme'</code></pre>
+<p>We can also run <code>git status</code> to double-check:</p>
+<pre><code>bruno@computer ➤ git status</code></pre>
+<pre><code>On branch add_readme
+nothing to commit, working tree clean</code></pre>
+<p>Let’s add a file called <code>README.md</code> and add the following in it:</p>
+<pre><code># Housing data for Luxembourg
+
+These scripts for the R programming language download nominal housing prices
+from the *Observatoire de l'Habitat* and tidy them up into a flat data frame.
+
+- save_data.R: downloads, cleans, and creates data frames from the data
+- analysis.R: creates plots of the data</code></pre>
+<p>Let’s save this and run <code>git status</code> to see what happened:</p>
+<pre><code>bruno@computer ➤ git status</code></pre>
+<p>Git tells us that the <code>README.md</code> file is not being tracked:</p>
+<pre><code>On branch add_readme
+Untracked files:
+  (use "git add &lt;file&gt;..." to include in what will be committed)
+        README.md
+
+nothing added to commit but untracked files present (use "git add" to track)</code></pre>
+<p>So next we are going to track it, and push the changes. Also, we are going to use a neat trick when pushing: we are going to use the commit message to state the issue was fixed, which will automatically close the issue for us:</p>
+<pre><code>bruno@computer ➤ git add .
+bruno@computer ➤ git commit -am "fixed #1"</code></pre>
+<p><code>#1</code> refers to the number of the issue. Because it’s the first issue, it can be simply be referred to as <code>#1</code>. Bruno will now push:</p>
+<pre><code>bruno@computer ➤ git push origin add_readme</code></pre>
+<p>As you can see from the command above, Bruno pushes to “add_readme”, not “master”. If he tried to push to “master” a message saying that “master” is up-to-date would get printed. Let’s see the output of pushing to “add_readme”:</p>
+<pre><code>Enumerating objects: 4, done.
+Counting objects: 100% (4/4), done.
+Delta compression using up to 12 threads
+Compressing objects: 100% (3/3), done.
+Writing objects: 100% (3/3), 501 bytes | 501.00 KiB/s, done.
+Total 3 (delta 0), reused 0 (delta 0), pack-reused 0
+remote: 
+remote: Create a pull request for 'add_readme' on GitHub by visiting:
+remote:      https://github.com/rap4all/housing/pull/new/add_readme
+remote: 
+To github.com:rap4all/housing.git
+ * [new branch]      add_readme -&gt; add_readme</code></pre>
+<p>Git tells us that we now need to create a pull request. What is that? Well, if we want to merge our brunch back to the trunk, we need to do so by using a pull request. Let’s see what Bruno sees on Github:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/github_add_readme_recent_push.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Bruno sees that the “add_readme” branch has been recently updated</figcaption><p></p>
+</figure>
+</div>
 
 
 </section>
