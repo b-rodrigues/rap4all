@@ -210,3 +210,151 @@ deleted the branch, which served its purpose:
 ![Let's get rid of this branch](images/github_pull_request_done.png)
 
 Let's delete it (it's always possible to restore it).
+
+## Handling conflicts
+
+As mentioned in the previous chapter, Git makes it easy to handle conflicts. Well, let's be clear; it can be very tricky
+sometimes to resolve conflicts. But you should know that when solving a conflict with Git is difficult, this usually means 
+that it would be impossible to do any other way, and would inevitably result in someone having to reconcile the files
+by hand.
+
+Let's see what happens when a conflict arises. In this scenario, both Bruno and the project owner will create a branch, and
+edit the same file. Perhaps they talked over the phone and decided to add a feature, or correct a bug. Perhaps they decided
+that it wasn't worth it to open an issue on Github and assign someone to do it. After all, they discussed this on the phone
+and decided that Bruno should do it. Or was it the owner who needed to solve the issue? No one remembers now. Either way,
+they both did, and what follows is what happens in that scenario.
+
+First, Bruno needs to switch back to the master branch on his computer:
+
+```
+bruno@computer ➤ git checkout master
+```
+
+```
+Switched to branch 'master'
+Your branch is behind 'origin/master' by 2 commits, and can be fast-forwarded.
+  (use "git pull" to update your local branch)
+```
+
+Git tells us to update the code on our computer by running `git pull`. We use `git push` to upload code to Github, and
+use `git pull` to download code from Github. Let's run it and see what happens:
+
+```
+bruno@computer ➤ git pull
+```
+
+```
+Updating b7f82ee..c774ebf
+Fast-forward
+ README.md | 7 +++++++
+ 1 file changed, 7 insertions(+)
+ create mode 100644 README.md
+```
+
+The owner of the project (called `owner`, remember?) can do the same and will see the same. Now, Bruno creates a new branch
+to work on the new feature:
+
+```
+bruno@computer ➤ git checkout -b add_cool_feature
+```
+
+And the project owner also create a new branch:
+
+```
+owner@localhost ➤ git checkout -b add_nice_feature
+```
+
+They now edit the same file, `analysis.R`. Bruno added this function:
+
+```{r, eval = F}
+make_plot <- function(country_level_data,
+                      commune_level_data,
+                      commune){
+
+  filtered_data <- commune_level_data %>%
+    filter(locality == commune)
+
+  data_to_plot <- bind_rows(
+    country_level_data,
+    filtered_data
+  )
+
+  ggplot(data_to_plot) +
+    geom_line(aes(y = pl_m2,
+                  x = year,
+                  group = locality,
+                  colour = locality))
+}
+
+```
+
+This way, Bruno could delete the repeating code and create plots like this:
+
+
+```{r, eval = F}
+lux_plot <- make_plot(country_level_data,
+                      commune_level_data,
+                      communes[1])
+
+
+# Esch sur Alzette
+
+esch_plot <- make_plot(country_level_data,
+                       commune_level_data,
+                       communes[2])
+
+# and so on...
+```
+
+The end effect is the same, but by using this function, the code is now shorter, and clearer. Also, if someone
+wants to change, say, the theme of the plot, now this only needs to be changed in one place and not for each 
+commune. Now, what did the owner change? The owner started by removing the line that loaded the `{purrr}`
+package, as no function from the package was used in the script, and then also changed every `%>%`
+to `|>`. It seems that much more than just who would make the changes got lost in translation... Anyways,
+both now push their changes to their respective branches. This is Bruno:
+
+```
+bruno@computer ➤ git add .
+bruno@computer ➤ git commit -am "make_plot() for plotting"
+bruno@computer ➤ git push origin add_cool_feature
+```
+
+```
+Enumerating objects: 5, done.
+Counting objects: 100% (5/5), done.
+Delta compression using up to 12 threads
+Compressing objects: 100% (3/3), done.
+Writing objects: 100% (3/3), 647 bytes | 647.00 KiB/s, done.
+Total 3 (delta 1), reused 0 (delta 0), pack-reused 0
+remote: Resolving deltas: 100% (1/1), completed with 1 local object.
+remote: 
+remote: Create a pull request for 'add_cool_feature' on GitHub by visiting:
+remote:      https://github.com/rap4all/housing/pull/new/add_cool_feature
+remote: 
+To github.com:rap4all/housing.git
+ * [new branch]      add_cool_feature -> add_cool_feature
+```
+
+and this is the owner:
+
+```
+owner@localhost ➤ git add .
+owner@localhost ➤ git commit -am "cleanup"
+owner@localhost ➤ git push origin add_sweet_feature
+```
+
+```
+Enumerating objects: 5, done.
+Counting objects: 100% (5/5), done.
+Delta compression using up to 4 threads
+Compressing objects: 100% (3/3), done.
+Writing objects: 100% (3/3), 449 bytes | 449.00 KiB/s, done.
+Total 3 (delta 1), reused 0 (delta 0)
+remote: Resolving deltas: 100% (1/1), completed with 1 local object.
+remote: 
+remote: Create a pull request for 'add_sweet_feature' on GitHub by visiting:
+remote:      https://github.com/rap4all/housing/pull/new/add_sweet_feature
+remote: 
+To github.com:rap4all/housing.git
+ * [new branch]      add_sweet_feature -> add_sweet_feature
+```

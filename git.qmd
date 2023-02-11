@@ -184,8 +184,13 @@ that you are in the right folder by **l**i**s**ting the contents of the folder:
 ls
 ```
 
+One little thing: from now on, the prompt of a terminal (or Git bash terminal on Windows) will start with 
+`owner@localhost`. This is the user called `owner` ("owner" simply because that will be the project manager
+in our examples from now on) and the computer `owner` uses is called `localhost`. So here is what happens
+when `owner` runs `ls` on the root directory of the project:
+
 ```
-user@localhost ➤ ls
+owner@localhost ➤ ls
 analysis.R save_data.R
 ```
 
@@ -200,7 +205,7 @@ git init
 ```
 
 ```
-user@localhost ➤ git init
+owner@localhost ➤ git init
 ```
 
 ```
@@ -226,7 +231,7 @@ mind. Also, note that because the "master" branch is the most important branch, 
 referred to as the "trunk". Let's now run this other `git` command:
 
 ```
-user@localhost ➤ git status
+owner@localhost ➤ git status
 ```
 
 ```
@@ -247,7 +252,7 @@ if we would modify them, Git would not keep track of the changes. So it's a good
 what Git tells us to do, let's *add* them so that Git can track them:
 
 ```
-user@localhost ➤ git add
+owner@localhost ➤ git add
 ```
 
 ```
@@ -262,13 +267,13 @@ We can name them one by one, for example `git add file1.R file2.txt` etc, but if
 track all the files in the folder, we can simply use a `.` placeholder:
 
 ```
-user@localhost ➤ git add .
+owner@localhost ➤ git add .
 ```
 
 No message this time... is that a good thing? Let's run `git status` and see what's going on:
 
 ```
-user@localhost ➤ git status
+owner@localhost ➤ git status
 ```
 
 ```
@@ -290,7 +295,7 @@ to tell you something else first: each commit must have a commit message, and we
 message as an option to the `git commit` command:
 
 ```
-user@localhost ➤ git commit -am "Project start"
+owner@localhost ➤ git commit -am "Project start"
 ```
 
 Apparently the `-am` option stands for *apply mailbox*, which we're sure makes sense to some people,
@@ -298,7 +303,7 @@ but we prefer to think of `-am` as standing for *a*dd *m*essage. All that remain
 commit to Github. But let's run `git status` again:
 
 ```
-user@localhost ➤ git status
+owner@localhost ➤ git status
 ```
 
 ```
@@ -333,7 +338,7 @@ library(tidyr)
 and now run `git status` again:
 
 ```
-user@localhost ➤ git status
+owner@localhost ➤ git status
 ```
 
 
@@ -354,7 +359,7 @@ would get lost forever. Better commit them and push them to Github.com as soon a
 So first, we need to add these changes to a commit using `git add .`:
 
 ```
-user@localhost ➤ git add .
+owner@localhost ➤ git add .
 ```
 
 (You can run `git status` at this point to check if the file was correctly added to be committed.)
@@ -362,7 +367,7 @@ user@localhost ➤ git add .
 Then, we need to commit the changes and add a nice commit message:
 
 ```
-user@localhost ➤ git commit -am "Added a comment to analysis.R"
+owner@localhost ➤ git commit -am "Added a comment to analysis.R"
 ```
 
 Try to keep commit message as short and as explicit as possible. This is not always easy, but it really
@@ -376,7 +381,7 @@ By the way, even if our changes are still not on Github.com, we can still now ro
 commits. For example, suppose that I delete the file accidentally by running `rm analysis.R`:
 
 ```
-user@localhost ➤ rm analysis.R
+owner@localhost ➤ rm analysis.R
 ```
 
 ```
@@ -395,7 +400,7 @@ we can simple tell Git to ignore our changes. A simple way to achieve this is to
 and then *drop* (or delete) the stash:
 
 ```
-user@localhost ➤ git stash
+owner@localhost ➤ git stash
 ```
 
 ```
@@ -406,7 +411,7 @@ So the deletion was stashed away, (so in case we want it back we could get it ba
 and our project was rolled back to the previous commit. Simply take a look at the files:
 
 ```
-user@localhost ➤ ls
+owner@localhost ➤ ls
 ```
 
 
@@ -419,7 +424,7 @@ file and committed the change? In this scenario we could not use `git stash`, bu
 revert back to a commit. Let's try, first let me remove the file:
 
 ```
-user@localhost ➤ rm analysis.R
+owner@localhost ➤ rm analysis.R
 ```
 
 and check the status with `git status`:
@@ -437,8 +442,8 @@ no changes added to commit (use "git add" and/or "git commit -a")
 Let's add these changes and commit them:
 
 ```
-user@localhost ➤ git add .
-user@localhost ➤ git commit -am "Removed analysis.R"
+owner@localhost ➤ git add .
+owner@localhost ➤ git commit -am "Removed analysis.R"
 ```
 
 ```
@@ -450,7 +455,7 @@ user@localhost ➤ git commit -am "Removed analysis.R"
 What’s the status now?
 
 ```
-user@localhost ➤ git status
+owner@localhost ➤ git status
 ```
 
 ```
@@ -463,24 +468,24 @@ we need to know to which commit we want to roll back. Each commit not only has a
 also an unique identifier that you can access with `git log`:
 
 ```
-user@localhost ➤ git log
+owner@localhost ➤ git log
 ```
 
 ```
 commit 8e51867dc5ae89e5f2ab2798be8920e703f73455 (HEAD -> master)
-Author: User <user@mailbox.com>
+Author: User <owner@mailbox.com>
 Date:   Sun Feb 5 17:54:30 2023 +0100
 
     Removed analysis.R
 
 commit ab43b4b1069cd987685253632827f19d7a402b27
-Author: User <user@mailbox.com>
+Author: User <owner@mailbox.com>
 Date:   Sun Feb 5 17:41:52 2023 +0100
 
     Added a comment to analysis.R
 
 commit df2beecba0101304f1b56e300a3cd713ce7366e5
-Author: User <user@mailbox.com>
+Author: User <owner@mailbox.com>
 Date:   Sun Feb 5 17:32:26 2023 +0100
 
     Project start
@@ -496,19 +501,19 @@ documents. Quit it by simply pressing `q` on your keyboard. We are now ready to 
 right commit with the following command:
 
 ```
-user@localhost ➤ git revert ab43b4b1069cd98768..HEAD
+owner@localhost ➤ git revert ab43b4b1069cd98768..HEAD
 ```
 
 and we're done! Check that all is right by running `ls` to see that the file magically returned,
 and `git log` to read the log of what happened:
 
 ```
-user@localhost ➤ git log
+owner@localhost ➤ git log
 ```
 
 ```
 commit b7f82ee119df52550e9ca1a8da2d81281e6aac58 (HEAD -> master)
-Author: User <user@mailbox.com>
+Author: User <owner@mailbox.com>
 Date:   Sun Feb 5 18:03:37 2023 +0100
 
     Revert "Removed analysis.R"
@@ -516,19 +521,19 @@ Date:   Sun Feb 5 18:03:37 2023 +0100
     This reverts commit 8e51867dc5ae89e5f2ab2798be8920e703f73455.
 
 commit 8e51867dc5ae89e5f2ab2798be8920e703f73455 (HEAD -> master)
-Author: User <user@mailbox.com>
+Author: User <owner@mailbox.com>
 Date:   Sun Feb 5 17:54:30 2023 +0100
 
     Removed analysis.R
 
 commit ab43b4b1069cd987685253632827f19d7a402b27
-Author: User <user@mailbox.com>
+Author: User <owner@mailbox.com>
 Date:   Sun Feb 5 17:41:52 2023 +0100
 
     Added a comment to analysis.R
 
 commit df2beecba0101304f1b56e300a3cd713ce7366e5
-Author: User <user@mailbox.com>
+Author: User <owner@mailbox.com>
 Date:   Sun Feb 5 17:32:26 2023 +0100
 
     Project start
@@ -603,13 +608,13 @@ are going to keep using it to avoid confusion. The last command pushes our chang
 Let's do just that:
 
 ```
-user@localhost ➤ git remote add origin git@github.com:rap4all/housing.git
+owner@localhost ➤ git remote add origin git@github.com:rap4all/housing.git
 ```
 
 This produces no output. We're now ready to push:
 
 ```
-user@localhost ➤ git push -u origin master
+owner@localhost ➤ git push -u origin master
 ```
 
 and it fails:
@@ -639,7 +644,7 @@ Let's generate a public/private rsa key pair. Open a terminal on Linux or macOS,
 Windows and run the following command:
 
 ```
-user@localhost ➤ ssh-keygen
+owner@localhost ➤ ssh-keygen
 ```
 
 The following lines will appear in your terminal:
@@ -673,7 +678,7 @@ see this:
 Your identification has been saved in /home/user/.ssh/id_rsa
 Your public key has been saved in /home/user/.ssh/id_rsa.pub
 The key fingerprint is:
-SHA256:tPZnR7qdN06mV53Mc36F3mASIyD55ktQJFBAVqJXNQw user@localhost
+SHA256:tPZnR7qdN06mV53Mc36F3mASIyD55ktQJFBAVqJXNQw owner@localhost
 The key's randomart image is:
 +---[RSA 3072]----+
 |   .*=E*=.       |
@@ -708,7 +713,7 @@ text box and click on "add SSH key":
 We can now go back to our terminal and try to push again:
 
 ```
-user@localhost ➤ git push -u origin master
+owner@localhost ➤ git push -u origin master
 ```
 
 The following message gets printed:
