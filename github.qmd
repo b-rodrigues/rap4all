@@ -497,6 +497,92 @@ In (1) we see the commit that deals with the conflict, in (2) the owner asks Bru
 for a review and then in (3) we see that Bruno reviewed and approved. Finally, the
 pull request can be merged (4) and the feature branch deleted.
 
+### Simplified trunk based development
+
+The workflow that we showed here may seem a bit too rigid for smaller teams (below 4
+or 5 contributors). It is possible to adopt a simplified version of trunk based
+development, where contributors don't have to open pull request to merge their
+feature branches into the trunk, and no reviewer is needed. In cases like this, Git
+forces you to pull changes if someone already merged his or her feature branch into
+the trunk before you could. This way, when pulling, conflicts (if any) arise at that
+point. It is then your responsibility to solve the conflicts (and this works just
+like in the previous section) and then commit and push the commits with the conflicts
+resolved. Another contributor who then wishes to merged his or fear feature branch
+into to the trunk will have to pull again, ensuring that conflicts get resolved
+before he or she can merge. If no conflicts arise (for example, you both worked on
+different files, or on different lines of the same files), then no resolution is
+needed and the feature branch can be merged into master.
+
+### Conclusion
+
+The main ideas of trunk based development are:
+
+- Each contributor opens a new branch to develop a feature or fix a bug, and works alone on his or her own little branch;
+- At the end of the day at the latest (or a previously agreed upon duration), branches need all to get merged;
+- Conflicts need to be taken care of at that point;
+- If adding a feature would take more time than just one day, then the task needs to be split in a manner that small contributions can be merged daily. In the beginning, these contributions can be simple placeholders that will be gradually enriched with functioning code until the feature is successfully implemented. This strategy is called branching by abstraction;
+- The master branch (or trunk) contains always working, production-grade code;
+- To enforce discipline, it might be worth it to make opening pull requests mandatory for merging back to the trunk, and require a review.
+
 ## Contributing to public repositories
 
+In this last section, we are going to briefly discuss how to contribute to a project when we
+are not a team member of that project. For example, maybe we use an R package and notice a bug,
+and want to propose a fix. Or maybe we simply spotted a typo in the README of said package, and
+want to propose a correction. Whatever it may be, if the repository is public, anyone can 
+propose a fix. For example, consider this repository:
 
+![A public repository](images/github_public_repo.png)
+
+This repository contains code written by a fellow called "rap4all", and Bruno uses this code
+daily. However, Bruno notices a typo in the readme, and wants to propose a fix.
+
+First, Bruno visits the repository on Github (since it's a public repository, anyone can view
+it online) and creates a fork:
+
+![Bruno needs to create a fork of the repository](images/github_fork.png)
+
+Forking creates a copy of the repository to Bruno's account:
+
+![Bruno goes ahead with forking](images/github_create_fork.png)
+
+Bruno now sees the fork on his account as well:
+
+![Bruno's fork](images/github_create_fork.png)
+
+So now, Bruno can clone this repository and work on it, because he is working on a copy
+of the repository that he owns. Anything Bruno does on this copy will not affect the original
+repository.
+
+```
+bruno@computer ➤ git clone git@github.com:b-rodrigues/my_cool_project.git 
+```
+
+Bruno now fixes the typo in the `README.md` file, commits and pushes to his fork:
+
+![Bruno fixed the typo in his fork](images/github_typo_fixed.png)
+
+As you can see, Bruno's fork is now ahead of the original repo by one commit. 
+By clicking on "Contribute", Bruno can open a pull request to propose his fix to the original
+repository. This pull request will be opened over at the original repository:
+
+![Bruno opens a pull request to contribute his fix upstream](images/github_pull_request_typo.png)
+
+What does the owner of the original repository, "rap4all" see? The pull request Bruno
+opened is now in the original repository's "Pull request" menu, and the owner can
+check what the contribution is, if it breaks code or not, etc. This is essentially the same
+workflow as the one presented before in trunk based development with pull requests and
+reviews before merging (minus the forking of the repository).
+
+![The owner of the original repository can now accept Bruno's fix](images/github_merge_pull_request.png)
+
+By merging the fix, the owner can now also benefit from a grammatically correct Readme file as 
+well:
+
+![The beauty of open source](images/github_contribution_done.png)
+
+## Further reading
+
+To know everything about trunk based development, check out @hammant2020. A free,
+online, version of the book is available at
+[https://trunkbaseddevelopment.com/](https://trunkbaseddevelopment.com/).
