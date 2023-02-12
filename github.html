@@ -547,8 +547,88 @@ remote:      https://github.com/rap4all/housing/pull/new/add_sweet_feature
 remote: 
 To github.com:rap4all/housing.git
  * [new branch]      add_sweet_feature -&gt; add_sweet_feature</code></pre>
+<p>So, let’s think about what just happened: two developers changed the same file, <code>analysis.R</code> in two separate branches. They did what they had to do, and now these two branches need to be merged back to the trunk. So Bruno does a pull request:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/github_new_pull_request.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Bruno opens a pull request after finishing his changes</figcaption><p></p>
+</figure>
+</div>
+<p>First, Bruno selects the feature branch (1), then clicks on “Contribute” (2) and then “Open pull request” (3). Bruno gets taken to this screen:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/github_new_pull_request_2.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">No conflicts, for now…</figcaption><p></p>
+</figure>
+</div>
+<p>Now Bruno can click on “Create pull request”, but remember, because reviews are required, automatic merging is disabled.</p>
+<p>If now we go see what happens from the project owner’s side of things, first of all, there’s now a notification for a pending review:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/github_new_pull_request_review_pending.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">New review pending</figcaption><p></p>
+</figure>
+</div>
+<p>By clicking on it, the project owner can review the pull request and decide what to do with it. So at this point, the owner did not open a pull request for the feature he or she worked on yet. And maybe that’s a good thing, because now the project owner can see that the changes that Bruno made on the file will conflict with the project owner’s changes.</p>
+<p>So how to move forward? Simple: the project owner can decide to approve the pull request, which will merge Bruno’s changes into the master branch (or the trunk). Then, instead of opening a pull request for merging his or her changes into trunk, which will cause a conflict, the project owner can instead merge the changes from the trunk into his or her feature branch. This will also create a conflict, but now the project owner can easily deal with it on his or her machine, and then push a new commit with both changes integrated gracefully. The image below illustrates this workflow:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/github_conflict_tbd.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Conflict solving with trunk based development</figcaption><p></p>
+</figure>
+</div>
+<p>First step, the owner reviews and approves Bruno’s pull request:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/github_pull_request_approved.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">First, let’s approve the changes</figcaption><p></p>
+</figure>
+</div>
+<p>The pull request can get merged and Bruno’s feature branch deleted. Now, it wouldn’t make sense for the project owner to create a pull request to merge his or her changes. They would conflict with what Bruno did. So the project owner goes back to the computer, and essentially updates the code in his or her feature branch by merging master into it.</p>
+<p>So, the project owner checks that he or she is working on the feature branch:</p>
+<pre><code>owner@localhost ➤ git status</code></pre>
+<pre><code>On branch add_sweet_feature
+nothing to commit, working tree clean</code></pre>
+<p>Ok, so now let’s get the updated code from master, by pulling from master:</p>
+<pre><code>owner@localhost ➤ git pull origin master</code></pre>
+<p>The owner now sees this:</p>
+<pre><code>remote: Enumerating objects: 6, done.
+remote: Counting objects: 100% (6/6), done.
+remote: Compressing objects: 100% (3/3), done.
+remote: Total 4 (delta 1), reused 3 (delta 1), pack-reused 0
+Unpacking objects: 100% (4/4), 1.23 KiB | 418.00 KiB/s, done.
+From github.com:rap4all/housing
+ * branch            master     -&gt; FETCH_HEAD
+   c774ebf..a43c68f  master     -&gt; origin/master
+Auto-merging analysis.R
+CONFLICT (content): Merge conflict in analysis.R
+Automatic merge failed; fix conflicts and then commit the result.</code></pre>
+<p>Git detect that there’s some conflicts and tells the owner to fix them, and then commit the results. So let’s open <code>analysis.R</code> and see how it looks like (you can view the file online on this <a href="https://gist.github.com/b-rodrigues/f713702268c99328ad16af56f7d32892">link</a><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>. First of all, you will see Git deals with conflicts on a per line basis. So each line that the owner changed that does not conflict with Bruno’s change gets immediately updated to reflect the owner’s changes. For example, remember that the owner removed the line that loaded the <code>{purrr}</code> package? This line was also removed by pulling the changes from master into the feature branch. Also, you should notice that every <code>%&gt;%</code> was changed into <code>|&gt;</code> as well.</p>
+<p>Then, you should understand what happens when a conflict gets detected on some lines. For example, this is the first conflict you should see:</p>
+<pre><code>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+filtered_data &lt;- commune_level_data |&gt;
+  filter(locality == communes[1])
+=======
+  filtered_data &lt;- commune_level_data %&gt;%
+    filter(locality == commune)
+&gt;&gt;&gt;&gt;&gt;&gt;&gt; a43c68f5596563ffca33b3729451bffc762782c3</code></pre>
+<p>We both see how the lines look on the owner’s computer and how they look in the master branch (or trunk). These are the lines between <code>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</code> and <code>=======</code>. The lines between <code>=======</code> and <code>&gt;&gt;&gt;&gt;&gt;&gt;&gt; a43c68f5596563ffca33b3729451bffc762782c3</code> are how they look in the master branch (or trunk). This very long chain of characters that starts with <code>a43c68f</code> is the hash of the commit from which these lines come from.</p>
+<p>So this makes things quite easy; one simply needs to remove the outdated code, and then commit and push the fixed file! The project owner only needs to remove <code>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</code> and <code>=======</code> and what’s between these lines, as well as the lines that show the hash commit. The project owner can now commit and push the changes, open a pull request, ask Bruno to review the changes one last time and merge everything back to master.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/github_conflict_solved.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">The conflict has been gracefully solved</figcaption><p></p>
+</figure>
+</div>
+<p>In (1) we see the commit that deals with the conflict, in (2) the owner asks Bruno for a review and then in (3) we see that Bruno reviewed and approved. Finally, the pull request can be merged (4) and the feature branch deleted.</p>
 
 
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1"><p>https://is.gd/ktWtjr<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
 </section>
 
 </main> <!-- /main -->
