@@ -270,8 +270,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#collaborating-as-a-team-using-trunk-based-development" id="toc-collaborating-as-a-team-using-trunk-based-development" class="nav-link active" data-scroll-target="#collaborating-as-a-team-using-trunk-based-development"><span class="toc-section-number">4.1</span>  Collaborating as a team using <em>trunk-based development</em></a></li>
-  <li><a href="#handling-conflicts" id="toc-handling-conflicts" class="nav-link" data-scroll-target="#handling-conflicts"><span class="toc-section-number">4.2</span>  Handling conflicts</a></li>
+  <li><a href="#collaborating-as-a-team-using-trunk-based-development" id="toc-collaborating-as-a-team-using-trunk-based-development" class="nav-link active" data-scroll-target="#collaborating-as-a-team-using-trunk-based-development"><span class="toc-section-number">4.1</span>  Collaborating as a team using <em>trunk-based development</em></a>
+  <ul class="collapse">
+  <li><a href="#tbd-basics" id="toc-tbd-basics" class="nav-link" data-scroll-target="#tbd-basics"><span class="toc-section-number">4.1.1</span>  TBD basics</a></li>
+  <li><a href="#handling-conflicts" id="toc-handling-conflicts" class="nav-link" data-scroll-target="#handling-conflicts"><span class="toc-section-number">4.1.2</span>  Handling conflicts</a></li>
+  </ul></li>
+  <li><a href="#contributing-to-public-repositories" id="toc-contributing-to-public-repositories" class="nav-link" data-scroll-target="#contributing-to-public-repositories"><span class="toc-section-number">4.2</span>  Contributing to public repositories</a></li>
   </ul>
 </nav>
     </div>
@@ -298,6 +302,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>As already mentioned several times, there are two ways of collaborating with Git (and Github): either as a team, or either as an external dev (external, as in, not part of the development team) who wishes to provide some code to a project (this only works for repositories that are public).</p>
 <section id="collaborating-as-a-team-using-trunk-based-development" class="level2" data-number="4.1">
 <h2 data-number="4.1" class="anchored" data-anchor-id="collaborating-as-a-team-using-trunk-based-development"><span class="header-section-number">4.1</span> Collaborating as a team using <em>trunk-based development</em></h2>
+<section id="tbd-basics" class="level3" data-number="4.1.1">
+<h3 data-number="4.1.1" class="anchored" data-anchor-id="tbd-basics"><span class="header-section-number">4.1.1</span> TBD basics</h3>
 <p>Remember the issue we opened and assigned to Bruno? Bruno will now solve this issue by adding a Readme. This will be also the opportunity to introduce trunk-based development. The idea of trunk-based development is simple; team members should work on separate branches to add features or fix bugs, and then merge their branch to the “trunk” (in our case the <em>master</em> branch) to add their changes back to the main code-base. And this process should happen quickly, ideally every day, or as soon as some code is ready. This way, if conflicts arise, they can be dealt with quickly. This also makes code review much easier, because the reviewer only needs to review little bits of code at a time. The alternative would be for each team member to work on his or her own branch for days, or even weeks. Once the branches get merged to the trunk, the conflicts that will need to be solved and reviewing all these changes would be very painful. To avoid this, it is best to merge every day, or each time a piece of code is added, and, <strong>very importantly</strong>, this code does not break the whole project (we will be using unit tests for this later).</p>
 <p>So in summary: to avoid a lot of pain later by merging branches that moved away too much from the trunk, we will create branches, add our code, and merge them to the trunk as soon as possible. <em>As soon as possible</em> can mean several things, but usually this means as soon as the feature was added, the bug fixed, or as soon as we added some code that does not break the whole project, even if the feature we wanted to add is not done yet. The philosophy is that if merging fails, it should fail as early as possible. Early failures are easy to deal with.</p>
 <p>So, back to our issue. First, Bruno needs to clone the repository:</p>
@@ -457,8 +463,8 @@ To github.com:rap4all/housing.git
 </div>
 <p>Let’s delete it (it’s always possible to restore it).</p>
 </section>
-<section id="handling-conflicts" class="level2" data-number="4.2">
-<h2 data-number="4.2" class="anchored" data-anchor-id="handling-conflicts"><span class="header-section-number">4.2</span> Handling conflicts</h2>
+<section id="handling-conflicts" class="level3" data-number="4.1.2">
+<h3 data-number="4.1.2" class="anchored" data-anchor-id="handling-conflicts"><span class="header-section-number">4.1.2</span> Handling conflicts</h3>
 <p>As mentioned in the previous chapter, Git makes it easy to handle conflicts. Well, let’s be clear; it can be very tricky sometimes to resolve conflicts. But you should know that when solving a conflict with Git is difficult, this usually means that it would be impossible to do any other way, and would inevitably result in someone having to reconcile the files by hand.</p>
 <p>Let’s see what happens when a conflict arises. In this scenario, both Bruno and the project owner will create a branch, and edit the same file. Perhaps they talked over the phone and decided to add a feature, or correct a bug. Perhaps they decided that it wasn’t worth it to open an issue on Github and assign someone to do it. After all, they discussed this on the phone and decided that Bruno should do it. Or was it the owner who needed to solve the issue? No one remembers now. Either way, they both did, and what follows is what happens in that scenario.</p>
 <p>First, Bruno needs to switch back to the master branch on his computer:</p>
@@ -621,6 +627,10 @@ filtered_data &lt;- commune_level_data |&gt;
 </figure>
 </div>
 <p>In (1) we see the commit that deals with the conflict, in (2) the owner asks Bruno for a review and then in (3) we see that Bruno reviewed and approved. Finally, the pull request can be merged (4) and the feature branch deleted.</p>
+</section>
+</section>
+<section id="contributing-to-public-repositories" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="contributing-to-public-repositories"><span class="header-section-number">4.2</span> Contributing to public repositories</h2>
 
 
 </section>
