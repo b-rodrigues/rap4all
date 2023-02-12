@@ -1,30 +1,34 @@
 # Collaborating with Github
 
-As already mentioned several times, there are two ways of collaborating with Git (and Github):
-either as a team, or either as an external dev (external, as in, not part of the development team)
-who wishes to provide some code to a project (this only works for repositories that are public).
+As already mentioned several times, there are two ways of collaborating with Git (and
+Github): either as a team, or either as an external dev (external, as in, not part of
+the development team) who wishes to provide some code to a project (this only works
+for repositories that are public).
 
 ## Collaborating as a team using *trunk-based development*
 
-Remember the issue we opened and assigned to Bruno? Bruno will now solve this issue by adding a
-Readme. This will be also the opportunity to introduce trunk-based development. The idea of
-trunk-based development is simple; team members should work on separate branches to add features or
-fix bugs, and then merge their branch to the "trunk" (in our case the *master* branch) to add their
-changes back to the main code-base. And this process should happen quickly, ideally every day, or
-as soon as some code is ready. This way, if conflicts arise, they can be dealt with quickly. This
-also makes code review much easier, because the reviewer only needs to review little bits of code
-at a time. The alternative would be for each team member to work on his or her own branch for days,
-or even weeks. Once the branches get merged to the trunk, the conflicts that will need to be solved
-and reviewing all these changes would be very painful. To avoid this, it is best to merge every day,
-or each time a piece of code is added, and, **very importantly**, this code does not break the whole
+Remember the issue we opened and assigned to Bruno? Bruno will now solve this issue
+by adding a Readme. This will be also the opportunity to introduce trunk-based
+development. The idea of trunk-based development is simple; team members should work
+on separate branches to add features or fix bugs, and then merge their branch to the
+"trunk" (in our case the *master* branch) to add their changes back to the main
+code-base. And this process should happen quickly, ideally every day, or as soon as
+some code is ready. This way, if conflicts arise, they can be dealt with quickly.
+This also makes code review much easier, because the reviewer only needs to review
+little bits of code at a time. The alternative would be for each team member to work
+on his or her own branch for days, or even weeks. Once the branches get merged to the
+trunk, the conflicts that will need to be solved and reviewing all these changes
+would be very painful. To avoid this, it is best to merge every day, or each time a
+piece of code is added, and, **very importantly**, this code does not break the whole
 project (we will be using unit tests for this later).
 
-So in summary: to avoid a lot of pain later by merging branches that moved away too much from the
-trunk, we will create branches, add our code, and merge them to the trunk as soon as possible. *As
-soon as possible* can mean several things, but usually this means as soon as the feature was added,
-the bug fixed, or as soon as we added some code that does not break the whole project, even if the
-feature we wanted to add is not done yet. The philosophy is that if merging fails, it should fail
-as early as possible. Early failures are easy to deal with.
+So in summary: to avoid a lot of pain later by merging branches that moved away too
+much from the trunk, we will create branches, add our code, and merge them to the
+trunk as soon as possible. *As soon as possible* can mean several things, but usually
+this means as soon as the feature was added, the bug fixed, or as soon as we added
+some code that does not break the whole project, even if the feature we wanted to add
+is not done yet. The philosophy is that if merging fails, it should fail as early as
+possible. Early failures are easy to deal with.
 
 So, back to our issue. First, Bruno needs to clone the repository:
 
@@ -32,10 +36,11 @@ So, back to our issue. First, Bruno needs to clone the repository:
 git clone git@github.com:rap4all/housing.git
 ```
 
-Because Bruno was added as a collaborator, Bruno can work on the repository just like the author.
+Because Bruno was added as a collaborator, Bruno can work on the repository just like
+the author.
 
-Bruno will now create a new branch by using the `git checkout` command with the 
-`-b` flag:
+Bruno will now create a new branch by using the `git checkout` command with the `-b`
+flag:
 
 ```
 bruno@computer ➤ git checkout -b "add_readme"
@@ -87,25 +92,25 @@ Untracked files:
 nothing added to commit but untracked files present (use "git add" to track)
 ```
 
-So next we are going to track it, and push the changes. Also, we are going to use a neat trick when
-pushing: we are going to use the commit message to state the issue was fixed, which will automatically
-close the issue for us:
+So next we are going to track it, and push the changes. Also, we are going to use a
+neat trick when pushing: we are going to use the commit message to state the issue
+was fixed, which will automatically close the issue for us:
 
 ```
 bruno@computer ➤ git add .
 bruno@computer ➤ git commit -am "fixed #1"
 ```
 
-`#1` refers to the number of the issue. Because it's the first issue, it can be simply be referred
-to as `#1`. Bruno will now push:
+`#1` refers to the number of the issue. Because it's the first issue, it can be
+simply be referred to as `#1`. Bruno will now push:
 
 ```
 bruno@computer ➤ git push origin add_readme
 ```
 
-As you can see from the command above, Bruno pushes to "add_readme", not "master". If he tried to push
-to "master" a message saying that "master" is up-to-date would get printed. Let's see the output of
-pushing to "add_readme":
+As you can see from the command above, Bruno pushes to "add_readme", not "master". If
+he tried to push to "master" a message saying that "master" is up-to-date would get
+printed. Let's see the output of pushing to "add_readme":
 
 ```
 Enumerating objects: 4, done.
@@ -122,20 +127,20 @@ To github.com:rap4all/housing.git
  * [new branch]      add_readme -> add_readme
 ```
 
-Git tells us that we now need to create a pull request. What is that? Well, if we want to merge
-our brunch back to the trunk, we need to do so by using a pull request. Let's see what
-Bruno sees on Github:
+Git tells us that we now need to create a pull request. What is that? Well, if we
+want to merge our brunch back to the trunk, we need to do so by using a pull request.
+Let's see what Bruno sees on Github:
 
 ![Bruno sees that the "add_readme" branch has been recently updated](images/github_add_readme_recent_push.png)
 
-Bruno can now decide to continue working on this branch, or, since the purpose of this branch was only
-to add the readme file, decide instead to do a pull request. By clicking on the "Compare & pull request"
-button Bruno now sees this:
+Bruno can now decide to continue working on this branch, or, since the purpose of
+this branch was only to add the readme file, decide instead to do a pull request. By
+clicking on the "Compare & pull request" button Bruno now sees this:
 
 ![This screen makes it easy to see what changed](images/github_pull_request.png)
 
-Bruno can leave a comment, see what changed (in this case, a single file was added) and most importantly, add
-a reviewer if needed:
+Bruno can leave a comment, see what changed (in this case, a single file was added)
+and most importantly, add a reviewer if needed:
 
 ![Let boss decide if this is good enough](images/github_add_reviewer.png)
 
@@ -143,11 +148,13 @@ This is what Bruno sees now:
 
 ![Github tells us that this branch can safely be merged](images/github_reviewer_requested.png)
 
-Bruno requested the review, but Github tells us that the brach can safely be merged. This is
-because we added a file and did not touch anything else, and also because the owner of the
-repository was asleep while Bruno was working, so there was no opportunity for conflicts to arise.
+Bruno requested the review, but Github tells us that the brach can safely be merged.
+This is because we added a file and did not touch anything else, and also because the
+owner of the repository was asleep while Bruno was working, so there was no
+opportunity for conflicts to arise.
 
-Let's see what the owner now sees. The owner should have gotten a notification to review the pull request:
+Let's see what the owner now sees. The owner should have gotten a notification to
+review the pull request:
 
 ![The owner was notified to review the pull request](images/github_reviewer_notified.png)
 
@@ -155,14 +162,15 @@ By clicking on the notification, the owner gets taken to this view:
 
 ![Time to review the pull request](images/github_review.png)
 
-Here, the reviewer can check the commit, the files that were changed, and see if there any
-conflicts between this code and the code base on the master (or trunk) branch. Github also tells us
-two interesting things: the owner can add a rule that states that any pull request must be
-approved, and also that continuous integration has not been set up (we are going to see what this means in the second
-part of this book).
+Here, the reviewer can check the commit, the files that were changed, and see if
+there any conflicts between this code and the code base on the master (or trunk)
+branch. Github also tells us two interesting things: the owner can add a rule that
+states that any pull request must be approved, and also that continuous integration
+has not been set up (we are going to see what this means in the second part of this
+book).
 
-Let's go ahead and add a rule that each pull request has to be approved. By clicking on "Add rule",
-the following screen appears:
+Let's go ahead and add a rule that each pull request has to be approved. By clicking
+on "Add rule", the following screen appears:
 
 ![Choose how to protect the master branch](images/github_rules.png)
 
@@ -170,13 +178,13 @@ By clicking the first option, more options appear:
 
 ![Reviews are now required](images/github_rules_2.png)
 
-By choosing these options, the owner can basically enforce trunk based development (well,
-collaborators still have to submit pull request frequently enough though, because if they don't, we
-can be in a situation where merging can be very difficult).
+By choosing these options, the owner can basically enforce trunk based development
+(well, collaborators still have to submit pull request frequently enough though,
+because if they don't, we can be in a situation where merging can be very difficult).
 
-Let's choose one last option: by scrolling down, it's possible to select the option "Do not allow
-bypassing the above settings". This makes sure that even administrations (the owners of the
-project) must abide by the same rules.
+Let's choose one last option: by scrolling down, it's possible to select the option
+"Do not allow bypassing the above settings". This makes sure that even
+administrations (the owners of the project) must abide by the same rules.
 
 Let's go back to the pull request. We can see now that the review is required:
 
@@ -190,13 +198,14 @@ It's possible to add comments to single lines, if needed:
 
 ![It's possible to add comments to lines](images/github_review_comments.png)
 
-By clicking on the plus sign, a box appears and it's possible to leave a comment. In this case, everything is fine,
-so the owner is going to click on the "Viewed" button:
+By clicking on the plus sign, a box appears and it's possible to leave a comment. In
+this case, everything is fine, so the owner is going to click on the "Viewed" button:
 
 ![Good job!](images/github_file_viewed.png)
 
-Then, by clicking on "Review changes", it's possible to either add a general comment, approve the pull request, or 
-request changes that must be addressed before merging. Let's go ahead and approve:
+Then, by clicking on "Review changes", it's possible to either add a general comment,
+approve the pull request, or request changes that must be addressed before merging.
+Let's go ahead and approve:
 
 ![Nothing to complain about](images/github_approve.png)
 
@@ -204,8 +213,8 @@ By submitting the review, the reviewer is taken back to the issue:
 
 ![We're done, we can merge the pull request](images/github_changes_approved.png)
 
-The reviewer can now merge the pull request by clicking on the "Merge pull request" button. Github even suggests we 
-deleted the branch, which served its purpose:
+The reviewer can now merge the pull request by clicking on the "Merge pull request"
+button. Github even suggests we deleted the branch, which served its purpose:
 
 ![Let's get rid of this branch](images/github_pull_request_done.png)
 
@@ -213,16 +222,19 @@ Let's delete it (it's always possible to restore it).
 
 ## Handling conflicts
 
-As mentioned in the previous chapter, Git makes it easy to handle conflicts. Well, let's be clear; it can be very tricky
-sometimes to resolve conflicts. But you should know that when solving a conflict with Git is difficult, this usually means 
-that it would be impossible to do any other way, and would inevitably result in someone having to reconcile the files
-by hand.
+As mentioned in the previous chapter, Git makes it easy to handle conflicts. Well,
+let's be clear; it can be very tricky sometimes to resolve conflicts. But you should
+know that when solving a conflict with Git is difficult, this usually means that it
+would be impossible to do any other way, and would inevitably result in someone
+having to reconcile the files by hand.
 
-Let's see what happens when a conflict arises. In this scenario, both Bruno and the project owner will create a branch, and
-edit the same file. Perhaps they talked over the phone and decided to add a feature, or correct a bug. Perhaps they decided
-that it wasn't worth it to open an issue on Github and assign someone to do it. After all, they discussed this on the phone
-and decided that Bruno should do it. Or was it the owner who needed to solve the issue? No one remembers now. Either way,
-they both did, and what follows is what happens in that scenario.
+Let's see what happens when a conflict arises. In this scenario, both Bruno and the
+project owner will create a branch, and edit the same file. Perhaps they talked over
+the phone and decided to add a feature, or correct a bug. Perhaps they decided that
+it wasn't worth it to open an issue on Github and assign someone to do it. After all,
+they discussed this on the phone and decided that Bruno should do it. Or was it the
+owner who needed to solve the issue? No one remembers now. Either way, they both did,
+and what follows is what happens in that scenario.
 
 First, Bruno needs to switch back to the master branch on his computer:
 
@@ -236,8 +248,9 @@ Your branch is behind 'origin/master' by 2 commits, and can be fast-forwarded.
   (use "git pull" to update your local branch)
 ```
 
-Git tells us to update the code on our computer by running `git pull`. We use `git push` to upload code to Github, and
-use `git pull` to download code from Github. Let's run it and see what happens:
+Git tells us to update the code on our computer by running `git pull`. We use `git
+push` to upload code to Github, and use `git pull` to download code from Github.
+Let's run it and see what happens:
 
 ```
 bruno@computer ➤ git pull
@@ -251,8 +264,8 @@ Fast-forward
  create mode 100644 README.md
 ```
 
-The owner of the project (called `owner`, remember?) can do the same and will see the same. Now, Bruno creates a new branch
-to work on the new feature:
+The owner of the project (called `owner`, remember?) can do the same and will see the
+same. Now, Bruno creates a new branch to work on the new feature:
 
 ```
 bruno@computer ➤ git checkout -b add_cool_feature
@@ -306,12 +319,14 @@ esch_plot <- make_plot(country_level_data,
 # and so on...
 ```
 
-The end effect is the same, but by using this function, the code is now shorter, and clearer. Also, if someone
-wants to change, say, the theme of the plot, now this only needs to be changed in one place and not for each 
-commune. Now, what did the owner change? The owner started by removing the line that loaded the `{purrr}`
-package, as no function from the package was used in the script, and then also changed every `%>%`
-to `|>`. It seems that much more than just who would make the changes got lost in translation... Anyways,
-both now push their changes to their respective branches. This is Bruno:
+The end effect is the same, but by using this function, the code is now shorter, and
+clearer. Also, if someone wants to change, say, the theme of the plot, now this only
+needs to be changed in one place and not for each commune. Now, what did the owner
+change? The owner started by removing the line that loaded the `{purrr}` package, as
+no function from the package was used in the script, and then also changed every
+`%>%` to `|>`. It seems that much more than just who would make the changes got lost
+in translation... Anyways, both now push their changes to their respective branches.
+This is Bruno:
 
 ```
 bruno@computer ➤ git add .
@@ -358,3 +373,128 @@ remote:
 To github.com:rap4all/housing.git
  * [new branch]      add_sweet_feature -> add_sweet_feature
 ```
+
+So, let's think about what just happened: two developers changed the same file,
+`analysis.R` in two separate branches. They did what they had to do, and now these
+two branches need to be merged back to the trunk. So Bruno does a pull request:
+
+![Bruno opens a pull request after finishing his changes](images/github_new_pull_request.png)
+
+First, Bruno selects the feature branch (1), then clicks on "Contribute" (2) and then
+"Open pull request" (3). Bruno gets taken to this screen:
+
+![No conflicts, for now...](images/github_new_pull_request_2.png)
+
+Now Bruno can click on "Create pull request", but remember, because reviews are
+required, automatic merging is disabled.
+
+If now we go see what happens from the project owner's side of things, first of all,
+there's now a notification for a pending review:
+
+![New review pending](images/github_new_pull_request_review_pending.png)
+
+By clicking on it, the project owner can review the pull request and decide what to
+do with it. So at this point, the owner did not open a pull request for the feature
+he or she worked on yet. And maybe that's a good thing, because now the project owner
+can see that the changes that Bruno made on the file will conflict with the project
+owner's changes.
+
+So how to move forward? Simple: the project owner can decide to approve the pull
+request, which will merge Bruno's changes into the master branch (or the trunk).
+Then, instead of opening a pull request for merging his or her changes into trunk,
+which will cause a conflict, the project owner can instead merge the changes from the
+trunk into his or her feature branch. This will also create a conflict, but now the
+project owner can easily deal with it on his or her machine, and then push a new
+commit with both changes integrated gracefully. The image below illustrates this
+workflow:
+
+![Conflict solving with trunk based development](images/github_conflict_tbd.png)
+
+First step, the owner reviews and approves Bruno's pull request:
+
+![First, let's approve the changes](images/github_pull_request_approved.png)
+
+The pull request can get merged and Bruno's feature branch deleted. Now, it wouldn't make
+sense for the project owner to create a pull request to merge his or her changes. They would
+conflict with what Bruno did. So the project owner goes back to the computer, and 
+essentially updates the code in his or her feature branch by merging master into it.
+
+So, the project owner checks that he or she is working on the feature branch:
+
+```
+owner@localhost ➤ git status
+```
+
+```
+On branch add_sweet_feature
+nothing to commit, working tree clean
+```
+
+Ok, so now let's get the updated code from master, by pulling from master:
+
+```
+owner@localhost ➤ git pull origin master
+```
+
+The owner now sees this:
+
+```
+remote: Enumerating objects: 6, done.
+remote: Counting objects: 100% (6/6), done.
+remote: Compressing objects: 100% (3/3), done.
+remote: Total 4 (delta 1), reused 3 (delta 1), pack-reused 0
+Unpacking objects: 100% (4/4), 1.23 KiB | 418.00 KiB/s, done.
+From github.com:rap4all/housing
+ * branch            master     -> FETCH_HEAD
+   c774ebf..a43c68f  master     -> origin/master
+Auto-merging analysis.R
+CONFLICT (content): Merge conflict in analysis.R
+Automatic merge failed; fix conflicts and then commit the result.
+```
+
+Git detect that there's some conflicts and tells the owner to fix them, and then
+commit the results. So let's open `analysis.R` and see how it looks like (you can
+view the file online on this
+[link](https://gist.github.com/b-rodrigues/f713702268c99328ad16af56f7d32892)^[https://is.gd/ktWtjr].
+First of all, you will see Git deals with conflicts on a per line basis. So each line
+that the owner changed that does not conflict with Bruno's change gets immediately
+updated to reflect the owner's changes. For example, remember that the owner removed
+the line that loaded the `{purrr}` package? This line was also removed by pulling the
+changes from master into the feature branch. Also, you should notice that every
+`%>%` was changed into `|>` as well. 
+
+Then, you should understand what happens when a conflict gets detected on some lines. For
+example, this is the first conflict you should see:
+
+```
+<<<<<<< HEAD
+filtered_data <- commune_level_data |>
+  filter(locality == communes[1])
+=======
+  filtered_data <- commune_level_data %>%
+    filter(locality == commune)
+>>>>>>> a43c68f5596563ffca33b3729451bffc762782c3
+```
+
+We both see how the lines look on the owner's computer and how they look in the
+master branch (or trunk). These are the lines between `<<<<<<< HEAD` and `=======`.
+The lines between `=======` and `>>>>>>> a43c68f5596563ffca33b3729451bffc762782c3` are
+how they look in the master branch (or trunk). This very long chain of characters that
+starts with `a43c68f` is the hash of the commit from which these lines come from.
+
+So this makes things quite easy; one simply needs to remove the outdated code, and
+then commit and push the fixed file! The project owner only needs to remove `<<<<<<<
+HEAD` and `=======` and what's between these lines, as well as the lines that show
+the hash commit. The project owner can now commit and push the changes, open a pull
+request, ask Bruno to review the changes one last time and merge everything back to
+master.
+
+![The conflict has been gracefully solved](images/github_conflict_solved.png)
+
+In (1) we see the commit that deals with the conflict, in (2) the owner asks Bruno
+for a review and then in (3) we see that Bruno reviewed and approved. Finally, the
+pull request can be merged (4) and the feature branch deleted.
+
+
+
+
