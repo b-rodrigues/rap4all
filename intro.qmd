@@ -1,12 +1,36 @@
 # Introduction
 
+This book will not teach you about machine learning, statistics or
+visualisation. The goal is to teach you a set of tools, practices and project
+management techniques that should make your projects easier to reproduce,
+replicate and retrace. These tools and techniques can be used right from the start
+at a minimal cost, such that once you’re done with the analysis, you’re also done
+with making the project reproducible. Your projects are going to be reproducible
+simply because they were engineered, from the start, to be reproducible.
 
+## Who is this book for?
 
 ## Prerequisites
 
-You should be comfortable with the R programming language. This book will assume that you have
-been using R for some projects already, and want to improve not only your knowledge of the
-language itself, but also how to successfully manage complex projects.
+You should be comfortable with the R programming language. This book will assume
+that you have been using R for some projects already, and want to improve not
+only your knowledge of the language itself, but also how to successfully manage
+complex projects. Ideally, you should know about packages, how to install them,
+you should have written some functions already, know about loops and have some
+basic knowledge of data structures like lists. While this is not a book on
+visualisation, we will be making some graphs using the `{ggplot2}` package, so
+if you’re familiar with that, that’s good. You should know that the *tidyverse*
+and *base* R are. Ideally, you should also not be afraid of not using Graphical
+User Interfaces (GUI). While you can follow along using an IDE like RStudio, we
+will not be teaching any features from any program that relies on GUIs. This is
+not to gatekeep, but because interacting graphically with a program is simply
+not reproducible. So our target is to write code that can be executed
+non-interactively by a machine. This is because one necessary condition for a
+workflow to be reproducible is for the workflow to be able to be executed by a
+machine, automatically, without any human intervention. If this is the case,
+then your workflow is likely reproducible, or can at least be made reproducible
+much more easily than if it requires some special manipulation by a human
+somewhere in the loop.
 
 ## What is reproducibility?
 
