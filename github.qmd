@@ -1,27 +1,31 @@
 # Collaborating with Github
 
-As already mentioned several times, there are two ways of collaborating with Git (and
-Github): either as a team, or either as an external dev (external, as in, not part of
-the development team) who wishes to provide some code to a project (this only works
-for repositories that are public).
+As already mentioned several times, there are two ways of collaborating with Git
+(and Github): either as a team, or either as an external dev (external, as in,
+not part of the development team) who wishes to provide some code to a project
+(this only works for repositories that are public).
+
+We are going to learn about these two ways of collaborating. Let’s first focus
+on collaboration within a team.
 
 ## Collaborating as a team using *trunk-based development*
 
 ### TBD basics
 
-Remember the issue we opened and assigned to Bruno? Bruno will now solve this issue
-by adding a Readme. This will be also the opportunity to introduce trunk-based
-development. The idea of trunk-based development is simple; team members should work
-on separate branches to add features or fix bugs, and then merge their branch to the
-"trunk" (in our case the *master* branch) to add their changes back to the main
-code-base. And this process should happen quickly, ideally every day, or as soon as
-some code is ready. This way, if conflicts arise, they can be dealt with quickly.
-This also makes code review much easier, because the reviewer only needs to review
-little bits of code at a time. The alternative would be for each team member to work
-on his or her own branch for days, or even weeks. Once the branches get merged to the
-trunk, the conflicts that will need to be solved and reviewing all these changes
-would be very painful. To avoid this, it is best to merge every day, or each time a
-piece of code is added, and, **very importantly**, this code does not break the whole
+Remember the issue we opened and assigned to Bruno? Bruno will now solve this
+issue by adding a Readme. This will be also the opportunity to introduce
+trunk-based development. The idea of trunk-based development is simple; team
+members should work on separate branches to add features or fix bugs, and then
+merge their branch to the "trunk" (in our case the *master* branch) to add their
+changes back to the main code-base. And this process should happen quickly,
+ideally every day, or as soon as some code is ready. This way, if conflicts
+arise, they can be dealt with quickly. This also makes code review much easier,
+because the reviewer only needs to review little bits of code at a time. The
+alternative would be for each team member to work on his or her own branch for
+days, or even weeks. Once the branches get merged to the trunk, the conflicts
+that will need to be solved and reviewing all these changes would be very
+painful. To avoid this, it is best to merge every day, or each time a piece of
+code is added, and, **very importantly**, this code does not break the whole
 project (we will be using unit tests for this later).
 
 So in summary: to avoid a lot of pain later by merging branches that moved away too
