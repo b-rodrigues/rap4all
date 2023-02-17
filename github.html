@@ -293,7 +293,7 @@ div.csl-indent {
   <ul class="collapse">
   <li><a href="#tbd-basics" id="toc-tbd-basics" class="nav-link" data-scroll-target="#tbd-basics"><span class="toc-section-number">4.1.1</span>  TBD basics</a></li>
   <li><a href="#handling-conflicts" id="toc-handling-conflicts" class="nav-link" data-scroll-target="#handling-conflicts"><span class="toc-section-number">4.1.2</span>  Handling conflicts</a></li>
-  <li><a href="#simplified-trunk-based-development" id="toc-simplified-trunk-based-development" class="nav-link" data-scroll-target="#simplified-trunk-based-development"><span class="toc-section-number">4.1.3</span>  Simplified trunk based development</a></li>
+  <li><a href="#simplified-trunk-based-development" id="toc-simplified-trunk-based-development" class="nav-link" data-scroll-target="#simplified-trunk-based-development"><span class="toc-section-number">4.1.3</span>  Simplified trunk-based development</a></li>
   <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="toc-section-number">4.1.4</span>  Conclusion</a></li>
   </ul></li>
   <li><a href="#contributing-to-public-repositories" id="toc-contributing-to-public-repositories" class="nav-link" data-scroll-target="#contributing-to-public-repositories"><span class="toc-section-number">4.2</span>  Contributing to public repositories</a></li>
@@ -327,8 +327,8 @@ div.csl-indent {
 <h2 data-number="4.1" class="anchored" data-anchor-id="collaborating-as-a-team-using-trunk-based-development"><span class="header-section-number">4.1</span> Collaborating as a team using <em>trunk-based development</em></h2>
 <section id="tbd-basics" class="level3" data-number="4.1.1">
 <h3 data-number="4.1.1" class="anchored" data-anchor-id="tbd-basics"><span class="header-section-number">4.1.1</span> TBD basics</h3>
-<p>Remember the issue we opened and assigned to Bruno? Bruno will now solve this issue by adding a Readme. This will be also the opportunity to introduce trunk-based development. The idea of trunk-based development is simple; team members should work on separate branches to add features or fix bugs, and then merge their branch to the “trunk” (in our case the <em>master</em> branch) to add their changes back to the main code-base. And this process should happen quickly, ideally every day, or as soon as some code is ready. This way, if conflicts arise, they can be dealt with quickly. This also makes code review much easier, because the reviewer only needs to review little bits of code at a time. The alternative would be for each team member to work on his or her own branch for days, or even weeks. Once the branches get merged to the trunk, the conflicts that will need to be solved and reviewing all these changes would be very painful. To avoid this, it is best to merge every day, or each time a piece of code is added, and, <strong>very importantly</strong>, this code does not break the whole project (we will be using unit tests for this later).</p>
-<p>So in summary: to avoid a lot of pain later by merging branches that moved away too much from the trunk, we will create branches, add our code, and merge them to the trunk as soon as possible. <em>As soon as possible</em> can mean several things, but usually this means as soon as the feature was added, the bug fixed, or as soon as we added some code that does not break the whole project, even if the feature we wanted to add is not done yet. The philosophy is that if merging fails, it should fail as early as possible. Early failures are easy to deal with.</p>
+<p>Remember the issue we opened and assigned to Bruno? Bruno will now solve this issue by adding a Readme. This will be also the opportunity to introduce trunk-based development. The idea of trunk-based development is simple; team members should work on separate branches to add features or fix bugs, and then merge their branch to the “trunk” (in our case the <em>master</em> branch) to add their changes back to the main code-base. And this process should happen quickly, ideally every day, or as soon as some code is ready. This way, if conflicts arise, they can be dealt with quickly. This also makes code review much easier, because the reviewer only needs to review little bits of code at a time. The alternative would be for each team member to work on his or her own branch for days or even weeks. Once the branches get merged into the trunk, reviewing all the changes and solving the conflicts that will arise would be very painful. To avoid this, it is best to merge every day or each time a piece of code is added, and, <strong>very importantly</strong>, this code does not break the whole project (we will be using unit tests for this later).</p>
+<p>So in summary: to avoid a lot of pain later by merging branches that moved away too much from the trunk, we will create branches, add our code, and merge them to the trunk as soon as possible. <em>As soon as possible</em> can mean several things, but usually this means as soon as the feature was added, bug was fixed, or as soon as we added some code that does not break the whole project, even if the feature we wanted to add is not done yet. The philosophy is that if merging fails, it should fail as early as possible. Early failures are easy to deal with.</p>
 <p>So, back to our issue. First, Bruno needs to clone the repository:</p>
 <pre><code>git clone git@github.com:rap4all/housing.git</code></pre>
 <p>Because Bruno was added as a collaborator, Bruno can work on the repository just like the author.</p>
@@ -340,7 +340,7 @@ div.csl-indent {
 <pre><code>bruno@computer ➤ git status</code></pre>
 <pre><code>On branch add_readme
 nothing to commit, working tree clean</code></pre>
-<p>Let’s add a file called <code>README.md</code> and add the following in it:</p>
+<p>Let’s add a file called <code>README.md</code> and add the following to it:</p>
 <pre><code># Housing data for Luxembourg
 
 These scripts for the R programming language download nominal housing prices
@@ -357,10 +357,10 @@ Untracked files:
         README.md
 
 nothing added to commit but untracked files present (use "git add" to track)</code></pre>
-<p>So next we are going to track it, and push the changes. Also, we are going to use a neat trick when pushing: we are going to use the commit message to state the issue was fixed, which will automatically close the issue for us:</p>
+<p>So next we are going to track it and push the changes. Also, we are going to use a neat trick when pushing: we are going to use the commit message to state the issue was fixed, which will automatically close the issue for us:</p>
 <pre><code>bruno@computer ➤ git add .
 bruno@computer ➤ git commit -am "fixed #1"</code></pre>
-<p><code>#1</code> refers to the number of the issue. Because it’s the first issue, it can be simply be referred to as <code>#1</code>. Bruno will now push:</p>
+<p><code>#1</code> refers to the number of the issue. Because it’s the first issue, it can simply be referred to as <code>#1</code>. Bruno will now push:</p>
 <pre><code>bruno@computer ➤ git push origin add_readme</code></pre>
 <p>As you can see from the command above, Bruno pushes to “add_readme”, not “master”. If he tried to push to “master” a message saying that “master” is up-to-date would get printed. Let’s see the output of pushing to “add_readme”:</p>
 <pre><code>Enumerating objects: 4, done.
@@ -389,7 +389,7 @@ To github.com:rap4all/housing.git
 <p></p><figcaption class="figure-caption">This screen makes it easy to see what changed</figcaption><p></p>
 </figure>
 </div>
-<p>Bruno can leave a comment, see what changed (in this case, a single file was added) and most importantly, add a reviewer if needed:</p>
+<p>Bruno can leave a comment, and see what changed (in this case, a single file was added) and most importantly, add a reviewer if needed:</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="images/github_add_reviewer.png" class="img-fluid figure-img"></p>
@@ -403,7 +403,7 @@ To github.com:rap4all/housing.git
 <p></p><figcaption class="figure-caption">Github tells us that this branch can safely be merged</figcaption><p></p>
 </figure>
 </div>
-<p>Bruno requested the review, but Github tells us that the brach can safely be merged. This is because we added a file and did not touch anything else, and also because the owner of the repository was asleep while Bruno was working, so there was no opportunity for conflicts to arise.</p>
+<p>Bruno requested the review, but Github tells us that the branch can safely be merged. This is because we added a file and did not touch anything else, and also because the owner of the repository was asleep while Bruno was working, so there was no opportunity for conflicts to arise.</p>
 <p>Let’s see what the owner now sees. The owner should have gotten a notification to review the pull request:</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -418,7 +418,7 @@ To github.com:rap4all/housing.git
 <p></p><figcaption class="figure-caption">Time to review the pull request</figcaption><p></p>
 </figure>
 </div>
-<p>Here, the reviewer can check the commit, the files that were changed, and see if there any conflicts between this code and the code base on the master (or trunk) branch. Github also tells us two interesting things: the owner can add a rule that states that any pull request must be approved, and also that continuous integration has not been set up (we are going to see what this means in the second part of this book).</p>
+<p>Here, the reviewer can check the commit, the files that were changed, and see if there are any conflicts between this code and the code base on the master (or trunk) branch. Github also tells us two interesting things: the owner can add a rule that states that any pull request must be approved, and also that continuous integration has not been set up (we are going to see what this means in the second part of this book).</p>
 <p>Let’s go ahead and add a rule that each pull request has to be approved. By clicking on “Add rule”, the following screen appears:</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -433,7 +433,7 @@ To github.com:rap4all/housing.git
 <p></p><figcaption class="figure-caption">Reviews are now required</figcaption><p></p>
 </figure>
 </div>
-<p>By choosing these options, the owner can basically enforce trunk based development (well, collaborators still have to submit pull request frequently enough though, because if they don’t, we can be in a situation where merging can be very difficult).</p>
+<p>By choosing these options, the owner can basically enforce trunk-based development (well, collaborators still have to submit pull requests frequently enough though, because if they don’t, we can be in a situation where merging can be very difficult).</p>
 <p>Let’s choose one last option: by scrolling down, it’s possible to select the option “Do not allow bypassing the above settings”. This makes sure that even administrations (the owners of the project) must abide by the same rules.</p>
 <p>Let’s go back to the pull request. We can see now that the review is required:</p>
 <div class="quarto-figure quarto-figure-center">
@@ -449,7 +449,7 @@ To github.com:rap4all/housing.git
 <p></p><figcaption class="figure-caption">Check the code, and add comments if needed</figcaption><p></p>
 </figure>
 </div>
-<p>It’s possible to add comments to single lines, if needed:</p>
+<p>It’s possible to add comments to single lines if needed:</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="images/github_review_comments.png" class="img-fluid figure-img"></p>
@@ -488,9 +488,9 @@ To github.com:rap4all/housing.git
 </section>
 <section id="handling-conflicts" class="level3" data-number="4.1.2">
 <h3 data-number="4.1.2" class="anchored" data-anchor-id="handling-conflicts"><span class="header-section-number">4.1.2</span> Handling conflicts</h3>
-<p>As mentioned in the previous chapter, Git makes it easy to handle conflicts. Well, let’s be clear; it can be very tricky sometimes to resolve conflicts. But you should know that when solving a conflict with Git is difficult, this usually means that it would be impossible to do any other way, and would inevitably result in someone having to reconcile the files by hand. What makes handling conflicts easier with Git though, is that Git is able to tell you where you can find clashes on a per line basis. So for instance, if you change the ten first lines of a script, and I change the ten next lines, there would be no conflict, and Git will automatically merge both our contributions into a single file. Other tools, like Dropbox, would fail in a situation like this, because Dropbox only handle conflicts on a per file basis. The same file was changed by two different persons? Regardless of where these changes happened, you now have a conflict to deal with on your hand… and worse, you don’t even know where! You will need to scan the two resulting copies of the file by hand. Git, in the case where the same lines were changed, highlights them very clearly so that you can quickly find them and deal with the problems.</p>
+<p>As mentioned in the previous chapter, Git makes it easy to handle conflicts. Well, let’s be clear; it can be very tricky sometimes to resolve conflicts. But you should know that when solving a conflict with Git is difficult, this usually means that it would be impossible to do any other way, and would inevitably result in someone having to reconcile the files by hand. What makes handling conflicts easier with Git though, is that Git is able to tell you where you can find clashes on a per-line basis. So for instance, if you change the ten first lines of a script, and I change the ten next lines, there would be no conflict, and Git will automatically merge both our contributions into a single file. Other tools, like Dropbox, would fail in a situation like this, because these tools can only handle conflicts on a per file basis. The same file was changed by two different persons? Regardless of where these changes happened, you now have a conflict to deal with on your hand… and worse, you don’t even know where! You will need to scan the two resulting copies of the file by hand. Git, in the case where the same lines were changed, highlights them very clearly so that you can quickly find them and deal with the problems.</p>
 <p>We will see all of this in the coming sections.</p>
-<p>So how do conflicts happen in practice? Let’s imagine the following scenario. Both Bruno and the project owner will create a branch, and edit the same file. Perhaps they talked over the phone and decided to add a feature, or correct a bug. Perhaps they decided that it wasn’t worth it to open an issue on Github and assign someone to do it. After all, they discussed this on the phone and decided that Bruno should do it. Or was it the owner who needed to solve the issue? No one remembers now. Either way, they both did, and changed the same file, so a conflict will ensue.</p>
+<p>So how do conflicts happen in practice? Let’s imagine the following scenario. Both Bruno and the project owner will create a branch, and edit the same file. Perhaps they talked over the phone and decided to add a feature or correct a bug. Perhaps they decided that it wasn’t worth it to open an issue on Github and assign someone to do it. After all, they discussed this on the phone and decided that Bruno should do it. Or was it the owner who needed to solve the issue? No one remembers now. Either way, they both did, and changed the same file, so a conflict will ensue.</p>
 <p>First, Bruno needs to switch back to the master branch on his computer:</p>
 <pre><code>bruno@computer ➤ git checkout master</code></pre>
 <pre><code>Switched to branch 'master'
@@ -604,7 +604,7 @@ To github.com:rap4all/housing.git
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="images/github_conflict_tbd.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Conflict solving with trunk based development</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Conflict solving with trunk-based development</figcaption><p></p>
 </figure>
 </div>
 <p>First step, the owner reviews and approves Bruno’s pull request:</p>
@@ -614,7 +614,7 @@ To github.com:rap4all/housing.git
 <p></p><figcaption class="figure-caption">First, let’s approve the changes</figcaption><p></p>
 </figure>
 </div>
-<p>The pull request can get merged and Bruno’s feature branch deleted. Now, it wouldn’t make sense for the project owner to create a pull request to merge his or her changes. They would conflict with what Bruno did. So the project owner goes back to the computer, and essentially updates the code in his or her feature branch by merging master into it.</p>
+<p>The pull request can get merged and Bruno’s feature branch deleted. Now, it wouldn’t make sense for the project owner to create a pull request to merge his or her changes. They would conflict with what Bruno did. So the project owner goes back to the computer and essentially updates the code in his or her feature branch by merging master into it.</p>
 <p>So, the project owner checks that he or she is working on the feature branch:</p>
 <pre><code>owner@localhost ➤ git status</code></pre>
 <pre><code>On branch add_sweet_feature
@@ -653,12 +653,12 @@ filtered_data &lt;- commune_level_data |&gt;
 <p>In (1) we see the commit that deals with the conflict, in (2) the owner asks Bruno for a review and then in (3) we see that Bruno reviewed and approved. Finally, the pull request can be merged (4) and the feature branch deleted.</p>
 </section>
 <section id="simplified-trunk-based-development" class="level3" data-number="4.1.3">
-<h3 data-number="4.1.3" class="anchored" data-anchor-id="simplified-trunk-based-development"><span class="header-section-number">4.1.3</span> Simplified trunk based development</h3>
-<p>The workflow that we showed here may seem a bit too rigid for smaller teams (below 4 or 5 contributors). It is possible to adopt a simplified version of trunk based development, where contributors don’t have to open pull request to merge their feature branches into the trunk, and no reviewer is needed. In cases like this, Git forces you to pull changes if someone already merged his or her feature branch into the trunk before you could. This way, when pulling, conflicts (if any) arise at that point. It is then your responsibility to solve the conflicts (and this works just like in the previous section) and then commit and push the commits with the conflicts resolved. Another contributor who then wishes to merged his or fear feature branch into to the trunk will have to pull again, ensuring that conflicts get resolved before he or she can merge. If no conflicts arise (for example, you both worked on different files, or on different lines of the same files), then no resolution is needed and the feature branch can be merged into master.</p>
+<h3 data-number="4.1.3" class="anchored" data-anchor-id="simplified-trunk-based-development"><span class="header-section-number">4.1.3</span> Simplified trunk-based development</h3>
+<p>The workflow that we showed here may seem a bit too rigid for smaller teams (below 4 or 5 contributors). It is possible to adopt a simplified version of trunk-based development, where contributors don’t have to open pull requests to merge their feature branches into the trunk, and no reviewer is needed. In cases like this, Git forces you to pull changes if someone already merged his or her feature branch into the trunk before you could. This way, when pulling, conflicts (if any) arise at that point. It is then your responsibility to solve the conflicts (and this works just like in the previous section) and then commit and push the commits with the conflicts resolved. Another contributor who then wishes to merged his or fear feature branch into to the trunk will have to pull again, ensuring that conflicts get resolved before he or she can merge. If no conflicts arise (for example, you both worked on different files, or on different lines of the same files), then no resolution is needed and the feature branch can be merged into master.</p>
 </section>
 <section id="conclusion" class="level3" data-number="4.1.4">
 <h3 data-number="4.1.4" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">4.1.4</span> Conclusion</h3>
-<p>The main ideas of trunk based development are:</p>
+<p>The main ideas of trunk-based development are:</p>
 <ul>
 <li>Each contributor opens a new branch to develop a feature or fix a bug, and works alone on his or her own little branch;</li>
 <li>At the end of the day at the latest (or a previously agreed upon duration), branches need all to get merged;</li>
@@ -716,14 +716,14 @@ filtered_data &lt;- commune_level_data |&gt;
 <p></p><figcaption class="figure-caption">Bruno opens a pull request to contribute his fix upstream</figcaption><p></p>
 </figure>
 </div>
-<p>What does the owner of the original repository, “rap4all” see? The pull request Bruno opened is now in the original repository’s “Pull request” menu, and the owner can check what the contribution is, if it breaks code or not, etc. This is essentially the same workflow as the one presented before in trunk based development with pull requests and reviews before merging (minus the forking of the repository).</p>
+<p>What does the owner of the original repository, “rap4all” see? The pull request Bruno opened is now in the original repository’s “Pull request” menu, and the owner can check what the contribution is, if it breaks code or not, etc. This is essentially the same workflow as the one presented before in trunk-based development with pull requests and reviews before merging (minus the forking of the repository).</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="images/github_merge_pull_request.png" class="img-fluid figure-img"></p>
 <p></p><figcaption class="figure-caption">The owner of the original repository can now accept Bruno’s fix</figcaption><p></p>
 </figure>
 </div>
-<p>By merging the fix, the owner can now also benefit from a grammatically correct Readme file as well:</p>
+<p>By merging the fix, the owner can now benefit from a grammatically correct Readme file as well:</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="images/github_contribution_done.png" class="img-fluid figure-img"></p>
@@ -733,7 +733,7 @@ filtered_data &lt;- commune_level_data |&gt;
 </section>
 <section id="further-reading" class="level2" data-number="4.3">
 <h2 data-number="4.3" class="anchored" data-anchor-id="further-reading"><span class="header-section-number">4.3</span> Further reading</h2>
-<p>To know everything about trunk based development, check out <span class="citation" data-cites="hammant2020">Hammant (<a href="references.html#ref-hammant2020" role="doc-biblioref">2020</a>)</span>. A free, online, version of the book is available at <a href="https://trunkbaseddevelopment.com/">https://trunkbaseddevelopment.com/</a>.</p>
+<p>To know everything about trunk-based development, check out <span class="citation" data-cites="hammant2020">Hammant (<a href="references.html#ref-hammant2020" role="doc-biblioref">2020</a>)</span>. A free, online, version of the book is available at <a href="https://trunkbaseddevelopment.com/">https://trunkbaseddevelopment.com/</a>.</p>
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography" style="display: none">
