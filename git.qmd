@@ -19,7 +19,7 @@ explicitly with the potential conflicts that might arise when the same file got
 changed by different people at the same time. Should your computer get lost,
 stolen, or explode, your projects are safely backed up on a server: this is
 because version control tools make use of a server which keeps track of all the
-changes (and in some cases, this *server* is actually your team mates’
+changes (and in some cases, this *server* is actually your teammates’
 computers!)
 
 Version control tools also make it easy to experiment with new ideas. You can
@@ -51,7 +51,7 @@ people that you invite to your private repositories will be able to see the code
 and collaborate with you. It is also possible that your work place has set up a
 self-hosted Git platform, ask your IT department! Usually these self-hosted
 platforms are Gitea or Gitlab instances. Gitea, Gitlab, Bitbucket, Codeberg,
-these are all similar services to Github. All have their own advantages and
+these are all similar services to Github. All have their advantages and
 disadvantages. 
 
 The advantages of Github are twofold:
@@ -94,9 +94,9 @@ each time I write and upload a new section or chapter to Github, the website
 hosting this ebook gets updated automatically and the PDF of the book gets
 updated as well, and everything happens automatically. Each Github account gets
 2000 minutes a month of free computing time a month, which is really a lot. In
-part 2, we will make use of Github Actions to automically test our code.
+part 2, we will make use of Github Actions to automatically test our code.
 
-By the way, if you're using a cloud service like Dropbox, Onedrive and the like,
+By the way, if you're using a cloud service like Dropbox, Onedrive, and the like,
 DO NOT put projects tracked by Git in them! We really need to stress this: do
 not track projects with both something like Dropbox and Git. This is because
 Dropbox and similar services do not deal gracefully with conflicts: if two
@@ -111,8 +111,8 @@ messes up the project and can lead to data loss. Let Git handle the tracking and
 the collaborating for you. It might seem more complex than a service like
 Dropbox, and it is, but it is immensely more powerful, and what steep learning
 curve it might have, it more than makes up for it with the many features it
-makes available at your finger tips. Unlike Dropbox (or similar services), Git
-deals with conflicts not on a per file basis, but on a per line basis. So if two
+makes available at your fingertips. Unlike Dropbox (or similar services), Git
+deals with conflicts not on a per-file basis, but on a per line basis. So if two
 collaborators change the same file, but different lines of this same file, there
 will be no conflict.
 
@@ -125,7 +125,7 @@ request. The maintainer and owner of the original project can then accept these
 edits or not.
 
 In the remainder of this chapter, you are going to learn how to set up Git on
-your machine, open a Github account, and start using it right away. Then, we are
+your machine, open a Github account and start using it right away. Then, we are
 going to show you several scenarios:
 
 - How to collaborate, as a team, on a project;
@@ -190,7 +190,7 @@ two scripts we wrote at the start of the book.
 ## Git superbasics
 
 Open the folder that contains the two scripts in a file explorer. On most Linux
-desktop environments you should be able to right click inside that folder
+desktop environments you should be able to right-click inside that folder
 anywhere and select an option titled something like "Open Terminal here". On
 Windows, do the same, but the option is titled "Open Git Bash here". On macOS,
 you need to first activate this option. Simply google for "open terminal at
@@ -267,7 +267,7 @@ a repository on Github, they suggest "main" as the name for the default branch.
 You need to pay attention to this, because when we will start interacting with
 our Github repository, we need to make sure that we have the right branch name
 in mind. Also, note that because the "master" branch is the most important
-branch, it’s get sometimes referred to as the "trunk". Some teams that use trunk
+branch, it get sometimes referred to as the "trunk". Some teams that use trunk
 based development (which I will discuss in the next chapter) even name this
 branch "trunk". Let's now run this other `git` command:
 
@@ -426,7 +426,7 @@ you're adding and amending comments in scripts, once you're done with that make
 this a commit. Then, maybe clean up some code. That's another, separate commit.
 This makes rolling back changes or reviewing them much easier. This will be
 crucial later on when we will use trunk based development to collaborate with
-our team mates on a project. It is generally not a good idea to code all day and
+our teammates on a project. It is generally not a good idea to code all day and
 then only push one single big fat commit at the end of the day.
 
 By the way, even if our changes are still not on Github.com, we can still now
@@ -450,10 +450,11 @@ no changes added to commit (use "git add" and/or "git commit -a")
 ```
 
 Yep, `analysis.R` is gone. And deleting on the console usually means that the
-file is gone forever. Well technically no, there’s still ways to recover deleted
-files, but we were using Git! Because we did not commit the deletion of the
-file, we can simple tell Git to ignore our changes. A simple way to achieve this
-is to stash the changes, and then *drop* (or delete) the stash:
+file is gone forever. Well technically no, there are still ways to recover
+deleted files, but sence we were using Git we can use it to recover the files!
+Because we did not commit the deletion of the file, we can simple tell Git to
+ignore our changes. A simple way to achieve this is to stash the changes, and
+then *drop* (or delete) the stash:
 
 ```
 owner@localhost ➤ git stash
@@ -477,7 +478,7 @@ analysis.R save_data.R
 
 There it is! You can get rid of the stash with `git stash drop`. But what if we had deleted the
 file and committed the change? In this scenario we could not use `git stash`, but we would need to
-revert back to a commit. Let's try, first let me remove the file:
+revert to a commit. Let's try, first let me remove the file:
 
 ```
 owner@localhost ➤ rm analysis.R
@@ -555,7 +556,7 @@ called hash. You need to copy it (or only like the first 10 or so characters,
 that's enough as well). By the way, depending on your terminal and operating
 system, `git log` may open `less` to view the log. `less` is a program that
 makes it easy to view long documents. Quit it by simply pressing `q` on your
-keyboard. We are now ready to revert back to the right commit with the following
+keyboard. We are now ready to revert to the right commit with the following
 command:
 
 ```
@@ -603,10 +604,10 @@ simply walk back changes and gives you a nice timeline of your project. Maybe
 this does not impress you much, because we live in a world where cloud services
 like Dropbox made things like this very accessible. But where Git (with the help
 of a service like Github) really shines is when collaboration is needed. Git and
-code housting services like Github make it possible to collaborate at very large
+code housing services like Github make it possible to collaborate at very large
 scale: thousands of developers contribute to the Linux kernel, arguably the most
 successful open source project ever, powering most of today’s smartphones,
-servers, super computers and embedded
+servers, supercomputers and embedded
 computer,^[https://www.zdnet.com/article/who-writes-linux-almost-10000-developers/]
 and you can use these tools to collaborate at a smaller scale very efficiently
 as well.
@@ -620,10 +621,10 @@ to a private repository, or makes them available to the world if you're pushing
 to a public repository.
 
 Before pushing anything to Github though, we need to create a new repository.
-This repository will contain the code to our project, as well as all the changes
+This repository will contain the code for our project, as well as all the changes
 that Git has been tracking on our machine. So if, for example, a new team member
 joins, he or she will be able to clone the repository to his or her computer and
-every change, every commit message, every single bit of history of the project
+every change, every commit message and every single bit of history of the project
 will be accessible. If it's a public repository, anyone will be able to clone
 the repository and contribute code to it. We are going to walk you true some
 examples of how to collaborate with Git using Github in the remained of this
@@ -648,14 +649,14 @@ We then land on this page:
 ![Some instructions to get you started](images/git_repo_start.png)
 
 We get some instructions on how to actually get started with our project. The
-first thing you need to do though is click on "SSH":
+first thing you need to do though is to click on "SSH":
 
 ![Some instructions to get you started](images/git_repo_start_ssh.png)
 
-This will changes the links in the instructions from `https` to `ssh`. We will
-explain why this is important in a couple paragraphs. For now, let's read the
+This will change the links in the instructions from `https` to `ssh`. We will
+explain why this is important in a couple of paragraphs. For now, let's read the
 instructions. Since we have already started working, we need to follow the
-instructions title "...or push an existing repository from the command line".
+instructions titled "...or push an existing repository from the command line".
 Let's review these commands. This is what Github suggests we run:
 
 ```
@@ -670,7 +671,7 @@ repository. If you’re following along, you should copy the link from your
 repository here. It would look exactly the same, but the user name `rap4all`
 would be replaced by your Github username. 
 
-Adding the remote links our folder in our machine to the Github repository
+Adding the remote links to our folder in our machine to the Github repository
 online. So now, every time we push, our changes will get uploaded to Github. The
 second line renames the branch from "master" to "main". You are of course free
 to do so. I don’t like changing the defaults from Git, so I will keep using the
@@ -702,7 +703,7 @@ and the repository exists.
 The reason is quite simple: Github has absolutely no idea who we are! Remember,
 if the repository is public, anyone can clone it. But that doesn't mean that
 anyone can simply push code to the repo! This means that we need a way to tell
-Github that we are the owner of the repository. For this, we need a way to login
+Github that we are the owner of the repository. For this, we need a way to log in
 securely, and we will do so using a public/private rsa key pair. The idea is
 quite simple; we are going to generate two files on our computer. These two
 files form a public/private key pair. We are going to upload the public key to
@@ -710,9 +711,9 @@ Github; and every time we want to interact with Github, Github will check the
 public key to the private key that we keep on our machine (never, ever, send the
 private key to anyone). If they match, Github knows that we are who we claim to
 be and will let us push to the repository. This is why we switched from `https`
-to `ssh` before. `https` would allow us to login by typing a password each time
+to `ssh` before. `https` would allow us to log in by typing a password each time
 we push (but actually, not anymore, since password login was turned off some
-years ago). It is much easier to not have to login manually and let our key pair
+years ago). It is much easier to not have to log in manually and let our key pair
 do the job for us.
 
 Let's generate a public/private rsa key pair. Open a terminal on Linux or macOS,
@@ -736,8 +737,8 @@ Enter passphrase (empty for no passphrase):
 ```
 
 Leave it empty as well. Entering a passphrase is not really needed, since the
-ssh key pair itself will deal with the login. In some situations a passphrase
-might be useful, if you're worried that someone might get physical access to
+ssh key pair itself will deal with the login. In some situations, a passphrase
+might be useful if you're worried that someone might get physical access to
 your machine and push code by impersonating you. But if you work with such
 sensitive data and code that this is a real worry, maybe don't use Github?
 
@@ -782,10 +783,10 @@ And then click on "SSH and GPG keys":
 ![Go to your user settings and choose "SSH and GPG keys"](images/github_gpg.png)
 
 and then click on "New SSH key". Name this key (it's a good idea to write
-something that makes recognizing the machine the key was generated easy) and
+something that makes recognizing the machine the key was generated easily) and
 paste the contents of `id_rsa.pub` in the text box and click on "add SSH key":
 
-![Copy the contents of the public key in here](images/github_add_ssh.png)
+![Copy the contents of the public key here](images/github_add_ssh.png)
 
 We can now go back to our terminal and try to push again:
 
@@ -874,10 +875,9 @@ This is what it looks like from the perspective of Bruno's account now:
 ![Bruno can now push as if he owned the repository](images/github_add_collab2.png)
 
 It's important to understand the distinction between inviting someone to
-contribute to the repository and having someone contribute, even though that
-person has not been specifically invited to do so. We are going to explore these
-two scenarios in the next section, but before that, let's see what the "Issues"
-tab is about.
+contribute to the repository and have someone from outside the project
+contribute. We are going to explore these two scenarios in the next section, but
+before that, let's see what the "Issues" tab is about.
 
 ![Anyone can open an issue in a public repository](images/github_new_issue.png)
 
@@ -925,7 +925,7 @@ yes, you also need to provide the code to create this object.
 
 The bar you need to set for an MRE is as follows: bar needed package
 dependencies that may need to be installed beforehand, people that try to help
-you should be able to run your script by simply copy and pasting it into an R
+you should be able to run your script by simply copy-and-pasting it into an R
 console. Any other manipulation that you require from them is unacceptable:
 remember that in open source development, developers very often work during
 their free time, and don't owe you tech support! And even if they did, it is
@@ -942,7 +942,7 @@ thought was a bug of the library was maybe rather a [problem between the
 keyboard and the
 chair](https://en.wikipedia.org/wiki/User_error#PEBKAC/PEBCAK/PICNIC).
 
-So don't underestimate the usefulness of creating high quality MREs for your issues! One package
+So don't underestimate the usefulness of creating high-quality MREs for your issues! One package
 that can assist you with this is {reprex} (read about it [here](https://reprex.tidyverse.org/)).
 
 ## Conclusion

@@ -1,33 +1,72 @@
 # Functional programming
 
-This chapter will teach you the fundamentals of functional programming. *Functional programming*
-might sound scary, but we will focus on only a handful of concepts that are quite accessible while
-providing many benefits. Using these functional programming concepts will make your code more
-reliable, easier to test, document, share, and ultimately rerun.
+Now that we are familiar with Git and Github, we can start with writing code. We
+will learn how to write code using the functional programming paradigm.
+
+This chapter will teach you the fundamentals of functional programming.
+*Functional programming* might sound scary, but we will focus on only a handful
+of concepts that are quite accessible while providing many benefits. Using these
+functional programming concepts will make your code more reliable, easier to
+test, document, share, and ultimately rerun.
+
 
 ## Introduction
 
-You are very likely already familiar with some aspects of functional program. Let's start by
-discussing the two central elements of functional programming: functions and lists.
+Remember that the philosophy of part one of this book is "don’t repeat
+yourself". In this chapter we will see how we can reduce the amount of code as
+much as possible. In the previous chapter we’ve seen how Bruno was able to 
+get rid of many lines of code (that were all the same) by writing a single
+function:
 
-There are several ways that you can structure a program, called programming paradigms. Functional
-programming is a paradigm that relies exclusively on the evaluation of functions to achieve the
-desired end result. If you have already written your own functions in the past, what follows will
-not be very new. But in order to write a good functional program, the functions that you write and
-evaluate have to have certain properties. Before discussing these properties, let's start by with
+```{r, eval = F}
+make_plot <- function(country_level_data,
+                      commune_level_data,
+                      commune){
+
+  filtered_data <- commune_level_data %>%
+    filter(locality == commune)
+
+  data_to_plot <- bind_rows(
+    country_level_data,
+    filtered_data
+  )
+
+  ggplot(data_to_plot) +
+    geom_line(aes(y = pl_m2,
+                  x = year,
+                  group = locality,
+                  colour = locality))
+}
+
+```
+
+Now we are going to go one step further and not only learn how to write good
+functions, but also how we can push the concept of "not repeating oneself" to
+the extreme by using higher-order fuctions and function factories.
+
+You are very likely already familiar with at least two elements of functional
+programming: functions and lists. But functional programming is a complete
+programming paradigm, so using functional programming is more than simply using
+functions and lists (which you can use with other programming paradigms as
+well). Programming paradagims are ways to structure programs (or scripts).
+
+Functional programming is a paradigm that relies exclusively on the evaluation
+of functions to achieve the desired result. If you have already written your own
+functions in the past, what follows will not be very new. But in order to write
+a good functional program, the functions that you write and evaluate have to
+have certain properties. Before discussing these properties, let's start with
 *state*.
 
 ### The state of your program
 
-Let's suppose that you start a fresh R session, and immediately run this next line:
+Let's suppose that you start a fresh R session, and immediately run this line:
 
 ```{r, eval = F}
 ls()
 ```
 
-If you did not modify any of R's configuration files
-that get automatically loaded on startup, you should
-see the following:
+If you did not modify any of R's configuration files that get automatically
+loaded on startup, you should see the following:
 
 ```{r, eval = F}
 character(0)
@@ -51,9 +90,9 @@ Running `ls()` now shows the following:
 [1] "a"      "mtcars"
 ```
 
-You have just altered the state of your program. You can think of the *state* as a box that holds everything
-that gets defined by the user and is accessible at any time. Let's now define a simple function that
-prints a sentence:
+You have just altered the state of your program. You can think of the *state* as
+a box that holds everything that gets defined by the user and is accessible at
+any time. Let's now define a simple function that prints a sentence:
 
 ```{r, eval = F}
 f <- function(name){
@@ -78,12 +117,13 @@ Let's run `ls()` again:
 Function `f()` is now listed there as well. This function has two nice properties:
 
 - For a given input, it always returns exactly the same output. So `f("Bruno")` will always return "Bruno likes lasagna".
-- This function does not change the state of your program, by adding new objects every time it’s run.
+- When running this function, the state of the program does not get altered in any way.
 
 ### Predictable functions
 
-Let's now define another function called `g()`, that does not have the same properties as `f()`. First, let's define
-a function that does not always return the same output given a particular input:
+Let's now define another function called `g()`, which does not have the same
+properties as `f()`. First, let's define a function which does not always return
+the same output given a particular input:
 
 ```{r, eval = F}
 g <- function(name){
@@ -92,7 +132,8 @@ g <- function(name){
 }
 ```
 
-For the same input, "Bruno", this function now produces (potentially) a different output:
+For the same input, "Bruno", this function now produces (potentially) a
+different output:
 
 ```{r, eval = F}
 g("Bruno")
@@ -120,9 +161,11 @@ h <- function(name){
 }
 ```
 
-This function uses the `<<-` operator. This operator saves definitions that are made inside the body
-of functions in the global environment. Before calling this function, run `ls()` again. You should
-see the same objects as before, plus the new functions we've defined:
+This function uses the `<<-` operator. This operator saves definitions that are
+made inside the body of functions[^The body of a function are all the
+instructions that go between the curly braces.] in the global environment.
+Before calling this function, run `ls()` again. You should see the same objects
+as before, plus the new functions we've defined:
 
 ```{r, eval = F}
 [1] "a"         "f"          "g"         "h"         "mtcars"   
@@ -141,8 +184,9 @@ And now `ls()` again:
 [1] "a"         "f"         "food_list" "g"         "h"         "mtcars" 
 ```
 
-Running `h()` did two things: it printed the message, but also created a variable called "food_list" in the
-global environment with the following contents:
+Running `h()` did two things: it printed the message, but also created a
+variable called "food_list" in the global environment with the following
+contents:
 
 ```{r, eval = F}
 food_list
@@ -175,10 +219,12 @@ food_list
 [1] "cassoulet"
 ```
 
-If you keep running `h()`, this list will continue growing. Let me just say that I hesitated showing you this; this
-is because if you didn't know `<<-`, you might find the example above useful. But while useful, it is quite dangerous as well.
-Generally, we want to avoid using functions that change the state as much as possible because these function are
-unpredictable, especially if randomness is involved. It is much safer to define `h()` like this instead:
+If you keep running `h()`, this list will continue growing. Let me just say that
+I hesitated to show you this; this is because if you didn't know `<<-`, you
+might find the example above useful. But while useful, it is quite dangerous as
+well. Generally, we want to avoid using functions that change the state as much
+as possible because these functions are unpredictable, especially if randomness
+is involved. It is much safer to define `h()` like this instead:
 
 ```{r, eval = F}
 h <- function(name, food_list = list()){
@@ -193,20 +239,21 @@ h <- function(name, food_list = list()){
 }
 ```
 
-The difference now is that we made `food_list` the second argument of the function. Also, we defined it as being
-optional by writing:
+The difference now is that we made `food_list` the second argument of the
+function. Also, we defined it as being optional by writing:
 
 ```{r, eval = F}
 food_list = list()
 ```
 
-This means that if we omit this argument, the empty list will get used by default. This avoids the users having
-to manually specify it.
+This means that if we omit this argument, the empty list will get used by
+default. This avoids the users from having to manually specify it.
 
 We can call it like this:
 
 ```{r, eval = F}
-food_list <- h("Bruno", food_list) # since food_list is already defined, we don't need to start with an empty list
+food_list <- h("Bruno", food_list) # since food_list is already defined,
+                                   # we don't need to start with an empty list
 ```
 
 ```{r, eval = F}
@@ -230,18 +277,23 @@ food_list
 [1] "feijoada"
 ```
 
-The only thing that we need now to deal with is the fact that the food gets chosen randomly. I'm going to show you the
-simple way of dealing with this, but later in this chapter we are going to use the `{withr}` package for situations
+The only thing that we need now to deal with is the fact that the food item gets
+chosen randomly. I'm going to show you the simple way of dealing with this, but
+later in this chapter we are going to use the `{withr}` package for situations
 like this. Let's redefine `h()` one last time:
 
 ```{r, eval = F}
 h <- function(name, food_list = list(), seed = 123){
 
-  # We set the seed, making sure that we get the same selection of food for a given seed
+  # We set the seed, making sure that we get the same
+  # selection of food for a given seed
+
   set.seed(seed)
   food <- sample(c("lasagna", "cassoulet", "feijoada"), 1)
 
-  # We now need to unset the seed, because if we don't, guess what, the seed will stay set for the whole session!
+  # We now need to unset the seed, because if we don't,
+  # guess what, the seed will stay set for the whole session!
+
   set.seed(NULL)
 
   food_list <- append(food_list, food)
@@ -284,12 +336,15 @@ h("Bruno")
 [1] "feijoada"
 ```
 
-As you can see, every time this function runs, it now produces the same result. Users can change the seed to have this function produce, consistently,
-another result.
+As you can see, every time this function runs, it now outputs the same result.
+Users can change the seed to have this function output, consistently, another
+result.
 
 ### Referentially transparent and pure functions
 
-A referentially transparent function is a function that does not use any variable that is not also one of its inputs. For example, the following function:
+A referentially transparent function is a function that does not use any
+variable that is not also one of its inputs. For example, the following
+function:
 
 ```{r, eval = F}
 bad <- function(x){
@@ -297,13 +352,17 @@ bad <- function(x){
 }
 ```
 
-is not referentially transparent, because `y` is not one of the functions inputs. What happens if you run `bad()` is that `bad()` needs to look for `y`. 
-Because `y` is not one of its inputs, `bad()` then looks for it in the global environment. If `y` is defined there, it then gets used. Defining and using
-such functions must be avoided at all costs, because these functions are unpredictable. For example:
+is not referentially transparent, because `y` is not one of the function’s
+inputs. What happens if you run `bad()` is that `bad()` needs to look for `y`.
+Because `y` is not one of its inputs, `bad()` then looks for it in the global
+environment. If `y` is defined there, it then gets used. Defining and using such
+functions must be avoided at all costs because these functions are
+unpredictable. For example:
 
 
 ```{r, eval = F}
 y <- 10
+
 bad <- function(x){
   x + y
 }
@@ -311,8 +370,10 @@ bad <- function(x){
 bad(5)
 ```
 
-This will return `15`. But if `y <- 45` then `bad(5)` would this time around return `50`. It is much safer, and easier to make `y` an explicit input of 
-the function instead of having to keep track of `y`’s value:
+This will return `15`. But if `y <- 45` then `bad(5)` would this time around
+return `50`. It is much safer, and clearer to make `y` an explicit input of the
+function instead of having to keep track of `y`’s value (and it’s so easy to do,
+why just not do it):
 
 ```{r, eval = F}
 good <- function(x, y){
@@ -320,24 +381,28 @@ good <- function(x, y){
 }
 ```
 
-`good()` is a referentially transparent function; it is much safer than `bad()`. `good()` is also a
-pure function, because it’s a function that does not interact in any way with the global
-environment. It does not write anything to the global environment, nor requires anything from the
-global environment. Function `h()` from the previous section was not pure, because it created an
-object and wrote it to the global environment (the `food_list` object). Turns out that pure
+`good()` is a referentially transparent function; it is much safer than `bad()`.
+`good()` is also a pure function, because it’s a function that does not interact
+in any way with the global environment. It does not write anything to the global
+environment, nor requires anything from the global environment. Function `h()`
+from the previous section was not pure, because it created an object and wrote
+it to the global environment (the `food_list` object). Turns out that pure
 functions are thus necessarily referentially transparent.
 
-So the first lesson in your functional programming journey that you have to remember is to only use pure functions.
+So the first lesson in your functional programming journey that you have to
+remember is to only use pure functions.
 
 ## Writing good functions
 
-### Functions are first class objects
+### Functions are first-class objects
 
-In a functional programming language, functions are first class objects. Contrary to what the name
-implies, this means that functions, especially the ones you define yourself, are nothing special. A
-function is an object like any other, and can thus be manipulated as such. Think of anything that
-you can do with any object in R, and you can do the same thing with a function. For example, let’s
-consider the `+()` function. It takes two numeric objects and returns their sum:
+In a functional programming language, functions are first-class objects.
+Contrary to what the name implies, this means that functions, especially the
+ones you define yourself, are nothing special. A function is an object like any
+other, and can thus be manipulated as such. Think of anything that you can do
+with any object in R, and you can do the same thing with a function. For
+example, let’s consider the `+()` function. It takes two numeric objects and
+returns their sum:
 
 ```{r}
 1 + 5.3
@@ -345,13 +410,14 @@ consider the `+()` function. It takes two numeric objects and returns their sum:
 # or alternatively: `+`(1, 5.3)
 ```
 
-You can replace the numbers by functions that return numbers:
+You can replace the numbers with functions that return numbers:
 
 ```{r}
 sqrt(1) + log(5.3)
 ```
 
-It’s also possible to define a function that explicitly takes another function as an input:
+It’s also possible to define a function that explicitly takes another function
+as an input:
 
 ```{r}
 h <- function(number, f){
@@ -367,9 +433,11 @@ h(4, sqrt)
 h(10, log10)
 ``` 
 
-Because `h()` takes another function as an argument, `h()` is called a higher-order function.
+Because `h()` takes another function as an argument, `h()` is called a
+higher-order function.
 
-If you don’t know how many arguments `f()`, the function you’re wrapping, has, you can use the `...`:
+If you don’t know how many arguments `f()`, the function you’re wrapping, has,
+you can use the `...`:
 
 ```{r}
 h <- function(number, f, ...){
@@ -377,7 +445,8 @@ h <- function(number, f, ...){
 }
 ```
 
-`...` are simply a placeholder for any potential additional argument that `f()` might have:
+`...` are simply a placeholder for any potential additional argument that `f()`
+might have:
 
 ```{r}
 h(c(1, 2, NA, 3), mean, na.rm = TRUE)
@@ -385,9 +454,10 @@ h(c(1, 2, NA, 3), mean, na.rm = TRUE)
 h(c(1, 2, NA, 3), mean, na.rm = FALSE)
 ```
 
-`na.rm` is an argument of `mean()`. As the developer of `h()`, I don’t necessarily know what `f()`
-might be, or maybe I know `f()` and know all its arguments, but don’t want to have to rewrite them
-all to make them arguments of `h()`, so I can use `...` instead. The following is also possible:
+`na.rm` is an argument of `mean()`. As the developer of `h()`, I don’t
+necessarily know what `f()` might be, or maybe I know `f()` and know all its
+arguments, but don’t want to have to rewrite them all to make them arguments of
+`h()`, so I can use `...` instead. The following is also possible:
 
 ```{r}
 w <- function(...){
@@ -399,24 +469,26 @@ w(1, 2, 3)
 
 If you want to learn more about `...`, type `?dots` in an R console.
 
-Because functions are nothing special, you can also write functions that return functions. As an
-illustration, we'll be writing a function that converts warnings to errors. This can be quite
-useful if you want your functions to fail early, which often makes debugging easier. For example,
-try running this:
+Because functions are nothing special, you can also write functions that return
+functions. As an illustration, we'll be writing a function that converts
+warnings to errors. This can be quite useful if you want your functions to fail
+early, which often makes debugging easier. For example, try running this:
 
 ```{r}
 sqrt(-5)
 ```
 
-This only raises a warning and returns `NaN` (Not a Number). This can be quite dangerous, especially
-when working non-interactively, which is what we will be doing a lot later on. It is much better if
-a pipeline fails early due to an error, than dragging an `NaN` value. This also happens with `log()`:
+This only raises a warning and returns `NaN` (Not a Number). This can be quite
+dangerous, especially when working non-interactively, which is what we will be
+doing a lot later on. It is much better if a pipeline fails early due to an
+error, than dragging a `NaN` value. This also happens with `log()`:
 
 ```{r}
 sqrt(-10)
 ```
 
-So it could be useful to redefine this functions to raise an error instead, for example like this:
+So it could be useful to redefine these functions to raise an error instead, for
+example like this:
 
 ```{r}
 strict_sqrt <- function(x){
@@ -438,10 +510,11 @@ strict_sqrt(-10)
 Error in strict_sqrt(-10) : x is negative
 ```
 
-However, it can be quite tedious to redefine every function that we need in our pipeline. This is where
-a function factory is useful. We can define a function that takes a function as an argument, converts
-any warning thrown by that function into an error, and returns the new function. For example it could
-look like this:
+However, it can be quite tedious to redefine every function that we need in our
+pipeline, and remember, we don’t want to repeat ourselves. The other thing you
+need to remember is that functions are nothing special. Which means that we can
+define a function that takes a function as an argument, converts any warning
+thrown by that function into an error, and returns a new function. For example:
 
 ```{r}
 strictly <- function(f){
@@ -455,9 +528,10 @@ strictly <- function(f){
 
 ```
 
-This function makes use of `tryCatch()` which catches warnings raised by an expression (in this
-example the expression is `f(...)`) and then raises an error instead with the `stop()` function. It
-is now possible to define new functions like this:
+This function makes use of `tryCatch()` which catches warnings raised by an
+expression (in this example the expression is `f(...)`) and then raises an error
+instead with the `stop()` function. It is now possible to define new functions
+like this:
 
 ```{r}
 s_sqrt <- strictly(sqrt)
@@ -483,8 +557,9 @@ s_log(-4)
 Error in value[[3L]](cond) : Can't do that chief
 ```
 
-Functions that return functions are called *functions factories* and they’re incredibly useful. I use this
-so much that I've written a package, available on CRAN, called `{chronicler}`, that does this:
+Functions that return functions are called *function factories* and they’re
+incredibly useful. I use this so much that I've written a package, available on
+CRAN, called `{chronicler}`, that does this:
 
 ```{r}
 s_sqrt <- chronicler::record(sqrt)
@@ -496,20 +571,25 @@ result <- s_sqrt(-4)
 result
 ```
 
-Because the expression above resulted in an error, `Nothing` is returned. `Nothing` is a special
-value defined in the `{maybe}` package (check it out, very interesting package!). We can then even
-read the log to see what went wrong:
+Because the expression above resulted in an error, `Nothing` is returned.
+`Nothing` is a special value defined in the `{maybe}` package (check it out,
+very interesting package!). We can then even read the log to see what went
+wrong:
 
 ```{r}
 chronicler::read_log(result)
 ```
 
-The `{purrr}` package also comes with function factories that you might find useful
-(`{possibly}`, `{safely}` and `{quietly}`).
+The `{purrr}` package also comes with function factories that you might find
+useful (`{possibly}`, `{safely}` and `{quietly}`).
+
+In part 2 we will also learn about assertive programming, another way of making
+our functions safer, as an alternative to using function factories.
 
 ### Optional arguments
 
-It is possible to make function arguments optional, by using `NULL`. For example:
+It is possible to make functions’ arguments optional, by using `NULL`. For
+example:
 
 ```{r}
 g <- function(x, y = NULL){
@@ -522,8 +602,9 @@ g <- function(x, y = NULL){
 }
 ```
 
-Calling `g(10)` prints the message "Optional argument y is NULL", and returns 10. Calling `g(10, 5)` however, prints "y is present" and returns 15.
-It is also possible to use `missing()`:
+Calling `g(10)` prints the message "Optional argument y is NULL", and
+returns 10. Calling `g(10, 5)` however, prints "y is present" and returns 15. It
+is also possible to use `missing()`:
 
 ```{r}
 g <- function(x, y){
@@ -536,13 +617,15 @@ g <- function(x, y){
 }
 ```
 
-I however prefer the first approach, because it is clearer which arguments are optional, which is not the case with the second approach, where you 
-need to read the body of the function.
+I however prefer the first approach, because it is clearer which arguments are
+optional, which is not the case with the second approach, where you need to read
+the body of the function.
 
 ### Safe functions
 
-It is important that your functions are safe and predictable. You should avoid writing functions that behave like `nchar()`, a base R function.
-Let’s see why this function is not safe:
+It is important that your functions are safe and predictable. You should avoid
+writing functions that behave like `nchar()`, a base R function. Let’s see why
+this function is not safe:
 
 ```{r}
 nchar("10000000")
@@ -560,12 +643,14 @@ What is going on here? I’ll give you a hint: simply type `10000000` in the con
 10000000
 ```
 
-`10000000` gets represented as `1e+07` by R. This number in scientific notation gets then converted
-into the character "1e+07" by `nchar()`, and this conversion happens silently. `nchar()` then
-counts the number of characters, and *correctly* returns 5. The problem is that it doesn’t make
-sense to provide a number to a function that expects a character. This function should have
-returned an error message, or at the very least raised a warning that the number got converted into
-a character. Here is how you could rewrite `nchar()` to make it safer:
+`10000000` gets represented as `1e+07` by R. This number in scientific notation
+gets then converted into the character "1e+07" by `nchar()`, and this conversion
+happens silently. `nchar()` then counts the number of characters, and
+*correctly* returns 5. The problem is that it doesn’t make sense to provide a
+number to a function that expects a character. This function should have
+returned an error message, or at the very least raised a warning that the number
+got converted into a character. Here is how you could rewrite `nchar()` to make
+it safer:
 
 ```{r}
 nchar2 <- function(x, result = 0){
@@ -594,15 +679,21 @@ nchar2(10000000)
 Error in nchar2(10000000) : x should be of type 'character', but is of type 'integer' instead. 
 ```
 
+This section is in a sense an introduction to assertive programming. As
+mentioned in the section on function factories, we will be learning about
+assertive programming in greater detail in part 2 of the book.
+
 ### Recursive functions
 
-You may have noticed that in the last lines of `nchar2()`, that `nchar2()` calls itself. A function
-that calls itself in its own body is called a recursive function. It is sometimes easier to write
-down a function in its recursive form than in an iterative form. The most common example is the
-factorial function. However, there is an issue with recursive functions (in the R programming
-language, other programming languages may not have the same problem, like Haskell): while it is
-sometimes easier to write down a function using a recursive algorithm than an iterative algorithm,
-like for the factorial function, recursive functions in R are quite slow. Let’s take a look at two
+You may have noticed in the last lines of `nchar2()` defined above, that
+`nchar2()` calls itself. A function that calls itself in its own body is called
+a recursive function. It is sometimes easier to define a function in its
+recursive form than in an iterative form. The most common example is the
+factorial function. However, there is an issue with recursive functions (in the
+R programming language, other programming languages may not have the same
+problem, like Haskell): while it is sometimes easier to write a function
+using a recursive algorithm than an iterative algorithm, like for the factorial
+function, recursive functions in R are quite slow. Let’s take a look at two
 definitions of the factorial function, one recursive, the other iterative:
 
 ```{r}
@@ -640,14 +731,16 @@ Unit: microseconds
   fact_iter(50)  2.000  2.101  2.74599  2.201  2.3510 21.000   100
 ```
 
-We see that the recursive factorial function is 10 times slower then the iterative version. In this
-particular example it doesn’t make much of a difference, because the functions only take
-microseconds to run. But if you’re working with more complex functions, this is a problem. If you
-want to keep using the recursive function and not switch to an iterative algorithm, there are
-workarounds. The first is called *trampolining*. I won’t go into details, but if you’re interested,
-there is an R package that allows you to use trampolining with R, aptly called
-[`{trampoline}`](https://rdinnager.github.io/trampoline/). Another solution is using the
-[`{memoise}`](https://memoise.r-lib.org/) package.
+We see that the recursive factorial function is 10 times slower than the
+iterative version. In this particular example it doesn’t make much of a
+difference, because the functions only take microseconds to run. But if you’re
+working with more complex functions, this is a problem. If you want to keep
+using the recursive function and not switch to an iterative algorithm, there are
+ways to make them faster. The first is called *trampolining*. I won’t go into
+details, but if you’re interested, there is an R package that allows you to use
+trampolining with R, aptly called
+[`{trampoline}`](https://rdinnager.github.io/trampoline/). Another solution is
+using the [`{memoise}`](https://memoise.r-lib.org/) package.
 
 ### Anonymous functions
 
@@ -663,9 +756,11 @@ Since R version 4.1, there is even a shorthand notation for anonymous functions:
 (\(x)(x+1))(10)
 ```
 
-Because we don't name them, we cannot reuse them. So why is this useful? Anonymous functions are useful when
-you need to apply a function somewhere inside a pipe once, and don't want to define a function just for this.
-This will become clearer once we learn about lists, but before that, let's philosophize a bit.
+Because we don't name them, we cannot reuse them. So why is this useful?
+Anonymous functions are useful when you need to apply a function somewhere
+inside a pipe once, and don't want to define a function just for this. This will
+become clearer once we learn about lists, but before that, let's philosophize a
+bit.
 
 ### The Unix philosophy applied to R
 
@@ -680,15 +775,18 @@ We can take inspiration from the Unix philosophy and rewrite it like this for ou
 *Write functions that do one thing and do it well. Write functions that work together. Write
  functions that handle lists, because that is a universal interface.*
  
-Strive for writing simple functions that only perform one task. Don’t hesitate to split a big
-function into smaller ones. Small functions that only perform one task are easier to maintain,
-test, document and debug. These smaller functions can then be chained using the `|>` operator. In
-other words, it is preferable to have something like:
+Strive for writing simple functions that only perform one task. Don’t hesitate
+to split a big function into smaller ones. Small functions that only perform one
+task are easier to maintain, test, document and debug. These smaller functions
+can then be chained using the `|>` operator. In other words, it is preferable to
+have something like:
 
-``` a |> f() |> g() |> h() ```
+```
+a |> f() |> g() |> h() 
+```
 
-where `a` is for example a path to a data set, and where `f()`, `g()` and `h()` successively read,
-clean, and plot the data, than having something like:
+where `a` is for example a path to a data set, and where `f()`, `g()` and `h()`
+successively read, clean, and plot the data, than having something like:
 
 ```
 big_function(a)
@@ -696,28 +794,31 @@ big_function(a)
 
 that does all the steps above in one go. 
 
-This idea of splitting the problem into smaller chunks, each chunk in turn split into even smaller
-units that can be handled by functions and then the results of these function combined into a final
-output is called composition.
+This idea of splitting the problem into smaller chunks, each chunk in turn split
+into even smaller units that can be handled by functions and then the results of
+these function combined into a final output is called composition.
 
-The advantage of splitting `big_function()` into `f()`, `g()` and `h()` is that you can tackle big
-problems *one bite at a time*, and also reusing these smaller functions in other projects is much
-easier. So what’s important is that you can make small functions work together by sharing a common
-interface. The list is usually a good candidate for this.
+The advantage of splitting `big_function()` into `f()`, `g()` and `h()` is that
+you can *eat the elephant one bite at a time*, and also reuse these smaller
+functions in other projects more easily. So what’s important is that you can
+make small functions work together by sharing a common interface. The list is
+usually a good candidate for this.
 
 ## Lists: a powerful data-structure
 
-Lists are the second important ingredient of functional programming. In the R philosophy inspired
-from UNIX, I stated that *lists are an universal interface* in R, so our functions should handle
-lists. This of course depends on what it is your doing. If you need functions to handle numbers,
-then there's little value in placing these numbers inside lists. But in practice, you will very
-likely manipulate objects that are more complex than numbers, and this is where lists come into
-play.
+Lists are the second important ingredient of functional programming. In the R
+philosophy inspired by the UNIX philosophy, I stated that *lists are a universal
+interface* in R, so our functions should handle lists. This of course depends on
+what it is you’re doing. If you need functions to handle numbers, then there's
+little value in placing these numbers inside lists. But in practice, you will
+very likely manipulate objects that are more complex than numbers, and this is
+where lists come into play.
 
 ### Lists all the way down
 
-Lists are extremely flexible, and most very complex objects classes that you manipulate are
-actually lists, but just fancier. For example, a data frame is a list:
+Lists are extremely flexible, and most of the very complex objects classes that
+you manipulate are actually lists, but just fancier. For example, a data frame
+is a list:
 
 ```{r}
 data(mtcars)
@@ -744,13 +845,14 @@ my_plot <- ggplot(data = mtcars) +
 typeof(my_plot)
 ```
 
-It's lists all the way down, and it's not a coincidence. It's because, as stated, lists are very
-powerful. So it's important to know what you can do with lists.
+It's lists all the way down, and it's not a coincidence. It's because, as
+stated, lists are very powerful. So it's important to know what you can do with
+lists.
 
 ### Lists can hold many things
 
-If you write a function that needs to return many objects, the only solution is to place them
-inside a list. For example, consider this function:
+If you write a function that needs to return many objects, the only solution is
+to place them inside a list. For example, consider this function:
 
 ```{r}
 sqrt_newton <- function(a, init = 1, eps = 0.01, steps = 1){
@@ -767,8 +869,8 @@ sqrt_newton <- function(a, init = 1, eps = 0.01, steps = 1){
 
 ```
 
-This function returns the square root of a number using Newton's algorithm, as well as the number of steps, or iterations,
-it took to reach the solution:
+This function returns the square root of a number using Newton's algorithm, as
+well as the number of steps, or iterations, it took to reach the solution:
 
 ```{r}
 result_list <- sqrt_newton(1600)
@@ -776,10 +878,14 @@ result_list <- sqrt_newton(1600)
 result_list
 ```
 
-It is quite common to instead print the number of steps to the console instead of returning them. But the issue with a function
-that prints something to the console instead of returning it, is that such a function is not pure, as it changes something
-outside of its scope. It is preferable to instead make the function pure by returning everything inside a neat list. It is
-then possible to separately save these objects if needed:
+It is quite common to instead print the number of steps to the console instead
+of returning them. But the issue with a function that prints something to the
+console instead of returning it, is that such a function is not pure, as it
+changes something outside of its scope. And if you need the information that got
+printed (for example, if you want to count all the steps it took to run the
+script from start to finish), it is lost. It gets printed, and that’s it. It is
+preferable to instead make the function pure by returning everything inside a
+neat list. It is then possible to separately save these objects if needed:
 
 ```{r}
 result <- result_list$result
@@ -801,7 +907,8 @@ f <- function(result_list){
 f(result_list)
 ```
 
-It all depends on what you want to do. But it is usually better to keep everything neatly inside a list.
+It all depends on what you want to do. But it is usually better to keep
+everything neatly inside a list.
 
 Lists can also hold objects of different types:
 
@@ -812,8 +919,8 @@ list(
   )
 ```
 
-The list above has two elements, the first is the head of the `mtcars` data frame, the second is a formula object.
-Lists can even hold other lists:
+The list above has two elements, the first is the head of the `mtcars` data
+frame, the second is a formula object. Lists can even hold other lists:
 
 ```{r}
 list(
@@ -829,10 +936,11 @@ Use this to your advantage.
 
 ### Lists as the cure to loops
 
-Loops are incredibly useful, and you are likely familiar with them. The problem with loops is that they are a concept
-from iterative programming, not functional programming, and this is a problem because loops rely on changing the state
-of your program to function. For example, let's suppose that you wish to use a for-loop to compute the sum of the first
-100 integers:
+Loops are incredibly useful, and you are likely familiar with them. The problem
+with loops is that they are a concept from iterative programming, not functional
+programming, and this is a problem because loops rely on changing the state of
+your program to run. For example, let's suppose that you wish to use a for-loop
+to compute the sum of the first 100 integers:
 
 ```{r}
 result <- 0
@@ -843,28 +951,35 @@ for (i in 1:100){
 print(result)
 ```
 
-If you run `ls()` now, you should see that there's a variable `i` in your global environment. This could cause issues further
-down in your pipeline if you need to re-use `i`. Also, writing loops is, in my opinion, quite error prone. But how can we avoid
-using loops? For looping in a functional programming language, we need to use higher-order functions and lists. A reminder:
-a higher-order function is a function that takes another function as an argument. Looping is a task like any other, so we can
-write a function that does the looping for us. We will call it `looping()`, which will take a function as an argument, as well
-as list. The list will serve as the container to hold our numbers:
+If you run `ls()` now, you should see that there's a variable `i` in your global
+environment. This could cause issues further down in your pipeline if you need
+to re-use `i`. Also, writing loops is, in my opinion, quite error prone. But how
+can we avoid using loops? For looping in a functional programming language, we
+need to use higher-order functions and lists. A reminder: a higher-order
+function is a function that takes another function as an argument. Looping is a
+task like any other, so we can write a function that does the looping for us. We
+will write a function, and call it `looping()`, which will take a function as an
+argument, as well as a list. The list will serve as the container to hold our
+numbers:
 
 ```{r}
 looping <- function(a_list, a_func, init = NULL, ...){
-  
-  # If the user does not provide an `init` value, set the head of the list as the initial value
+
+  # If the user does not provide an `init` value,
+  # set the head of the list as the initial value
   if(is.null(init)){
     init <- a_list[[1]]
     a_list <- tail(a_list, -1)
   }
- 
-  # Separate the head from the tail of the list and apply the function to the initial value and the head of the list
+
+  # Separate the head from the tail of the list
+  # and apply the function to the initial value and the head of the list
   head_list = a_list[[1]]
   tail_list = tail(a_list, -1)
   init = a_func(init, head_list, ...)
 
-  # Check if we're done: if there is still some tail, rerun the whole thing until there's no tail left
+  # Check if we're done: if there is still some tail,
+  # rerun the whole thing until there's no tail left
   if(length(tail_list) != 0){
     looping(tail_list, a_func, init, ...)
   }
@@ -1083,7 +1198,7 @@ nested_unemp %>%
 ```
 
 In this case here, we need to use an anonymous function. This is because `filter()` has two
-arguments, and we need to make clear what it is we are mapping over and what argument stays fixed;
+arguments and we need to make clear what it is we are mapping over and what argument stays fixed;
 we are mapping over, or iterating if you will, data frames, but the predicate stays fixed.
 
 We are now ready to plot our data. The best way to continue is to first get the function right by
@@ -1242,7 +1357,7 @@ print(head(mtcars))
 print(str(mtcars))
 ```
  
-The way this works, is essentially a mixture of functional and object oriented programming, so
+The way this works, is essentially a mixture of functional and object-oriented programming, so
 functional OOP. Let’s take a closer look at the source code of `print()` by simply typing `print`
 without brackets, into a console:
 
@@ -1409,6 +1524,6 @@ This is in my opinion not very difficult to do and comes with many benefits. But
 and replacing them with higher-order functions (`lapply()`, `Reduce()`, `purrr::map()` -- and its
 variants --) also pays off. While this chapter stresses the advantages of functional programming,
 you should not forget that R is not a pure, and solely, functional programming language and that
-other paradigms, like object oriented programming, are also available to you, and if your goal is
+other paradigms, like object-oriented programming, are also available to you, and if your goal is
 to master the language (instead of "just" using it to solve data analysis problems), then you also
 need to know about R’s OOP capabilities.

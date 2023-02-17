@@ -134,8 +134,7 @@ your organisation, in a way that they could re-execute it if needed? Good.
 But is it code written in a proprietary program, like STATA, SAS or MATLAB? Then
 your project is not reproducible. It doesn’t matter if this code is well
 documented and written and available on a version control system (internally to
-your company or open to the public). This project is not reproducible.
-Why?
+your company or open to the public). This project is not reproducible. Why?
 
 Because there is no way to re-execute your code with the exact same version of
 this proprietary program down the line. As I’m writing these lines, MATLAB, for
@@ -235,11 +234,12 @@ hard to reproduce. Maybe you use software, even if it’s open source software,
 that is not easy to install (anyone that tried to install R packages on Linux
 that depend on the `{rJava}` package know what I’m talking about).
 
-So a least worse pipeline would be one that could be run more easily on any similar
-machine as yours. This could be achieved by not using hardcoded absolute paths, and 
-by providing instructions to set up the environment. For example, in the case of R,
-this could be as simple as providing a script called something like `install_deps.R`
-that would be a call to `install.packages()`. It could look like this:
+So a least worse pipeline would be one that could be run more easily on any
+similar machine as yours. This could be achieved by not using hardcoded absolute
+paths, and by providing instructions to set up the environment. For example, in
+the case of R, this could be as simple as providing a script called something
+like `install_deps.R` that would be a call to `install.packages()`. It could
+look like this:
 
 ```{r, eval = F}
 
@@ -257,11 +257,11 @@ Maybe that’s not a problem, but it can be if your script uses a function from
 version 2.2.1 that is not available anymore in the latest version (or maybe its
 name got changed, or maybe it was modified somehow and doesn’t provide the exact
 same result). And the more packages the script uses (and the older it is), the
-higher the likelihood that some package version will not be compatible. There 
-is also the issue of the R version itself. Generally speaking, recent versions of 
-R seem to not be too bad when it comes to running older code written in R.
-I know this because in 2022 I’ve ran every example that comes bundled with R
-since version 0.6.0 on the then current version of R, version 4.2.2. Here is the 
+higher the likelihood that some package version will not be compatible. There is
+also the issue of the R version itself. Generally speaking, recent versions of R
+seem to not be too bad when it comes to running older code written in R. I know
+this because in 2022 I’ve ran every example that comes bundled with R since
+version 0.6.0 on the then current version of R, version 4.2.2. Here is the
 result of this experiment:
 
 ![Examples from older versions of R run most of the time successfully on the current version of R](images/wontrun.png)
@@ -269,14 +269,15 @@ result of this experiment:
 This graph shows the following: for each version of R, starting with R version
 0.6.0 (released in 1997), how well the examples that came with a standard
 installation of R run on the current version of R (version 4.2.2 as of writing).
-These are the examples from the default packages like `{base}`, `{stats}`, `{stats4}`,
-and so on. Turns out that more than 75% of the example code from version 0.6.0
-still work on the current version of R. A small fraction output a message
-(which doesn’t mean the code doesn’t work), some 5% raise a warning, which again
-doesn’t necessarily mean that the code doesn’t work, and finally around 20% or
-so errors. As you can see, the closer we get to the current release, the less
-errors get raised (if you want to run the code for yourself, check out this
-[Github repository](https://github.com/b-rodrigues/code_longevity)).
+These are the examples from the default packages like `{base}`, `{stats}`,
+`{stats4}`, and so on. Turns out that more than 75% of the example code from
+version 0.6.0 still work on the current version of R. A small fraction output a
+message (which doesn’t mean the code doesn’t work), some 5% raise a warning,
+which again doesn’t necessarily mean that the code doesn’t work, and finally
+around 20% or so errors. As you can see, the closer we get to the current
+release, the less errors get raised (if you want to run the code for yourself,
+check out this [Github
+repository](https://github.com/b-rodrigues/code_longevity)).
 
 (But something important should be noted: just because some old piece of code
 runs without error, doesn’t mean that the result is exactly the same. There

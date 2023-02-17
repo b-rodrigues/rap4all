@@ -22,16 +22,16 @@ ideally every day, or as soon as some code is ready. This way, if conflicts
 arise, they can be dealt with quickly. This also makes code review much easier,
 because the reviewer only needs to review little bits of code at a time. The
 alternative would be for each team member to work on his or her own branch for
-days, or even weeks. Once the branches get merged to the trunk, the conflicts
-that will need to be solved and reviewing all these changes would be very
-painful. To avoid this, it is best to merge every day, or each time a piece of
-code is added, and, **very importantly**, this code does not break the whole
-project (we will be using unit tests for this later).
+days or even weeks. Once the branches get merged into the trunk, reviewing all
+the changes and solving the conflicts that will arise would be very painful. To
+avoid this, it is best to merge every day or each time a piece of code is
+added, and, **very importantly**, this code does not break the whole project (we
+will be using unit tests for this later).
 
 So in summary: to avoid a lot of pain later by merging branches that moved away too
 much from the trunk, we will create branches, add our code, and merge them to the
 trunk as soon as possible. *As soon as possible* can mean several things, but usually
-this means as soon as the feature was added, the bug fixed, or as soon as we added
+this means as soon as the feature was added, bug was fixed, or as soon as we added
 some code that does not break the whole project, even if the feature we wanted to add
 is not done yet. The philosophy is that if merging fails, it should fail as early as
 possible. Early failures are easy to deal with.
@@ -69,7 +69,7 @@ On branch add_readme
 nothing to commit, working tree clean
 ```
 
-Let's add a file called `README.md` and add the following in it:
+Let's add a file called `README.md` and add the following to it:
 
 ````
 # Housing data for Luxembourg
@@ -98,7 +98,7 @@ Untracked files:
 nothing added to commit but untracked files present (use "git add" to track)
 ```
 
-So next we are going to track it, and push the changes. Also, we are going to use a
+So next we are going to track it and push the changes. Also, we are going to use a
 neat trick when pushing: we are going to use the commit message to state the issue
 was fixed, which will automatically close the issue for us:
 
@@ -107,7 +107,7 @@ bruno@computer ➤ git add .
 bruno@computer ➤ git commit -am "fixed #1"
 ```
 
-`#1` refers to the number of the issue. Because it's the first issue, it can be
+`#1` refers to the number of the issue. Because it's the first issue, it can
 simply be referred to as `#1`. Bruno will now push:
 
 ```
@@ -145,7 +145,7 @@ clicking on the "Compare & pull request" button Bruno now sees this:
 
 ![This screen makes it easy to see what changed](images/github_pull_request.png)
 
-Bruno can leave a comment, see what changed (in this case, a single file was added)
+Bruno can leave a comment, and see what changed (in this case, a single file was added)
 and most importantly, add a reviewer if needed:
 
 ![Let boss decide if this is good enough](images/github_add_reviewer.png)
@@ -154,7 +154,7 @@ This is what Bruno sees now:
 
 ![Github tells us that this branch can safely be merged](images/github_reviewer_requested.png)
 
-Bruno requested the review, but Github tells us that the brach can safely be merged.
+Bruno requested the review, but Github tells us that the branch can safely be merged.
 This is because we added a file and did not touch anything else, and also because the
 owner of the repository was asleep while Bruno was working, so there was no
 opportunity for conflicts to arise.
@@ -169,7 +169,7 @@ By clicking on the notification, the owner gets taken to this view:
 ![Time to review the pull request](images/github_review.png)
 
 Here, the reviewer can check the commit, the files that were changed, and see if
-there any conflicts between this code and the code base on the master (or trunk)
+there are any conflicts between this code and the code base on the master (or trunk)
 branch. Github also tells us two interesting things: the owner can add a rule that
 states that any pull request must be approved, and also that continuous integration
 has not been set up (we are going to see what this means in the second part of this
@@ -184,8 +184,8 @@ By clicking the first option, more options appear:
 
 ![Reviews are now required](images/github_rules_2.png)
 
-By choosing these options, the owner can basically enforce trunk based development
-(well, collaborators still have to submit pull request frequently enough though,
+By choosing these options, the owner can basically enforce trunk-based development
+(well, collaborators still have to submit pull requests frequently enough though,
 because if they don't, we can be in a situation where merging can be very difficult).
 
 Let's choose one last option: by scrolling down, it's possible to select the option
@@ -200,7 +200,7 @@ So now the owner actually has to go and see the files that were changed:
 
 ![Check the code, and add comments if needed](images/github_add_your_review.png)
 
-It's possible to add comments to single lines, if needed:
+It's possible to add comments to single lines if needed:
 
 ![It's possible to add comments to lines](images/github_review_comments.png)
 
@@ -228,31 +228,33 @@ Let's delete it (it's always possible to restore it).
 
 ### Handling conflicts
 
-As mentioned in the previous chapter, Git makes it easy to handle conflicts. Well,
-let's be clear; it can be very tricky sometimes to resolve conflicts. But you should
-know that when solving a conflict with Git is difficult, this usually means that it
-would be impossible to do any other way, and would inevitably result in someone
-having to reconcile the files by hand. What makes handling conflicts easier with Git
-though, is that Git is able to tell you where you can find clashes on a per line basis.
-So for instance, if you change the ten first lines of a script, and I change the ten 
-next lines, there would be no conflict, and Git will automatically merge both our 
-contributions into a single file. Other tools, like Dropbox, would fail in a situation 
-like this, because Dropbox only handle conflicts on a per file basis. The same file
-was changed by two different persons? Regardless of where these changes happened, you now 
-have a conflict to deal with on your hand... and worse, you don't even know where! You 
-will need to scan the two resulting copies of the file by hand. Git, in the case
-where the same lines were changed, highlights them very clearly so that you can quickly 
-find them and deal with the problems. 
+As mentioned in the previous chapter, Git makes it easy to handle conflicts.
+Well, let's be clear; it can be very tricky sometimes to resolve conflicts. But
+you should know that when solving a conflict with Git is difficult, this usually
+means that it would be impossible to do any other way, and would inevitably
+result in someone having to reconcile the files by hand. What makes handling
+conflicts easier with Git though, is that Git is able to tell you where you can
+find clashes on a per-line basis. So for instance, if you change the ten first
+lines of a script, and I change the ten next lines, there would be no conflict,
+and Git will automatically merge both our contributions into a single file.
+Other tools, like Dropbox, would fail in a situation like this, because these
+tools can only handle conflicts on a per file basis. The same file was changed
+by two different persons? Regardless of where these changes happened, you now
+have a conflict to deal with on your hand... and worse, you don't even know
+where! You will need to scan the two resulting copies of the file by hand. Git,
+in the case where the same lines were changed, highlights them very clearly so
+that you can quickly find them and deal with the problems.
 
 We will see all of this in the coming sections.
 
-So how do conflicts happen in practice? Let's imagine the following scenario. Both
-Bruno and the project owner will create a branch, and edit the same file. Perhaps
-they talked over the phone and decided to add a feature, or correct a bug. Perhaps
-they decided that it wasn't worth it to open an issue on Github and assign someone to
-do it. After all, they discussed this on the phone and decided that Bruno should do
-it. Or was it the owner who needed to solve the issue? No one remembers now. Either
-way, they both did, and changed the same file, so a conflict will ensue.
+So how do conflicts happen in practice? Let's imagine the following scenario.
+Both Bruno and the project owner will create a branch, and edit the same file.
+Perhaps they talked over the phone and decided to add a feature or correct a
+bug. Perhaps they decided that it wasn't worth it to open an issue on Github and
+assign someone to do it. After all, they discussed this on the phone and decided
+that Bruno should do it. Or was it the owner who needed to solve the issue? No
+one remembers now. Either way, they both did, and changed the same file, so a
+conflict will ensue.
 
 First, Bruno needs to switch back to the master branch on his computer:
 
@@ -426,7 +428,7 @@ project owner can easily deal with it on his or her machine, and then push a new
 commit with both changes integrated gracefully. The image below illustrates this
 workflow:
 
-![Conflict solving with trunk based development](images/github_conflict_tbd.png)
+![Conflict solving with trunk-based development](images/github_conflict_tbd.png)
 
 First step, the owner reviews and approves Bruno's pull request:
 
@@ -434,7 +436,7 @@ First step, the owner reviews and approves Bruno's pull request:
 
 The pull request can get merged and Bruno's feature branch deleted. Now, it wouldn't make
 sense for the project owner to create a pull request to merge his or her changes. They would
-conflict with what Bruno did. So the project owner goes back to the computer, and 
+conflict with what Bruno did. So the project owner goes back to the computer and 
 essentially updates the code in his or her feature branch by merging master into it.
 
 So, the project owner checks that he or she is working on the feature branch:
@@ -513,11 +515,11 @@ In (1) we see the commit that deals with the conflict, in (2) the owner asks Bru
 for a review and then in (3) we see that Bruno reviewed and approved. Finally, the
 pull request can be merged (4) and the feature branch deleted.
 
-### Simplified trunk based development
+### Simplified trunk-based development
 
 The workflow that we showed here may seem a bit too rigid for smaller teams (below 4
-or 5 contributors). It is possible to adopt a simplified version of trunk based
-development, where contributors don't have to open pull request to merge their
+or 5 contributors). It is possible to adopt a simplified version of trunk-based
+development, where contributors don't have to open pull requests to merge their
 feature branches into the trunk, and no reviewer is needed. In cases like this, Git
 forces you to pull changes if someone already merged his or her feature branch into
 the trunk before you could. This way, when pulling, conflicts (if any) arise at that
@@ -531,7 +533,7 @@ needed and the feature branch can be merged into master.
 
 ### Conclusion
 
-The main ideas of trunk based development are:
+The main ideas of trunk-based development are:
 
 - Each contributor opens a new branch to develop a feature or fix a bug, and works alone on his or her own little branch;
 - At the end of the day at the latest (or a previously agreed upon duration), branches need all to get merged;
@@ -587,18 +589,18 @@ repository. This pull request will be opened over at the original repository:
 What does the owner of the original repository, "rap4all" see? The pull request Bruno
 opened is now in the original repository's "Pull request" menu, and the owner can
 check what the contribution is, if it breaks code or not, etc. This is essentially the same
-workflow as the one presented before in trunk based development with pull requests and
+workflow as the one presented before in trunk-based development with pull requests and
 reviews before merging (minus the forking of the repository).
 
 ![The owner of the original repository can now accept Bruno's fix](images/github_merge_pull_request.png)
 
-By merging the fix, the owner can now also benefit from a grammatically correct Readme file as 
-well:
+By merging the fix, the owner can now benefit from a grammatically correct
+Readme file as well:
 
 ![The beauty of open source](images/github_contribution_done.png)
 
 ## Further reading
 
-To know everything about trunk based development, check out @hammant2020. A free,
+To know everything about trunk-based development, check out @hammant2020. A free,
 online, version of the book is available at
 [https://trunkbaseddevelopment.com/](https://trunkbaseddevelopment.com/).
