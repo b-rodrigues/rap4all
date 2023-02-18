@@ -750,8 +750,8 @@ To read the log of this object, call read_log(.c).</code></pre>
 <div class="sourceCode cell-code" id="cb74"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a>chronicler<span class="sc">::</span><span class="fu">read_log</span>(result)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "Complete log:"                                                                                
-[2] "NOK! sqrt() ran unsuccessfully with following exception: NaNs produced at 2023-02-17 19:19:33"
-[3] "Total running time: 0.00129532814025879 secs"                                                 </code></pre>
+[2] "NOK! sqrt() ran unsuccessfully with following exception: NaNs produced at 2023-02-18 17:38:18"
+[3] "Total running time: 0.00120258331298828 secs"                                                 </code></pre>
 </div>
 </div>
 <p>The <code>{purrr}</code> package also comes with function factories that you might find useful (<code>{possibly}</code>, <code>{safely}</code> and <code>{quietly}</code>).</p>
@@ -1147,7 +1147,7 @@ $b$d</code></pre>
 [1] 1.000000 1.414214 1.732051 2.000000 2.236068</code></pre>
 </div>
 </div>
-<p>In other programming languages, <code>lapply()</code> is often called <code>map()</code>. The <code>{purrr}</code> packages ships with other such useful higher-order functions that abstract loops away. For example, there’s the function called <code>map2()</code>, that maps a function of two arguments to each element of two atomic vectors or lists, two at a time:</p>
+<p>In other programming languages, <code>lapply()</code> is often called <code>map()</code>. The <code>{purrr}</code> package ships with other such useful higher-order functions that abstract loops away. For example, there’s the function called <code>map2()</code>, that maps a function of two arguments to each element of two atomic vectors or lists, two at a time:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb124"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb124-1"><a href="#cb124-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(purrr)</span>
 <span id="cb124-2"><a href="#cb124-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -1177,7 +1177,7 @@ $b$d</code></pre>
 </section>
 <section id="data-frames" class="level3" data-number="5.3.4">
 <h3 data-number="5.3.4" class="anchored" data-anchor-id="data-frames"><span class="header-section-number">5.3.4</span> Data frames</h3>
-<p>As mentioned in the introduction of this section, data frames are a special type of list of atomic vectors. This means that just as I can use <code>lapply()</code> to compute the square root of the elements of an atomic vector, as in the previous example, I can also operate on all the columns of a data frame. For example, it is possible to determine the class of every variable like this:</p>
+<p>As mentioned in the introduction of this section, data frames are a special type of list of atomic vectors. This means that just as I can use <code>lapply()</code> to compute the square root of the elements of an atomic vector, as in the previous example, I can also operate on all the columns of a data frame. For example, it is possible to determine the class of every column of a data frame like this:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb126"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb126-1"><a href="#cb126-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lapply</span>(iris, class)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -1197,16 +1197,17 @@ $Species
 [1] "factor"</code></pre>
 </div>
 </div>
-<p>Unlike a list however, the elements of a data frame must be of the same length. Data frames remain very flexible however, and using what we have learned until now, it is possible to use the data frame as a structure for all our computations. For example, suppose that we have a data frame that contains data on unemployment for the different subnational divisions of the Grand-Duchy of Luxembourg, the country the author of this book hails from. Let’s suppose that I want to generate several plots, per subnational division and per year. Typically, we would use a loop for this, but we can use what we’ve learned here, as well as some functions from the <code>{dplyr}</code>, <code>{purrr}</code>, <code>{ggplot2}</code> and <code>{tidyr}</code> packages. I will be downloading data that I made available inside a package, but instead of installing the package, we will download the <code>.rda</code> file (which is the file format of packaged data) and then load that data into our R session:</p>
+<p>Unlike a list however, the elements of a data frame must be of the same length. Data frames remain very flexible though, and using what we have learned until now it is possible to use the data frame as a structure for all our computations. For example, suppose that we have a data frame that contains data on unemployment for the different subnational divisions of the Grand-Duchy of Luxembourg, the country the author of this book hails from. Let’s suppose that I want to generate several plots, per subnational division and per year. Typically, we would use a loop for this, but we can use what we’ve learned here, as well as some functions from the <code>{dplyr}</code>, <code>{purrr}</code>, <code>{ggplot2}</code> and <code>{tidyr}</code> packages. I will be downloading data that I made available inside a package, but instead of installing the package, we will download the <code>.rda</code> file directly (which is the file format of packaged data) and then load that data into our R session:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb128"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb128-1"><a href="#cb128-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a temporary file</span></span>
 <span id="cb128-2"><a href="#cb128-2" aria-hidden="true" tabindex="-1"></a>unemp_path <span class="ot">&lt;-</span> <span class="fu">tempfile</span>(<span class="at">fileext =</span> <span class="st">".rda"</span>)</span>
 <span id="cb128-3"><a href="#cb128-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb128-4"><a href="#cb128-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Download the data and save it to the path of the temporary file</span></span>
-<span id="cb128-5"><a href="#cb128-5" aria-hidden="true" tabindex="-1"></a><span class="fu">download.file</span>(<span class="st">"https://github.com/b-rodrigues/myPackage/raw/main/data/unemp.rda"</span>, <span class="at">destfile =</span> unemp_path)</span>
-<span id="cb128-6"><a href="#cb128-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb128-7"><a href="#cb128-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the data. The data is now available as 'unemp'</span></span>
-<span id="cb128-8"><a href="#cb128-8" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(unemp_path)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb128-5"><a href="#cb128-5" aria-hidden="true" tabindex="-1"></a><span class="fu">download.file</span>(<span class="st">"https://github.com/b-rodrigues/myPackage/raw/main/data/unemp.rda"</span>,</span>
+<span id="cb128-6"><a href="#cb128-6" aria-hidden="true" tabindex="-1"></a>              <span class="at">destfile =</span> unemp_path)</span>
+<span id="cb128-7"><a href="#cb128-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb128-8"><a href="#cb128-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the data. The data is now available as 'unemp'</span></span>
+<span id="cb128-9"><a href="#cb128-9" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(unemp_path)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Let’s load the required packages and take a look at the data:</p>
 <div class="cell">
@@ -1244,8 +1245,8 @@ $ active_population            &lt;dbl&gt; 242694, 18873, 1817, 869, 1505, 4355,
 $ unemployment_rate_in_percent &lt;dbl&gt; 7.947044, 5.674773, 6.274078, 2.876870, 4…</code></pre>
 </div>
 </div>
-<p>Column names are self-descriptive, but the <code>level</code> column needs some explanations. The country of Luxembourg is divided into <em>Cantons</em>, and these <em>Cantons</em> themselves into <em>Communes</em>.</p>
-<p>You should know that the word <em>Luxembourg</em> can refer to the country, the canton or the commune of Luxembourg. Now let’s suppose that I want a separate plot for the three communes of Luxembourg, Esch-sur-Alzette and Wiltz. Instead of creating three separate data frames and feeding them to the same ggplot code, I can instead take advantage of the fact that data frames are lists, and are thus quite flexible. Let’s start with filtering:</p>
+<p>Column names are self-descriptive, but the <code>level</code> column needs some explanations. <code>level</code> contains the adiministrative divisions of the country, so the country of Luxembourg, then the Cantons and then the Communes.</p>
+<p>Remember that Luxembourg can refer to the country, the canton or the commune of Luxembourg. Now let’s suppose that I want a separate plot for the three communes of Luxembourg, Esch-sur-Alzette and Wiltz. Instead of creating three separate data frames and feeding them to the same ggplot code, I can instead take advantage of the fact that data frames are lists, and are thus quite flexible. Let’s start with filtering:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb135"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb135-1"><a href="#cb135-1" aria-hidden="true" tabindex="-1"></a>filtered_unemp <span class="ot">&lt;-</span> unemp <span class="sc">%&gt;%</span></span>
 <span id="cb135-2"><a href="#cb135-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(</span>
@@ -1293,7 +1294,7 @@ $b
 <div class="sourceCode cell-code" id="cb139"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb139-1"><a href="#cb139-1" aria-hidden="true" tabindex="-1"></a>nested_unemp <span class="ot">&lt;-</span> filtered_unemp <span class="sc">%&gt;%</span></span>
 <span id="cb139-2"><a href="#cb139-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_nest</span>(place_name) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Let’s see how this looks like:</p>
+<p>Let’s see what this looks like:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb140"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb140-1"><a href="#cb140-1" aria-hidden="true" tabindex="-1"></a>nested_unemp</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -1345,7 +1346,7 @@ $b
 3 Wiltz                       [4 × 8] &lt;tibble [1 × 8]&gt;</code></pre>
 </div>
 </div>
-<p>In this case here, we need to use an anonymous function. This is because <code>filter()</code> has two arguments and we need to make clear what it is we are mapping over and what argument stays fixed; we are mapping over, or iterating if you will, data frames, but the predicate stays fixed.</p>
+<p>In this case, we need to use an anonymous function. This is because <code>filter()</code> has two arguments and we need to make clear what it is we are mapping over and what argument stays fixed; we are mapping over, or iterating if you will, data frames, but the predicate <code>year == 2015</code> stays fixed.</p>
 <p>We are now ready to plot our data. The best way to continue is to first get the function right by creating one plot for one single commune. Let’s select the dataset for the commune of <code>Luxembourg</code>:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb148"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb148-1"><a href="#cb148-1" aria-hidden="true" tabindex="-1"></a>lux_data <span class="ot">&lt;-</span> nested_unemp <span class="sc">%&gt;%</span></span>
@@ -1375,7 +1376,7 @@ attr(,"class")
 [1] "labels"</code></pre>
 </div>
 </div>
-<p>Ideally, we would want that title to change, depending on the data set. So we could write the function like so:</p>
+<p>Ideally, we would want that title to change depending on the data set. So we could write the function like so:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb152"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb152-1"><a href="#cb152-1" aria-hidden="true" tabindex="-1"></a>make_plot <span class="ot">&lt;-</span> <span class="cf">function</span>(x, y){</span>
 <span id="cb152-2"><a href="#cb152-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="at">data =</span> x) <span class="sc">+</span></span>
@@ -1474,15 +1475,15 @@ attr(,"class")
 <p><img src="fprog_files/figure-html/unnamed-chunk-103-3.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>This column-list based workflow is extremely powerful and I highly advise you to take the required time to master it.</p>
+<p>This list-column based workflow is extremely powerful and I highly advise you to take the required time to master it. Remember, we never want to have to repeat ourselves. This might seem more complicated that repeating yourself, but imagine that you need to do this for various countries, various variables, etc… What are you going to do, copy and paste code everywhere? This gets very tedious and more importantly, very error-prone, because you will forget to update the code in some places. You could of course use a loop instead of this list-column based workflow. But as mentioned, the issue with loops is that you have to interact with the global environment, which can lead to other issues. But whatever you end up using, you need to avoid copy and pasting at all costs.</p>
 </section>
 </section>
 <section id="functional-programming-in-r" class="level2" data-number="5.4">
 <h2 data-number="5.4" class="anchored" data-anchor-id="functional-programming-in-r"><span class="header-section-number">5.4</span> Functional programming in R</h2>
-<p>Up until now we focused more on concepts than on specifics of the R programming language when it comes to functional programming. In the section, we will be focusing entirely on R-specific capabilities and packages for functional programming.</p>
+<p>Up until now I focused more on concepts than on specifics of the R programming language when it comes to functional programming. In the section, we will be focusing entirely on R-specific capabilities and packages for functional programming.</p>
 <section id="base-capabilities" class="level3" data-number="5.4.1">
 <h3 data-number="5.4.1" class="anchored" data-anchor-id="base-capabilities"><span class="header-section-number">5.4.1</span> Base capabilities</h3>
-<p>R is a functional programming language, as already stated, and as such it comes with many functions out of the box to write functional code. We have already discussed <code>lapply()</code> and <code>Reduce()</code>. You should know that depending on what you want to achieve, there are other functions that are similar to <code>lapply()</code>: <code>apply()</code>, <code>sapply()</code>, <code>vapply()</code>, <code>mapply()</code> and <code>tapply()</code>. There’s also <code>Map()</code> which is a wrapper around <code>mapply()</code>. Each function performs the same basic task of applying a function over all the elements of a list or list-like structure, but it can be hard to keep them apart. This is why <code>{purrr}</code>, which we will discuss in the next section, is quite an interesting alternative to base R’s offering.</p>
+<p>R is a functional programming language, (but not only), and as such it comes with many functions out of the box to write functional code. We have already discussed <code>lapply()</code> and <code>Reduce()</code>. You should know that depending on what you want to achieve, there are other functions that are similar to <code>lapply()</code>: <code>apply()</code>, <code>sapply()</code>, <code>vapply()</code>, <code>mapply()</code> and <code>tapply()</code>. There’s also <code>Map()</code> which is a wrapper around <code>mapply()</code>. Each function performs the same basic task of applying a function over all the elements of a list or list-like structure, but it can be hard to keep them apart and when you should use one over another. This is why <code>{purrr}</code>, which we will discuss in the next section, is quite an interesting alternative to base R’s offering.</p>
 <p>Another one of the quintessential functional programming functions (alongside <code>Reduce()</code> and <code>Map()</code>) that ships with R is <code>Filter()</code>. If you know <code>dplyr::filter()</code> you should be familiar with the concept of filtering rows of a data frame where the elements of one particular column satisfy a predicate. <code>Filter()</code> works the same way, but focusing on lists instead of data frame:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb164"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb164-1"><a href="#cb164-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Filter</span>(is.character,</span>
@@ -1548,7 +1549,7 @@ NULL</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>function (x, ...) 
 UseMethod("print")
-&lt;bytecode: 0x55b7fe93e7d0&gt;
+&lt;bytecode: 0x562b66226090&gt;
 &lt;environment: namespace:base&gt;</code></pre>
 </div>
 </div>
@@ -1592,7 +1593,7 @@ UseMethod("print")
     }
     invisible(x)
 }
-&lt;bytecode: 0x55b7ffa58810&gt;
+&lt;bytecode: 0x562b673400d0&gt;
 &lt;environment: namespace:base&gt;</code></pre>
 </div>
 </div>
