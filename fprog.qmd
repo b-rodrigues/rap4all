@@ -990,22 +990,24 @@ looping <- function(a_list, a_func, init = NULL, ...){
 
 ```
 
-Now, this might seem much more complicated than a for loop. However, now that we have abstracted the loop away inside a function,
-we can keep reusing this function:
+Now, this might seem much more complicated than a for loop. However, now that we
+have abstracted the loop away inside a function, we can keep reusing this
+function:
 
 ```{r}
 looping(as.list(seq(1:100)), `+`)
 ```
 
-Of course, because this is so useful, `looping()` actually ships with R, and is called `Reduce()`:
+Of course, because this is so useful, `looping()` actually ships with R, and is
+called `Reduce()`:
 
 ```{r}
 Reduce(`+`, seq(1:100)) # the order of the arguments is `function` then `list` for `Reduce()`
 ```
 
-But this is not the only way that we can loop. We can also write a loop that applies a function to each element of a list, instead of 
-operating on the whole list:
-
+But this is not the only way that we can loop. We can also write a loop that
+applies a function to each element of a list, instead of operating on the whole
+list:
 
 ```{r}
 result <- as.list(seq(1:5))
@@ -1016,8 +1018,9 @@ for (i in seq_along(result)){
 print(result)
 ```
 
-Here again, we have to pollute the global environment by first creating a vessel for our results, and then apply the function
-at each index. We can abstract this process away in a function:
+Here again, we have to pollute the global environment by first creating a vessel
+for our results, and then apply the function at each index. We can abstract this
+process away in a function:
 
 ```{r}
 applying <- function(a_list, a_func, ...){
@@ -1036,23 +1039,26 @@ applying <- function(a_list, a_func, ...){
 }
 ```
 
-Once again this might seem complicated, and I would agree. Abstraction is complex. But once we have it, we can focus on the task at
-hand, instead of having to always tell the computer what we want:
+Once again this might seem complicated, and I would agree. Abstraction is
+complex. But once we have it, we can focus on the task at hand, instead of
+having to always tell the computer what we want:
 
 ```{r}
 applying(as.list(seq(1:5)), sqrt)
 ```
 
-Of course, R ships with its own, much more efficient, implementation of this function:
+Of course, R ships with its own, much more efficient, implementation of this
+function:
 
 ```{r}
 lapply(list(seq(1:5)), sqrt)
 ```
 
-In other programming languages, `lapply()` is often called `map()`. The `{purrr}` packages ships
-with other such useful higher-order functions that abstract loops away. For example, there’s the
-function called `map2()`, that maps a function of two arguments to each element of two atomic
-vectors or lists, two at a time:
+In other programming languages, `lapply()` is often called `map()`. The
+`{purrr}` package ships with other such useful higher-order functions that
+abstract loops away. For example, there’s the function called `map2()`, that
+maps a function of two arguments to each element of two atomic vectors or lists,
+two at a time:
 
 ```{r}
 library(purrr)
@@ -1068,33 +1074,37 @@ If you have more than two lists, you can use `pmap()` instead.
 
 ### Data frames
 
-As mentioned in the introduction of this section, data frames are a special type of list of atomic
-vectors. This means that just as I can use `lapply()` to compute the square root of the elements of
-an atomic vector, as in the previous example, I can also operate on all the columns of a data
-frame. For example, it is possible to determine the class of every variable like this:
+As mentioned in the introduction of this section, data frames are a special type
+of list of atomic vectors. This means that just as I can use `lapply()` to
+compute the square root of the elements of an atomic vector, as in the previous
+example, I can also operate on all the columns of a data frame. For example, it
+is possible to determine the class of every column of a data frame like this:
 
 ```{r}
 lapply(iris, class)
 ```
 
-Unlike a list however, the elements of a data frame must be of the same length. Data frames
-remain very flexible however, and using what we have learned until now, it is possible to
-use the data frame as a structure for all our computations. For example, suppose that we
-have a data frame that contains data on unemployment for the different subnational divisions
-of the Grand-Duchy of Luxembourg, the country the author of this book hails from. Let’s suppose
-that I want to generate several plots, per subnational division and per year. Typically,
-we would use a loop for this, but we can use what we’ve learned here, as well as some
-functions from the `{dplyr}`, `{purrr}`, `{ggplot2}` and `{tidyr}` packages. I will be downloading
-data that I made available inside a package, but instead of installing the package,
-we will download the `.rda` file (which is the file format of packaged data) and
-then load that data into our R session:
+Unlike a list however, the elements of a data frame must be of the same length.
+Data frames remain very flexible though, and using what we have learned until
+now it is possible to use the data frame as a structure for all our
+computations. For example, suppose that we have a data frame that contains data
+on unemployment for the different subnational divisions of the Grand-Duchy of
+Luxembourg, the country the author of this book hails from. Let’s suppose that I
+want to generate several plots, per subnational division and per year.
+Typically, we would use a loop for this, but we can use what we’ve learned here,
+as well as some functions from the `{dplyr}`, `{purrr}`, `{ggplot2}` and
+`{tidyr}` packages. I will be downloading data that I made available inside a
+package, but instead of installing the package, we will download the `.rda` file
+directly (which is the file format of packaged data) and then load that data
+into our R session:
 
 ```{r}
 # Create a temporary file
 unemp_path <- tempfile(fileext = ".rda")
 
 # Download the data and save it to the path of the temporary file
-download.file("https://github.com/b-rodrigues/myPackage/raw/main/data/unemp.rda", destfile = unemp_path)
+download.file("https://github.com/b-rodrigues/myPackage/raw/main/data/unemp.rda",
+              destfile = unemp_path)
 
 # Load the data. The data is now available as 'unemp'
 load(unemp_path)
@@ -1113,14 +1123,16 @@ glimpse(unemp)
 
 ``` 
 
-Column names are self-descriptive, but the `level` column needs some explanations. The
-country of Luxembourg is divided into *Cantons*, and these *Cantons* themselves into *Communes*.
+Column names are self-descriptive, but the `level` column needs some
+explanations. `level` contains the adiministrative divisions of the country, so
+the country of Luxembourg, then the Cantons and then the Communes.
 
-You should know that the word *Luxembourg* can refer to the country, the canton or the commune of
-Luxembourg. Now let’s suppose that I want a separate plot for the three communes of Luxembourg,
-Esch-sur-Alzette and Wiltz. Instead of creating three separate data frames and feeding
-them to the same ggplot code, I can instead take advantage of the fact that data frames are
-lists, and are thus quite flexible. Let’s start with filtering:
+Remember that Luxembourg can refer to the country, the canton or the commune of
+Luxembourg. Now let’s suppose that I want a separate plot for the three communes
+of Luxembourg, Esch-sur-Alzette and Wiltz. Instead of creating three separate
+data frames and feeding them to the same ggplot code, I can instead take
+advantage of the fact that data frames are lists, and are thus quite flexible.
+Let’s start with filtering:
 
 ```{r}
 filtered_unemp <- unemp %>%
@@ -1132,9 +1144,9 @@ filtered_unemp <- unemp %>%
 glimpse(filtered_unemp)
 ```
 
-We are now going to use the fact that data frames are lists, and that lists can hold any
-type of object.  For example, remember this list from before where one of the elements is a
-data frame, and the second one a formula:
+We are now going to use the fact that data frames are lists, and that lists can
+hold any type of object. For example, remember this list from before where one
+of the elements is a data frame, and the second one a formula:
 
 ```{r}
 list(
@@ -1143,9 +1155,10 @@ list(
   )
 ```
 
-`{dplyr}` comes with a function called `group_nest()` which groups the data frame by
-a variable (such that the next computations will be performed group-wise) and then nests
-the other columns into a smaller data frame. Let’s try it and see what happens:
+`{dplyr}` comes with a function called `group_nest()` which groups the data
+frame by a variable (such that the next computations will be performed
+group-wise) and then nests the other columns into a smaller data frame. Let’s
+try it and see what happens:
 
 
 ```{r}
@@ -1153,56 +1166,62 @@ nested_unemp <- filtered_unemp %>%
   group_nest(place_name) 
 ```
 
-Let’s see how this looks like:
+Let’s see what this looks like:
 
 ```{r}
 nested_unemp
 ```
 
-`nested_unemp` is a new data frame of 3 rows, one per commune ("Esch-sur-Alzette", "Luxembourg",
-"Wiltz"), and of two columns, one for the names of the communes, and the other contains every other
-variable inside a smaller data frame. So this is a data frame that has one column where each
-element of that column is itself a data frame. Such a column is called a list-column. This is
-essentially a list of lists.
+`nested_unemp` is a new data frame of 3 rows, one per commune
+("Esch-sur-Alzette", "Luxembourg", "Wiltz"), and of two columns, one for the
+names of the communes, and the other contains every other variable inside a
+smaller data frame. So this is a data frame that has one column where each
+element of that column is itself a data frame. Such a column is called a
+list-column. This is essentially a list of lists.
 
-Let’s now think about this for a moment. If the column titled `data` is a list of data frames, it
-should be possible to use a function like `map()` or `lapply()` to apply a function on each of
-these data frames. Remember that `map()` or `lapply()` require a list of elements of whatever type
-and a function that accepts objects of this type as input. So this means that we could apply a
-function that plots the data to each element of the column titled `data`. Since each element of
-this column is a data frame, this functions needs a data frame as an input. As a first, simple,
-example to illustrate this, let’s suppose that we want to determine the number of rows of each data
-frame. This is how we would do it:
+Let’s now think about this for a moment. If the column titled `data` is a list
+of data frames, it should be possible to use a function like `map()` or
+`lapply()` to apply a function on each of these data frames. Remember that
+`map()` or `lapply()` require a list of elements of whatever type and a function
+that accepts objects of this type as input. So this means that we could apply a
+function that plots the data to each element of the column titled `data`. Since
+each element of this column is a data frame, this functions needs a data frame
+as an input. As a first, simple, example to illustrate this, let’s suppose that
+we want to determine the number of rows of each data frame. This is how we would
+do it:
 
 ```{r}
 nested_unemp %>%
   mutate(nrows = map(data, nrow))
 ```
 
-The new column, titled `nrows` is a list of integers. We can simplify it by converting it directly
-to an atomic vector of integers by using `map_int()` instead of `map()`:
+The new column, titled `nrows` is a list of integers. We can simplify it by
+converting it directly to an atomic vector of integers by using `map_int()`
+instead of `map()`:
 
 ```{r}
 nested_unemp %>%
   mutate(nrows = map_int(data, nrow))
 ```
 
-Let’s try for a more complex example now. What if we want to filter rows? (The simplest way would
-of course to filter the rows we need before nesting the data frame). We need to apply the function
-`filter()` where its first argument is a data frame and the second argument is a predicate:
-
+Let’s try for a more complex example now. What if we want to filter rows? (The
+simplest way would of course to filter the rows we need before nesting the data
+frame). We need to apply the function `filter()` where its first argument is a
+data frame and the second argument is a predicate:
 
 ```{r}
 nested_unemp %>%
   mutate(nrows = map(data, \(x)filter(x, year == 2015)))
 ```
 
-In this case here, we need to use an anonymous function. This is because `filter()` has two
-arguments and we need to make clear what it is we are mapping over and what argument stays fixed;
-we are mapping over, or iterating if you will, data frames, but the predicate stays fixed.
+In this case, we need to use an anonymous function. This is because
+`filter()` has two arguments and we need to make clear what it is we are mapping
+over and what argument stays fixed; we are mapping over, or iterating if you
+will, data frames, but the predicate `year == 2015` stays fixed.
 
-We are now ready to plot our data. The best way to continue is to first get the function right by
-creating one plot for one single commune. Let’s select the dataset for the commune of `Luxembourg`:
+We are now ready to plot our data. The best way to continue is to first get the
+function right by creating one plot for one single commune. Let’s select the
+dataset for the commune of `Luxembourg`:
 
 ```{r}
 lux_data <- nested_unemp %>%
@@ -1222,17 +1241,17 @@ ggplot(data = lux_data) +
 
 ```
 
-To turn the lines of code above into a function, you need to think about how many arguments that
-function would have. There is an obvious one, the data itself (in the snippet above, the data is
-the `lux_data` object). Another one that is less obvious is in the title:
+To turn the lines of code above into a function, you need to think about how
+many arguments that function would have. There is an obvious one, the data
+itself (in the snippet above, the data is the `lux_data` object). Another one
+that is less obvious is in the title:
 
 ```{r}
   labs(title = "Unemployment in Luxembourg")
 ```
 
-Ideally, we would want that title to change, depending on the data set. So we could write the
-function like so:
-
+Ideally, we would want that title to change depending on the data set. So we
+could write the function like so:
 
 ```{r}
 make_plot <- function(x, y){
@@ -1265,8 +1284,8 @@ nested_unemp <- nested_unemp %>%
 nested_unemp
 ```
 
-If you look at the `plots` column, you see that it is a list of
-`gg` objects: these are our plots. Let’s take a look at them:
+If you look at the `plots` column, you see that it is a list of `gg` objects:
+these are our plots. Let’s take a look at them:
 
 ```{r}
 nested_unemp$plots
@@ -1293,30 +1312,42 @@ nested_unemp %>%
 
 ```
 
-This column-list based workflow is extremely powerful and I highly advise you to take the required
-time to master it.
+This list-column based workflow is extremely powerful and I highly advise you to
+take the required time to master it. Remember, we never want to have to repeat
+ourselves. This might seem more complicated that repeating yourself, but imagine
+that you need to do this for various countries, various variables, etc... What
+are you going to do, copy and paste code everywhere? This gets very tedious and
+more importantly, very error-prone, because you will forget to update the code
+in some places. You could of course use a loop instead of this list-column based
+workflow. But as mentioned, the issue with loops is that you have to interact
+with the global environment, which can lead to other issues. But whatever you
+end up using, you need to avoid copy and pasting at all costs.
 
 ## Functional programming in R
 
-Up until now we focused more on concepts than on specifics of the R programming language when
-it comes to functional programming. In the section, we will be focusing entirely on R-specific
-capabilities and packages for functional programming.
+Up until now I focused more on concepts than on specifics of the R programming
+language when it comes to functional programming. In the section, we will be
+focusing entirely on R-specific capabilities and packages for functional
+programming.
 
 ### Base capabilities
 
-R is a functional programming language, as already stated, and as such it comes with many functions
-out of the box to write functional code. We have already discussed `lapply()` and `Reduce()`. You
-should know that depending on what you want to achieve, there are other functions that are similar
-to `lapply()`: `apply()`, `sapply()`, `vapply()`, `mapply()` and `tapply()`. There’s also `Map()`
-which is a wrapper around `mapply()`. Each function performs the same basic task of applying a
-function over all the elements of a list or list-like structure, but it can be hard to keep them
-apart. This is why `{purrr}`, which we will discuss in the next section, is quite an interesting
-alternative to base R’s offering.
+R is a functional programming language, (but not only), and as such it comes
+with many functions out of the box to write functional code. We have already
+discussed `lapply()` and `Reduce()`. You should know that depending on what you
+want to achieve, there are other functions that are similar to `lapply()`:
+`apply()`, `sapply()`, `vapply()`, `mapply()` and `tapply()`. There’s also
+`Map()` which is a wrapper around `mapply()`. Each function performs the same
+basic task of applying a function over all the elements of a list or list-like
+structure, but it can be hard to keep them apart and when you should use one
+over another. This is why `{purrr}`, which we will discuss in the next section,
+is quite an interesting alternative to base R’s offering.
 
-Another one of the quintessential functional programming functions (alongside `Reduce()` and
-`Map()`) that ships with R is `Filter()`. If you know `dplyr::filter()` you should be familiar with
-the concept of filtering rows of a data frame where the elements of one particular column satisfy a
-predicate. `Filter()` works the same way, but focusing on lists instead of data frame:
+Another one of the quintessential functional programming functions (alongside
+`Reduce()` and `Map()`) that ships with R is `Filter()`. If you know
+`dplyr::filter()` you should be familiar with the concept of filtering rows of a
+data frame where the elements of one particular column satisfy a predicate.
+`Filter()` works the same way, but focusing on lists instead of data frame:
 
 ```{r}
 Filter(is.character,
@@ -1326,11 +1357,13 @@ Filter(is.character,
        )
 ```
 
-The call above only returns the elements where `is.character()` evaluates to `TRUE`.
+The call above only returns the elements where `is.character()` evaluates to
+`TRUE`.
 
-Another useful function is `Negate()` which is a function factory that takes a boolean function as
-an input and returns the opposite boolean function. As an illustration, suppose that in the example
-above we wanted to get everything *but* the character:
+Another useful function is `Negate()` which is a function factory that takes a
+boolean function as an input and returns the opposite boolean function. As an
+illustration, suppose that in the example above we wanted to get everything
+*but* the character:
 
 
 ```{r}
@@ -1341,8 +1374,8 @@ Filter(Negate(is.character),
        )
 ```
 
-There are some other functions like this that you might want to check out: type `?Negate` in 
-console to read more about them.
+There are some other functions like this that you might want to check out: type
+`?Negate` in console to read more about them.
 
 Before continuing with R packages that extend R’s functional programming capabilities it’s also
 important to stress that just as R is a functional programming language, it is also an object
