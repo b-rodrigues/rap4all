@@ -750,8 +750,8 @@ To read the log of this object, call read_log(.c).</code></pre>
 <div class="sourceCode cell-code" id="cb74"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a>chronicler<span class="sc">::</span><span class="fu">read_log</span>(result)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "Complete log:"                                                                                
-[2] "NOK! sqrt() ran unsuccessfully with following exception: NaNs produced at 2023-02-18 17:38:18"
-[3] "Total running time: 0.00120258331298828 secs"                                                 </code></pre>
+[2] "NOK! sqrt() ran unsuccessfully with following exception: NaNs produced at 2023-02-18 19:52:06"
+[3] "Total running time: 0.00105023384094238 secs"                                                 </code></pre>
 </div>
 </div>
 <p>The <code>{purrr}</code> package also comes with function factories that you might find useful (<code>{possibly}</code>, <code>{safely}</code> and <code>{quietly}</code>).</p>
@@ -1480,7 +1480,7 @@ attr(,"class")
 </section>
 <section id="functional-programming-in-r" class="level2" data-number="5.4">
 <h2 data-number="5.4" class="anchored" data-anchor-id="functional-programming-in-r"><span class="header-section-number">5.4</span> Functional programming in R</h2>
-<p>Up until now I focused more on concepts than on specifics of the R programming language when it comes to functional programming. In the section, we will be focusing entirely on R-specific capabilities and packages for functional programming.</p>
+<p>Up until now I focused on general concepts than on specifics of the R programming language when it comes to functional programming. In the section, we will be focusing entirely on R-specific capabilities and packages for functional programming.</p>
 <section id="base-capabilities" class="level3" data-number="5.4.1">
 <h3 data-number="5.4.1" class="anchored" data-anchor-id="base-capabilities"><span class="header-section-number">5.4.1</span> Base capabilities</h3>
 <p>R is a functional programming language, (but not only), and as such it comes with many functions out of the box to write functional code. We have already discussed <code>lapply()</code> and <code>Reduce()</code>. You should know that depending on what you want to achieve, there are other functions that are similar to <code>lapply()</code>: <code>apply()</code>, <code>sapply()</code>, <code>vapply()</code>, <code>mapply()</code> and <code>tapply()</code>. There’s also <code>Map()</code> which is a wrapper around <code>mapply()</code>. Each function performs the same basic task of applying a function over all the elements of a list or list-like structure, but it can be hard to keep them apart and when you should use one over another. This is why <code>{purrr}</code>, which we will discuss in the next section, is quite an interesting alternative to base R’s offering.</p>
@@ -1543,13 +1543,13 @@ Valiant           18.1   6  225 105 2.76 3.460 20.22  1  0    3    1</code></pre
 NULL</code></pre>
 </div>
 </div>
-<p>The way this works, is essentially a mixture of functional and object-oriented programming, so functional OOP. Let’s take a closer look at the source code of <code>print()</code> by simply typing <code>print</code> without brackets, into a console:</p>
+<p>This works by essentially mixing both functional and object-oriented programming, hence functional OOP. Let’s take a closer look at the source code of <code>print()</code> by simply typing <code>print</code> without brackets, into a console:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb174"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb174-1"><a href="#cb174-1" aria-hidden="true" tabindex="-1"></a>print</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>function (x, ...) 
 UseMethod("print")
-&lt;bytecode: 0x562b66226090&gt;
+&lt;bytecode: 0x560b2eae8fb0&gt;
 &lt;environment: namespace:base&gt;</code></pre>
 </div>
 </div>
@@ -1593,7 +1593,7 @@ UseMethod("print")
     }
     invisible(x)
 }
-&lt;bytecode: 0x562b673400d0&gt;
+&lt;bytecode: 0x560b2fc030d0&gt;
 &lt;environment: namespace:base&gt;</code></pre>
 </div>
 </div>
@@ -1601,12 +1601,12 @@ UseMethod("print")
 <div class="cell">
 <div class="sourceCode cell-code" id="cb178"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb178-1"><a href="#cb178-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mtcars.print</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>In these languages, objects encapsulate method (the equivalent of our functions), so if <code>mtcars</code> is a data frame, it encapsulates a <code>print()</code> method that then does the printing. R is different, because classes and methods are kept separate. If a package developer creates a new class of object, then the developer also must implement the required methods. For example in the <code>{chronicler}</code> package, the <code>chronicler</code> class is defined and a <code>print.chronicler()</code> function is defined to print these objects.</p>
-<p>All of this to say that if you want to extend R by writing packages, learning some OOP essentials is also important. But for data analysis, functional programming does the job perfectly. To learn more about R’s different OOP systems (yes, R can do OOP in different ways and the one I sketched here is the simplest, but probably the most used as well, one), take a look at <span class="citation" data-cites="wickham2019">Wickham (<a href="references.html#ref-wickham2019" role="doc-biblioref">2019</a>)</span>.</p>
+<p>In these languages, objects encapsulate methods (the equivalent of our functions), so if <code>mtcars</code> is a data frame, it encapsulates a <code>print()</code> method that then does the printing. R is different, because classes and methods are kept separate. If a package developer creates a new object class, then the developer also must implement the required methods. For example in the <code>{chronicler}</code> package, the <code>chronicler</code> class is defined alongside the <code>print.chronicler()</code> function to print these objects.</p>
+<p>All of this to say that if you want to extend R by writing packages, learning some OOP essentials is also important. But for data analysis, functional programming does the job perfectly. To learn more about R’s different OOP systems (yes, R can do OOP in different ways and the one I sketched here is the simplest, but probably the most used as well), take a look at <span class="citation" data-cites="wickham2019">Wickham (<a href="references.html#ref-wickham2019" role="doc-biblioref">2019</a>)</span>.</p>
 </section>
 <section id="purrr" class="level3" data-number="5.4.2">
 <h3 data-number="5.4.2" class="anchored" data-anchor-id="purrr"><span class="header-section-number">5.4.2</span> purrr</h3>
-<p>The <code>{purrr}</code> package, developed by Posit, contains many functions to make functional programming with R more smooth. In the previous section, we discussed the <code>apply()</code> family of function; they all do a very similar thing, which is looping over a list and applying a function to the elements of the list, but it is not quite easy to remember which one does what. Also, for some of these functions like <code>apply()</code>, the list comes first, and then the function, but in the case of <code>mapply()</code>, the function comes first. Another issue with these functions is that it is not always easy to know what type the output is going to be. List? Atomic vector? Something else?</p>
+<p>The <code>{purrr}</code> package, developed by Posit (formerly RStudio), contains many functions to make functional programming with R go more smoothly. In the previous section, we discussed the <code>apply()</code> family of function; they all do a very similar thing, which is looping over a list and applying a function to the elements of the list, but it is not quite easy to remember which one does what. Also, for some of these functions like <code>apply()</code>, the list comes first, and then the function, but in the case of <code>mapply()</code>, the function comes first. This type of inconsistencies can be frustrating. Another issue with these functions is that it is not always easy to know what type the output is going to be. List? Atomic vector? Something else?</p>
 <p><code>{purrr}</code> solves this issue by offering the <code>map()</code> family of functions, which behave in a very consistent way. The basic function is called <code>map()</code> and we’ve already used it:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb179"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb179-1"><a href="#cb179-1" aria-hidden="true" tabindex="-1"></a><span class="fu">map</span>(<span class="fu">seq</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>), sqrt)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1661,7 +1661,7 @@ UseMethod("print")
 <span id="cb185-9"><a href="#cb185-9" aria-hidden="true" tabindex="-1"></a>  food_list</span>
 <span id="cb185-10"><a href="#cb185-10" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Because this function returns results that are not consistent for a fixed input, this function is not referentially transparent. So we improved the function like this:</p>
+<p>Because this function returns results that are not consistent for a fixed input, this function is not referentially transparent. So we improved the function by adding calls to <code>set.seed()</code> like this:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb186"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb186-1"><a href="#cb186-1" aria-hidden="true" tabindex="-1"></a>h2 <span class="ot">&lt;-</span> <span class="cf">function</span>(name, <span class="at">food_list =</span> <span class="fu">list</span>(), <span class="at">seed =</span> <span class="dv">123</span>){</span>
 <span id="cb186-2"><a href="#cb186-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -1708,14 +1708,15 @@ UseMethod("print")
 [1] "feijoada"</code></pre>
 </div>
 </div>
-<p>Before we downloaded a dataset and loaded it into memory; we did so by first created a temporary file, then downloading it and then loading it. Suppose that instead of loading this data into our session, we simply wanted to test whether the link was still working. We wouldn’t want to keep the loaded data in our session, so to avoid having to delete it again manually, we could use <code>with_tempfile()</code>:</p>
+<p>In a previous example we downloaded a dataset and loaded it into memory; we did so by first created a temporary file, then downloading it and then loading it. Suppose that instead of loading this data into our session, we simply wanted to test whether the link was still working. We wouldn’t want to keep the loaded data in our session, so to avoid having to delete it again manually, we could use <code>with_tempfile()</code>:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb194"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb194-1"><a href="#cb194-1" aria-hidden="true" tabindex="-1"></a>withr<span class="sc">::</span><span class="fu">with_tempfile</span>(<span class="st">"unemp"</span>, {</span>
-<span id="cb194-2"><a href="#cb194-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">download.file</span>(<span class="st">"https://github.com/b-rodrigues/myPackage/raw/main/data/unemp.rda"</span>, <span class="at">destfile =</span> unemp)</span>
-<span id="cb194-3"><a href="#cb194-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">load</span>(unemp)</span>
-<span id="cb194-4"><a href="#cb194-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">nrow</span>(unemp)</span>
-<span id="cb194-5"><a href="#cb194-5" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb194-6"><a href="#cb194-6" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb194-2"><a href="#cb194-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">download.file</span>(<span class="st">"https://github.com/b-rodrigues/myPackage/raw/main/data/unemp.rda"</span>,</span>
+<span id="cb194-3"><a href="#cb194-3" aria-hidden="true" tabindex="-1"></a>                <span class="at">destfile =</span> unemp)</span>
+<span id="cb194-4"><a href="#cb194-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">load</span>(unemp)</span>
+<span id="cb194-5"><a href="#cb194-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">nrow</span>(unemp)</span>
+<span id="cb194-6"><a href="#cb194-6" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb194-7"><a href="#cb194-7" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning in unlink(mget(new, envir = env), recursive = TRUE): expanded path length 35189 would be too long for
 list(year = c(2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 
@@ -1731,7 +1732,7 @@ list(year = c(2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 
 </section>
 <section id="conclusion" class="level2" data-number="5.5">
 <h2 data-number="5.5" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">5.5</span> Conclusion</h2>
-<p>If there is only one thing that you should remember from this chapter, it would be pure functions. This is in my opinion not very difficult to do and comes with many benefits. But, avoiding loops and replacing them with higher-order functions (<code>lapply()</code>, <code>Reduce()</code>, <code>purrr::map()</code> – and its variants –) also pays off. While this chapter stresses the advantages of functional programming, you should not forget that R is not a pure, and solely, functional programming language and that other paradigms, like object-oriented programming, are also available to you, and if your goal is to master the language (instead of “just” using it to solve data analysis problems), then you also need to know about R’s OOP capabilities.</p>
+<p>If there is only one thing that you should remember from this chapter, it would be pure functions. Writing pure functions is in my opinion not very difficult to do and comes with many benefits. But, avoiding loops and replacing them with higher-order functions (<code>lapply()</code>, <code>Reduce()</code>, <code>purrr::map()</code> – and its variants –) also pays off. While this chapter stresses the advantages of functional programming, you should not forget that R is not a pure, and solely, functional programming language and that other paradigms, like object-oriented programming, are also available to you. So if your goal is to master the language (instead of “just” using it to solve data analysis problems), then you also need to know about R’s OOP capabilities.</p>
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography" style="display: none">
