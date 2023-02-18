@@ -1,20 +1,36 @@
 # Conclusion of part 1
 
-Before continuing, let’s quickly summarise what we’ve learned so far.
+We're at the end of part 1, and I need to congratulate you for making it this
+far. If you took the time to digest what we've learned up until now, you should
+be ready for what's coming, which should be a bit easier, at least some of the
+parts.
 
-We started our journey with two scripts that download and analyse date about housing
-in Luxembourg. We then learned about tools and programming paradigms that we will now
-use in part 2 to make our scripts more robust:
+But before continuing, let’s quickly summarise what we’ve learned so far.
+
+We started our journey with two scripts that download and analyse data about
+housing in Luxembourg. We then learned about tools and programming paradigms
+that we will now use in part 2 to make our scripts more robust:
 
 - Version control;
 - Functional programming;
-- Testing;
 - Literate programming.
 
-We will start part 2 by rewriting our scripts using what we’ve learned, and then,
-we will think about approaching the core problem differently, and structuring our 
-project not as a series of scripts (or R Markdown files in the case of literate programming)
-but instead as a pipeline. We will learn about tools that will capture the computational
-environment that was used to set up this pipeline and how to use them effectively to make
-sure that our project is reproducible.
+In some ways, you might think that the we've made our life unnecessarily
+complicated for very little gain. For example, functional programming seems to
+be only about putting restrictions on how you code. Same with using trunk-based
+development; why make it so restrictive? 
 
+What you need to understand is that these restrictions actually play a role.
+They force us to work in a much more structured way, which then ensures that
+our projects will be well-managed and ultimately reproducible. So while these
+techniques come with a cost, the benefits are far greater.
+
+We will start part 2 by rewriting our scripts using what we’ve learned, and
+then, we will think about approaching the core problem differently, and
+structuring our project not as a series of scripts (or R Markdown files in the
+case of literate programming) but instead as a pipeline. Because until now,
+there's no pipeline still. 
+
+We will also learn about tools that capture the computational environment that
+was used to set up this pipeline and how to use them effectively to make sure
+that our project is reproducible.
