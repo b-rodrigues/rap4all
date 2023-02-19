@@ -11,6 +11,7 @@
     "gohel23"
     "xie2020r"
     "hammant2020"
-    "trisovic2022"))
+    "trisovic2022"
+    "peng2011"))
  '(or :bibtex :latex))
 

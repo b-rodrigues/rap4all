@@ -1,3 +1,38 @@
-# Part 2: Repro
+# Part 2: Reproducibility
 
-## Introduction
+## The reproducibility iceberg
+
+We are done with the first part of the book, and I think it is time to reflect
+on why we bothered with it at all. Why not just go straight to the
+reproducibility part?
+
+Remember the introduction, where I talked about the reproducibility continuum or
+spectrum? It is now time to discuss this in greater detail. I propose a new analogy,
+*the reproducibility iceberg*:
+
+![The reproducibility iceberg](images/repro_iceberg.png)
+
+Why an iceberg? Because the parts of the iceberg that you see, those that are
+obvious, are like running your analyses in a click-based environment like Excel.
+This is what’s obvious, what’s easy. No special knowledge or even training is
+required. All that’s required is time, so people using these tools are not
+efficient and thus compensate by workins insane hours (*I can’t go home and
+enjoy time with my family I have to stay at the office and update the
+spreadsheeeeeeeeet* **clicks furiously**).
+
+Let’s go one level deeper: let’s write a script. This is where we started. Our
+script was not too bad, it did the job. Unlike a click-based workflow, we could
+at least re-read it, someone else could read it, and it would be possible to run
+in the future, albeit with some effort. But the issue is that as the project
+grows larger and more complex, we need to start thinking about using tools and 
+techniques to manage this growing complexity.
+
+This is where Git and Github came into play, one more level deeper. The
+advantage now is that collaboration was streamlined. The commit history is
+available to all the teammates and it is possible to revert changes, experiment
+new features using branches and overall manage the project. In this layer we
+also employ new programming paradigms to make the code of the project less
+verbose, using functional programming, with the added benefits of making it
+easier to test, document and share (which we will discuss to its fullest in this
+part of the book). Using literate programming, it is also much easier to go to
+our final output (which is usually a report).
