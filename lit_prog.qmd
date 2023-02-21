@@ -546,6 +546,10 @@ S(\omega)
 \end{align*}
 ````
 
+Th LaTeX code above results in this equation:
+
+![A rendered LaTeX equation](images/latex_equation.png)
+
 ## Keeping it DRY
 
 Remember; we never, ever, want to have to repeat ourselves. Copy and pasting
@@ -834,7 +838,7 @@ function generates a very plain looking output. For something
 publication-worthy, we recommend the `{flextable}` package, developed by
 @gohel23:
 
-```{r}
+```{r, eval = FALSE}
 library(flextable)
 
 my_table <- head(mtcars)
@@ -844,6 +848,8 @@ flextable(my_table) |>
   theme_booktabs()
 
 ```
+
+![The output of the code above](images/flextable.png)
 
 We won't go into much detail on how `{flextable}` works, but it is very
 powerful, and the fact that it works for PDF, Html, Word and Powerpoint outputs
@@ -856,7 +862,7 @@ The next package is `{modelsummary}`, by @arel22, and this one focuses on
 regression and summary tables. It is extremely powerful as well, and just like
 `{flextable}`, works for any type of output. It is very simple to get started:
 
-```{r}
+```{r, eval = FALSE}
 library(modelsummary)
 
 model_1 <- lm(mpg ~ hp + am, data = mtcars)
@@ -868,6 +874,8 @@ models <- list("Model 1" = model_1,
 modelsummary(models)
 
 ```
+
+![The output of the code above](images/modelsummary.png)
 
 Here again, we won't got into much detail, but recommend instead that you read
 the package's

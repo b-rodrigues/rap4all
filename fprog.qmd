@@ -1546,7 +1546,7 @@ test whether the link was still working. We wouldn’t want to keep the loaded
 data in our session, so to avoid having to delete it again manually, we could
 use `with_tempfile()`:
 
-```{r}
+```{r, warning = FALSE}
 withr::with_tempfile("unemp", {
   download.file("https://github.com/b-rodrigues/myPackage/raw/main/data/unemp.rda",
                 destfile = unemp)
