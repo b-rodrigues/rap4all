@@ -337,7 +337,7 @@ nothing added to commit but untracked files present (use "git add" to track)</co
 hint: Maybe you wanted to say 'git add .'?
 hint: Turn this message off by running
 hint: "git config advice.addEmptyPathspec false"</code></pre>
-<p>Shoot, simply running <code>git add</code> does do us any good. We need to specify which files we want to add. We can name them one by one, for example <code>git add file1.R file2.txt</code> etc, but if we simply want to track all the files in the folder, we can simply use the <code>.</code> placeholder:</p>
+<p>Shoot, simply running <code>git add</code> does not do us any good. We need to specify which files we want to add. We can name them one by one, for example <code>git add file1.R file2.txt</code> etc, but if we simply want to track all the files in the folder, we can simply use the <code>.</code> placeholder:</p>
 <pre><code>owner@localhost ➤ git add .</code></pre>
 <p>No message this time… is that a good thing? Let’s run <code>git status</code> and see what’s going on:</p>
 <pre><code>owner@localhost ➤ git status</code></pre>
