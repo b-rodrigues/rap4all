@@ -23,45 +23,54 @@ spreadsheeeeeeeeet* **clicks furiously**).
 Let’s go one level deeper: let’s write a script. This is where we started. Our
 script was not too bad, it did the job. Unlike a click-based workflow, we could
 at least re-read it, someone else could read it, and it would be possible to run
-in the future but likely with some effort unless we’re lucky. By that I mean
+in the future but likely with some effort unless we’re lucky. By that, I mean
 that for such a script to run successfully in the future, that script cannot
 rely on packages that got updated in such a way that the script cannot run
 anymore (for example, if functions get renamed, or if their arguments get
-renamed). Also, if that script relies on a data source, the original authors
-also have to make sure that the same data source stays available. Another issue
-is collaborating when writing this script. Without any version control tools nor
-code hosting platform, collaborating on this script can very quickly turn into a
-nightmare.
+renamed). Furthermore, if that script relies on a data source, the original
+authors also have to make sure that the same data source stays available.
+Another issue is collaborating when writing this script. Without any version
+control tools nor code hosting platform, collaborating on this script can very
+quickly turn into a nightmare.
 
 This is where Git and Github came into play, one more level deeper. The
 advantage now is that collaboration was streamlined. The commit history is
 available to all the teammates and it is possible to revert changes, experiment
-new features using branches and overall manage the project. In this layer we
-also employ new programming paradigms to make the code of the project less
+with new features using branches and overall manage the project. In this layer
+we also employ new programming paradigms to make the code of the project less
 verbose, using functional programming, with the added benefits of making it
 easier to test, document and share (which we will discuss to its fullest in this
 part of the book). Using literate programming, it is also much easier to go to
 our final output (which is usually a report).
 
-But we can still go deeper: we need to find a way to freeze the packages that we
-used and make it that our project keeps using the same version of the packages
-regardless of *when* we run the script. We also want to make running the script
-as easy as possible, and ideally, *as non-interactively as possible**. Any human
-interaction with the pipeline is a source of errors, so that’s why we also need
-to thouroughly and systematically test our code. These tests also need to run
-non-interactively. 
+At this depth, we are at a pivotal moment: in many cases, analysts may want to
+stop here because there is no more time or budget left. After all, the results
+were obtained and shared with higher-ups. It can be difficult, in some contexts,
+to justify spending more time to go deeper and write tests, documentation and
+otherwise ensure total reproducibility. So at this stage, we will see what we
+can do that is *very cheap* (in both time and effort) to ensure the minimal
+amount of reproducibility, which is recording packages versions. Recording
+packages means that the exact same versions of the packages that were used
+originally will get used regardless of *when* in the future we rerun the
+analysis.
 
-Freezing the packages’ versions is not enough though. As we shall see in part 2
-of the book, installing older package versions can be a challenge. This can be the 
-case for two reasons:
+But if budget and time allows we can still go deeper, and definitely should. We
+also want to make running the script as easy as possible, and ideally, *as
+non-interactively as possible**. Any human interaction with the analysis is a
+source of errors, so that’s why we also need to thouroughly and systematically
+test our code. These tests also need to run non-interactively.
+
+The other problem with freezing packages’s version is that in practice, it is
+very often not enough. This is because installing older versions of packages can
+be a challenge. This can be the case for two reasons:
 
 - These older packages need also an older version of R, and installing old versions of R can be tricky, depending on your operating system;
-- These older packages might need to get compiled and thus depend themselves on older version of development libraries needed for compilation.
+- These older packages might need to get compiled and thus depend themselves on older versions of development libraries needed for compilation.
 
 So to solve this issue, we will also need a way to freeze the computational
 environment itself, and this is where we will use Docker.
 
-Finally, and this is the last level of the iceberg, and not part of this book,
+Finally, and this is the last level of the iceberg and not part of this book,
 is the need to make the building of the computational environment reproducible
 as well. *Guix* is the tool that enables one to do just that. However, this is a
 very deep topic unto itself, and there are workarounds to achieve this using
@@ -83,7 +92,7 @@ chapter.
 
 Once we have a package, we can then leverage `{testthat}` and `{assertthat}`,
 which are packages for unit and assertive testing respectively. At this stage,
-our code should be well documented, easy to share, and thouroughly tested.
+our code should be well-documented, easy to share, and thoroughly tested.
 
 Once this is achieved, we can build a true pipeline using `{targets}`, an
 incredibly useful library for build automation.

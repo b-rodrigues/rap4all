@@ -1,3 +1,625 @@
 # Rewriting our project
 
-In this chapter, we will use what we’ve learned until now to rewrite our project.
+In this chapter, we will use what we’ve learned until now to rewrite our
+project. As a reminder, here is the
+[save_data.R](https://raw.githubusercontent.com/rap4all/housing/77a181c19f0f7a7646453b2f74408814d02c3570/save_data.R)^[https://is.gd/LyvwHb]
+and the
+[analysis.R](https://raw.githubusercontent.com/rap4all/housing/77a181c19f0f7a7646453b2f74408814d02c3570/analysis.R)^[https://is.gd/X7XXJg]
+files from our project. The `analysis.R` file already includes one change: the
+one from the chapter on collaborating with Github, where Bruno wrote a function
+to make the plots for each commune.
+
+If you skipped part one of the book, or for any other reason do not have a
+Github repository with these two files yet, then now is the time to do so.
+Create a repository and name it *housing_lux* or anything you’d like, and put
+these two files there. I will assume that you have these files safely versioned,
+and will not be telling you systematically when to commit and push. Simply do so
+as often as you’d like!
+
+Before moving forward now is the right moment to actually discuss why you would
+want to convert the script into an Rmd. There are several reasons. First, as
+argued in the chapter on literate programming, a document that mixes prose and
+code is easier to read and share than a script. Next, since this Rmd file can
+get knitted into any type of document (PDF, Word, etc...), it also makes it
+easier to arrive at what interests us, the output. A script is simply a means,
+it’s not an end. The end is a document, (in most cases) so might as well use
+literate programming to avoid the cursed loop mentioned in the chapter on
+literate programming, of changing the script, editing the document, going back
+to the script, etc.
+
+But there is yet another benefit; even if the Rmd file is not supposed to get
+shared with anyone else, we will, later on, use it as our starting point for the
+*Rmd first* method of package development as promoted by Sébastien Rochette, the
+author of `{fusen}`. This means that from a single Rmd file, we can not only
+have a document that is easier to read, easier to compile into our final output
+and, if needed, converted quite easily into a package. If you’re still not
+convinced, just push on, and all the pieces of the puzzle will elegantly fit in
+a couple chapters.
+
+## An Rmd for cleaning the data
+
+So, let’s start with the `save_data.R` script. Since we are going to use
+functional programming and literate programming, we are going to start from an
+empty `.Rmd` file. So open an empty `.Rmd` file and start with the following
+lines:
+
+````{verbatim}
+---
+title: "Nominal house prices data in Luxembourg - Data cleaning"
+author: "Put your name in here"
+date: "`r Sys.Date()`"
+---
+
+```{r, warning=FALSE, message=FALSE}
+library(dplyr)
+library(ggplot2)
+library(janitor)
+library(purrr)
+library(readxl)
+library(rvest)
+library(stringr)
+```
+
+## Downloading the data
+````
+
+So we start by writing a header to define the title of the document, the name of
+the author and the current date (yes, we can use inline R code to always get
+current date), or you can hardcode the date as a string if you prefer.
+
+We then load packages in a chunk with options `warning=FALSE` and `message=FALSE`
+which will avoid showing packages’ startup messages in the knitted document.
+
+Then we start with a new section called `## Downloading the data`. We then add
+a paragraph explaining from where and how we are going to download the data:
+
+````{verbatim} 
+This data is downloaded from the luxembourguish [Open Data
+Portal](https://data.public.lu/fr/datasets/prix-annonces-des-logements-par-commune/)
+(the data set called *Série rétrospective des prix annoncés des maisons par
+commune, de 2010 à 2021*), and the original data is from the "Observatoire de
+l'habitat". This data contains prices for houses sold since 2010 for each
+luxembourguish commune. 
+
+The function below uses the permanent URL from the Open Data Portal to access
+the data, but I have also rehosted the data, and use my link to download the
+data (for archival purposes):
+
+````
+
+This is much more detailed than using comments. Then comes a function to download
+and get the data. This function simply wraps the lines from our original script that
+did the downloading and the cleaning. As a reminder, here are the lines from the 
+original script:
+
+```{r, eval = FALSE}
+
+url <- "https://github.com/b-rodrigues/rap4all/raw/master/datasets/vente-maison-2010-2021.xlsx"
+
+raw_data <- tempfile(fileext = ".xlsx")
+
+download.file(url, raw_data)
+
+sheets <- excel_sheets(raw_data)
+
+read_clean <- function(..., sheet){
+  read_excel(..., sheet = sheet) |>
+    mutate(year = sheet)
+
+  raw_data <- map(
+    sheets,
+    ~read_clean(raw_data,
+                skip = 10,
+                sheet = .)
+  ) |>
+    bind_rows() |>
+    clean_names()
+
+  raw_data <- raw_data |>
+    rename(
+      locality = commune,
+      n_offers = nombre_doffres,
+      average_price_nominal_euros = prix_moyen_annonce_en_courant,
+      average_price_m2_nominal_euros = prix_moyen_annonce_au_m2_en_courant,
+      average_price_m2_nominal_euros = prix_moyen_annonce_au_m2_en_courant
+    ) |>
+    mutate(locality = str_trim(locality)) |>
+    select(year, locality, n_offers, starts_with("average"))
+
+```
+
+and here is the same code, but as a function:
+
+
+````{verbatim}
+```{r, eval = F}
+get_raw_data <- function(url = "https://data.public.lu/fr/datasets/r/14b0156e-ff87-4a36-a867-933fc9a6f903"){
+
+  raw_data <- tempfile(fileext = ".xlsx")
+
+  download.file(url,
+                raw_data,
+                mode = "wb") # for compatibility with Windows
+
+  sheets <- excel_sheets(raw_data)
+
+  read_clean <- function(..., sheet){
+    read_excel(..., sheet = sheet) %>%
+      mutate(year = sheet)
+  }
+
+  raw_data <- map_dfr(sheets,
+                      ~read_clean(raw_data,
+                                  skip = 10,
+                                  sheet = .)) %>%
+    clean_names()
+
+  raw_data %>%
+    rename(locality = commune,
+           n_offers = nombre_doffres,
+           average_price_nominal_euros = prix_moyen_annonce_en_courant,
+           average_price_m2_nominal_euros = prix_moyen_annonce_au_m2_en_courant,
+           average_price_m2_nominal_euros = prix_moyen_annonce_au_m2_en_courant
+           ) %>%
+    mutate(locality = str_trim(locality)) %>%
+    select(year, locality, n_offers, starts_with("average"))
+
+}
+```
+````
+
+As you see, it’s almost exactly the same code. So why use a function? Our
+function has the advantage that it uses the url of the data as an argument. Which
+means that we can use it on other datasets (let’s remember that we are here
+focusing on prices of houses, but there’s another dataset of prices of
+apartments) or the same, but updated dataset (let’s also remember that this is a
+dataset that gets updated yearly). We can now more easily re-use this function
+later on (especially once we’ve turned this Rmd into a package in the next
+chapter). You can decide to show the source code of the function or hide it with
+the chunk option `include=FALSE` or `echo=FALSE` (the difference between
+`include` and `echo` is that `include` hides both the source code chunk and the
+output of that chunk). The next part of the Rmd file is simply using the
+function we just wrote:
+
+````{verbatim}
+```{r}
+raw_data <- get_raw_data(url = "https://github.com/b-rodrigues/rap4all/raw/master/datasets/vente-maison-2010-2021.xlsx")
+```
+````
+
+We can now continue by explaining what’s wrong with the data and what cleaning
+steps need to be taken:
+
+````{verbatim}
+We need clean the data: "Luxembourg" is "Luxembourg-ville" in 2010 and 2011,
+then "Luxembourg". "Pétange" is also spelled non-consistently, and we also need
+to convert columns to right type. We also directly remove rows where the
+locality contains information on the "Source":
+
+```{r}
+clean_raw_data <- function(raw_data){
+  raw_data %>%
+    mutate(locality = ifelse(grepl("Luxembourg-Ville", locality),
+                             "Luxembourg",
+                             locality),
+           locality = ifelse(grepl("P.tange", locality),
+                             "Pétange",
+                             locality)
+           ) %>%
+    filter(!grepl("Source", locality)) %>%
+    mutate(across(starts_with("average"), as.numeric))
+}
+```
+
+```{r}
+flat_data <- clean_raw_data(raw_data)
+```
+````
+
+The chunk above explains what we’re doing and why we’re doing it, and so we
+write a function (based on what we already wrote). Here again, the advantage of
+having this as a function will make it easier to run on updated data.
+
+We now continue with establishing a list of communes:
+
+````{verbatim}
+We now need to make sure that we got all the communes/localities in there. There
+were mergers in 2011, 2015 and 2018. So we need to account for these localities.
+
+We’re now scraping data from wikipedia of former Luxembourguish communes:
+
+```{r}
+get_former_communes <- function(url = "https://en.wikipedia.org/wiki/Communes_of_Luxembourg#Former_communes",
+                                min_year = 2009,
+                                table_position = 3){
+  read_html(url) %>%
+    html_table() %>%
+    pluck(table_position) %>%
+    clean_names() %>%
+    filter(year_dissolved > min_year)
+}
+
+```
+
+```{r}
+former_communes <- get_former_communes()
+```
+
+We can scrape current communes:
+
+```{r}
+get_current_communes <- function(url = "https://en.wikipedia.org/wiki/List_of_communes_of_Luxembourg",
+                                 table_position = 1){
+  read_html(url) %>%
+    html_table() %>%
+    pluck(table_position) %>%
+    clean_names()
+}
+
+```
+
+```{r}
+current_communes <- get_current_communes()
+```
+````
+
+This is quite a long chunk, but there is nothing new in here, so I won’t explain
+it line by line. What’s important is to notice that the code doing the actual
+work is all being wrapped inside functions. I reiterate: this will make reusing,
+testing and documenting much easier later on. Using the object `former_communes`
+and `current_communes` we can now build the complete list:
+
+````{verbatim}
+Let’s now create a list of all communes:
+
+```{r}
+get_test_communes <- function(former_communes, current_communes){
+
+  communes <- unique(c(former_communes$name, current_communes$commune))
+  # we need to rename some communes
+
+  # Different spelling of these communes between wikipedia and the data
+
+  communes[which(communes == "Clemency")] <- "Clémency"
+  communes[which(communes == "Redange")] <- "Redange-sur-Attert"
+  communes[which(communes == "Erpeldange-sur-Sûre")] <- "Erpeldange"
+  communes[which(communes == "Luxembourg-City")] <- "Luxembourg"
+  communes[which(communes == "Käerjeng")] <- "Kaerjeng"
+  communes[which(communes == "Petange")] <- "Pétange"
+
+  communes
+}
+
+```
+
+```{r}
+former_communes <- get_former_communes()
+current_communes <- get_current_communes()
+
+communes <- get_test_communes(former_communes, current_communes)
+```
+````
+
+Once again, we write a function for this. We need to merge these two lists, and
+need to make sure that the spelling of the communes’ names is unified between
+this list and between the communes’ names in the data.
+
+We now run the actual test:
+
+````{verbatim}
+Let’s test to see if all the communes from our dataset are represented.
+
+```{r}
+setdiff(flat_data$locality, communes)
+```
+
+If the above code doesn’t show any communes, then this means that we are
+accounting for every commune.
+
+````
+
+This test is quite simple, and we will see how to create something a bit more
+robust and useful later on.
+
+Now, let’s extract the national average from the data and create a separate
+dataset with the national level data:
+
+````{verbatim}
+
+Let’s keep the national average in another dataset:
+
+```{r}
+make_country_level_data <- function(flat_data){
+  country_level <- flat_data %>%
+    filter(grepl("nationale", locality)) %>%
+    select(-n_offers)
+
+  offers_country <- flat_data %>%
+    filter(grepl("Total d.offres", locality)) %>%
+    select(year, n_offers)
+
+  full_join(country_level, offers_country) %>%
+    select(year, locality, n_offers, everything()) %>%
+    mutate(locality = "Grand-Duchy of Luxembourg")
+
+}
+
+```
+
+```{r}
+country_level_data <- make_country_level_data(flat_data)
+```
+````
+
+and finally, let’s do the same but for the commune level data:
+
+````{verbatim}
+We can finish cleaning the commune data:
+
+```{r}
+make_commune_level_data <- function(flat_data){
+  flat_data %>%
+    filter(!grepl("nationale|offres", locality),
+           !is.na(locality))
+}
+
+```
+
+```{r}
+commune_level_data <- make_commune_level_data(flat_data)
+```
+````
+
+We can finish with a chunk to save the data to disk:
+
+````{verbatim}
+We now save the dataset in a folder for further analysis (keep chunk option to
+`eval = F` to avoid running it when knitting):
+
+```{r, eval = F}
+write.csv(commune_level_data,
+          "datasets/house_prices_commune_level_data.csv",
+          row.names = FALSE)
+write.csv(country_level_data,
+          "datasets/house_prices_country_level_data.csv",
+          row.names = FALSE)
+```
+````
+
+This last chunk is something I like to add to my Rmd files, but instead of
+showing it in the final document but not evaluating its contents using the chunk
+option `eval = F` you could hide it completely as well, so it doesn’t appear in
+the compiled document. The first time you compile this document, you could
+change the option to `eval = T`, so that the data gets written to disk, and then
+change it to `eval = F` to avoid overwriting the data on subsequent knittings.
+This is up to you, and also who the audience of the knitted output is (do they
+want to see this chunk at all?).
+
+Ok, and that’s it. You can take a look at the finalised file
+[here](https://raw.githubusercontent.com/b-rodrigues/rap4all/master/rmds/save_data.Rmd)[^https://is.gd/eBbcsR].
+You can now remove the `save_data.R` script, as you have successfully ported the
+code over to a `Rmd`.
+
+If you have not done it yet, you can commit these changes and push.
+
+Let’s now do the same thing for the analysis script.
+
+## An Rmd for analysing the data
+
+We will follow the same steps as before to convert the analysis script into an 
+analysis markdown. Instead of showing the whole file here, I will instead show
+you two important points. 
+
+The first point is removing redundancy. In the original script, we had the
+following lines:
+
+```{r, eval = F}
+#Let’s compute the Laspeyeres index for each commune:
+
+commune_level_data <- commune_level_data %>%
+  group_by(locality) %>%
+  mutate(p0 = ifelse(year == "2010", average_price_nominal_euros, NA)) %>%
+  fill(p0, .direction = "down") %>%
+  mutate(p0_m2 = ifelse(year == "2010", average_price_m2_nominal_euros, NA)) %>%
+  fill(p0_m2, .direction = "down") %>%
+  ungroup() %>%
+  mutate(pl = average_price_nominal_euros/p0*100,
+         pl_m2 = average_price_m2_nominal_euros/p0_m2*100)
+
+
+#Let’s also compute it for the whole country:
+
+country_level_data <- country_level_data %>%
+  mutate(p0 = ifelse(year == "2010", average_price_nominal_euros, NA)) %>%
+  fill(p0, .direction = "down") %>%
+  mutate(p0_m2 = ifelse(year == "2010", average_price_m2_nominal_euros, NA)) %>%
+  fill(p0_m2, .direction = "down") %>%
+  mutate(pl = average_price_nominal_euros/p0*100,
+         pl_m2 = average_price_m2_nominal_euros/p0_m2*100)
+
+```
+ 
+As you can see, this is almost exactly twice the same code. The only difference
+is that we need to group by commune when computing the Laspeyeres index for the
+communes (remember, this index will make it easy to make comparisons). Instead
+of repeating 99% of the lines, we can create a function that will group the data
+if the data is the commune level data, and not group the data if it’s the
+national data. Here is this function:
+
+```{r, eval = F}
+
+get_laspeyeres <- function(dataset, start_year = "2010"){
+
+  which_dataset <- deparse(substitute(dataset))
+
+  group_var <- if(grepl("commune", which_dataset)){
+                 quo(locality)
+               } else {
+                 NULL
+               }
+  dataset %>%
+    group_by(!!group_var) %>%
+    mutate(p0 = ifelse(year == start_year,
+                       average_price_nominal_euros,
+                       NA)) %>%
+    fill(p0, .direction = "down") %>%
+    mutate(p0_m2 = ifelse(year == start_year,
+                          average_price_m2_nominal_euros,
+                          NA)) %>%
+    fill(p0_m2, .direction = "down") %>%
+    ungroup() %>%
+    mutate(pl = average_price_nominal_euros/p0*100,
+           pl_m2 = average_price_m2_nominal_euros/p0_m2*100)
+
+}
+
+```
+
+So, the first step is naming the function. We’ll call it `get_laspeyeres()`, and
+it’ll be a function of two arguments. The first is the data (commune or national
+level data) and the second is the starting date of the data. This second
+argument is has a default value of "2010". This is the year the data starts, and
+thus the year the Laspeyeres index will have a value of 100.
+
+The following lines are probably the most complicated:
+
+```{r, eval = F}
+which_dataset <- deparse(substitute(dataset))
+
+group_var <- if(grepl("commune", which_dataset)){
+               quo(locality)
+             } else {
+               NULL
+             }
+```
+
+The first line replaces the variable `dataset` by its bound value (that’s what
+`substitute()` does) for example, `commune_level_data`, and then converts this
+variable name into a string (using `deparse()`). So when the user provides
+`commune_level_data`, `which_dataset` will defined as equal to
+`"commune_level_data"`. We then use this string to detect whether the data needs
+to be grouped or not. So if we detect the word "commune" in the `which_dataset`
+variable, we set the grouping variable to `locality`, if not to `NULL`. But you
+might have a question: why is `locality` given as an input to `quo()`, and what
+is `quo()`.
+
+A simple explanation: `locality` is a variable in the `commune_level_dataset`.
+If we don’t *quote* it using `quo()`, our function will look for a variable called
+`locality` in body of the function, but since there is no variable defined
+that is called `locality` in there, the function will look for this variable in the
+global environment. But this is not a variable defined in the global environment, it
+is a column in our dataset. So we need a way to tell this to the column: *don’t
+worry about evaluating this just yet, I’ll tell you when it’s time*.
+
+So by using `quo()`, we can delay evaluation. So how can we tell the function
+that it’s time to evaluate `locality`? This is where we need `!!`. If you take a
+look at the line where we group the data in the function:
+
+```{r, eval = F}
+group_by(!!group_var)
+```
+
+So if we are calling the function on `commune_level_dataset`, then `group_var` is equal to
+`locality`, if not it’s `NULL`. `!!group_var` means that now it’s time to evaluate `group_var`
+(or rather, `locality`). Because `!!group_var` gets replaced by `quo(locality)`, and because
+`group_by()` is a `{dplyr}` function that knows how to deal with quoted variables, `locality`
+gets looked up among the columns of the data frame. If it’s `NULL` nothing happens, so the
+data doesn’t get grouped.
+
+This is a big topic unto itself, so if you want to know more you can start by reading the 
+famous `{dplyr}` vignette called *Programming with dplyr* 
+[here](https://dplyr.tidyverse.org/articles/programming.html)[^https://dplyr.tidyverse.org/articles/programming.html]
+In case you use `{dplyr}` a lot, I recommend you do because mastering *tidy evaluation* (the name
+of this framework) is key to become comfortable with programming using `{dplyr}` (and other
+*tidyverse* packages). You can also read the chapter I wrote on this in my other 
+[free ebook](http://modern-rstats.eu/defining-your-own-functions.html#functions-that-take-columns-of-data-as-arguments).
+
+The next lines of the script that we need to port over to the Rmd are quite
+standard, we write code to create some plots (which were already refactored into
+a function in the chapter on collaborating on Github). But remember, we want to
+have an Rmd file that can be compiled into a document that can be read by
+humans. This means that to make the document clear, I suggest that we create one
+subsection by commune that we plot. Thankfully, we have learned all about child
+documents in the literate programming chapter, and this is what we will be using
+to avoid having to repeat ourselves. The first part is simply the function that
+we’ve already wrote:
+
+````{verbatim}
+```{r}
+make_plot <- function(commune){
+
+  commune_data <- commune_level_data %>%
+    filter(locality == commune)
+
+  data_to_plot <- bind_rows(
+    country_level_data,
+    commune_data
+  )
+
+  ggplot(data_to_plot) +
+    geom_line(aes(y = pl_m2,
+                  x = year,
+                  group = locality,
+                  colour = locality))
+}
+
+```
+````
+
+Now comes the interesting part:
+
+````{verbatim}
+```{r, results = "asis"}
+res <- lapply(communes, function(x){
+
+  knitr::knit_child(text = c(
+
+    '\n',
+    '## Plot for commune: `r x`',
+    '\n',
+    '```{r, echo = F}',
+    'print(make_plot(x))',
+    '```'
+
+     ),
+     envir = environment(),
+     quiet = TRUE)
+
+})
+
+cat(unlist(res), sep = "\n")
+
+```
+
+````
+
+I won’t explain this now in great detail, since that was already done in the
+chapter on literate programming. Before continuing, really make sure that you
+understand what is going on here. Take a look at the finalised file
+[here](https://raw.githubusercontent.com/b-rodrigues/rap4all/master/rmds/analyse_data.Rmd)[^https://is.gd/L2GICG].
+
+## Conclusion
+
+This chapter was short, but quite dense, especially when we converted the
+analysis script to an Rmd, because we’ve had to use two advanced concepts, *tidy
+evaluation* and Rmarkdown child documents. *Tidy* evaluation is not a topic that
+I wanted to discuss in this book, because it doesn’t have anything to do with
+the main topic at hand. However, part of building a robust, reproducible
+pipeline is to avoid repetition. In this sense, programming with `{dplyr}` and
+tidy evaluation are quite important. As suggested before, take a look at the
+linked vignette above, and then the chapter from my other (free) ebook. This
+should help get you started.
+
+The end of this chapter marks an important step: many analyses stop here, and
+this can be due to a variety of reasons. Maybe there’s no time left to go
+further, and, after all, we got the results we wanted. Maybe this analysis is
+useful, but we don’t necessarily need it to be reproducible in 5, 10 years, so
+all we want is to make sure that we can at least rerun it in some months or a
+couple of years (but be careful with this assessment, sometimes an analysis that
+wasn’t supposed to be reproducible turns out it needs to be reproducible for way
+longer than expected...)
+
+Because I want this book to be a pragmatic guide, we will now talk about
+inputting the least amount of effort to make your current analysis reproducible,
+and this is by freezing package versions, which we will do in the next chapter.
+

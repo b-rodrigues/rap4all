@@ -1,10 +1,10 @@
 ---
 title: "Nominal house prices data in Luxembourg - Data cleaning"
 author: "Bruno Rodrigues"
-date: today
+date: "`r Sys.Date()`"
 ---
 
-```{r, include=FALSE}
+```{r, warning=FALSE, message=FALSE}
 library(dplyr)
 library(ggplot2)
 library(janitor)
@@ -16,14 +16,23 @@ library(stringr)
 
 ## Downloading the data
 
-This data is downloaded from the "Observatoire de l'habitat":
+This data is downloaded from the luxembourguish [Open Data
+Portal](https://data.public.lu/fr/datasets/prix-annonces-des-logements-par-commune/)
+(the data set called *Série rétrospective des prix annoncés des maisons par commune, de 2010 à 2021*), and the original data is from the "Observatoire de l'habitat". This data
+contains prices for houses sold since 2010 for each luxembourguish commune.
+
+The function below uses the permanent URL from the Open Data Portal to access the data,
+but I have also rehosted the data, and use my link to download the data (for archival
+purposes):
 
 ```{r}
-get_raw_data <- function(url = "https://data.public.lu/fr/datasets/r/1d20f982-57e1-4ae2-a278-dc78c88c21dc"){
+get_raw_data <- function(url = "https://data.public.lu/fr/datasets/r/14b0156e-ff87-4a36-a867-933fc9a6f903"){
 
   raw_data <- tempfile(fileext = ".xlsx")
 
-  download.file(url, raw_data)
+  download.file(url,
+                raw_data,
+                mode = "wb") # for compatibility with Windows
 
   sheets <- excel_sheets(raw_data)
 
@@ -53,12 +62,13 @@ get_raw_data <- function(url = "https://data.public.lu/fr/datasets/r/1d20f982-57
 ```
 
 ```{r}
-raw_data <- get_raw_data(url = "https://data.public.lu/fr/datasets/r/1d20f982-57e1-4ae2-a278-dc78c88c21dc")
+raw_data <- get_raw_data(url = "https://github.com/b-rodrigues/rap4all/raw/master/datasets/vente-maison-2010-2021.xlsx")
 ```
 
-We need clean the data: "Luxembourg" is "Luxembourg-ville" in 2010 and 2011, then "Luxembourg".
-"Pétange" is also spelled non-consistently, and we also need to convert columns to right type. We
-also directly remove rows where the locality contains information on the "Source":
+We need clean the data: "Luxembourg" is "Luxembourg-ville" in 2010 and 2011,
+then "Luxembourg". "Pétange" is also spelled non-consistently, and we also need
+to convert columns to right type. We also directly remove rows where the
+locality contains information on the "Source":
 
 ```{r}
 clean_raw_data <- function(raw_data){
@@ -79,8 +89,8 @@ clean_raw_data <- function(raw_data){
 flat_data <- clean_raw_data(raw_data)
 ```
 
-We now need to make sure that we got all the communes/localities in there. There were mergers in
-2011, 2015 and 2018. So we need to account for these localities.
+We now need to make sure that we got all the communes/localities in there. There
+were mergers in 2011, 2015 and 2018. So we need to account for these localities.
 
 We’re now scraping data from wikipedia of former Luxembourguish communes:
 
@@ -153,6 +163,9 @@ Let’s test to see if all the communes from our dataset are represented.
 setdiff(flat_data$locality, communes)
 ```
 
+If the above code doesn’t show any communes, then this means that we are
+accounting for every commune.
+
 Let’s keep the national average in another dataset:
 
 ```{r}
@@ -192,10 +205,14 @@ make_commune_level_data <- function(flat_data){
 commune_level_data <- make_commune_level_data(flat_data)
 ```
 
-We now save the dataset in a folder for further analysis (keep chunk option to `eval = F` to avoid running it
-when knitting):
+We now save the dataset in a folder for further analysis (keep chunk option to
+`eval = F` to avoid running it when knitting):
 
 ```{r, eval = F}
-write.csv(commune_level_data, "datasets/commune_level_data.csv", row.names = FALSE)
-write.csv(country_level_data, "datasets/country_level_data.csv", row.names = FALSE)
+write.csv(commune_level_data,
+          "datasets/house_prices_commune_level_data.csv",
+          row.names = FALSE)
+write.csv(country_level_data,
+          "datasets/house_prices_country_level_data.csv",
+          row.names = FALSE)
 ```

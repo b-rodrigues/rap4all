@@ -1,7 +1,7 @@
 ---
 title: "Nominal house prices data in Luxembourg"
 author: "Bruno Rodrigues"
-date: "2023-01-28"
+date: "`r Sys.Date()`"
 ---
 
 ```{r, messages = FALSE}
@@ -14,35 +14,46 @@ library(tidyr)
 Let’s load the datasets:
 
 ```{r}
-commune_level_data <- read.csv("../datasets/commune_level_data.csv")
-country_level_data <- read.csv("../datasets/country_level_data.csv")
+commune_level_data <- read.csv(
+  "../datasets/house_prices_commune_level_data.csv"
+)
+
+country_level_data <- read.csv(
+  "../datasets/house_prices_country_level_data.csv"
+)
 ```
 
 Let’s compute the Laspeyeres index for each commune:
 
 ```{r}
-commune_level_data <- commune_level_data %>%
-  group_by(locality) %>%
-  mutate(p0 = ifelse(year == "2010", average_price_nominal_euros, NA)) %>%
-  fill(p0, .direction = "down") %>%
-  mutate(p0_m2 = ifelse(year == "2010", average_price_m2_nominal_euros, NA)) %>%
-  fill(p0_m2, .direction = "down") %>%
-  ungroup() %>%
-  mutate(pl = average_price_nominal_euros/p0*100,
-         pl_m2 = average_price_m2_nominal_euros/p0_m2*100)
+get_laspeyeres <- function(dataset){
+
+  which_dataset <- deparse(substitute(dataset))
+
+  group_var <- if(grepl("commune", which_dataset)){
+                quo(locality)
+              } else {
+                NULL
+              }
+  dataset %>%
+    group_by(!!group_var) %>%
+      mutate(p0 = ifelse(year == "2010", average_price_nominal_euros, NA)) %>%
+      fill(p0, .direction = "down") %>%
+      mutate(p0_m2 = ifelse(year == "2010", average_price_m2_nominal_euros, NA)) %>%
+      fill(p0_m2, .direction = "down") %>%
+      ungroup() %>%
+      mutate(pl = average_price_nominal_euros/p0*100,
+             pl_m2 = average_price_m2_nominal_euros/p0_m2*100)
+
+}
+commune_level_data <- get_laspeyeres(commune_level_data)
 
 ```
 
 Let’s also compute it for the whole country:
 
 ```{r}
-country_level_data <- country_level_data %>%
-  mutate(p0 = ifelse(year == "2010", average_price_nominal_euros, NA)) %>%
-  fill(p0, .direction = "down") %>%
-  mutate(p0_m2 = ifelse(year == "2010", average_price_m2_nominal_euros, NA)) %>%
-  fill(p0_m2, .direction = "down") %>%
-  mutate(pl = average_price_nominal_euros/p0*100,
-         pl_m2 = average_price_m2_nominal_euros/p0_m2*100)
+country_level_data <- get_laspeyeres(country_level_data)
 
 ```
 
