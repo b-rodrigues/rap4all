@@ -163,22 +163,22 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./packages.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Packaging your code</span></a>
+  <a href="./repro_intro.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Introduction to reproducibility</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./testing.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Testing your code</span></a>
+  <a href="./packages.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Packaging your code</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./targets.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Build automation</span></a>
+  <a href="./testing.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Testing your code</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./repro_intro.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Introduction to reproducibility</span></a>
+  <a href="./targets.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Build automation</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -247,19 +247,20 @@ ul.task-list li input[type="checkbox"] {
 </figure>
 </div>
 <p>Why an iceberg? Because the parts of the iceberg that you see, those that are obvious, are like running your analyses in a click-based environment like Excel. This is what’s obvious, what’s easy. No special knowledge or even training is required. All that’s required is time, so people using these tools are not efficient and thus compensate by working insane hours (<em>I can’t go home and enjoy time with my family I have to stay at the office and update the spreadsheeeeeeeeet</em> <strong>clicks furiously</strong>).</p>
-<p>Let’s go one level deeper: let’s write a script. This is where we started. Our script was not too bad, it did the job. Unlike a click-based workflow, we could at least re-read it, someone else could read it, and it would be possible to run in the future but likely with some effort unless we’re lucky. By that I mean that for such a script to run successfully in the future, that script cannot rely on packages that got updated in such a way that the script cannot run anymore (for example, if functions get renamed, or if their arguments get renamed). Also, if that script relies on a data source, the original authors also have to make sure that the same data source stays available. Another issue is collaborating when writing this script. Without any version control tools nor code hosting platform, collaborating on this script can very quickly turn into a nightmare.</p>
-<p>This is where Git and Github came into play, one more level deeper. The advantage now is that collaboration was streamlined. The commit history is available to all the teammates and it is possible to revert changes, experiment new features using branches and overall manage the project. In this layer we also employ new programming paradigms to make the code of the project less verbose, using functional programming, with the added benefits of making it easier to test, document and share (which we will discuss to its fullest in this part of the book). Using literate programming, it is also much easier to go to our final output (which is usually a report).</p>
-<p>But we can still go deeper: we need to find a way to freeze the packages that we used and make it that our project keeps using the same version of the packages regardless of <em>when</em> we run the script. We also want to make running the script as easy as possible, and ideally, *as non-interactively as possible**. Any human interaction with the pipeline is a source of errors, so that’s why we also need to thouroughly and systematically test our code. These tests also need to run non-interactively.</p>
-<p>Freezing the packages’ versions is not enough though. As we shall see in part 2 of the book, installing older package versions can be a challenge. This can be the case for two reasons:</p>
+<p>Let’s go one level deeper: let’s write a script. This is where we started. Our script was not too bad, it did the job. Unlike a click-based workflow, we could at least re-read it, someone else could read it, and it would be possible to run in the future but likely with some effort unless we’re lucky. By that, I mean that for such a script to run successfully in the future, that script cannot rely on packages that got updated in such a way that the script cannot run anymore (for example, if functions get renamed, or if their arguments get renamed). Furthermore, if that script relies on a data source, the original authors also have to make sure that the same data source stays available. Another issue is collaborating when writing this script. Without any version control tools nor code hosting platform, collaborating on this script can very quickly turn into a nightmare.</p>
+<p>This is where Git and Github came into play, one more level deeper. The advantage now is that collaboration was streamlined. The commit history is available to all the teammates and it is possible to revert changes, experiment with new features using branches and overall manage the project. In this layer we also employ new programming paradigms to make the code of the project less verbose, using functional programming, with the added benefits of making it easier to test, document and share (which we will discuss to its fullest in this part of the book). Using literate programming, it is also much easier to go to our final output (which is usually a report).</p>
+<p>At this depth, we are at a pivotal moment: in many cases, analysts may want to stop here because there is no more time or budget left. After all, the results were obtained and shared with higher-ups. It can be difficult, in some contexts, to justify spending more time to go deeper and write tests, documentation and otherwise ensure total reproducibility. So at this stage, we will see what we can do that is <em>very cheap</em> (in both time and effort) to ensure the minimal amount of reproducibility, which is recording packages versions. Recording packages means that the exact same versions of the packages that were used originally will get used regardless of <em>when</em> in the future we rerun the analysis.</p>
+<p>But if budget and time allows we can still go deeper, and definitely should. We also want to make running the script as easy as possible, and ideally, *as non-interactively as possible**. Any human interaction with the analysis is a source of errors, so that’s why we also need to thouroughly and systematically test our code. These tests also need to run non-interactively.</p>
+<p>The other problem with freezing packages’s version is that in practice, it is very often not enough. This is because installing older versions of packages can be a challenge. This can be the case for two reasons:</p>
 <ul>
 <li>These older packages need also an older version of R, and installing old versions of R can be tricky, depending on your operating system;</li>
-<li>These older packages might need to get compiled and thus depend themselves on older version of development libraries needed for compilation.</li>
+<li>These older packages might need to get compiled and thus depend themselves on older versions of development libraries needed for compilation.</li>
 </ul>
 <p>So to solve this issue, we will also need a way to freeze the computational environment itself, and this is where we will use Docker.</p>
-<p>Finally, and this is the last level of the iceberg, and not part of this book, is the need to make the building of the computational environment reproducible as well. <em>Guix</em> is the tool that enables one to do just that. However, this is a very deep topic unto itself, and there are workarounds to achieve this using Docker, so that’s why we will not show be discussing <em>Guix</em>.</p>
+<p>Finally, and this is the last level of the iceberg and not part of this book, is the need to make the building of the computational environment reproducible as well. <em>Guix</em> is the tool that enables one to do just that. However, this is a very deep topic unto itself, and there are workarounds to achieve this using Docker, so that’s why we will not show be discussing <em>Guix</em>.</p>
 <p>We will travel down the iceberg in the coming chapters. First, we will use what we’ve learned up until now to rewrite our project using functional and literate programming. Our project will not be two scripts anymore, but two Rmd files that we can knit and that we can then read and also send to non-technical stakeholders.</p>
 <p>Then, we are going to turn these two Rmds files into a package. This will be done by using <a href="https://thinkr-open.github.io/fusen/">Sébastien Rochette’s package {fusen}</a>. <code>{fusen}</code> makes it very easy to go from our Rmd files to a package, by using what Sébastien named the <em>Rmarkdown first</em> method. If at this stage it’s not clear why you would want to turn your analysis into a package, don’t worry, it’ll be once we’re done with this chapter.</p>
-<p>Once we have a package, we can then leverage <code>{testthat}</code> and <code>{assertthat}</code>, which are packages for unit and assertive testing respectively. At this stage, our code should be well documented, easy to share, and thouroughly tested.</p>
+<p>Once we have a package, we can then leverage <code>{testthat}</code> and <code>{assertthat}</code>, which are packages for unit and assertive testing respectively. At this stage, our code should be well-documented, easy to share, and thoroughly tested.</p>
 <p>Once this is achieved, we can build a true pipeline using <code>{targets}</code>, an incredibly useful library for build automation.</p>
 <p>Once we reached this stage, this is when we can finally start introducing reproducibility concretely. The reason it will take so long to actually make our pipeline reproducible is that we need solid foundations. There is no point in making a shaky analysis reproducible.</p>
 
