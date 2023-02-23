@@ -300,10 +300,9 @@ div.csl-indent {
   <li><a href="#what-is-reproducibility" id="toc-what-is-reproducibility" class="nav-link" data-scroll-target="#what-is-reproducibility"><span class="toc-section-number">1.4</span>  What is reproducibility?</a>
   <ul class="collapse">
   <li><a href="#using-open-source-tools-to-build-a-rap-is-a-hard-requirement" id="toc-using-open-source-tools-to-build-a-rap-is-a-hard-requirement" class="nav-link" data-scroll-target="#using-open-source-tools-to-build-a-rap-is-a-hard-requirement"><span class="toc-section-number">1.4.1</span>  Using open-source tools to build a RAP is a hard requirement</a></li>
-  <li><a href="#knitr-include-graphs" id="toc-knitr-include-graphs" class="nav-link" data-scroll-target="#knitr-include-graphs"><span class="toc-section-number">1.4.2</span>  knitr include graphs</a></li>
-  <li><a href="#html" id="toc-html" class="nav-link" data-scroll-target="#html"><span class="toc-section-number">1.4.3</span>  html</a></li>
-  <li><a href="#there-are-hidden-dependencies-that-can-hinder-the-reproducibility-of-a-project" id="toc-there-are-hidden-dependencies-that-can-hinder-the-reproducibility-of-a-project" class="nav-link" data-scroll-target="#there-are-hidden-dependencies-that-can-hinder-the-reproducibility-of-a-project"><span class="toc-section-number">1.4.4</span>  There are hidden dependencies that can hinder the reproducibility of a project</a></li>
-  <li><a href="#the-requirements-of-a-rap" id="toc-the-requirements-of-a-rap" class="nav-link" data-scroll-target="#the-requirements-of-a-rap"><span class="toc-section-number">1.4.5</span>  The requirements of a RAP</a></li>
+  <li><a href="#html" id="toc-html" class="nav-link" data-scroll-target="#html"><span class="toc-section-number">1.4.2</span>  html</a></li>
+  <li><a href="#there-are-hidden-dependencies-that-can-hinder-the-reproducibility-of-a-project" id="toc-there-are-hidden-dependencies-that-can-hinder-the-reproducibility-of-a-project" class="nav-link" data-scroll-target="#there-are-hidden-dependencies-that-can-hinder-the-reproducibility-of-a-project"><span class="toc-section-number">1.4.3</span>  There are hidden dependencies that can hinder the reproducibility of a project</a></li>
+  <li><a href="#the-requirements-of-a-rap" id="toc-the-requirements-of-a-rap" class="nav-link" data-scroll-target="#the-requirements-of-a-rap"><span class="toc-section-number">1.4.4</span>  The requirements of a RAP</a></li>
   </ul></li>
   <li><a href="#are-there-different-types-of-reproducibility" id="toc-are-there-different-types-of-reproducibility" class="nav-link" data-scroll-target="#are-there-different-types-of-reproducibility"><span class="toc-section-number">1.5</span>  Are there different types of reproducibility?</a></li>
   </ul>
@@ -372,24 +371,10 @@ div.csl-indent {
 </figure>
 </div>
 </section>
-<section id="knitr-include-graphs" class="level3" data-number="1.4.2">
-<h3 data-number="1.4.2" class="anchored" data-anchor-id="knitr-include-graphs"><span class="header-section-number">1.4.2</span> knitr include graphs</h3>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(<span class="st">"images/matlab_old_version.png"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
+<section id="html" class="level3" data-number="1.4.2">
+<h3 data-number="1.4.2" class="anchored" data-anchor-id="html"><span class="header-section-number">1.4.2</span> html</h3>
 <figure class="figure">
-<p><img src="images/matlab_old_version.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Wanting to run older versions of analytics software is a recurrent need.</figcaption><p></p>
-</figure>
-</div>
-</div>
-</div>
-</section>
-<section id="html" class="level3" data-number="1.4.3">
-<h3 data-number="1.4.3" class="anchored" data-anchor-id="html"><span class="header-section-number">1.4.3</span> html</h3>
-<figure class="figure">
-<img src="images/matlab_old_version.png" alt="Elephant at sunset" class="figure-img">
+<img src="images/matlab_old_version.png" alt="Elephant" class="figure-img">
 <figcaption class="figure-caption">
 Wanting to run older version of analytics software is a recurrent need.
 </figcaption>
@@ -399,15 +384,15 @@ Wanting to run older version of analytics software is a recurrent need.
 <p><em>For just $199 a month, you can execute your SAS/STATA/MATLAB scripts on the cloud! Worry about data confidentiality? No worries, data gets encrypted and stored safely on our secure servers! Run your analysis from anywhere and don’t worry about losing your work if your cat knocks over your coffee on your laptop! And if you purchase the pro licence, for an additional $100 a month, you can even execute your code in parallel!</em></p>
 <p>Think this is science fiction? Google “SAS cloud” to see SAS’s cloud based offering.</p>
 </section>
-<section id="there-are-hidden-dependencies-that-can-hinder-the-reproducibility-of-a-project" class="level3" data-number="1.4.4">
-<h3 data-number="1.4.4" class="anchored" data-anchor-id="there-are-hidden-dependencies-that-can-hinder-the-reproducibility-of-a-project"><span class="header-section-number">1.4.4</span> There are hidden dependencies that can hinder the reproducibility of a project</h3>
+<section id="there-are-hidden-dependencies-that-can-hinder-the-reproducibility-of-a-project" class="level3" data-number="1.4.3">
+<h3 data-number="1.4.3" class="anchored" data-anchor-id="there-are-hidden-dependencies-that-can-hinder-the-reproducibility-of-a-project"><span class="header-section-number">1.4.3</span> There are hidden dependencies that can hinder the reproducibility of a project</h3>
 <p>Then there’s another problem: let’s suppose you’ve written a nice, thoroughly tested and documented workflow, and made it available on Github (and let’s even assume that the data is available for people to freely download, and that the paper is open access). Or, if you’re working in the private sector, you did everything above as well, the only difference being that the workflow is only available to people inside the company instead of being available freely and publicly online.</p>
 <p>Let’s further assume that you’ve used R or Python, or any other open source programming language. Could this study/analysis be said to be reproducible? Well, if the analysis ran on a proprietary operating system, then the conclusion is: your project is not reproducible.</p>
 <p>This is because the operating system the code runs on can also influence the reproducibility of the project. There are some particularities in operating systems that may make certain things work differently. Admittedly, this is in practice rarely a problem, but <a href="https://github.com/numpy/numpy/issues/9187">it does happen</a>, especially if you’re working with very high precision floating point arithmetic like you would do in the financial sector.</p>
 <p>Thankfully, there is no need to change operating systems to deal with this issue, and we will learn how to use Docker to safeguard against this problem.</p>
 </section>
-<section id="the-requirements-of-a-rap" class="level3" data-number="1.4.5">
-<h3 data-number="1.4.5" class="anchored" data-anchor-id="the-requirements-of-a-rap"><span class="header-section-number">1.4.5</span> The requirements of a RAP</h3>
+<section id="the-requirements-of-a-rap" class="level3" data-number="1.4.4">
+<h3 data-number="1.4.4" class="anchored" data-anchor-id="the-requirements-of-a-rap"><span class="header-section-number">1.4.4</span> The requirements of a RAP</h3>
 <p>So where does that leave us? Basically, for something to be truly reproducible, it has to respect the following bullet points:</p>
 <ul>
 <li>Source code must obviously be available and thoroughly tested and documented (which is why we will be using Git and Github);</li>
@@ -431,9 +416,9 @@ Wanting to run older version of analytics software is a recurrent need.
 <p>The <em>worst</em> reproducible pipeline would be something that works, but only on your machine. This can be simply due to the fact that you hardcoded paths that only exist on your laptop. Anyone wanting to rerun the pipeline would need to change the paths. This is something that needs to be documented in a README which we assumed was the case, so there’s that. But maybe this pipeline only runs on your laptop because the computational environment that you’re using is hard to reproduce. Maybe you use software, even if it’s open source software, that is not easy to install (anyone that tried to install R packages on Linux that depend on the <code>{rJava}</code> package know what I’m talking about).</p>
 <p>So a least worse pipeline would be one that could be run more easily on any similar machine as yours. This could be achieved by not using hardcoded absolute paths, and by providing instructions to set up the environment. For example, in the case of R, this could be as simple as providing a script called something like <code>install_deps.R</code> that would be a call to <code>install.packages()</code>. It could look like this:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="fu">c</span>(<span class="st">"package1"</span>,</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>                   <span class="st">"package2"</span>,</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>                   etc))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="fu">c</span>(<span class="st">"package1"</span>,</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>                   <span class="st">"package2"</span>,</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>                   etc))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>The issue here is that you need to make sure that the right versions of the packages get installed. If your script uses <code>{ggplot2}</code> version 2.2.1, then users should install this version as well, and by running the script above, the latest version of <code>{ggplot2}</code> (as of writing, version 3.4.0) will get installed. Maybe that’s not a problem, but it can be if your script uses a function from version 2.2.1 that is not available anymore in the latest version (or maybe its name got changed, or maybe it was modified somehow and doesn’t provide the exact same result). And the more packages the script uses (and the older it is), the higher the likelihood that some package version will not be compatible. There is also the issue of the R version itself. Generally speaking, recent versions of R seem to not be too bad when it comes to running older code written in R. I know this because in 2022 I’ve ran every example that comes bundled with R since version 0.6.0 on the then current version of R, version 4.2.2. Here is the result of this experiment:</p>
 <div class="quarto-figure quarto-figure-center">
