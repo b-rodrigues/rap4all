@@ -12,16 +12,28 @@ least some hope that the analysis will stay reproducible. But this will not do
 anything to make the analysis more easily re-usable, will not improve the
 documentation, nor ensure that what we wrote is actually correct. For this, we
 would need to write tests, which are missing from our current analysis. We only
-wrote on test, making sure that all the communes were accounted for.
+wrote one test, making sure that all the communes were accounted for. This is
+why going with a package (and I need to stress here that the goal of making this
+package is not to have it on CRAN) is so useful: packages offer us a great
+framework for documenting, testing and sharing our code (even if only sharing
+internally in your company/team, or even just future you). Also, at this stage,
+your analysis is much closer to be a package than you think. As you shall see in
+the next chapter, going from our Rmds to a fully functioning package is much
+easier than you expect, even if you’ve never written a package in your life.
 
-So I hope that I made my pont clear: it is not recommended to stop at this stage,
-but I also recognizes that we live in the real world with real physical constraints.
-So let’s see what the `{renv}` can do for us.
+So I hope that I made my pont clear: it is not recommended to stop at this
+stage, but I also recognize that we live in the real world with real physical
+constraints. So because we live in this imperfect world, sometimes we need to
+deliver imperfect work. So let’s see what we can do that is very cheap in terms
+of effort and time, but still allow us to have some hope of having our analysis
+reproducible using the `{renv}` package.
 
 ## Recording packages’ version with `{renv}`
 
 - renv freezes packages, but not R versions
 - difficulty to install packages with renv happens
+
+## Collaborating with `{renv}`
 
 
 ## Rerunning old analyses where no renv.lock file is available
