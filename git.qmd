@@ -182,7 +182,11 @@ If you don't have already a Github account, now is the time to create one. Just
 go over to [https://github.com/](https://github.com/) and simply follow the
 instructions and select the free tier to open your account.
 
-![This is your Github dashboard](images/git_1.png)
+<figure>
+    <img src="images/git_1.png"
+         alt="This is your Github dashboard."></img>
+    <figcaption>This is your Github dashboard.</figcaption>
+</figure>
 
 Now that we have an opened account, we can go to the folder that contains the
 two scripts we wrote at the start of the book.
@@ -633,11 +637,19 @@ chapter.
 So, let's first go back to [https://github.com/](https://github.com/) and create
 a new repository:
 
-![Creating a new repository from your dashboard](images/git_new_repo.png)
+<figure>
+    <img src="images/git_new_repo.png"
+         alt="Creating a new repository from your dashboard."></img>
+    <figcaption>Creating a new repository from your dashboard.</figcaption>
+</figure>
 
 You will then land on this page:
 
-![Name your repository and choose whether it's a public or private repository](images/git_new_repo_2.png)
+<figure>
+    <img src="images/git_new_repo_2.png"
+         alt="Name your repository and choose whether it's a public or private repository."></img>
+    <figcaption>Name your repository and choose whether it's a public or private repository.</figcaption>
+</figure>
 
 Name your repository, and choose whether it should be open to the word or if it
 should be private and only accessible to your coworkers. We are going to make it
@@ -646,12 +658,20 @@ change nothing to what we're going to learn.
 
 We then land on this page:
 
-![Some instructions to get you started](images/git_repo_start.png)
+<figure>
+    <img src="images/git_repo_start.png"
+         alt="Some instructions to get you started."></img>
+    <figcaption>Some instructions to get you started.</figcaption>
+</figure>
 
 We get some instructions on how to actually get started with our project. The
 first thing you need to do though is to click on "SSH":
 
-![Some instructions to get you started](images/git_repo_start_ssh.png)
+<figure>
+    <img src="images/git_repo_start_ssh.png"
+         alt="Make sure to select 'SSH'."></img>
+    <figcaption>Make sure to select 'SSH'.</figcaption>
+</figure>
 
 This will change the links in the instructions from `https` to `ssh`. We will
 explain why this is important in a couple of paragraphs. For now, let's read the
@@ -776,17 +796,29 @@ private and public keys respectively. We're almost done: what you need to do now
 is copy the contents of the `id_rsa.pub` file to Github. Go to your profile
 settings:
 
-![Click on your user profile's image in the top-right corner](images/github_settings.png)
+<figure>
+    <img src="images/github_settings.png"
+         alt="Click on your user profile's image in the top-right corner."></img>
+    <figcaption>Click on your user profile's image in the top-right corner.</figcaption>
+</figure>
 
 And then click on "SSH and GPG keys":
 
-![Go to your user settings and choose "SSH and GPG keys"](images/github_gpg.png)
+<figure>
+    <img src="images/github_gpg.png"
+         alt="Go to your user settings and choose 'SSH and GPG keys'."></img>
+    <figcaption>Go to your user settings and choose 'SSH and GPG keys'.</figcaption>
+</figure>
 
 and then click on "New SSH key". Name this key (it's a good idea to write
 something that makes recognizing the machine the key was generated easily) and
 paste the contents of `id_rsa.pub` in the text box and click on "add SSH key":
 
-![Copy the contents of the public key here](images/github_add_ssh.png)
+<figure>
+    <img src="images/git_add_ssh.png"
+         alt="Copy the contents of the public key here."></img>
+    <figcaption>Copy the contents of the public key here.</figcaption>
+</figure>
 
 We can now go back to our terminal and try to push again:
 
@@ -821,7 +853,11 @@ Branch 'master' set up to track remote branch 'master' from 'origin'.
 And we're done! Our commits are now safely backed up on Github. If we go to our
 repository's main page, we should see the following:
 
-![Finally!](images/github_repo_1.png)
+<figure>
+    <img src="images/git_repo_1.png"
+         alt="Finally!"></img>
+    <figcaption>Finally!</figcaption>
+</figure>
 
 ## Getting to know Github
 
@@ -834,7 +870,11 @@ same key pair as a passwordless authentication method for ssh (for example to
 log into a server, but this is outside the scope of the present book). Before
 continuing we are going to take a little tour of Github.
 
-![You repository's landing page](images/github_repo_1.png)
+<figure>
+    <img src="images/git_repo_1.png"
+         alt="You repository's landing page."></img>
+    <figcaption>You repository's landing page.</figcaption>
+</figure>
 
 Once you're on your repository's landing page you see the same files and folders
 as in the root directory of the project on your computer. In our case here, we
@@ -842,7 +882,11 @@ see our two files. Github suggests that we add a README file; we are going to
 ignore this for now. Take a closer look at the menu at the top, below your
 repository's name:
 
-![Several options to choose from](images/github_menu.png)
+<figure>
+    <img src="images/github_menu.png"
+         alt="Several options to choose from."></img>
+    <figcaption>Several options to choose from.</figcaption>
+</figure>
 
 Most important for our needs is the "Issues", "Pull requests", "Actions" and
 "Settings" tab.
@@ -853,33 +897,48 @@ essential for collaborating using Git and Github.com. We will learn about the
 
 So let's start with "Settings".
 
-![Choose the "Settings" tab](images/github_settings2.png)
+<figure>
+    <img src="images/github_settings2.png"
+         alt="Choose the 'Settings' tab."></img>
+    <figcaption>Choose the 'Settings' tab.</figcaption>
+</figure>
 
 There are many options that you can choose from, but what's important for our
 purposes is the "Collaborators" option. This is where you can invite people to
 contribute to the repository. People that are invited in this way can directly
 push to the repository. Let's invite the author of this book:
 
-![Choose the "Settings" tab](images/github_add_collab.png)
+<figure>
+    <img src="images/github_add_collab.png"
+         alt="Follow along to add a collaborator."></img>
+    <figcaption>Follow along to add a collaborator.</figcaption>
+</figure>
+
 
 Start by typing the person's Github username. You can also invite collaborators
 by providing their email address.
 
-![Choose the "Settings" tab](images/github_add_collab2.png)
+<figure>
+    <img src="images/github_add_collab2.png"
+         alt="Look for your collaborators."></img>
+    <figcaption>Look for your collaborators.</figcaption>
+</figure>
 
 Click then on the user's profile and he or she should get an invitation per
 email.
 
 This is what it looks like from the perspective of Bruno's account now:
 
-![Bruno can now push as if he owned the repository](images/github_add_collab2.png)
+<figure>
+    <img src="images/github_collab_added.png"
+         alt="Bruno can now push as if he owned the repository."></img>
+    <figcaption>Bruno can now push as if he owned the repository.</figcaption>
+</figure>
 
 It's important to understand the distinction between inviting someone to
 contribute to the repository and have someone from outside the project
 contribute. We are going to explore these two scenarios in the next section, but
 before that, let's see what the "Issues" tab is about.
-
-![Anyone can open an issue in a public repository](images/github_new_issue.png)
 
 If the repository is public, anyone can open an issue to either submit a bug, or
 suggest some ideas, and if the repository is private, only invited collaborators
@@ -887,13 +946,30 @@ can do this.
 
 Let's open an issue to illustrate how this works:
 
-![Write what the issue's about here](images/github_new_issue.png)
+<figure>
+    <img src="images/github_new_issue.png"
+         alt="Click on 'New issue' in the 'Issues' tab of your project."></img>
+    <figcaption>Click on 'New issue' in the 'Issues' tab of your project.</figcaption>
+</figure>
+
+You will land on this interface:
+
+<figure>
+    <img src="images/github_new_issue_empty.png"
+         alt="Write what the issue's about here."></img>
+    <figcaption>Write what the issue's about here.</figcaption>
+</figure>
+
 
 Give a nice title to the issue (1), add a thorough description (2), (optionally)
 assign it to someone (3) and (optionally) add a label to it (4), finally click
 on "Submit new issue" (5) to submit the issue:
 
-![Try to provide as many details as possible](images/github_new_issue2.png)
+<figure>
+    <img src="images/github_new_issue2.png"
+         alt="Try to provide as many details as possible."></img>
+    <figcaption>Try to provide as many details as possible.</figcaption>
+</figure>
 
 Sometimes issues don't need to be very long, and act more as reminders than
 anything else. For example here, the owner of the repository didn't have the

@@ -13,7 +13,11 @@ But usually, we don't really stop there. We now need to write a report, or maybe
 a Powerpoint presentation. If you're a researcher, you still need to write a
 paper, just getting the results is not enough!
 
-![The cursed report drafting loop](images/report_draft_loop.png)
+<figure>
+    <img src="images/report_draft_loop.png"
+         alt="The cursed report drafting loop."></img>
+    <figcaption>The cursed report drafting loop.</figcaption>
+</figure>
 
 The problem is that this workflow is very often quite horrible. The picture
 above illustrates this cursed report drafting loop. Get some results, copy and
@@ -30,7 +34,11 @@ instead of dealing with this again.
 
 But if we can make the loop look like this instead:
 
-![The holy report drafting loop](images/md_draft_loop.png)
+<figure>
+    <img src="images/md_draft_loop.png"
+         alt="The holy report drafting loop."></img>
+    <figcaption>The holy report drafting loop.</figcaption>
+</figure>
 
 Basically, everything from cleaning, analysing and drafting is done in one
 single step? Well, this is what literate programming enables you to do. And even
@@ -106,7 +114,11 @@ installation since version 1.5.0, and still works to this day. For example, we
 can test that our Sweave installation works just fine by compiling the example
 above. This is what the final output looks like:
 
-![More than 20 years later, the output is still the same](images/hello_sweave.PNG)
+<figure>
+    <img src="images/hello_sweave.PNG"
+         alt="More than 20 years later, the output is still the same."></img>
+    <figcaption>More than 20 years later, the output is still the same.</figcaption>
+</figure>
 
 Let us just state that the fact that it is still possible to compile this
 example more than 20 years later is an incredible testament to how mature and
@@ -152,7 +164,11 @@ boxplot(Ozone ~ Month, data = airquality)
 
 This is what the output looks like:
 
-![It’s very close to the Sweave output](images/hello_rmd.PNG)
+<figure>
+    <img src="images/hello_rmd.PNG"
+         alt="It’s very close to the Sweave output."></img>
+    <figcaption>It’s very close to the Sweave output.</figcaption>
+</figure>
 
 Just like in a Sweave document, an Rmd source file also has a header in which
 authors can define a number of options. Here we only specified that we wanted a
@@ -214,7 +230,11 @@ types of documents. It is possible to write books, blogs, package documentation
 slides... It is extremely powerful because we can use the same general R
 Markdown knowledge to build many different outputs:
 
-![One format to rule them all](images/rmd_to_many.PNG)
+<figure>
+    <img src="images/rmd_to_many.PNG"
+         alt="One format to rule them all."></img>
+    <figcaption>One format to rule them all.</figcaption>
+</figure>
 
 Finally, the latest in literate programming for R is a new tool developed by
 Posit, called Quarto. If you’re an R user and already know `{knitr}` and the Rmd
@@ -390,7 +410,12 @@ rmarkdown::render("path/to/rmd_test.rmd")
 This should create a file called `rmd_test.html`; open it with your web browser
 and you should see the following:
 
-![It’s very close to the Sweave output](images/rmd_test.PNG)
+<figure>
+    <img src="images/rmd_test.PNG"
+         alt="It’s very close to the Sweave output."></img>
+    <figcaption>It’s very close to the Sweave output.</figcaption>
+</figure>
+
 
 Congratulations, you just *knitted* your first Rmd document!
 
@@ -546,9 +571,13 @@ S(\omega)
 \end{align*}
 ````
 
-Th LaTeX code above results in this equation:
+The LaTeX code above results in this equation:
 
-![A rendered LaTeX equation](images/latex_equation.png)
+<figure>
+    <img src="images/latex_equation.png"
+         alt="A rendered LaTeX equation."></img>
+    <figcaption>A rendered LaTeX equation.</figcaption>
+</figure>
 
 ## Keeping it DRY
 
@@ -849,7 +878,11 @@ flextable(my_table) |>
 
 ```
 
-![The output of the code above](images/flextable.png)
+<figure>
+    <img src="images/flextable.png"
+         alt="The output of the code above."></img>
+    <figcaption>The output of the code above.</figcaption>
+</figure>
 
 We won't go into much detail on how `{flextable}` works, but it is very
 powerful, and the fact that it works for PDF, Html, Word and Powerpoint outputs
@@ -875,7 +908,11 @@ modelsummary(models)
 
 ```
 
-![The output of the code above](images/modelsummary.png)
+<figure>
+    <img src="images/modelsummary.png"
+         alt="The output of the code above."></img>
+    <figcaption>The output of the code above.</figcaption>
+</figure>
 
 Here again, we won't got into much detail, but recommend instead that you read
 the package's
