@@ -338,21 +338,21 @@ div.csl-indent {
 
 <p>We now know about version control, how to collaborate using Github.com and functional programming. By only learning about this, we have actually already made some massive steps towards making our projects reproducible. Especially by using Git and Github. Even if you’re using private repos and work in the private sector, by using version control, you ensure that reusing this code for future projects is much easier. Auditing is greatly simplified as well.</p>
 <p>But this book is still far from over. Let’s think about our project up until now. We have downloaded some data, and wrote code to analyse it. Fair enough. But usually, we don’t really stop there. We now need to write a report, or maybe a Powerpoint presentation. If you’re a researcher, you still need to write a paper, just getting the results is not enough!</p>
-<div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="images/report_draft_loop.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">The cursed report drafting loop</figcaption><p></p>
+<img src="images/report_draft_loop.png" alt="The cursed report drafting loop." class="figure-img">
+<figcaption class="figure-caption">
+The cursed report drafting loop.
+</figcaption>
 </figure>
-</div>
 <p>The problem is that this workflow is very often quite horrible. The picture above illustrates this cursed report drafting loop. Get some results, copy and paste images into Word or Powerpoint, get a change request, or notice a mistake, and start from scratch again. If you’re using LaTeX it’ll be easier for pictures, but you’ll still need to update tables by hand each time you need to touch your analysis code.</p>
 <p>Worse, what if you start with a Word or LaTeX document, but then get asked to make a Powerpoint presentation as well? Then you need to copy and paste everything into Powerpoint as well… and if you get a change request after you’re done and need to start over, you might seriously consider raising goats instead of dealing with this again.</p>
 <p>But if we can make the loop look like this instead:</p>
-<div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="images/md_draft_loop.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">The holy report drafting loop</figcaption><p></p>
+<img src="images/md_draft_loop.png" alt="The holy report drafting loop." class="figure-img">
+<figcaption class="figure-caption">
+The holy report drafting loop.
+</figcaption>
 </figure>
-</div>
 <p>Basically, everything from cleaning, analysing and drafting is done in one single step? Well, this is what literate programming enables you to do. And even if you get asked to make a Powerpoint presentation, you can start from the same source code as the original report, and remove everything that you don’t need and compile to a Powerpoint (or Beamer) presentation.</p>
 <section id="a-quick-history-of-literate-programming" class="level2" data-number="7.1">
 <h2 data-number="7.1" class="anchored" data-anchor-id="a-quick-history-of-literate-programming"><span class="header-section-number">7.1</span> A quick history of literate programming</h2>
@@ -384,12 +384,12 @@ boxplot(Ozone ~ Month, data = airquality)
 
 \end{document}</code></pre>
 <p>Even if you’ve never seen a LaTeX source file, you should be able to figure out what’s going on. The first line states what type of document we’re writing. Then comes <code>\begin{document}</code> which tells the compiler where the document starts. Then comes the content. You can see that it’s a mixture of plain English with R code defined inside chunks starting with <code>&lt;&lt;&gt;&gt;=</code> and ending with <code>@</code>. Finally, the documents ends with <code>\end{document}</code>. Getting a human readable PDF from this source is a two-step process: first this source gets converted into a <code>.tex</code> file and then this <code>.tex</code> file into a PDF. Sweave is included with every R installation since version 1.5.0, and still works to this day. For example, we can test that our Sweave installation works just fine by compiling the example above. This is what the final output looks like:</p>
-<div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="images/hello_sweave.PNG" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">More than 20 years later, the output is still the same</figcaption><p></p>
+<img src="images/hello_sweave.PNG" alt="More than 20 years later, the output is still the same." class="figure-img">
+<figcaption class="figure-caption">
+More than 20 years later, the output is still the same.
+</figcaption>
 </figure>
-</div>
 <p>Let us just state that the fact that it is still possible to compile this example more than 20 years later is an incredible testament to how mature and stable this software is (both R, Sweave, and LaTeX). But as impressive as this is, LaTeX has a steep learning curve, and Leisch even advocated the use of the Emacs text editor to edit Sweave files, which also has a very steep learning curve (but this is entirely optional; for example we edited and compiled the example on the Rstudio IDE).</p>
 <p>The next generation of literate programming tools was provided by a package called <code>{knitr}</code> in 2012. From the perspective of the user, the biggest change from Sweave is that <code>{knitr}</code> is able to use many different formats as source files. The one that became very likely the most widely used format is a flavour of the Markdown markup language, R Markdown (Rmd). But this is not the only difference with Sweave:<code>{knitr}</code> can also run code chunks for other languages, such as Python, Perl, Awk, Haskell, bash and more (<span class="citation" data-cites="xie2014">Xie (<a href="references.html#ref-xie2014" role="doc-biblioref">2014</a>)</span>). Since version 1.18, <code>{knitr}</code> uses the <code>{reticulate}</code> package to provide a Python engine for the Rmd format. To illustrate the Rmd format, let’s rewrite the example from Leisch’s Sweave paper into it:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>---</span>
@@ -413,12 +413,12 @@ boxplot(Ozone ~ Month, data = airquality)
 <span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>boxplot(Ozone ~ Month, data = airquality)</span>
 <span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>```</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>This is what the output looks like:</p>
-<div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="images/hello_rmd.PNG" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">It’s very close to the Sweave output</figcaption><p></p>
+<img src="images/hello_rmd.PNG" alt="It’s very close to the Sweave output." class="figure-img">
+<figcaption class="figure-caption">
+It’s very close to the Sweave output.
+</figcaption>
 </figure>
-</div>
 <p>Just like in a Sweave document, an Rmd source file also has a header in which authors can define a number of options. Here we only specified that we wanted a pdf document as an output file. We then copy and pasted the contents from the Sweave source, but changed the chunk delimiters from <code>&lt;&lt;&gt;&gt;=</code> and <code>@</code> to <code>```{r}</code> to start an R chunk and <code>```</code> to end it. Remember; we need to specify the engine in the chunk because <code>{knitr}</code> supports many engines. For example, it is possible to run a bash command by adding this chunk to the source:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>---</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>output: pdf_document</span>
@@ -448,12 +448,12 @@ boxplot(Ozone ~ Month, data = airquality)
 <p>(bash’s <code>pwd</code> command shows the current working directory). You may have noticed that we also keep two LaTeX commands in the source Rmd, <code>\texttt{}</code> and <code>LaTeX</code>. This is because Rmd files get first converted into <code>LaTeX</code> files and then into a PDF. If you’re using RStudio, this document can be compiled by clicking a button or using a keyboard shortcut, but you can also use the <code>rmarkdown::render()</code> function. This function does two things transparently: it first converts the Rmd file into a source LaTeX file, and then converts it into a PDF. It is of course possible to convert the document to a Word document as well, but in this case, LaTeX commands will be ignored. Html is another widely used output format.</p>
 <p>If you’re a researcher and prefer working with LaTeX directly instead of having to switch to Markdown, you can either use Sweave, or use <code>{knitr}</code> but instead of writing your documents using the R Markdown format, you can use the <code>Rnw</code> format which is basically the same as Sweave, but uses <code>{knitr}</code> for compilation. Take a look at <a href="https://github.com/yihui/knitr/blob/master/inst/examples/knitr-minimal.Rnw">this example</a> from the <code>{knitr}</code> github repository for example.</p>
 <p>You should know that <code>{knitr}</code> makes it possible to author many, many different types of documents. It is possible to write books, blogs, package documentation (and even entire packages, as we shall see later in this book), Powerpoint slides… It is extremely powerful because we can use the same general R Markdown knowledge to build many different outputs:</p>
-<div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="images/rmd_to_many.PNG" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">One format to rule them all</figcaption><p></p>
+<img src="images/rmd_to_many.PNG" alt="One format to rule them all." class="figure-img">
+<figcaption class="figure-caption">
+One format to rule them all.
+</figcaption>
 </figure>
-</div>
 <p>Finally, the latest in literate programming for R is a new tool developed by Posit, called Quarto. If you’re an R user and already know <code>{knitr}</code> and the Rmd format, you should be able to immediately use Quarto. So what’s the difference? In practice and for R users not much but there are some things that Quarto is able to do out of the box for which you’d need extensions with <code>{knitr}</code>. Quarto has some nice defaults; in fact this book is written in Quarto’s Markdown flavour and compiled with Quarto instead of <code>{knitr}</code> because the default Quarto output looks nicer than the default <code>{knitr}</code> output. However, there may even be things that Quarto can’t do at all (at least for now) when compared to <code>{knitr}</code>. So why bother switching? Well, Quarto provides sane defaults and some nice features out of the box, and the cost of switching from the Rmd format to Quarto’s Qmd format is basically 0. Also, and this is probably the biggest reason to use Quarto, Quarto is not tied to R. Quarto is actually a standalone tool that needs to be installed alongside your R installation, and works completely independently. In fact, you can use Quarto without having R installed at all, as Quarto, just like <code>{knitr}</code> supports many engines. This means that if you’re primarily using Python, you can author documents with Quarto. Quarto also supports the Julia programming language and Observable JS, making it possible to include interactive visualisations into an Html document. Let’s take a look at how the example from Leisch’s paper looks as a Qmd file:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>---</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>output: pdf</span>
@@ -528,12 +528,12 @@ output: pdf
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>rmarkdown<span class="sc">::</span><span class="fu">render</span>(<span class="st">"path/to/rmd_test.rmd"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>This should create a file called <code>rmd_test.html</code>; open it with your web browser and you should see the following:</p>
-<div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="images/rmd_test.PNG" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">It’s very close to the Sweave output</figcaption><p></p>
+<img src="images/rmd_test.PNG" alt="It’s very close to the Sweave output." class="figure-img">
+<figcaption class="figure-caption">
+It’s very close to the Sweave output.
+</figcaption>
 </figure>
-</div>
 <p>Congratulations, you just <em>knitted</em> your first Rmd document!</p>
 </section>
 <section id="markdown-ultrabasics" class="level3" data-number="7.2.2">
@@ -621,13 +621,13 @@ output: pdf
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>&amp;= \frac{\alpha g^2}{\omega^5} e^{[ -0.74\bigl\{\frac{\omega U_\omega 19.5}{g}\bigr\}^{\!-4}\,]} \\</span>
 <span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>&amp;= \frac{\alpha g^2}{\omega^5} \exp\Bigl[ -0.74\Bigl\{\frac{\omega U_\omega 19.5}{g}\Bigr\}^{\!-4}\,\Bigr] </span>
 <span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>\end{align*}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Th LaTeX code above results in this equation:</p>
-<div class="quarto-figure quarto-figure-center">
+<p>The LaTeX code above results in this equation:</p>
 <figure class="figure">
-<p><img src="images/latex_equation.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">A rendered LaTeX equation</figcaption><p></p>
+<img src="images/latex_equation.png" alt="A rendered LaTeX equation." class="figure-img">
+<figcaption class="figure-caption">
+A rendered LaTeX equation.
+</figcaption>
 </figure>
-</div>
 </section>
 </section>
 <section id="keeping-it-dry" class="level2" data-number="7.3">
@@ -848,12 +848,12 @@ output: pdf
 <span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_caption</span>(<span class="at">caption =</span> <span class="st">"Head of the mtcars dataset"</span>) <span class="sc">|&gt;</span></span>
 <span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_booktabs</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="images/flextable.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">The output of the code above</figcaption><p></p>
+<img src="images/flextable.png" alt="The output of the code above." class="figure-img">
+<figcaption class="figure-caption">
+The output of the code above.
+</figcaption>
 </figure>
-</div>
 <p>We won’t go into much detail on how <code>{flextable}</code> works, but it is very powerful, and the fact that it works for PDF, Html, Word and Powerpoint outputs is really a massive plus. If you want to learn more about <code>{flextable}</code>, there’s a <a href="https://ardata-fr.github.io/flextable-book/index.html">whole, free, ebook on it</a>. <code>{flextable}</code> can create very complicated tables, so really take the time to dig in!</p>
 <p>The next package is <code>{modelsummary}</code>, by <span class="citation" data-cites="arel22">Arel-Bundock (<a href="references.html#ref-arel22" role="doc-biblioref">2022</a>)</span>, and this one focuses on regression and summary tables. It is extremely powerful as well, and just like <code>{flextable}</code>, works for any type of output. It is very simple to get started:</p>
 <div class="cell">
@@ -867,12 +867,12 @@ output: pdf
 <span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a><span class="fu">modelsummary</span>(models)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="images/modelsummary.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">The output of the code above</figcaption><p></p>
+<img src="images/modelsummary.png" alt="The output of the code above." class="figure-img">
+<figcaption class="figure-caption">
+The output of the code above.
+</figcaption>
 </figure>
-</div>
 <p>Here again, we won’t got into much detail, but recommend instead that you read the package’s <a href="https://vincentarelbundock.github.io/modelsummary/articles/modelsummary.html">website</a> which has very detailed documentation.</p>
 <p>These packages can help you keeping it DRY, so take some time to learn them.</p>
 <p>And one last thing: if you’re a researcher, take a look at the <a href="https://pkgs.rstudio.com/rticles/articles/examples.html"><code>{rticles}</code></a> package, which provides Rmd templates to write articles for many scientific journals.</p>

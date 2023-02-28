@@ -246,12 +246,12 @@ ul.task-list li input[type="checkbox"] {
 <h2 class="anchored" data-anchor-id="the-reproducibility-iceberg">The reproducibility iceberg</h2>
 <p>We are done with the first part of the book, and I think it is time to reflect on why we bothered with it at all. Why not just go straight to the reproducibility part?</p>
 <p>Remember the introduction, where I talked about the reproducibility continuum or spectrum? It is now time to discuss this in greater detail. I propose a new analogy, <em>the reproducibility iceberg</em>:</p>
-<div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="images/repro_iceberg.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">The reproducibility iceberg</figcaption><p></p>
+<img src="images/repro_iceberg.png" alt="The reproducibility iceberg." class="figure-img">
+<figcaption class="figure-caption">
+The reproducibility iceberg.
+</figcaption>
 </figure>
-</div>
 <p>Why an iceberg? Because the parts of the iceberg that you see, those that are obvious, are like running your analyses in a click-based environment like Excel. This is what’s obvious, what’s easy. No special knowledge or even training is required. All that’s required is time, so people using these tools are not efficient and thus compensate by working insane hours (<em>I can’t go home and enjoy time with my family I have to stay at the office and update the spreadsheeeeeeeeet</em> <strong>clicks furiously</strong>).</p>
 <p>Let’s go one level deeper: let’s write a script. This is where we started. Our script was not too bad, it did the job. Unlike a click-based workflow, we could at least re-read it, someone else could read it, and it would be possible to run in the future but likely with some effort unless we’re lucky. By that, I mean that for such a script to run successfully in the future, that script cannot rely on packages that got updated in such a way that the script cannot run anymore (for example, if functions get renamed, or if their arguments get renamed). Furthermore, if that script relies on a data source, the original authors also have to make sure that the same data source stays available. Another issue is collaborating when writing this script. Without any version control tools nor code hosting platform, collaborating on this script can very quickly turn into a nightmare.</p>
 <p>This is where Git and Github came into play, one more level deeper. The advantage now is that collaboration was streamlined. The commit history is available to all the teammates and it is possible to revert changes, experiment with new features using branches and overall manage the project. In this layer we also employ new programming paradigms to make the code of the project less verbose, using functional programming, with the added benefits of making it easier to test, document and share (which we will discuss to its fullest in this part of the book). Using literate programming, it is also much easier to go to our final output (which is usually a report).</p>

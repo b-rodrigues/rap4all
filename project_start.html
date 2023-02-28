@@ -321,9 +321,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2 data-number="3.1" class="anchored" data-anchor-id="housing-in-luxembourg"><span class="header-section-number">3.1</span> Housing in Luxembourg</h2>
 <p>We are going to download data about house prices in Luxembourg. Luxembourg is a little Western European country the author hails from that looks like a shoe and is about the size of .98 Rhode Islands. Did you know that Luxembourg is a constitutional monarchy, and not a kingdom like Belgium, but a Grand-Duchy, and actually the last Grand-Duchy in the World? Also, what you should know to understand what we will be doing is that the country of Luxembourg is divided into Cantons, and each Cantons into Communes. If Luxembourg was the USA, Cantons would be States and Communes would be Counties (or Parishes or Boroughs). What’s confusing is that “Luxembourg” is also the name of a Canton, and of a Commune, which also has the status of a city and is the capital of the country. So Luxembourg the country, is divided into Cantons, one of which is called Luxembourg as well, cantons are divided into communes, and inside the canton of Luxembourg there’s the commune of Luxembourg which is also the city of Luxembourg, sometimes called Luxembourg-City, which is the capital of the country.</p>
 <figure class="figure">
-<img src="images/lux_rhode_island.png" alt="Luxembourg is about as big as the US State of Rhode Island" class="figure-img">
+<img src="images/lux_rhode_island.png" alt="Luxembourg is about as big as the US State of Rhode Island." class="figure-img">
 <figcaption class="figure-caption">
-Luxembourg is about as big as the US State of Rhode Island
+Luxembourg is about as big as the US State of Rhode Island.
 </figcaption>
 </figure>
 <p>What you should also know is that the population is about 645.000 as of writing (January 2023), half of which are foreigners. Around 400.000 persons work in Luxembourg, of which half do not live in Luxembourg; so every morning from Monday to Friday, 200.000 people enter the country to work, and leave in the evening to go back to either Belgium, France or Germany, the neighbouring countries. As you can imagine, this puts enormous pressure on the transportation system and on the roads, but also on the housing market; everyone wants to live in Luxembourg to avoid the horrible daily commute, and everyone wants to live either in the capital city, or in the second largest urban area in the south, in a city called Esch-sur-Alzette.</p>
@@ -350,12 +350,12 @@ Luxembourg is about as big as the US State of Rhode Island
 <section id="saving-trapped-data-from-excel" class="level2" data-number="3.2">
 <h2 data-number="3.2" class="anchored" data-anchor-id="saving-trapped-data-from-excel"><span class="header-section-number">3.2</span> Saving trapped data from Excel</h2>
 <p>Getting data from Excel into a tidy data frame can be very tricky. This is because very often, Excel is used as some kind of dashboard, or presentation tool. So data is made human-readable, in contrast to machine readable. Let us quickly discuss this topic as it is essential to grasp the difference between the two (and in our experience, a lot of collective pain inflicted to statisticians and researchers could have been avoided if this concept was more well-known). The picture below shows an Excel made for human consumption:</p>
-<div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="images/obs_hab_xlsx_overview.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">An Excel file meant for human eyes</figcaption><p></p>
+<img src="images/obs_hab_xlsx_overview.png" alt="An Excel file meant for human eyes." class="figure-img">
+<figcaption class="figure-caption">
+An Excel file meant for human eyes.
+</figcaption>
 </figure>
-</div>
 <p>So why is this file not machine-readable? Here are some issues:</p>
 <ul>
 <li>The table does not start in the top-left corner of the spreadsheet, which is where most importing tools expect it to be;</li>
@@ -521,12 +521,12 @@ Warning in mask$eval_all_mutate(quo): NAs introduced by coercion</code></pre>
 </div>
 </div>
 <p>It turns out that there are no prices for certain communes, but that we also have some rows with garbage in there. Let’s go back to the raw data to see what this is about:</p>
-<div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="images/obs_hab_xlsx_missing.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Always look at your data</figcaption><p></p>
+<img src="images/obs_hab_xlsx_missing.png" alt="Always look at your data." class="figure-img">
+<figcaption class="figure-caption">
+Always look at your data.
+</figcaption>
 </figure>
-</div>
 <p>So it turns out that indeed, there are some rows that we need to remove. We can start by removing rows where <code>locality</code> is missing. Then we have a row where <code>locality</code> is equal to “Total d’offres”. This is simply the total of every offer from every commune. We could keep that in a separate data frame, or even remove it. Finally there’s a row, the last one, that states the source of the data, which we can remove.</p>
 <p>In the screenshot above, we see another row that we don’t see in our filtered data frame: one where <code>n_offers</code> is missing. This row gives the national average for columns <code>average_prince_nominal_euros</code> and <code>average_price_m2_nominal_euros</code>. What we are going to do is create two datasets: one with data on communes, and the other on national prices. Let’s first remove the rows stating the sources:</p>
 <div class="cell">

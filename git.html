@@ -287,12 +287,12 @@ sudo apt-get install git</code></pre>
 <p>We are not going to use any graphical user interface however. This is because there is no common, universal graphical user interface; they all work slightly differently. The only universal is the command line. Also, learning how to use Git via the command line will make it easier the day you will need to use it from a server, which will very likely happen. It also makes our job easier: it is simpler to tell you which commands to run and explain them to you than littering the book with dozens upon dozens of screenshots that might get outdated as soon as a new version of the interface gets released.</p>
 <p>Don’t worry, using the command line is not as hard as it sounds.</p>
 <p>If you don’t have already a Github account, now is the time to create one. Just go over to <a href="https://github.com/">https://github.com/</a> and simply follow the instructions and select the free tier to open your account.</p>
-<div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="images/git_1.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">This is your Github dashboard</figcaption><p></p>
+<img src="images/git_1.png" alt="This is your Github dashboard." class="figure-img">
+<figcaption class="figure-caption">
+This is your Github dashboard.
+</figcaption>
 </figure>
-</div>
 <p>Now that we have an opened account, we can go to the folder that contains the two scripts we wrote at the start of the book.</p>
 </section>
 <section id="git-superbasics" class="level2" data-number="4.2">
@@ -482,34 +482,34 @@ Date:   Sun Feb 5 17:32:26 2023 +0100
 <p>So we got some work done on our machine and made some commits. We are now ready to push these commits to Github. “Pushing” means essentially uploading these changes to Github. This makes them available to your coworkers if you’re pushing to a private repository, or makes them available to the world if you’re pushing to a public repository.</p>
 <p>Before pushing anything to Github though, we need to create a new repository. This repository will contain the code for our project, as well as all the changes that Git has been tracking on our machine. So if, for example, a new team member joins, he or she will be able to clone the repository to his or her computer and every change, every commit message and every single bit of history of the project will be accessible. If it’s a public repository, anyone will be able to clone the repository and contribute code to it. We are going to walk you true some examples of how to collaborate with Git using Github in the remained of this chapter.</p>
 <p>So, let’s first go back to <a href="https://github.com/">https://github.com/</a> and create a new repository:</p>
-<div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="images/git_new_repo.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Creating a new repository from your dashboard</figcaption><p></p>
+<img src="images/git_new_repo.png" alt="Creating a new repository from your dashboard." class="figure-img">
+<figcaption class="figure-caption">
+Creating a new repository from your dashboard.
+</figcaption>
 </figure>
-</div>
 <p>You will then land on this page:</p>
-<div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="images/git_new_repo_2.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Name your repository and choose whether it’s a public or private repository</figcaption><p></p>
+<img src="images/git_new_repo_2.png" alt="Name your repository and choose whether it's a public or private repository." class="figure-img">
+<figcaption class="figure-caption">
+Name your repository and choose whether it’s a public or private repository.
+</figcaption>
 </figure>
-</div>
 <p>Name your repository, and choose whether it should be open to the word or if it should be private and only accessible to your coworkers. We are going to make it a public repository, but you could make it private and follow along, this would change nothing to what we’re going to learn.</p>
 <p>We then land on this page:</p>
-<div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="images/git_repo_start.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Some instructions to get you started</figcaption><p></p>
+<img src="images/git_repo_start.png" alt="Some instructions to get you started." class="figure-img">
+<figcaption class="figure-caption">
+Some instructions to get you started.
+</figcaption>
 </figure>
-</div>
 <p>We get some instructions on how to actually get started with our project. The first thing you need to do though is to click on “SSH”:</p>
-<div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="images/git_repo_start_ssh.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Some instructions to get you started</figcaption><p></p>
+<img src="images/git_repo_start_ssh.png" alt="Make sure to select 'SSH'." class="figure-img">
+<figcaption class="figure-caption">
+Make sure to select ‘SSH’.
+</figcaption>
 </figure>
-</div>
 <p>This will change the links in the instructions from <code>https</code> to <code>ssh</code>. We will explain why this is important in a couple of paragraphs. For now, let’s read the instructions. Since we have already started working, we need to follow the instructions titled “…or push an existing repository from the command line”. Let’s review these commands. This is what Github suggests we run:</p>
 <pre><code>git remote add origin git@github.com:rap4all/housing.git
 git branch -M main
@@ -555,26 +555,26 @@ The key's randomart image is:
 |            ..=oo|
 +----[SHA256]-----+</code></pre>
 <p>If now you go to the specified path on the first line (so in our case <code>/home/user/.ssh/</code> you should see two files, <code>id_rsa</code> and <code>id_rsa.pub</code>, the private and public keys respectively. We’re almost done: what you need to do now is copy the contents of the <code>id_rsa.pub</code> file to Github. Go to your profile settings:</p>
-<div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="images/github_settings.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Click on your user profile’s image in the top-right corner</figcaption><p></p>
+<img src="images/github_settings.png" alt="Click on your user profile's image in the top-right corner." class="figure-img">
+<figcaption class="figure-caption">
+Click on your user profile’s image in the top-right corner.
+</figcaption>
 </figure>
-</div>
 <p>And then click on “SSH and GPG keys”:</p>
-<div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="images/github_gpg.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Go to your user settings and choose “SSH and GPG keys”</figcaption><p></p>
+<img src="images/github_gpg.png" alt="Go to your user settings and choose 'SSH and GPG keys'." class="figure-img">
+<figcaption class="figure-caption">
+Go to your user settings and choose ‘SSH and GPG keys’.
+</figcaption>
 </figure>
-</div>
 <p>and then click on “New SSH key”. Name this key (it’s a good idea to write something that makes recognizing the machine the key was generated easily) and paste the contents of <code>id_rsa.pub</code> in the text box and click on “add SSH key”:</p>
-<div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="images/github_add_ssh.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Copy the contents of the public key here</figcaption><p></p>
+<img src="images/git_add_ssh.png" alt="Copy the contents of the public key here." class="figure-img">
+<figcaption class="figure-caption">
+Copy the contents of the public key here.
+</figcaption>
 </figure>
-</div>
 <p>We can now go back to our terminal and try to push again:</p>
 <pre><code>owner@localhost ➤ git push -u origin master</code></pre>
 <p>The following message gets printed:</p>
@@ -594,82 +594,83 @@ To github.com:rap4all/housing.git
  * [new branch]      master -&gt; master
 Branch 'master' set up to track remote branch 'master' from 'origin'.</code></pre>
 <p>And we’re done! Our commits are now safely backed up on Github. If we go to our repository’s main page, we should see the following:</p>
-<div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="images/github_repo_1.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Finally!</figcaption><p></p>
+<img src="images/git_repo_1.png" alt="Finally!" class="figure-img">
+<figcaption class="figure-caption">
+Finally!
+</figcaption>
 </figure>
-</div>
 </section>
 <section id="getting-to-know-github" class="level2" data-number="4.4">
 <h2 data-number="4.4" class="anchored" data-anchor-id="getting-to-know-github"><span class="header-section-number">4.4</span> Getting to know Github</h2>
 <p>We have succeeded in installing Git and making it work with our Github account. If you use another machine for development, you will need to generate another rsa key pair on that machine and add the public key to Github. If you use another code hosting platform, you can use the same rsa key pair, but will need to add the public key to this other code hosting platform. You can even use the same key pair as a passwordless authentication method for ssh (for example to log into a server, but this is outside the scope of the present book). Before continuing we are going to take a little tour of Github.</p>
-<div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="images/github_repo_1.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">You repository’s landing page</figcaption><p></p>
+<img src="images/git_repo_1.png" alt="You repository's landing page." class="figure-img">
+<figcaption class="figure-caption">
+You repository’s landing page.
+</figcaption>
 </figure>
-</div>
 <p>Once you’re on your repository’s landing page you see the same files and folders as in the root directory of the project on your computer. In our case here, we see our two files. Github suggests that we add a README file; we are going to ignore this for now. Take a closer look at the menu at the top, below your repository’s name:</p>
-<div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="images/github_menu.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Several options to choose from</figcaption><p></p>
+<img src="images/github_menu.png" alt="Several options to choose from." class="figure-img">
+<figcaption class="figure-caption">
+Several options to choose from.
+</figcaption>
 </figure>
-</div>
 <p>Most important for our needs is the “Issues”, “Pull requests”, “Actions” and “Settings” tab.</p>
 <p>In the next chapter we are going to learn about pull requests which are essential for collaborating using Git and Github.com. We will learn about the “Actions” tab in the second part of the book.</p>
 <p>So let’s start with “Settings”.</p>
-<div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="images/github_settings2.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Choose the “Settings” tab</figcaption><p></p>
+<img src="images/github_settings2.png" alt="Choose the 'Settings' tab." class="figure-img">
+<figcaption class="figure-caption">
+Choose the ‘Settings’ tab.
+</figcaption>
 </figure>
-</div>
 <p>There are many options that you can choose from, but what’s important for our purposes is the “Collaborators” option. This is where you can invite people to contribute to the repository. People that are invited in this way can directly push to the repository. Let’s invite the author of this book:</p>
-<div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="images/github_add_collab.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Choose the “Settings” tab</figcaption><p></p>
+<img src="images/github_add_collab.png" alt="Follow along to add a collaborator." class="figure-img">
+<figcaption class="figure-caption">
+Follow along to add a collaborator.
+</figcaption>
 </figure>
-</div>
 <p>Start by typing the person’s Github username. You can also invite collaborators by providing their email address.</p>
-<div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="images/github_add_collab2.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Choose the “Settings” tab</figcaption><p></p>
+<img src="images/github_add_collab2.png" alt="Look for your collaborators." class="figure-img">
+<figcaption class="figure-caption">
+Look for your collaborators.
+</figcaption>
 </figure>
-</div>
 <p>Click then on the user’s profile and he or she should get an invitation per email.</p>
 <p>This is what it looks like from the perspective of Bruno’s account now:</p>
-<div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="images/github_add_collab2.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Bruno can now push as if he owned the repository</figcaption><p></p>
+<img src="images/github_collab_added.png" alt="Bruno can now push as if he owned the repository." class="figure-img">
+<figcaption class="figure-caption">
+Bruno can now push as if he owned the repository.
+</figcaption>
 </figure>
-</div>
 <p>It’s important to understand the distinction between inviting someone to contribute to the repository and have someone from outside the project contribute. We are going to explore these two scenarios in the next section, but before that, let’s see what the “Issues” tab is about.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="images/github_new_issue.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Anyone can open an issue in a public repository</figcaption><p></p>
-</figure>
-</div>
 <p>If the repository is public, anyone can open an issue to either submit a bug, or suggest some ideas, and if the repository is private, only invited collaborators can do this.</p>
 <p>Let’s open an issue to illustrate how this works:</p>
-<div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="images/github_new_issue.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Write what the issue’s about here</figcaption><p></p>
+<img src="images/github_new_issue.png" alt="Click on 'New issue' in the 'Issues' tab of your project." class="figure-img">
+<figcaption class="figure-caption">
+Click on ‘New issue’ in the ‘Issues’ tab of your project.
+</figcaption>
 </figure>
-</div>
+<p>You will land on this interface:</p>
+<figure class="figure">
+<img src="images/github_new_issue_empty.png" alt="Write what the issue's about here." class="figure-img">
+<figcaption class="figure-caption">
+Write what the issue’s about here.
+</figcaption>
+</figure>
 <p>Give a nice title to the issue (1), add a thorough description (2), (optionally) assign it to someone (3) and (optionally) add a label to it (4), finally click on “Submit new issue” (5) to submit the issue:</p>
-<div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="images/github_new_issue2.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Try to provide as many details as possible</figcaption><p></p>
+<img src="images/github_new_issue2.png" alt="Try to provide as many details as possible." class="figure-img">
+<figcaption class="figure-caption">
+Try to provide as many details as possible.
+</figcaption>
 </figure>
-</div>
 <p>Sometimes issues don’t need to be very long, and act more as reminders than anything else. For example here, the owner of the repository didn’t have the time to add a Readme, but didn’t want to forget to add one later on. The author assigned the issue to Bruno: so it’ll be Bruno’s job to add the Readme. Issue-driven project management is a very valid strategy when working asynchronously and in a decentralized fashion.</p>
 <p>If you encountered a bug and want to open an issue, it is very important that you provide a minimal, reproducible example (MRE). MREs are snippets of code that can be run very easily by someone other than yourself and which produce the bug reliably. Interestingly, if you understand what makes an MRE minimal and reproducible, you understand what will make our pipelines reproducible as well. So what’s important for an MRE?</p>
 <p>First, the code needs to be self-contained. For example, if some data is required you need to provide the data. If the data is sensitive, you need to think about the bug in greater detail: is the bug due to the structure of the data, or does the bug manifest itself on any kind of data? If that’s the case, use some of the built-in datasets to R (<code>iris</code>, <code>mtcars</code>, etc) for your MRE.</p>
