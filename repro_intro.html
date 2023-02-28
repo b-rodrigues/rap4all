@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Building reproducible analytical pipelines with R - 12&nbsp; Introduction to reproducibility</title>
+<title>Building reproducible analytical pipelines with R - 10&nbsp; Introduction to reproducibility</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -136,7 +136,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
     <div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Introduction to reproducibility</span></h1>
+      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Introduction to reproducibility</span></h1>
       <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
         <i class="bi bi-chevron-right"></i>
       </button>
@@ -172,91 +172,101 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <a href="./intro.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./part1_intro.html" class="sidebar-item-text sidebar-link">Part 1: Don’t repeat yourself</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./part1_intro.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Part 1: Don’t repeat yourself</span></a>
+  <a href="./prerequisites.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Before we start</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./prerequisites.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Before we start</span></a>
+  <a href="./project_start.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Project start</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./project_start.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Project start</span></a>
+  <a href="./git.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Version control</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./git.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Version control</span></a>
+  <a href="./github.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Collaborating with Github</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./github.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Collaborating with Github</span></a>
+  <a href="./fprog.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Functional programming</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./fprog.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Functional programming</span></a>
+  <a href="./lit_prog.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Literate programming</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./lit_prog.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Literate programming</span></a>
+  <a href="./part1_conclusion.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Conclusion of part 1</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./part2_intro.html" class="sidebar-item-text sidebar-link">Part 2: Reproducibility</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./part1_conclusion.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Conclusion of part 1</span></a>
+  <a href="./project_rewrite.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Rewriting our project</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./part2_intro.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Part 2: Reproducibility</span></a>
+  <a href="./repro_intro.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Introduction to reproducibility</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./project_rewrite.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Rewriting our project</span></a>
+  <a href="./packages.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Packaging your code</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./repro_intro.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Introduction to reproducibility</span></a>
+  <a href="./testing.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Testing your code</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./packages.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Packaging your code</span></a>
+  <a href="./targets.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Build automation</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./testing.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Testing your code</span></a>
+  <a href="./repro_cont.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Advanced topics in reproducibility</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./targets.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Build automation</span></a>
+  <a href="./ci_cd.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Continuous integration and continuous deployment/delivery</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./repro_cont.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Advanced topics in reproducibility</span></a>
+  <a href="./part2_conclusion.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Conclusion of part 2</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./ci_cd.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Continuous integration and continuous deployment/delivery</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./part2_conclusion.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Conclusion of part 2</span></a>
-  </div>
-</li>
+      </ul>
+  </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./references.html" class="sidebar-item-text sidebar-link">References</a>
@@ -271,12 +281,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#recording-packages-version-with-renv" id="toc-recording-packages-version-with-renv" class="nav-link active" data-scroll-target="#recording-packages-version-with-renv"><span class="toc-section-number">12.1</span>  Recording packages’ version with <code>{renv}</code></a></li>
-  <li><a href="#daily-renv-usage" id="toc-daily-renv-usage" class="nav-link" data-scroll-target="#daily-renv-usage"><span class="toc-section-number">12.2</span>  Daily <code>{renv}</code> usage</a></li>
-  <li><a href="#collaborating-with-renv" id="toc-collaborating-with-renv" class="nav-link" data-scroll-target="#collaborating-with-renv"><span class="toc-section-number">12.3</span>  Collaborating with <code>{renv}</code></a></li>
-  <li><a href="#renv-shortcomings" id="toc-renv-shortcomings" class="nav-link" data-scroll-target="#renv-shortcomings"><span class="toc-section-number">12.4</span>  renv shortcomings</a></li>
-  <li><a href="#rerunning-old-analyses-where-no-renv.lock-file-is-available" id="toc-rerunning-old-analyses-where-no-renv.lock-file-is-available" class="nav-link" data-scroll-target="#rerunning-old-analyses-where-no-renv.lock-file-is-available"><span class="toc-section-number">12.5</span>  Rerunning old analyses where no renv.lock file is available</a></li>
-  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="toc-section-number">12.6</span>  Conclusion</a></li>
+  <li><a href="#recording-packages-version-with-renv" id="toc-recording-packages-version-with-renv" class="nav-link active" data-scroll-target="#recording-packages-version-with-renv"><span class="toc-section-number">10.1</span>  Recording packages’ version with <code>{renv}</code></a></li>
+  <li><a href="#daily-renv-usage" id="toc-daily-renv-usage" class="nav-link" data-scroll-target="#daily-renv-usage"><span class="toc-section-number">10.2</span>  Daily <code>{renv}</code> usage</a></li>
+  <li><a href="#collaborating-with-renv" id="toc-collaborating-with-renv" class="nav-link" data-scroll-target="#collaborating-with-renv"><span class="toc-section-number">10.3</span>  Collaborating with <code>{renv}</code></a></li>
+  <li><a href="#renv-shortcomings" id="toc-renv-shortcomings" class="nav-link" data-scroll-target="#renv-shortcomings"><span class="toc-section-number">10.4</span>  renv shortcomings</a></li>
+  <li><a href="#rerunning-old-analyses-where-no-renv.lock-file-is-available" id="toc-rerunning-old-analyses-where-no-renv.lock-file-is-available" class="nav-link" data-scroll-target="#rerunning-old-analyses-where-no-renv.lock-file-is-available"><span class="toc-section-number">10.5</span>  Rerunning old analyses where no renv.lock file is available</a></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="toc-section-number">10.6</span>  Conclusion</a></li>
   </ul>
 </nav>
     </div>
@@ -285,7 +295,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Introduction to reproducibility</span></h1>
+<h1 class="title d-none d-lg-block"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Introduction to reproducibility</span></h1>
 </div>
 
 
@@ -303,8 +313,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>We are at a stage where the analysis is done. Converting our scripts into Rmds was quite easy to justify because writing the Rmds is also writing the report that we need to send to our boss (or our research paper, etc). But it might be harder to justify writing further documentation, or package the functions we’ve had to write for reuse later and otherwise ensure that the analysis is and stays reproducible. So we are going to start with the least best solution to the reproducibility issue, which is recording the versions of the packages that were used. This is quite easy and quick to do and provides at least some hope that the analysis will stay reproducible. But this will not do anything to make the analysis more easily re-usable, will not improve the documentation, nor ensure that what we wrote is indeed correct. For this, we would need to write tests, which are missing from our current analysis. We only wrote one test, making sure that all the communes were accounted for. This is why going with a package (and I need to stress here that the goal of making this package is not to have it on CRAN) is so useful: packages offer us a great framework for documenting, testing and sharing our code (even if only sharing internally in your company/team, or even just future you). Also, at this stage, your analysis is much closer to being a package than you think. As you shall see in the next chapter, going from our Rmds to a fully functioning package is much easier than you expect, even if you’ve never written a package in your life.</p>
 <p>So I hope that I made my point clear: it is not recommended to stop at this stage, but I also recognize that we live in the real world with real physical constraints. So because we live in this imperfect world, sometimes we need to deliver imperfect work. So let’s see what we can do that is very cheap in terms of effort and time, but still allow us to have some hope of having our analysis reproducible using the <code>{renv}</code> package. It is quite easy to get started with <code>{renv}</code>: simply install it, and in get a record of the used packages and their versions with one single command. This record gets saved inside a file that can then be used to restore this project’s library in the future, and without interfering with the other packages that you already have installed on your machine. You see, <code>{renv}</code> creates a per-project library (a library is the set of packages installed on your machine) which means that you can have as many version of, say, <code>{dplyr}</code> as needed (one per project). The right version of <code>{dplyr}</code> will be installed and used for the right project.</p>
 <p>Let’s see how this works by creating such a project-wide library for our little project.</p>
-<section id="recording-packages-version-with-renv" class="level2" data-number="12.1">
-<h2 data-number="12.1" class="anchored" data-anchor-id="recording-packages-version-with-renv"><span class="header-section-number">12.1</span> Recording packages’ version with <code>{renv}</code></h2>
+<section id="recording-packages-version-with-renv" class="level2" data-number="10.1">
+<h2 data-number="10.1" class="anchored" data-anchor-id="recording-packages-version-with-renv"><span class="header-section-number">10.1</span> Recording packages’ version with <code>{renv}</code></h2>
 <p>So now that you’ve used functional and literate programming, we need to start thinking about the infrastructure surrounding our code. By infrastructure I mean:</p>
 <ul>
 <li>the R version;</li>
@@ -430,29 +440,29 @@ drwxr-xr-x 1 LLP685 Domain Users     0 Feb 27 12:44 renv
 </ul>
 <p>In the next section, we’ll quickly review how to use <code>{renv}</code> on a “daily basis”.</p>
 </section>
-<section id="daily-renv-usage" class="level2" data-number="12.2">
-<h2 data-number="12.2" class="anchored" data-anchor-id="daily-renv-usage"><span class="header-section-number">12.2</span> Daily <code>{renv}</code> usage</h2>
+<section id="daily-renv-usage" class="level2" data-number="10.2">
+<h2 data-number="10.2" class="anchored" data-anchor-id="daily-renv-usage"><span class="header-section-number">10.2</span> Daily <code>{renv}</code> usage</h2>
 <p>So let’s say that you start a new project and want to use <code>{renv}</code> right from the start.</p>
 </section>
-<section id="collaborating-with-renv" class="level2" data-number="12.3">
-<h2 data-number="12.3" class="anchored" data-anchor-id="collaborating-with-renv"><span class="header-section-number">12.3</span> Collaborating with <code>{renv}</code></h2>
+<section id="collaborating-with-renv" class="level2" data-number="10.3">
+<h2 data-number="10.3" class="anchored" data-anchor-id="collaborating-with-renv"><span class="header-section-number">10.3</span> Collaborating with <code>{renv}</code></h2>
 </section>
-<section id="renv-shortcomings" class="level2" data-number="12.4">
-<h2 data-number="12.4" class="anchored" data-anchor-id="renv-shortcomings"><span class="header-section-number">12.4</span> renv shortcomings</h2>
+<section id="renv-shortcomings" class="level2" data-number="10.4">
+<h2 data-number="10.4" class="anchored" data-anchor-id="renv-shortcomings"><span class="header-section-number">10.4</span> renv shortcomings</h2>
 <ul>
 <li>renv freezes packages, but not R versions</li>
 <li>difficulty to install packages with renv happens</li>
 </ul>
 </section>
-<section id="rerunning-old-analyses-where-no-renv.lock-file-is-available" class="level2" data-number="12.5">
-<h2 data-number="12.5" class="anchored" data-anchor-id="rerunning-old-analyses-where-no-renv.lock-file-is-available"><span class="header-section-number">12.5</span> Rerunning old analyses where no renv.lock file is available</h2>
+<section id="rerunning-old-analyses-where-no-renv.lock-file-is-available" class="level2" data-number="10.5">
+<h2 data-number="10.5" class="anchored" data-anchor-id="rerunning-old-analyses-where-no-renv.lock-file-is-available"><span class="header-section-number">10.5</span> Rerunning old analyses where no renv.lock file is available</h2>
 <ul>
 <li>groundhog</li>
 <li>rang</li>
 </ul>
 </section>
-<section id="conclusion" class="level2" data-number="12.6">
-<h2 data-number="12.6" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">12.6</span> Conclusion</h2>
+<section id="conclusion" class="level2" data-number="10.6">
+<h2 data-number="10.6" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">10.6</span> Conclusion</h2>
 
 
 </section>
@@ -709,12 +719,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="./project_rewrite.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Rewriting our project</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Rewriting our project</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="./packages.html" class="pagination-link">
-        <span class="nav-page-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Packaging your code</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Packaging your code</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

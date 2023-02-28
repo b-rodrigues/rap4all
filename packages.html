@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Building reproducible analytical pipelines with R - 13&nbsp; Packaging your code</title>
+<title>Building reproducible analytical pipelines with R - 11&nbsp; Packaging your code</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -73,7 +73,7 @@ ul.task-list li input[type="checkbox"] {
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
     <div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Packaging your code</span></h1>
+      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Packaging your code</span></h1>
       <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
         <i class="bi bi-chevron-right"></i>
       </button>
@@ -109,91 +109,101 @@ ul.task-list li input[type="checkbox"] {
   <a href="./intro.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./part1_intro.html" class="sidebar-item-text sidebar-link">Part 1: Don’t repeat yourself</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./part1_intro.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Part 1: Don’t repeat yourself</span></a>
+  <a href="./prerequisites.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Before we start</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./prerequisites.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Before we start</span></a>
+  <a href="./project_start.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Project start</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./project_start.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Project start</span></a>
+  <a href="./git.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Version control</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./git.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Version control</span></a>
+  <a href="./github.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Collaborating with Github</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./github.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Collaborating with Github</span></a>
+  <a href="./fprog.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Functional programming</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./fprog.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Functional programming</span></a>
+  <a href="./lit_prog.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Literate programming</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./lit_prog.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Literate programming</span></a>
+  <a href="./part1_conclusion.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Conclusion of part 1</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./part2_intro.html" class="sidebar-item-text sidebar-link">Part 2: Reproducibility</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./part1_conclusion.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Conclusion of part 1</span></a>
+  <a href="./project_rewrite.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Rewriting our project</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./part2_intro.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Part 2: Reproducibility</span></a>
+  <a href="./repro_intro.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Introduction to reproducibility</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./project_rewrite.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Rewriting our project</span></a>
+  <a href="./packages.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Packaging your code</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./repro_intro.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Introduction to reproducibility</span></a>
+  <a href="./testing.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Testing your code</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./packages.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Packaging your code</span></a>
+  <a href="./targets.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Build automation</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./testing.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Testing your code</span></a>
+  <a href="./repro_cont.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Advanced topics in reproducibility</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./targets.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Build automation</span></a>
+  <a href="./ci_cd.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Continuous integration and continuous deployment/delivery</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./repro_cont.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Advanced topics in reproducibility</span></a>
+  <a href="./part2_conclusion.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Conclusion of part 2</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./ci_cd.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Continuous integration and continuous deployment/delivery</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./part2_conclusion.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Conclusion of part 2</span></a>
-  </div>
-</li>
+      </ul>
+  </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./references.html" class="sidebar-item-text sidebar-link">References</a>
@@ -208,12 +218,12 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#benefits-of-packages" id="toc-benefits-of-packages" class="nav-link active" data-scroll-target="#benefits-of-packages"><span class="toc-section-number">13.1</span>  Benefits of packages</a></li>
-  <li><a href="#intro-to-packge-dev" id="toc-intro-to-packge-dev" class="nav-link" data-scroll-target="#intro-to-packge-dev"><span class="toc-section-number">13.2</span>  Intro to packge dev</a></li>
-  <li><a href="#document-your-package" id="toc-document-your-package" class="nav-link" data-scroll-target="#document-your-package"><span class="toc-section-number">13.3</span>  Document your package (?)</a></li>
-  <li><a href="#managing-package-dependencies" id="toc-managing-package-dependencies" class="nav-link" data-scroll-target="#managing-package-dependencies"><span class="toc-section-number">13.4</span>  Managing package dependencies (?)</a></li>
-  <li><a href="#unit-testing" id="toc-unit-testing" class="nav-link" data-scroll-target="#unit-testing"><span class="toc-section-number">13.5</span>  Unit testing</a></li>
-  <li><a href="#pkgdown" id="toc-pkgdown" class="nav-link" data-scroll-target="#pkgdown"><span class="toc-section-number">13.6</span>  pkgdown</a></li>
+  <li><a href="#benefits-of-packages" id="toc-benefits-of-packages" class="nav-link active" data-scroll-target="#benefits-of-packages"><span class="toc-section-number">11.1</span>  Benefits of packages</a></li>
+  <li><a href="#intro-to-packge-dev" id="toc-intro-to-packge-dev" class="nav-link" data-scroll-target="#intro-to-packge-dev"><span class="toc-section-number">11.2</span>  Intro to packge dev</a></li>
+  <li><a href="#document-your-package" id="toc-document-your-package" class="nav-link" data-scroll-target="#document-your-package"><span class="toc-section-number">11.3</span>  Document your package (?)</a></li>
+  <li><a href="#managing-package-dependencies" id="toc-managing-package-dependencies" class="nav-link" data-scroll-target="#managing-package-dependencies"><span class="toc-section-number">11.4</span>  Managing package dependencies (?)</a></li>
+  <li><a href="#unit-testing" id="toc-unit-testing" class="nav-link" data-scroll-target="#unit-testing"><span class="toc-section-number">11.5</span>  Unit testing</a></li>
+  <li><a href="#pkgdown" id="toc-pkgdown" class="nav-link" data-scroll-target="#pkgdown"><span class="toc-section-number">11.6</span>  pkgdown</a></li>
   </ul>
 </nav>
     </div>
@@ -222,7 +232,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Packaging your code</span></h1>
+<h1 class="title d-none d-lg-block"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Packaging your code</span></h1>
 </div>
 
 
@@ -239,27 +249,27 @@ ul.task-list li input[type="checkbox"] {
 
 <p>In this chapter you’re going to learn how to create your own package.</p>
 <p><em>We should make clear that this does not mean publishing the package on CRAN.</em></p>
-<section id="benefits-of-packages" class="level2" data-number="13.1">
-<h2 data-number="13.1" class="anchored" data-anchor-id="benefits-of-packages"><span class="header-section-number">13.1</span> Benefits of packages</h2>
+<section id="benefits-of-packages" class="level2" data-number="11.1">
+<h2 data-number="11.1" class="anchored" data-anchor-id="benefits-of-packages"><span class="header-section-number">11.1</span> Benefits of packages</h2>
 </section>
-<section id="intro-to-packge-dev" class="level2" data-number="13.2">
-<h2 data-number="13.2" class="anchored" data-anchor-id="intro-to-packge-dev"><span class="header-section-number">13.2</span> Intro to packge dev</h2>
+<section id="intro-to-packge-dev" class="level2" data-number="11.2">
+<h2 data-number="11.2" class="anchored" data-anchor-id="intro-to-packge-dev"><span class="header-section-number">11.2</span> Intro to packge dev</h2>
 <p><em>This is where fusen comes into play I guess; so we start from the Qmd file that was written before, containing the functions an the analysis, and see how we can now create a package from it, and use that file as a vignette? Copying here what Sébastien said on the matter</em></p>
 </section>
-<section id="document-your-package" class="level2" data-number="13.3">
-<h2 data-number="13.3" class="anchored" data-anchor-id="document-your-package"><span class="header-section-number">13.3</span> Document your package (?)</h2>
+<section id="document-your-package" class="level2" data-number="11.3">
+<h2 data-number="11.3" class="anchored" data-anchor-id="document-your-package"><span class="header-section-number">11.3</span> Document your package (?)</h2>
 <p><em>I guess fusen makes this process easy and leverages roxygen?</em></p>
 </section>
-<section id="managing-package-dependencies" class="level2" data-number="13.4">
-<h2 data-number="13.4" class="anchored" data-anchor-id="managing-package-dependencies"><span class="header-section-number">13.4</span> Managing package dependencies (?)</h2>
+<section id="managing-package-dependencies" class="level2" data-number="11.4">
+<h2 data-number="11.4" class="anchored" data-anchor-id="managing-package-dependencies"><span class="header-section-number">11.4</span> Managing package dependencies (?)</h2>
 <p><em>Discuss NAMESPACE and DESCRIPTION and all that. I think it’s important to also discuss here how to define dependencies from remotes, not just CRAN.</em></p>
 </section>
-<section id="unit-testing" class="level2" data-number="13.5">
-<h2 data-number="13.5" class="anchored" data-anchor-id="unit-testing"><span class="header-section-number">13.5</span> Unit testing</h2>
+<section id="unit-testing" class="level2" data-number="11.5">
+<h2 data-number="11.5" class="anchored" data-anchor-id="unit-testing"><span class="header-section-number">11.5</span> Unit testing</h2>
 <p><em>This is where I think we should discuss unit testing</em></p>
 </section>
-<section id="pkgdown" class="level2" data-number="13.6">
-<h2 data-number="13.6" class="anchored" data-anchor-id="pkgdown"><span class="header-section-number">13.6</span> pkgdown</h2>
+<section id="pkgdown" class="level2" data-number="11.6">
+<h2 data-number="11.6" class="anchored" data-anchor-id="pkgdown"><span class="header-section-number">11.6</span> pkgdown</h2>
 
 
 </section>
@@ -516,12 +526,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="./repro_intro.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Introduction to reproducibility</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Introduction to reproducibility</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="./testing.html" class="pagination-link">
-        <span class="nav-page-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Testing your code</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Testing your code</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
