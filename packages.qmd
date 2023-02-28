@@ -1,16 +1,108 @@
 # Packaging your code
 
-In this chapter you're going to learn how to create your own package.
+In this chapter you're going to learn how to create your own package. And let me
+be clear right from the start: the goal here is not to convert your analysis as
+a package to then publish on CRAN. No, that’s not it. The goal is to convert
+your analysis into a package because when your analysis goes into *package
+development mode*, you can, as the developer, leverage many tools that will
+help you improve the quality of your analysis. These tools will make it easier
+for you to:
 
-*We should make clear that this does not mean publishing the package on CRAN.*
+- document the functions you had to write for your analysis;
+- test these functions;
+- properly define depedencies;
+- use all the code you wrote into a true reproducible pipeline.
+
+Turning the analysis into a package will also make the separation between the
+software development work you had to write for your analysis (writing functions
+to clean data for instance) from the analysis itself much clearer. The package
+itself can be published on Github (if there’s nothing particularly sensitive
+about it) and can also be very easily installed from R itself from Github, or
+you can store it inside your organisation and then simply install it locally.
+
+By turning your analysis into a package you will essentially end up with two
+*things*:
+
+- a well-documented, and tested package;
+- an analysis that uses this package like any other package.
+
+Making this separation will then make it easier to record dependencies of your
+analysis using `{renv}`, as your package will be a package like any other that
+needs to be recorded. And what’s more, we can start off from the `.Rmd` files that
+we have already written! The `{fusen}` package will bridge the gap between the `.Rmd`
+files and the package: as Sébastien Rochette, the author of `{fusen}** says:
+
+> If you have written an Rmd file, you (almost) already written a package.
 
 ## Benefits of packages
 
-## Intro to packge dev
+Let’s first go over the benefits of turning your analysis into a package once
+again, as this is crucial.
 
-*This is where fusen comes into play I guess; so we start from the Qmd file that was written
-before, containing the functions an the analysis, and see how we can now create a package from it,
-and use that file as a vignette? Copying here what Sébastien said on the matter*
+The main point is not to turn the analysis into a package to publish on CRAN
+(but you can, if you want to). The point is that when you analyse data, more
+often than not you have to write a lot of custom code, and very often, you don’t
+expect to write that much custom code. Let’s think about our little project: all
+we wanted was to create some plots from Luxembourguish houses’ price data. And
+yet, we had to scrape Wikipedia on two occasion, clean an Excel file, write a
+test... the project was quite modest, and yet, the amount of code (and thus
+opportunities to make mistakes) is quite large. But, that’s not something that
+we could have anticipated, hence why we never really start by writing a package,
+but a script (or rather, an `.Rmd`) instead. But then as this script grows
+larger and larger, we realise that we might need something else that a simple
+`.Rmd` file.
+
+The other benefit of turning all this code into a package is that we get a clear
+separation between the code that we wrote purely to get our analysis going (what
+I called the *software development part* before) from the analysis itself (which
+would then typically consist in computing descriptive statisics, run regression
+or machine learning models, and visualisation). This then in turn means that we
+can more easily maintain and update each part separately. So the pure software
+development part goes into the package, which then gives us the possibility to
+use many great tools to ensure that our code is properly documented and tested,
+and then the analysis can go inside a purely reproducible pipeline.
+
+## `{fusen}` quickstart
+
+If you haven’t already, install the `{fusen}` package:
+
+```{r, eval = F}
+install.packages("fusen")
+```
+
+`{fusen}` makes the *documentation first* method proposed by Sébastien Rochette,
+`{fusen}` author, reality. The idea is to start from documentation in the form
+of an `.Rmd` file and go from there to a package. Let’s dive right into it
+by starting from a template included in the `{fusen}` package. Start an R session
+from your home (or Documents) directory and run the following:
+
+```{r, eval = F}
+fusen::create_fusen(path = "fusen.test", template = "minimal")
+```
+
+This will create a directory called `fusen.test` inside your home (or Documents) directory. Inside
+that folder you will find another folder called `dev/`. Let’s see what’s inside:
+
+```
+owner@localhost ➤ ls dev/
+
+0-dev_history.Rmd  flat_minimal.Rmd
+```
+
+`dev/` contains two `.Rmd` files, `0-dev_history.Rmd` and `flat_miminal.Rmd`. They’re both important, so let me
+explain what they do:
+
+- `flat_minimal.Rmd` is only an example, in practice, we will be using the Rmd file(s) that we have written before (`analyse_data.Rmd` and `save_data.Rmd`) instead.
+- `0-dev_history.Rmd` contains lines of code that you typically run when you’re developing a package. For example, a line to initialise Git for the project, a line to add some dependencies, etc, etc. The idea is to **write down everything** that you type in the console in this file. This leaves a trace of what you have been doing, and also acts as a checklist so that you can make sure that you didn’t forget anything.
+
+Before describing these files into detail, I want to show you this image taken from `{fusen}`’s 
+[website](https://thinkr-open.github.io/fusen/)[^https://is.gd/5pJi2h]:
+
+<figure>
+    <img src="images/fusen_inflate_functions.png"
+         alt="fusen takes care of the boring stuff for you!"></img>
+    <figcaption>fusen takes care of the boring stuff for you!</figcaption>
+</figure>
 
 ## Document your package (?)
 

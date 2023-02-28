@@ -3,9 +3,9 @@
 We are at a stage where the analysis is done. Converting our scripts into Rmds
 was quite easy to justify because writing the Rmds is also writing the report
 that we need to send to our boss (or our research paper, etc). But it might be
-harder to justify writing further documentation, or package the functions we’ve
+harder to justify writing further documentation or package the functions we’ve
 had to write for reuse later and otherwise ensure that the analysis is and stays
-reproducible. So we are going to start with the least best solution to the
+reproducible. So we are going to start with the least good solution to the
 reproducibility issue, which is recording the versions of the packages that were
 used. This is quite easy and quick to do and provides at least some hope that
 the analysis will stay reproducible. But this will not do anything to make the
@@ -27,14 +27,15 @@ constraints. So because we live in this imperfect world, sometimes we need to
 deliver imperfect work. So let’s see what we can do that is very cheap in terms
 of effort and time, but still allow us to have some hope of having our analysis
 reproducible using the `{renv}` package. It is quite easy to get started with
-`{renv}`: simply install it, and in get a record of the used packages and their
+`{renv}`: simply install it, and get a record of the used packages and their
 versions with one single command. This record gets saved inside a file that can
 then be used to restore this project’s library in the future, and without
 interfering with the other packages that you already have installed on your
 machine. You see, `{renv}` creates a per-project library (a library is the set
 of packages installed on your machine) which means that you can have as many
-version of, say, `{dplyr}` as needed (one per project). The right version of
-`{dplyr}` will be installed and used for the right project.
+versions of, say, `{dplyr}` as needed (one per project). The right version of
+`{dplyr}` will be installed and used for the right project only, and without
+interfering with other installed versions.
 
 Let’s see how this works by creating such a project-wide library for our little
 project.
@@ -49,16 +50,16 @@ about the infrastructure surrounding our code. By infrastructure I mean:
 - and otherwise the whole computational environment, even the computer hardware itself.
 
 `{renv}` is a package that takes care of point number 2: it allows you to easily
-record the packages that were used for an analysis. This record is a file called
-`renv.lock` which will appear at the root of your project once you’ve set up
-`{renv}` and executed it. You can use `{renv}` once you’re done with an analysis
-like in our case, or better yet, immediately at the start, as soon as you start
-writing `library(somePackage)`. You can keep updating the `renv.lock` file as
-you add or remove packages from your analysis. The `renv.lock` file can then be
-used to restore the exact same package library that was used for your analysis
-on another computer, or on the same computer but in the future.
+record the packages that were used for a specific project. This record is a file
+called `renv.lock` which will appear at the root of your project once you’ve set
+up `{renv}` and executed it. You can use `{renv}` once you’re done with an
+analysis like in our case, or better yet, immediately at the start, as soon as
+you start writing `library(somePackage)`. You can keep updating the `renv.lock`
+file as you add or remove packages from your analysis. The `renv.lock` file can
+then be used to restore the exact same package library that was used for your
+analysis on another computer, or on the same computer but in the future.
 
-This works because `{renv}` does more than simply creating a list of the used
+This works because `{renv}` does more than simply create a list of the used
 packages and recording their versions inside the `renv.lock` file: it actually
 creates a per-project library (remember, the *library* is the set of packages
 installed on your computer) that is completely isolated for the main, default, R
@@ -217,8 +218,8 @@ dependencies that are used for the project, but it started by stating the R
 version that was used when it was generated. It is important to remember that
 when you’ll use `{renv}` to restore a project’s library on a new machine, the R
 version will not be restored: so you will be running these old packages on a
-newer version of R, which may in sometimes by a problem (but we’re going to
-discuss this later).
+newer version of R, which may sometimes be a problem (but we’re going to discuss
+this later).
 
 So... that’s it. You’ve generated the `renv.lock` file, which means that future
 you, or someone else can restore the library that you used to write this
@@ -263,7 +264,7 @@ Retrieving 'https://cloud.r-project.org/src/contrib/Archive/vroom/vroom_1.5.5.ta
 Notice the word "Archive" in the url? That’s because this project uses `{vroom}`
 1.5.5, but as of writing (early 2023), `{vroom}` is at version 1.6.1.
 
-Now, maybe you’ve run `renv::restore()`, but installation of the packages failed.
+Now, maybe you’ve run `renv::restore()`, but the installation of the packages failed.
 If that’s the case, let me explain what likely happened.
 
 I tried restoring the project’s library on two different machines: a Windows
@@ -271,11 +272,12 @@ laptop and a Linux workstation. `renv::restore()` failed on the Windows laptop,
 but succeeded on the Linux workstation.
 
 Why does that happen? Well in the case of the Windows laptop, compilation of the
-`{dplyr}` package failed. This is likely due to the fact that my Windows laptop does
-not have the right version of Rtools installed. If you look inside the `renv.lock`
-file that came with the `targets-minimal` project, you should notice that the recorded
-R version is 4.1.0, but I’m running R 4.2.2 on my laptop. So libraries get compiled
-using Rtools 4.2 and not Rtools 4.0 (which include the libraries for R 4.1 as well).
+`{dplyr}` package failed. This is likely because my Windows laptop does not have
+the right version of Rtools installed. If you look inside the `renv.lock` file
+that came with the `targets-minimal` project, you should notice that the
+recorded R version is 4.1.0, but I’m running R 4.2.2 on my laptop. So libraries
+get compiled using Rtools 4.2 and not Rtools 4.0 (which includes the libraries
+for R 4.1 as well).
 
 So in order to run this project successfully, I should install the right version
 of R and Rtools, and this is usually not so difficult, especially on Windows.
@@ -287,45 +289,276 @@ another project’s library. This is especially useful if you’re working on a
 project for some time (say, several months at least) and want to make sure that
 you can keep working on other projects in parallel. That’s because what often
 happens is that you update your packages to use that sweet new feature from some
-package but when you go back to your long-term project and try to run, it, ’lo
+package but when you go back to your long-term project and try to run, it, lo
 and behold it doesn’t work anymore. This is because another function coming from
-some other package you use in your long-term project got removed, or renamed, or
-simple works differently due to the update. In this scenario, you wouldn’t be 
-troubled by trying to restore the project, since you’re simply using `{renv}` to
-isolate the project’s library (but even if you had to restore the library, that
-would work since you’re using the same R version).
+some other package that also got updated and that you use in your long-term
+project got removed, or renamed, or simply works differently now. In this
+scenario, you wouldn’t be troubled by trying to restore the project, since
+you’re simply using `{renv}` to isolate the project’s library (but even if you
+had to restore the library, that would work since you’re using the same R
+version).
 
 But also, apart from that already quite useful feature, `renv.lock` files
 provide a very useful blueprint for Docker, which we are going to explore in a
 future chapter. Only to give you a little taste of what’s coming: since the
 `renv.lock` file lists the R version that was used to record the packages, we
 can start from a Docker image that contains the right version of R. From there,
-restoring the project using `renv::restore()` should succeed without isssues. If
+restoring the project using `renv::restore()` should succeed without issues. If
 you have no idea what this all means, do not worry, you will know by the end of
 the book, so hang in there.
 
 So should you use `{renv}`? I see two scenarios where it makes sense:
 
 - You’re done with the project and simply want to keep a record of the packages used. Simply call `renv::init()` at the end of the project and commit and push the `renv.lock` file on Github.
-- You want to use `{renv}` from the start to isolate the project’s library from your whole R installation’s library to avoid any interference (I would advise you do it like this).
+- You want to use `{renv}` from the start to isolate the project’s library from your whole R installation’s library to avoid any interference (I would advise you to do it like this).
 
 In the next section, we’ll quickly review how to use `{renv}` on a "daily basis".
 
-## Daily `{renv}` usage
+### Daily `{renv}` usage
 
-So let’s say that you start a new project and want to use `{renv}` right from the start.
+So let’s say that you start a new project and want to use `{renv}` right from the start. You start with an empty directory, and
+add a template `.Rmd` file, and let’s say it looks like this:
 
-## Collaborating with `{renv}`
+````{verbatim}
+---
+title: "My new project"
+output: html_document
+---
 
+```{r setup, include=FALSE}
+library(dplyr)
+```
 
-## renv shortcomings
-- renv freezes packages, but not R versions
-- difficulty to install packages with renv happens
+## Overview
 
+## Analysis
+````
 
-## Rerunning old analyses where no renv.lock file is available
+Before continuing, make sure that it correctly compiles into a HTML file by
+running `rmarkdown::render("test.Rmd")` in the correct directory.
 
-- groundhog
-- rang
+In the `setup` chunk you load the packages that you need. Now, save this file,
+and start a fresh session in the same directory and run `renv::init()`. You
+should see the familiar prompts described above, as well as the `renv.lock` file
+(which will only contain `{dplyr}` and its dependencies).
+
+Now, after the `library(dplyr)` line, add the following `library(ggplot2)` (or any other 
+package that you use on a daily basis). Make sure to save the `.Rmd` file and try
+to render it again by using `rmarkdown::render("test.Rmd")` (or if you’re using
+RStudio, by clicking the right button), but, spoiler alert, it won’t work. Instead
+you should see this:
+
+```
+Quitting from lines 7-9 (my_new_project.Rmd) 
+Error in library(ggplot2) : there is no package called 'ggplot2'
+```
+
+Don’t be confused: remember that `{renv}` is now activated, and that each
+project where `{renv}` is enabled has its own project-wide library. You may have
+`{ggplot2}` installed on your system-wide library, but this project does not
+have it yet. This means that you need to install `{ggplot2}` for your project.
+To do so, simply start an R session within your project and run
+`install.packages("ggplot2")`. If the version installed on your system-wide
+library is the latest version available on CRAN, the package will simply be
+copied over, if not, the latest version will be installed on your project’s
+library. You can now update the `renv.lock` file. This is done using
+`renv::snapshot()`; this will show you a list of new packages to record inside
+the `renv.lock` file and ask you to continue:
+
+```{r, eval = F}
+**list of many packages over here**
+
+Do you want to proceed? [y/N]: 
+* Lockfile written to 'path/to/my_new_project/renv.lock'.
+```
+
+If you now open the `renv.lock` file, and look for the string `"ggplot2"` you should
+see it listed there alongside its dependencies. Let me reiterate: this version of 
+`{ggplot2}` is now unique to this project. You can work on other projects with other
+versions of `{ggplot2}` without interfering with this one. You can even install
+arbitrary versions of packages using `renv::install()`. For example, to install
+an older version of `{data.table}`:
+
+```{r, eval = F}
+renv::install("AER@1.0-0") # this is a version from August 2008
+```
+
+But just like in the previous section, where we wanted to restore an old project
+that used `{renv}`, installation of older packages may fail. If you need to use
+old packages, there are approaches that work better, which we are also going to
+going to explore in this chapter.
+
+Back to daily usage of `{renv}`: keep installing the required packages for your
+project and calling `renv::snapshot()` to keep a record of the library for
+reproducibility purposes. Once you’re done with your project, you have two possibilities:
+
+- You can `renv::snapshot()` one last time to make sure that every dependency is correctly accounted for;
+- You update every package in the library and in the lockfile and make sure your project runs with the latest versions of every package. You then provide this updated `renv.lock` file for future use. 
+
+The second option can be interesting if your project took some time to be
+developed, and you want to deliver something that depends on current packages.
+However, only do so if you have written enough tests to detect if a package
+update could break your project, or else you run the risk of providing a lock
+file that will install packages with which your project can’t actually run!
+If you want to play it safe, simply go for the first option.
+
+### Collaborating with `{renv}`
+
+`{renv}` is also quite useful when collaborating. You can start the project and
+generate the lock file, and when your team-mates clone the repository from
+Github, they can get the exact same package versions as you. You all only need
+to make sure that everyone is running the same R version to avoid any issues.
+
+There is a vignette on just this that I invite you to read for more details,
+see [here](https://rstudio.github.io/renv/articles/collaborating.html)[^https://is.gd/sXpWVp].
+
+### {renv}’s shortcomings
+
+In the next section, I’m going to go over two packages that make it easy to install old
+packages, which can be useful for reproducibility as well. But before that, let’s discuss
+`{renv}`’s shortcomings (which we already alluded to before). It is quite important to
+understand what `{renv}` does and what it doesn’t do, and why `{renv}` alone is not enough.
+
+The first problem, and I’m repeating myself here, is that `{renv}` only records
+the R version used for the project, but does not restore it when calling
+`renv::restore()`. You need to install the right R version yourself. On Windows
+this should be fairly easy to do, but you then need to make sure that you’re
+running the right version of R with the right scripts, which can get confusing.
+
+There is the `{rig}` package that makes it easy to install and switch between R
+versions that you could check
+[out](https://github.com/r-lib/rig)[^https://is.gd/dvH2Sj] if you’re interested.
+However, I don’t think that `{rig}` should be used for our purposes. I believe
+that it is safer to use Docker instead, and we shall see how to do so in the
+coming chapters.
+
+The other issue of using `{renv}` is that future you, or your team-mates or
+people that want to reproduce your results need to install packages that may be
+quite difficult to install, either because they’re very old by now, or because
+their dependencies are difficult to satisfy. Have you ever tried to install a
+package thet depended on `{rJava}`? Or the `{rgdal}` package? Installing these
+packages can be quite challenging, because they need specific system
+requirements that may be impossible for you to install (either because you don’t
+have admin rights on your workstation, or because the required version of these
+system dependencies is not available anymore). Having to install these packages
+(and potentially quite old versions at that) can really hinder the
+reproducibility of your project. Here again, Docker provides a solution. Future
+you, your team-mates or other people simply need to be able to run a Docker
+container, which is a much lower bar than installing these old libraries.
+
+I want to stress that this does not mean that `{renv}` is useless: we will keep
+using it, but together with Docker to ensure the reproducibility of our project.
+As I’ve written above alread, *at a minimum `{renv}` ensures that a project’s
+library doesn’t interfere with another project’s library* and this is in itself
+already quite useful.
+
+Let’s now quickly disuss two other packages before finishing this chapter, which
+provide an answer to the question: *how to rerun an old analysis if no renv.lock file
+is available?*
+
+## Becoming an R-cheologist
+
+So let’s say that you need to run an old script, and there’s no `renv.lock` file
+around for you to restore the packages as they were. There might still be a
+solution (apart from running the script on the current version on R and
+packages, and hope that everything goes well), but for this you need to at least
+know roughly *when* that script was written. Let’s say that you know that this
+script was written back in 2017, somewhere around October.
+If you know that, you can use the `{rang}` and `{groundhog}` packages to download
+the packages as of October 2018 in a separate library and then run your script.
+
+`{rang}` is fairly recent as of writing (February 2023) so I won’t go into too much
+detail now, as it is likely that the package will keep evolving rapidly in the coming
+weeks. So if you want to use it already and follow its development, take a look at 
+its Github repository [here](https://github.com/chainsawriot/rang)[^https://is.gd/sQu7NV].
+
+`{groundhog}` is another option that has been around for more time and is fairly easy
+to use. Suppose that you have a script from October 2018 that looks like this:
+
+```{r, eval = F}
+library(purrr)
+library(ggplot2)
+
+data(mtcars)
+
+myplot <- ggplot(mtcars) +
+  geom_line(aes(y = hp, x = mpg))
+
+ggsave("/home/project/output/myplot.pdf", myplot)
+```
+
+If you want to run this script with the versions that were current in October 2017
+for the `{purrr}` and `{ggplot2}` packages, you can achieve this by simply
+changing the `library()` calls:
+
+```{r, eval = F}
+groundhog::groundhog.library("
+    library(purrr)
+    library(ggplot2)",
+    "2017-10-04"
+    )
+
+data(mtcars)
+
+myplot <- ggplot(mtcars) +
+  geom_line(aes(y = hp, x = mpg))
+
+ggsave("/home/project/output/myplot.pdf", myplot)
+```
+
+but you will get the following message:
+
+```
+---------------------------------------------------------------------------
+|IMPORTANT.
+|    Groundhog says: you are using R-4.2.2, but the version of R current 
+|    for the entered date, '2017-10-04', is R-3.4.x. It is recommended 
+|    that you either keep this date and switch to that version of R, or 
+|    you keep the version of R you are using but switch the date to 
+|    between '2022-04-22' and '2023-01-08'. 
+|
+|    You may bypass this R-version check by adding: 
+|    `tolerate.R.version='4.2.2'`as an option in your groundhog.library() 
+|    call. Please type 'OK' to confirm you have read this message. 
+|   >ok
+```
+
+So here again, we are advised to switch to the version of R that was current at that
+time. If we follow the message’s advice, and add `tolerate.R.version = '4.2.2'`, we 
+may get the script to run:
+
+```{r, eval = F}
+groundhog.library("
+    library(purrr)
+    library(ggplot2)",
+    "2017-10-04",
+    tolerate.R.version = "4.2.2")
+
+data(mtcars)
+
+myplot <- ggplot(mtcars) +
+  geom_line(aes(y = hp, x = mpg))
+
+ggsave("/home/project/output/myplot.pdf", myplot)
+```
+
+But just like for `{renv}` (or `{rang}`), installation of the packages can fail,
+and for the same reasons (unmet system requirements most of the time).
+
+So here again, the solution is to take care of the missing piece of the
+reproducibility puzzle, which is the whole computational environment itself.
 
 ## Conclusion
+
+In this chapter you had a first (maybe a bit sour taste) of reproducibility.
+This is because while the tools presented here are very useful, they will not be
+sufficient if we want our project to be truly reproducible. There are too many
+things that can go wrong when re-installing old package versions, so we must
+instead provide a way for users to not have to do it at all. This is where
+Docker is going to be helpful. But before that, we need to hit the development
+bench again. We are actually not quite done with our project; before going to
+full reproducibility, we should turn our analysis into a package. And so you
+will see, this is going to be much, much, easier than you might expect. You
+already did 95% of the job! There are many advantages to turning our analysis
+into a package, and not only from a reproducibility perspective.
+
