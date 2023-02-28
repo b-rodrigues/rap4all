@@ -304,8 +304,9 @@ div.csl-indent {
   <ul class="collapse">
   <li><a href="#tbd-basics" id="toc-tbd-basics" class="nav-link" data-scroll-target="#tbd-basics"><span class="toc-section-number">5.1.1</span>  TBD basics</a></li>
   <li><a href="#handling-conflicts" id="toc-handling-conflicts" class="nav-link" data-scroll-target="#handling-conflicts"><span class="toc-section-number">5.1.2</span>  Handling conflicts</a></li>
-  <li><a href="#simplified-trunk-based-development" id="toc-simplified-trunk-based-development" class="nav-link" data-scroll-target="#simplified-trunk-based-development"><span class="toc-section-number">5.1.3</span>  Simplified trunk-based development</a></li>
-  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="toc-section-number">5.1.4</span>  Conclusion</a></li>
+  <li><a href="#make-sure-you-blame-the-right-person" id="toc-make-sure-you-blame-the-right-person" class="nav-link" data-scroll-target="#make-sure-you-blame-the-right-person"><span class="toc-section-number">5.1.3</span>  Make sure you blame the right person</a></li>
+  <li><a href="#simplified-trunk-based-development" id="toc-simplified-trunk-based-development" class="nav-link" data-scroll-target="#simplified-trunk-based-development"><span class="toc-section-number">5.1.4</span>  Simplified trunk-based development</a></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="toc-section-number">5.1.5</span>  Conclusion</a></li>
   </ul></li>
   <li><a href="#contributing-to-public-repositories" id="toc-contributing-to-public-repositories" class="nav-link" data-scroll-target="#contributing-to-public-repositories"><span class="toc-section-number">5.2</span>  Contributing to public repositories</a></li>
   <li><a href="#further-reading" id="toc-further-reading" class="nav-link" data-scroll-target="#further-reading"><span class="toc-section-number">5.3</span>  Further reading</a></li>
@@ -663,12 +664,24 @@ The conflict has been gracefully solved.
 </figure>
 <p>In (1) we see the commit that deals with the conflict, in (2) the owner asks Bruno for a review and then in (3) we see that Bruno reviewed and approved. Finally, the pull request can be merged (4) and the feature branch deleted.</p>
 </section>
-<section id="simplified-trunk-based-development" class="level3" data-number="5.1.3">
-<h3 data-number="5.1.3" class="anchored" data-anchor-id="simplified-trunk-based-development"><span class="header-section-number">5.1.3</span> Simplified trunk-based development</h3>
+<section id="make-sure-you-blame-the-right-person" class="level3" data-number="5.1.3">
+<h3 data-number="5.1.3" class="anchored" data-anchor-id="make-sure-you-blame-the-right-person"><span class="header-section-number">5.1.3</span> Make sure you blame the right person</h3>
+<p>If many people contribute to a single project, it might sometimes be difficult to know who changed what and when exactly. This is where the <code>git blame</code> command is useful. If you want to know who changed the file called <code>analysis.R</code> for example, simply run:</p>
+<pre><code>owner@localhost ➤ git blame analysis.R</code></pre>
+<p>and you will see a detailed history, line by line, with the user name of the contributors and a date stamp:</p>
+<pre><code>b7f82ee1 (Bruno   2023-02-05 18:03:37 +0100 24) #Let’s also compute it for the whole country:
+b7f82ee1 (Bruno   2023-02-05 18:03:37 +0100 25) 
+55804ccb (Owner   2023-02-11 22:33:20 +0000 26) country_level_data &lt;- country_level_data |&gt;
+55804ccb (Owner   2023-02-11 22:33:20 +0000 27)   mutate(p0 = ifelse(year == "2010", average_price_nominal_euros, NA)) |&gt;</code></pre>
+<p>We can see that Bruno edited lines 24 and 25 on the 5th of February as part of the commit with the hash b7f82ee1, while the owner of the repository changed lines 26 and 27 on the 11th of February as part of the commit with the hash 55804ccb.</p>
+<p>Take advantage of <code>git blame</code> to have a clear overview of each file’s changes.</p>
+</section>
+<section id="simplified-trunk-based-development" class="level3" data-number="5.1.4">
+<h3 data-number="5.1.4" class="anchored" data-anchor-id="simplified-trunk-based-development"><span class="header-section-number">5.1.4</span> Simplified trunk-based development</h3>
 <p>The workflow that we showed here may seem a bit too rigid for smaller teams (below 4 or 5 contributors). It is possible to adopt a simplified version of trunk-based development, where contributors don’t have to open pull requests to merge their feature branches into the trunk, and no reviewer is needed. In cases like this, Git forces you to pull changes if someone already merged his or her feature branch into the trunk before you could. This way, when pulling, conflicts (if any) arise at that point. It is then your responsibility to solve the conflicts (and this works just like in the previous section) and then commit and push the commits with the conflicts resolved. Another contributor who then wishes to merged his or fear feature branch into to the trunk will have to pull again, ensuring that conflicts get resolved before he or she can merge. If no conflicts arise (for example, you both worked on different files, or on different lines of the same files), then no resolution is needed and the feature branch can be merged into master.</p>
 </section>
-<section id="conclusion" class="level3" data-number="5.1.4">
-<h3 data-number="5.1.4" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">5.1.4</span> Conclusion</h3>
+<section id="conclusion" class="level3" data-number="5.1.5">
+<h3 data-number="5.1.5" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">5.1.5</span> Conclusion</h3>
 <p>The main ideas of trunk-based development are:</p>
 <ul>
 <li>Each contributor opens a new branch to develop a feature or fix a bug, and works alone on his or her own little branch;</li>
