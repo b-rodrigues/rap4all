@@ -26,7 +26,18 @@ stage, but I also recognize that we live in the real world with real physical
 constraints. So because we live in this imperfect world, sometimes we need to
 deliver imperfect work. So let’s see what we can do that is very cheap in terms
 of effort and time, but still allow us to have some hope of having our analysis
-reproducible using the `{renv}` package.
+reproducible using the `{renv}` package. It is quite easy to get started with
+`{renv}`: simply install it, and in get a record of the used packages and their
+versions with one single command. This record gets saved inside a file that can
+then be used to restore this project’s library in the future, and without
+interfering with the other packages that you already have installed on your
+machine. You see, `{renv}` creates a per-project library (a library is the set
+of packages installed on your machine) which means that you can have as many
+version of, say, `{dplyr}` as needed (one per project). The right version of
+`{dplyr}` will be installed and used for the right project.
+
+Let’s see how this works by creating such a project-wide library for our little
+project.
 
 ## Recording packages’ version with `{renv}`
 
@@ -37,33 +48,35 @@ about the infrastructure surrounding our code. By infrastructure I mean:
 - the packages used for the analysis;
 - and otherwise the whole computational environment, even the computer hardware itself.
 
-`{renv}` is a package that takes core of point number 2: it allows you to easily
-record the packages that were used for an analysis. This record is a file,
-called `renv.lock` which will appear at the root of your project once you’ve set
-up `{renv}` and executed it. You can use `{renv}` once you’re done with an
-analysis like in our case, or better yet, immediately at the start, as soon as
-you listed some packages. You can keep updating the `renv.lock` file as you add
-or remove packages from your analysis. The `renv.lock` file can then be used to
-restore the exact same package library that was used for your analysis on
-another computer, or on the same computer but in the future.
+`{renv}` is a package that takes care of point number 2: it allows you to easily
+record the packages that were used for an analysis. This record is a file called
+`renv.lock` which will appear at the root of your project once you’ve set up
+`{renv}` and executed it. You can use `{renv}` once you’re done with an analysis
+like in our case, or better yet, immediately at the start, as soon as you start
+writing `library(somePackage)`. You can keep updating the `renv.lock` file as
+you add or remove packages from your analysis. The `renv.lock` file can then be
+used to restore the exact same package library that was used for your analysis
+on another computer, or on the same computer but in the future.
 
 This works because `{renv}` does more than simply creating a list of the used
-packages and saving it inside the `renv.lock` file: it actually creates a
-per-project library (remember, the *library* is the set of packages installed on
-your computer) that is completely isolated for the main, default, R library on
-your machine, but also from the other `{renv}` libraries that you might have set
-up for your other projects. To save time when setting up an `{renv}` library,
-packages simply get copied over instead of re-downloaded and re-installed (if
-the required packages are already installed in your default library).
+packages and recording their versions inside the `renv.lock` file: it actually
+creates a per-project library (remember, the *library* is the set of packages
+installed on your computer) that is completely isolated for the main, default, R
+library on your machine, but also from the other `{renv}` libraries that you
+might have set up for your other projects. `{renv}** enables you to create
+**R**eproducible **Env**ironments. To save time when setting up an `{renv}`
+library, packages simply get copied over from your main library instead of being
+re-downloaded and re-installed (if the required packages are already installed
+in your default library).
 
-To get started, install the `{renv}` package:
+To get started, install the `{renv}` package (make sure to start a fresh R session):
 
 ```{r, eval = F}
 install.packages("renv")
 ```
 
-and then go to the folder containing the Rmds we wrote together in the previous chapter. 
-Make sure that you have the two following files in that folder:
+and then go to the folder containing the Rmds we wrote together in the previous
+chapter. Make sure that you have the two following files in that folder:
 
 - `save_data.Rmd`, the script that downloads and prepares the data;
 - `analyse_data.Rmd`, the script that analyses the data.
@@ -96,8 +109,8 @@ The version of R recorded in the lockfile will be updated:
 * renv activated -- please restart the R session.
 ```
 
-Let’s take a look at the files that were created (if you prefer using your file browser, feel
-free to do so, but I prefer the command line):
+Let’s take a look at the files that were created (if you prefer using your file
+browser, feel free to do so, but I prefer the command line):
 
 ```
 owner@localhost ➤ ls -la
@@ -117,13 +130,15 @@ drwxr-xr-x 1 LLP685 Domain Users     0 Feb 27 12:44 renv
 ```
 
 As you can see, there are two new files and one folder. The files are the
-`renv.lock` file that I mentioned before and a file called `.Rprofile`. The folder is
-simply called `renv`. The `renv.lock` is the file that lists all the packages used for 
-the analysis. `.Rprofile` files are files that get read by R automatically at startup.
-You should have a system-wide one that gets read by default startups of R, but if R
-discovers an `.Rprofile` file in the directory it starts on, then that file gets read
-instead. Let’s see the contents of this file (you can open this file in any text editor, like
-Notepad on Windows, but then again I prefer the command line):
+`renv.lock` file that I mentioned before and a file called `.Rprofile`. The
+folder is simply called `renv`. The `renv.lock` is the file that lists all the
+packages used for the analysis. `.Rprofile` files are files that get read by R
+automatically at startup (as discussed at the very beginning of part one of this
+book). You should have a system-wide one that gets read on startups of R, but if
+R discovers an `.Rprofile` file in the directory it starts on, then that file
+gets read instead. Let’s see the contents of this file (you can open this file
+in any text editor, like Notepad on Windows, but then again I prefer the command
+line):
 
 ```
 cat .Rprofile
