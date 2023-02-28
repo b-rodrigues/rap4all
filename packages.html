@@ -356,13 +356,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><code>flat_minimal.Rmd</code> is only an example, in practice, we will be using the Rmd file(s) that we have written before (<code>analyse_data.Rmd</code> and <code>save_data.Rmd</code>) instead.</li>
 <li><code>0-dev_history.Rmd</code> contains lines of code that you typically run when you’re developing a package. For example, a line to initialise Git for the project, a line to add some dependencies, etc, etc. The idea is to <strong>write down everything</strong> that you type in the console in this file. This leaves a trace of what you have been doing, and also acts as a checklist so that you can make sure that you didn’t forget anything.</li>
 </ul>
-<p>Before describing these files into detail, I want to show you this image taken from <code>{fusen}</code>’s <a href="https://thinkr-open.github.io/fusen/">website</a>[^https://is.gd/5pJi2h]:</p>
+<p>Before describing these files into detail, I want to show you this image taken from <code>{fusen}</code>’s <a href="https://thinkr-open.github.io/fusen/">website</a><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>:</p>
 <figure class="figure">
 <img src="images/fusen_inflate_functions.png" alt="fusen takes care of the boring stuff for you!" class="figure-img">
 <figcaption class="figure-caption">
 fusen takes care of the boring stuff for you!
 </figcaption>
 </figure>
+<p>On the left hand side of the image we see our two <code>.Rmd</code> files. <code>0-dev_history.Rmd</code> contains a chunk called <code>description</code>. This is the main chunk in that file that we need to execute to get started with <code>{fusen}</code>. Running this chunk will create the package’s <code>DESCRIPTION</code> file (don’t worry if you don’t know about this, I will explain). Then, the second file <code>flat_minimal.Rmd</code> (or our very own <code>.Rmd</code> files) contain functions, tests, examples, and everything we need for our analysis. When we <em>inflate</em> the Rmd file, <code>{fusen}</code> places every piece from this <code>.Rmd</code> file at the right place: the functions get copied into the package’s <code>R/</code> folder, tests go into the <code>tests/</code> folder, and so on. <code>{fusen}</code> simply takes care of everything for us!</p>
+<p>But, for <code>{fusen}</code> to be able to work its magic, we do need to prepare our <code>.Rmd</code> file a bit. But don’t worry, it is mostly simply giving adequate names to our code chunks.</p>
 </section>
 <section id="document-your-package" class="level2" data-number="11.3">
 <h2 data-number="11.3" class="anchored" data-anchor-id="document-your-package"><span class="header-section-number">11.3</span> Document your package (?)</h2>
@@ -380,6 +382,12 @@ fusen takes care of the boring stuff for you!
 <h2 data-number="11.6" class="anchored" data-anchor-id="pkgdown"><span class="header-section-number">11.6</span> pkgdown</h2>
 
 
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1"><p>https://is.gd/5pJi2h<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
 </section>
 
 </main> <!-- /main -->
