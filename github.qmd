@@ -603,6 +603,33 @@ In (1) we see the commit that deals with the conflict, in (2) the owner asks Bru
 for a review and then in (3) we see that Bruno reviewed and approved. Finally, the
 pull request can be merged (4) and the feature branch deleted.
 
+### Make sure you blame the right person
+
+If many people contribute to a single project, it might sometimes be difficult to know
+who changed what and when exactly. This is where the `git blame` command is useful. If you
+want to know who changed the file called `analysis.R` for example, simply run:
+
+```
+owner@localhost ➤ git blame analysis.R
+```
+
+and you will see a detailed history, line by line, with the user name of the
+contributors and a date stamp:
+
+```
+b7f82ee1 (Bruno   2023-02-05 18:03:37 +0100 24) #Let’s also compute it for the whole country:
+b7f82ee1 (Bruno   2023-02-05 18:03:37 +0100 25) 
+55804ccb (Owner   2023-02-11 22:33:20 +0000 26) country_level_data <- country_level_data |>
+55804ccb (Owner   2023-02-11 22:33:20 +0000 27)   mutate(p0 = ifelse(year == "2010", average_price_nominal_euros, NA)) |>
+```
+
+We can see that Bruno edited lines 24 and 25 on the 5th of February as part of
+the commit with the hash b7f82ee1, while the owner of the repository changed
+lines 26 and 27 on the 11th of February as part of the commit with the hash
+55804ccb.
+
+Take advantage of `git blame` to have a clear overview of each file's changes.
+
 ### Simplified trunk-based development
 
 The workflow that we showed here may seem a bit too rigid for smaller teams (below 4
