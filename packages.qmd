@@ -96,7 +96,7 @@ explain what they do:
 - `0-dev_history.Rmd` contains lines of code that you typically run when you’re developing a package. For example, a line to initialise Git for the project, a line to add some dependencies, etc, etc. The idea is to **write down everything** that you type in the console in this file. This leaves a trace of what you have been doing, and also acts as a checklist so that you can make sure that you didn’t forget anything.
 
 Before describing these files into detail, I want to show you this image taken from `{fusen}`’s 
-[website](https://thinkr-open.github.io/fusen/)[^https://is.gd/5pJi2h]:
+[website](https://thinkr-open.github.io/fusen/)^[https://is.gd/5pJi2h]:
 
 <figure>
     <img src="images/fusen_inflate_functions.png"
@@ -104,7 +104,20 @@ Before describing these files into detail, I want to show you this image taken f
     <figcaption>fusen takes care of the boring stuff for you!</figcaption>
 </figure>
 
+On the left hand side of the image we see our two `.Rmd` files.
+`0-dev_history.Rmd` contains a chunk called `description`. This is the main
+chunk in that file that we need to execute to get started with `{fusen}`.
+Running this chunk will create the package's `DESCRIPTION` file (don't worry if
+you don't know about this, I will explain). Then, the second file
+`flat_minimal.Rmd` (or our very own `.Rmd` files) contain functions, tests,
+examples, and everything we need for our analysis. When we *inflate* the Rmd
+file, `{fusen}` places every piece from this `.Rmd` file at the right place: the
+functions get copied into the package's `R/` folder, tests go into the `tests/`
+folder, and so on. `{fusen}` simply takes care of everything for us! 
 
+But, for `{fusen}` to be able to work its magic, we do need to prepare our
+`.Rmd` file a bit. But don't worry, it is mostly simply giving adequate names to
+our code chunks.
 
 ## Document your package (?)
 
