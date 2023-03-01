@@ -287,7 +287,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <ul>
   <li><a href="#benefits-of-packages" id="toc-benefits-of-packages" class="nav-link active" data-scroll-target="#benefits-of-packages"><span class="toc-section-number">11.1</span>  Benefits of packages</a></li>
   <li><a href="#fusen-quickstart" id="toc-fusen-quickstart" class="nav-link" data-scroll-target="#fusen-quickstart"><span class="toc-section-number">11.2</span>  <code>{fusen}</code> quickstart</a></li>
-  <li><a href="#document-your-package" id="toc-document-your-package" class="nav-link" data-scroll-target="#document-your-package"><span class="toc-section-number">11.3</span>  Document your package (?)</a></li>
+  <li><a href="#turning-our-rmds-into-a-package" id="toc-turning-our-rmds-into-a-package" class="nav-link" data-scroll-target="#turning-our-rmds-into-a-package"><span class="toc-section-number">11.3</span>  Turning our Rmds into a package</a></li>
   <li><a href="#managing-package-dependencies" id="toc-managing-package-dependencies" class="nav-link" data-scroll-target="#managing-package-dependencies"><span class="toc-section-number">11.4</span>  Managing package dependencies (?)</a></li>
   <li><a href="#unit-testing" id="toc-unit-testing" class="nav-link" data-scroll-target="#unit-testing"><span class="toc-section-number">11.5</span>  Unit testing</a></li>
   <li><a href="#pkgdown" id="toc-pkgdown" class="nav-link" data-scroll-target="#pkgdown"><span class="toc-section-number">11.6</span>  pkgdown</a></li>
@@ -314,11 +314,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 </header>
 
-<p>In this chapter you’re going to learn how to create your own package. And let me be clear right from the start: the goal here is not to convert your analysis as a package to then publish on CRAN. No, that’s not it. The goal is to convert your analysis into a package because when your analysis goes into <em>package development mode</em>, you can, as the developer, leverage many tools that will help you improve the quality of your analysis. These tools will make it easier for you to:</p>
+<p>In this chapter, you’re going to learn how to create your own package. And let me be clear right from the start: the goal here is not to convert your analysis as a package to then publish on CRAN. No, that’s not it. The goal is to convert your analysis into a package because when your analysis goes into <em>package development mode</em>, you can, as the developer, leverage many tools that will help you improve the quality of your analysis. These tools will make it easier for you to:</p>
 <ul>
 <li>document the functions you had to write for your analysis;</li>
 <li>test these functions;</li>
-<li>properly define depedencies;</li>
+<li>properly define dependencies;</li>
 <li>use all the code you wrote into a true reproducible pipeline.</li>
 </ul>
 <p>Turning the analysis into a package will also make the separation between the software development work you had to write for your analysis (writing functions to clean data for instance) from the analysis itself much clearer. The package itself can be published on Github (if there’s nothing particularly sensitive about it) and can also be very easily installed from R itself from Github, or you can store it inside your organisation and then simply install it locally.</p>
@@ -327,15 +327,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>a well-documented, and tested package;</li>
 <li>an analysis that uses this package like any other package.</li>
 </ul>
-<p>Making this separation will then make it easier to record dependencies of your analysis using <code>{renv}</code>, as your package will be a package like any other that needs to be recorded. And what’s more, we can start off from the <code>.Rmd</code> files that we have already written! The <code>{fusen}</code> package will bridge the gap between the <code>.Rmd</code> files and the package: as Sébastien Rochette, the author of <code>{fusen}</code> says:</p>
+<p>Making this separation will then make it easier to record dependencies of your analysis using <code>{renv}</code>, as your package will be a package like any other that needs to be recorded. And what’s more, we can start with the <code>.Rmd</code> files that we have already written! The <code>{fusen}</code> package will bridge the gap between the <code>.Rmd</code> files and the package: as Sébastien Rochette, the author of <code>{fusen}</code> says:</p>
 <blockquote class="blockquote">
 <p>If you have written an Rmd file, you have (almost) already written a package.</p>
 </blockquote>
 <section id="benefits-of-packages" class="level2" data-number="11.1">
 <h2 data-number="11.1" class="anchored" data-anchor-id="benefits-of-packages"><span class="header-section-number">11.1</span> Benefits of packages</h2>
 <p>Let’s first go over the benefits of turning your analysis into a package once again, as this is crucial.</p>
-<p>The main point is not to turn the analysis into a package to publish on CRAN (but you can, if you want to). The point is that when you analyse data, more often than not you have to write a lot of custom code, and very often, you don’t expect to write that much custom code. Let’s think about our little project: all we wanted was to create some plots from Luxembourguish houses’ price data. And yet, we had to scrape Wikipedia on two occasion, clean an Excel file, write a test… the project was quite modest, and yet, the amount of code (and thus opportunities to make mistakes) is quite large. But, that’s not something that we could have anticipated, hence why we never really start by writing a package, but a script (or rather, an <code>.Rmd</code>) instead. But then as this script grows larger and larger, we realise that we might need something else that a simple <code>.Rmd</code> file.</p>
-<p>The other benefit of turning all this code into a package is that we get a clear separation between the code that we wrote purely to get our analysis going (what I called the <em>software development part</em> before) from the analysis itself (which would then typically consist in computing descriptive statisics, run regression or machine learning models, and visualisation). This then in turn means that we can more easily maintain and update each part separately. So the pure software development part goes into the package, which then gives us the possibility to use many great tools to ensure that our code is properly documented and tested, and then the analysis can go inside a purely reproducible pipeline.</p>
+<p>The main point is not to turn the analysis into a package to publish on CRAN (but you can if you want to). The point is that when you analyse data, more often than not you have to write a lot of custom code, and very often, you don’t expect to write that much custom code. Let’s think about our little project: all we wanted was to create some plots from Luxembourguish houses’ price data. And yet, we had to scrape Wikipedia on two occasions, clean an Excel file, and write a test… the project was quite modest, and yet, the amount of code (and thus opportunities to make mistakes) is quite large. But, that’s not something that we could have anticipated, hence why we never really start by writing a package, but a script (or rather, an <code>.Rmd</code>) instead. But then as this script grows larger and larger, we realise that we might need something else that a simple <code>.Rmd</code> file.</p>
+<p>The other benefit of turning all this code into a package is that we get a clear separation between the code that we wrote purely to get our analysis going (what I called the <em>software development part</em> before) from the analysis itself (which would then typically consist in computing descriptive statistics, running regression or machine learning models, and visualisation). This then in turn means that we can more easily maintain and update each part separately. So the pure software development part goes into the package, which then gives us the possibility to use many great tools to ensure that our code is properly documented and tested, and then the analysis can go inside a purely reproducible pipeline.</p>
 </section>
 <section id="fusen-quickstart" class="level2" data-number="11.2">
 <h2 data-number="11.2" class="anchored" data-anchor-id="fusen-quickstart"><span class="header-section-number">11.2</span> <code>{fusen}</code> quickstart</h2>
@@ -345,9 +345,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <p><code>{fusen}</code> makes the <em>documentation first</em> method proposed by Sébastien Rochette, <code>{fusen}</code> author, reality. The idea is to start from documentation in the form of an <code>.Rmd</code> file and go from there to a package. Let’s dive right into it by starting from a template included in the <code>{fusen}</code> package. Start an R session from your home (or Documents) directory and run the following:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>fusen<span class="sc">::</span><span class="fu">create_fusen</span>(<span class="at">path =</span> <span class="st">"fusen.test"</span>, <span class="at">template =</span> <span class="st">"minimal"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>fusen<span class="sc">::</span><span class="fu">create_fusen</span>(<span class="at">path =</span> <span class="st">"fusen.quickstart"</span>, <span class="at">template =</span> <span class="st">"minimal"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>This will create a directory called <code>fusen.test</code> inside your home (or Documents) directory. Inside that folder you will find another folder called <code>dev/</code>. Let’s see what’s inside:</p>
+<p>This will create a directory called <code>fusen.quickstart</code> inside your home (or Documents) directory. Inside that folder, you will find another folder called <code>dev/</code>. Let’s see what’s inside:</p>
 <pre><code>owner@localhost ➤ ls dev/
 
 0-dev_history.Rmd  flat_minimal.Rmd</code></pre>
@@ -356,19 +356,114 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><code>flat_minimal.Rmd</code> is only an example, in practice, we will be using the Rmd file(s) that we have written before (<code>analyse_data.Rmd</code> and <code>save_data.Rmd</code>) instead.</li>
 <li><code>0-dev_history.Rmd</code> contains lines of code that you typically run when you’re developing a package. For example, a line to initialise Git for the project, a line to add some dependencies, etc, etc. The idea is to <strong>write down everything</strong> that you type in the console in this file. This leaves a trace of what you have been doing, and also acts as a checklist so that you can make sure that you didn’t forget anything.</li>
 </ul>
-<p>Before describing these files into detail, I want to show you this image taken from <code>{fusen}</code>’s <a href="https://thinkr-open.github.io/fusen/">website</a><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>:</p>
+<p>Before describing these files in detail, I want to show you this image taken from <code>{fusen}</code>’s <a href="https://thinkr-open.github.io/fusen/">website</a><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>:</p>
 <figure class="figure">
 <img src="images/fusen_inflate_functions.png" alt="fusen takes care of the boring stuff for you!" class="figure-img">
 <figcaption class="figure-caption">
 fusen takes care of the boring stuff for you!
 </figcaption>
 </figure>
-<p>On the left hand side of the image we see our two <code>.Rmd</code> files. <code>0-dev_history.Rmd</code> contains a chunk called <code>description</code>. This is the main chunk in that file that we need to execute to get started with <code>{fusen}</code>. Running this chunk will create the package’s <code>DESCRIPTION</code> file (don’t worry if you don’t know about this, I will explain). Then, the second file <code>flat_minimal.Rmd</code> (or our very own <code>.Rmd</code> files) contain functions, tests, examples, and everything we need for our analysis. When we <em>inflate</em> the Rmd file, <code>{fusen}</code> places every piece from this <code>.Rmd</code> file at the right place: the functions get copied into the package’s <code>R/</code> folder, tests go into the <code>tests/</code> folder, and so on. <code>{fusen}</code> simply takes care of everything for us!</p>
-<p>But, for <code>{fusen}</code> to be able to work its magic, we do need to prepare our <code>.Rmd</code> file a bit. But don’t worry, it is mostly simply giving adequate names to our code chunks.</p>
+<p>On the left-hand side of the image, we see the two template <code>.Rmd</code> files from <code>{fusen}</code>. <code>0-dev_history.Rmd</code> contains a chunk called <code>description</code>. This is the main chunk in that file that we need to execute to get started with <code>{fusen}</code>. Running this chunk will create the package’s <code>DESCRIPTION</code> file (don’t worry if you don’t know about this, I will explain). Then, the second file <code>flat_minimal.Rmd</code> (or our very own <code>.Rmd</code> files) contain functions, tests, examples, and everything we need for our analysis. When we <em>inflate</em> the Rmd file, <code>{fusen}</code> places every piece from this <code>.Rmd</code> file at the right place: the functions get copied into the package’s <code>R/</code> folder, tests go into the <code>tests/</code> folder, and so on. <code>{fusen}</code> simply takes care of everything for us!</p>
+<p>But, for <code>{fusen}</code> to be able to work its magic, we do need to prepare our <code>.Rmd</code> file a bit. But don’t worry, it is mostly simply giving adequate names to our code chunks. Let’s take a look at the <code>flat_minimal.Rmd</code> file that was just generated. If you open it in a text editor, you should see that it is a fairly normal <code>.Rmd</code> file. There is a comment telling you to first run the <code>description</code> chunk in the <code>0-dev_history.Rmd</code> file before changing this one. But let’s keep reading <code>flat_minimal.Rmd</code>. What’s important comes next:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a># my_fun</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>```{r function-my_fun}</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>#' my_fun Title</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>#'</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>#' @return 1</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>#' @export</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>#'</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>#' @examples</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>my_fun &lt;- function() {</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>  1</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>```</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>```{r examples-my_fun}</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>my_fun()</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>```</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>```{r tests-my_fun}</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>test_that("my_fun works", {</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>```</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This is a section titled <code>my_fun</code>. Then comes the definition of <code>my_fun()</code>, inside a chunk titled <code>function-my_fun</code>, then comes an example, inside a chunk titled <code>examples-my_fun</code> and finally a test in a chunk titled <code>tests-my_fun</code>.</p>
+<p>This is essentially how we need to rewrite our own <code>.Rmd</code> files to be able to use <code>{fusen}</code>. What’s really nice, is that most of it is actually done already. Using <code>{fusen}</code> just <em>forces</em> us to clean up our code and define examples and tests (if we want them) more cleanly and explicitly. Also, you might have noticed that in the chunk with the function definition there are a bunch of comments that start with <code>#'</code>. These are <code>{roxygen2}</code> type comments. As the package’s documentation gets built, these comments get automatically turned into the documentation you see when you type <code>help(my_fun)</code> in an R console.</p>
+<p>So, basically, a <code>{fusen}</code>-ready <code>.Rmd</code> file is nothing more than an <code>.Rmd</code> file with some structure imposed on it. Instead of documenting your functions as simple comments, document them using <code>{roxygen2}</code> comments, which then get turned into the package’s documentation automatically. Instead of writing ad-hoc tests, or worse, instead of testing your functions on your console only, manually, one by one (and we’ve all done this), write down the test inside the <code>.Rmd</code> file itself, right next to the function you’re testing. Instead of trying your function out on some mock data in your console, write down that example inside the `.Rmd** file itself.</p>
+<p><strong>Write it down</strong>, <strong>write it down</strong>, <strong>write it down</strong>… you’re already documenting and testing things, so why not just write it down once and for all, so you don’t have to rely on your ageing, mushy brain so much? Don’t make yourself remember things, just write them down! <code>{fusen}</code> gives you a perfect framework to do this. The added benefit is that it will improve your package’s quality through the tests and examples that are not directly part of the analysis itself but are still required to make sure that the analysis is of high quality. So if you start messing with your functions, you have the tests right there to tell you if you introduced breaking changes.</p>
+<p>Let’s go back to the template and inflate it into a package. Open <code>0-dev_history.Rmd</code> and take a look at the <code>description</code> code chunk:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>```{r description, eval=FALSE}</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a># Describe your package</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>fusen::fill_description(</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  pkg = here::here(),</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  fields = list(</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    Title = "Build A Package From Rmarkdown File",</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    Description = "Use Rmarkdown First method to build your package. Start your package with documentation. Everything can be set from a Rmarkdown file in your project.",</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    `Authors@R` = c(</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>      person("Sebastien", "Rochette", email = "sebastien@thinkr.fr", role = c("aut", "cre"), comment = c(ORCID = "0000-0002-1565-9313")),</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>      person(given = "ThinkR", role = "cph")</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a># Define License with use_*_license()</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>usethis::use_mit_license("Sébastien Rochette")</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>```</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Running this chunk will create the package’s <code>DESCRIPTION</code> file. <a href="https://raw.githubusercontent.com/b-rodrigues/chronicler/c34239d0d42a4ad6082dff614fc6b4c0e9b917d8/DESCRIPTION">Here</a><a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> is an example of such a file. This file provides some information on who wrote the package, the purpose of the package, as well as some metadata such as the package’s version. What’s also quite important are the packages listed below the keywords <code>Depends:</code>, <code>Imports:</code> and <code>Suggests:</code>. <code>Depends:</code> is where you list packages (or R versions) that must be installed for your package to work (if they’re not installed, they will be installed alongside your package). This is the same with <code>Imports:</code>, and the difference is most of the time irrelevant: packages listed under <code>Depends</code> will not only be loaded when you load your package, but also attached. This means that the functions from these packages will also be available to the end-user when loading your package. Packages listed under <code>Imports:</code> will only be loaded, meaning that their functions will only be available to your packages’ functions, not the end-users themselves. If that’s confusing, don’t worry too much about it. Finally, <code>Suggests:</code> are dependencies that are not critical, usually these are only necessary if you want to run the code from the packages vignettes or examples. As you can imagine, listing the right packages under the right category can be a daunting task. But don’t worry, <code>{fusen}</code> takes care of this automatically for us! Simply focus on writing your <code>.Rmd</code> files.</p>
+<p>The last line of this chunk runs <code>usethis::use_mit_license()</code>. <code>{usethis}</code> is a package that contains many helper functions to help you develop packages. You can choose among many licenses, but this is only relevant if you want to publish your package on CRAN, and you don’t need to think too much about it at the start, since you can always change the license later. And if you don’t want to publish your package anywhere (nor CRAN, nor Github) and keep it completely internal to your organisation, you don’t need to think about it at all. My very personal take on licenses is that you should use copyleft licenses as much as possible (so licenses like the GPL) which ensure that if someone takes your code and changes it, their changes also have to be republished to the public under the GPL – but only if they wish to publish their changes. They could always keep their modifications totally private, which means that companies can, and do, use GPL’ed code in their internal products. It’s just if that product gets released to the public, that the source code must be released as well. This ensures that open code stays open. Licenses like the MIT allow private companies to take open source and freely available code and incorporate it inside their own proprietary tools, without having to give back to the community. Some people argue that this is the <em>true</em> free license, because anyone is then also free to use and not have to give anything back to the community. I think that this is a very idiotic argument, and when proponents of permissive licenses like the MIT (or BSD) get bitten, and their software gets used for nefarious purposes, <a href="https://web.archive.org/web/20230223092823/https://www.cs.vu.nl/~ast/intel/">the levels of cope are through the roof</a><a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> (archived link for posterity). Anyway, I got side-tracked here, let’s go back to our package.</p>
+<p>Run the code inside the description chunk in an R console (don’t change anything for now, and make sure that the R session was started on the root of the project, so in the <code>fusen.quickstart/</code> folder), and see the <code>DESCRIPTION</code> file appear magically in the root of the folder (as well as the <code>LICENSE</code> file, containing the license).</p>
+<p>For now, we can ignore the rest of the <code>0-dev_history.Rmd</code> file: actually, everything that follows is totally optional, but still useful. If you look at them, you see that lines that follow simply help you remember to do useful things, like initialising Git, creating a <code>Readme</code> file, add some usual dependencies, as so one. But let’s ignore this for now, and go to the <code>flat_minimal.Rmd</code> file.</p>
+<p>Got at the end of the file, and take a look at the chunk titled <code>development-inflate</code>. This is the chunk that will now do the conversion from a flat <code>.Rmd</code> file to a package. This process is called <em>inflating</em> the <code>.Rmd</code> file (because a <em>fusen</em> is a type of origami figure that you fold in a certain way, which can then get inflated <em>literally</em> into a box). Run the code in that chunk, and see your analysis becoming a package automagically.</p>
+<p>If you look now at the projects’ folder, you will see several new sub-folder:</p>
+<ul>
+<li><code>R/</code>: the folder that contains the functions;</li>
+<li><code>man/</code>: contains the functions’ documentation;</li>
+<li><code>tests/</code>: contains the tests;</li>
+<li><code>vignettes/</code>: contains the vignettes.</li>
+</ul>
+<p>Every function defined in the <code>flat_minimal.Rmd</code> file is now inside the <code>R/</code> folder; all the documentation written as <code>{roxygen2}</code> comments is now neatly inside <code>man/</code>, the tests are in <code>tests/</code>, and <code>flat_minimal.Rmd</code> has been converted to an actual vignette (without all the <code>development</code> chunks). This is now a package that can be installed immediately using <code>devtools::install()</code>, or that can be shared on Github and installed from there. Right now, without doing anything else. You can even generate a website for your package: got back to the <code>0-dev_history.Rmd</code> and check the last code chunk, under the title <em>Share the package</em>. Start a new, fresh session at the root of your project and run the two following lines from that last chunk:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># set and try pkgdown documentation website</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">use_pkgdown</span>()</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>pkgdown<span class="sc">::</span><span class="fu">build_site</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>This will build a website for your package and open your web browser and show you how it looks like. The files for this website are in the newly created <code>docs/</code> folder in the root of your package. This can then be hosted, for free, with Github, so people can explore the package’s functions and documentation without having to install the package!</p>
 </section>
-<section id="document-your-package" class="level2" data-number="11.3">
-<h2 data-number="11.3" class="anchored" data-anchor-id="document-your-package"><span class="header-section-number">11.3</span> Document your package (?)</h2>
-<p><em>I guess fusen makes this process easy and leverages roxygen?</em></p>
+<section id="turning-our-rmds-into-a-package" class="level2" data-number="11.3">
+<h2 data-number="11.3" class="anchored" data-anchor-id="turning-our-rmds-into-a-package"><span class="header-section-number">11.3</span> Turning our Rmds into a package</h2>
+<p>Ok, so I hope to have convinced you that <code>{fusen}</code> is definitely something that you should add to your toolbox. Let’s now turn our analysis into a package, but before diving right into it, let’s think about it for a moment.</p>
+<p>We have two <code>.Rmd</code> files, one for getting and cleaning the data, which we called <code>save_data.Rmd</code> and another for analysing this data, called <code>analyse_data.Rmd</code>.</p>
+<p>In both <code>.Rmd</code> files, we defined a bunch of functions, but most of the functions were defined in the <code>save_data.Rmd</code> script. In fact, in the <code>analyse_data.Rmd</code> file we defined only two functions, <code>get_laspeyeres()</code>, the function to get the Laspeyeres price index, and <code>make_plot()</code>, the function to create the plots for our analysis.</p>
+<p>We are faced with the following choice here:</p>
+<ul>
+<li>make both these <code>.Rmd</code> files <em>fusen-ready</em>, and inflate them both. This would put the functions from both <code>save_data.Rmd</code> and <code>analyse_data.Rmd</code> into the inflated package <code>R/</code> folder;</li>
+<li>put all the functions into <code>save_data.Rmd</code> and only inflate that file. The other, <code>analyse_data.Rmd</code> can then be used exclusively, and only, for the analysis <em>stricto sensu</em>.</li>
+</ul>
+<p>This is really up to you, there is no right or wrong answer. You could even go for another split if you wanted. It all depends on how much time you want to invest into this. If you want to get done quickly, the first option, where you simply inflate both files is the fastest. If you have more time, the last option, where you neatly split everything might be better. I propose that we go for the second option. This way, we only have to inflate one file, and in our case here, it won’t take much time anyways. It’s literally only moving to code chunks from <code>analyse_data.Rmd</code> to <code>save_data.Rmd</code>. So before continuing, let’s go back to our repository and switch back to the <code>rmd</code> branch that contains the <code>.Rmd</code> files (let’s ignore <code>{renv}</code> and the <code>renv</code> branch for now):</p>
+<pre><code>owner@localhost ➤ git checkout rmd</code></pre>
+<p>From, there, let’s create a new branch called <code>fusen</code>:</p>
+<pre><code>owner@localhost ➤ git checkout -b fusen</code></pre>
+<pre><code>Switched to a new branch 'fusen'</code></pre>
+<p>We will now be working on this branch. Simply work as usual, but when pushing, make sure to push to the <code>rmd</code> branch:</p>
+<pre><code>owner@localhost ➤ git add .
+owner@localhost ➤ git commit -am "some changes"
+owner@localhost ➤ git push origin fusen</code></pre>
+<p>By now, that repository should have four branches:</p>
+<ul>
+<li><em>master</em>, or <em>main</em> with the simple <code>.R</code> scripts;</li>
+<li><em>rmd</em>, with the <code>.Rmd</code> files</li>
+<li><em>renv</em>, containing the <code>.Rmd</code> files as well, and the <code>renv.lock</code> file</li>
+<li><em>fusen</em>, the branch we will be using now.</li>
+</ul>
+<p>If you’ve skipped the first part of the book, or didn’t diligently create the branches and push, you can clone this <a href="https://github.com/b-rodrigues/housing">repository</a><a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> and start from a sane base. Switch to the <code>rmd</code> branch, and create a branch called <code>fusen</code>.</p>
+<p>First order of business: create a <code>{fusen}</code> template in the folder. Start a fresh R session inside the <code>housing/</code> folder, and run the following:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>fusen<span class="sc">::</span><span class="fu">create_fusen</span>(<span class="at">path =</span> <span class="st">"."</span>, <span class="at">template =</span> <span class="st">"minimal"</span>, <span class="at">overwrite =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Because we already have a folder, called <code>housing/</code> we use the <code>"."</code> which essentially means “right here”. We need the <code>overwrite = TRUE</code> option because the folder exists already. Running the above command will add the <code>dev/</code> folder. Move <code>save_data.Rmd</code> inside; remember, we only want to inflate that one: <code>analyse_data.Rmd</code> will be a simple <code>.Rmd</code> that will use our package to load the needed functions and data.</p>
+<p>Next step, move the functions <code>get_laspeyeres()</code> and <code>make_plot()</code> from <code>analyse_data.Rmd</code> to <code>save_data.Rmd</code>. Simple cut and paste these functions from one <code>.Rmd</code> to the other. Make sure <code>save_data.Rmd</code> looks something like <a href="https://gist.github.com/b-rodrigues/16952727d35355bf3b9cbd5f37843c20">this</a><a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a>, take a look at the end of the script to find the functions we’ve moved over. The <code>analyse_data.Rmd</code> script is exactly the same, minus the functions that we’ve just moved over.</p>
+<p>Now we need to make <code>analyse_data.Rmd</code> ready to be inflated using <code>{fusen}</code>. Take inspiration from the <code>flat_minimal.Rmd</code> that <code>fusen::create_fusen()</code> put in the <code>dev/</code> folder.</p>
+<p>Here is what the <code>analyse_data.Rmd</code> file, ready to be inflated, looks like. Let’s go over it.</p>
 </section>
 <section id="managing-package-dependencies" class="level2" data-number="11.4">
 <h2 data-number="11.4" class="anchored" data-anchor-id="managing-package-dependencies"><span class="header-section-number">11.4</span> Managing package dependencies (?)</h2>
@@ -387,6 +482,10 @@ fusen takes care of the boring stuff for you!
 <hr>
 <ol>
 <li id="fn1"><p>https://is.gd/5pJi2h<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>https://is.gd/PfvkSZ<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>https://is.gd/PS45xu<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>https://is.gd/jGZrMF<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p>https://is.gd/n3m6In<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 
