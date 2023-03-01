@@ -64,7 +64,7 @@ packages and recording their versions inside the `renv.lock` file: it actually
 creates a per-project library (remember, the *library* is the set of packages
 installed on your computer) that is completely isolated for the main, default, R
 library on your machine, but also from the other `{renv}` libraries that you
-might have set up for your other projects. `{renv}** enables you to create
+might have set up for your other projects. `{renv}` enables you to create
 **R**eproducible **Env**ironments. To save time when setting up an `{renv}`
 library, packages simply get copied over from your main library instead of being
 re-downloaded and re-installed (if the required packages are already installed
@@ -83,7 +83,26 @@ chapter. Make sure that you have the two following files in that folder:
 - `analyse_data.Rmd`, the script that analyses the data.
 
 Also, make sure that the changes are correctly backed up on Github.com, so if
-you haven’t already, commit and push any change.
+you haven’t already, commit and push any change to the `rmd` branch. Because we will
+be experimenting with a new feature, create a new branch called `renv`. You should
+know the drill by now, but if not simply follow along:
+
+```
+owner@localhost ➤ git checkout -b renv
+```
+
+```
+Switched to a new branch 'renv'
+```
+
+We will now be working on this branch. Simply work as usual, but when pushing, make
+sure to push to the `renv` branch:
+
+```
+owner@localhost ➤ git add .
+owner@localhost ➤ git commit -am "some changes"
+owner@localhost ➤ git push origin renv
+```
 
 Once this is done, start an R session, and simply type the following in a console:
 
@@ -161,7 +180,22 @@ activate.R  library  settings.dcf
 ```
 
 So inside the `renv` folder, there is another folder called `library`: this is
-the folder that contains our isolated library for just this project.
+the folder that contains our isolated library for just this project. That’s
+something that we would not want to back up on Github as it grow quite large. So
+here is the right moment to introduce the `.gitignore` file (notice the `.` at
+the start of the name). This is a file that sits in the root of the directory,
+and simply lists files and folder that you want Git to ignore. Any file listed
+there will not get pushed to Github. Create this file using your favourite text
+editor and simply add the following:
+
+```
+renv/
+```
+
+This will prevent the `renv/` folder from being tracked and backed up. If you are
+working with sensitive, or large, data, you can also add the folder where this data
+is to the `.gitignore` file as well.
+
 `activate.R` is the script that tells R to use the packages from the `library`
 folder at startup. The other file, `settings.dcf` contains general settings for
 `{renv}` which you can safely ignore.

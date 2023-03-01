@@ -1,6 +1,6 @@
 # Packaging your code
 
-In this chapter you're going to learn how to create your own package. And let me
+In this chapter, you're going to learn how to create your own package. And let me
 be clear right from the start: the goal here is not to convert your analysis as
 a package to then publish on CRAN. No, that’s not it. The goal is to convert
 your analysis into a package because when your analysis goes into *package
@@ -10,7 +10,7 @@ for you to:
 
 - document the functions you had to write for your analysis;
 - test these functions;
-- properly define depedencies;
+- properly define dependencies;
 - use all the code you wrote into a true reproducible pipeline.
 
 Turning the analysis into a package will also make the separation between the
@@ -28,9 +28,10 @@ By turning your analysis into a package you will essentially end up with two
 
 Making this separation will then make it easier to record dependencies of your
 analysis using `{renv}`, as your package will be a package like any other that
-needs to be recorded. And what’s more, we can start off from the `.Rmd` files that
-we have already written! The `{fusen}` package will bridge the gap between the `.Rmd`
-files and the package: as Sébastien Rochette, the author of `{fusen}` says:
+needs to be recorded. And what’s more, we can start with the `.Rmd` files that
+we have already written! The `{fusen}` package will bridge the gap between the
+`.Rmd` files and the package: as Sébastien Rochette, the author of `{fusen}`
+says:
 
 > If you have written an Rmd file, you have (almost) already written a package.
 
@@ -40,12 +41,12 @@ Let’s first go over the benefits of turning your analysis into a package once
 again, as this is crucial.
 
 The main point is not to turn the analysis into a package to publish on CRAN
-(but you can, if you want to). The point is that when you analyse data, more
+(but you can if you want to). The point is that when you analyse data, more
 often than not you have to write a lot of custom code, and very often, you don’t
 expect to write that much custom code. Let’s think about our little project: all
 we wanted was to create some plots from Luxembourguish houses’ price data. And
-yet, we had to scrape Wikipedia on two occasion, clean an Excel file, write a
-test... the project was quite modest, and yet, the amount of code (and thus
+yet, we had to scrape Wikipedia on two occasions, clean an Excel file, and write
+a test... the project was quite modest, and yet, the amount of code (and thus
 opportunities to make mistakes) is quite large. But, that’s not something that
 we could have anticipated, hence why we never really start by writing a package,
 but a script (or rather, an `.Rmd`) instead. But then as this script grows
@@ -55,12 +56,13 @@ larger and larger, we realise that we might need something else that a simple
 The other benefit of turning all this code into a package is that we get a clear
 separation between the code that we wrote purely to get our analysis going (what
 I called the *software development part* before) from the analysis itself (which
-would then typically consist in computing descriptive statisics, run regression
-or machine learning models, and visualisation). This then in turn means that we
-can more easily maintain and update each part separately. So the pure software
-development part goes into the package, which then gives us the possibility to
-use many great tools to ensure that our code is properly documented and tested,
-and then the analysis can go inside a purely reproducible pipeline.
+would then typically consist in computing descriptive statistics, running
+regression or machine learning models, and visualisation). This then in turn
+means that we can more easily maintain and update each part separately. So the
+pure software development part goes into the package, which then gives us the
+possibility to use many great tools to ensure that our code is properly
+documented and tested, and then the analysis can go inside a purely reproducible
+pipeline.
 
 ## `{fusen}` quickstart
 
@@ -77,11 +79,12 @@ by starting from a template included in the `{fusen}` package. Start an R sessio
 from your home (or Documents) directory and run the following:
 
 ```{r, eval = F}
-fusen::create_fusen(path = "fusen.test", template = "minimal")
+fusen::create_fusen(path = "fusen.quickstart", template = "minimal")
 ```
 
-This will create a directory called `fusen.test` inside your home (or Documents) directory. Inside
-that folder you will find another folder called `dev/`. Let’s see what’s inside:
+This will create a directory called `fusen.quickstart` inside your home (or
+Documents) directory. Inside that folder, you will find another folder called
+`dev/`. Let’s see what’s inside:
 
 ```
 owner@localhost ➤ ls dev/
@@ -95,7 +98,8 @@ explain what they do:
 - `flat_minimal.Rmd` is only an example, in practice, we will be using the Rmd file(s) that we have written before (`analyse_data.Rmd` and `save_data.Rmd`) instead.
 - `0-dev_history.Rmd` contains lines of code that you typically run when you’re developing a package. For example, a line to initialise Git for the project, a line to add some dependencies, etc, etc. The idea is to **write down everything** that you type in the console in this file. This leaves a trace of what you have been doing, and also acts as a checklist so that you can make sure that you didn’t forget anything.
 
-Before describing these files into detail, I want to show you this image taken from `{fusen}`’s 
+Before describing these files in detail, I want to show you this image taken
+from `{fusen}`’s
 [website](https://thinkr-open.github.io/fusen/)^[https://is.gd/5pJi2h]:
 
 <figure>
@@ -104,24 +108,297 @@ Before describing these files into detail, I want to show you this image taken f
     <figcaption>fusen takes care of the boring stuff for you!</figcaption>
 </figure>
 
-On the left hand side of the image we see our two `.Rmd` files.
-`0-dev_history.Rmd` contains a chunk called `description`. This is the main
-chunk in that file that we need to execute to get started with `{fusen}`.
-Running this chunk will create the package's `DESCRIPTION` file (don't worry if
-you don't know about this, I will explain). Then, the second file
-`flat_minimal.Rmd` (or our very own `.Rmd` files) contain functions, tests,
+On the left-hand side of the image, we see the two template `.Rmd` files from
+`{fusen}`. `0-dev_history.Rmd` contains a chunk called `description`.
+This is the main chunk in that file that we need to execute to get started with
+`{fusen}`. Running this chunk will create the package's `DESCRIPTION` file
+(don't worry if you don't know about this, I will explain). Then, the second
+file `flat_minimal.Rmd` (or our very own `.Rmd` files) contain functions, tests,
 examples, and everything we need for our analysis. When we *inflate* the Rmd
 file, `{fusen}` places every piece from this `.Rmd` file at the right place: the
 functions get copied into the package's `R/` folder, tests go into the `tests/`
-folder, and so on. `{fusen}` simply takes care of everything for us! 
+folder, and so on. `{fusen}` simply takes care of everything for us!
 
 But, for `{fusen}` to be able to work its magic, we do need to prepare our
 `.Rmd` file a bit. But don't worry, it is mostly simply giving adequate names to
-our code chunks.
+our code chunks. Let’s take a look at the `flat_minimal.Rmd` file that was just
+generated. If you open it in a text editor, you should see that it is a fairly
+normal `.Rmd` file. There is a comment telling you to first run the `description`
+chunk in the `0-dev_history.Rmd` file before changing this one. But let’s keep
+reading `flat_minimal.Rmd`. What’s important comes next:
 
-## Document your package (?)
+````{verbatim}
+# my_fun
 
-*I guess fusen makes this process easy and leverages roxygen?*
+```{r function-my_fun}
+#' my_fun Title
+#'
+#' @return 1
+#' @export
+#'
+#' @examples
+my_fun <- function() {
+  1
+}
+```
+
+```{r examples-my_fun}
+my_fun()
+```
+
+```{r tests-my_fun}
+test_that("my_fun works", {
+
+})
+```
+````
+
+This is a section titled `my_fun`. Then comes the definition of `my_fun()`, inside
+a chunk titled `function-my_fun`, then comes an example, inside a chunk titled
+`examples-my_fun` and finally a test in a chunk titled `tests-my_fun`. 
+
+This is essentially how we need to rewrite our own `.Rmd` files to be able to
+use `{fusen}`. What’s really nice, is that most of it is actually done already.
+Using `{fusen}` just *forces* us to clean up our code and define examples and
+tests (if we want them) more cleanly and explicitly. Also, you might have
+noticed that in the chunk with the function definition there are a bunch of
+comments that start with `#'`. These are `{roxygen2}` type comments. As the
+package’s documentation gets built, these comments get automatically turned into
+the documentation you see when you type `help(my_fun)` in an R console.
+
+So, basically, a `{fusen}`-ready `.Rmd` file is nothing more than an `.Rmd` file
+with some structure imposed on it. Instead of documenting your functions as
+simple comments, document them using `{roxygen2}` comments, which then get
+turned into the package’s documentation automatically. Instead of writing ad-hoc
+tests, or worse, instead of testing your functions on your console only,
+manually, one by one (and we’ve all done this), write down the test inside the
+`.Rmd` file itself, right next to the function you’re testing. Instead of trying
+your function out on some mock data in your console, write down that example
+inside the `.Rmd** file itself.
+
+**Write it down**, **write it down**, **write it down**... you’re already
+documenting and testing things, so why not just write it down once and for all,
+so you don’t have to rely on your ageing, mushy brain so much? Don’t make
+yourself remember things, just write them down! `{fusen}` gives you a perfect
+framework to do this. The added benefit is that it will improve your package’s
+quality through the tests and examples that are not directly part of the
+analysis itself but are still required to make sure that the analysis is of high
+quality. So if you start messing with your functions, you have the tests right
+there to tell you if you introduced breaking changes.
+
+Let’s go back to the template and inflate it into a package. Open `0-dev_history.Rmd`
+and take a look at the `description` code chunk:
+
+````{verbatim}
+```{r description, eval=FALSE}
+# Describe your package
+fusen::fill_description(
+  pkg = here::here(),
+  fields = list(
+    Title = "Build A Package From Rmarkdown File",
+    Description = "Use Rmarkdown First method to build your package. Start your package with documentation. Everything can be set from a Rmarkdown file in your project.",
+    `Authors@R` = c(
+      person("Sebastien", "Rochette", email = "sebastien@thinkr.fr", role = c("aut", "cre"), comment = c(ORCID = "0000-0002-1565-9313")),
+      person(given = "ThinkR", role = "cph")
+    )
+  )
+)
+# Define License with use_*_license()
+usethis::use_mit_license("Sébastien Rochette")
+```
+````
+
+Running this chunk will create the package’s `DESCRIPTION` file.
+[Here](https://raw.githubusercontent.com/b-rodrigues/chronicler/c34239d0d42a4ad6082dff614fc6b4c0e9b917d8/DESCRIPTION)^[https://is.gd/PfvkSZ]
+is an example of such a file. This file provides some information on who wrote
+the package, the purpose of the package, as well as some metadata such as the
+package’s version. What’s also quite important are the packages listed below the
+keywords `Depends:`, `Imports:` and `Suggests:`. `Depends:` is where you list
+packages (or R versions) that must be installed for your package to work (if
+they’re not installed, they will be installed alongside your package). This is
+the same with `Imports:`, and the difference is most of the time irrelevant:
+packages listed under `Depends` will not only be loaded when you load your
+package, but also attached. This means that the functions from these packages
+will also be available to the end-user when loading your package. Packages
+listed under `Imports:` will only be loaded, meaning that their functions will
+only be available to your packages’ functions, not the end-users themselves. If
+that’s confusing, don’t worry too much about it. Finally, `Suggests:` are
+dependencies that are not critical, usually these are only necessary if you want
+to run the code from the packages vignettes or examples. As you can imagine,
+listing the right packages under the right category can be a daunting task. But
+don’t worry, `{fusen}` takes care of this automatically for us! Simply focus on
+writing your `.Rmd` files.
+
+The last line of this chunk runs `usethis::use_mit_license()`. `{usethis}` is a
+package that contains many helper functions to help you develop packages. You
+can choose among many licenses, but this is only relevant if you want to publish
+your package on CRAN, and you don’t need to think too much about it at the
+start, since you can always change the license later. And if you don’t want to
+publish your package anywhere (nor CRAN, nor Github) and keep it completely
+internal to your organisation, you don’t need to think about it at all. My very
+personal take on licenses is that you should use copyleft licenses as much as
+possible (so licenses like the GPL) which ensure that if someone takes your code
+and changes it, their changes also have to be republished to the public under
+the GPL -- but only if they wish to publish their changes. They could always
+keep their modifications totally private, which means that companies can, and
+do, use GPL’ed code in their internal products. It’s just if that product gets
+released to the public, that the source code must be released as well. This
+ensures that open code stays open. Licenses like the MIT allow private companies
+to take open source and freely available code and incorporate it inside their
+own proprietary tools, without having to give back to the community. Some people
+argue that this is the *true* free license, because anyone is then also free to
+use and not have to give anything back to the community. I think that this is a
+very idiotic argument, and when proponents of permissive licenses like the MIT
+(or BSD) get bitten, and their software gets used for nefarious purposes, [the
+levels of cope are through the
+roof](https://web.archive.org/web/20230223092823/https://www.cs.vu.nl/~ast/intel/)^[https://is.gd/PS45xu]
+(archived link for posterity). Anyway, I got side-tracked here, let’s go back
+to our package. 
+
+Run the code inside the description chunk in an R console (don’t change anything
+for now, and make sure that the R session was started on the root of the
+project, so in the `fusen.quickstart/` folder), and see the `DESCRIPTION` file
+appear magically in the root of the folder (as well as the `LICENSE` file,
+containing the license).
+
+For now, we can ignore the rest of the `0-dev_history.Rmd` file: actually,
+everything that follows is totally optional, but still useful. If you look at
+them, you see that lines that follow simply help you remember to do useful
+things, like initialising Git, creating a `Readme` file, add some usual
+dependencies, as so one. But let’s ignore this for now, and go to the
+`flat_minimal.Rmd` file.
+
+Got at the end of the file, and take a look at the chunk titled
+`development-inflate`. This is the chunk that will now do the conversion from a
+flat `.Rmd` file to a package. This process is called *inflating* the `.Rmd`
+file (because a *fusen* is a type of origami figure that you fold in a certain
+way, which can then get inflated *literally* into a box). Run the code in that
+chunk, and see your analysis becoming a package automagically.
+
+If you look now at the projects’ folder, you will see several new sub-folder:
+
+- `R/`: the folder that contains the functions;
+- `man/`: contains the functions’ documentation;
+- `tests/`: contains the tests;
+- `vignettes/`: contains the vignettes.
+
+Every function defined in the `flat_minimal.Rmd` file is now inside the `R/`
+folder; all the documentation written as `{roxygen2}` comments is now neatly
+inside `man/`, the tests are in `tests/`, and `flat_minimal.Rmd` has been
+converted to an actual vignette (without all the `development` chunks). This is
+now a package that can be installed immediately using `devtools::install()`,
+or that can be shared on Github and installed from there. Right now, without
+doing anything else. You can even generate a website for your package:
+got back to the `0-dev_history.Rmd` and check the last code chunk, under
+the title *Share the package*. Start a new, fresh session at the root of your 
+project and run the two following lines from that last chunk:
+
+```{r, eval = F}
+# set and try pkgdown documentation website
+usethis::use_pkgdown()
+pkgdown::build_site()
+```
+
+This will build a website for your package and open your web browser and show
+you how it looks like. The files for this website are in the newly created
+`docs/` folder in the root of your package. This can then be hosted, for free,
+with Github, so people can explore the package’s functions and documentation
+without having to install the package!
+
+## Turning our Rmds into a package
+
+Ok, so I hope to have convinced you that `{fusen}` is definitely something that
+you should add to your toolbox. Let’s now turn our analysis into a package, but
+before diving right into it, let’s think about it for a moment.
+
+We have two `.Rmd` files, one for getting and cleaning the data, which we called
+`save_data.Rmd` and another for analysing this data, called `analyse_data.Rmd`.
+
+In both `.Rmd` files, we defined a bunch of functions, but most of the functions
+were defined in the `save_data.Rmd` script. In fact, in the `analyse_data.Rmd`
+file we defined only two functions, `get_laspeyeres()`, the function to get the
+Laspeyeres price index, and `make_plot()`, the function to create the plots for
+our analysis.
+
+We are faced with the following choice here:
+
+- make both these `.Rmd` files *fusen-ready*, and inflate them both. This would put the functions from both `save_data.Rmd` and `analyse_data.Rmd` into the inflated package `R/` folder;
+- put all the functions into `save_data.Rmd` and only inflate that file. The other, `analyse_data.Rmd` can then be used exclusively, and only, for the analysis *stricto sensu*.
+
+This is really up to you, there is no right or wrong answer. You could even go
+for another split if you wanted. It all depends on how much time you want to
+invest into this. If you want to get done quickly, the first option, where you
+simply inflate both files is the fastest. If you have more time, the last
+option, where you neatly split everything might be better. I propose that we go
+for the second option. This way, we only have to inflate one file, and in our case
+here, it won’t take much time anyways. It’s literally only moving to code chunks
+from `analyse_data.Rmd` to `save_data.Rmd`. So before continuing, let’s go back to our
+repository and switch back to the `rmd` branch that contains the `.Rmd` files (let’s ignore
+`{renv}` and the `renv` branch for now):
+
+```
+owner@localhost ➤ git checkout rmd
+```
+
+From, there, let’s create a new branch called `fusen`:
+
+```
+owner@localhost ➤ git checkout -b fusen
+```
+
+```
+Switched to a new branch 'fusen'
+```
+
+We will now be working on this branch. Simply work as usual, but when pushing, make
+sure to push to the `rmd` branch:
+
+```
+owner@localhost ➤ git add .
+owner@localhost ➤ git commit -am "some changes"
+owner@localhost ➤ git push origin fusen
+```
+
+By now, that repository should have four branches:
+
+- *master*, or *main* with the simple `.R` scripts;
+- *rmd*, with the `.Rmd` files
+- *renv*, containing the `.Rmd` files as well, and the `renv.lock` file
+- *fusen*, the branch we will be using now.
+
+If you’ve skipped the first part of the book, or didn’t diligently create the
+branches and push, you can clone this
+[repository](https://github.com/b-rodrigues/housing)^[https://is.gd/jGZrMF] and
+start from a sane base. Switch to the `rmd` branch, and create a branch called
+`fusen`.
+
+First order of business: create a `{fusen}` template in the folder. Start a fresh R
+session inside the `housing/` folder, and run the following:
+
+```{r, eval = F}
+fusen::create_fusen(path = ".", template = "minimal", overwrite = TRUE)
+```
+
+Because we already have a folder, called `housing/` we use the `"."` which essentially
+means "right here". We need the `overwrite = TRUE` option because the folder exists already.
+Running the above command will add the `dev/` folder. Move `save_data.Rmd` inside; remember,
+we only want to inflate that one: `analyse_data.Rmd` will be a simple `.Rmd` that will 
+use our package to load the needed functions and data.
+
+Next step, move the functions `get_laspeyeres()` and `make_plot()` from
+`analyse_data.Rmd` to `save_data.Rmd`. Simple cut and paste these functions from
+one `.Rmd` to the other. Make sure `save_data.Rmd` looks something like
+[this](https://gist.github.com/b-rodrigues/16952727d35355bf3b9cbd5f37843c20)^[https://is.gd/n3m6In],
+take a look at the end of the script to find the functions we’ve moved over. The
+`analyse_data.Rmd` script is exactly the same, minus the functions that we’ve
+just moved over.
+
+Now we need to make `analyse_data.Rmd` ready to be inflated using `{fusen}`. Take inspiration from 
+the `flat_minimal.Rmd` that `fusen::create_fusen()` put in the `dev/` folder. 
+
+Here is what the `analyse_data.Rmd` file, ready to be inflated, looks like. Let’s go over it.
+
+
 
 ## Managing package dependencies (?)
 

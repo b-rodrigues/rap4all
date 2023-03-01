@@ -60,13 +60,19 @@ analysis.
 
 But if budget and time allows we can still go deeper, and definitely should. We
 also want to make running the script as easy as possible, and ideally, *as
-non-interactively as possible**. Any human interaction with the analysis is a
+non-interactively as possible*. Any human interaction with the analysis is a
 source of errors, so that’s why we also need to thouroughly and systematically
-test our code. These tests also need to run non-interactively.
+test our code. These tests also need to run non-interactively. Also, using the
+tools described in part two of this book, we can actually set up the project,
+right from the very beginning, in a way that it will be reproducible quite
+naturally. By using the right tools and setting things up right, we don’t really
+need to invest more time to make things reproducible. The project will simply be
+reproducible because it was engineered, that way. And I insist, at practically
+no additional cost!
 
-The other problem with freezing packages’s version is that in practice, it is
-very often not enough. This is because installing older versions of packages can
-be a challenge. This can be the case for two reasons:
+The other problem with only recording packages’s version is that in practice, it
+is very often not enough. This is because installing older versions of packages
+can be a challenge. This can be the case for two reasons:
 
 - These older packages need also an older version of R, and installing old versions of R can be tricky, depending on your operating system;
 - These older packages might need to get compiled and thus depend themselves on older versions of development libraries needed for compilation.

@@ -14,7 +14,43 @@ Github repository with these two files yet, then now is the time to do so.
 Create a repository and name it *housing_lux* or anything you’d like, and put
 these two files there. I will assume that you have these files safely versioned,
 and will not be telling you systematically when to commit and push. Simply do so
-as often as you’d like!
+as often as you’d like! You should have a repository with a *master* or *main*
+branch containing these two scripts. On your computer, calling `git status` in
+Git Bash (on Windows) or in a terminal (for Linux and macOS) should result in
+this:
+
+```
+owner@localhost ➤ git status
+```
+
+```
+On branch master
+nothing to commit, working tree clean
+```
+
+If that’s the case, congrats, we can start working. Start by creating a new branch,
+and call it `rmd` for example:
+
+```
+owner@localhost ➤ git checkout -b rmd
+```
+
+```
+Switched to a new branch 'rmd'
+```
+
+We will now be working on this branch. Simply work as usual, but when pushing, make
+sure to push to the `rmd` branch:
+
+```
+owner@localhost ➤ git add .
+owner@localhost ➤ git commit -am "some changes"
+owner@localhost ➤ git push origin rmd
+```
+
+This will push whatever change to the `rmd` branch. By doing this, you keep the
+original `.R` scripts in the main branch, and the will end up with the `.Rmd`
+files in the `rmd` branch.
 
 Before moving forward now is the right moment to actually discuss why you would
 want to convert the script into an Rmd. There are several reasons. First, as
