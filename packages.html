@@ -455,7 +455,7 @@ owner@localhost ➤ git push origin fusen</code></pre>
 <li><em>renv</em>, containing the <code>.Rmd</code> files as well, and the <code>renv.lock</code> file</li>
 <li><em>fusen</em>, the branch we will be using now.</li>
 </ul>
-<p>If you’ve skipped the first part of the book, or didn’t diligently create the branches and push, you can clone this <a href="https://github.com/b-rodrigues/housing">repository</a><a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> and start from a sane base. Switch to the <code>rmd</code> branch, and create a branch called <code>fusen</code>.</p>
+<p>If you’ve skipped the first part of the book, or didn’t diligently create the branches and push, you can fork this <a href="https://github.com/b-rodrigues/housing">repository</a><a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> and clone it to start from a sane base. Switch to the <code>rmd</code> branch, and create a branch called <code>fusen</code>.</p>
 <p>First order of business: create a <code>{fusen}</code> template in the folder. Start a fresh R session inside the <code>housing/</code> folder, and run the following:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>fusen<span class="sc">::</span><span class="fu">create_fusen</span>(<span class="at">path =</span> <span class="st">"."</span>, <span class="at">template =</span> <span class="st">"minimal"</span>, <span class="at">overwrite =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
