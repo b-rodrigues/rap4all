@@ -367,23 +367,24 @@ By now, that repository should have four branches:
 - *fusen*, the branch we will be using now.
 
 If you’ve skipped the first part of the book, or didn’t diligently create the
-branches and push, you can clone this
+branches and push, you can fork this
 [repository](https://github.com/b-rodrigues/housing)^[https://is.gd/jGZrMF] and
 start from a sane base. Switch to the `rmd` branch, and create a branch called
 `fusen`.
 
-First order of business: create a `{fusen}` template in the folder. Start a fresh R
-session inside the `housing/` folder, and run the following:
+First order of business: create a `{fusen}` template in the folder. Start a
+fresh R session inside the `housing/` folder, and run the following:
 
 ```{r, eval = F}
 fusen::create_fusen(path = ".", template = "minimal", overwrite = TRUE)
 ```
 
-Because we already have a folder, called `housing/` we use the `"."` which essentially
-means "right here". We need the `overwrite = TRUE` option because the folder exists already.
-Running the above command will add the `dev/` folder. Move `save_data.Rmd` inside; remember,
-we only want to inflate that one: `analyse_data.Rmd` will be a simple `.Rmd` that will 
-use our package to load the needed functions and data.
+Because we already have a folder, called `housing/` we use the `"."` which
+essentially means "right here". We need the `overwrite = TRUE` option because
+the folder exists already. Running the above command will add the `dev/` folder.
+Move `save_data.Rmd` inside; remember, we only want to inflate that one:
+`analyse_data.Rmd` will be a simple `.Rmd` that will use our package to load the
+needed functions and data.
 
 Next step, move the functions `get_laspeyeres()` and `make_plot()` from
 `analyse_data.Rmd` to `save_data.Rmd`. Simple cut and paste these functions from
@@ -393,20 +394,258 @@ take a look at the end of the script to find the functions we’ve moved over. T
 `analyse_data.Rmd` script is exactly the same, minus the functions that we’ve
 just moved over.
 
-Now we need to make `analyse_data.Rmd` ready to be inflated using `{fusen}`. Take inspiration from 
-the `flat_minimal.Rmd` that `fusen::create_fusen()` put in the `dev/` folder. 
+Ok, so now, we need to make `save_data.Rmd` ready to be inflated. Take
+inspiration from the `flat_minimal.Rmd` that `fusen::create_fusen()` put in the
+`dev/` folder. This is what the end-result should [look
+like](https://is.gd/zmXgrv) (no worries, I’m going to explain how I got there).
 
-Here is what the `analyse_data.Rmd` file, ready to be inflated, looks like. Let’s go over it.
+Let’s start by the first function, `get_raw_data()`. If you compare the
+[before](https://gist.github.com/b-rodrigues/16952727d35355bf3b9cbd5f37843c20)^[https://is.gd/n3m6In]
+and [after](https://is.gd/zmXgrv), the differences are that we have named the
+chunk `function-get_raw_data` and added documentation in the form of
+`{roxygen2}` comments. Naming the chunks is essential: this is how `{fusen}` knows
+that this chunk contains a function that should go into the `R/` folder.
+`{roxygen2}` are strictly speaking not required, but it is highly advised that you
+add them: this way, your function will get documented and users (including 
+future you) will be able to read the documentation by typing `help(get_raw_data)`.
 
+Remember when I mentioned that the good thing about turning our analysis into a
+package is that it gives us a framework to develop high quality code by using
+nice development tools? `{roxygen2}` type comments for documentation is the
+first such tool in this list. When you’re writing your functions, I’m pretty
+sure that you add comments to it most of the time. You explain what the inputs
+are, what the outputs are going to be, and also how to use with a little
+example. Using `{fusen}` (and `{roxygen2}`), you simply continue doing the same,
+but with some added structure. This added structure is not costly to impose on
+yourself, and comes with many added benefits (in this case, free
+documentation!). I’m repeating myself but I really want to drive this point
+home: the goal is not to have to *add* code on top of what you already did. The
+point is to do what you always do, but within a framework.
 
+Let’s now look at the functions `{roxygen2}` comments. The first line:
 
-## Managing package dependencies (?)
+```
+#' get_raw_data Gets raw nominal house price data from LU Open Data Portal
+```
 
-*Discuss NAMESPACE and DESCRIPTION and all that. I think it's important to also discuss here
-how to define dependencies from remotes, not just CRAN.*
+will create the title of the function’s help page. Then come the `@param`
+lines (in this case we onyl have one):
 
-## Unit testing
+```
+#' @param url Optional: Persistent url to the data
+```
 
-*This is where I think we should discuss unit testing*
+This lists the parameters of the function. Here you can explain exactly what the
+inputs should be. Suppose that the function has several parameters and that you 
+forget to document one. If that happens, when you will inflate the file, you
+will get a warning in the console:
+
+```
+inflate warings and errors: Undocumented arguments in documentation object 'get_raw_data'
+  'url'
+```
+
+Then come the `@importFrom` statements. This is where you list dependencies:
+
+```
+#' @importFrom readxl excel_sheets read_excel
+#' @importFrom utils download.file
+#' @importFrom dplyr mutate rename select
+#' @importFrom stringr str_trim
+#' @importFrom janitor clean_names
+#' @importFrom purrr map_dfr
+```
+
+This is important, because the statements will write the dependencies into the
+package’s `NAMESPACE` file. This file is important, because any function defined
+there will be available to your package’s functions when you load the package.
+So if your function use `dplyr::mutate()` for example, your package needs to
+know where to look for `mutate()`. This is where the `NAMESPACE` file comes into
+play. Take the opportunity to list the dependencies of your function to review
+them: maybe your using a package for a single dependency that you could easily
+remove. For example, I’m using `stringr::str_trim()` to remove whitespace around
+characters. But I could be using the base R function `trimws()` instead, which
+would remove this dependency. I’m going to keep it here, because I’m lazy
+though.
+
+You will also notice the following `importFrom` statement:
+
+```
+#' @importFrom utils download.file
+```
+
+`download.file()` is included in the `{utils}` package, itself inculded with a
+base installation of R. So you don’t really need to specify it; but when
+inflating the file, you get the following message:
+
+```
+  Consider adding
+    importFrom("utils", "download.file")
+  to your NAMESPACE file.
+```
+
+hence why I’ve added it, to silence this message. Again, not mandatory, but why
+not do it?
+
+Now comes the `@return` keyword: this simply tells your users what the function
+returns. If the function doesn’t return anything, because it only has a side
+effect (for example, writing something to disk, or printing something on
+screen), then you could return `NULL`.
+
+```
+#' @return A data frame
+```
+
+Last but not least, the `@export` keyword:
+
+```
+#' @export
+```
+
+This makes the function available to users that load the package using
+`library(housing)`. If you don’t add this keyword, the function will be only
+available to other functions of the package. Another way to see this: functions
+decorated with the `@export` keyword are public, functions without it are
+private. But private functions don’t really exist in R, if you want to access a
+"private" function, you always can using `:::` (three times the `:`), as in
+`package:::private_function()`.
+
+The other functions are documented in the same manner, so I won’t comment them.
+Something else you might have noticed: I replaced every `%>%` by the base pipe
+`|>`. You don’t have to do it, but the advantage of using the base pipe is that
+it removes the dependency on the `{magrittr}` package, needed for `%>%`. If you
+want to use `%>%`, you can keep it, but then should run the line:
+
+```{r, eval = F}
+usethis::use_pipe()
+```
+
+in the `0-dev_history.Rmd` file, which will take care of adding this dependency
+correctly for you (by editing the `NAMESPACE` file).
+
+Next comes the test we wrote. As a reminder, here is out it looked like in our 
+original `.Rmd` file:
+
+````{verbatim}
+
+Let’s test to see if all the communes from our dataset are represented.
+
+```{r}
+setdiff(flat_data$locality, communes)
+```
+````
+
+The objects `communes` and `flat_data` had obviously to exist for this test to
+pass. This was a very simple test that must be monitored interactively. If
+commune names are returned here, then this means that there are communes left
+that we need to include in our data. But remember: we are aiming at building a
+RAP, and don’t want to have to look at as it is running to see if everything is
+alright. What we need is a test that returns an error if it fails. So for this
+we use the `{testthat}` package, and write a so-called *unit test*. We’re going
+to deep-dive into unit testing (and assertive testing) in the next chapter, so
+for now, let me simply comment the test:
+
+````{verbatim}
+```{r tests-clean_flat_data}
+# We now need to check if we have them all in the data. The test needs to be self-contained, hence
+# why we need to redefine the required variables:
+
+former_communes <- get_former_communes()
+
+current_communes <- get_current_communes()
+
+communes <- get_test_communes(former_communes, current_communes)
+
+raw_data <- get_raw_data(url = "https://github.com/b-rodrigues/rap4all/raw/master/datasets/vente-maison-2010-2021.xlsx")
+
+flat_data <- clean_raw_data(raw_data)
+
+testthat::expect_true(
+            all(communes %in% unique(flat_data$locality))
+                      )
+```
+````
+
+The first thing that you need to know is that tests need to be self-contained.
+This is why we define `former_communes` and `current_communes` again. The reason
+is that `{fusen}` will take this whole chunk and save it inside a script in the
+package’s `tests/` folder and in that script, the test will be all one. So
+that’s why you need to redefine every variable the test needs to run. For the
+test itself, we use `testthat::expect_true()`. This function expects a piece of
+code that should evaluate to `TRUE`: if not, we get an error, and the whole
+pipeline stops here, forcing us to see what’s going on. This is exactly what we
+want: when our code fails, it needs to fail as early and as spectacularly as
+possible. If you rely of future you to have to manually check console output or
+logs and look for errors, you deserve everything that’s going to happen to you.
+
+Under the section titled "Functions used for analysis", I copy and pasted the
+functions from the `analyse_data.Rmd` and documented them as well. What’s new
+is that I’ve added examples:
+
+````{verbatim}
+```{r examples-get_laspeyeres, eval = FALSE}
+#' \dontrun{
+#' commune_level_data_laspeyeres <- get_laspeyeres(commune_level_data)
+#' } 
+```
+````
+
+But I don’t want these examples to run, simply to appear in the documentation.
+This is because, just like for tests, examples have to be self-contained. So for
+this example to run sucessfully, I would need to redefine `commune_level_data`
+from scratch. I don’t want to do this now, so hence why I wrapped the example
+around `\dontrun` and used roxygen-styl comments with `#'`. I did the same
+with the function to plot the data.
+
+We’re almost done; take a look again at the template `flat_minimal.Rmd`. I
+advised you to take inspiration from it to get `save_data.Rmd` fusen-ready.
+At the end of that file, we can see this chunk:
+
+````{verbatim}
+```{r development-inflate, eval=FALSE}
+# Run but keep eval=FALSE to avoid infinite loop
+# Execute in the console directly
+fusen::inflate(flat_file = "dev/flat_minimal.Rmd",
+               vignette_name = "Minimal")
+```
+````
+
+This chunk contains the code that we need to run, manually, to inflate the
+package. However, I’ve removed it, and the reason is that I prefer to have it
+inside the `0-dev_history.Rmd` file. I think that it makes more sense to have it
+there. Take a look at my `0-dev_history.Rmd`
+[here](https://is.gd/WhxGnN)^[https://is.gd/WhxGnN]. By reading that file, you
+see all the different developer actions that were taken. Your team-mates, or
+future you could read this, and immediately understand what happened, and
+what was done. Under the section title "Inflate save_data.Rmd", you see
+that the chunk to inflate the `.Rmd` file and generate the package is there.
+I can run this chunk from `0-dev_history.Rmd` and have my package successfully
+generated.
+
+I suggest that you stop here, and really try to get this working as well. You
+can start by simply cloning your fork of this
+[repository](https://github.com/b-rodrigues/housing)^[https://is.gd/jGZrMF] I
+linked as well in the beginning of this chapter, and follow along. After
+inflating, take a look at the vignette generated from the inflated
+`save_data.Rmd`, which you can find under the `vignettes/` folder. One thing
+you need to understand, is that the `save_data.Rmd` file that you inflate,
+under `dev/` is a working file for *developers*. The generated vignette on the
+other hand, can be read by stakeholders other than developers. You will
+notice that the generated vignette does not contain the function chunks. This
+is normal, because the functions are now under the `R/` folder. Really take
+some time to understand this. Because what follows will assume that you have
+groked `{fusen}`.
+
+## Including datasets
+
+Another difference from before, is that our fusen-ready `save_data.Rmd` file
+does not save the datasets as `.csv` files anymore. This is because it is 
+much better to include them directly in the package, and make them available
+to users like so:
+
+```{r, eval = F}
+data("commune_level_data")
+```
+
 
 ## pkgdown
