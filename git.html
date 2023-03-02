@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Building reproducible analytical pipelines with R - 5&nbsp; Version control</title>
+<title>Building reproducible analytical pipelines with R - 4&nbsp; Version control</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -77,7 +77,7 @@ ul.task-list li input[type="checkbox"] {
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
     <div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Version control</span></h1>
+      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Version control</span></h1>
       <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
         <i class="bi bi-chevron-right"></i>
       </button>
@@ -113,91 +113,101 @@ ul.task-list li input[type="checkbox"] {
   <a href="./intro.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./part1_intro.html" class="sidebar-item-text sidebar-link">Part 1: Don’t repeat yourself</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./part1_intro.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Part 1: Don’t repeat yourself</span></a>
+  <a href="./prerequisites.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Before we start</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./prerequisites.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Before we start</span></a>
+  <a href="./project_start.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Project start</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./project_start.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Project start</span></a>
+  <a href="./git.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Version control</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./git.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Version control</span></a>
+  <a href="./github.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Collaborating with Github</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./github.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Collaborating with Github</span></a>
+  <a href="./fprog.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Functional programming</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./fprog.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Functional programming</span></a>
+  <a href="./lit_prog.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Literate programming</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./lit_prog.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Literate programming</span></a>
+  <a href="./part1_conclusion.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Conclusion of part 1</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./part2_intro.html" class="sidebar-item-text sidebar-link">Part 2: Reproducibility</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./part1_conclusion.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Conclusion of part 1</span></a>
+  <a href="./project_rewrite.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Rewriting our project</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./part2_intro.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Part 2: Reproducibility</span></a>
+  <a href="./repro_intro.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Introduction to reproducibility</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./project_rewrite.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Rewriting our project</span></a>
+  <a href="./packages.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Packaging your code</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./repro_intro.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Introduction to reproducibility</span></a>
+  <a href="./testing.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Testing your code</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./packages.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Packaging your code</span></a>
+  <a href="./targets.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Build automation</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./testing.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Testing your code</span></a>
+  <a href="./repro_cont.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Advanced topics in reproducibility</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./targets.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Build automation</span></a>
+  <a href="./ci_cd.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Continuous integration and continuous deployment/delivery</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./repro_cont.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Advanced topics in reproducibility</span></a>
+  <a href="./part2_conclusion.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Conclusion of part 2</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./ci_cd.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Continuous integration and continuous deployment/delivery</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./part2_conclusion.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Conclusion of part 2</span></a>
-  </div>
-</li>
+      </ul>
+  </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./references.html" class="sidebar-item-text sidebar-link">References</a>
@@ -212,11 +222,11 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#installing-git-and-opening-a-github-account" id="toc-installing-git-and-opening-a-github-account" class="nav-link active" data-scroll-target="#installing-git-and-opening-a-github-account"><span class="toc-section-number">5.1</span>  Installing Git and opening a Github account</a></li>
-  <li><a href="#git-superbasics" id="toc-git-superbasics" class="nav-link" data-scroll-target="#git-superbasics"><span class="toc-section-number">5.2</span>  Git superbasics</a></li>
-  <li><a href="#git-and-github" id="toc-git-and-github" class="nav-link" data-scroll-target="#git-and-github"><span class="toc-section-number">5.3</span>  Git and Github</a></li>
-  <li><a href="#getting-to-know-github" id="toc-getting-to-know-github" class="nav-link" data-scroll-target="#getting-to-know-github"><span class="toc-section-number">5.4</span>  Getting to know Github</a></li>
-  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="toc-section-number">5.5</span>  Conclusion</a></li>
+  <li><a href="#installing-git-and-opening-a-github-account" id="toc-installing-git-and-opening-a-github-account" class="nav-link active" data-scroll-target="#installing-git-and-opening-a-github-account"><span class="toc-section-number">4.1</span>  Installing Git and opening a Github account</a></li>
+  <li><a href="#git-superbasics" id="toc-git-superbasics" class="nav-link" data-scroll-target="#git-superbasics"><span class="toc-section-number">4.2</span>  Git superbasics</a></li>
+  <li><a href="#git-and-github" id="toc-git-and-github" class="nav-link" data-scroll-target="#git-and-github"><span class="toc-section-number">4.3</span>  Git and Github</a></li>
+  <li><a href="#getting-to-know-github" id="toc-getting-to-know-github" class="nav-link" data-scroll-target="#getting-to-know-github"><span class="toc-section-number">4.4</span>  Getting to know Github</a></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="toc-section-number">4.5</span>  Conclusion</a></li>
   </ul>
 </nav>
     </div>
@@ -225,7 +235,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Version control</span></h1>
+<h1 class="title d-none d-lg-block"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Version control</span></h1>
 </div>
 
 
@@ -267,8 +277,8 @@ ul.task-list li input[type="checkbox"] {
 <li>How to collaborate, as a team, on a project;</li>
 <li>How to contribute to someone else’s project.</li>
 </ul>
-<section id="installing-git-and-opening-a-github-account" class="level2" data-number="5.1">
-<h2 data-number="5.1" class="anchored" data-anchor-id="installing-git-and-opening-a-github-account"><span class="header-section-number">5.1</span> Installing Git and opening a Github account</h2>
+<section id="installing-git-and-opening-a-github-account" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="installing-git-and-opening-a-github-account"><span class="header-section-number">4.1</span> Installing Git and opening a Github account</h2>
 <p>Git is a program that you install on your computer. If you’re running a Linux distribution, chances are Git is already installed. Try to run the following command in a terminal to see if this is the case:</p>
 <pre><code>which git</code></pre>
 <p>If a path like <code>/usr/bin/git</code> gets shown, congratulations, you can skip the rest of this paragraph. If something like:</p>
@@ -289,8 +299,8 @@ This is your Github dashboard.
 </figure>
 <p>Now that we have an opened account, we can go to the folder that contains the two scripts we wrote at the start of the book.</p>
 </section>
-<section id="git-superbasics" class="level2" data-number="5.2">
-<h2 data-number="5.2" class="anchored" data-anchor-id="git-superbasics"><span class="header-section-number">5.2</span> Git superbasics</h2>
+<section id="git-superbasics" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="git-superbasics"><span class="header-section-number">4.2</span> Git superbasics</h2>
 <p>Open the folder that contains the two scripts in a file explorer. On most Linux desktop environments you should be able to right-click inside that folder anywhere and select an option titled something like “Open Terminal here”. On Windows, do the same, but the option is titled “Open Git Bash here”. On macOS, you need to first activate this option. Simply google for “open terminal at folder macOS” and follow the instructions. It is also possible to drag and drop a folder into a terminal which will then open the correct path in the terminal. Another option, of course, is to simply open a terminal and navigate to the correct folder using <code>cd</code> (<strong>c</strong>hange <strong>d</strong>irectory:</p>
 <pre><code>cd /home/user/housing/</code></pre>
 <p>(The above command assumes that our project is inside a folder called “housing”). Make sure that you are in the right folder by <strong>l</strong>i<strong>s</strong>ting the contents of the folder:</p>
@@ -472,8 +482,8 @@ Date:   Sun Feb 5 17:32:26 2023 +0100
     Project start</code></pre>
 <p>This small example illustrates how useful Git is, even without using Github, and even if working alone on a project. At the very least it offers you a way to simply walk back changes and gives you a nice timeline of your project. Maybe this does not impress you much, because we live in a world where cloud services like Dropbox made things like this very accessible. But where Git (with the help of a service like Github) really shines is when collaboration is needed. Git and code housing services like Github make it possible to collaborate at very large scale: thousands of developers contribute to the Linux kernel, arguably the most successful open source project ever, powering most of today’s smartphones, servers, supercomputers and embedded computer,<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> and you can use these tools to collaborate at a smaller scale very efficiently as well.</p>
 </section>
-<section id="git-and-github" class="level2" data-number="5.3">
-<h2 data-number="5.3" class="anchored" data-anchor-id="git-and-github"><span class="header-section-number">5.3</span> Git and Github</h2>
+<section id="git-and-github" class="level2" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="git-and-github"><span class="header-section-number">4.3</span> Git and Github</h2>
 <p>So we got some work done on our machine and made some commits. We are now ready to push these commits to Github. “Pushing” means essentially uploading these changes to Github. This makes them available to your coworkers if you’re pushing to a private repository, or makes them available to the world if you’re pushing to a public repository.</p>
 <p>Before pushing anything to Github though, we need to create a new repository. This repository will contain the code for our project, as well as all the changes that Git has been tracking on our machine. So if, for example, a new team member joins, he or she will be able to clone the repository to his or her computer and every change, every commit message and every single bit of history of the project will be accessible. If it’s a public repository, anyone will be able to clone the repository and contribute code to it. We are going to walk you true some examples of how to collaborate with Git using Github in the remained of this chapter.</p>
 <p>So, let’s first go back to <a href="https://github.com/">https://github.com/</a> and create a new repository:</p>
@@ -596,8 +606,8 @@ Finally!
 </figcaption>
 </figure>
 </section>
-<section id="getting-to-know-github" class="level2" data-number="5.4">
-<h2 data-number="5.4" class="anchored" data-anchor-id="getting-to-know-github"><span class="header-section-number">5.4</span> Getting to know Github</h2>
+<section id="getting-to-know-github" class="level2" data-number="4.4">
+<h2 data-number="4.4" class="anchored" data-anchor-id="getting-to-know-github"><span class="header-section-number">4.4</span> Getting to know Github</h2>
 <p>We have succeeded in installing Git and making it work with our Github account. If you use another machine for development, you will need to generate another rsa key pair on that machine and add the public key to Github. If you use another code hosting platform, you can use the same rsa key pair, but will need to add the public key to this other code hosting platform. You can even use the same key pair as a passwordless authentication method for ssh (for example to log into a server, but this is outside the scope of the present book). Before continuing we are going to take a little tour of Github.</p>
 <figure class="figure">
 <img src="images/github_repo_1.png" alt="You repository's landing page." class="figure-img">
@@ -675,8 +685,8 @@ Try to provide as many details as possible.
 <p>Also, writing an MRE can usually make you actually debug the code yourself. Just like in <a href="https://en.wikipedia.org/wiki/Rubber_duck_debugging">rubber duck debugging</a>, the fact of simply trying to explain the problem can lead to finding what’s wrong. But by writing an MRE, you’re also reducing the problem into its most basic parts, and removing everything unnecessary. By doing so, you might realize that what you thought was a bug of the library was maybe rather a <a href="https://en.wikipedia.org/wiki/User_error#PEBKAC/PEBCAK/PICNIC">problem between the keyboard and the chair</a>.</p>
 <p>So don’t underestimate the usefulness of creating high-quality MREs for your issues! One package that can assist you with this is {reprex} (read about it <a href="https://reprex.tidyverse.org/">here</a>).</p>
 </section>
-<section id="conclusion" class="level2" data-number="5.5">
-<h2 data-number="5.5" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">5.5</span> Conclusion</h2>
+<section id="conclusion" class="level2" data-number="4.5">
+<h2 data-number="4.5" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">4.5</span> Conclusion</h2>
 <p>You should now have your first repository and know the very basics of using Git and Github.com. If you did not understand everything, take some time to rerun the commands from above. Maybe add some more files to your repo, remove them, try to revert certain commits, etc. Create a new repo and try to push some files or scripts to it. Really take the time to understand what is going on and how to use these tools, because they are essential for reproducibility.</p>
 
 
@@ -940,12 +950,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="./project_start.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Project start</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Project start</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="./github.html" class="pagination-link">
-        <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Collaborating with Github</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Collaborating with Github</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
