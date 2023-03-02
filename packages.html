@@ -288,9 +288,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#benefits-of-packages" id="toc-benefits-of-packages" class="nav-link active" data-scroll-target="#benefits-of-packages"><span class="toc-section-number">11.1</span>  Benefits of packages</a></li>
   <li><a href="#fusen-quickstart" id="toc-fusen-quickstart" class="nav-link" data-scroll-target="#fusen-quickstart"><span class="toc-section-number">11.2</span>  <code>{fusen}</code> quickstart</a></li>
   <li><a href="#turning-our-rmds-into-a-package" id="toc-turning-our-rmds-into-a-package" class="nav-link" data-scroll-target="#turning-our-rmds-into-a-package"><span class="toc-section-number">11.3</span>  Turning our Rmds into a package</a></li>
-  <li><a href="#managing-package-dependencies" id="toc-managing-package-dependencies" class="nav-link" data-scroll-target="#managing-package-dependencies"><span class="toc-section-number">11.4</span>  Managing package dependencies (?)</a></li>
-  <li><a href="#unit-testing" id="toc-unit-testing" class="nav-link" data-scroll-target="#unit-testing"><span class="toc-section-number">11.5</span>  Unit testing</a></li>
-  <li><a href="#pkgdown" id="toc-pkgdown" class="nav-link" data-scroll-target="#pkgdown"><span class="toc-section-number">11.6</span>  pkgdown</a></li>
+  <li><a href="#including-datasets" id="toc-including-datasets" class="nav-link" data-scroll-target="#including-datasets"><span class="toc-section-number">11.4</span>  Including datasets</a></li>
+  <li><a href="#pkgdown" id="toc-pkgdown" class="nav-link" data-scroll-target="#pkgdown"><span class="toc-section-number">11.5</span>  pkgdown</a></li>
   </ul>
 </nav>
     </div>
@@ -455,26 +454,101 @@ owner@localhost ➤ git push origin fusen</code></pre>
 <li><em>renv</em>, containing the <code>.Rmd</code> files as well, and the <code>renv.lock</code> file</li>
 <li><em>fusen</em>, the branch we will be using now.</li>
 </ul>
-<p>If you’ve skipped the first part of the book, or didn’t diligently create the branches and push, you can fork this <a href="https://github.com/b-rodrigues/housing">repository</a><a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> and clone it to start from a sane base. Switch to the <code>rmd</code> branch, and create a branch called <code>fusen</code>.</p>
+<p>If you’ve skipped the first part of the book, or didn’t diligently create the branches and push, you can fork this <a href="https://github.com/b-rodrigues/housing">repository</a><a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> and then clone it to start from a sane base. Switch to the <code>rmd</code> branch, and create a branch called <code>fusen</code>.</p>
 <p>First order of business: create a <code>{fusen}</code> template in the folder. Start a fresh R session inside the <code>housing/</code> folder, and run the following:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>fusen<span class="sc">::</span><span class="fu">create_fusen</span>(<span class="at">path =</span> <span class="st">"."</span>, <span class="at">template =</span> <span class="st">"minimal"</span>, <span class="at">overwrite =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Because we already have a folder, called <code>housing/</code> we use the <code>"."</code> which essentially means “right here”. We need the <code>overwrite = TRUE</code> option because the folder exists already. Running the above command will add the <code>dev/</code> folder. Move <code>save_data.Rmd</code> inside; remember, we only want to inflate that one: <code>analyse_data.Rmd</code> will be a simple <code>.Rmd</code> that will use our package to load the needed functions and data.</p>
 <p>Next step, move the functions <code>get_laspeyeres()</code> and <code>make_plot()</code> from <code>analyse_data.Rmd</code> to <code>save_data.Rmd</code>. Simple cut and paste these functions from one <code>.Rmd</code> to the other. Make sure <code>save_data.Rmd</code> looks something like <a href="https://gist.github.com/b-rodrigues/16952727d35355bf3b9cbd5f37843c20">this</a><a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a>, take a look at the end of the script to find the functions we’ve moved over. The <code>analyse_data.Rmd</code> script is exactly the same, minus the functions that we’ve just moved over.</p>
-<p>Now we need to make <code>analyse_data.Rmd</code> ready to be inflated using <code>{fusen}</code>. Take inspiration from the <code>flat_minimal.Rmd</code> that <code>fusen::create_fusen()</code> put in the <code>dev/</code> folder.</p>
-<p>Here is what the <code>analyse_data.Rmd</code> file, ready to be inflated, looks like. Let’s go over it.</p>
+<p>Ok, so now, we need to make <code>save_data.Rmd</code> ready to be inflated. Take inspiration from the <code>flat_minimal.Rmd</code> that <code>fusen::create_fusen()</code> put in the <code>dev/</code> folder. This is what the end-result should <a href="https://is.gd/zmXgrv">look like</a> (no worries, I’m going to explain how I got there).</p>
+<p>Let’s start by the first function, <code>get_raw_data()</code>. If you compare the <a href="https://gist.github.com/b-rodrigues/16952727d35355bf3b9cbd5f37843c20">before</a><a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a> and <a href="https://is.gd/zmXgrv">after</a>, the differences are that we have named the chunk <code>function-get_raw_data</code> and added documentation in the form of <code>{roxygen2}</code> comments. Naming the chunks is essential: this is how <code>{fusen}</code> knows that this chunk contains a function that should go into the <code>R/</code> folder. <code>{roxygen2}</code> are strictly speaking not required, but it is highly advised that you add them: this way, your function will get documented and users (including future you) will be able to read the documentation by typing <code>help(get_raw_data)</code>.</p>
+<p>Remember when I mentioned that the good thing about turning our analysis into a package is that it gives us a framework to develop high quality code by using nice development tools? <code>{roxygen2}</code> type comments for documentation is the first such tool in this list. When you’re writing your functions, I’m pretty sure that you add comments to it most of the time. You explain what the inputs are, what the outputs are going to be, and also how to use with a little example. Using <code>{fusen}</code> (and <code>{roxygen2}</code>), you simply continue doing the same, but with some added structure. This added structure is not costly to impose on yourself, and comes with many added benefits (in this case, free documentation!). I’m repeating myself but I really want to drive this point home: the goal is not to have to <em>add</em> code on top of what you already did. The point is to do what you always do, but within a framework.</p>
+<p>Let’s now look at the functions <code>{roxygen2}</code> comments. The first line:</p>
+<pre><code>#' get_raw_data Gets raw nominal house price data from LU Open Data Portal</code></pre>
+<p>will create the title of the function’s help page. Then come the <code>@param</code> lines (in this case we onyl have one):</p>
+<pre><code>#' @param url Optional: Persistent url to the data</code></pre>
+<p>This lists the parameters of the function. Here you can explain exactly what the inputs should be. Suppose that the function has several parameters and that you forget to document one. If that happens, when you will inflate the file, you will get a warning in the console:</p>
+<pre><code>inflate warings and errors: Undocumented arguments in documentation object 'get_raw_data'
+  'url'</code></pre>
+<p>Then come the <code>@importFrom</code> statements. This is where you list dependencies:</p>
+<pre><code>#' @importFrom readxl excel_sheets read_excel
+#' @importFrom utils download.file
+#' @importFrom dplyr mutate rename select
+#' @importFrom stringr str_trim
+#' @importFrom janitor clean_names
+#' @importFrom purrr map_dfr</code></pre>
+<p>This is important, because the statements will write the dependencies into the package’s <code>NAMESPACE</code> file. This file is important, because any function defined there will be available to your package’s functions when you load the package. So if your function use <code>dplyr::mutate()</code> for example, your package needs to know where to look for <code>mutate()</code>. This is where the <code>NAMESPACE</code> file comes into play. Take the opportunity to list the dependencies of your function to review them: maybe your using a package for a single dependency that you could easily remove. For example, I’m using <code>stringr::str_trim()</code> to remove whitespace around characters. But I could be using the base R function <code>trimws()</code> instead, which would remove this dependency. I’m going to keep it here, because I’m lazy though.</p>
+<p>You will also notice the following <code>importFrom</code> statement:</p>
+<pre><code>#' @importFrom utils download.file</code></pre>
+<p><code>download.file()</code> is included in the <code>{utils}</code> package, itself included with a base installation of R. So you don’t really need to specify it; but when inflating the file, you get the following message:</p>
+<pre><code>  Consider adding
+    importFrom("utils", "download.file")
+  to your NAMESPACE file.</code></pre>
+<p>hence why I’ve added it, to silence this message. Again, not mandatory, but why not do it?</p>
+<p>Now comes the <code>@return</code> keyword: this simply tells your users what the function returns. If the function doesn’t return anything, because it only has a side effect (for example, writing something to disk, or printing something on screen), then you could return <code>NULL</code>.</p>
+<pre><code>#' @return A data frame</code></pre>
+<p>Last but not least, the <code>@export</code> keyword:</p>
+<pre><code>#' @export</code></pre>
+<p>This makes the function available to users that load the package using <code>library(housing)</code>. If you don’t add this keyword, the function will be only available to other functions of the package. Another way to see this: functions decorated with the <code>@export</code> keyword are public, functions without it are private. But private functions don’t really exist in R, if you want to access a “private” function, you always can using <code>:::</code> (three times the <code>:</code>), as in <code>package:::private_function()</code>.</p>
+<p>The other functions are documented in the same manner, so I won’t comment them. Something else you might have noticed: I replaced every <code>%&gt;%</code> by the base pipe <code>|&gt;</code>. You don’t have to do it, but the advantage of using the base pipe is that it removes the dependency on the <code>{magrittr}</code> package, needed for <code>%&gt;%</code>. If you want to use <code>%&gt;%</code>, you can keep it, but then should run the line:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">use_pipe</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>in the <code>0-dev_history.Rmd</code> file, which will take care of adding this dependency correctly for you (by editing the <code>NAMESPACE</code> file).</p>
+<p>Next comes the test we wrote. As a reminder, here is out it looked like in our original <code>.Rmd</code> file:</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>Let’s test to see if all the communes from our dataset are represented.</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>```{r}</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>setdiff(flat_data$locality, communes)</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>```</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The objects <code>communes</code> and <code>flat_data</code> had obviously to exist for this test to pass. This was a very simple test that must be monitored interactively. If commune names are returned here, then this means that there are communes left that we need to include in our data. But remember: we are aiming at building a RAP, and don’t want to have to look at as it is running to see if everything is alright. What we need is a test that returns an error if it fails. So for this we use the <code>{testthat}</code> package, and write a so-called <em>unit test</em>. We’re going to deep-dive into unit testing (and assertive testing) in the next chapter, so for now, let me simply comment the test:</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>```{r tests-clean_flat_data}</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a># We now need to check if we have them all in the data. The test needs to be self-contained, hence</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a># why we need to redefine the required variables:</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>former_communes &lt;- get_former_communes()</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>current_communes &lt;- get_current_communes()</span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>communes &lt;- get_test_communes(former_communes, current_communes)</span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>raw_data &lt;- get_raw_data(url = "https://github.com/b-rodrigues/rap4all/raw/master/datasets/vente-maison-2010-2021.xlsx")</span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a>flat_data &lt;- clean_raw_data(raw_data)</span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a>testthat::expect_true(</span>
+<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a>            all(communes %in% unique(flat_data$locality))</span>
+<span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a>                      )</span>
+<span id="cb22-18"><a href="#cb22-18" aria-hidden="true" tabindex="-1"></a>```</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The first thing that you need to know is that tests need to be self-contained. This is why we define <code>former_communes</code> and <code>current_communes</code> again. The reason is that <code>{fusen}</code> will take this whole chunk and save it inside a script in the package’s <code>tests/</code> folder and in that script, the test will be all one. So that’s why you need to redefine every variable the test needs to run. For the test itself, we use <code>testthat::expect_true()</code>. This function expects a piece of code that should evaluate to <code>TRUE</code>: if not, we get an error, and the whole pipeline stops here, forcing us to see what’s going on. This is exactly what we want: when our code fails, it needs to fail as early and as spectacularly as possible. If you rely of future you to have to manually check console output or logs and look for errors, you deserve everything that’s going to happen to you.</p>
+<p>Under the section titled “Functions used for analysis”, I copy and pasted the functions from the <code>analyse_data.Rmd</code> and documented them as well. What’s new is that I’ve added examples:</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>```{r examples-get_laspeyeres, eval = FALSE}</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>#' \dontrun{</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>#' commune_level_data_laspeyeres &lt;- get_laspeyeres(commune_level_data)</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>#' } </span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>```</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>But I don’t want these examples to run, simply to appear in the documentation. This is because, just like for tests, examples have to be self-contained. So for this example to run sucessfully, I would need to redefine <code>commune_level_data</code> from scratch. I don’t want to do this now, so hence why I wrapped the example around <code>\dontrun</code> and used roxygen-styl comments with <code>#'</code>. I did the same with the function to plot the data.</p>
+<p>We’re almost done; take a look again at the template <code>flat_minimal.Rmd</code>. I advised you to take inspiration from it to get <code>save_data.Rmd</code> fusen-ready. At the end of that file, we can see this chunk:</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>```{r development-inflate, eval=FALSE}</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a># Run but keep eval=FALSE to avoid infinite loop</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a># Execute in the console directly</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>fusen::inflate(flat_file = "dev/flat_minimal.Rmd",</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>               vignette_name = "Minimal")</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>```</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This chunk contains the code that we need to run, manually, to inflate the package. However, I’ve removed it, and the reason is that I prefer to have it inside the <code>0-dev_history.Rmd</code> file. I think that it makes more sense to have it there. Take a look at my <code>0-dev_history.Rmd</code> <a href="https://is.gd/WhxGnN">here</a><a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a>. By reading that file, you see all the different developer actions that were taken. Your team-mates, or future you could read this, and immediately understand what happened, and what was done. Under the section title “Inflate save_data.Rmd”, you see that the chunk to inflate the <code>.Rmd</code> file and generate the package is there. I can run this chunk from <code>0-dev_history.Rmd</code> and have my package successfully generated.</p>
+<p>I suggest that you stop here, and really try to get this working as well. You can start by simply cloning your fork of this <a href="https://github.com/b-rodrigues/housing">repository</a><a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a> I linked as well in the beginning of this chapter, and follow along. After inflating, take a look at the vignette generated from the inflated <code>save_data.Rmd</code>, which you can find under the <code>vignettes/</code> folder. One thing you need to understand, is that the <code>save_data.Rmd</code> file that you inflate, under <code>dev/</code> is a working file for <em>developers</em>. The generated vignette on the other hand, can be read by stakeholders other than developers. You will notice that the generated vignette does not contain the function chunks. This is normal, because the functions are now under the <code>R/</code> folder. Really take some time to understand this. Because what follows will assume that you have groked <code>{fusen}</code>.</p>
 </section>
-<section id="managing-package-dependencies" class="level2" data-number="11.4">
-<h2 data-number="11.4" class="anchored" data-anchor-id="managing-package-dependencies"><span class="header-section-number">11.4</span> Managing package dependencies (?)</h2>
-<p><em>Discuss NAMESPACE and DESCRIPTION and all that. I think it’s important to also discuss here how to define dependencies from remotes, not just CRAN.</em></p>
+<section id="including-datasets" class="level2" data-number="11.4">
+<h2 data-number="11.4" class="anchored" data-anchor-id="including-datasets"><span class="header-section-number">11.4</span> Including datasets</h2>
+<p>Another difference from before, is that our fusen-ready <code>save_data.Rmd</code> file does not save the datasets as <code>.csv</code> files anymore. This is because it is much better to include them directly in the package, and make them available to users like so:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">"commune_level_data"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 </section>
-<section id="unit-testing" class="level2" data-number="11.5">
-<h2 data-number="11.5" class="anchored" data-anchor-id="unit-testing"><span class="header-section-number">11.5</span> Unit testing</h2>
-<p><em>This is where I think we should discuss unit testing</em></p>
-</section>
-<section id="pkgdown" class="level2" data-number="11.6">
-<h2 data-number="11.6" class="anchored" data-anchor-id="pkgdown"><span class="header-section-number">11.6</span> pkgdown</h2>
+<section id="pkgdown" class="level2" data-number="11.5">
+<h2 data-number="11.5" class="anchored" data-anchor-id="pkgdown"><span class="header-section-number">11.5</span> pkgdown</h2>
 
 
 </section>
@@ -486,6 +560,9 @@ owner@localhost ➤ git push origin fusen</code></pre>
 <li id="fn3"><p>https://is.gd/PS45xu<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn4"><p>https://is.gd/jGZrMF<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn5"><p>https://is.gd/n3m6In<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn6"><p>https://is.gd/n3m6In<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn7"><p>https://is.gd/WhxGnN<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn8"><p>https://is.gd/jGZrMF<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 
