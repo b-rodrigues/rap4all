@@ -369,8 +369,8 @@ By now, that repository should have four branches:
 If you’ve skipped the first part of the book, or didn’t diligently create the
 branches and push, you can fork this
 [repository](https://github.com/b-rodrigues/housing)^[https://is.gd/jGZrMF] and
-start from a sane base. Switch to the `rmd` branch, and create a branch called
-`fusen`.
+then clone it to start from a sane base. Switch to the `rmd` branch, and create
+a branch called `fusen`.
 
 First order of business: create a `{fusen}` template in the folder. Start a
 fresh R session inside the `housing/` folder, and run the following:
@@ -474,7 +474,7 @@ You will also notice the following `importFrom` statement:
 #' @importFrom utils download.file
 ```
 
-`download.file()` is included in the `{utils}` package, itself inculded with a
+`download.file()` is included in the `{utils}` package, itself included with a
 base installation of R. So you don’t really need to specify it; but when
 inflating the file, you get the following message:
 
