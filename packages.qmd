@@ -614,38 +614,59 @@ This chunk contains the code that we need to run, manually, to inflate the
 package. However, I’ve removed it, and the reason is that I prefer to have it
 inside the `0-dev_history.Rmd` file. I think that it makes more sense to have it
 there. Take a look at my `0-dev_history.Rmd`
-[here](https://is.gd/WhxGnN)^[https://is.gd/WhxGnN]. By reading that file, you
+[here](https://is.gd/e9MqkB)^[https://is.gd/WhxGnN]. By reading that file, you
 see all the different developer actions that were taken. Your team-mates, or
-future you could read this, and immediately understand what happened, and
-what was done. Under the section title "Inflate save_data.Rmd", you see
-that the chunk to inflate the `.Rmd` file and generate the package is there.
-I can run this chunk from `0-dev_history.Rmd` and have my package successfully
-generated.
+future you could read this, and immediately understand what happened, and what
+was done. Under the section title "Inflate save_data.Rmd", you see that the
+chunk to inflate the `.Rmd` file and generate the package is there. I can run
+this chunk from `0-dev_history.Rmd` and have my package successfully generated.
+Something important to notice as well: my fusen-ready `.Rmd` file is simply
+called `save_data.Rmd`, while the generated, inflated file, that will be part of
+the package under the `vignettes/` folder is called `dev-save_data.Rmd`.
 
 I suggest that you stop here, and really try to get this working as well. You
 can start by simply cloning your fork of this
 [repository](https://github.com/b-rodrigues/housing)^[https://is.gd/jGZrMF] I
 linked as well in the beginning of this chapter, and follow along. After
 inflating, take a look at the vignette generated from the inflated
-`save_data.Rmd`, which you can find under the `vignettes/` folder. One thing
-you need to understand, is that the `save_data.Rmd` file that you inflate,
-under `dev/` is a working file for *developers*. The generated vignette on the
-other hand, can be read by stakeholders other than developers. You will
-notice that the generated vignette does not contain the function chunks. This
-is normal, because the functions are now under the `R/` folder. Really take
-some time to understand this. Because what follows will assume that you have
-groked `{fusen}`.
+`dev-save_data.Rmd`, which you can find under the `vignettes/` folder. One thing
+you need to understand, is that the `save_data.Rmd` file that you inflate, under
+`dev/` is a working file for *developers*. The generated vignette on the other
+hand, can be read by stakeholders other than developers as well. In my case,
+I’ve added the prefix `dev-` because this vignette deals with preparing data for
+inlusing in the package, and there is not much point for a stakeholder other
+than a developer to read this vignette. You will notice that the generated
+vignette does not contain the function chunks. This is normal, because after
+inflating the `.Rmd` file, the functions get saved under the `R/` folder. Really
+take some time to understand this. Because what follows will assume that you
+have groked `{fusen}`.
 
 ## Including datasets
 
-Another difference from before, is that our fusen-ready `save_data.Rmd` file
-does not save the datasets as `.csv` files anymore. This is because it is 
-much better to include them directly in the package, and make them available
-to users like so:
+Another difference between our initial `.Rmd` and the fusen-ready `.Rmd`, is
+that that fusen-ready `save_data.Rmd` file does not save the datasets as `.csv`
+files anymore. This is because it is much better to include them directly in the
+package, and make them available to users like so:
 
 ```{r, eval = F}
 data("commune_level_data")
 ```
+
+For this however, we need the package to already be built; only once the package
+exists can we include data sets. This is why we need to inflate `save_data.Rmd`
+first. So, how do we include data sets in a package? The workflow is quite simple:
+
+- write a script that generates the data set (and save this script inside the `data-raw` folder for future reference)
+- save the datasets inside the `data/` folder.
+
+The first step is actually done already: we have our vignette `save_data.Rmd`!
+Let’s not forget that the whole point of this `.Rmd` file was, initially, to
+build these datasets and save them. So why not simply re-use this vignette? If
+you take a look at the inflated `dev-save_data.Rmd`, you will see that everything
+is right there! After all, we have used it in the past to build our datasets, so 
+of course everything is in there. So remember, we don’t want to have to repeat 
+ourselves. The vignette is right there with the code we need, so we are going
+to use it.
 
 
 ## pkgdown
