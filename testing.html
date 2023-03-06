@@ -105,7 +105,12 @@ ul.task-list li input[type="checkbox"] {
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link">Preface</a>
+  <a href="./index.html" class="sidebar-item-text sidebar-link">Building reproducible analytical pipelines</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./preface.html" class="sidebar-item-text sidebar-link">Preface</a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -115,7 +120,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="./part1_intro.html" class="sidebar-item-text sidebar-link">Part 1: Don’t repeat yourself</a>
+            <a href="./part1_intro.html" class="sidebar-item-text sidebar-link">Part 1: Don’t Repeat Yourself</a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -160,7 +165,7 @@ ul.task-list li input[type="checkbox"] {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="./part2_intro.html" class="sidebar-item-text sidebar-link">Part 2: Reproducibility</a>
+            <a href="./part2_intro.html" class="sidebar-item-text sidebar-link">Part 2: Write It Down</a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -224,8 +229,8 @@ ul.task-list li input[type="checkbox"] {
   <ul>
   <li><a href="#unit-testing" id="toc-unit-testing" class="nav-link active" data-scroll-target="#unit-testing"><span class="toc-section-number">12.1</span>  Unit testing</a></li>
   <li><a href="#assertive-programming" id="toc-assertive-programming" class="nav-link" data-scroll-target="#assertive-programming"><span class="toc-section-number">12.2</span>  Assertive programming</a></li>
-  <li><a href="#code-coverage" id="toc-code-coverage" class="nav-link" data-scroll-target="#code-coverage"><span class="toc-section-number">12.3</span>  Code coverage</a></li>
-  <li><a href="#test-driven-development" id="toc-test-driven-development" class="nav-link" data-scroll-target="#test-driven-development"><span class="toc-section-number">12.4</span>  Test-driven development</a></li>
+  <li><a href="#test-driven-development" id="toc-test-driven-development" class="nav-link" data-scroll-target="#test-driven-development"><span class="toc-section-number">12.3</span>  Test-driven development</a></li>
+  <li><a href="#code-coverage" id="toc-code-coverage" class="nav-link" data-scroll-target="#code-coverage"><span class="toc-section-number">12.4</span>  Code coverage</a></li>
   </ul>
 </nav>
     </div>
@@ -249,6 +254,8 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
+<p>Testing code is crucial, and we all do it in some form or another. The problem is that it is not something that we do consistently. Usually code gets tested in the beginning of a project, but then, as we start focusing on the analysis more and more and need to respect deadlines, testing gets forgotten.</p>
+<p>In this chapter, you are going to learn how to make testing your code consistent and, very importantly, fully automatic. Just like in the previous chapter, the key is to <em>write everything down</em>. Don’t just do a little test in the console to see if the function you’ve just written works as expected. Write it down! And don’t rely on future you to run tests, because future you is just as unreliable as you are.</p>
 <section id="unit-testing" class="level2" data-number="12.1">
 <h2 data-number="12.1" class="anchored" data-anchor-id="unit-testing"><span class="header-section-number">12.1</span> Unit testing</h2>
 </section>
@@ -256,14 +263,12 @@ ul.task-list li input[type="checkbox"] {
 <h2 data-number="12.2" class="anchored" data-anchor-id="assertive-programming"><span class="header-section-number">12.2</span> Assertive programming</h2>
 <p>The analysis is still in Quarto, so how could the readers of this book test their code? Copying here what Miles wrote on the subject:</p>
 <p><em>‘Assertive programming’ is a topic that might be missing from the book. I think of it as a kind of dual of unit testing. Unit testing is for more generally applicable packaged code. But when you have functions in your analysis pipeline that operate on a very specific kind of input data, unit testing becomes kind of nonsensical because you’re left to dream up endless variations of your input dataset that may never occur. It’s a bit easier to flip the effort to validating the assumptions you have about your input and output data, which you can do in the pipeline functions themselves rather than separate unit testing ones. This is nice because it ensures the validation is performed in the pipeline run, and so is backed by the same reproducibility guarantees.</em></p>
-<p>I think at the end of the chapter we should hint at unit testing, but leave it as a subsection of the next chapter that deals with packaging code.</p>
-<p>https://www.brodrigues.co/blog/2022-05-26-safer_programs/</p>
 </section>
-<section id="code-coverage" class="level2" data-number="12.3">
-<h2 data-number="12.3" class="anchored" data-anchor-id="code-coverage"><span class="header-section-number">12.3</span> Code coverage</h2>
+<section id="test-driven-development" class="level2" data-number="12.3">
+<h2 data-number="12.3" class="anchored" data-anchor-id="test-driven-development"><span class="header-section-number">12.3</span> Test-driven development</h2>
 </section>
-<section id="test-driven-development" class="level2" data-number="12.4">
-<h2 data-number="12.4" class="anchored" data-anchor-id="test-driven-development"><span class="header-section-number">12.4</span> Test-driven development</h2>
+<section id="code-coverage" class="level2" data-number="12.4">
+<h2 data-number="12.4" class="anchored" data-anchor-id="code-coverage"><span class="header-section-number">12.4</span> Code coverage</h2>
 
 
 </section>

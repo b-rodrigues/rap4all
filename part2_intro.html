@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Building reproducible analytical pipelines with R - Part 2: Reproducibility</title>
+<title>Building reproducible analytical pipelines with R - Part 2: Write It Down</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -77,7 +77,7 @@ ul.task-list li input[type="checkbox"] {
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
     <div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title">Part 2: Reproducibility</h1>
+      <h1 class="quarto-secondary-nav-title">Part 2: Write It Down</h1>
       <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
         <i class="bi bi-chevron-right"></i>
       </button>
@@ -105,7 +105,12 @@ ul.task-list li input[type="checkbox"] {
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link">Preface</a>
+  <a href="./index.html" class="sidebar-item-text sidebar-link">Building reproducible analytical pipelines</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./preface.html" class="sidebar-item-text sidebar-link">Preface</a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -115,7 +120,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="./part1_intro.html" class="sidebar-item-text sidebar-link">Part 1: Don’t repeat yourself</a>
+            <a href="./part1_intro.html" class="sidebar-item-text sidebar-link">Part 1: Don’t Repeat Yourself</a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -160,7 +165,7 @@ ul.task-list li input[type="checkbox"] {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="./part2_intro.html" class="sidebar-item-text sidebar-link active">Part 2: Reproducibility</a>
+            <a href="./part2_intro.html" class="sidebar-item-text sidebar-link active">Part 2: Write It Down</a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -231,7 +236,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block">Part 2: Reproducibility</h1>
+<h1 class="title d-none d-lg-block">Part 2: Write It Down</h1>
 </div>
 
 
@@ -246,9 +251,11 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
+<p>In this part of the book, we are now going to focus on the second main idea of this book: Write It Down. We now need to acknowledge that our brains are faillible (and ageing) and thus we need to write down many safeguards to ensure that our analyses can be of high quality.</p>
+<p>We cannot leave code quality, documentation and finally its reproducibility be to chance. We need to write down everything we need to ensure the long-term reproducibility of our pipelines.</p>
 <section id="the-reproducibility-iceberg" class="level2">
 <h2 class="anchored" data-anchor-id="the-reproducibility-iceberg">The reproducibility iceberg</h2>
-<p>We are done with the first part of the book, and I think it is time to reflect on why we bothered with it at all. Why not just go straight to the reproducibility part?</p>
+<p>I think it is time to reflect on why we bothered with the first part of the book at all, because for now, we din’t really learn anything about reproducibility. Why not just go straight to the reproducibility part?</p>
 <p>Remember the introduction, where I talked about the reproducibility continuum or spectrum? It is now time to discuss this in greater detail. I propose a new analogy, <em>the reproducibility iceberg</em>:</p>
 <figure class="figure">
 <img src="images/repro_iceberg.png" alt="The reproducibility iceberg." class="figure-img">
@@ -258,7 +265,7 @@ The reproducibility iceberg.
 </figure>
 <p>Why an iceberg? Because the parts of the iceberg that you see, those that are obvious, are like running your analyses in a click-based environment like Excel. This is what’s obvious, what’s easy. No special knowledge or even training is required. All that’s required is time, so people using these tools are not efficient and thus compensate by working insane hours (<em>I can’t go home and enjoy time with my family I have to stay at the office and update the spreadsheeeeeeeeet</em> <strong>clicks furiously</strong>).</p>
 <p>Let’s go one level deeper: let’s write a script. This is where we started. Our script was not too bad, it did the job. Unlike a click-based workflow, we could at least re-read it, someone else could read it, and it would be possible to run in the future but likely with some effort unless we’re lucky. By that, I mean that for such a script to run successfully in the future, that script cannot rely on packages that got updated in such a way that the script cannot run anymore (for example, if functions get renamed, or if their arguments get renamed). Furthermore, if that script relies on a data source, the original authors also have to make sure that the same data source stays available. Another issue is collaborating when writing this script. Without any version control tools nor code hosting platform, collaborating on this script can very quickly turn into a nightmare.</p>
-<p>This is where Git and Github came into play, one more level deeper. The advantage now is that collaboration was streamlined. The commit history is available to all the teammates and it is possible to revert changes, experiment with new features using branches and overall manage the project. In this layer we also employ new programming paradigms to make the code of the project less verbose, using functional programming, with the added benefits of making it easier to test, document and share (which we will discuss to its fullest in this part of the book). Using literate programming, it is also much easier to go to our final output (which is usually a report).</p>
+<p>This is where Git and Github came into play, one more level deeper. The advantage now is that collaboration was streamlined. The commit history is available to all the teammates and it is possible to revert changes, experiment with new features using branches and overall manage the project. In this layer we also employ new programming paradigms to make the code of the project less verbose, using functional programming, with the added benefits of making it easier to test, document and share (which we will discuss to its fullest in this part of the book). Using literate programming, it is also much easier to go to our final output (which is usually a report). We implemented DRY ideas to the fullest to ensure that our code was of high quality.</p>
 <p>At this depth, we are at a pivotal moment: in many cases, analysts may want to stop here because there is no more time or budget left. After all, the results were obtained and shared with higher-ups. It can be difficult, in some contexts, to justify spending more time to go deeper and write tests, documentation and otherwise ensure total reproducibility. So at this stage, we will see what we can do that is <em>very cheap</em> (in both time and effort) to ensure the minimal amount of reproducibility, which is recording packages versions. Recording packages means that the exact same versions of the packages that were used originally will get used regardless of <em>when</em> in the future we rerun the analysis.</p>
 <p>But if budget and time allows we can still go deeper, and definitely should. We also want to make running the script as easy as possible, and ideally, <em>as non-interactively as possible</em>. Any human interaction with the analysis is a source of errors, so that’s why we also need to thouroughly and systematically test our code. These tests also need to run non-interactively. Also, using the tools described in part two of this book, we can actually set up the project, right from the very beginning, in a way that it will be reproducible quite naturally. By using the right tools and setting things up right, we don’t really need to invest more time to make things reproducible. The project will simply be reproducible because it was engineered, that way. And I insist, at practically no additional cost!</p>
 <p>The other problem with only recording packages’s version is that in practice, it is very often not enough. This is because installing older versions of packages can be a challenge. This can be the case for two reasons:</p>
