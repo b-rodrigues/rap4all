@@ -614,7 +614,7 @@ This chunk contains the code that we need to run, manually, to inflate the
 package. However, I’ve removed it, and the reason is that I prefer to have it
 inside the `0-dev_history.Rmd` file. I think that it makes more sense to have it
 there. Take a look at my `0-dev_history.Rmd`
-[here](https://is.gd/e9MqkB)^[https://is.gd/WhxGnN]. By reading that file, you
+[here](https://is.gd/JsJJVN)^[https://is.gd/JsJJVN]. By reading that file, you
 see all the different developer actions that were taken. Your team-mates, or
 future you could read this, and immediately understand what happened, and what
 was done. Under the section title "Inflate save_data.Rmd", you see that the
@@ -654,19 +654,175 @@ data("commune_level_data")
 
 For this however, we need the package to already be built; only once the package
 exists can we include data sets. This is why we need to inflate `save_data.Rmd`
-first. So, how do we include data sets in a package? The workflow is quite simple:
+first. So, how do we include data sets in a package? If you are developing
+packages in the usual manner (meaning, without `{fusen}`) then you have to do
+the following steps:
 
 - write a script that generates the data set (and save this script inside the `data-raw` folder for future reference)
 - save the datasets inside the `data/` folder.
 
-The first step is actually done already: we have our vignette `save_data.Rmd`!
-Let’s not forget that the whole point of this `.Rmd` file was, initially, to
-build these datasets and save them. So why not simply re-use this vignette? If
-you take a look at the inflated `dev-save_data.Rmd`, you will see that everything
-is right there! After all, we have used it in the past to build our datasets, so 
-of course everything is in there. So remember, we don’t want to have to repeat 
-ourselves. The vignette is right there with the code we need, so we are going
-to use it.
+But we are using `{fusen}`, so instead, we can use the documentation first
+approach! And actually, the first step is done already: we have our vignette
+`save_data.Rmd`! Let’s not forget that the whole point of this `.Rmd` file was,
+initially, to build these datasets and save them. So why not simply re-use this
+vignette? If you take a look at the inflated `dev-save_data.Rmd`, you will see
+that everything is right there! We have used it in the past to build our
+datasets, so of course everything is in there. So remember, we don’t want to
+have to repeat ourselves. The vignette is right there with the code we need, so
+we are going to use it.
 
+If you look at `0-dev_history.Rmd`, everything is explained under the header
+`Including datasets`. The idea is to run the code inside the vignette, which
+creates our datasets, and then save these datasets in the right place using
+`usethis::use_data()`, mimicking the steps above. I also used the `local()`
+function to run all these steps inside a temporary, local environment. This way,
+any variable that gets made by knitting the vignette gets discarded once we’re
+done.
 
-## pkgdown
+Finally, we need to document the datasets. For this, we use another `.Rmd` file
+that we inflate as well. You can find it under `dev/data_doc.Rmd`. Datasets
+get defined inside chunks, just like functions, using `{roxygen2}`-type comments.
+
+This basically covers what you need to know to package code. Of course, there
+are many other topics that we could discuss, but for our purposes, this is
+enough. We now know how to take advantage of the tools that make package
+development easy, and have diverted them for our use. If you want to develop a
+proper package and push it to CRAN, then I highly recommend you read the [second
+edition of *R packages*](https://r-pkgs.org/)^[https://r-pkgs.org/] by
+@wickham2023. This book goes into all the nitty gritty details of full package
+development. But let me be clear: this does not mean that you cannot develop a
+full, CRAN-ready, package using `{fusen}`. You absolutely can! It’s just that
+this is outside the scope of the present book.
+
+## Installing and sharing the package
+
+To install the package on the same machine that you developed it, you can simply
+run the line `remotes::install_local()` on line 46 of the `0-dev_history.Rmd`
+file (ideally in a fresh R session). But how can you share it with colleagues or
+future you?
+
+Now that the package is ready, you need to be able to share it. This really
+depends on whether you can publish the code on Github or not, or whether you
+company/institution has a self-hosted version control system. In this section,
+we’re going to discover the following two scenarios: the package is hosted
+on Github (or in a private self-hosted version control system), or the package
+cannot be hosted for whatever reason.
+
+### Code is hosted
+
+So if the code is hosted on Github or on a self-hosted, private, version control
+system, users of the package can install it directly from Github. This can be done
+using the `{remotes}` package, like this:
+
+```{r, eval = F}
+remotes::install_github("github_username/repository_name")
+```
+
+It is also possible to install the package from a specific branch:
+
+```{r, eval = F}
+remotes::install_github("github_username/repository_name@repo_name")
+```
+
+it is even possible to install the package exactly how it was at a specific
+commit:
+
+```{r, eval = F}
+remotes::install_github("github_username/repository_name@repo_name",
+                        ref = "commit_hash")
+```
+
+For example, if you want to install the package we have developed together from
+my Github account, you could run the following (the commit hash is actually wrong
+so you don’t install this one by mistake):
+
+```{r, eval = F}
+remotes::install_github("rap4all/housing@fusen",
+                        ref = "ae42601")
+```
+
+So the package in the `fusen` branch and at commit "ae42601" gets installed.
+Keep in mind that you can specify the commit hash to install the exact version
+you need, because this is going to do wonders for reproducibility.
+
+### Code cannot be hosted
+
+If the code cannot be hosted, then you have to share it *manually*. That’s less
+than ideal, but sometimes there simply is no alternative. In that case, you need
+to prepare a compressed archive that you can share. This is easily done using
+`devtools::build()`. Start a new session in the root directory of you package,
+and run `devtools::build()`. This will create a `.tar.gz` file that you can send
+to you team-mates, or archive for future you. Ideally, before creating this
+file, you should go to `0-dev_history.Rmd` and update the version number in the
+`fusen::fill_description()` function, like so:
+
+```{r, eval = F}
+fusen::fill_description(
+  pkg = here::here(),
+  fields = list(
+    Title = "Housing Data For Luxembourg",
+    Version = "0.1", # notice that I’ve added a version number here
+    Description = "This package contains functions to get, clean and analyse housing price data for Luxembourg.",
+    `Authors@R` = c(
+      person("Bruno", "Rodrigues", email = "bruno@brodrigues.co", role = c("aut", "cre"), comment = c(ORCID = "0000-0002-3211-3689"))
+    )
+  )
+, overwrite = TRUE) # you need to add overwrite = TRUE to overwrite the file
+```
+
+You have to be very disciplined here, because you have to make sure that you
+keep updating this and documenting which version of the package should get used
+for which project. Also, make sure that you can store generated `.tar.gz`
+alongside the project and that you provide clear installation instructions. To
+install a package from a `.tar.gz` file, open a new R session and run the
+following:
+
+```
+remotes::install_local("path/to/package/housing_0.0.0.9000.tar.gz")
+```
+
+### Marketing your work
+
+Once your package is done, wether it is destined for CRAN or not, wether it can 
+only be shared within your organisation or not, it is important to market it and
+make it discoverable. This is where building a website for the package is important,
+and thankfully, it but takes two lines of code to build a fully functionable site.
+This website can then be hosted online if you wish, or it can be shared internally
+to your organisation, offline, as a means of providing documentation.
+
+Take a look at the very last section of the `0-dev_history.Rmd` file, title 
+"Share the package". If you execute the lines in that chunk (ideally from a fresh
+R session), a website will be built automatically. This website will first be 
+in the `docs/` folder: open the `index.html` file using a web-browser and you can
+start navigating the documentation!
+
+If your package is on Github, you can also host the website for free on Github
+pages. For this, first make sure that the `.gitignore` file in the root of 
+your package does not contain the `docs` folder. If yes remove it. Then, commit
+and push. This will upload the `docs` package on Github. Then, go to the 
+repository’s settings, and "Pages" and then choose the branch that contains the
+`docs` folder:
+
+<figure>
+    <img src="images/pkgdown_deploy.png"
+         alt="Choose these options to host your package’s website for free!"></img>
+    <figcaption>Choose these options to host your package’s website for free!</figcaption>
+</figure>
+
+As an example, you can visit the website of the package we’ve built together
+[here](https://rap4all.github.io/housing/)^[https://rap4all.github.io/housing/].
+
+## Conclusion
+
+Turning our analysis into a package is useful, because we can divert a lot of tools
+that are originally intended for package development towards improving our analysis.
+We can now more easily document the code, define its dependencies, and also
+share it with team-mates, our future selves or the world. What’s more, we clearly
+separate two tasks from each other: the pure software engineering part, which
+consisted in building the package, from the pure data analysis part, which will
+eventually become our pipeline.
+
+There is one chapter left before we actually build a full-fledged pipeline. In
+the next chapter, we will learn how to use unit and assertive testing to further
+improve the code of our package, which will thus also improve the quality of our
+analysis.

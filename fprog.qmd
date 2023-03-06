@@ -1376,6 +1376,27 @@ Filter(Negate(is.character),
 There are some other functions like this that you might want to check out: type
 `?Negate` in console to read more about them.
 
+Sometimes you may need to run code with side-effects, but want to avoid any
+interaction between these side-effects and the global environment. For example,
+you might want to run some code that create a plot and saves it to disk, or code
+that creates some data and write them to disk. `local()` can be used for this.
+`local()` runs code in a temporary environment that gets discarded at the end:
+
+```{r}
+local({
+  a <- 2
+})
+```
+
+Variable `a` was created inside this local environment. Checking if it exists now
+yields `FALSE`:
+
+```{r}
+exists("a")
+```
+
+We will be using this technique later in the book to keep our scripts pure.
+
 Before continuing with R packages that extend R’s functional programming
 capabilities it’s also important to stress that just as R is a functional
 programming language, it is also an object oriented language. In fact, R is what

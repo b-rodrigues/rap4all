@@ -1,10 +1,19 @@
-# Part 2: Reproducibility
+# Part 2: Write It Down
+
+In this part of the book, we are now going to focus on the second main idea of
+this book: Write It Down. We now need to acknowledge that our brains are
+faillible (and ageing) and thus we need to write down many safeguards to ensure
+that our analyses can be of high quality.
+
+We cannot leave code quality, documentation and finally its reproducibility be
+to chance. We need to write down everything we need to ensure the long-term
+reproducibility of our pipelines.
 
 ## The reproducibility iceberg
 
-We are done with the first part of the book, and I think it is time to reflect
-on why we bothered with it at all. Why not just go straight to the
-reproducibility part?
+I think it is time to reflect on why we bothered with the first part of the book
+at all, because for now, we din’t really learn anything about reproducibility.
+Why not just go straight to the reproducibility part?
 
 Remember the introduction, where I talked about the reproducibility continuum or
 spectrum? It is now time to discuss this in greater detail. I propose a new
@@ -45,7 +54,8 @@ we also employ new programming paradigms to make the code of the project less
 verbose, using functional programming, with the added benefits of making it
 easier to test, document and share (which we will discuss to its fullest in this
 part of the book). Using literate programming, it is also much easier to go to
-our final output (which is usually a report).
+our final output (which is usually a report). We implemented DRY ideas to the
+fullest to ensure that our code was of high quality.
 
 At this depth, we are at a pivotal moment: in many cases, analysts may want to
 stop here because there is no more time or budget left. After all, the results

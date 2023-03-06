@@ -7,6 +7,7 @@
     "wickham2019"
     "leisch2002"
     "xie2014"
+    "wickham2023"
     "arel22"
     "gohel23"
     "xie2020r"

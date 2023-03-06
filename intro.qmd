@@ -1,13 +1,23 @@
 # Introduction
 
 This book will not teach you about machine learning, statistics or
-visualisation. The goal is to teach you a set of tools, practices and project
-management techniques that should make your projects easier to reproduce,
-replicate and retrace. These tools and techniques can be used right from the
-start of your project at a minimal cost, such that once you’re done with the
-analysis, you’re also done with making the project reproducible. Your projects
-are going to be reproducible simply because they were engineered, from the
-start, to be reproducible.
+visualisation. 
+
+The goal is to teach you a set of tools, practices and project management
+techniques that should make your projects easier to reproduce, replicate and
+retrace. These tools and techniques can be used right from the start of your
+project at a minimal cost, such that once you’re done with the analysis, you’re
+also done with making the project reproducible. Your projects are going to be
+reproducible simply because they were engineered, from the start, to be
+reproducible.
+
+There are two main ideas in this book that you need to keep in mind at all times:
+
+- DRY: Don’t Repeat Yourself;
+- WIT: Write It Down.
+
+DRY WIT is not only the best type of humour, it is also the best way to write
+reproducible analytical pipelines.
 
 ## Who is this book for?
 
@@ -288,7 +298,7 @@ version 0.6.0 still work on the current version of R. A small fraction output a
 message (which doesn’t mean the code doesn’t work), some 5% raise a warning,
 which again doesn’t necessarily mean that the code doesn’t work, and finally
 around 20% or so errors. As you can see, the closer we get to the current
-release, the less errors get raised (if you want to run the code for yourself,
+release, the fewer errors get raised (if you want to run the code for yourself,
 check out this [Github
 repository](https://github.com/b-rodrigues/code_longevity)).
 
