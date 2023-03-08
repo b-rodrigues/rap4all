@@ -6,13 +6,351 @@ the beginning of a project, but then, as we start focusing on the analysis more
 and more and need to respect deadlines, testing gets forgotten.
 
 In this chapter, you are going to learn how to make testing your code consistent
-and, very importantly, fully automatic. Just like in the previous chapter, the 
-key is to *write everything down*. Don’t just do a little test in the console
-to see if the function you’ve just written works as expected. Write it down!
-And don’t rely on future you to run tests, because future you is just as unreliable
-as you are.
+and, very importantly, fully automatic. Just like in the previous chapter, the
+key is to *write everything down*. Don’t just do a little test in the console to
+see if the function you’ve just written works as expected. Write it down! And
+don’t rely on future you to run tests, because future you is just as unreliable
+as you are. Tests need to be run each time *any* of the code from a project gets
+changed. This might seem overkill (why test a function that you didn’t even
+touch for weeks?), because ther are dependencies between your functions, a
+change in one function can affect another. Especially if the output of function
+A is the input of function B, and now, because of your changes, the output of
+function A changed in a way that it breaks function B, or also modifies its
+input in an unexpected way.
+
+There are several types of tests that we can use:
+
+- unit testing: these are written while developing, and executed while developing;
+- assertive testing: these are executed at runtime. These make sure, for example, that the inputs a function receives are sane.
 
 ## Unit testing
+
+Unit testing is the testing of units. What’s a unit? Functions are units! We acutally
+already ecountered one unit test before, in the `save_data.Rmd` script:
+
+````{verbatim}
+
+```{r tests-clean_flat_data}
+# We now need to check if we have them all in the data. The test needs to be self-contained, hence
+# why we need to redefine the required variables:
+
+former_communes <- get_former_communes()
+
+current_communes <- get_current_communes()
+
+communes <- get_test_communes(former_communes, current_communes)
+
+raw_data <- get_raw_data(url = "https://github.com/b-rodrigues/rap4all/raw/master/datasets/vente-maison-2010-2021.xlsx")
+
+flat_data <- clean_raw_data(raw_data)
+
+testthat::expect_true(
+            all(communes %in% unique(flat_data$locality))
+                      )
+```
+
+`````
+
+When using `{fusen}`, a unit test should be a self-contained chunk that can be
+executed completely independently. This is why in this chunk we re-created the
+different variables that we needed, `communes` and the `flat_data`. If you were
+developing the package without `{fusen}`, you would do the same, so don’t think
+that this is somehow a limitation of `{fusen}`.
+
+The test above ensures that we find all the former and current communes of
+Luxembourg in our dataset. Let me explain again why we want to write such a test
+down in a script and not simply try it out in our console. 
+
+For this test to pass, a lot of moving pieces have to fall together. If anything
+changes, be it because you changed something in either `get_raw_data()` or
+`clean_raw_data()` or because something changed with the Wikipedia tables you
+scraped, this test will not pass. And you should be made aware of failures as
+soon as possible! Also, this test ensures that when the data gets updated, you
+are certain that if you use the code in `save_data.Rmd` you will get a new
+dataset that is likely correct, even if new communes merge. And mergers will
+happen around 2024 by the way, the communes of Groussbous and Wal will merge,
+and the communes of Bous and Waldbredimus as well. So you need to make sure that
+when this happens, your code knows how to handle this, or at least gives out an
+error as early as possible.
+
+Ideally, we would test every function that we wrote, but sometimes that’s not
+really possible, either due to lack of time, or because the function is quite
+trivial, so maybe no test is warranted. But be careful what you consider trivial
+though, I have personally been bitten in the past by trivially simple
+functions! For example, a function like this one:
+
+````{verbatim}
+```{r function-make_commune_level_data}
+#' make_commune_level_data Makes the final data at commune level
+#'
+#' @param flat_data Flat data df as returned by clean_flat_data()
+#' @importFrom dplyr filter
+#' @return A data frame
+#' @export
+make_commune_level_data <- function(flat_data){
+  flat_data |>
+    filter(!grepl("nationale|offres", locality),
+           !is.na(locality))
+}
+
+```
+````
+
+might not need to be unit-tested. An assertion, which we will learn about in the
+next section, is likely better suited. However, as functions become more
+complex, unit tests are highly recommended. This is because it can become very
+difficult to make sure that changing some part of the function somewhere does
+not affect some other part. This is where writing several unit tests can be
+useful. As long as all unit tests keep succeeding (or passing) you are somewhat
+sure that what you’re doing is not brekaing stuff. And unit tests are especially
+useful when collaborating using trunk-based development! As the project leader,
+you could for example refuse to merge changes that break unit tests (the first
+project I worked on that used unit tests was organized like this, so we all better
+made sure that we wrote sensible code).
+
+Before continuing, let’s rewrite the test we have already. While it is fully
+working, we didn’t really write it in the canonical form. Inside
+`dev/save_data.Rmd`, change the code of the test to the following:
+
+````{verbatim}
+```{r tests-clean_flat_data}
+# We now need to check if we have them all in the data. The test needs to be self-contained, hence
+# why we need to redefine the required variables:
+
+former_communes <- get_former_communes()
+
+current_communes <- get_current_communes()
+
+communes <- get_test_communes(former_communes, current_communes)
+
+raw_data <- get_raw_data(url = "https://github.com/b-rodrigues/rap4all/raw/master/datasets/vente-maison-2010-2021.xlsx")
+
+flat_data <- clean_raw_data(raw_data)
+
+test_that("Check if all communes are accounted for", {
+
+  expect_true(
+    all(communes %in% unique(flat_data$locality))
+  )
+
+})
+```
+````
+
+The only difference is that instead of calling `testthat::expect_true()` directly,
+we have wrapped this call inside `testthat::test_that()`. This why, we can add
+a description to the test. This is useful if the test fails.
+
+Save `dev/save_data.Rmd` and go back to `0-dev_history.Rmd` to inflate
+`save_data.Rmd` again. Everything should work without problems.
+
+If the test fails, you get an informative message. To illustrate, I’ve added a typo
+in the test and inflated `save_data.Rmd`. Because tests always run when files
+get inflated, this test failed and here is what happened:
+
+```
+══ Failed tests ════════════════════════════════════════════════════════════════
+── Error ('test-get_raw_data.R:18'): Check if all communes are accounted for ───
+Error in `communs %in% unique(flat_data$locality)`: object 'communs' not found
+Backtrace:
+    ▆
+ 1. ├─testthat::expect_true(all(communs %in% unique(flat_data$locality))) at test-get_raw_data.R:18:2
+ 2. │ └─testthat::quasi_label(enquo(object), label, arg = "object")
+ 3. │   └─rlang::eval_bare(expr, quo_get_env(quo))
+ 4. └─communs %in% unique(flat_data$locality)
+
+[ FAIL 1 | WARN 2 | SKIP 0 | PASS 0 ]
+Error: Test failures
+Execution halted
+```
+
+The file `test-get_raw_data.R` contains our test, generated by inflating
+`save_data.Rmd`. You can find it under the `tests/testthat/` folder of your
+inflated package. You can also see the description that we’ve added, which
+helps us find the test that failed. In cases like this, you should go back
+to the function that makes the test fail and correct it, until the test passes.
+You should also make sure that everything is alright with the test itself. If 
+there really is a typo in the test, you should of course correct the test 
+(in `dev/save_data.Rmd`, not in `tests/testthat/`)!
+
+Now, let’s add a unit test to a complex function, `get_laspeyeres()`. This
+function seems to me like a good candidate for testing, as it is not that
+trivial.
+
+Let’s try with something simple. `get_laspeyeres()` expects either
+`commune_level_data` or `country_level_data`. What happens if we provide another 
+dataset? Very likely an error. So let’s test for this. Go back to the
+`save_data.Rmd` file and add the following, under the function definition of 
+`get_laspeyeres()`:
+
+
+````{verbatim}
+```{r tests-get_laspeyeres}
+
+test_that("Wrong data", {
+
+  expect_error(
+    get_laspeyeres(mtcars)
+  )
+
+})
+
+```
+````
+
+Since we expect an error, we used `expect_error()`, which succeeds if the code
+fails! If you’re confused, no worries, we’ve all been there. But let’s think
+about it: what would you want to happen if you provided a wrong data set?
+Surely, you’d like for the function to scream an error at you, and not somehow
+do something and return *something*. So testing that functions fail when they
+should is actually quite important as well. Let’s add another, similar, test:
+
+````{verbatim}
+```{r tests-get_laspeyeres}
+
+test_that("Wrong data", {
+
+  expect_error(
+    get_laspeyeres(mtcars)
+  )
+
+})
+
+test_that("Empty data", {
+
+  expect_error(
+    get_laspeyeres(subset(mtcars, am == 2))
+  )
+
+})
+
+```
+````
+
+This second test checks what happens if we provide an empty dataset. This should
+not happen, but hey, it’s always a good idea to see what could happen. Here we also
+expect an error, se we use `expect_error()` as well. Inflating `save_data.Rmd` 
+runs the tests again, all of them successfully.
+
+Now, I know what you’re thinking. Probably something along the lines of 
+*"Bruno, you told me that making my projects reproducible and reliable and robust
+would not take much more time than what I was already doing before. This certainly
+doesn’t feel like it!"* to wish I answer that your feelings on the issue are wrong.
+It may not feel like it, but doing this does two things:
+
+- It ultimately saves you time. You typed the test once, and can now rerun it automatically every time you inflate the `.Rmd` files. You don’t need to remember to test the code, and don’t need to remember how to test the code.
+- This saves you a lot of headaches. You don’t have to live in fear that you might forget to test the code, or forget how to test the code. You wrote the tests down, and now you’re free to concentrate on adding features or using the existing code knowing that you can trust its outputs.
+
+Trust the process.
+
+Let’s go back to the two tests from before: `get_laspeyeres()` fails, as expected,
+when we provide a random dataset to it. But it would be interesting to know why
+it fails. Simply run `get_laspeyeres(mtcars)` in the console. This is what we get
+back:
+
+```{r, eval = F}
+Error in `mutate()`:
+           ! Problem while computing `p0 = ifelse(year == "2010",
+  average_price_nominal_euros, NA)`.
+Caused by error in `ifelse()`:
+! object 'year' not found
+Run `rlang::last_error()` to see where the error occurred.
+```
+
+So the functions fails, but actually, for the wrong reason. It fails because a
+column `year` cannot be found in the data. But what if there was a column year?
+The code would continue, but then likely fail for something else. It would be
+much safer to make it fail as soon as it detects that the provided data sets are
+not one of `commune_level_data` and `country_level_data`. But for this, we need
+assertive programming, which we will discuss in the next section. Remember, unit
+testing tests should run during development time, and assertive testing is for
+run-time. In the next section we will be changing the function to fail when the
+right datasets are not provided, but our unit test will not need to change; the
+function still fails, but it’ll be for the right reasons.
+
+This is another advantage of writing unit tests: it forces you to think about
+what you’re doing. It very often improves your code quite a lot, and not just
+from a pure algorithmic perspective, but also from a user experience
+perspective. Writing these tests made use think about the failure of our
+function when we provide a random dataset, and made us realise that it would be
+much better for users if the returned error message is something such as "Wrong
+dataset, please provide either `commune_level_data` or `country_level_data`".
+
+Let’s continue with testing `get_laspeyeres()`. It would be nice to see if the
+function actually does what it’s supposed to do correctly. For this, we need to
+start from an input, and then create the expected output. It doesn’t matter how
+you create this output, what matters is that you make absolutely sure that it is
+correct, and then, never touch it ever again. Let’s call this output the
+"truth". Then, you use `get_laspeyeres()` or any other function that you want to
+test, and give it this input. You then compare the "truth" to this output. If 
+everything matches, congratulations, your function produces the right output.
+
+So let’s start. Remember that unit tests should be self-contained, so I’m going
+to create the input dataset and the expected data set (what I called the "truth")
+in the test itself. This is the code I’m going to use to create the mock, input
+dataset:
+
+```{r, eval = F}
+input_df <- expand.grid(
+  list("year" = c(2010, 2011),
+       "locality" = c("Bascharage", "Luxembourg"))
+)
+
+input_df$n_offers <- c(123, 101, 1230, 1010)
+input_df$average_price_nominal_euros <- c(234, 345, 560, 670)
+input_df$average_price_m2_nominal_euros <- c(23, 34, 56, 67)
+```
+
+This creates a data frame with two years, two communes and some mock prices. 
+Now, I need to create the output. I start from the input, and add the columns
+that `get_laspeyeres()` computes "by hand". Remember, you need to make sure
+that these results are correct!
+
+```{r, eval = F}
+  expected_df <- input_df
+
+  # p0 should be always equal to the value in the first year
+  expected_df$p0 <- c(234, 234, 560, 560)
+  expected_df$p0_m2 <- c(23, 23, 56, 56)
+
+  # pl should be equal to the price divided by p0
+  expected_df$pl <- expected_df$average_price_nominal_euros/expected_df$p0 * 100
+  expected_df$pl_m2 <- expected_df$average_price_m2_nominal_euros/expected_df$p0_m2 * 100
+```
+
+If you look at each line, you see that this is basically what `get_laspeyeres()` does. 
+
+````{verbatim}
+```{r, eval = F}
+test_that("get_laspeyeres() produces correct results", {
+
+  input_df <- expand.grid(
+    list("year" = c(2010, 2011),
+         "locality" = c("Bascharage", "Luxembourg"))
+  )
+
+  input_df$n_offers <- c(123, 101, 1230, 1010)
+  input_df$average_price_nominal_euros <- c(234, 345, 560, 670)
+  input_df$average_price_m2_nominal_euros <- c(23, 34, 56, 67)
+
+  expected_df <- input_df
+
+  # p0 should be always equal to the value in the first year
+  expected_df$p0 <- c(234, 234, 560, 560)
+  expected_df$p0_m2 <- c(23, 23, 56, 56)
+
+  # pl should be equal to the price divided by p0
+  expected_df$pl <- expected_df$average_price_nominal_euros/expected_df$p0 * 100
+  expected_df$pl_m2 <- expected_df$average_price_m2_nominal_euros/expected_df$p0_m2 * 100
+
+  expect_equivalent(
+    expected_df, get_laspeyeres(input_df)
+  )
+
+})
+```
+````
+
 
 
 ## Assertive programming
