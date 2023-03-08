@@ -20,6 +20,69 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1.6em;
   vertical-align: middle;
 }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 
@@ -165,7 +228,7 @@ ul.task-list li input[type="checkbox"] {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="./part2_intro.html" class="sidebar-item-text sidebar-link">Part 2: Write It Down</a>
+            <a href="./part2_intro.html" class="sidebar-item-text sidebar-link">Part 2: Write IT down</a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -255,9 +318,197 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 <p>Testing code is crucial, and we all do it in some form or another. The problem is that it is not something that we do consistently. Usually code gets tested in the beginning of a project, but then, as we start focusing on the analysis more and more and need to respect deadlines, testing gets forgotten.</p>
-<p>In this chapter, you are going to learn how to make testing your code consistent and, very importantly, fully automatic. Just like in the previous chapter, the key is to <em>write everything down</em>. Don’t just do a little test in the console to see if the function you’ve just written works as expected. Write it down! And don’t rely on future you to run tests, because future you is just as unreliable as you are.</p>
+<p>In this chapter, you are going to learn how to make testing your code consistent and, very importantly, fully automatic. Just like in the previous chapter, the key is to <em>write everything down</em>. Don’t just do a little test in the console to see if the function you’ve just written works as expected. Write it down! And don’t rely on future you to run tests, because future you is just as unreliable as you are. Tests need to be run each time <em>any</em> of the code from a project gets changed. This might seem overkill (why test a function that you didn’t even touch for weeks?), because ther are dependencies between your functions, a change in one function can affect another. Especially if the output of function A is the input of function B, and now, because of your changes, the output of function A changed in a way that it breaks function B, or also modifies its input in an unexpected way.</p>
+<p>There are several types of tests that we can use:</p>
+<ul>
+<li>unit testing: these are written while developing, and executed while developing;</li>
+<li>assertive testing: these are executed at runtime. These make sure, for example, that the inputs a function receives are sane.</li>
+</ul>
 <section id="unit-testing" class="level2" data-number="12.1">
 <h2 data-number="12.1" class="anchored" data-anchor-id="unit-testing"><span class="header-section-number">12.1</span> Unit testing</h2>
+<p>Unit testing is the testing of units. What’s a unit? Functions are units! We acutally already ecountered one unit test before, in the <code>save_data.Rmd</code> script:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>```{r tests-clean_flat_data}</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a># We now need to check if we have them all in the data. The test needs to be self-contained, hence</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a># why we need to redefine the required variables:</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>former_communes &lt;- get_former_communes()</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>current_communes &lt;- get_current_communes()</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>communes &lt;- get_test_communes(former_communes, current_communes)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>raw_data &lt;- get_raw_data(url = "https://github.com/b-rodrigues/rap4all/raw/master/datasets/vente-maison-2010-2021.xlsx")</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>flat_data &lt;- clean_raw_data(raw_data)</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>testthat::expect_true(</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>            all(communes %in% unique(flat_data$locality))</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>                      )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>`````</p>
+<p>When using <code>{fusen}</code>, a unit test should be a self-contained chunk that can be executed completely independently. This is why in this chunk we re-created the different variables that we needed, <code>communes</code> and the <code>flat_data</code>. If you were developing the package without <code>{fusen}</code>, you would do the same, so don’t think that this is somehow a limitation of <code>{fusen}</code>.</p>
+<p>The test above ensures that we find all the former and current communes of Luxembourg in our dataset. Let me explain again why we want to write such a test down in a script and not simply try it out in our console.</p>
+<p>For this test to pass, a lot of moving pieces have to fall together. If anything changes, be it because you changed something in either <code>get_raw_data()</code> or <code>clean_raw_data()</code> or because something changed with the Wikipedia tables you scraped, this test will not pass. And you should be made aware of failures as soon as possible! Also, this test ensures that when the data gets updated, you are certain that if you use the code in <code>save_data.Rmd</code> you will get a new dataset that is likely correct, even if new communes merge. And mergers will happen around 2024 by the way, the communes of Groussbous and Wal will merge, and the communes of Bous and Waldbredimus as well. So you need to make sure that when this happens, your code knows how to handle this, or at least gives out an error as early as possible.</p>
+<p>Ideally, we would test every function that we wrote, but sometimes that’s not really possible, either due to lack of time, or because the function is quite trivial, so maybe no test is warranted. But be careful what you consider trivial though, I have personally been bitten in the past by trivially simple functions! For example, a function like this one:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>```{r function-make_commune_level_data}</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>#' make_commune_level_data Makes the final data at commune level</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>#'</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>#' @param flat_data Flat data df as returned by clean_flat_data()</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>#' @importFrom dplyr filter</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>#' @return A data frame</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>#' @export</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>make_commune_level_data &lt;- function(flat_data){</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  flat_data |&gt;</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    filter(!grepl("nationale|offres", locality),</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>           !is.na(locality))</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>```</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>might not need to be unit-tested. An assertion, which we will learn about in the next section, is likely better suited. However, as functions become more complex, unit tests are highly recommended. This is because it can become very difficult to make sure that changing some part of the function somewhere does not affect some other part. This is where writing several unit tests can be useful. As long as all unit tests keep succeeding (or passing) you are somewhat sure that what you’re doing is not brekaing stuff. And unit tests are especially useful when collaborating using trunk-based development! As the project leader, you could for example refuse to merge changes that break unit tests (the first project I worked on that used unit tests was organized like this, so we all better made sure that we wrote sensible code).</p>
+<p>Before continuing, let’s rewrite the test we have already. While it is fully working, we didn’t really write it in the canonical form. Inside <code>dev/save_data.Rmd</code>, change the code of the test to the following:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>```{r tests-clean_flat_data}</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a># We now need to check if we have them all in the data. The test needs to be self-contained, hence</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a># why we need to redefine the required variables:</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>former_communes &lt;- get_former_communes()</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>current_communes &lt;- get_current_communes()</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>communes &lt;- get_test_communes(former_communes, current_communes)</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>raw_data &lt;- get_raw_data(url = "https://github.com/b-rodrigues/rap4all/raw/master/datasets/vente-maison-2010-2021.xlsx")</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>flat_data &lt;- clean_raw_data(raw_data)</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>test_that("Check if all communes are accounted for", {</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>  expect_true(</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>    all(communes %in% unique(flat_data$locality))</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>```</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The only difference is that instead of calling <code>testthat::expect_true()</code> directly, we have wrapped this call inside <code>testthat::test_that()</code>. This why, we can add a description to the test. This is useful if the test fails.</p>
+<p>Save <code>dev/save_data.Rmd</code> and go back to <code>0-dev_history.Rmd</code> to inflate <code>save_data.Rmd</code> again. Everything should work without problems.</p>
+<p>If the test fails, you get an informative message. To illustrate, I’ve added a typo in the test and inflated <code>save_data.Rmd</code>. Because tests always run when files get inflated, this test failed and here is what happened:</p>
+<pre><code>══ Failed tests ════════════════════════════════════════════════════════════════
+── Error ('test-get_raw_data.R:18'): Check if all communes are accounted for ───
+Error in `communs %in% unique(flat_data$locality)`: object 'communs' not found
+Backtrace:
+    ▆
+ 1. ├─testthat::expect_true(all(communs %in% unique(flat_data$locality))) at test-get_raw_data.R:18:2
+ 2. │ └─testthat::quasi_label(enquo(object), label, arg = "object")
+ 3. │   └─rlang::eval_bare(expr, quo_get_env(quo))
+ 4. └─communs %in% unique(flat_data$locality)
+
+[ FAIL 1 | WARN 2 | SKIP 0 | PASS 0 ]
+Error: Test failures
+Execution halted</code></pre>
+<p>The file <code>test-get_raw_data.R</code> contains our test, generated by inflating <code>save_data.Rmd</code>. You can find it under the <code>tests/testthat/</code> folder of your inflated package. You can also see the description that we’ve added, which helps us find the test that failed. In cases like this, you should go back to the function that makes the test fail and correct it, until the test passes. You should also make sure that everything is alright with the test itself. If there really is a typo in the test, you should of course correct the test (in <code>dev/save_data.Rmd</code>, not in <code>tests/testthat/</code>)!</p>
+<p>Now, let’s add a unit test to a complex function, <code>get_laspeyeres()</code>. This function seems to me like a good candidate for testing, as it is not that trivial.</p>
+<p>Let’s try with something simple. <code>get_laspeyeres()</code> expects either <code>commune_level_data</code> or <code>country_level_data</code>. What happens if we provide another dataset? Very likely an error. So let’s test for this. Go back to the <code>save_data.Rmd</code> file and add the following, under the function definition of <code>get_laspeyeres()</code>:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>```{r tests-get_laspeyeres}</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>test_that("Wrong data", {</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  expect_error(</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    get_laspeyeres(mtcars)</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>```</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Since we expect an error, we used <code>expect_error()</code>, which succeeds if the code fails! If you’re confused, no worries, we’ve all been there. But let’s think about it: what would you want to happen if you provided a wrong data set? Surely, you’d like for the function to scream an error at you, and not somehow do something and return <em>something</em>. So testing that functions fail when they should is actually quite important as well. Let’s add another, similar, test:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>```{r tests-get_laspeyeres}</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>test_that("Wrong data", {</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  expect_error(</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    get_laspeyeres(mtcars)</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>test_that("Empty data", {</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>  expect_error(</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>    get_laspeyeres(subset(mtcars, am == 2))</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>```</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This second test checks what happens if we provide an empty dataset. This should not happen, but hey, it’s always a good idea to see what could happen. Here we also expect an error, se we use <code>expect_error()</code> as well. Inflating <code>save_data.Rmd</code> runs the tests again, all of them successfully.</p>
+<p>Now, I know what you’re thinking. Probably something along the lines of <em>“Bruno, you told me that making my projects reproducible and reliable and robust would not take much more time than what I was already doing before. This certainly doesn’t feel like it!”</em> to wish I answer that your feelings on the issue are wrong. It may not feel like it, but doing this does two things:</p>
+<ul>
+<li>It ultimately saves you time. You typed the test once, and can now rerun it automatically every time you inflate the <code>.Rmd</code> files. You don’t need to remember to test the code, and don’t need to remember how to test the code.</li>
+<li>This saves you a lot of headaches. You don’t have to live in fear that you might forget to test the code, or forget how to test the code. You wrote the tests down, and now you’re free to concentrate on adding features or using the existing code knowing that you can trust its outputs.</li>
+</ul>
+<p>Trust the process.</p>
+<p>Let’s go back to the two tests from before: <code>get_laspeyeres()</code> fails, as expected, when we provide a random dataset to it. But it would be interesting to know why it fails. Simply run <code>get_laspeyeres(mtcars)</code> in the console. This is what we get back:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>Error <span class="cf">in</span> <span class="st">`</span><span class="at">mutate()</span><span class="st">`</span><span class="sc">:</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>           <span class="sc">!</span> Problem <span class="cf">while</span> computing <span class="st">`</span><span class="at">p0 = ifelse(year == "2010",</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="at">  average_price_nominal_euros, NA)</span><span class="st">`</span>.</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>Caused by error <span class="cf">in</span> <span class="st">`</span><span class="at">ifelse()</span><span class="st">`</span><span class="sc">:</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="sc">!</span> object <span class="st">'year'</span> not found</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>Run <span class="st">`</span><span class="at">rlang::last_error()</span><span class="st">`</span> to see where the error occurred.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>So the functions fails, but actually, for the wrong reason. It fails because a column <code>year</code> cannot be found in the data. But what if there was a column year? The code would continue, but then likely fail for something else. It would be much safer to make it fail as soon as it detects that the provided data sets are not one of <code>commune_level_data</code> and <code>country_level_data</code>. But for this, we need assertive programming, which we will discuss in the next section. Remember, unit testing tests should run during development time, and assertive testing is for run-time. In the next section we will be changing the function to fail when the right datasets are not provided, but our unit test will not need to change; the function still fails, but it’ll be for the right reasons.</p>
+<p>This is another advantage of writing unit tests: it forces you to think about what you’re doing. It very often improves your code quite a lot, and not just from a pure algorithmic perspective, but also from a user experience perspective. Writing these tests made use think about the failure of our function when we provide a random dataset, and made us realise that it would be much better for users if the returned error message is something such as “Wrong dataset, please provide either <code>commune_level_data</code> or <code>country_level_data</code>”.</p>
+<p>Let’s continue with testing <code>get_laspeyeres()</code>. It would be nice to see if the function actually does what it’s supposed to do correctly. For this, we need to start from an input, and then create the expected output. It doesn’t matter how you create this output, what matters is that you make absolutely sure that it is correct, and then, never touch it ever again. Let’s call this output the “truth”. Then, you use <code>get_laspeyeres()</code> or any other function that you want to test, and give it this input. You then compare the “truth” to this output. If everything matches, congratulations, your function produces the right output.</p>
+<p>So let’s start. Remember that unit tests should be self-contained, so I’m going to create the input dataset and the expected data set (what I called the “truth”) in the test itself. This is the code I’m going to use to create the mock, input dataset:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>input_df <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">list</span>(<span class="st">"year"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">2010</span>, <span class="dv">2011</span>),</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>       <span class="st">"locality"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"Bascharage"</span>, <span class="st">"Luxembourg"</span>))</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>input_df<span class="sc">$</span>n_offers <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">123</span>, <span class="dv">101</span>, <span class="dv">1230</span>, <span class="dv">1010</span>)</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>input_df<span class="sc">$</span>average_price_nominal_euros <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">234</span>, <span class="dv">345</span>, <span class="dv">560</span>, <span class="dv">670</span>)</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>input_df<span class="sc">$</span>average_price_m2_nominal_euros <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">23</span>, <span class="dv">34</span>, <span class="dv">56</span>, <span class="dv">67</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>This creates a data frame with two years, two communes and some mock prices. Now, I need to create the output. I start from the input, and add the columns that <code>get_laspeyeres()</code> computes “by hand”. Remember, you need to make sure that these results are correct!</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>  expected_df <span class="ot">&lt;-</span> input_df</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># p0 should be always equal to the value in the first year</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  expected_df<span class="sc">$</span>p0 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">234</span>, <span class="dv">234</span>, <span class="dv">560</span>, <span class="dv">560</span>)</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  expected_df<span class="sc">$</span>p0_m2 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">23</span>, <span class="dv">23</span>, <span class="dv">56</span>, <span class="dv">56</span>)</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># pl should be equal to the price divided by p0</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>  expected_df<span class="sc">$</span>pl <span class="ot">&lt;-</span> expected_df<span class="sc">$</span>average_price_nominal_euros<span class="sc">/</span>expected_df<span class="sc">$</span>p0 <span class="sc">*</span> <span class="dv">100</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>  expected_df<span class="sc">$</span>pl_m2 <span class="ot">&lt;-</span> expected_df<span class="sc">$</span>average_price_m2_nominal_euros<span class="sc">/</span>expected_df<span class="sc">$</span>p0_m2 <span class="sc">*</span> <span class="dv">100</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>If you look at each line, you see that this is basically what <code>get_laspeyeres()</code> does.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>```{r, eval = F}</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>test_that("get_laspeyeres() produces correct results", {</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  input_df &lt;- expand.grid(</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    list("year" = c(2010, 2011),</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>         "locality" = c("Bascharage", "Luxembourg"))</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>  input_df$n_offers &lt;- c(123, 101, 1230, 1010)</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>  input_df$average_price_nominal_euros &lt;- c(234, 345, 560, 670)</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>  input_df$average_price_m2_nominal_euros &lt;- c(23, 34, 56, 67)</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>  expected_df &lt;- input_df</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>  # p0 should be always equal to the value in the first year</span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>  expected_df$p0 &lt;- c(234, 234, 560, 560)</span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>  expected_df$p0_m2 &lt;- c(23, 23, 56, 56)</span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>  # pl should be equal to the price divided by p0</span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>  expected_df$pl &lt;- expected_df$average_price_nominal_euros/expected_df$p0 * 100</span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>  expected_df$pl_m2 &lt;- expected_df$average_price_m2_nominal_euros/expected_df$p0_m2 * 100</span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a>  expect_equivalent(</span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a>    expected_df, get_laspeyeres(input_df)</span>
+<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a>```</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="assertive-programming" class="level2" data-number="12.2">
 <h2 data-number="12.2" class="anchored" data-anchor-id="assertive-programming"><span class="header-section-number">12.2</span> Assertive programming</h2>
