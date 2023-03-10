@@ -83,6 +83,25 @@ code span.st { color: #4070a0; } /* String */
 code span.va { color: #19177c; } /* Variable */
 code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
 </style>
 
 
@@ -517,7 +536,7 @@ Error in library(ggplot2) : there is no package called 'ggplot2'</code></pre>
 <section id="becoming-an-r-cheologist" class="level2" data-number="10.2">
 <h2 data-number="10.2" class="anchored" data-anchor-id="becoming-an-r-cheologist"><span class="header-section-number">10.2</span> Becoming an R-cheologist</h2>
 <p>So let’s say that you need to run an old script, and there’s no <code>renv.lock</code> file around for you to restore the packages as they were. There might still be a solution (apart from running the script on the current version on R and packages, and hope that everything goes well), but for this you need to at least know roughly <em>when</em> that script was written. Let’s say that you know that this script was written back in 2017, somewhere around October. If you know that, you can use the <code>{rang}</code> and <code>{groundhog}</code> packages to download the packages as of October 2018 in a separate library and then run your script.</p>
-<p><code>{rang}</code> is fairly recent as of writing (February 2023) so I won’t go into too much detail now, as it is likely that the package will keep evolving rapidly in the coming weeks. So if you want to use it already and follow its development, take a look at its Github repository <a href="https://github.com/chainsawriot/rang">here</a><a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a>.</p>
+<p><code>{rang}</code> is fairly recent as of writing (February 2023) so I won’t go into too much detail now, as it is likely that the package will keep evolving rapidly in the coming weeks. So if you want to use it already and follow its development, take a look at its Github repository <a href="https://github.com/chainsawriot/rang">here</a><a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a> and read the <a href="https://arxiv.org/abs/2303.04758">prepint</a> (<span class="citation" data-cites="schoch2023">Chan and Schoch (<a href="references.html#ref-schoch2023" role="doc-biblioref">2023</a>)</span>).</p>
 <p><code>{groundhog}</code> is another option that has been around for more time and is fairly easy to use. Suppose that you have a script from October 2018 that looks like this:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(purrr)</span>
@@ -581,6 +600,11 @@ Error in library(ggplot2) : there is no package called 'ggplot2'</code></pre>
 <p>In this chapter you had a first (maybe a bit sour taste) of reproducibility. This is because while the tools presented here are very useful, they will not be sufficient if we want our project to be truly reproducible. There are too many things that can go wrong when re-installing old package versions, so we must instead provide a way for users to not have to do it at all. This is where Docker is going to be helpful. But before that, we need to hit the development bench again. We are actually not quite done with our project; before going to full reproducibility, we should turn our analysis into a package. And so you will see, this is going to be much, much, easier than you might expect. You already did 95% of the job! There are many advantages to turning our analysis into a package, and not only from a reproducibility perspective.</p>
 
 
+<div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography" style="display: none">
+<div id="ref-schoch2023" class="csl-entry" role="doc-biblioentry">
+Chan, Chung-hong, and David Schoch. 2023. <span>“RANG: Reconstructing Reproducible r Computational Environments.”</span> arXiv. <a href="https://doi.org/10.48550/ARXIV.2303.04758">https://doi.org/10.48550/ARXIV.2303.04758</a>.
+</div>
+</div>
 </section>
 <section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr>
