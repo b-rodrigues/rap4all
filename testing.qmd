@@ -551,16 +551,18 @@ Error in any_function("this is not a data frame") :
   `dataset` must be a data frame
 ```
 
-`inherits()` checks if an option inherits from a certain class. So for example, a `tibble` or a `data.table` that
-are classes that are defined by inheriting attributes from the `data.frame` class, will also successfully pass
-the test above. You can be as strict as you need: for example, do you need any type of number? You could do the
-following:
+`inherits()` checks if an option inherits from a certain class. So for example,
+a `tibble` or a `data.table` that are classes that are defined by inheriting
+attributes from the `data.frame` class, will also successfully pass the test
+above. You can be as strict as you need: for example, do you need any type of
+number? You could do the following:
 
 ```{r}
 inherits(2, "numeric")
 ```
 
-But do you actually need integers, and want to force this? Then you could be stricter in your assertion:
+But do you actually need integers, and want to force this? Then you could be
+stricter in your assertion:
 
 ```{r}
 inherits(2, "integer")
@@ -572,8 +574,8 @@ If you want the above to evaluate to `TRUE`, an integer must be provided:
 inherits(2L, "integer")
 ```
 
-Same as before: do you want, for some reason, that your functions only accept `tibble`s and not 
-`data.frame`s ? Be as strict as you need:
+Do you want, for some reason, that your functions only accept `tibble`s and not
+`data.frame`s? Be as strict as you need:
 
 ```{r}
 inherits(tibble::as_tibble(mtcars), "tbl_df")
@@ -583,7 +585,134 @@ inherits(tibble::as_tibble(mtcars), "tbl_df")
 inherits(mtcars, "tbl_df")
 ```
 
+You could also use more complex assertions. For example, suppose that you need to clean
+data using many functions, with several filters. Something could go wrong in any of these
+functions for a variety of reasons. So each of these functions could test if all the 
+individuals are still in the data, and that you didn’t remove any of them by mistake.
+A test like:
+
+```{r, eval = F}
+
+summary_stats <- function(dataframe, var){
+  stopifnot("Some individuals are missing!" =
+              all((unique(dataframe[[var]])) %in% c(0,1)))
+
+  # and then some comptutations here
+}
+
+```
+
+Now, when running `summary_stats(mtcars, "am")`, if somehow the level "1" or "0"
+is missing from `mtcars`, the function would throw an error. 
+
+There are several packages for assertive programming that you might want to
+check out:
+
+- [{assertthat}](https://github.com/hadley/assertthat)
+- [{chk}](https://poissonconsulting.github.io/chk/)
+- [{checkmate}](https://mllg.github.io/checkmate/)
+
+I won’t discuss any of them; what’s important is for you to know that assertive
+programming is something that is useful, and that you should add to your
+toolbox.
+
 ## Test-driven development
+
+Test-driven development, or TDD, is the programming paradigm in which instead of
+writing a function and then several tests to ensure that it’s working as
+expected, you start with several tests. Of course, since there is no function to
+test, these tests will all fail at first. But the goal is to then write a
+function such that the tests pass.
+
+TDD is interesting in at least two scenarios:
+
+- You want to write a function, but don’t know exactly where to start. Maybe it’s a very complex function. So writing tests can help you think about it, and already fix certain properties that this function should have.
+- You use the tests as a way to write requirements for a codebase. This can be useful when working in a team, and you don’t want to "waste" time writing requirements, so instead you already write the tests. Careful though, because a "smart" programmer could write code that passes the tests but doesn’t actually do anything otherwise useful.
+
+I tend to use TDD when I need to write a function but don’t quite know where to
+start. I start by writing the most basic tests and make them ever more
+complicated. At some point, I start having an idea for the function’s
+implementation and have a go at it. Sometimes this makes me even realise that I 
+was testing for something irrelevant!
+
+Some programmers only do TDD; so they start by writing many, many tests, and
+then only start writing their functions. Personally, I think that this is also
+not ideal, because you could waste a lot of time writing meaningless tests.
 
 ## Code coverage
 
+It is useful to have an idea of which functions are tested and which are not, but
+also *how much* of a function is being tested. For example, suppose that you have
+an `if...else...` clause somewhere in a function. Did you write a test for each of 
+the outcomes of this clause? Maybe you only wrote a test when this clause evaluates
+to `TRUE`, but forgot to write a test for the case it is `FALSE`.
+
+The packages `{covr}` allows you to track the test coverage of your package. 
+Install `{covr}` and run `report()` in the console to get the results:
+
+```{r, eval = F}
+covr::report()
+```
+
+This should open a tab in your web browser with some statistics. You can click
+on the individual scripts to see the source code of your functions: each line
+that is highlighted in green represents a line that is being test, and lines in red
+are lines that are not being tested:
+
+<figure>
+    <img src="images/covr.PNG"
+         alt="The output of report() inside a web browser."></img>
+    <figcaption>The output of report() inside a web browser.</figcaption>
+</figure>
+
+You could strive to get 100% coverage by painting all the lines green (by writing
+unit tests that test these lines). But in practice, it is not always so easy to 
+get 100% coverage, so don’t fret if don’t achieve perfection.
+
+If you’re working on a server (and thus do not have access to a graphical user interface)
+you can instead opt for a the `covr::package_coverage()` function which provides you
+with the following results (inside yoru console):
+
+```
+housing Coverage: 73.33%
+R/get_laspeyeres.R: 57.14%
+R/get_raw_data.R: 80.65%
+```
+
+The percentage represents the share of lines of code that are tested by our unit
+tests. We see that the share of lines being tested in `get_laspeyeres().R` is
+57%: this is because the script `get_laspeyeres()` contains two functions,
+`get_laspeyeres()` and `make_plot()`. We do not test `make_plot()` at all, hence
+why the percentage is so low. We could move `make_plot()` to another script by
+simply putting the function under a level two header in the original `.Rmd`
+file and then inflating again. But in any case, this would not improve the overall
+coverage of the package; we would ideally need to write a test for `make_plot()`.
+This is left as an exercise to the reader.
+
+## Conclusion
+
+Testing is crucial and useful. Not just because it gives you piece of mind but
+also because writing tests forces you to think about your code, by putting
+yourself in the shoes of your users (which includes future you as well).
+In most cases, it is even something that you’ve been doing but perhaps not as
+systematically as you should. 
+
+There really is no other way to say this: you need to consider writing tests as
+an integral part of the project, and need to take the time it takes to write
+them into account when planning projects. But keep in mind that writing them
+makes you gain a lot of time in the long run, so in actually, you might even be
+faster by writing tests! Tests also allow you to immediately see where something
+went wrong, when something goes wrong. So tests save you time here as well.
+Without tests, when something goes wrong, you have a hard time finding where the
+bug comes from, and end up wasting precious time.
+
+So remember: it might *feel* like packaging your code and writing tests for it 
+takes time, but:
+
+- you’re actually already doing it, albeit casually;
+- it saves you time in the long run.
+
+The tools I’ve showed you in this chapter and in the last are probably the
+fastest, easiest way to go from your analysis to a documented and tested package
+in a matter of hours. The benefits these provide however are measured in days of
+work.
