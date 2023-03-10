@@ -13,6 +13,7 @@
     "xie2020r"
     "hammant2020"
     "trisovic2022"
-    "peng2011"))
+    "peng2011"
+    "schoch2023"))
  '(or :bibtex :latex))
 
