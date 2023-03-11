@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Building reproducible analytical pipelines with R - 7&nbsp; Functional programming</title>
+<title>Building reproducible analytical pipelines with R - 6&nbsp; Functional programming</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -159,7 +159,7 @@ div.csl-indent {
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
     <div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Functional programming</span></h1>
+      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Functional programming</span></h1>
       <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
         <i class="bi bi-chevron-right"></i>
       </button>
@@ -200,91 +200,101 @@ div.csl-indent {
   <a href="./intro.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./part1_intro.html" class="sidebar-item-text sidebar-link">Part 1: Don’t Repeat Yourself</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./part1_intro.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Part 1: Don’t Repeat Yourself</span></a>
+  <a href="./prerequisites.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Before we start</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./prerequisites.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Before we start</span></a>
+  <a href="./project_start.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Project start</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./project_start.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Project start</span></a>
+  <a href="./git.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Version control</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./git.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Version control</span></a>
+  <a href="./github.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Collaborating with Github</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./github.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Collaborating with Github</span></a>
+  <a href="./fprog.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Functional programming</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./fprog.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Functional programming</span></a>
+  <a href="./lit_prog.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Literate programming</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./lit_prog.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Literate programming</span></a>
+  <a href="./part1_conclusion.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Conclusion of part 1</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./part2_intro.html" class="sidebar-item-text sidebar-link">Part 2: Write IT down</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./part1_conclusion.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Conclusion of part 1</span></a>
+  <a href="./project_rewrite.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Rewriting our project</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./part2_intro.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Part 2: Write IT down</span></a>
+  <a href="./repro_intro.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Introduction to reproducibility</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./project_rewrite.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Rewriting our project</span></a>
+  <a href="./packages.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Packaging your code</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./repro_intro.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Introduction to reproducibility</span></a>
+  <a href="./testing.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Testing your code</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./packages.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Packaging your code</span></a>
+  <a href="./targets.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Build automation</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./testing.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Testing your code</span></a>
+  <a href="./repro_cont.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Advanced topics in reproducibility</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./targets.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Build automation</span></a>
+  <a href="./ci_cd.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Continuous integration and continuous deployment/delivery</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./repro_cont.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Advanced topics in reproducibility</span></a>
+  <a href="./part2_conclusion.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Conclusion of part 2</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./ci_cd.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Continuous integration and continuous deployment/delivery</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./part2_conclusion.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Conclusion of part 2</span></a>
-  </div>
-</li>
+      </ul>
+  </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./references.html" class="sidebar-item-text sidebar-link">References</a>
@@ -299,35 +309,35 @@ div.csl-indent {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="toc-section-number">7.1</span>  Introduction</a>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="toc-section-number">6.1</span>  Introduction</a>
   <ul class="collapse">
-  <li><a href="#the-state-of-your-program" id="toc-the-state-of-your-program" class="nav-link" data-scroll-target="#the-state-of-your-program"><span class="toc-section-number">7.1.1</span>  The state of your program</a></li>
-  <li><a href="#predictable-functions" id="toc-predictable-functions" class="nav-link" data-scroll-target="#predictable-functions"><span class="toc-section-number">7.1.2</span>  Predictable functions</a></li>
-  <li><a href="#referentially-transparent-and-pure-functions" id="toc-referentially-transparent-and-pure-functions" class="nav-link" data-scroll-target="#referentially-transparent-and-pure-functions"><span class="toc-section-number">7.1.3</span>  Referentially transparent and pure functions</a></li>
+  <li><a href="#the-state-of-your-program" id="toc-the-state-of-your-program" class="nav-link" data-scroll-target="#the-state-of-your-program"><span class="toc-section-number">6.1.1</span>  The state of your program</a></li>
+  <li><a href="#predictable-functions" id="toc-predictable-functions" class="nav-link" data-scroll-target="#predictable-functions"><span class="toc-section-number">6.1.2</span>  Predictable functions</a></li>
+  <li><a href="#referentially-transparent-and-pure-functions" id="toc-referentially-transparent-and-pure-functions" class="nav-link" data-scroll-target="#referentially-transparent-and-pure-functions"><span class="toc-section-number">6.1.3</span>  Referentially transparent and pure functions</a></li>
   </ul></li>
-  <li><a href="#writing-good-functions" id="toc-writing-good-functions" class="nav-link" data-scroll-target="#writing-good-functions"><span class="toc-section-number">7.2</span>  Writing good functions</a>
+  <li><a href="#writing-good-functions" id="toc-writing-good-functions" class="nav-link" data-scroll-target="#writing-good-functions"><span class="toc-section-number">6.2</span>  Writing good functions</a>
   <ul class="collapse">
-  <li><a href="#functions-are-first-class-objects" id="toc-functions-are-first-class-objects" class="nav-link" data-scroll-target="#functions-are-first-class-objects"><span class="toc-section-number">7.2.1</span>  Functions are first-class objects</a></li>
-  <li><a href="#optional-arguments" id="toc-optional-arguments" class="nav-link" data-scroll-target="#optional-arguments"><span class="toc-section-number">7.2.2</span>  Optional arguments</a></li>
-  <li><a href="#safe-functions" id="toc-safe-functions" class="nav-link" data-scroll-target="#safe-functions"><span class="toc-section-number">7.2.3</span>  Safe functions</a></li>
-  <li><a href="#recursive-functions" id="toc-recursive-functions" class="nav-link" data-scroll-target="#recursive-functions"><span class="toc-section-number">7.2.4</span>  Recursive functions</a></li>
-  <li><a href="#anonymous-functions" id="toc-anonymous-functions" class="nav-link" data-scroll-target="#anonymous-functions"><span class="toc-section-number">7.2.5</span>  Anonymous functions</a></li>
-  <li><a href="#the-unix-philosophy-applied-to-r" id="toc-the-unix-philosophy-applied-to-r" class="nav-link" data-scroll-target="#the-unix-philosophy-applied-to-r"><span class="toc-section-number">7.2.6</span>  The Unix philosophy applied to R</a></li>
+  <li><a href="#functions-are-first-class-objects" id="toc-functions-are-first-class-objects" class="nav-link" data-scroll-target="#functions-are-first-class-objects"><span class="toc-section-number">6.2.1</span>  Functions are first-class objects</a></li>
+  <li><a href="#optional-arguments" id="toc-optional-arguments" class="nav-link" data-scroll-target="#optional-arguments"><span class="toc-section-number">6.2.2</span>  Optional arguments</a></li>
+  <li><a href="#safe-functions" id="toc-safe-functions" class="nav-link" data-scroll-target="#safe-functions"><span class="toc-section-number">6.2.3</span>  Safe functions</a></li>
+  <li><a href="#recursive-functions" id="toc-recursive-functions" class="nav-link" data-scroll-target="#recursive-functions"><span class="toc-section-number">6.2.4</span>  Recursive functions</a></li>
+  <li><a href="#anonymous-functions" id="toc-anonymous-functions" class="nav-link" data-scroll-target="#anonymous-functions"><span class="toc-section-number">6.2.5</span>  Anonymous functions</a></li>
+  <li><a href="#the-unix-philosophy-applied-to-r" id="toc-the-unix-philosophy-applied-to-r" class="nav-link" data-scroll-target="#the-unix-philosophy-applied-to-r"><span class="toc-section-number">6.2.6</span>  The Unix philosophy applied to R</a></li>
   </ul></li>
-  <li><a href="#lists-a-powerful-data-structure" id="toc-lists-a-powerful-data-structure" class="nav-link" data-scroll-target="#lists-a-powerful-data-structure"><span class="toc-section-number">7.3</span>  Lists: a powerful data-structure</a>
+  <li><a href="#lists-a-powerful-data-structure" id="toc-lists-a-powerful-data-structure" class="nav-link" data-scroll-target="#lists-a-powerful-data-structure"><span class="toc-section-number">6.3</span>  Lists: a powerful data-structure</a>
   <ul class="collapse">
-  <li><a href="#lists-all-the-way-down" id="toc-lists-all-the-way-down" class="nav-link" data-scroll-target="#lists-all-the-way-down"><span class="toc-section-number">7.3.1</span>  Lists all the way down</a></li>
-  <li><a href="#lists-can-hold-many-things" id="toc-lists-can-hold-many-things" class="nav-link" data-scroll-target="#lists-can-hold-many-things"><span class="toc-section-number">7.3.2</span>  Lists can hold many things</a></li>
-  <li><a href="#lists-as-the-cure-to-loops" id="toc-lists-as-the-cure-to-loops" class="nav-link" data-scroll-target="#lists-as-the-cure-to-loops"><span class="toc-section-number">7.3.3</span>  Lists as the cure to loops</a></li>
-  <li><a href="#data-frames" id="toc-data-frames" class="nav-link" data-scroll-target="#data-frames"><span class="toc-section-number">7.3.4</span>  Data frames</a></li>
+  <li><a href="#lists-all-the-way-down" id="toc-lists-all-the-way-down" class="nav-link" data-scroll-target="#lists-all-the-way-down"><span class="toc-section-number">6.3.1</span>  Lists all the way down</a></li>
+  <li><a href="#lists-can-hold-many-things" id="toc-lists-can-hold-many-things" class="nav-link" data-scroll-target="#lists-can-hold-many-things"><span class="toc-section-number">6.3.2</span>  Lists can hold many things</a></li>
+  <li><a href="#lists-as-the-cure-to-loops" id="toc-lists-as-the-cure-to-loops" class="nav-link" data-scroll-target="#lists-as-the-cure-to-loops"><span class="toc-section-number">6.3.3</span>  Lists as the cure to loops</a></li>
+  <li><a href="#data-frames" id="toc-data-frames" class="nav-link" data-scroll-target="#data-frames"><span class="toc-section-number">6.3.4</span>  Data frames</a></li>
   </ul></li>
-  <li><a href="#functional-programming-in-r" id="toc-functional-programming-in-r" class="nav-link" data-scroll-target="#functional-programming-in-r"><span class="toc-section-number">7.4</span>  Functional programming in R</a>
+  <li><a href="#functional-programming-in-r" id="toc-functional-programming-in-r" class="nav-link" data-scroll-target="#functional-programming-in-r"><span class="toc-section-number">6.4</span>  Functional programming in R</a>
   <ul class="collapse">
-  <li><a href="#base-capabilities" id="toc-base-capabilities" class="nav-link" data-scroll-target="#base-capabilities"><span class="toc-section-number">7.4.1</span>  Base capabilities</a></li>
-  <li><a href="#purrr" id="toc-purrr" class="nav-link" data-scroll-target="#purrr"><span class="toc-section-number">7.4.2</span>  purrr</a></li>
-  <li><a href="#withr" id="toc-withr" class="nav-link" data-scroll-target="#withr"><span class="toc-section-number">7.4.3</span>  withr</a></li>
+  <li><a href="#base-capabilities" id="toc-base-capabilities" class="nav-link" data-scroll-target="#base-capabilities"><span class="toc-section-number">6.4.1</span>  Base capabilities</a></li>
+  <li><a href="#purrr" id="toc-purrr" class="nav-link" data-scroll-target="#purrr"><span class="toc-section-number">6.4.2</span>  purrr</a></li>
+  <li><a href="#withr" id="toc-withr" class="nav-link" data-scroll-target="#withr"><span class="toc-section-number">6.4.3</span>  withr</a></li>
   </ul></li>
-  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="toc-section-number">7.5</span>  Conclusion</a></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="toc-section-number">6.5</span>  Conclusion</a></li>
   </ul>
 </nav>
     </div>
@@ -336,7 +346,7 @@ div.csl-indent {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Functional programming</span></h1>
+<h1 class="title d-none d-lg-block"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Functional programming</span></h1>
 </div>
 
 
@@ -353,8 +363,8 @@ div.csl-indent {
 
 <p>Now that we are familiar with Git and Github, we can start with writing code. We will learn how to write code using the functional programming paradigm.</p>
 <p>This chapter will teach you the fundamentals of functional programming. <em>Functional programming</em> might sound scary, but we will focus on only a handful of concepts that are quite accessible while providing many benefits. Using these functional programming concepts will make your code more reliable, easier to test, document, share, and ultimately rerun.</p>
-<section id="introduction" class="level2" data-number="7.1">
-<h2 data-number="7.1" class="anchored" data-anchor-id="introduction"><span class="header-section-number">7.1</span> Introduction</h2>
+<section id="introduction" class="level2" data-number="6.1">
+<h2 data-number="6.1" class="anchored" data-anchor-id="introduction"><span class="header-section-number">6.1</span> Introduction</h2>
 <p>Remember that the philosophy of part one of this book is “don’t repeat yourself”. In this chapter we will see how we can reduce the amount of code as much as possible. In the previous chapter we’ve seen how Bruno was able to get rid of many lines of code (that were all the same) by writing a single function:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>make_plot <span class="ot">&lt;-</span> <span class="cf">function</span>(country_level_data,</span>
@@ -379,8 +389,8 @@ div.csl-indent {
 <p>Now we are going to go one step further and not only learn how to write good functions, but also how we can push the concept of “not repeating oneself” to the extreme by using higher-order fuctions and function factories.</p>
 <p>You are very likely already familiar with at least two elements of functional programming: functions and lists. But functional programming is a complete programming paradigm, so using functional programming is more than simply using functions and lists (which you can use with other programming paradigms as well). Programming paradagims are ways to structure programs (or scripts).</p>
 <p>Functional programming is a paradigm that relies exclusively on the evaluation of functions to achieve the desired result. If you have already written your own functions in the past, what follows will not be very new. But in order to write a good functional program, the functions that you write and evaluate have to have certain properties. Before discussing these properties, let’s start with <em>state</em>.</p>
-<section id="the-state-of-your-program" class="level3" data-number="7.1.1">
-<h3 data-number="7.1.1" class="anchored" data-anchor-id="the-state-of-your-program"><span class="header-section-number">7.1.1</span> The state of your program</h3>
+<section id="the-state-of-your-program" class="level3" data-number="6.1.1">
+<h3 data-number="6.1.1" class="anchored" data-anchor-id="the-state-of-your-program"><span class="header-section-number">6.1.1</span> The state of your program</h3>
 <p>Let’s suppose that you start a fresh R session, and immediately run this line:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -423,8 +433,8 @@ div.csl-indent {
 <li>When running this function, the state of the program does not get altered in any way.</li>
 </ul>
 </section>
-<section id="predictable-functions" class="level3" data-number="7.1.2">
-<h3 data-number="7.1.2" class="anchored" data-anchor-id="predictable-functions"><span class="header-section-number">7.1.2</span> Predictable functions</h3>
+<section id="predictable-functions" class="level3" data-number="6.1.2">
+<h3 data-number="6.1.2" class="anchored" data-anchor-id="predictable-functions"><span class="header-section-number">6.1.2</span> Predictable functions</h3>
 <p>Let’s now define another function called <code>g()</code>, which does not have the same properties as <code>f()</code>. First, let’s define a function which does not always return the same output given a particular input:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>g <span class="ot">&lt;-</span> <span class="cf">function</span>(name){</span>
@@ -581,8 +591,8 @@ div.csl-indent {
 </div>
 <p>As you can see, every time this function runs, it now outputs the same result. Users can change the seed to have this function output, consistently, another result.</p>
 </section>
-<section id="referentially-transparent-and-pure-functions" class="level3" data-number="7.1.3">
-<h3 data-number="7.1.3" class="anchored" data-anchor-id="referentially-transparent-and-pure-functions"><span class="header-section-number">7.1.3</span> Referentially transparent and pure functions</h3>
+<section id="referentially-transparent-and-pure-functions" class="level3" data-number="6.1.3">
+<h3 data-number="6.1.3" class="anchored" data-anchor-id="referentially-transparent-and-pure-functions"><span class="header-section-number">6.1.3</span> Referentially transparent and pure functions</h3>
 <p>A referentially transparent function is a function that does not use any variable that is not also one of its inputs. For example, the following function:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>bad <span class="ot">&lt;-</span> <span class="cf">function</span>(x){</span>
@@ -609,10 +619,10 @@ div.csl-indent {
 <p>So the first lesson in your functional programming journey that you have to remember is to only use pure functions.</p>
 </section>
 </section>
-<section id="writing-good-functions" class="level2" data-number="7.2">
-<h2 data-number="7.2" class="anchored" data-anchor-id="writing-good-functions"><span class="header-section-number">7.2</span> Writing good functions</h2>
-<section id="functions-are-first-class-objects" class="level3" data-number="7.2.1">
-<h3 data-number="7.2.1" class="anchored" data-anchor-id="functions-are-first-class-objects"><span class="header-section-number">7.2.1</span> Functions are first-class objects</h3>
+<section id="writing-good-functions" class="level2" data-number="6.2">
+<h2 data-number="6.2" class="anchored" data-anchor-id="writing-good-functions"><span class="header-section-number">6.2</span> Writing good functions</h2>
+<section id="functions-are-first-class-objects" class="level3" data-number="6.2.1">
+<h3 data-number="6.2.1" class="anchored" data-anchor-id="functions-are-first-class-objects"><span class="header-section-number">6.2.1</span> Functions are first-class objects</h3>
 <p>In a functional programming language, functions are first-class objects. Contrary to what the name implies, this means that functions, especially the ones you define yourself, are nothing special. A function is an object like any other, and can thus be manipulated as such. Think of anything that you can do with any object in R, and you can do the same thing with a function. For example, let’s consider the <code>+()</code> function. It takes two numeric objects and returns their sum:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="sc">+</span> <span class="fl">5.3</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -760,15 +770,15 @@ To read the log of this object, call read_log(.c).</code></pre>
 <div class="sourceCode cell-code" id="cb74"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a>chronicler<span class="sc">::</span><span class="fu">read_log</span>(result)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "Complete log:"                                                                                
-[2] "NOK! sqrt() ran unsuccessfully with following exception: NaNs produced at 2023-03-11 13:08:27"
-[3] "Total running time: 0.00103759765625 secs"                                                    </code></pre>
+[2] "NOK! sqrt() ran unsuccessfully with following exception: NaNs produced at 2023-03-11 13:32:31"
+[3] "Total running time: 0.00104975700378418 secs"                                                 </code></pre>
 </div>
 </div>
 <p>The <code>{purrr}</code> package also comes with function factories that you might find useful (<code>{possibly}</code>, <code>{safely}</code> and <code>{quietly}</code>).</p>
 <p>In part 2 we will also learn about assertive programming, another way of making our functions safer, as an alternative to using function factories.</p>
 </section>
-<section id="optional-arguments" class="level3" data-number="7.2.2">
-<h3 data-number="7.2.2" class="anchored" data-anchor-id="optional-arguments"><span class="header-section-number">7.2.2</span> Optional arguments</h3>
+<section id="optional-arguments" class="level3" data-number="6.2.2">
+<h3 data-number="6.2.2" class="anchored" data-anchor-id="optional-arguments"><span class="header-section-number">6.2.2</span> Optional arguments</h3>
 <p>It is possible to make functions’ arguments optional, by using <code>NULL</code>. For example:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb76"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a>g <span class="ot">&lt;-</span> <span class="cf">function</span>(x, <span class="at">y =</span> <span class="cn">NULL</span>){</span>
@@ -793,8 +803,8 @@ To read the log of this object, call read_log(.c).</code></pre>
 </div>
 <p>I however prefer the first approach, because it is clearer which arguments are optional, which is not the case with the second approach, where you need to read the body of the function.</p>
 </section>
-<section id="safe-functions" class="level3" data-number="7.2.3">
-<h3 data-number="7.2.3" class="anchored" data-anchor-id="safe-functions"><span class="header-section-number">7.2.3</span> Safe functions</h3>
+<section id="safe-functions" class="level3" data-number="6.2.3">
+<h3 data-number="6.2.3" class="anchored" data-anchor-id="safe-functions"><span class="header-section-number">6.2.3</span> Safe functions</h3>
 <p>It is important that your functions are safe and predictable. You should avoid writing functions that behave like <code>nchar()</code>, a base R function. Let’s see why this function is not safe:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb78"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nchar</span>(<span class="st">"10000000"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -840,8 +850,8 @@ To read the log of this object, call read_log(.c).</code></pre>
 <pre><code>Error in nchar2(10000000) : x should be of type 'character', but is of type 'integer' instead. </code></pre>
 <p>This section is in a sense an introduction to assertive programming. As mentioned in the section on function factories, we will be learning about assertive programming in greater detail in part 2 of the book.</p>
 </section>
-<section id="recursive-functions" class="level3" data-number="7.2.4">
-<h3 data-number="7.2.4" class="anchored" data-anchor-id="recursive-functions"><span class="header-section-number">7.2.4</span> Recursive functions</h3>
+<section id="recursive-functions" class="level3" data-number="6.2.4">
+<h3 data-number="6.2.4" class="anchored" data-anchor-id="recursive-functions"><span class="header-section-number">6.2.4</span> Recursive functions</h3>
 <p>You may have noticed in the last lines of <code>nchar2()</code> defined above, that <code>nchar2()</code> calls itself. A function that calls itself in its own body is called a recursive function. It is sometimes easier to define a function in its recursive form than in an iterative form. The most common example is the factorial function. However, there is an issue with recursive functions (in the R programming language, other programming languages may not have the same problem, like Haskell): while it is sometimes easier to write a function using a recursive algorithm than an iterative algorithm, like for the factorial function, recursive functions in R are quite slow. Let’s take a look at two definitions of the factorial function, one recursive, the other iterative:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb87"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb87-1"><a href="#cb87-1" aria-hidden="true" tabindex="-1"></a>fact_iter <span class="ot">&lt;-</span> <span class="cf">function</span>(n){</span>
@@ -874,8 +884,8 @@ To read the log of this object, call read_log(.c).</code></pre>
   fact_iter(50)  2.000  2.101  2.74599  2.201  2.3510 21.000   100</code></pre>
 <p>We see that the recursive factorial function is 10 times slower than the iterative version. In this particular example it doesn’t make much of a difference, because the functions only take microseconds to run. But if you’re working with more complex functions, this is a problem. If you want to keep using the recursive function and not switch to an iterative algorithm, there are ways to make them faster. The first is called <em>trampolining</em>. I won’t go into details, but if you’re interested, there is an R package that allows you to use trampolining with R, aptly called <a href="https://rdinnager.github.io/trampoline/"><code>{trampoline}</code></a>. Another solution is using the <a href="https://memoise.r-lib.org/"><code>{memoise}</code></a> package.</p>
 </section>
-<section id="anonymous-functions" class="level3" data-number="7.2.5">
-<h3 data-number="7.2.5" class="anchored" data-anchor-id="anonymous-functions"><span class="header-section-number">7.2.5</span> Anonymous functions</h3>
+<section id="anonymous-functions" class="level3" data-number="6.2.5">
+<h3 data-number="6.2.5" class="anchored" data-anchor-id="anonymous-functions"><span class="header-section-number">6.2.5</span> Anonymous functions</h3>
 <p>It is possible to define a function and not give it a name. For example:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb90"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb90-1"><a href="#cb90-1" aria-hidden="true" tabindex="-1"></a><span class="cf">function</span>(x)(x<span class="sc">+</span><span class="dv">1</span>)(<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -886,8 +896,8 @@ To read the log of this object, call read_log(.c).</code></pre>
 </div>
 <p>Because we don’t name them, we cannot reuse them. So why is this useful? Anonymous functions are useful when you need to apply a function somewhere inside a pipe once, and don’t want to define a function just for this. This will become clearer once we learn about lists, but before that, let’s philosophize a bit.</p>
 </section>
-<section id="the-unix-philosophy-applied-to-r" class="level3" data-number="7.2.6">
-<h3 data-number="7.2.6" class="anchored" data-anchor-id="the-unix-philosophy-applied-to-r"><span class="header-section-number">7.2.6</span> The Unix philosophy applied to R</h3>
+<section id="the-unix-philosophy-applied-to-r" class="level3" data-number="6.2.6">
+<h3 data-number="6.2.6" class="anchored" data-anchor-id="the-unix-philosophy-applied-to-r"><span class="header-section-number">6.2.6</span> The Unix philosophy applied to R</h3>
 <blockquote class="blockquote">
 <p>This is the Unix philosophy: Write programs that do one thing and do it well. Write programs to work together. Write programs to handle text streams, because that is a universal interface.</p>
 </blockquote>
@@ -903,11 +913,11 @@ To read the log of this object, call read_log(.c).</code></pre>
 <p>The advantage of splitting <code>big_function()</code> into <code>f()</code>, <code>g()</code> and <code>h()</code> is that you can <em>eat the elephant one bite at a time</em>, and also reuse these smaller functions in other projects more easily. So what’s important is that you can make small functions work together by sharing a common interface. The list is usually a good candidate for this.</p>
 </section>
 </section>
-<section id="lists-a-powerful-data-structure" class="level2" data-number="7.3">
-<h2 data-number="7.3" class="anchored" data-anchor-id="lists-a-powerful-data-structure"><span class="header-section-number">7.3</span> Lists: a powerful data-structure</h2>
+<section id="lists-a-powerful-data-structure" class="level2" data-number="6.3">
+<h2 data-number="6.3" class="anchored" data-anchor-id="lists-a-powerful-data-structure"><span class="header-section-number">6.3</span> Lists: a powerful data-structure</h2>
 <p>Lists are the second important ingredient of functional programming. In the R philosophy inspired by the UNIX philosophy, I stated that <em>lists are a universal interface</em> in R, so our functions should handle lists. This of course depends on what it is you’re doing. If you need functions to handle numbers, then there’s little value in placing these numbers inside lists. But in practice, you will very likely manipulate objects that are more complex than numbers, and this is where lists come into play.</p>
-<section id="lists-all-the-way-down" class="level3" data-number="7.3.1">
-<h3 data-number="7.3.1" class="anchored" data-anchor-id="lists-all-the-way-down"><span class="header-section-number">7.3.1</span> Lists all the way down</h3>
+<section id="lists-all-the-way-down" class="level3" data-number="6.3.1">
+<h3 data-number="6.3.1" class="anchored" data-anchor-id="lists-all-the-way-down"><span class="header-section-number">6.3.1</span> Lists all the way down</h3>
 <p>Lists are extremely flexible, and most of the very complex objects classes that you manipulate are actually lists, but just fancier. For example, a data frame is a list:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb94"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb94-1"><a href="#cb94-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(mtcars)</span>
@@ -940,8 +950,8 @@ To read the log of this object, call read_log(.c).</code></pre>
 </div>
 <p>It’s lists all the way down, and it’s not a coincidence. It’s because, as stated, lists are very powerful. So it’s important to know what you can do with lists.</p>
 </section>
-<section id="lists-can-hold-many-things" class="level3" data-number="7.3.2">
-<h3 data-number="7.3.2" class="anchored" data-anchor-id="lists-can-hold-many-things"><span class="header-section-number">7.3.2</span> Lists can hold many things</h3>
+<section id="lists-can-hold-many-things" class="level3" data-number="6.3.2">
+<h3 data-number="6.3.2" class="anchored" data-anchor-id="lists-can-hold-many-things"><span class="header-section-number">6.3.2</span> Lists can hold many things</h3>
 <p>If you write a function that needs to return many objects, the only solution is to place them inside a list. For example, consider this function:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb100"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb100-1"><a href="#cb100-1" aria-hidden="true" tabindex="-1"></a>sqrt_newton <span class="ot">&lt;-</span> <span class="cf">function</span>(a, <span class="at">init =</span> <span class="dv">1</span>, <span class="at">eps =</span> <span class="fl">0.01</span>, <span class="at">steps =</span> <span class="dv">1</span>){</span>
@@ -1045,8 +1055,8 @@ $b$d</code></pre>
 </div>
 <p>Use this to your advantage.</p>
 </section>
-<section id="lists-as-the-cure-to-loops" class="level3" data-number="7.3.3">
-<h3 data-number="7.3.3" class="anchored" data-anchor-id="lists-as-the-cure-to-loops"><span class="header-section-number">7.3.3</span> Lists as the cure to loops</h3>
+<section id="lists-as-the-cure-to-loops" class="level3" data-number="6.3.3">
+<h3 data-number="6.3.3" class="anchored" data-anchor-id="lists-as-the-cure-to-loops"><span class="header-section-number">6.3.3</span> Lists as the cure to loops</h3>
 <p>Loops are incredibly useful, and you are likely familiar with them. The problem with loops is that they are a concept from iterative programming, not functional programming, and this is a problem because loops rely on changing the state of your program to run. For example, let’s suppose that you wish to use a for-loop to compute the sum of the first 100 integers:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb110"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb110-1"><a href="#cb110-1" aria-hidden="true" tabindex="-1"></a>result <span class="ot">&lt;-</span> <span class="dv">0</span></span>
@@ -1185,8 +1195,8 @@ $b$d</code></pre>
 </div>
 <p>If you have more than two lists, you can use <code>pmap()</code> instead.</p>
 </section>
-<section id="data-frames" class="level3" data-number="7.3.4">
-<h3 data-number="7.3.4" class="anchored" data-anchor-id="data-frames"><span class="header-section-number">7.3.4</span> Data frames</h3>
+<section id="data-frames" class="level3" data-number="6.3.4">
+<h3 data-number="6.3.4" class="anchored" data-anchor-id="data-frames"><span class="header-section-number">6.3.4</span> Data frames</h3>
 <p>As mentioned in the introduction of this section, data frames are a special type of list of atomic vectors. This means that just as I can use <code>lapply()</code> to compute the square root of the elements of an atomic vector, as in the previous example, I can also operate on all the columns of a data frame. For example, it is possible to determine the class of every column of a data frame like this:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb126"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb126-1"><a href="#cb126-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lapply</span>(iris, class)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1488,11 +1498,11 @@ attr(,"class")
 <p>This list-column based workflow is extremely powerful and I highly advise you to take the required time to master it. Remember, we never want to have to repeat ourselves. This might seem more complicated that repeating yourself, but imagine that you need to do this for various countries, various variables, etc… What are you going to do, copy and paste code everywhere? This gets very tedious and more importantly, very error-prone, because you will forget to update the code in some places. You could of course use a loop instead of this list-column based workflow. But as mentioned, the issue with loops is that you have to interact with the global environment, which can lead to other issues. But whatever you end up using, you need to avoid copy and pasting at all costs.</p>
 </section>
 </section>
-<section id="functional-programming-in-r" class="level2" data-number="7.4">
-<h2 data-number="7.4" class="anchored" data-anchor-id="functional-programming-in-r"><span class="header-section-number">7.4</span> Functional programming in R</h2>
+<section id="functional-programming-in-r" class="level2" data-number="6.4">
+<h2 data-number="6.4" class="anchored" data-anchor-id="functional-programming-in-r"><span class="header-section-number">6.4</span> Functional programming in R</h2>
 <p>Up until now I focused on general concepts than on specifics of the R programming language when it comes to functional programming. In the section, we will be focusing entirely on R-specific capabilities and packages for functional programming.</p>
-<section id="base-capabilities" class="level3" data-number="7.4.1">
-<h3 data-number="7.4.1" class="anchored" data-anchor-id="base-capabilities"><span class="header-section-number">7.4.1</span> Base capabilities</h3>
+<section id="base-capabilities" class="level3" data-number="6.4.1">
+<h3 data-number="6.4.1" class="anchored" data-anchor-id="base-capabilities"><span class="header-section-number">6.4.1</span> Base capabilities</h3>
 <p>R is a functional programming language, (but not only), and as such it comes with many functions out of the box to write functional code. We have already discussed <code>lapply()</code> and <code>Reduce()</code>. You should know that depending on what you want to achieve, there are other functions that are similar to <code>lapply()</code>: <code>apply()</code>, <code>sapply()</code>, <code>vapply()</code>, <code>mapply()</code> and <code>tapply()</code>. There’s also <code>Map()</code> which is a wrapper around <code>mapply()</code>. Each function performs the same basic task of applying a function over all the elements of a list or list-like structure, but it can be hard to keep them apart and when you should use one over another. This is why <code>{purrr}</code>, which we will discuss in the next section, is quite an interesting alternative to base R’s offering.</p>
 <p>Another one of the quintessential functional programming functions (alongside <code>Reduce()</code> and <code>Map()</code>) that ships with R is <code>Filter()</code>. If you know <code>dplyr::filter()</code> you should be familiar with the concept of filtering rows of a data frame where the elements of one particular column satisfy a predicate. <code>Filter()</code> works the same way, but focusing on lists instead of data frame:</p>
 <div class="cell">
@@ -1573,7 +1583,7 @@ NULL</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>function (x, ...) 
 UseMethod("print")
-&lt;bytecode: 0x55d7de3f61d0&gt;
+&lt;bytecode: 0x55ce198c0b40&gt;
 &lt;environment: namespace:base&gt;</code></pre>
 </div>
 </div>
@@ -1617,7 +1627,7 @@ UseMethod("print")
     }
     invisible(x)
 }
-&lt;bytecode: 0x55d7df6e4060&gt;
+&lt;bytecode: 0x55ce1abae070&gt;
 &lt;environment: namespace:base&gt;</code></pre>
 </div>
 </div>
@@ -1628,8 +1638,8 @@ UseMethod("print")
 <p>In these languages, objects encapsulate methods (the equivalent of our functions), so if <code>mtcars</code> is a data frame, it encapsulates a <code>print()</code> method that then does the printing. R is different, because classes and methods are kept separate. If a package developer creates a new object class, then the developer also must implement the required methods. For example in the <code>{chronicler}</code> package, the <code>chronicler</code> class is defined alongside the <code>print.chronicler()</code> function to print these objects.</p>
 <p>All of this to say that if you want to extend R by writing packages, learning some OOP essentials is also important. But for data analysis, functional programming does the job perfectly. To learn more about R’s different OOP systems (yes, R can do OOP in different ways and the one I sketched here is the simplest, but probably the most used as well), take a look at <span class="citation" data-cites="wickham2019">Wickham (<a href="references.html#ref-wickham2019" role="doc-biblioref">2019</a>)</span>.</p>
 </section>
-<section id="purrr" class="level3" data-number="7.4.2">
-<h3 data-number="7.4.2" class="anchored" data-anchor-id="purrr"><span class="header-section-number">7.4.2</span> purrr</h3>
+<section id="purrr" class="level3" data-number="6.4.2">
+<h3 data-number="6.4.2" class="anchored" data-anchor-id="purrr"><span class="header-section-number">6.4.2</span> purrr</h3>
 <p>The <code>{purrr}</code> package, developed by Posit (formerly RStudio), contains many functions to make functional programming with R go more smoothly. In the previous section, we discussed the <code>apply()</code> family of function; they all do a very similar thing, which is looping over a list and applying a function to the elements of the list, but it is not quite easy to remember which one does what. Also, for some of these functions like <code>apply()</code>, the list comes first, and then the function, but in the case of <code>mapply()</code>, the function comes first. This type of inconsistencies can be frustrating. Another issue with these functions is that it is not always easy to know what type the output is going to be. List? Atomic vector? Something else?</p>
 <p><code>{purrr}</code> solves this issue by offering the <code>map()</code> family of functions, which behave in a very consistent way. The basic function is called <code>map()</code> and we’ve already used it:</p>
 <div class="cell">
@@ -1670,8 +1680,8 @@ UseMethod("print")
 <p>There are many others, so take a look at the document with <code>?map</code>. There’s also <code>walk()</code> which is used if you’re only interested in the side-effect of the function (for example if the function takes paths as input and saves something to disk).</p>
 <p><code>{purrr}</code> also has functions to replace <code>Reduce()</code>, simply called <code>reduce()</code> and <code>accumulate()</code>, and there are many, many other useful functions. Read through the <a href="https://purrr.tidyverse.org/reference/index.html">documentation of the package</a> and take the time to learn about all it has to offer.</p>
 </section>
-<section id="withr" class="level3" data-number="7.4.3">
-<h3 data-number="7.4.3" class="anchored" data-anchor-id="withr"><span class="header-section-number">7.4.3</span> withr</h3>
+<section id="withr" class="level3" data-number="6.4.3">
+<h3 data-number="6.4.3" class="anchored" data-anchor-id="withr"><span class="header-section-number">6.4.3</span> withr</h3>
 <p><code>{withr}</code> is a powerful package that makes it easy to “purify” functions that behave in a way that can cause problems. Remember the function from the introduction that randomly gave out a recipe Bruno liked? Here it is again:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb188"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb188-1"><a href="#cb188-1" aria-hidden="true" tabindex="-1"></a>h <span class="ot">&lt;-</span> <span class="cf">function</span>(name, <span class="at">food_list =</span> <span class="fu">list</span>()){</span>
@@ -1749,8 +1759,8 @@ UseMethod("print")
 <p>Just like for <code>{purrr}</code>, <code>{withr}</code> has many useful functions which I encourage you to <a href="https://withr.r-lib.org/reference/index.html">familiarize yourself with</a>.</p>
 </section>
 </section>
-<section id="conclusion" class="level2" data-number="7.5">
-<h2 data-number="7.5" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">7.5</span> Conclusion</h2>
+<section id="conclusion" class="level2" data-number="6.5">
+<h2 data-number="6.5" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">6.5</span> Conclusion</h2>
 <p>If there is only one thing that you should remember from this chapter, it would be pure functions. Writing pure functions is in my opinion not very difficult to do and comes with many benefits. But, avoiding loops and replacing them with higher-order functions (<code>lapply()</code>, <code>Reduce()</code>, <code>purrr::map()</code> – and its variants –) also pays off. While this chapter stresses the advantages of functional programming, you should not forget that R is not a pure, and solely, functional programming language and that other paradigms, like object-oriented programming, are also available to you. So if your goal is to master the language (instead of “just” using it to solve data analysis problems), then you also need to know about R’s OOP capabilities.</p>
 
 
@@ -2022,12 +2032,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="./github.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Collaborating with Github</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Collaborating with Github</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="./lit_prog.html" class="pagination-link">
-        <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Literate programming</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Literate programming</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
