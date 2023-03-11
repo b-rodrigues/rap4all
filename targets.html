@@ -255,11 +255,28 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
+<p>We are finally ready to actually build a pipeline. For this, we are going to be using a package called <code>{targets}</code> which is a so-called build automation tool.</p>
+<p>Without a build automation tool, a pipeline is nothing but a series of scripts that get called one after the other, or perhaps the pipeline is only one very long script that does the required operations successfully.</p>
+<p>There are several problems with this approach.</p>
 <section id="introduction" class="level2" data-number="13.1">
 <h2 data-number="13.1" class="anchored" data-anchor-id="introduction"><span class="header-section-number">13.1</span> Introduction</h2>
+<p>Scripts can, and will, be executed out of order. You can mitigate the problems this can make by using pure functions, but even then, you risk messing things up when you do this. But why would you run your script out of order? Well, usually because you changed a function, and only want to re-execute the parts of the pipeline that are impacted by that change. But this supposes that you can know, in your head, which part of the script was impacted and which was not. And this can be quite difficult to figure out, especially when the pipeline is huge.</p>
+<p>Another issue, but this one is perhaps more subjective, is that pipelines written as scripts are usually quite difficult to read and understand. To mitigate this, what you’d typically do is write a lot of comments. But here again you face the problem of needing to maintain these comments, and once the comments and the code are out of synch… the problems start.</p>
+<p>Running the different parts of the pipeline in parallel is also very complicated if your pipeline is defined as script. You would need to break the script into independent parts (and make really sure that these parts are independent) and execute them in parallel, perhaps using a separate R session for each script. The good news is that if you followed the advice from this book is that you have been using functional programming and so your pipeline is a series of function calls, which is “easy” to break up and run in parallel.</p>
+<p>But by now you should now that software engineers also faced similar problems when they needed to build their software, and you should also know that they likely came up with something to alleviate these issues. Enter build automation tools.</p>
+<p>When using a build automation tool, what you end up doing is writing down a recipe, that will not be very different than a standard script in your favourite programming language, that defines how the source code should be “cooked” into the software (or in our case, a report, a cleaned dataset or any data product).</p>
+<p>The build automation tool can then figure out the following things:</p>
+<ul>
+<li>any change in any of the code. Only the outputs that are affected by the changes you did will be re-computed (and their dependencies as well);</li>
+<li>any change in any of the tracked files. For example, if a file gets updated daily, you can track this file and the build automation tool will only execute the parts of the pipeline affected by this update;</li>
+<li>which parts of the pipeline can safely run in parallel (with the option to thus run the pipeline on multiple CPU cores).</li>
+</ul>
+<p>Just like many of the other tools that we have encountered in this book, what build automation tools do is allow you to not have to rely on your brain. You <em>write down</em> the recipe once, and then you can focus again, on just the code of your actual project. You shouldn’t have to think about the pipeline itself, nor think about to best run it. Let your computer figure that out for you, it’s much better at such tasks than you.</p>
 </section>
 <section id="targets-quick-start" class="level2" data-number="13.2">
 <h2 data-number="13.2" class="anchored" data-anchor-id="targets-quick-start"><span class="header-section-number">13.2</span> {targets} quick-start</h2>
+<p>First thing’s first: to know everything about the <code>{targets}</code> package, you should read the excellent <a href="https://books.ropensci.org/targets/"><code>{targets}</code> manual</a><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>. Everything’s in there. So what I’m going to do is really to just give you a very quick intro to what I think are really the main points that you should know about.</p>
+<p>Let’s start by a “hello-world” type pipeline. Create a file called <code>_targets.R</code> in a new folder called something like <code>targets_intro/</code>.</p>
 </section>
 <section id="handling-files" class="level2" data-number="13.3">
 <h2 data-number="13.3" class="anchored" data-anchor-id="handling-files"><span class="header-section-number">13.3</span> Handling files</h2>
@@ -273,6 +290,12 @@ ul.task-list li input[type="checkbox"] {
 <p><em>It is possible to communicate a great deal of domain knowledge in code, such that it is illuminating beyond the mere mechanical number crunching. To do this well the author needs to make use of certain styles and structures that produce code that has layers of domain specific abstraction a reader can traverse up and down as they build their understanding of the project. Functional programming style, coupled with a dependency graph as per {targets} are useful tools in this regard.</em></p>
 
 
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1"><p>https://is.gd/VS6vSs<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
 </section>
 
 </main> <!-- /main -->
