@@ -65,8 +65,119 @@ Everything's in there. So what I'm going to do is really to just give you
 a very quick intro to what I think are really the main points that you should
 know about.
 
-Let's start by a "hello-world" type pipeline. Create a file called `_targets.R`
-in a new folder called something like `targets_intro/`.
+Let's start by a "hello-world" type pipeline. Create a new folder called
+something like `targets_intro/`, and start a fresh R session in it. For now, let’s
+ignore `{renv}`. We will see how `{renv}` works together with `{targets}` to provide
+a reproducible pipeline later. In that fresh session inside the `targets_intro/`
+run the following line:
+
+```{r, eval = FALSE}
+targets::tar_script()
+```
+
+this will create a template `_targets.R` file in that directory. This is the file
+in which we will define our pipeline. Open in it in your favourite editor. A
+`_targets.R` pipeline is roughly divided into three parts:
+
+- first is where packages are loaded and helper functions defined;
+- second is where pipeline-specific options are defined;
+- third is the pipeline itself, defined as a series of targets.
+
+Let’s go through all these parts one by one.
+
+### _targets.R’s anatomy
+
+The first part of the pipeline is where package get loaded as well as helper
+functions. In the template, the very first line is a `library(targets)` call
+and then a function definition. There are two important things here that you need
+to understand.
+
+If your pipeline needs, say, the `{dplyr}` package to run, you could write
+`library(dplyr)` in there. However, it is best to actually do as in the
+template, and load the packages using `tar_option_set(packages = "dplyr")`. This
+is because is you execute the pipeline in a cluster, you need to make sure that
+all the packages are available to all the workers. If you load the packages at
+the top of the `_targets.R` script, the packages will be available for the
+session that called `library(...)`, but not any worker sessions spawned for
+parallel execution. 
+  
+So, the idea is that at the very top of your script, you only load the
+`{targets}` library and other packages that are required for running the
+pipeline itself (as we shall see in coming sections). But packages that are
+required by functions that are running inside the pipeline, these should ideally
+be loaded as in the template. Another way of saying this: at the top of the
+script, think "pipeline infrastructure" packages (`{targets}` and some others),
+but inside `tar_option_set()` think "functions that run inside the pipeline"
+packages.
+
+Part two is where you set some global options for the pipeline. As discussed
+previously, this is where you should load packages that are required by the
+functions that are called inside the pipeline. I won’t list all the options
+here, because I would simply be repeating what’s in the
+[documentation](https://docs.ropensci.org/targets/reference/tar_option_set.html)^[https://is.gd/lm4QoO].
+This second part is also where you can define some functions that you might need
+for running the pipeline. For example, you might need to define a function to
+load and clean some data: this is where you would do so. We have developed a
+package, so we might not need this. But sometimes your analysis doesn’t require
+you to write any custom functions, or maybe just a few, and perhaps you don’t
+see the benefit of building a package just for one or two functions. So instead,
+you have two other options: you either define them directly inside the
+`_targets.R` script, like in the template, or you create a `functions/` folder
+next to the `_targets.R` script, and put your functions there. It’s up to you,
+but I prefer this second option.
+
+Finally, comes the pipeline itself. Let’s take a closer look at it:
+
+```{r, eval = F}
+list(
+  tar_target(data, data.frame(x = sample.int(100), y = sample.int(100))),
+  tar_target(summary, summ(data)) # Call your custom functions as needed.
+)
+```
+
+The pipeline is nothing but a list (told you lists where a very important
+object) of "targets". A target is defined using the `targets::tar_target()`
+function and has at least two inputs: the first is the name of the target
+(without quotes) and the second is the function that generates the target. So a
+target defined as `tar_target(y, f(x))` is equivalent to `y <- f(x)`. The next
+target can use the output of the previous target as an input, so you could have
+something like `tar_target(z, f(y))` (just like in the template). 
+
+This pipeline can immediately be run using the `targets::tar_make()` command in
+a console. Doing so shows you the following output:
+
+```{r, eval = F}
+targets::tar_make()
+```
+
+```
+• start target data
+• built target data [0.82 seconds]
+• start target summary
+• built target summary [0.02 seconds]
+• end pipeline [1.71 seconds]
+```
+
+The pipeline is done running! So, now what? This pipeline simply built some summary
+statistics, but where are they? Typing `summary` in the console to try to inspect this
+output results in the following:
+
+```{r, eval = F}
+summary
+```
+
+```
+function (object, ...) 
+UseMethod("summary")
+<bytecode: 0x000001f1a5436d78>
+<environment: namespace:base>
+```
+
+What is going on?
+
+Ok, so first, you need to remember our chapter on function programming.
+
+
 
 ## Handling files
 
@@ -78,3 +189,5 @@ in a new folder called something like `targets_intro/`.
 Miles said*
 
 *It is possible to communicate a great deal of domain knowledge in code, such that it is illuminating beyond the mere mechanical number crunching. To do this well the author needs to make use of certain styles and structures that produce code that has layers of domain specific abstraction a reader can traverse up and down as they build their understanding of the project. Functional programming style, coupled with a dependency graph as per {targets} are useful tools in this regard.*
+
+## Rewriting our project as a pipeline
