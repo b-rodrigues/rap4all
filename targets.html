@@ -571,8 +571,21 @@ UseMethod("summary")
 </section>
 <section id="the-dependency-graph" class="level2" data-number="13.5">
 <h2 data-number="13.5" class="anchored" data-anchor-id="the-dependency-graph"><span class="header-section-number">13.5</span> The dependency graph</h2>
-<p>As you’ve seen in the previous section (and as I told you in the introduction) <code>{targets}</code> keeps track of changes in files, but also in the functions that you use. Any change in any of these files will result in <code>{targets}</code> identifying which targets are now out-of-date and which should be re-computed (alongside any other target that depends on them). It is possible to visualise this using <code>targets::tar_visnetwork()</code></p>
-<p>change and see network write.csv(mtcars, “mtcars.csv”, row.names = F)</p>
+<p>As you’ve seen in the previous section (and as I told you in the introduction) <code>{targets}</code> keeps track of changes in files, but also in the functions that you use. Any change in any of these files will result in <code>{targets}</code> identifying which targets are now out-of-date and which should be re-computed (alongside any other target that depends on them). It is possible to visualise this using <code>targets::tar_visnetwork()</code>. This opens an interactive network graph in your web browser that looks like this:</p>
+<figure class="figure">
+<img src="images/targets_visnetwork.png" alt="This image opens in your web-browser." class="figure-img">
+<figcaption class="figure-caption">
+This image opens in your web-browser.
+</figcaption>
+</figure>
+<p>In the image above, each target has been computed, so they are all up-to-date. If we now change the input data as before, here is what you will see instead:</p>
+<figure class="figure">
+<img src="images/targets_visnetwork_outdated.png" alt="Because the input data got changed, we need to run the pipeline again." class="figure-img">
+<figcaption class="figure-caption">
+Because the input data got changed, we need to run the pipeline again.
+</figcaption>
+</figure>
+<p>Because all the targets depend on the input data, we need to re-run everything. Let’s run the pipeline again to update all the targets using <code>tar_make()</code>. Now let’s add another target to our pipeline, one that does not depend on the input data. Then, we will modify the input data again, and call <code>tar_visnetwork()</code> as well.</p>
 </section>
 <section id="running-the-pipeline-in-parallel" class="level2" data-number="13.6">
 <h2 data-number="13.6" class="anchored" data-anchor-id="running-the-pipeline-in-parallel"><span class="header-section-number">13.6</span> Running the pipeline in parallel</h2>
