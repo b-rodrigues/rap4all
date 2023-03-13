@@ -3,9 +3,12 @@
 We are finally ready to actually build a pipeline. For this, we are going to be
 using a package called `{targets}` which is a so-called build automation tool.
 
+If you go back to the reproducibility iceberg, you will see that we are quite
+low now.
+
 Without a build automation tool, a pipeline is nothing but a series of scripts
-that get called one after the other, or perhaps the pipeline is only one
-very long script that does the required operations successfully.
+that get called one after the other, or perhaps the pipeline is only one very
+long script that does the required operations successfully.
 
 There are several problems with this approach.
 
@@ -143,6 +146,8 @@ target defined as `tar_target(y, f(x))` is equivalent to `y <- f(x)`. The next
 target can use the output of the previous target as an input, so you could have
 something like `tar_target(z, f(y))` (just like in the template). 
 
+## A pipeline is a composition of pure functions
+
 This pipeline can immediately be run using the `targets::tar_make()` command in
 a console. Doing so shows you the following output:
 
@@ -158,9 +163,9 @@ targets::tar_make()
 • end pipeline [1.71 seconds]
 ```
 
-The pipeline is done running! So, now what? This pipeline simply built some summary
-statistics, but where are they? Typing `summary` in the console to try to inspect this
-output results in the following:
+The pipeline is done running! So, now what? This pipeline simply built some
+summary statistics, but where are they? Typing `summary` in the console to try
+to inspect this output results in the following:
 
 ```{r, eval = F}
 summary
@@ -175,20 +180,19 @@ UseMethod("summary")
 
 What is going on?
 
-Ok, so first, you need to remember our chapter on functional programming. We
-want our pipeline to be a sequence of pure functions. This means that our
-pipeline running successfully should not depend on anything in the global
-environment (apart from loading the packages in the first part of the script,
-and why we should use `tar_option_set()` for the others) and it should not
-change anything outside of its scope. This means that the pipeline should not
-change anything in the global environment either. This is exactly how a
-`{targets}` pipeline operates. A pipeline defined using `{targets}` will be pure
-and so the output of the pipeline will not be save in the global environment.
-Now, strictly speaking, the pipeline is not exactly pure. Check the folder that
-contains the `_targets.R` script. There should now be a `_targets/` folder in
-there as well. If you go inside that folder, and then open the `objects/`
-folder, you should see two objects, `data` and `summary`. These are the outputs
-of our pipeline.
+First, you need to remember our chapter on functional programming. We want our
+pipeline to be a sequence of pure functions. This means that our pipeline
+running successfully should not depend on anything in the global environment
+(apart from loading the packages in the first part of the script, and why we
+should use `tar_option_set()` for the others) and it should not change anything
+outside of its scope. This means that the pipeline should not change anything in
+the global environment either. This is exactly how a `{targets}` pipeline
+operates. A pipeline defined using `{targets}` will be pure and so the output of
+the pipeline will not be save in the global environment. Now, strictly speaking,
+the pipeline is not exactly pure. Check the folder that contains the
+`_targets.R` script. There should now be a `_targets/` folder in there as well.
+If you go inside that folder, and then open the `objects/` folder, you should
+see two objects, `data` and `summary`. These are the outputs of our pipeline.
 
 So each target that is defined inside the pipeline gets saved there in the
 `.rds` format. This is an R-specific format that can be used to save *any* type
@@ -223,15 +227,290 @@ UseMethod("summary")
 
 Ok, so here, strictly speaking, you don’t see the source code from `summary()`.
 This is because `summary()` is a generic function, that simply picks the right
-`summary()` depending to what type of object you pass to it. Try with 
+`summary()` depending to what type of object you pass to it. Try with
 `summary.data.frame()` and there you shall see the source code. So when you type
-`summary` after running the pipeline, because the pipeline is pure and nothing gets
-saved to the global environment, you see `summary`’s source code and not the 
-target that got computed by the pipeline.
+`summary` after running the pipeline, because the pipeline is pure and nothing
+gets saved to the global environment, you see `summary`’s source code and not
+the target that got computed by the pipeline.
 
-So that was a long explanation. Let’s go back to our pipeline.
+So that was a long explanation, but I think that it was worth the effort. It is
+quite important to not forget that a targets pipeline is the composition of many
+pure functions, but since we need to be able to access the outputs produced by
+the pipeline, they also get saved inside a folder. To retrieve the outputs you
+can use `targets::tar_read()` or `targets::tar_load()`. The difference is that
+`tar_read()` simply reads the output and shows it in the console (just like when
+you type `mtcars` in a console for example) but `tar_load()` reads and saves the
+object into the global environment (just like doing something like `x <- mtcars`
+in an R console). So to retrieve our `summary` object let’s use
+`tar_load(summary)`:
+
+```{r, eval = F}
+tar_load(summary)
+```
+
+Now, typing `summary` shows the computed output (now the function
+`base::summary()` is masked):
+
+```{r, eval = F}
+summary
+```
+
+```{r, eval = F}
+    mean_x
+1 500000.5
+```
+
+it is possible to load all the outputs using `targets::tar_load_everything()` so
+that you don’t need to load each output one by one.
+
+Before continuing with more `{targets}` features, I want to really stress the
+fact the pipeline is the composition of pure functions. So functions that only
+have a side-effect will be difficult to handle. For example, plotting in base R
+consists in a series of calls to functions with side-effects. If you open an R
+console and type `plot(mtcars)`, you will see a plot. But the function `plot()`
+does not create any output. It just prints a picture on your screen, which is a
+side-effect. To convince yourself that `plot()` does not create any output and only
+has a side-effect, try to save the output of `plot()` in a variable:
+
+```{r, eval = F}
+a <- plot(mtcars)
+```
+
+doing this will show the plot, but then if you call `a`, the plot will not appear, and instead
+you will get NULL:
+
+
+```{r, eval = F}
+a
+```
+
+```{r, eval = F}
+NULL
+```
+
+This is also why saving plots in R is awkward, it’s because there’s no object to
+actually save!
+
+So because `plot()` is not a pure function, if you try to use it in a
+`{targets}` pipeline, you will get `NULL` as well when loading the target. To
+see this, change the list of targets like this:
+
+```{r, eval = F}
+list(
+  tar_target(data, data.frame(x = sample.int(100), y = sample.int(100))),
+  tar_target(summary, summ(data)),
+  tar_target(data_plot, plot(data))
+)
+```
+
+I’ve simply added a new target using `tar_target()`. Run the pipeline again
+using `tar_make()` and then type `tar_load(data_plot)` to load the `data_plot`
+target. But typing `data_plot` only shows `NULL` and not the plot!
+
+There are several workarounds for this. The first is to use `ggplot()` instead.
+This is because the output of `ggplot()` is an object of type `ggplot`. You can
+do something like `a <- ggplot()` and then type `a` to see an empty canvas.
+Doing `str(a)` also shows an output (the structure of the object a of class
+`ggplot`).
+
+The second workaround is to save the plot to disk. For this, you need to write a
+new function, for example:
+
+```{r, eval = F}
+save_plot <- function(filename, ...){
+
+  png(filename = filename)
+  plot(...)
+  dev.off()
+
+}
+```
+
+If you put this in the `_targets.R` script, before defining the list of `tar_target` objects, 
+you could use this instead of `plot()` in the last target:
+
+```{r, eval = F}
+summ <- function(dataset) {
+  summarize(dataset, mean_x = mean(x))
+}
+
+save_plot <- function(filename, ...){
+  png(filename = filename)
+  plot(...)
+  dev.off()
+
+  filename
+}
+
+# Set target-specific options such as packages.
+tar_option_set(packages = "dplyr")
+
+# End this file with a list of target objects.
+list(
+  tar_target(data,
+             data.frame(x = sample.int(100),
+                        y = sample.int(100))),
+  tar_target(summary,
+             summ(data)),
+
+  tar_target(data_plot,
+             save_plot(filename = "my_plot.png",
+                       data),
+             format = "file")
+)
+```
+
+After running this pipeline you should see a file called `my_plot.png` in the
+folder of your pipeline. If you type `tar_load(data_plot)`, and then `data_plot`
+you will see that this target returns the `filename` argument of `save_plot()`.
+This is because a target needs to return something, and in the case of functions
+that save a file to disk returning the path is recommended. This is because if I
+then need to use this file in another target, I could do `tar_target(x,
+f(data_plot))`. Because the `data_plot` target returns a path, I can write `f()`
+in such a way that it knows how to handle this path. If instead I write
+`tar_target(x, f("path/to/my_plot.png"))`, then `{targets}` would have no way of
+knowing that the target `x` depends on the target `data_plot`. The dependency
+between these two targets would break. Hence why the first option is preferable.
+
+Finally, you will have noticed that the last target also has the option `format =
+"file"`. This will be topic of the next section.
 
 ## Handling files
+
+In this section, we will learn how `{targets}` handles files. First, run the following
+lines in the folder that contains the `_targets.R` script that we’ve been using up until
+now:
+
+```{r, eval = F}
+data(mtcars)
+
+write.csv(mtcars, "mtcars.csv", row.names = F)
+```
+
+This will create the file `"mtcars.csv"` in that folder. We are going to use
+this in our pipeline.
+
+Write the pipeline like this:
+
+```{r, eval = F}
+list(
+  tar_target(
+    data_mtcars,
+    read.csv("mtcars.csv")
+  ),
+  tar_target(
+    summary_mtcars,
+    summary(data_mtcars)
+  ),
+  tar_target(plot_mtcars,
+             save_plot(filename = "mtcars_plot.png",
+                       data_mtcars),
+             format = "file")
+)
+```
+
+You can now run the pipeline and will get a plot at the end. 
+The problem however, is that the input file `"mtcars.csv"` is not being 
+tracked for changes. Try to change the file, for example by running this line:
+
+```{r, eval = F}
+write.csv(head(mtcars), "mtcars.csv", row.names = F)
+```
+
+If you try to run the pipeline again, these changes are ignored:
+
+```
+✔ skip target data_mtcars
+✔ skip target plot_mtcars
+✔ skip target summary_mtcars
+✔ skip pipeline [0.1 seconds]
+```
+
+As you can see, because `{targets}` is not tracking the changes in the `mtcars.csv` file,
+from the its point of view nothing changed. And thus the pipeline gets skipped because 
+according to `{targets}`, it is up-to-date.
+
+Let’s change the csv back:
+
+```{r, eval = F}
+write.csv(mtcars, "mtcars.csv", row.names = F)
+```
+
+and change the first target such that the file gets tracked. Remember that
+targets need to be pure functions and return something. So we are going to
+change the first target to simply return the path to the file, and use the
+`format = "file"` option in `tar_target()`:
+
+```{r, eval = F}
+path_data <- function(path){
+  path
+}
+
+list(
+  tar_target(
+    path_data_mtcars,
+    path_data("mtcars.csv"),
+    format = "file"
+  ),
+  tar_target(data_mtcars,
+             read.csv(path_data_mtcars)
+             ),
+  tar_target(
+    summary_mtcars,
+    summary(data_mtcars)
+  ),
+  tar_target(plot_mtcars,
+             save_plot(filename = "mtcars_plot.png",
+                       data_mtcars),
+             format = "file")
+)
+```
+
+To drive the point home, I use a function called `path_data()` which takes a
+path as an input and simply returns it. This is totally superfluous, and you
+could define the target like this instead:
+
+```{r, eval = F}
+tar_target(
+  path_data_mtcars,
+  "mtcars.csv",
+  format = "file"
+)
+```
+
+This would have exactly the same effect as using the `path_data()` function.
+
+So now we got a target called `path_data_mtcars` that returns nothing but the
+path to the data. But because we’ve used the `format = "file"` option,
+`{targets}` now knows that this is a file that must be tracked. So any change on
+this file will be correctly recognized and any target that depends on this input
+file will be marked as being out-of-date. The other targets are exactly the
+same.
+
+Run the pipeline now using `targets::tar_make()`. Now, change the input file again:
+
+```{r, eval = F}
+write.csv(head(mtcars),
+          "mtcars.csv",
+          row.names = F)
+```
+
+Now, run the pipeline again using `targets::tar_make()`: this time you should
+see that `{targets}` correctly identified the change and runs the pipeline again
+accordingly!
+
+## The dependency graph
+
+As you’ve seen in the previous section (and as I told you in the introduction)
+`{targets}` keeps track of changes in files, but also in the functions that you use.
+Any change in any of these files will result in `{targets}` identifying which targets
+are now out-of-date and which should be re-computed (alongside any other target that
+depends on them). It is possible to visualise this using `targets::tar_visnetwork()`
+
+
+change and see network
+write.csv(mtcars, "mtcars.csv", row.names = F)
+
 
 ## Running the pipeline in parallel
 
