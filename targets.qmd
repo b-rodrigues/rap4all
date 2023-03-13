@@ -505,11 +505,30 @@ As you’ve seen in the previous section (and as I told you in the introduction)
 `{targets}` keeps track of changes in files, but also in the functions that you use.
 Any change in any of these files will result in `{targets}` identifying which targets
 are now out-of-date and which should be re-computed (alongside any other target that
-depends on them). It is possible to visualise this using `targets::tar_visnetwork()`
+depends on them). It is possible to visualise this using `targets::tar_visnetwork()`.
+This opens an interactive network graph in your web browser that looks like this:
 
+<figure>
+    <img src="images/targets_visnetwork.png"
+         alt="This image opens in your web-browser."></img>
+    <figcaption>This image opens in your web-browser.</figcaption>
+</figure>
 
-change and see network
-write.csv(mtcars, "mtcars.csv", row.names = F)
+In the image above, each target has been computed, so they are all up-to-date. If we now change
+the input data as before, here is what you will see instead:
+
+<figure>
+    <img src="images/targets_visnetwork_outdated.png"
+         alt="Because the input data got changed, we need to run the pipeline again."></img>
+    <figcaption>Because the input data got changed, we need to run the pipeline again.</figcaption>
+</figure>
+
+Because all the targets depend on the input data, we need to re-run everything.
+Let's run the pipeline again to update all the targets using `tar_make()`. Now
+let's add another target to our pipeline, one that does not depend on the input
+data. Then, we will modify the input data again, and call `tar_visnetwork()` as
+well.
+
 
 
 ## Running the pipeline in parallel
