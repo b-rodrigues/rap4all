@@ -295,10 +295,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <ul class="collapse">
   <li><a href="#targets.rs-anatomy" id="toc-targets.rs-anatomy" class="nav-link" data-scroll-target="#targets.rs-anatomy"><span class="toc-section-number">13.2.1</span>  _targets.R’s anatomy</a></li>
   </ul></li>
-  <li><a href="#handling-files" id="toc-handling-files" class="nav-link" data-scroll-target="#handling-files"><span class="toc-section-number">13.3</span>  Handling files</a></li>
-  <li><a href="#running-the-pipeline-in-parallel" id="toc-running-the-pipeline-in-parallel" class="nav-link" data-scroll-target="#running-the-pipeline-in-parallel"><span class="toc-section-number">13.4</span>  Running the pipeline in parallel</a></li>
-  <li><a href="#targets-and-renv" id="toc-targets-and-renv" class="nav-link" data-scroll-target="#targets-and-renv"><span class="toc-section-number">13.5</span>  {targets} and {renv}</a></li>
-  <li><a href="#rewriting-our-project-as-a-pipeline" id="toc-rewriting-our-project-as-a-pipeline" class="nav-link" data-scroll-target="#rewriting-our-project-as-a-pipeline"><span class="toc-section-number">13.6</span>  Rewriting our project as a pipeline</a></li>
+  <li><a href="#a-pipeline-is-a-composition-of-pure-functions" id="toc-a-pipeline-is-a-composition-of-pure-functions" class="nav-link" data-scroll-target="#a-pipeline-is-a-composition-of-pure-functions"><span class="toc-section-number">13.3</span>  A pipeline is a composition of pure functions</a></li>
+  <li><a href="#handling-files" id="toc-handling-files" class="nav-link" data-scroll-target="#handling-files"><span class="toc-section-number">13.4</span>  Handling files</a></li>
+  <li><a href="#the-dependency-graph" id="toc-the-dependency-graph" class="nav-link" data-scroll-target="#the-dependency-graph"><span class="toc-section-number">13.5</span>  The dependency graph</a></li>
+  <li><a href="#running-the-pipeline-in-parallel" id="toc-running-the-pipeline-in-parallel" class="nav-link" data-scroll-target="#running-the-pipeline-in-parallel"><span class="toc-section-number">13.6</span>  Running the pipeline in parallel</a></li>
+  <li><a href="#targets-and-renv" id="toc-targets-and-renv" class="nav-link" data-scroll-target="#targets-and-renv"><span class="toc-section-number">13.7</span>  {targets} and {renv}</a></li>
+  <li><a href="#rewriting-our-project-as-a-pipeline" id="toc-rewriting-our-project-as-a-pipeline" class="nav-link" data-scroll-target="#rewriting-our-project-as-a-pipeline"><span class="toc-section-number">13.8</span>  Rewriting our project as a pipeline</a></li>
   </ul>
 </nav>
     </div>
@@ -323,6 +325,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </header>
 
 <p>We are finally ready to actually build a pipeline. For this, we are going to be using a package called <code>{targets}</code> which is a so-called build automation tool.</p>
+<p>If you go back to the reproducibility iceberg, you will see that we are quite low now.</p>
 <p>Without a build automation tool, a pipeline is nothing but a series of scripts that get called one after the other, or perhaps the pipeline is only one very long script that does the required operations successfully.</p>
 <p>There are several problems with this approach.</p>
 <section id="introduction" class="level2" data-number="13.1">
@@ -368,6 +371,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>The pipeline is nothing but a list (told you lists where a very important object) of “targets”. A target is defined using the <code>targets::tar_target()</code> function and has at least two inputs: the first is the name of the target (without quotes) and the second is the function that generates the target. So a target defined as <code>tar_target(y, f(x))</code> is equivalent to <code>y &lt;- f(x)</code>. The next target can use the output of the previous target as an input, so you could have something like <code>tar_target(z, f(y))</code> (just like in the template).</p>
+</section>
+</section>
+<section id="a-pipeline-is-a-composition-of-pure-functions" class="level2" data-number="13.3">
+<h2 data-number="13.3" class="anchored" data-anchor-id="a-pipeline-is-a-composition-of-pure-functions"><span class="header-section-number">13.3</span> A pipeline is a composition of pure functions</h2>
 <p>This pipeline can immediately be run using the <code>targets::tar_make()</code> command in a console. Doing so shows you the following output:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>targets<span class="sc">::</span><span class="fu">tar_make</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -386,7 +393,7 @@ UseMethod("summary")
 &lt;bytecode: 0x000001f1a5436d78&gt;
 &lt;environment: namespace:base&gt;</code></pre>
 <p>What is going on?</p>
-<p>Ok, so first, you need to remember our chapter on functional programming. We want our pipeline to be a sequence of pure functions. This means that our pipeline running successfully should not depend on anything in the global environment (apart from loading the packages in the first part of the script, and why we should use <code>tar_option_set()</code> for the others) and it should not change anything outside of its scope. This means that the pipeline should not change anything in the global environment either. This is exactly how a <code>{targets}</code> pipeline operates. A pipeline defined using <code>{targets}</code> will be pure and so the output of the pipeline will not be save in the global environment. Now, strictly speaking, the pipeline is not exactly pure. Check the folder that contains the <code>_targets.R</code> script. There should now be a <code>_targets/</code> folder in there as well. If you go inside that folder, and then open the <code>objects/</code> folder, you should see two objects, <code>data</code> and <code>summary</code>. These are the outputs of our pipeline.</p>
+<p>First, you need to remember our chapter on functional programming. We want our pipeline to be a sequence of pure functions. This means that our pipeline running successfully should not depend on anything in the global environment (apart from loading the packages in the first part of the script, and why we should use <code>tar_option_set()</code> for the others) and it should not change anything outside of its scope. This means that the pipeline should not change anything in the global environment either. This is exactly how a <code>{targets}</code> pipeline operates. A pipeline defined using <code>{targets}</code> will be pure and so the output of the pipeline will not be save in the global environment. Now, strictly speaking, the pipeline is not exactly pure. Check the folder that contains the <code>_targets.R</code> script. There should now be a <code>_targets/</code> folder in there as well. If you go inside that folder, and then open the <code>objects/</code> folder, you should see two objects, <code>data</code> and <code>summary</code>. These are the outputs of our pipeline.</p>
 <p>So each target that is defined inside the pipeline gets saved there in the <code>.rds</code> format. This is an R-specific format that can be used to save <em>any</em> type of object. It doesn’t matter what it is: a simple data frame, a fitted model, a ggplot, whatever, any object can be saved into this format using the <code>saveRDS()</code> function, and can be read back into another R session using <code>readRDS()</code>. <code>{targets}</code> makes use of these two functions to save every target. Keep this in mind if you use Git to version the code of your pipeline (which you are doing of course), and add the <code>targets/</code> folder to the <code>.gitignore</code> (unless you really want to also version it, but it shouldn’t be necessary).</p>
 <p>Ok, so back to <code>summary</code>. What happened before when we typed <code>summary</code> in the console? Well, now you know why the result didn’t appear: this is because the target called <code>summary</code> gets saved in that folder, but not in the global environment. So why did we see something anyways, which was not looking like a data summary at all?</p>
 <p>This is because R has a <code>summary()</code> function. So when you write the function’s name in the console without <code>()</code> you see the function’s source code. Let’s try again:</p>
@@ -400,22 +407,183 @@ UseMethod("summary")
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="er">&lt;</span>environment<span class="sc">:</span> namespace<span class="sc">:</span>base<span class="sc">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Ok, so here, strictly speaking, you don’t see the source code from <code>summary()</code>. This is because <code>summary()</code> is a generic function, that simply picks the right <code>summary()</code> depending to what type of object you pass to it. Try with <code>summary.data.frame()</code> and there you shall see the source code. So when you type <code>summary</code> after running the pipeline, because the pipeline is pure and nothing gets saved to the global environment, you see <code>summary</code>’s source code and not the target that got computed by the pipeline.</p>
-<p>So that was a long explanation. Let’s go back to our pipeline.</p>
+<p>So that was a long explanation, but I think that it was worth the effort. It is quite important to not forget that a targets pipeline is the composition of many pure functions, but since we need to be able to access the outputs produced by the pipeline, they also get saved inside a folder. To retrieve the outputs you can use <code>targets::tar_read()</code> or <code>targets::tar_load()</code>. The difference is that <code>tar_read()</code> simply reads the output and shows it in the console (just like when you type <code>mtcars</code> in a console for example) but <code>tar_load()</code> reads and saves the object into the global environment (just like doing something like <code>x &lt;- mtcars</code> in an R console). So to retrieve our <code>summary</code> object let’s use <code>tar_load(summary)</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tar_load</span>(summary)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Now, typing <code>summary</code> shows the computed output (now the function <code>base::summary()</code> is masked):</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>summary</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>    mean_x</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="fl">500000.5</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>it is possible to load all the outputs using <code>targets::tar_load_everything()</code> so that you don’t need to load each output one by one.</p>
+<p>Before continuing with more <code>{targets}</code> features, I want to really stress the fact the pipeline is the composition of pure functions. So functions that only have a side-effect will be difficult to handle. For example, plotting in base R consists in a series of calls to functions with side-effects. If you open an R console and type <code>plot(mtcars)</code>, you will see a plot. But the function <code>plot()</code> does not create any output. It just prints a picture on your screen, which is a side-effect. To convince yourself that <code>plot()</code> does not create any output and only has a side-effect, try to save the output of <code>plot()</code> in a variable:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="fu">plot</span>(mtcars)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>doing this will show the plot, but then if you call <code>a</code>, the plot will not appear, and instead you will get NULL:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>a</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="cn">NULL</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>This is also why saving plots in R is awkward, it’s because there’s no object to actually save!</p>
+<p>So because <code>plot()</code> is not a pure function, if you try to use it in a <code>{targets}</code> pipeline, you will get <code>NULL</code> as well when loading the target. To see this, change the list of targets like this:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">list</span>(</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tar_target</span>(data, <span class="fu">data.frame</span>(<span class="at">x =</span> <span class="fu">sample.int</span>(<span class="dv">100</span>), <span class="at">y =</span> <span class="fu">sample.int</span>(<span class="dv">100</span>))),</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tar_target</span>(summary, <span class="fu">summ</span>(data)),</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tar_target</span>(data_plot, <span class="fu">plot</span>(data))</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>I’ve simply added a new target using <code>tar_target()</code>. Run the pipeline again using <code>tar_make()</code> and then type <code>tar_load(data_plot)</code> to load the <code>data_plot</code> target. But typing <code>data_plot</code> only shows <code>NULL</code> and not the plot!</p>
+<p>There are several workarounds for this. The first is to use <code>ggplot()</code> instead. This is because the output of <code>ggplot()</code> is an object of type <code>ggplot</code>. You can do something like <code>a &lt;- ggplot()</code> and then type <code>a</code> to see an empty canvas. Doing <code>str(a)</code> also shows an output (the structure of the object a of class <code>ggplot</code>).</p>
+<p>The second workaround is to save the plot to disk. For this, you need to write a new function, for example:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>save_plot <span class="ot">&lt;-</span> <span class="cf">function</span>(filename, ...){</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">png</span>(<span class="at">filename =</span> filename)</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot</span>(...)</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dev.off</span>()</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>If you put this in the <code>_targets.R</code> script, before defining the list of <code>tar_target</code> objects, you could use this instead of <code>plot()</code> in the last target:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>summ <span class="ot">&lt;-</span> <span class="cf">function</span>(dataset) {</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(dataset, <span class="at">mean_x =</span> <span class="fu">mean</span>(x))</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>save_plot <span class="ot">&lt;-</span> <span class="cf">function</span>(filename, ...){</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">png</span>(<span class="at">filename =</span> filename)</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot</span>(...)</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dev.off</span>()</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>  filename</span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Set target-specific options such as packages.</span></span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a><span class="fu">tar_option_set</span>(<span class="at">packages =</span> <span class="st">"dplyr"</span>)</span>
+<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a><span class="co"># End this file with a list of target objects.</span></span>
+<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a><span class="fu">list</span>(</span>
+<span id="cb17-18"><a href="#cb17-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tar_target</span>(data,</span>
+<span id="cb17-19"><a href="#cb17-19" aria-hidden="true" tabindex="-1"></a>             <span class="fu">data.frame</span>(<span class="at">x =</span> <span class="fu">sample.int</span>(<span class="dv">100</span>),</span>
+<span id="cb17-20"><a href="#cb17-20" aria-hidden="true" tabindex="-1"></a>                        <span class="at">y =</span> <span class="fu">sample.int</span>(<span class="dv">100</span>))),</span>
+<span id="cb17-21"><a href="#cb17-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tar_target</span>(summary,</span>
+<span id="cb17-22"><a href="#cb17-22" aria-hidden="true" tabindex="-1"></a>             <span class="fu">summ</span>(data)),</span>
+<span id="cb17-23"><a href="#cb17-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-24"><a href="#cb17-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tar_target</span>(data_plot,</span>
+<span id="cb17-25"><a href="#cb17-25" aria-hidden="true" tabindex="-1"></a>             <span class="fu">save_plot</span>(<span class="at">filename =</span> <span class="st">"my_plot.png"</span>,</span>
+<span id="cb17-26"><a href="#cb17-26" aria-hidden="true" tabindex="-1"></a>                       data),</span>
+<span id="cb17-27"><a href="#cb17-27" aria-hidden="true" tabindex="-1"></a>             <span class="at">format =</span> <span class="st">"file"</span>)</span>
+<span id="cb17-28"><a href="#cb17-28" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>After running this pipeline you should see a file called <code>my_plot.png</code> in the folder of your pipeline. If you type <code>tar_load(data_plot)</code>, and then <code>data_plot</code> you will see that this target returns the <code>filename</code> argument of <code>save_plot()</code>. This is because a target needs to return something, and in the case of functions that save a file to disk returning the path is recommended. This is because if I then need to use this file in another target, I could do <code>tar_target(x, f(data_plot))</code>. Because the <code>data_plot</code> target returns a path, I can write <code>f()</code> in such a way that it knows how to handle this path. If instead I write <code>tar_target(x, f("path/to/my_plot.png"))</code>, then <code>{targets}</code> would have no way of knowing that the target <code>x</code> depends on the target <code>data_plot</code>. The dependency between these two targets would break. Hence why the first option is preferable.</p>
+<p>Finally, you will have noticed that the last target also has the option <code>format = "file"</code>. This will be topic of the next section.</p>
 </section>
+<section id="handling-files" class="level2" data-number="13.4">
+<h2 data-number="13.4" class="anchored" data-anchor-id="handling-files"><span class="header-section-number">13.4</span> Handling files</h2>
+<p>In this section, we will learn how <code>{targets}</code> handles files. First, run the following lines in the folder that contains the <code>_targets.R</code> script that we’ve been using up until now:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(mtcars)</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(mtcars, <span class="st">"mtcars.csv"</span>, <span class="at">row.names =</span> F)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>This will create the file <code>"mtcars.csv"</code> in that folder. We are going to use this in our pipeline.</p>
+<p>Write the pipeline like this:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">list</span>(</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tar_target</span>(</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>    data_mtcars,</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">read.csv</span>(<span class="st">"mtcars.csv"</span>)</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>  ),</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tar_target</span>(</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>    summary_mtcars,</span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summary</span>(data_mtcars)</span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>  ),</span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tar_target</span>(plot_mtcars,</span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>             <span class="fu">save_plot</span>(<span class="at">filename =</span> <span class="st">"mtcars_plot.png"</span>,</span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>                       data_mtcars),</span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>             <span class="at">format =</span> <span class="st">"file"</span>)</span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>You can now run the pipeline and will get a plot at the end. The problem however, is that the input file <code>"mtcars.csv"</code> is not being tracked for changes. Try to change the file, for example by running this line:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(<span class="fu">head</span>(mtcars), <span class="st">"mtcars.csv"</span>, <span class="at">row.names =</span> F)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>If you try to run the pipeline again, these changes are ignored:</p>
+<pre><code>✔ skip target data_mtcars
+✔ skip target plot_mtcars
+✔ skip target summary_mtcars
+✔ skip pipeline [0.1 seconds]</code></pre>
+<p>As you can see, because <code>{targets}</code> is not tracking the changes in the <code>mtcars.csv</code> file, from the its point of view nothing changed. And thus the pipeline gets skipped because according to <code>{targets}</code>, it is up-to-date.</p>
+<p>Let’s change the csv back:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(mtcars, <span class="st">"mtcars.csv"</span>, <span class="at">row.names =</span> F)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>and change the first target such that the file gets tracked. Remember that targets need to be pure functions and return something. So we are going to change the first target to simply return the path to the file, and use the <code>format = "file"</code> option in <code>tar_target()</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>path_data <span class="ot">&lt;-</span> <span class="cf">function</span>(path){</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  path</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="fu">list</span>(</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tar_target</span>(</span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>    path_data_mtcars,</span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">path_data</span>(<span class="st">"mtcars.csv"</span>),</span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">format =</span> <span class="st">"file"</span></span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>  ),</span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tar_target</span>(data_mtcars,</span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>             <span class="fu">read.csv</span>(path_data_mtcars)</span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a>             ),</span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tar_target</span>(</span>
+<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a>    summary_mtcars,</span>
+<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summary</span>(data_mtcars)</span>
+<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a>  ),</span>
+<span id="cb23-18"><a href="#cb23-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tar_target</span>(plot_mtcars,</span>
+<span id="cb23-19"><a href="#cb23-19" aria-hidden="true" tabindex="-1"></a>             <span class="fu">save_plot</span>(<span class="at">filename =</span> <span class="st">"mtcars_plot.png"</span>,</span>
+<span id="cb23-20"><a href="#cb23-20" aria-hidden="true" tabindex="-1"></a>                       data_mtcars),</span>
+<span id="cb23-21"><a href="#cb23-21" aria-hidden="true" tabindex="-1"></a>             <span class="at">format =</span> <span class="st">"file"</span>)</span>
+<span id="cb23-22"><a href="#cb23-22" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>To drive the point home, I use a function called <code>path_data()</code> which takes a path as an input and simply returns it. This is totally superfluous, and you could define the target like this instead:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tar_target</span>(</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  path_data_mtcars,</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"mtcars.csv"</span>,</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">format =</span> <span class="st">"file"</span></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>This would have exactly the same effect as using the <code>path_data()</code> function.</p>
+<p>So now we got a target called <code>path_data_mtcars</code> that returns nothing but the path to the data. But because we’ve used the <code>format = "file"</code> option, <code>{targets}</code> now knows that this is a file that must be tracked. So any change on this file will be correctly recognized and any target that depends on this input file will be marked as being out-of-date. The other targets are exactly the same.</p>
+<p>Run the pipeline now using <code>targets::tar_make()</code>. Now, change the input file again:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(<span class="fu">head</span>(mtcars),</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>          <span class="st">"mtcars.csv"</span>,</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>          <span class="at">row.names =</span> F)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Now, run the pipeline again using <code>targets::tar_make()</code>: this time you should see that <code>{targets}</code> correctly identified the change and runs the pipeline again accordingly!</p>
 </section>
-<section id="handling-files" class="level2" data-number="13.3">
-<h2 data-number="13.3" class="anchored" data-anchor-id="handling-files"><span class="header-section-number">13.3</span> Handling files</h2>
+<section id="the-dependency-graph" class="level2" data-number="13.5">
+<h2 data-number="13.5" class="anchored" data-anchor-id="the-dependency-graph"><span class="header-section-number">13.5</span> The dependency graph</h2>
+<p>As you’ve seen in the previous section (and as I told you in the introduction) <code>{targets}</code> keeps track of changes in files, but also in the functions that you use. Any change in any of these files will result in <code>{targets}</code> identifying which targets are now out-of-date and which should be re-computed (alongside any other target that depends on them). It is possible to visualise this using <code>targets::tar_visnetwork()</code></p>
+<p>change and see network write.csv(mtcars, “mtcars.csv”, row.names = F)</p>
 </section>
-<section id="running-the-pipeline-in-parallel" class="level2" data-number="13.4">
-<h2 data-number="13.4" class="anchored" data-anchor-id="running-the-pipeline-in-parallel"><span class="header-section-number">13.4</span> Running the pipeline in parallel</h2>
+<section id="running-the-pipeline-in-parallel" class="level2" data-number="13.6">
+<h2 data-number="13.6" class="anchored" data-anchor-id="running-the-pipeline-in-parallel"><span class="header-section-number">13.6</span> Running the pipeline in parallel</h2>
 </section>
-<section id="targets-and-renv" class="level2" data-number="13.5">
-<h2 data-number="13.5" class="anchored" data-anchor-id="targets-and-renv"><span class="header-section-number">13.5</span> {targets} and {renv}</h2>
+<section id="targets-and-renv" class="level2" data-number="13.7">
+<h2 data-number="13.7" class="anchored" data-anchor-id="targets-and-renv"><span class="header-section-number">13.7</span> {targets} and {renv}</h2>
 <p><em>Why build automation: removes cognitive load, is a form of documentation in and of itself, as Miles said</em></p>
 <p><em>It is possible to communicate a great deal of domain knowledge in code, such that it is illuminating beyond the mere mechanical number crunching. To do this well the author needs to make use of certain styles and structures that produce code that has layers of domain specific abstraction a reader can traverse up and down as they build their understanding of the project. Functional programming style, coupled with a dependency graph as per {targets} are useful tools in this regard.</em></p>
 </section>
-<section id="rewriting-our-project-as-a-pipeline" class="level2" data-number="13.6">
-<h2 data-number="13.6" class="anchored" data-anchor-id="rewriting-our-project-as-a-pipeline"><span class="header-section-number">13.6</span> Rewriting our project as a pipeline</h2>
+<section id="rewriting-our-project-as-a-pipeline" class="level2" data-number="13.8">
+<h2 data-number="13.8" class="anchored" data-anchor-id="rewriting-our-project-as-a-pipeline"><span class="header-section-number">13.8</span> Rewriting our project as a pipeline</h2>
 
 
 </section>
