@@ -10,34 +10,39 @@ Without a build automation tool, a pipeline is nothing but a series of scripts
 that get called one after the other, or perhaps the pipeline is only one very
 long script that does the required operations successfully.
 
-There are several problems with this approach.
+There are several problems with this approach, so let’s see how build automation
+can help us.
 
 ## Introduction
 
-Scripts can, and will, be executed out of order. You can mitigate the problems
-this can make by using pure functions, but even then, you risk messing things up
-when you do this. But why would you run your script out of order? Well, usually
-because you changed a function, and only want to re-execute the parts of the
+Script-based workflows are problematic for several reasons. The first is that
+scripts can, and will, be executed out of order. You can mitigate the problems
+this can make by using pure functions, but you still need to make sure to not
+run the scripts out of order. But what does that actually mean? Well, suppose
+that you changed a function, and only want to re-execute the parts of the
 pipeline that are impacted by that change. But this supposes that you can know,
 in your head, which part of the script was impacted and which was not. And this
-can be quite difficult to figure out, especially when the pipeline is huge.
+can be quite difficult to figure out, especially when the pipeline is huge. So
+you will run certain parts of the script, and not others, in the hope that you 
+don’t need to re-run everything.
 
 Another issue, but this one is perhaps more subjective, is that pipelines
 written as scripts are usually quite difficult to read and understand. To
 mitigate this, what you'd typically do is write a lot of comments. But here
 again you face the problem of needing to maintain these comments, and once the
-comments and the code are out of synch... the problems start.
+comments and the code are out of synch... the problems start (or rather, they 
+continue).
 
 Running the different parts of the pipeline in parallel is also very complicated
 if your pipeline is defined as script. You would need to break the script into
 independent parts (and make really sure that these parts are independent) and
 execute them in parallel, perhaps using a separate R session for each script.
-The good news is that if you followed the advice from this book is that you have
+The good news is that if you followed the advice from this book you have
 been using functional programming and so your pipeline is a series of function
 calls, which is "easy" to break up and run in parallel.
 
-But by now you should now that software engineers also faced similar problems
-when they needed to build their software, and you should also know that they
+But by now you should know that software engineers also faced similar problems
+when they needed to build their software, and you should also suspect that they
 likely came up with something to alleviate these issues. Enter build automation
 tools.
 
@@ -54,19 +59,19 @@ The build automation tool can then figure out the following things:
 
 Just like many of the other tools that we have encountered in this book, what
 build automation tools do is allow you to not have to rely on your brain. You
-*write down* the recipe once, and then you can focus again, on just the code of
+*write down* the recipe once, and then you can focus again on just the code of
 your actual project. You shouldn't have to think about the pipeline itself, nor
-think about to best run it. Let your computer figure that out for you, it's much
-better at such tasks than you.
+think about how to best run it. Let your computer figure that out for you, it's
+much better at such tasks than you.
 
 ## {targets} quick-start
 
 First thing's first: to know everything about the `{targets}` package, you
 should read the excellent [`{targets}`
-manual](https://books.ropensci.org/targets/)^[https://is.gd/VS6vSs]. 
-Everything's in there. So what I'm going to do is really to just give you 
-a very quick intro to what I think are really the main points that you should
-know about.
+manual](https://books.ropensci.org/targets/)^[https://is.gd/VS6vSs].
+Everything's in there. So what I'm going to do is really just give you a very
+quick intro to what I think are really the main points you should know about to
+get started.
 
 Let's start by a "hello-world" type pipeline. Create a new folder called
 something like `targets_intro/`, and start a fresh R session in it. For now, let’s
@@ -78,40 +83,40 @@ run the following line:
 targets::tar_script()
 ```
 
-this will create a template `_targets.R` file in that directory. This is the file
-in which we will define our pipeline. Open in it in your favourite editor. A
-`_targets.R` pipeline is roughly divided into three parts:
+this will create a template `_targets.R` file in that directory. This is the
+file in which we will define our pipeline. Open in it in your favourite editor.
+A `_targets.R** pipeline is roughly divided into three parts:
 
 - first is where packages are loaded and helper functions defined;
 - second is where pipeline-specific options are defined;
-- third is the pipeline itself, defined as a series of targets.
+- third is the pipeline itself, defined as a series of *targets*.
 
 Let’s go through all these parts one by one.
 
 ### _targets.R’s anatomy
 
-The first part of the pipeline is where package get loaded as well as helper
+The first part of the pipeline is where packages get loaded as well as helper
 functions. In the template, the very first line is a `library(targets)` call
-and then a function definition. There are two important things here that you need
-to understand.
+followed by a function definition. There are two important things here that you
+need to understand.
 
 If your pipeline needs, say, the `{dplyr}` package to run, you could write
-`library(dplyr)` in there. However, it is best to actually do as in the
-template, and load the packages using `tar_option_set(packages = "dplyr")`. This
-is because is you execute the pipeline in a cluster, you need to make sure that
-all the packages are available to all the workers. If you load the packages at
-the top of the `_targets.R` script, the packages will be available for the
-session that called `library(...)`, but not any worker sessions spawned for
-parallel execution. 
+`library(dplyr)` right after the `library(targets)` call. However, it is best to
+actually do as in the template, and load the packages using
+`tar_option_set(packages = "dplyr")`. This is because if you execute the
+pipeline in a cluster, you need to make sure that all the packages are available
+to all the workers. If you load the packages at the top of the `_targets.R`
+script, the packages will be available for the session that called
+`library(...)`, but not any worker sessions spawned for parallel execution.
   
 So, the idea is that at the very top of your script, you only load the
 `{targets}` library and other packages that are required for running the
 pipeline itself (as we shall see in coming sections). But packages that are
-required by functions that are running inside the pipeline, these should ideally
-be loaded as in the template. Another way of saying this: at the top of the
-script, think "pipeline infrastructure" packages (`{targets}` and some others),
-but inside `tar_option_set()` think "functions that run inside the pipeline"
-packages.
+required by functions that are running inside the pipeline should ideally be
+loaded as in the template. Another way of saying this: at the top of the script,
+think "pipeline infrastructure" packages (`{targets}` and some others), but
+inside `tar_option_set()` think "packages for functions that run inside the
+pipeline" packages.
 
 Part two is where you set some global options for the pipeline. As discussed
 previously, this is where you should load packages that are required by the
@@ -133,16 +138,23 @@ Finally, comes the pipeline itself. Let’s take a closer look at it:
 
 ```{r, eval = F}
 list(
-  tar_target(data, data.frame(x = sample.int(100), y = sample.int(100))),
-  tar_target(summary, summ(data)) # Call your custom functions as needed.
+  tar_target(
+    data,
+    data.frame(x = sample.int(100),
+               y = sample.int(100))
+  ),
+
+  tar_target(
+    summary,
+    summ(data)) # Call your custom functions as needed.
 )
 ```
 
 The pipeline is nothing but a list (told you lists where a very important
-object) of "targets". A target is defined using the `targets::tar_target()`
+object) of *targets*. A target is defined using the `targets::tar_target()`
 function and has at least two inputs: the first is the name of the target
 (without quotes) and the second is the function that generates the target. So a
-target defined as `tar_target(y, f(x))` is equivalent to `y <- f(x)`. The next
+target defined as `tar_target(y, f(x))` can be understood as `y <- f(x)`. The next
 target can use the output of the previous target as an input, so you could have
 something like `tar_target(z, f(y))` (just like in the template). 
 
@@ -183,13 +195,13 @@ What is going on?
 First, you need to remember our chapter on functional programming. We want our
 pipeline to be a sequence of pure functions. This means that our pipeline
 running successfully should not depend on anything in the global environment
-(apart from loading the packages in the first part of the script, and why we
-should use `tar_option_set()` for the others) and it should not change anything
-outside of its scope. This means that the pipeline should not change anything in
-the global environment either. This is exactly how a `{targets}` pipeline
-operates. A pipeline defined using `{targets}` will be pure and so the output of
-the pipeline will not be save in the global environment. Now, strictly speaking,
-the pipeline is not exactly pure. Check the folder that contains the
+(apart from loading the packages in the first part of the script, and the
+options set with `tar_option_set()` for the others) and it should not change
+anything outside of its scope. This means that the pipeline should not change
+anything in the global environment either. This is exactly how a `{targets}`
+pipeline operates. A pipeline defined using `{targets}` will be pure and so the
+output of the pipeline will not be saved in the global environment. Now, strictly
+speaking, the pipeline is not exactly pure. Check the folder that contains the
 `_targets.R` script. There should now be a `_targets/` folder in there as well.
 If you go inside that folder, and then open the `objects/` folder, you should
 see two objects, `data` and `summary`. These are the outputs of our pipeline.
@@ -227,8 +239,8 @@ UseMethod("summary")
 
 Ok, so here, strictly speaking, you don’t see the source code from `summary()`.
 This is because `summary()` is a generic function, that simply picks the right
-`summary()` depending to what type of object you pass to it. Try with
-`summary.data.frame()` and there you shall see the source code. So when you type
+`summary()` depending on what type of object you pass to it. Try with
+`summary.data.frame()` and yous should see the source code. So when you type
 `summary` after running the pipeline, because the pipeline is pure and nothing
 gets saved to the global environment, you see `summary`’s source code and not
 the target that got computed by the pipeline.
@@ -260,25 +272,25 @@ summary
 1 500000.5
 ```
 
-it is possible to load all the outputs using `targets::tar_load_everything()` so
+It is possible to load all the outputs using `targets::tar_load_everything()` so
 that you don’t need to load each output one by one.
 
 Before continuing with more `{targets}` features, I want to really stress the
-fact the pipeline is the composition of pure functions. So functions that only
-have a side-effect will be difficult to handle. For example, plotting in base R
-consists in a series of calls to functions with side-effects. If you open an R
-console and type `plot(mtcars)`, you will see a plot. But the function `plot()`
-does not create any output. It just prints a picture on your screen, which is a
-side-effect. To convince yourself that `plot()` does not create any output and only
-has a side-effect, try to save the output of `plot()` in a variable:
+fact that the pipeline is the composition of pure functions. So functions that
+only have a side-effect will be difficult to handle. For example, plotting in
+base R consists in a series of calls to functions with side-effects. If you open
+an R console and type `plot(mtcars)`, you will see a plot. But the function
+`plot()` does not create any output. It just prints a picture on your screen,
+which is a side-effect. To convince yourself that `plot()` does not create any
+output and only has a side-effect, try to save the output of `plot()` in a
+variable:
 
 ```{r, eval = F}
 a <- plot(mtcars)
 ```
 
-doing this will show the plot, but then if you call `a`, the plot will not appear, and instead
-you will get NULL:
-
+doing this will show the plot, but then if you call `a`, the plot will not
+appear, and instead you will get NULL:
 
 ```{r, eval = F}
 a
@@ -297,9 +309,21 @@ see this, change the list of targets like this:
 
 ```{r, eval = F}
 list(
-  tar_target(data, data.frame(x = sample.int(100), y = sample.int(100))),
-  tar_target(summary, summ(data)),
-  tar_target(data_plot, plot(data))
+  tar_target(
+    data,
+    data.frame(x = sample.int(100),
+               y = sample.int(100))
+  ),
+
+  tar_target(
+    summary,
+    summ(data)
+  ),
+
+  tar_target(
+    data_plot,
+    plot(data)
+  )
 )
 ```
 
@@ -326,8 +350,8 @@ save_plot <- function(filename, ...){
 }
 ```
 
-If you put this in the `_targets.R` script, before defining the list of `tar_target` objects, 
-you could use this instead of `plot()` in the last target:
+If you put this in the `_targets.R` script, before defining the list of
+`tar_target` objects, you could use this instead of `plot()` in the last target:
 
 ```{r, eval = F}
 summ <- function(dataset) {
@@ -347,16 +371,22 @@ tar_option_set(packages = "dplyr")
 
 # End this file with a list of target objects.
 list(
-  tar_target(data,
-             data.frame(x = sample.int(100),
-                        y = sample.int(100))),
-  tar_target(summary,
-             summ(data)),
+  tar_target(
+    data,
+    data.frame(x = sample.int(100),
+               y = sample.int(100))
+  ),
 
-  tar_target(data_plot,
-             save_plot(filename = "my_plot.png",
-                       data),
-             format = "file")
+  tar_target(
+    summary,
+    summ(data)
+  ),
+
+  tar_target(
+    data_plot,
+    save_plot(filename = "my_plot.png",
+              data),
+              format = "file")
 )
 ```
 
@@ -377,14 +407,16 @@ Finally, you will have noticed that the last target also has the option `format 
 
 ## Handling files
 
-In this section, we will learn how `{targets}` handles files. First, run the following
-lines in the folder that contains the `_targets.R` script that we’ve been using up until
-now:
+In this section, we will learn how `{targets}` handles files. First, run the
+following lines in the folder that contains the `_targets.R` script that we’ve
+been using up until now:
 
 ```{r, eval = F}
 data(mtcars)
 
-write.csv(mtcars, "mtcars.csv", row.names = F)
+write.csv(mtcars,
+          "mtcars.csv",
+          row.names = F)
 ```
 
 This will create the file `"mtcars.csv"` in that folder. We are going to use
@@ -398,26 +430,29 @@ list(
     data_mtcars,
     read.csv("mtcars.csv")
   ),
+
   tar_target(
     summary_mtcars,
     summary(data_mtcars)
   ),
+
   tar_target(plot_mtcars,
-             save_plot(filename = "mtcars_plot.png",
-                       data_mtcars),
+             save_plot(
+               filename = "mtcars_plot.png",
+               data_mtcars),
              format = "file")
 )
 ```
 
-You can now run the pipeline and will get a plot at the end. 
-The problem however, is that the input file `"mtcars.csv"` is not being 
-tracked for changes. Try to change the file, for example by running this line:
+You can now run the pipeline and will get a plot at the end. The problem
+however, is that the input file `"mtcars.csv"` is not being tracked for changes.
+Try to change the file, for example by running this line in the console:
 
 ```{r, eval = F}
 write.csv(head(mtcars), "mtcars.csv", row.names = F)
 ```
 
-If you try to run the pipeline again, these changes are ignored:
+If you try to run the pipeline again, our changes to the data are ignored:
 
 ```
 ✔ skip target data_mtcars
@@ -514,8 +549,8 @@ This opens an interactive network graph in your web browser that looks like this
     <figcaption>This image opens in your web-browser.</figcaption>
 </figure>
 
-In the image above, each target has been computed, so they are all up-to-date. If we now change
-the input data as before, here is what you will see instead:
+In the image above, each target has been computed, so they are all up-to-date.
+If we now change the input data as before, here is what you will see instead:
 
 <figure>
     <img src="images/targets_visnetwork_outdated.png"
@@ -524,16 +559,289 @@ the input data as before, here is what you will see instead:
 </figure>
 
 Because all the targets depend on the input data, we need to re-run everything.
-Let's run the pipeline again to update all the targets using `tar_make()`. Now
-let's add another target to our pipeline, one that does not depend on the input
-data. Then, we will modify the input data again, and call `tar_visnetwork()` as
-well.
+Let's run the pipeline again to update all the targets using `tar_make()`. 
 
+Now let's add another target to our pipeline, one that does not depend on the
+input data. Then, we will modify the input data again, and call
+`tar_visnetwork()` as well. Change the pipeline like so:
 
+```{r, eval = F}
+list(
+  tar_target(
+    path_data_mtcars,
+    "mtcars.csv",
+    format = "file"
+  ),
+  tar_target(
+    iris_data,
+    data("iris")
+  ),
+  tar_target(
+    summary_iris,
+    summary(iris_data)
+  ),
+  tar_target(
+    data_mtcars,
+    read.csv(path_data_mtcars)
+  ),
+  tar_target(
+    summary_mtcars,
+    summary(data_mtcars)
+  ),
+  tar_target(
+    plot_mtcars,
+    save_plot(filename = "mtcars_plot.png",
+              data_mtcars),
+    format = "file")
+)
+```
+
+Before running the pipeline, we can call `targets::tar_visnetwork()` again to
+see the entire workflow:
+
+<figure>
+    <img src="images/targets_visnetwork_iris.png"
+         alt="We clearly see that the pipeline has two completely independent parts."></img>
+    <figcaption>We clearly see that the pipeline has two completely independent parts.</figcaption>
+</figure>
+
+We can see that there are now two independent parts, as well as two unused
+functions, `path_data()` and `summ()` which we could remove.
+
+Running the pipeline using `targets::tar_make()` builds everything
+successfully. Let’s add the following target, just before the very
+last one:
+
+```{r, eval = F}
+tar_target(
+  list_summaries,
+  list(
+    "summary_iris" = summary_iris,
+    "summary_mtcars" = summary_mtcars
+  )
+),
+```
+
+This target creates a list with the two summaries that we compute. Call
+`targets::tar_visnetwork()` again:
+
+<figure>
+    <img src="images/targets_visnetwork_list_summaries.png"
+         alt="The two separate workflows end up in one output."></img>
+    <figcaption>The two separate workflows end up in one output.</figcaption>
+</figure>
+
+Finally, run the pipeline one last time to compute the final output.
 
 ## Running the pipeline in parallel
 
-## {targets} and {renv}
+`{targets}` make it easy to run independent parts of our pipeline in parallel.
+In the example from before, it was quite obvious to know which parts were
+independent, but when the pipeline grows in complexity, it can be very difficult
+to see which parts are independent.
+
+Let’s now run the example from before in parallel. But first, we need to create
+a function that takes some time to run. `summary()` is so quick that running
+both of its calls in parallel is not worth it (and would actually even run
+slower, I’ll explain why at the end). Let’s define a new function called
+`slow_summary()`:
+
+```{r, eval = F}
+slow_summary <- function(...){
+  Sys.sleep(30)
+  summary(...)
+}
+```
+
+and replace every call to `summary()` with `slow_summary()` in the
+pipeline:
+
+```{r, eval = F}
+list(
+  tar_target(
+    path_data_mtcars,
+    "mtcars.csv",
+    format = "file"
+  ),
+  tar_target(
+    iris_data,
+    data("iris")
+  ),
+  tar_target(
+    summary_iris,
+    slow_summary(iris_data)
+  ),
+  tar_target(
+    data_mtcars,
+    read.csv(path_data_mtcars)
+  ),
+  tar_target(
+    summary_mtcars,
+    slow_summary(data_mtcars)
+  ),
+  tar_target(
+    list_summaries,
+    list(
+      "summary_iris" = summary_iris,
+      "summary_mtcars" = summary_mtcars
+    )
+  ),
+  tar_target(
+    plot_mtcars,
+    save_plot(filename = "mtcars_plot.png",
+              data_mtcars),
+    format = "file")
+)
+```
+
+here’s what the pipeline looks like before running:
+
+<figure>
+    <img src="images/targets_visnetwork_slow_summary.png"
+         alt="slow_summary() is used instead of summary()."></img>
+    <figcaption>slow_summary() is used instead of summary().</figcaption>
+</figure>
+
+(You will also notice that I’ve removed the unneeded functions, `path_data()`
+and `summ()`).
+
+Running this pipeline sequentially will take about a minute. To re-run
+the pipeline completely from scratch, call `targets::tar_destroy()`. This
+will make all the targets outdated. Then, run the pipeline from scratch
+with `targets::tar_make()`:
+
+```{r, eval = F}
+targets::tar_make()
+```
+
+```
+
+• start target path_data_mtcars
+• built target path_data_mtcars [0.18 seconds]
+• start target iris_data
+• built target iris_data [0 seconds]
+• start target data_mtcars
+• built target data_mtcars [0 seconds]
+• start target summary_iris
+• built target summary_iris [30.26 seconds]
+• start target plot_mtcars
+• built target plot_mtcars [0.16 seconds]
+• start target summary_mtcars
+• built target summary_mtcars [30.29 seconds]
+• start target list_summaries
+• built target list_summaries [0 seconds]
+• end pipeline [1.019 minutes]
+```
+
+But because computing `summary_iris` is completely independent of 
+`summary_mtcars`, these two computations could be running at the same
+time on two separate CPU cores. To do this, we need to first load
+two additional packages, `{future}` and `{future.callr}` at the top of
+the script. Then, we also need to call `plan(callr)` before defining
+our pipeline. Here is what the complete `_targets.R` looks like:
+
+```{r, eval = F}
+library(targets)
+library(future)
+library(future.callr)
+plan(callr)
+
+# Sometimes you gotta take your time
+slow_summary <- function(...) {
+  Sys.sleep(30)
+  summary(...)
+}
+
+# Save plot to disk
+save_plot <- function(filename, ...){
+  png(filename = filename)
+  plot(...)
+  dev.off()
+
+  filename
+}
+
+# Set target-specific options such as packages.
+tar_option_set(packages = "dplyr")
+
+list(
+  tar_target(
+    path_data_mtcars,
+    "mtcars.csv",
+    format = "file"
+  ),
+  tar_target(
+    iris_data,
+    data("iris")
+  ),
+  tar_target(
+    summary_iris,
+    slow_summary(iris_data)
+  ),
+  tar_target(
+    data_mtcars,
+    read.csv(path_data_mtcars)
+  ),
+  tar_target(
+    summary_mtcars,
+    slow_summary(data_mtcars)
+  ),
+  tar_target(
+    list_summaries,
+    list(
+      "summary_iris" = summary_iris,
+      "summary_mtcars" = summary_mtcars
+    )
+  ),
+  tar_target(
+    plot_mtcars,
+    save_plot(
+      filename = "mtcars_plot.png",
+      data_mtcars),
+    format = "file")
+)
+```
+
+You can now run this pipeline in parallel using `targets::tar_make_future()`
+(and sequentially as well, just as usual with `targets::tar_make()`). Don’t
+forget to run `targets::tar_destroy()` to run your pipeline from 0 again:
+
+```
+# Set workers = 2 to use 2 cpu cores
+targets::tar_make_future(workers = 2)
+```
+
+```
+• start target path_data_mtcars
+• start target iris_data
+• built target path_data_mtcars [0.2 seconds]
+• start target data_mtcars
+• built target iris_data [0.22 seconds]
+• start target summary_iris
+• built target data_mtcars [0.2 seconds]
+• start target plot_mtcars
+• built target plot_mtcars [0.35 seconds]
+• start target summary_mtcars
+• built target summary_iris [30.5 seconds]
+• built target summary_mtcars [30.52 seconds]
+• start target list_summaries
+• built target list_summaries [0.21 seconds]
+• end pipeline [38.72 seconds]
+```
+
+As you can see, this was faster but not quite twice as fast, but faster
+nonetheless. The reason this isn’t exactly twice as fast is because there is
+some overhead to run code in parallel. New R session have to be spawned by
+`{targets}` and data needs to be transferred, and packages loaded, in these new
+sessions. This is why it’s only worth parallelizing code that takes some time to
+run. If you decrease the number of sleep seconds in `slow_summary(...)` (for
+example to 10), running the code in parallel might even be slower, because of
+that overhead. But if you have several long-running computations, it’s really
+worth the very small price that you pay for the initial setup.
+
+## {targets} and Quarto
+
+## {targets} and {renv} 
 
 *Why build automation: removes cognitive load, is a form of documentation in and of itself, as
 Miles said*
@@ -541,3 +849,15 @@ Miles said*
 *It is possible to communicate a great deal of domain knowledge in code, such that it is illuminating beyond the mere mechanical number crunching. To do this well the author needs to make use of certain styles and structures that produce code that has layers of domain specific abstraction a reader can traverse up and down as they build their understanding of the project. Functional programming style, coupled with a dependency graph as per {targets} are useful tools in this regard.*
 
 ## Rewriting our project as a pipeline
+
+## Common mistakes
+
+```
+
+targets::tar_make()
+Error:
+! Error running targets::tar_make()
+  Target errors: targets::tar_meta(fields = error, complete_only = TRUE)
+  Tips: https://books.ropensci.org/targets/debugging.html
+  Last error: argument 9 is empty
+```
