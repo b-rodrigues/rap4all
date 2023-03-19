@@ -302,7 +302,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#targets-and-rmarkdown-or-quarto" id="toc-targets-and-rmarkdown-or-quarto" class="nav-link" data-scroll-target="#targets-and-rmarkdown-or-quarto"><span class="toc-section-number">13.7</span>  {targets} and RMarkdown (or Quarto)</a></li>
   <li><a href="#targets-and-renv" id="toc-targets-and-renv" class="nav-link" data-scroll-target="#targets-and-renv"><span class="toc-section-number">13.8</span>  {targets} and {renv}</a></li>
   <li><a href="#rewriting-our-project-as-a-pipeline" id="toc-rewriting-our-project-as-a-pipeline" class="nav-link" data-scroll-target="#rewriting-our-project-as-a-pipeline"><span class="toc-section-number">13.9</span>  Rewriting our project as a pipeline</a></li>
-  <li><a href="#common-mistakes" id="toc-common-mistakes" class="nav-link" data-scroll-target="#common-mistakes"><span class="toc-section-number">13.10</span>  Common mistakes</a></li>
+  <li><a href="#some-little-tips-before-concluding" id="toc-some-little-tips-before-concluding" class="nav-link" data-scroll-target="#some-little-tips-before-concluding"><span class="toc-section-number">13.10</span>  Some little tips before concluding</a>
+  <ul class="collapse">
+  <li><a href="#reusing-targets-in-another-project" id="toc-reusing-targets-in-another-project" class="nav-link" data-scroll-target="#reusing-targets-in-another-project"><span class="toc-section-number">13.10.1</span>  Reusing targets in another project</a></li>
+  <li><a href="#common-mistakes" id="toc-common-mistakes" class="nav-link" data-scroll-target="#common-mistakes"><span class="toc-section-number">13.10.2</span>  Common mistakes</a></li>
+  </ul></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="toc-section-number">13.11</span>  Conclusion</a></li>
   </ul>
 </nav>
     </div>
@@ -627,12 +632,12 @@ Because the input data got changed, we need to run the pipeline again.
 <span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">format =</span> <span class="st">"file"</span></span>
 <span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>  ),</span>
 <span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tar_target</span>(</span>
-<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>    iris_data,</span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>    data_iris,</span>
 <span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">data</span>(<span class="st">"iris"</span>)</span>
 <span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>  ),</span>
 <span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tar_target</span>(</span>
 <span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a>    summary_iris,</span>
-<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summary</span>(iris_data)</span>
+<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summary</span>(data_iris)</span>
 <span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a>  ),</span>
 <span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tar_target</span>(</span>
 <span id="cb26-16"><a href="#cb26-16" aria-hidden="true" tabindex="-1"></a>    data_mtcars,</span>
@@ -695,12 +700,12 @@ The two separate workflows end up in one output.
 <span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">format =</span> <span class="st">"file"</span></span>
 <span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>  ),</span>
 <span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tar_target</span>(</span>
-<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>    iris_data,</span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>    data_iris,</span>
 <span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">data</span>(<span class="st">"iris"</span>)</span>
 <span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>  ),</span>
 <span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tar_target</span>(</span>
 <span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a>    summary_iris,</span>
-<span id="cb29-13"><a href="#cb29-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">slow_summary</span>(iris_data)</span>
+<span id="cb29-13"><a href="#cb29-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">slow_summary</span>(data_iris)</span>
 <span id="cb29-14"><a href="#cb29-14" aria-hidden="true" tabindex="-1"></a>  ),</span>
 <span id="cb29-15"><a href="#cb29-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tar_target</span>(</span>
 <span id="cb29-16"><a href="#cb29-16" aria-hidden="true" tabindex="-1"></a>    data_mtcars,</span>
@@ -739,8 +744,8 @@ slow_summary() is used instead of summary().
 <pre><code>
 • start target path_data_mtcars
 • built target path_data_mtcars [0.18 seconds]
-• start target iris_data
-• built target iris_data [0 seconds]
+• start target data_iris
+• built target data_iris [0 seconds]
 • start target data_mtcars
 • built target data_mtcars [0 seconds]
 • start target summary_iris
@@ -784,12 +789,12 @@ slow_summary() is used instead of summary().
 <span id="cb32-28"><a href="#cb32-28" aria-hidden="true" tabindex="-1"></a>    <span class="at">format =</span> <span class="st">"file"</span></span>
 <span id="cb32-29"><a href="#cb32-29" aria-hidden="true" tabindex="-1"></a>  ),</span>
 <span id="cb32-30"><a href="#cb32-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tar_target</span>(</span>
-<span id="cb32-31"><a href="#cb32-31" aria-hidden="true" tabindex="-1"></a>    iris_data,</span>
+<span id="cb32-31"><a href="#cb32-31" aria-hidden="true" tabindex="-1"></a>    data_iris,</span>
 <span id="cb32-32"><a href="#cb32-32" aria-hidden="true" tabindex="-1"></a>    <span class="fu">data</span>(<span class="st">"iris"</span>)</span>
 <span id="cb32-33"><a href="#cb32-33" aria-hidden="true" tabindex="-1"></a>  ),</span>
 <span id="cb32-34"><a href="#cb32-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tar_target</span>(</span>
 <span id="cb32-35"><a href="#cb32-35" aria-hidden="true" tabindex="-1"></a>    summary_iris,</span>
-<span id="cb32-36"><a href="#cb32-36" aria-hidden="true" tabindex="-1"></a>    <span class="fu">slow_summary</span>(iris_data)</span>
+<span id="cb32-36"><a href="#cb32-36" aria-hidden="true" tabindex="-1"></a>    <span class="fu">slow_summary</span>(data_iris)</span>
 <span id="cb32-37"><a href="#cb32-37" aria-hidden="true" tabindex="-1"></a>  ),</span>
 <span id="cb32-38"><a href="#cb32-38" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tar_target</span>(</span>
 <span id="cb32-39"><a href="#cb32-39" aria-hidden="true" tabindex="-1"></a>    data_mtcars,</span>
@@ -818,10 +823,10 @@ slow_summary() is used instead of summary().
 <pre><code># Set workers = 2 to use 2 cpu cores
 targets::tar_make_future(workers = 2)</code></pre>
 <pre><code>• start target path_data_mtcars
-• start target iris_data
+• start target data_iris
 • built target path_data_mtcars [0.2 seconds]
 • start target data_mtcars
-• built target iris_data [0.22 seconds]
+• built target data_iris [0.22 seconds]
 • start target summary_iris
 • built target data_mtcars [0.2 seconds]
 • start target plot_mtcars
@@ -867,7 +872,7 @@ targets::tar_make_future(workers = 2)</code></pre>
 <span id="cb35-26"><a href="#cb35-26" aria-hidden="true" tabindex="-1"></a>    {<span class="fu">ggplot</span>(clean_mtcars) <span class="sc">+</span></span>
 <span id="cb35-27"><a href="#cb35-27" aria-hidden="true" tabindex="-1"></a>       <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">y =</span> mpg,</span>
 <span id="cb35-28"><a href="#cb35-28" aria-hidden="true" tabindex="-1"></a>                      <span class="at">x =</span> hp,</span>
-<span id="cb35-29"><a href="#cb35-29" aria-hidden="true" tabindex="-1"></a>                      <span class="at">size =</span> am))}</span>
+<span id="cb35-29"><a href="#cb35-29" aria-hidden="true" tabindex="-1"></a>                      <span class="at">shape =</span> am))}</span>
 <span id="cb35-30"><a href="#cb35-30" aria-hidden="true" tabindex="-1"></a>  )</span>
 <span id="cb35-31"><a href="#cb35-31" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -914,7 +919,7 @@ targets::tar_make_future(workers = 2)</code></pre>
 <span id="cb37-27"><a href="#cb37-27" aria-hidden="true" tabindex="-1"></a>    {<span class="fu">ggplot</span>(clean_mtcars) <span class="sc">+</span></span>
 <span id="cb37-28"><a href="#cb37-28" aria-hidden="true" tabindex="-1"></a>       <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">y =</span> mpg,</span>
 <span id="cb37-29"><a href="#cb37-29" aria-hidden="true" tabindex="-1"></a>                      <span class="at">x =</span> hp,</span>
-<span id="cb37-30"><a href="#cb37-30" aria-hidden="true" tabindex="-1"></a>                      <span class="at">size =</span> am))}</span>
+<span id="cb37-30"><a href="#cb37-30" aria-hidden="true" tabindex="-1"></a>                      <span class="at">shape =</span> am))}</span>
 <span id="cb37-31"><a href="#cb37-31" aria-hidden="true" tabindex="-1"></a>  ),</span>
 <span id="cb37-32"><a href="#cb37-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tar_render</span>(</span>
 <span id="cb37-33"><a href="#cb37-33" aria-hidden="true" tabindex="-1"></a>    my_doc,</span>
@@ -944,7 +949,104 @@ The output of our pipeline. Our first data product!
 <span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>          <span class="st">"mtcars.csv"</span>,</span>
 <span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>          <span class="at">row.names =</span> F)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>and rebuilding the document by running the pipeline.</p>
+<p>and rebuilding the document by running the pipeline. We can work a little on the document itself, by transforming the output into nice looking table using <code>{flextable}</code>. But there is an issue however: the output of <code>summary()</code> on a <code>data.frame</code> object is not a <code>data.frame</code>, but a <code>table</code>. But <code>flextable()</code> expects a <code>data.frame</code>. So if you call <code>flextable()</code> on the output of <code>summary()</code>, you’ll get an error message. Instead, we need a replacement for <code>summary()</code> that outputs a <code>data.frame</code>. This replacement is <code>skimr::skim()</code>; let’s go back to our pipeline and change the call to <code>summary()</code> to <code>skim()</code> (after adding the <code>{skimr}</code> to the list of loaded packages, as well as <code>{flextable}</code>):</p>
+<div class="sourceCode" id="cb41"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>library(targets)</span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>library(tarchetypes)</span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>tar_option_set(packages = c(</span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>                 "dplyr",</span>
+<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a>                 "flextable",</span>
+<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a>                 "ggplot2",</span>
+<span id="cb41-8"><a href="#cb41-8" aria-hidden="true" tabindex="-1"></a>                 "skimr"</span>
+<span id="cb41-9"><a href="#cb41-9" aria-hidden="true" tabindex="-1"></a>                 )</span>
+<span id="cb41-10"><a href="#cb41-10" aria-hidden="true" tabindex="-1"></a>               )</span>
+<span id="cb41-11"><a href="#cb41-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-12"><a href="#cb41-12" aria-hidden="true" tabindex="-1"></a>list(</span>
+<span id="cb41-13"><a href="#cb41-13" aria-hidden="true" tabindex="-1"></a>  tar_target(</span>
+<span id="cb41-14"><a href="#cb41-14" aria-hidden="true" tabindex="-1"></a>    path_data_mtcars,</span>
+<span id="cb41-15"><a href="#cb41-15" aria-hidden="true" tabindex="-1"></a>    "mtcars.csv",</span>
+<span id="cb41-16"><a href="#cb41-16" aria-hidden="true" tabindex="-1"></a>    format = "file"</span>
+<span id="cb41-17"><a href="#cb41-17" aria-hidden="true" tabindex="-1"></a>  ),</span>
+<span id="cb41-18"><a href="#cb41-18" aria-hidden="true" tabindex="-1"></a>  tar_target(</span>
+<span id="cb41-19"><a href="#cb41-19" aria-hidden="true" tabindex="-1"></a>    data_mtcars,</span>
+<span id="cb41-20"><a href="#cb41-20" aria-hidden="true" tabindex="-1"></a>    read.csv(path_data_mtcars)</span>
+<span id="cb41-21"><a href="#cb41-21" aria-hidden="true" tabindex="-1"></a>  ),</span>
+<span id="cb41-22"><a href="#cb41-22" aria-hidden="true" tabindex="-1"></a>  tar_target(</span>
+<span id="cb41-23"><a href="#cb41-23" aria-hidden="true" tabindex="-1"></a>    summary_mtcars,</span>
+<span id="cb41-24"><a href="#cb41-24" aria-hidden="true" tabindex="-1"></a>    skim(data_mtcars)</span>
+<span id="cb41-25"><a href="#cb41-25" aria-hidden="true" tabindex="-1"></a>  ),</span>
+<span id="cb41-26"><a href="#cb41-26" aria-hidden="true" tabindex="-1"></a>  tar_target(</span>
+<span id="cb41-27"><a href="#cb41-27" aria-hidden="true" tabindex="-1"></a>    clean_mtcars,</span>
+<span id="cb41-28"><a href="#cb41-28" aria-hidden="true" tabindex="-1"></a>    mutate(data_mtcars,</span>
+<span id="cb41-29"><a href="#cb41-29" aria-hidden="true" tabindex="-1"></a>           am = as.character(am))</span>
+<span id="cb41-30"><a href="#cb41-30" aria-hidden="true" tabindex="-1"></a>  ),</span>
+<span id="cb41-31"><a href="#cb41-31" aria-hidden="true" tabindex="-1"></a>  tar_target(</span>
+<span id="cb41-32"><a href="#cb41-32" aria-hidden="true" tabindex="-1"></a>    plot_mtcars,</span>
+<span id="cb41-33"><a href="#cb41-33" aria-hidden="true" tabindex="-1"></a>    {ggplot(clean_mtcars) +</span>
+<span id="cb41-34"><a href="#cb41-34" aria-hidden="true" tabindex="-1"></a>       geom_point(aes(y = mpg,</span>
+<span id="cb41-35"><a href="#cb41-35" aria-hidden="true" tabindex="-1"></a>                      x = hp,</span>
+<span id="cb41-36"><a href="#cb41-36" aria-hidden="true" tabindex="-1"></a>                      shape = am))}</span>
+<span id="cb41-37"><a href="#cb41-37" aria-hidden="true" tabindex="-1"></a>  ),</span>
+<span id="cb41-38"><a href="#cb41-38" aria-hidden="true" tabindex="-1"></a>  tar_render(</span>
+<span id="cb41-39"><a href="#cb41-39" aria-hidden="true" tabindex="-1"></a>    my_doc,</span>
+<span id="cb41-40"><a href="#cb41-40" aria-hidden="true" tabindex="-1"></a>    "my_document.Rmd"</span>
+<span id="cb41-41"><a href="#cb41-41" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb41-42"><a href="#cb41-42" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>In the <code>.Rmd</code> file, we can now pass the output of <code>tar_read(summary_mtcars)</code> to <code>flextable()</code>:</p>
+<div class="sourceCode" id="cb42"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>## Load the summary</span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>```{r}</span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>tar_read(summary_mtcars) %&gt;%</span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>  flextable()</span>
+<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a>```</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>If you look at the output now, you’ll see a nice table with a lot of summary statistics. Since the output of <code>skim()</code> is a <code>data.frame</code>, you can only keep the stats you want by <code>select()</code>ing the columns you need:</p>
+<div class="sourceCode" id="cb43"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>## Load the summary</span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>```{r}</span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>tar_read(summary_mtcars) %&gt;%</span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>  select(Variable = skim_variable,</span>
+<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a>         Mean = numeric.mean,</span>
+<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a>         SD = numeric.sd,</span>
+<span id="cb43-8"><a href="#cb43-8" aria-hidden="true" tabindex="-1"></a>         Histogram = numeric.hist) %&gt;%</span>
+<span id="cb43-9"><a href="#cb43-9" aria-hidden="true" tabindex="-1"></a>  flextable()</span>
+<span id="cb43-10"><a href="#cb43-10" aria-hidden="true" tabindex="-1"></a>```</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>If you want to hide the R code in the output document, simply use <code>knitr::opts_chunk$set(echo = F)</code> in a chunk with the <code>include = FALSE</code> option. Here is what the final source code of the <code>.Rmd</code> could look like:</p>
+<div class="sourceCode" id="cb44"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>title: "mtcars is the best data set"</span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>author: "mtcars enjoyer"</span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>date: today</span>
+<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-7"><a href="#cb44-7" aria-hidden="true" tabindex="-1"></a>```{r, include = FALSE}</span>
+<span id="cb44-8"><a href="#cb44-8" aria-hidden="true" tabindex="-1"></a>knitr::opts_chunk$set(echo = F)</span>
+<span id="cb44-9"><a href="#cb44-9" aria-hidden="true" tabindex="-1"></a>```</span>
+<span id="cb44-10"><a href="#cb44-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-11"><a href="#cb44-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-12"><a href="#cb44-12" aria-hidden="true" tabindex="-1"></a>## Load the summary statistics</span>
+<span id="cb44-13"><a href="#cb44-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-14"><a href="#cb44-14" aria-hidden="true" tabindex="-1"></a>I really like to see the distribution of the variables as a cell of a table:</span>
+<span id="cb44-15"><a href="#cb44-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-16"><a href="#cb44-16" aria-hidden="true" tabindex="-1"></a>```{r}</span>
+<span id="cb44-17"><a href="#cb44-17" aria-hidden="true" tabindex="-1"></a>tar_read(summary_mtcars) %&gt;%</span>
+<span id="cb44-18"><a href="#cb44-18" aria-hidden="true" tabindex="-1"></a>  select(Variable = skim_variable,</span>
+<span id="cb44-19"><a href="#cb44-19" aria-hidden="true" tabindex="-1"></a>         Mean = numeric.mean,</span>
+<span id="cb44-20"><a href="#cb44-20" aria-hidden="true" tabindex="-1"></a>         SD = numeric.sd,</span>
+<span id="cb44-21"><a href="#cb44-21" aria-hidden="true" tabindex="-1"></a>         Histogram = numeric.hist) %&gt;%</span>
+<span id="cb44-22"><a href="#cb44-22" aria-hidden="true" tabindex="-1"></a>  flextable() %&gt;%</span>
+<span id="cb44-23"><a href="#cb44-23" aria-hidden="true" tabindex="-1"></a>  set_caption("Summary statistics for mtcars")</span>
+<span id="cb44-24"><a href="#cb44-24" aria-hidden="true" tabindex="-1"></a>```</span>
+<span id="cb44-25"><a href="#cb44-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-26"><a href="#cb44-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-27"><a href="#cb44-27" aria-hidden="true" tabindex="-1"></a>## Graphics</span>
+<span id="cb44-28"><a href="#cb44-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-29"><a href="#cb44-29" aria-hidden="true" tabindex="-1"></a>The plot below is really nice, just look at it:</span>
+<span id="cb44-30"><a href="#cb44-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-31"><a href="#cb44-31" aria-hidden="true" tabindex="-1"></a>```{r, fig.cap = "Scatterplot of `mpg` and `hp` by type of transmission"}</span>
+<span id="cb44-32"><a href="#cb44-32" aria-hidden="true" tabindex="-1"></a>tar_read(plot_mtcars) +</span>
+<span id="cb44-33"><a href="#cb44-33" aria-hidden="true" tabindex="-1"></a>  theme_minimal() +</span>
+<span id="cb44-34"><a href="#cb44-34" aria-hidden="true" tabindex="-1"></a>  theme(legend.position = "bottom")</span>
+<span id="cb44-35"><a href="#cb44-35" aria-hidden="true" tabindex="-1"></a>```</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>As you can see, once I’ve used <code>targets::tar_read()</code>, I get back the object just as if I had generated it from within the <code>.Rmd</code> source file, and can simply add stuff to it (like changing the theme of the ggplot). Once you’re happy with the contents, you can add <code>output: word_document</code> to the header of the document (just below <code>date: today</code> for example) to generate a Word document.</p>
 </section>
 <section id="targets-and-renv" class="level2" data-number="13.8">
 <h2 data-number="13.8" class="anchored" data-anchor-id="targets-and-renv"><span class="header-section-number">13.8</span> {targets} and {renv}</h2>
@@ -954,8 +1056,13 @@ The output of our pipeline. Our first data product!
 <section id="rewriting-our-project-as-a-pipeline" class="level2" data-number="13.9">
 <h2 data-number="13.9" class="anchored" data-anchor-id="rewriting-our-project-as-a-pipeline"><span class="header-section-number">13.9</span> Rewriting our project as a pipeline</h2>
 </section>
-<section id="common-mistakes" class="level2" data-number="13.10">
-<h2 data-number="13.10" class="anchored" data-anchor-id="common-mistakes"><span class="header-section-number">13.10</span> Common mistakes</h2>
+<section id="some-little-tips-before-concluding" class="level2" data-number="13.10">
+<h2 data-number="13.10" class="anchored" data-anchor-id="some-little-tips-before-concluding"><span class="header-section-number">13.10</span> Some little tips before concluding</h2>
+<section id="reusing-targets-in-another-project" class="level3" data-number="13.10.1">
+<h3 data-number="13.10.1" class="anchored" data-anchor-id="reusing-targets-in-another-project"><span class="header-section-number">13.10.1</span> Reusing targets in another project</h3>
+</section>
+<section id="common-mistakes" class="level3" data-number="13.10.2">
+<h3 data-number="13.10.2" class="anchored" data-anchor-id="common-mistakes"><span class="header-section-number">13.10.2</span> Common mistakes</h3>
 <pre><code>
 targets::tar_make()
 Error:
@@ -963,6 +1070,10 @@ Error:
   Target errors: targets::tar_meta(fields = error, complete_only = TRUE)
   Tips: https://books.ropensci.org/targets/debugging.html
   Last error: argument 9 is empty</code></pre>
+</section>
+</section>
+<section id="conclusion" class="level2" data-number="13.11">
+<h2 data-number="13.11" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">13.11</span> Conclusion</h2>
 
 
 </section>
