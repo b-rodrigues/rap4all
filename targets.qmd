@@ -839,12 +839,176 @@ example to 10), running the code in parallel might even be slower, because of
 that overhead. But if you have several long-running computations, it’s really
 worth the very small price that you pay for the initial setup.
 
-## {targets} and Quarto
+## {targets} and RMarkdown (or Quarto)
+
+It is also possible to compile documents using RMardown (or Quarto) and
+`{targets}`. The way this works is by setting up a pipeline that produce the
+outputs you need in the document. For example, if you’re showing a table in the
+document, create a target in the pipeline that builds the underlying data. Do
+the same for a plot, or a statistical model that you run on some data. Then, in
+the `.Rmd` (or `.Qmd`) source file, use `targets::tar_load()` or
+`targets::tar_read()`to load the different objects you need.
+
+Consider the following `_targets.R` file:
+
+```{r, eval = FALSE}
+library(targets)
+
+tar_option_set(packages = c("dplyr", "ggplot2"))
+
+list(
+  tar_target(
+    path_data_mtcars,
+    "mtcars.csv",
+    format = "file"
+  ),
+  tar_target(
+    data_mtcars,
+    read.csv(path_data_mtcars)
+  ),
+  tar_target(
+    summary_mtcars,
+    summary(data_mtcars)
+  ),
+  tar_target(
+    clean_mtcars,
+    mutate(data_mtcars,
+           am = as.character(am))
+  ),
+  tar_target(
+    plot_mtcars,
+    {ggplot(clean_mtcars) +
+       geom_point(aes(y = mpg,
+                      x = hp,
+                      size = am))}
+  )
+)
+
+```
+
+This pipeline loads the `.csv` file from before and creates a summary of the data
+as well as plot. But we don’t simply want these objects to be saved as `.rds` files
+by the pipeline, we want to be able to use them to write a document (either in the 
+`.Rmd` or `.Qmd` format). For this, we need another package, called `{tarchetypes}`.
+This package comes many functions that allow you to define new targets. The new 
+target factory (or function) that we need is `tarchetypes::tar_render()`. As you
+can probably guess from the name, this function renders an `.Rmd` file. Write the 
+following lines in an `.Rmd` file and save it next to the pipeline:
+
+````{verbatim}
+---
+title: "mtcars is the best data set"
+author: "mtcars enjoyer"
+date: today
+---
+
+## Load the summary
+
+```{r, eval = FALSE}
+tar_read(summary_mtcars)
+```
+
+````
+
+Here is the `_targets.R` file (I loaded `{tarchetypes}` at the top and added 
+a new target at the bottom):
+
+```{r, eval = FALSE}
+library(targets)
+library(tarchetypes)
+
+tar_option_set(packages = c("dplyr", "ggplot2"))
+
+list(
+  tar_target(
+    path_data_mtcars,
+    "mtcars.csv",
+    format = "file"
+  ),
+  tar_target(
+    data_mtcars,
+    read.csv(path_data_mtcars)
+  ),
+  tar_target(
+    summary_mtcars,
+    summary(data_mtcars)
+  ),
+  tar_target(
+    clean_mtcars,
+    mutate(data_mtcars,
+           am = as.character(am))
+  ),
+  tar_target(
+    plot_mtcars,
+    {ggplot(clean_mtcars) +
+       geom_point(aes(y = mpg,
+                      x = hp,
+                      size = am))}
+  ),
+  tar_render(
+    my_doc,
+    "my_document.Rmd"
+  )
+)
+```
+
+Running this pipeline with `targets::tar_make()` will now create an `.html` file
+that you can open in your web-browser. Even if you want to build another format,
+I advise you to develop using the `.html` format. This is because you can open the
+`.html** file in the web-browser, and keep working on the source. Each time you run 
+the pipeline after you made some changes to the file, you simply need to refresh the
+web-browser to see your changes. If instead you compile a Word document, you will need
+to always close the file, and then re-open it to see your changes, which is quite
+annoying. So if you open the output file, you should be seeing something quite
+plain looking:
+
+<figure>
+    <img src="images/mtcars_html_1.png"
+         alt="The output of our pipeline. Our first data product!"></img>
+    <figcaption>The output of our pipeline. Our first data product!</figcaption>
+</figure>
+
+Don’t worry, we will make it look nice, but right at the end. Don’t waste time
+making things look good too early on. Ideally, try to get the pipeline to run on
+a simple example, and then keep adding features. Also, try to get *as much
+feedback* as possible on the *content* as *early* as possible. Let’s now 
+get the `ggplot` of the data to show in the document as well.
+
+For this, simply add:
+
+````{verbatim}
+tar_read(plot_mtcars)
+````
+
+at the bottom of the `.Rmd` file. Running the pipeline again will now add the
+plot to the document. Before continuing, let me just remind you, again, of the 
+usefulness of `{targets}` by changing the underlying data. Run the following:
+
+```{r, eval = FALSE}
+write.csv(head(mtcars),
+          "mtcars.csv",
+          row.names = F)
+```
+
+and run the pipeline again. Because the data changed and every target depends on
+the data, the document gets entirely rebuilt. I hope that you see why this is
+really great: in case you need to be build weekly, daily, heck, even hourly
+reports, by using `{targets}` the updated report can now get built automatically.
+Restore the data by running:
+
+```{r, eval = FALSE}
+write.csv(mtcars,
+          "mtcars.csv",
+          row.names = F)
+```
+
+and rebuilding the document by running the pipeline.
+
 
 ## {targets} and {renv} 
 
-*Why build automation: removes cognitive load, is a form of documentation in and of itself, as
-Miles said*
+*Why build automation: removes cognitive load, is a form of documentation in and
+of itself, as Miles said*
 
 *It is possible to communicate a great deal of domain knowledge in code, such that it is illuminating beyond the mere mechanical number crunching. To do this well the author needs to make use of certain styles and structures that produce code that has layers of domain specific abstraction a reader can traverse up and down as they build their understanding of the project. Functional programming style, coupled with a dependency graph as per {targets} are useful tools in this regard.*
 
