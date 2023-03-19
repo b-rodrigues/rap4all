@@ -573,12 +573,12 @@ list(
     format = "file"
   ),
   tar_target(
-    iris_data,
+    data_iris,
     data("iris")
   ),
   tar_target(
     summary_iris,
-    summary(iris_data)
+    summary(data_iris)
   ),
   tar_target(
     data_mtcars,
@@ -664,12 +664,12 @@ list(
     format = "file"
   ),
   tar_target(
-    iris_data,
+    data_iris,
     data("iris")
   ),
   tar_target(
     summary_iris,
-    slow_summary(iris_data)
+    slow_summary(data_iris)
   ),
   tar_target(
     data_mtcars,
@@ -718,8 +718,8 @@ targets::tar_make()
 
 • start target path_data_mtcars
 • built target path_data_mtcars [0.18 seconds]
-• start target iris_data
-• built target iris_data [0 seconds]
+• start target data_iris
+• built target data_iris [0 seconds]
 • start target data_mtcars
 • built target data_mtcars [0 seconds]
 • start target summary_iris
@@ -771,12 +771,12 @@ list(
     format = "file"
   ),
   tar_target(
-    iris_data,
+    data_iris,
     data("iris")
   ),
   tar_target(
     summary_iris,
-    slow_summary(iris_data)
+    slow_summary(data_iris)
   ),
   tar_target(
     data_mtcars,
@@ -813,10 +813,10 @@ targets::tar_make_future(workers = 2)
 
 ```
 • start target path_data_mtcars
-• start target iris_data
+• start target data_iris
 • built target path_data_mtcars [0.2 seconds]
 • start target data_mtcars
-• built target iris_data [0.22 seconds]
+• built target data_iris [0.22 seconds]
 • start target summary_iris
 • built target data_mtcars [0.2 seconds]
 • start target plot_mtcars
@@ -880,7 +880,7 @@ list(
     {ggplot(clean_mtcars) +
        geom_point(aes(y = mpg,
                       x = hp,
-                      size = am))}
+                      shape = am))}
   )
 )
 
@@ -943,7 +943,7 @@ list(
     {ggplot(clean_mtcars) +
        geom_point(aes(y = mpg,
                       x = hp,
-                      size = am))}
+                      shape = am))}
   ),
   tar_render(
     my_doc,
@@ -954,13 +954,13 @@ list(
 
 Running this pipeline with `targets::tar_make()` will now create an `.html` file
 that you can open in your web-browser. Even if you want to build another format,
-I advise you to develop using the `.html` format. This is because you can open the
-`.html** file in the web-browser, and keep working on the source. Each time you run 
-the pipeline after you made some changes to the file, you simply need to refresh the
-web-browser to see your changes. If instead you compile a Word document, you will need
-to always close the file, and then re-open it to see your changes, which is quite
-annoying. So if you open the output file, you should be seeing something quite
-plain looking:
+I advise you to develop using the `.html` format. This is because you can open
+the `.html** file in the web-browser, and keep working on the source. Each time
+you run the pipeline after you made some changes to the file, you simply need to
+refresh the web-browser to see your changes. If instead you compile a Word
+document, you will need to always close the file, and then re-open it to see
+your changes, which is quite annoying. So if you open the output file, you
+should be seeing something quite plain looking:
 
 <figure>
     <img src="images/mtcars_rmd_1.png"
@@ -971,8 +971,8 @@ plain looking:
 Don’t worry, we will make it look nice, but right at the end. Don’t waste time
 making things look good too early on. Ideally, try to get the pipeline to run on
 a simple example, and then keep adding features. Also, try to get *as much
-feedback* as possible on the *content* as *early* as possible. Let’s now 
-get the `ggplot` of the data to show in the document as well.
+feedback* as possible on the *content* as *early* as possible. Let’s now get the
+`ggplot` of the data to show in the document as well.
 
 For this, simply add:
 
@@ -981,7 +981,7 @@ tar_read(plot_mtcars)
 ````
 
 at the bottom of the `.Rmd` file. Running the pipeline again will now add the
-plot to the document. Before continuing, let me just remind you, again, of the 
+plot to the document. Before continuing, let me just remind you, again, of the
 usefulness of `{targets}` by changing the underlying data. Run the following:
 
 ```{r, eval = FALSE}
@@ -993,8 +993,8 @@ write.csv(head(mtcars),
 and run the pipeline again. Because the data changed and every target depends on
 the data, the document gets entirely rebuilt. I hope that you see why this is
 really great: in case you need to be build weekly, daily, heck, even hourly
-reports, by using `{targets}` the updated report can now get built automatically.
-Restore the data by running:
+reports, by using `{targets}` the updated report can now get built
+automatically. Restore the data by running:
 
 ```{r, eval = FALSE}
 write.csv(mtcars,
@@ -1002,10 +1002,137 @@ write.csv(mtcars,
           row.names = F)
 ```
 
-and rebuilding the document by running the pipeline.
+and rebuilding the document by running the pipeline. We can work a little on the
+document itself, by transforming the output into nice looking table using
+`{flextable}`. But there is an issue however: the output of `summary()` on a
+`data.frame` object is not a `data.frame`, but a `table`. But `flextable()`
+expects a `data.frame`. So if you call `flextable()` on the output of
+`summary()`, you’ll get an error message. Instead, we need a replacement for
+`summary()` that outputs a `data.frame`. This replacement is `skimr::skim()`; let’s go
+back to our pipeline and change the call to `summary()` to `skim()` (after adding the
+`{skimr}` to the list of loaded packages, as well as `{flextable}`):
+
+````{verbatim}
+library(targets)
+library(tarchetypes)
+
+tar_option_set(packages = c(
+                 "dplyr",
+                 "flextable",
+                 "ggplot2",
+                 "skimr"
+                 )
+               )
+
+list(
+  tar_target(
+    path_data_mtcars,
+    "mtcars.csv",
+    format = "file"
+  ),
+  tar_target(
+    data_mtcars,
+    read.csv(path_data_mtcars)
+  ),
+  tar_target(
+    summary_mtcars,
+    skim(data_mtcars)
+  ),
+  tar_target(
+    clean_mtcars,
+    mutate(data_mtcars,
+           am = as.character(am))
+  ),
+  tar_target(
+    plot_mtcars,
+    {ggplot(clean_mtcars) +
+       geom_point(aes(y = mpg,
+                      x = hp,
+                      shape = am))}
+  ),
+  tar_render(
+    my_doc,
+    "my_document.Rmd"
+  )
+)
+````
+
+In the `.Rmd` file, we can now pass the output of `tar_read(summary_mtcars)` to
+`flextable()`:
+
+````{verbatim}
+## Load the summary
+
+```{r}
+tar_read(summary_mtcars) %>%
+  flextable()
+```
+````
+
+If you look at the output now, you’ll see a nice table with a lot of summary
+statistics. Since the output of `skim()` is a `data.frame`, you can only keep
+the stats you want by `select()`ing the columns you need:
+
+````{verbatim}
+## Load the summary
+
+```{r}
+tar_read(summary_mtcars) %>%
+  select(Variable = skim_variable,
+         Mean = numeric.mean,
+         SD = numeric.sd,
+         Histogram = numeric.hist) %>%
+  flextable()
+```
+````
+
+If you want to hide the R code in the output document, simply use `knitr::opts_chunk$set(echo = F)` in
+a chunk with the `include = FALSE` option. Here is what the final source code of the `.Rmd` could look like:
 
 
-## {targets} and {renv} 
+````{verbatim}
+---
+title: "mtcars is the best data set"
+author: "mtcars enjoyer"
+date: today
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(echo = F)
+```
+
+## Load the summary statistics
+
+I really like to see the distribution of the variables as a cell of a table:
+
+```{r}
+tar_read(summary_mtcars) %>%
+  select(Variable = skim_variable,
+         Mean = numeric.mean,
+         SD = numeric.sd,
+         Histogram = numeric.hist) %>%
+  flextable() %>%
+  set_caption("Summary statistics for mtcars")
+```
+
+## Graphics
+
+The plot below is really nice, just look at it:
+
+```{r, fig.cap = "Scatterplot of `mpg` and `hp` by type of transmission"}
+tar_read(plot_mtcars) +
+  theme_minimal() +
+  theme(legend.position = "bottom")
+```
+````
+
+As you can see, once I’ve used `targets::tar_read()`, I get back the object just
+as if I had generated it from within the `.Rmd` source file, and can simply add
+stuff to it (like changing the theme of the ggplot). Once you’re happy with the
+contents, you can add `output: word_document` to the header of the document
+(just below `date: today` for example) to generate a Word document.
+
+## {targets} and {renv}
 
 *Why build automation: removes cognitive load, is a form of documentation in and
 of itself, as Miles said*
@@ -1014,7 +1141,12 @@ of itself, as Miles said*
 
 ## Rewriting our project as a pipeline
 
-## Common mistakes
+## Some little tips before concluding
+
+### Reusing targets in another project
+
+### Common mistakes
+
 
 ```
 
@@ -1025,3 +1157,5 @@ Error:
   Tips: https://books.ropensci.org/targets/debugging.html
   Last error: argument 9 is empty
 ```
+
+## Conclusion
