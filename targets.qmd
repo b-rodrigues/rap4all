@@ -1132,14 +1132,61 @@ stuff to it (like changing the theme of the ggplot). Once you’re happy with th
 contents, you can add `output: word_document` to the header of the document
 (just below `date: today` for example) to generate a Word document.
 
-## {targets} and {renv}
+## Rewriting our project as a pipeline and {renv} redux
 
-*Why build automation: removes cognitive load, is a form of documentation in and
-of itself, as Miles said*
+It is now time to turn our little project into a full-fledged pipeline. For
+this, we’re going back to our project’s folder and specifically to the `fusen`
+branch. This is the branch where we used `{fusen}` to turn our `.Rmd` into a
+package. This package contains the functions that we need to update the data.
+But remember, we wrote the analysis in another `.Rmd` file that we did not
+inflate, `analyse_data.Rmd`. We are now going to write a `{targets}` pipeline
+that will make use of the inflated package and compute all the targets required
+for the analysis. The first step is to create a new branch, but you could also
+create an entirely new repository if you want. It’s up to you. If you create a new
+branch, start from the `rmd` branch, since this will provide a nice starting point.
 
-*It is possible to communicate a great deal of domain knowledge in code, such that it is illuminating beyond the mere mechanical number crunching. To do this well the author needs to make use of certain styles and structures that produce code that has layers of domain specific abstraction a reader can traverse up and down as they build their understanding of the project. Functional programming style, coupled with a dependency graph as per {targets} are useful tools in this regard.*
+```
+owner@localhost ➤ git checkout rmd #switch to the rmd branch
+owner@localhost ➤ git checkout -b pipeline #create and switch to the new branch called pipeline
+```
 
-## Rewriting our project as a pipeline
+If you start with a fresh repository, you can grab the `analyse_data.Rmd` from 
+[here](https://raw.githubusercontent.com/b-rodrigues/rap4all/master/rmds/analyse_data.Rmd)^[https://is.gd/L2GICG].
+
+First order of business, let’s delete `save_data.Rmd` (unless you started with
+an empty repo). We don’t need that file anymore, since everything is now
+available in the package we developed:
+
+```
+owner@localhost ➤ rm save_data.Rmd
+```
+
+Let’s now start an R session in that folder and install our `{housing}` package.
+Wether you followed along and developed the package, or skipped the previous
+parts and didn’t develop the package by following along, install it from my
+Github repository. This ensures that you have exactly the same version as me. Run
+the following lines (but make sure that you started a fresh R session in the
+right folder):
+
+```{r, eval = F}
+remotes::install_github("rap4all/housing@fusen",
+                        ref = "387a52b")
+```
+
+This will install the package from my Github repository, and very specifically
+the version from the `fusen` branch at commit `387a52b` (you may need to install
+the `{remotes}` package first). Now that the package is installed, we can start 
+building the pipeline. In the same R session, call `targets::tar_script()` which
+will give us a nice template `_targets.R` file:
+
+```{r, eval = F}
+targets::tar_script()
+```
+
+You should at most have three files: `README.md`, `_targets.R` and
+`analyse_data.Rmd` (unless you started with an empty repo, in which case you
+don’t have the `README.md` file).
+
 
 ## Some little tips before concluding
 
