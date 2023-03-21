@@ -300,14 +300,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#the-dependency-graph" id="toc-the-dependency-graph" class="nav-link" data-scroll-target="#the-dependency-graph"><span class="toc-section-number">13.5</span>  The dependency graph</a></li>
   <li><a href="#running-the-pipeline-in-parallel" id="toc-running-the-pipeline-in-parallel" class="nav-link" data-scroll-target="#running-the-pipeline-in-parallel"><span class="toc-section-number">13.6</span>  Running the pipeline in parallel</a></li>
   <li><a href="#targets-and-rmarkdown-or-quarto" id="toc-targets-and-rmarkdown-or-quarto" class="nav-link" data-scroll-target="#targets-and-rmarkdown-or-quarto"><span class="toc-section-number">13.7</span>  {targets} and RMarkdown (or Quarto)</a></li>
-  <li><a href="#targets-and-renv" id="toc-targets-and-renv" class="nav-link" data-scroll-target="#targets-and-renv"><span class="toc-section-number">13.8</span>  {targets} and {renv}</a></li>
-  <li><a href="#rewriting-our-project-as-a-pipeline" id="toc-rewriting-our-project-as-a-pipeline" class="nav-link" data-scroll-target="#rewriting-our-project-as-a-pipeline"><span class="toc-section-number">13.9</span>  Rewriting our project as a pipeline</a></li>
-  <li><a href="#some-little-tips-before-concluding" id="toc-some-little-tips-before-concluding" class="nav-link" data-scroll-target="#some-little-tips-before-concluding"><span class="toc-section-number">13.10</span>  Some little tips before concluding</a>
+  <li><a href="#rewriting-our-project-as-a-pipeline-and-renv-redux" id="toc-rewriting-our-project-as-a-pipeline-and-renv-redux" class="nav-link" data-scroll-target="#rewriting-our-project-as-a-pipeline-and-renv-redux"><span class="toc-section-number">13.8</span>  Rewriting our project as a pipeline and {renv} redux</a></li>
+  <li><a href="#some-little-tips-before-concluding" id="toc-some-little-tips-before-concluding" class="nav-link" data-scroll-target="#some-little-tips-before-concluding"><span class="toc-section-number">13.9</span>  Some little tips before concluding</a>
   <ul class="collapse">
-  <li><a href="#reusing-targets-in-another-project" id="toc-reusing-targets-in-another-project" class="nav-link" data-scroll-target="#reusing-targets-in-another-project"><span class="toc-section-number">13.10.1</span>  Reusing targets in another project</a></li>
-  <li><a href="#common-mistakes" id="toc-common-mistakes" class="nav-link" data-scroll-target="#common-mistakes"><span class="toc-section-number">13.10.2</span>  Common mistakes</a></li>
+  <li><a href="#reusing-targets-in-another-project" id="toc-reusing-targets-in-another-project" class="nav-link" data-scroll-target="#reusing-targets-in-another-project"><span class="toc-section-number">13.9.1</span>  Reusing targets in another project</a></li>
+  <li><a href="#common-mistakes" id="toc-common-mistakes" class="nav-link" data-scroll-target="#common-mistakes"><span class="toc-section-number">13.9.2</span>  Common mistakes</a></li>
   </ul></li>
-  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="toc-section-number">13.11</span>  Conclusion</a></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="toc-section-number">13.10</span>  Conclusion</a></li>
   </ul>
 </nav>
     </div>
@@ -1048,21 +1047,32 @@ The output of our pipeline. Our first data product!
 <span id="cb44-35"><a href="#cb44-35" aria-hidden="true" tabindex="-1"></a>```</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>As you can see, once I’ve used <code>targets::tar_read()</code>, I get back the object just as if I had generated it from within the <code>.Rmd</code> source file, and can simply add stuff to it (like changing the theme of the ggplot). Once you’re happy with the contents, you can add <code>output: word_document</code> to the header of the document (just below <code>date: today</code> for example) to generate a Word document.</p>
 </section>
-<section id="targets-and-renv" class="level2" data-number="13.8">
-<h2 data-number="13.8" class="anchored" data-anchor-id="targets-and-renv"><span class="header-section-number">13.8</span> {targets} and {renv}</h2>
-<p><em>Why build automation: removes cognitive load, is a form of documentation in and of itself, as Miles said</em></p>
-<p><em>It is possible to communicate a great deal of domain knowledge in code, such that it is illuminating beyond the mere mechanical number crunching. To do this well the author needs to make use of certain styles and structures that produce code that has layers of domain specific abstraction a reader can traverse up and down as they build their understanding of the project. Functional programming style, coupled with a dependency graph as per {targets} are useful tools in this regard.</em></p>
+<section id="rewriting-our-project-as-a-pipeline-and-renv-redux" class="level2" data-number="13.8">
+<h2 data-number="13.8" class="anchored" data-anchor-id="rewriting-our-project-as-a-pipeline-and-renv-redux"><span class="header-section-number">13.8</span> Rewriting our project as a pipeline and {renv} redux</h2>
+<p>It is now time to turn our little project into a full-fledged pipeline. For this, we’re going back to our project’s folder and specifically to the <code>fusen</code> branch. This is the branch where we used <code>{fusen}</code> to turn our <code>.Rmd</code> into a package. This package contains the functions that we need to update the data. But remember, we wrote the analysis in another <code>.Rmd</code> file that we did not inflate, <code>analyse_data.Rmd</code>. We are now going to write a <code>{targets}</code> pipeline that will make use of the inflated package and compute all the targets required for the analysis. The first step is to create a new branch, but you could also create an entirely new repository if you want. It’s up to you. If you create a new branch, start from the <code>rmd</code> branch, since this will provide a nice starting point.</p>
+<pre><code>owner@localhost ➤ git checkout rmd #switch to the rmd branch
+owner@localhost ➤ git checkout -b pipeline #create and switch to the new branch called pipeline</code></pre>
+<p>If you start with a fresh repository, you can grab the <code>analyse_data.Rmd</code> from <a href="https://raw.githubusercontent.com/b-rodrigues/rap4all/master/rmds/analyse_data.Rmd">here</a><a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>.</p>
+<p>First order of business, let’s delete <code>save_data.Rmd</code> (unless you started with an empty repo). We don’t need that file anymore, since everything is now available in the package we developed:</p>
+<pre><code>owner@localhost ➤ rm save_data.Rmd</code></pre>
+<p>Let’s now start an R session in that folder and install our <code>{housing}</code> package. Wether you followed along and developed the package, or skipped the previous parts and didn’t develop the package by following along, install it from my Github repository. This ensures that you have exactly the same version as me. Run the following lines (but make sure that you started a fresh R session in the right folder):</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"rap4all/housing@fusen"</span>,</span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>                        <span class="at">ref =</span> <span class="st">"387a52b"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>This will install the package from my Github repository, and very specifically the version from the <code>fusen</code> branch at commit <code>387a52b</code> (you may need to install the <code>{remotes}</code> package first). Now that the package is installed, we can start building the pipeline. In the same R session, call <code>targets::tar_script()</code> which will give us a nice template <code>_targets.R</code> file:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>targets<span class="sc">::</span><span class="fu">tar_script</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>You should at most have three files: <code>README.md</code>, <code>_targets.R</code> and <code>analyse_data.Rmd</code> (unless you started with an empty repo, in which case you don’t have the <code>README.md</code> file).</p>
 </section>
-<section id="rewriting-our-project-as-a-pipeline" class="level2" data-number="13.9">
-<h2 data-number="13.9" class="anchored" data-anchor-id="rewriting-our-project-as-a-pipeline"><span class="header-section-number">13.9</span> Rewriting our project as a pipeline</h2>
+<section id="some-little-tips-before-concluding" class="level2" data-number="13.9">
+<h2 data-number="13.9" class="anchored" data-anchor-id="some-little-tips-before-concluding"><span class="header-section-number">13.9</span> Some little tips before concluding</h2>
+<section id="reusing-targets-in-another-project" class="level3" data-number="13.9.1">
+<h3 data-number="13.9.1" class="anchored" data-anchor-id="reusing-targets-in-another-project"><span class="header-section-number">13.9.1</span> Reusing targets in another project</h3>
 </section>
-<section id="some-little-tips-before-concluding" class="level2" data-number="13.10">
-<h2 data-number="13.10" class="anchored" data-anchor-id="some-little-tips-before-concluding"><span class="header-section-number">13.10</span> Some little tips before concluding</h2>
-<section id="reusing-targets-in-another-project" class="level3" data-number="13.10.1">
-<h3 data-number="13.10.1" class="anchored" data-anchor-id="reusing-targets-in-another-project"><span class="header-section-number">13.10.1</span> Reusing targets in another project</h3>
-</section>
-<section id="common-mistakes" class="level3" data-number="13.10.2">
-<h3 data-number="13.10.2" class="anchored" data-anchor-id="common-mistakes"><span class="header-section-number">13.10.2</span> Common mistakes</h3>
+<section id="common-mistakes" class="level3" data-number="13.9.2">
+<h3 data-number="13.9.2" class="anchored" data-anchor-id="common-mistakes"><span class="header-section-number">13.9.2</span> Common mistakes</h3>
 <pre><code>
 targets::tar_make()
 Error:
@@ -1072,8 +1082,8 @@ Error:
   Last error: argument 9 is empty</code></pre>
 </section>
 </section>
-<section id="conclusion" class="level2" data-number="13.11">
-<h2 data-number="13.11" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">13.11</span> Conclusion</h2>
+<section id="conclusion" class="level2" data-number="13.10">
+<h2 data-number="13.10" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">13.10</span> Conclusion</h2>
 
 
 </section>
@@ -1082,6 +1092,7 @@ Error:
 <ol>
 <li id="fn1"><p>https://is.gd/VS6vSs<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn2"><p>https://is.gd/lm4QoO<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>https://is.gd/L2GICG<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 
