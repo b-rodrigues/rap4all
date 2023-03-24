@@ -332,7 +332,7 @@ our analysis.
 We are faced with the following choice here:
 
 - make both these `.Rmd` files *fusen-ready*, and inflate them both. This would put the functions from both `save_data.Rmd` and `analyse_data.Rmd` into the inflated package `R/` folder;
-- put all the functions into `save_data.Rmd` and only inflate that file. The other, `analyse_data.Rmd` can then be used exclusively, and only, for the analysis *stricto sensu*.
+- put all the functions into `save_data.Rmd` and only inflate that file. The other, `analyse_data.Rmd` can then be used exclusively for the analysis *stricto sensu*.
 
 This is really up to you, there is no right or wrong answer. You could even go
 for another option if you wanted. It all depends on how much time you want to
@@ -407,17 +407,22 @@ just moved over.
 Ok, so now, we need to make `save_data.Rmd` ready to be inflated. Take
 inspiration from the `flat_minimal.Rmd` that `fusen::create_fusen()` put in the
 `dev/` folder. This is what the end-result should [look
-like](https://is.gd/zmXgrv) (no worries, I’m going to explain how I got there).
+like](https://is.gd/anRjt4) (no worries, I’m going to explain how I got there).
 
 Let’s start by the first function, `get_raw_data()`. If you compare the
 [before](https://gist.github.com/b-rodrigues/16952727d35355bf3b9cbd5f37843c20)^[https://is.gd/n3m6In]
-and [after](https://is.gd/zmXgrv), the differences are that we have named the
+and [after](https://is.gd/anRjt4), the differences are that we have named the
 chunk `function-get_raw_data` and added documentation in the form of
-`{roxygen2}` comments. Naming the chunks is essential: this is how `{fusen}` knows
-that this chunk contains a function that should go into the `R/` folder.
-`{roxygen2}` are strictly speaking not required, but it is highly advised that you
-add them: this way, your function will get documented and users (including 
-future you) will be able to read the documentation by typing `help(get_raw_data)`.
+`{roxygen2}` comments. Naming the chunks is essential: this is how `{fusen}`
+knows that this chunk contains a function that should go into the `R/` folder.
+`{roxygen2}` are strictly speaking not required, but it is highly advised that
+you add them: this way, your function will get documented and users (including
+future you) will be able to read the documentation by typing
+`help(get_raw_data)`. Another difference is that I have made all the functions
+referentially transparent. Take a closer look at `make_plot()` in the before and
+after `.Rmd`’s. You will see that I’ve added two arguments to `make_plot()`,
+`country_level_data` and `commune_level_data`. This is really important, so
+don’t forget to do it!
 
 Remember when I mentioned that the good thing about turning our analysis into a
 package is that it gives us a framework to develop high quality code by using

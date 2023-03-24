@@ -1170,7 +1170,7 @@ right folder):
 
 ```{r, eval = F}
 remotes::install_github("rap4all/housing@fusen",
-                        ref = "387a52b")
+                        ref = "1c86095")
 ```
 
 This will install the package from my Github repository, and very specifically
@@ -1185,14 +1185,291 @@ targets::tar_script()
 
 You should at most have three files: `README.md`, `_targets.R` and
 `analyse_data.Rmd` (unless you started with an empty repo, in which case you
-don’t have the `README.md` file).
+don’t have the `README.md` file). The `_targets.R` script will contain the required
+code to perform the computations that we need. Inside `analyse_data.Rmd`, we will
+simply load the required, pre-computed targets, and show them in the document.
+
+First, we need to load the data. The two datasets we use are now part of the
+package, so we can simply load them using `data(commune_level_data)` and
+`data(country_level_data)`. But remember, `{targets}` only loves pure functions, and
+`data()` is not pure! Let’s see what happens when you call `data(mtcars)`. 
+If you’re using RStudio, this is really visible: in a fresh session, calling `data(mtcars)`
+shows the following in the `Environment` pane:
+
+<figure>
+    <img src="images/mtcars_promise.png"
+         alt="What’s described as 'mtcars' is not a 'data.frame', yet."></img>
+    <figcaption>What’s described as 'mtcars' is not a 'data.frame', yet.</figcaption>
+</figure>
+
+At this stage, `mtcars` is only a `promise`. It’s only if you need to interact
+with `mtcars` that the `promise` becomes a `data.frame`. So `data()` returns a promise,
+does this mean that we can save that into a variable? If you try the following:
+
+```{r}
+x <- data(mtcars)
+```
+
+And check out `x`, you will see that `x` contains the string `"mtcars"` and is of class
+character! So `data()` returns a promise by saving it directly to the global environment
+(this is a side-effect) but it returns a string. Because `{targets}` needs pure functions,
+if we write:
+
+```{r, eval = F}
+tar_target(
+  target_mtcars,
+  data(mtcars)
+)
+```
+
+the `target_mtcars` target will be equal to the `"mtcars"` character string.
+This might be confusing, but just remember: a target must return something, and
+functions with side-effects don’t always return something. Also remember the
+example on plotting with `plot()`, which does not return an object. It’s
+actually the same issue here.
+
+So to solve this, we need a pure function that returns the `data.frame`. This
+means that it first needs to load the data, which results in a promise, and then
+evaluate that promise. The function to achieve this is as follows:
+
+```{r}
+read_data <- function(data_name, package_name){
+
+  temp <- new.env(parent = emptyenv())
+
+  data(list = data_name,
+       package = package_name,
+       envir = temp)
+
+  get(data_name, envir = temp)
+}
+```
+
+This function takes `data_name` and `package_name` as arguments, both strings.
+
+Then, I used `data()` but with two arguments: `list = ` and `package = `. `list
+= ` is needed because we pass `data_name` as a string. If we did something like
+`data(data_name)` instead, hoping that `data_name` would get replaced by its
+bound value (`"commune_level_data"`) it would result in an error. This is
+because `data()` would be looking for a data set literally called `data_name`
+instead of replacing `data_name` by its bound value. The second argument,
+`package = ` simply states that we’re looking for that dataset in the
+`{housing}` package and uses the value of `package_name`. Now comes the `envir =` argument. 
+This argument tells `data()` where to load the data set. By default, this loads the data
+in the global environment. But remember, we want our function to be pure, meaning, it should
+only return the data object and not load it into the global environment as well! So
+that’s where the temporary environment created in the first line of the body of the function
+comes into play. What happens is that the functions loads the data object into this temporary
+environment, which is different from the global environment. Once we’re done, we can 
+simply discard this environment, and so our global environment stays clean.
+
+The final step is using `get()`. Remember that once the line `data(list =
+data_name...)` has run, all we have is a promise. So if we stop there, the
+target would simply hold the character `"commune_level_data"`. In order to turn
+that promise into the data frame, we use `get()`. We’ve already encountered this
+function in Chapter 7. `get()` searches an object by name, and returns it. So in
+the line `get(data_name)`, `data_name` gets first replaced by its bound value,
+so `get("commune_level_data")` and hence we get the dataset back. Also, `get()`
+looks for that name in the temporary environment that was set up. This way, there
+is literally no interaction with the global environment, so that function is pure:
+it always returns the same output for the same input, and does not pollute, in any way,
+the global environment.
+
+This seems overly complicated, but it’s all a consequence of `{targets}` needing
+pure functions that actually return something to work well. Unfortunately some
+of R’s default functions are not pure, so we need this kind of workaround.
+However, all of this work is not in vain! By forcing us to use pure functions,
+`{targets}` contributes to the general quality and safety of our pipeline.
+
+Let’s continue the pipeline: here is what it will ultimately look like:
+
+```{r, eval = F}
+library(targets)
+library(tarchetypes)
+
+tar_option_set(packages = "housing")
+
+source("functions/read_data.R")
+
+list(
+  tar_target(
+    commune_level_data,
+    read_data("commune_level_data",
+              "housing")
+  ),
+
+  tar_target(
+    country_level_data,
+    read_data("country_level_data",
+              "housing")
+  ),
+
+  tar_target(
+    commune_data,
+    get_laspeyeres(commune_level_data)
+  ),
+
+  tar_target(
+    country_data,
+    get_laspeyeres(country_level_data)
+  ),
+
+  tar_target(
+    communes,
+    c("Luxembourg",
+      "Esch-sur-Alzette",
+      "Mamer",
+      "Schengen",
+      "Wincrange")
+  ),
+
+  tar_render(
+    analyse_data,
+    "analyse_data.Rmd"
+  )
+
+)
+
+```
+
+Remember, the idea is that all the computation is taken out of the `.Rmd` file
+and put into a `{targets}` pipeline. This way, if certain targets need to get
+updated, we don’t need to recompute everything when knitting the `.Rmd`
+document. The document simply retrieves the required targets from the cache
+and thus gets knitted very quickly. Here is what `analyse_data.Rmd` now looks
+like:
+
+````{verbatim}
+---
+title: "Nominal house prices data in Luxembourg"
+author: "Bruno Rodrigues"
+date: "`r Sys.Date()`"
+---
+
+Let’s load the datasets (the Laspeyeres price index is already computed):
+
+```{r}
+tar_load(commune_data)
+tar_load(country_data)
+```
+
+We are going to create a plot for 5 communes and compare the price evolution in the communes
+to the national price evolution. Let’s first load the communes:
+
+```{r}
+tar_load(communes)
+```
+
+```{r, results = "asis"}
+res <- lapply(communes, function(x){
+
+  knitr::knit_child(text = c(
+
+    '\n',
+    '## Plot for commune: `r x`',
+    '\n',
+    '```{r, echo = F}',
+    'print(make_plot(country_data, commune_data, x))',
+    '```'
+
+     ),
+     envir = environment(),
+     quiet = TRUE)
+
+})
+
+cat(unlist(res), sep = "\n")
+
+```
+````
+
+As you can see, the data gets loaded by using `targets::tar_load()` which loads
+the two pre-computed data sets. The end portion of the document looks fairly
+similar to what we had before turning our analysis into a package and then a
+pipeline. We use a child document to generate as many sections as required
+automatically (remember, Don’t Repeat Yourself!). Try to change something in the
+pipeline, for example remove some communes from the `communes` object, and rerun
+the whole pipeline using `tar_make()`.
+
+We are now done with this introduction to `{targets}`: we have turned our
+analysis into a pipeline, and now we need to ensure that the outputs it produces
+are reproducible. So the first step is to use `{renv}`; but as already
+discussed, this will not be enough, but it is essential that you do it! So let’s
+initialize `{renv}`:
+
+```{r, eval = F}
+renv::init()
+```
+
+This will create an `renv.lock` file with all the dependencies of the pipeline
+listed. Very importantly, our Github package also gets listed:
+
+```
+"housing": {
+  "Package": "housing",
+  "Version": "0.1",
+  "Source": "GitHub",
+  "RemoteType": "github",
+  "RemoteHost": "api.github.com",
+  "RemoteRepo": "housing",
+  "RemoteUsername": "rap4all",
+  "RemoteRef": "fusen",
+  "RemoteSha": "1c860959310b80e67c41f7bbdc3e84cef00df18e",
+  "Hash": "859672476501daeea9b719b9218165f1",
+  "Requirements": [
+    "dplyr",
+    "ggplot2",
+    "janitor",
+    "purrr",
+    "readxl",
+    "rlang",
+    "rvest",
+    "stringr",
+    "tidyr"
+  ]
+},
+
+```
+
+If you look at the fields titled `RemoteSha` and `RemoteRef` you should
+recognize the commit hash and repository that were used to install the package:
+
+```
+"RemoteRef": "fusen",
+"RemoteSha": "1c860959310b80e67c41f7bbdc3e84cef00df18e",
+```
+
+This means that if someone wants to re-run our project, by running
+`renv::restore()` the correct version of the package will get installed!
+h 
+To finish things, we should edit the `Readme.md` file and add instructions on how
+to re-run the project. This is what the `Readme.md` file could look like:
+
+````{verbatim}
+# How to run
+
+- Clone the repository: `git clone git@github.com:rap4all/housing.git`
+- Switch to the `pipeline` branch: `git checkout pipeline`
+- Start an R session in the folder and run `renv::restore()` to install the project’s dependencies.
+- Run the pipeline with `targets::tar_make()`.
+- Checkout `analyse_data.html` for the output.
+````
+
+If you followed along, don’t forget to change the `url` of the repository to
+your own.
 
 
 ## Some little tips before concluding
 
-### Reusing targets in another project
+### General tricks
 
-### Common mistakes
+`tar_load_everything()`
+`tar_manifest()`
+`tar_destroy()`
+`tar_visnetwork() %>% visNetwork::visNetworkEditor()`
+
+`withr::with_dir(path, tar_load...)`
+
 
 
 ```
