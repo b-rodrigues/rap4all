@@ -1224,13 +1224,14 @@ tar_target(
 
 the `target_mtcars` target will be equal to the `"mtcars"` character string.
 This might be confusing, but just remember: a target must return something, and
-functions with side-effects don’t always return something. Also remember the
-example on plotting with `plot()`, which does not return an object. It’s
-actually the same issue here.
+functions with side-effects don’t always return something, or the thing we want.
+Also remember the example on plotting with `plot()`, which does not return an
+object. It’s actually the same issue here.
 
 So to solve this, we need a pure function that returns the `data.frame`. This
-means that it first needs to load the data, which results in a promise, and then
-evaluate that promise. The function to achieve this is as follows:
+means that it first needs to load the data, which results in a promise (which
+gets loaded into the environment directly), and then evaluate that promise. The
+function to achieve this is as follows:
 
 ```{r}
 read_data <- function(data_name, package_name){
@@ -1254,14 +1255,17 @@ bound value (`"commune_level_data"`) it would result in an error. This is
 because `data()` would be looking for a data set literally called `data_name`
 instead of replacing `data_name` by its bound value. The second argument,
 `package = ` simply states that we’re looking for that dataset in the
-`{housing}` package and uses the value of `package_name`. Now comes the `envir =` argument. 
-This argument tells `data()` where to load the data set. By default, this loads the data
-in the global environment. But remember, we want our function to be pure, meaning, it should
-only return the data object and not load it into the global environment as well! So
-that’s where the temporary environment created in the first line of the body of the function
-comes into play. What happens is that the functions loads the data object into this temporary
-environment, which is different from the global environment. Once we’re done, we can 
-simply discard this environment, and so our global environment stays clean.
+`{housing}` package and uses the value of `package_name`. 
+Now comes the `envir =` argument. 
+This argument tells `data()` where to load the data set. By
+default, `data()` loads the data in the global environment. But remember, we
+want our function to be pure, meaning, it should only return the data object and
+not load anything into the global environment! So that’s where the temporary
+environment created in the first line of the body of the function comes into
+play. What happens is that the functions loads the data object into this
+temporary environment, which is different from the global environment. Once
+we’re done, we can simply discard this environment, and so our global
+environment stays clean.
 
 The final step is using `get()`. Remember that once the line `data(list =
 data_name...)` has run, all we have is a promise. So if we stop there, the
@@ -1270,16 +1274,20 @@ that promise into the data frame, we use `get()`. We’ve already encountered th
 function in Chapter 7. `get()` searches an object by name, and returns it. So in
 the line `get(data_name)`, `data_name` gets first replaced by its bound value,
 so `get("commune_level_data")` and hence we get the dataset back. Also, `get()`
-looks for that name in the temporary environment that was set up. This way, there
-is literally no interaction with the global environment, so that function is pure:
-it always returns the same output for the same input, and does not pollute, in any way,
-the global environment.
+looks for that name in the temporary environment that was set up. This way,
+there is literally no interaction with the global environment, so that function
+is pure: it always returns the same output for the same input, and does not
+pollute, in any way, the global environment. After that function is done
+running, the temporary environment is discarded.
 
 This seems overly complicated, but it’s all a consequence of `{targets}` needing
 pure functions that actually return something to work well. Unfortunately some
 of R’s default functions are not pure, so we need this kind of workaround.
 However, all of this work is not in vain! By forcing us to use pure functions,
-`{targets}` contributes to the general quality and safety of our pipeline.
+`{targets}` contributes to the general quality and safety of our pipeline. Once
+our pipeline is done running, nothing the global environment should have stayed 
+untouched. This is because having stuff pollute the global environment can cause
+interactions with subsequent runs of the same (or another) pipeline.
 
 Let’s continue the pipeline: here is what it will ultimately look like:
 
@@ -1332,12 +1340,12 @@ list(
 
 ```
 
-Remember, the idea is that all the computation is taken out of the `.Rmd` file
+Remember, the idea is that all the computations are taken out of the `.Rmd` file
 and put into a `{targets}` pipeline. This way, if certain targets need to get
 updated, we don’t need to recompute everything when knitting the `.Rmd`
-document. The document simply retrieves the required targets from the cache
-and thus gets knitted very quickly. Here is what `analyse_data.Rmd` now looks
-like:
+document. Only the outdated targets get recomputed, and the because the document
+simply retrieves the required targets from the cache, it gets knitted very
+quickly. Here is what `analyse_data.Rmd` now looks like:
 
 ````{verbatim}
 ---
@@ -1353,8 +1361,8 @@ tar_load(commune_data)
 tar_load(country_data)
 ```
 
-We are going to create a plot for 5 communes and compare the price evolution in the communes
-to the national price evolution. Let’s first load the communes:
+We are going to create a plot for 5 communes and compare the price evolution in
+the communes to the national price evolution. Let’s first load the communes:
 
 ```{r}
 tar_load(communes)
@@ -1440,9 +1448,8 @@ recognize the commit hash and repository that were used to install the package:
 ```
 
 This means that if someone wants to re-run our project, by running
-`renv::restore()` the correct version of the package will get installed!
-h 
-To finish things, we should edit the `Readme.md` file and add instructions on how
+`renv::restore()` the correct version of the package will get installed! To
+finish things, we should edit the `Readme.md` file and add instructions on how
 to re-run the project. This is what the `Readme.md` file could look like:
 
 ````{verbatim}
@@ -1458,23 +1465,121 @@ to re-run the project. This is what the `Readme.md` file could look like:
 If you followed along, don’t forget to change the `url` of the repository to
 your own.
 
-
 ## Some little tips before concluding
 
-### General tricks
+In this section I’ll be showing you some other useful functions included in the `{targets}` package that
+I think you should know!
 
-`tar_load_everything()`
-`tar_manifest()`
-`tar_destroy()`
-`tar_visnetwork() %>% visNetwork::visNetworkEditor()`
+### Load every target at once
 
-`withr::with_dir(path, tar_load...)`
+It is possible to load every target included in the cache at once using `tar_load_everything()`. But be careful,
+if your pipeline builds many targets, this can take some time!
 
+### Get metadata information on your pipeline
 
+`tar_meta()` will return a data frame with some information about the pipeline. I find it quite useful after
+running the pipeline, and it turns out that some warnings or errors were raised. This is how this data frame
+looks like:
 
+```{r, eval = F}
+targets::tar_meta()
 ```
 
+(I have removed the last columns, or it would fit)
+
+```
+# A tibble: 11 × 18
+   name       type  data  command depend [...]
+   <chr>      <chr> <chr> <chr>   <chr>  [...]
+ 1 analyse_d… stem  c251… 995812… 3233e… [...]
+ 2 commune_d… stem  024d… 85c2ab… ec7f2… [...]
+ 3 commune_l… stem  fb07… f48470… ce0d8… [...]
+ 4 commune_l… stem  fb07… 2549df… 15e48… [...]
+ 5 communes   stem  b097… be3c56… a3dad… [...]
+ 6 country_d… stem  ae21… 9dc7a6… 1d321… [...]
+```
+
+There are more columns that those I’m showing, of great interest are the columns
+`warnings` and `error`. In the example below, I have changed the code to
+`read_data()`, and now it raises a warning:
+
+```{r, eval = F}
 targets::tar_make()
+```
+
+```
+• start target commune_level_data
+• built target commune_level_data [0.61 seconds]
+• start target country_level_data
+• built target country_level_data [0.02 seconds]
+✔ skip target communes
+✔ skip target commune_data
+✔ skip target country_data
+✔ skip target analyse_data
+• end pipeline [0.75 seconds]
+Warning messages:
+1: this is a warning 
+2: this is a warning 
+3: 2 targets produced warnings. Run tar_meta(fields = warnings, complete_only = TRUE) for the messages. 
+> 
+```
+
+Because warnings were raised, the pipeline raises another
+warning telling you to run `tar_meta(fields = warnings, complete_only = TRUE)` so let’s do it:
+
+```{r, eval = F}
+tar_meta(fields = warnings, complete_only = TRUE)
+```
+
+This code returns a data frame with the name of the targets
+that produced the warning, alongside the warning.
+
+```
+# A tibble: 2 × 2
+  name               warnings
+  <chr>              <chr>
+1 commune_level_data this is a warning
+2 country_level_data this is a warning
+```
+
+So now you can better see what is going on.
+
+### Make a target (or the whole pipeline) outdated
+
+With `tar_invalidate()` you can make a target outdated, so that when
+you rerun the pipeline, it gets re-computed (alongside every target that
+depends on it). This can sometimes be useful to make sure that everything
+is running correctly. Try running `tar_invalidate("communes")`
+and see what happens. It is also possible to complete nuke the whole pipeline
+and rerun it from scratch using `tar_destroy()`. You’ll get asked to confirm
+if that’s what you want to do, and if yes, reruning the pipeline after that
+will start from scratch.
+
+### Customize the network’s visualisation
+
+By calling `visNetwork::visNetworkEditor(tar_visnetwork())`, a Shiny app
+gets started that lets you customize the look of your pipeline’s network.
+You can play around with the options and see the effect they have on the 
+look of the network. It is also possible to generate R code that you can 
+then paste into a script to consistently generate the same look.
+
+### Use targets from one pipeline in another project
+
+If you need to load some targets inside another project (for example,
+because you need to reference an older study), you can do so easily 
+with `{withr}`:
+
+```{r, eval = F}
+withr::with_dir(
+  "path/to/root/of/project", 
+  targets::tar_load(target_name))
+```
+
+### Understanding this cryptic error message
+
+Sometimes, when you try to run the pipeline, you get the following error message:
+
+```
 Error:
 ! Error running targets::tar_make()
   Target errors: targets::tar_meta(fields = error, complete_only = TRUE)
@@ -1482,4 +1587,23 @@ Error:
   Last error: argument 9 is empty
 ```
 
+The last line is what interests us here: "Last error: argument 9 is empty". It
+is not clear which target is raising this error: that’s because it’s not a
+target that is raising this error, but the pipeline itself! Remember that the
+pipeline is nothing but a list of targets. If your last target ends with a `,`
+character, `list()` is expecting another element. But because there’s none, this
+error gets raised. Try the following `list(1,2,)` and you will get the same
+error message. Simply check your last target, there is a `,` in there that you
+should remove!
+
 ## Conclusion
+
+I hope to have convinced you that you need to add build automation tools to your
+toolbox. `{targets}` is a fantastic package, because it takes care of something
+incredibly tedious for you. By using `{targets}` you don’t have to remember
+which objects you need to recompute when you need to change code. You don’t need
+to rewrite your code to make it run in parallel. And by using `{renv}`, other 
+users can run your pipeline in a couple of lines and reproduce the results.
+
+In the next chapter, we will be going deeper in the iceberg of reproducibility
+still.

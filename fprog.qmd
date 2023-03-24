@@ -481,7 +481,7 @@ sqrt(-5)
 This only raises a warning and returns `NaN` (Not a Number). This can be quite
 dangerous, especially when working non-interactively, which is what we will be
 doing a lot later on. It is much better if a pipeline fails early due to an
-error, than dragging a `NaN` value. This also happens with `log()`:
+error, than dragging a `NaN` value. This also happens with `sqrt()`:
 
 ```{r}
 sqrt(-10)
@@ -878,7 +878,7 @@ result_list <- sqrt_newton(1600)
 result_list
 ```
 
-It is quite common to instead print the number of steps to the console instead
+It is quite common to print the number of steps to the console instead
 of returning them. But the issue with a function that prints something to the
 console instead of returning it, is that such a function is not pure, as it
 changes something outside of its scope. And if you need the information that got
@@ -1325,8 +1325,8 @@ end up using, you need to avoid copy and pasting at all costs.
 
 ## Functional programming in R
 
-Up until now I focused on general concepts than on specifics of the R
-programming language when it comes to functional programming. In the section, we
+Up until now I focused on general concepts rather than on specifics of the R
+programming language when it comes to functional programming. In this section, we
 will be focusing entirely on R-specific capabilities and packages for functional
 programming.
 

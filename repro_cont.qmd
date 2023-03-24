@@ -1,5 +1,19 @@
 # Advanced topics in reproducibility
 
+If the book ended here, it would be titled "Building analytical pipelines with
+R", because we have not ensured that the pipeline we built is reproducible.
+We did our best though:
+
+- we used functional and literate programming;
+- we documented, tested and versioned the code;
+- we used `{renv}` to record the dependencies of the project;
+- the project is now a pipeline and re-running it is as easy as it can possibly get.
+
+But there are still many variables that we need to consider. If we go back to
+the reproducibility iceberg, you will notice that we can still go deeper. As the
+code stands now, we did our best using programming paradigms and libraries, but
+now we need to consider another tool, called Docker.
+
 *Now that the readers are familiar with renv, but also its shortcomings, we can go a step further
 and introduce Docker. I think some primer on the Linux command line could be included here*
 

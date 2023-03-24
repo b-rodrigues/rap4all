@@ -691,20 +691,23 @@ This is left as an exercise to the reader.
 
 ## Conclusion
 
-Testing is crucial and useful. Not just because it gives you piece of mind but
+Testing is crucial and useful. Not just because it gives you peace of mind but
 also because writing tests forces you to think about your code, by putting
 yourself in the shoes of your users (which includes future you as well).
 In most cases, it is even something that you’ve been doing but perhaps not as
 systematically as you should. 
 
 There really is no other way to say this: you need to consider writing tests as
-an integral part of the project, and need to take the time it takes to write
-them into account when planning projects. But keep in mind that writing them
-makes you gain a lot of time in the long run, so in actually, you might even be
-faster by writing tests! Tests also allow you to immediately see where something
-went wrong, when something goes wrong. So tests save you time here as well.
-Without tests, when something goes wrong, you have a hard time finding where the
-bug comes from, and end up wasting precious time.
+an integral part of the project, and need to take the required time it takes to
+write them into account when planning projects. But keep in mind that writing
+them makes you gain a lot of time in the long run, so actually, you might
+even be faster by writing tests! Tests also allow you to immediately see where
+something went wrong, when something goes wrong. So tests save you time here as
+well. Without tests, when something goes wrong, you have a hard time finding
+where the bug comes from, and end up wasting precious time. And worse, something
+things go wrong and break, but silently. You still get an output that may look
+ok at first glance, and only realise something is wrong way too late. Testing
+helps avoiding such situations.
 
 So remember: it might *feel* like packaging your code and writing tests for it 
 takes time, but:
