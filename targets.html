@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.335">
+<meta name="generator" content="quarto-1.2.475">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -303,8 +303,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#rewriting-our-project-as-a-pipeline-and-renv-redux" id="toc-rewriting-our-project-as-a-pipeline-and-renv-redux" class="nav-link" data-scroll-target="#rewriting-our-project-as-a-pipeline-and-renv-redux"><span class="toc-section-number">13.8</span>  Rewriting our project as a pipeline and {renv} redux</a></li>
   <li><a href="#some-little-tips-before-concluding" id="toc-some-little-tips-before-concluding" class="nav-link" data-scroll-target="#some-little-tips-before-concluding"><span class="toc-section-number">13.9</span>  Some little tips before concluding</a>
   <ul class="collapse">
-  <li><a href="#reusing-targets-in-another-project" id="toc-reusing-targets-in-another-project" class="nav-link" data-scroll-target="#reusing-targets-in-another-project"><span class="toc-section-number">13.9.1</span>  Reusing targets in another project</a></li>
-  <li><a href="#common-mistakes" id="toc-common-mistakes" class="nav-link" data-scroll-target="#common-mistakes"><span class="toc-section-number">13.9.2</span>  Common mistakes</a></li>
+  <li><a href="#general-tricks" id="toc-general-tricks" class="nav-link" data-scroll-target="#general-tricks"><span class="toc-section-number">13.9.1</span>  General tricks</a></li>
   </ul></li>
   <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="toc-section-number">13.10</span>  Conclusion</a></li>
   </ul>
@@ -1058,21 +1057,188 @@ owner@localhost ➤ git checkout -b pipeline #create and switch to the new branc
 <p>Let’s now start an R session in that folder and install our <code>{housing}</code> package. Wether you followed along and developed the package, or skipped the previous parts and didn’t develop the package by following along, install it from my Github repository. This ensures that you have exactly the same version as me. Run the following lines (but make sure that you started a fresh R session in the right folder):</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"rap4all/housing@fusen"</span>,</span>
-<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>                        <span class="at">ref =</span> <span class="st">"387a52b"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>                        <span class="at">ref =</span> <span class="st">"1c86095"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>This will install the package from my Github repository, and very specifically the version from the <code>fusen</code> branch at commit <code>387a52b</code> (you may need to install the <code>{remotes}</code> package first). Now that the package is installed, we can start building the pipeline. In the same R session, call <code>targets::tar_script()</code> which will give us a nice template <code>_targets.R</code> file:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>targets<span class="sc">::</span><span class="fu">tar_script</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>You should at most have three files: <code>README.md</code>, <code>_targets.R</code> and <code>analyse_data.Rmd</code> (unless you started with an empty repo, in which case you don’t have the <code>README.md</code> file).</p>
+<p>You should at most have three files: <code>README.md</code>, <code>_targets.R</code> and <code>analyse_data.Rmd</code> (unless you started with an empty repo, in which case you don’t have the <code>README.md</code> file). The <code>_targets.R</code> script will contain the required code to perform the computations that we need. Inside <code>analyse_data.Rmd</code>, we will simply load the required, pre-computed targets, and show them in the document.</p>
+<p>First, we need to load the data. The two datasets we use are now part of the package, so we can simply load them using <code>data(commune_level_data)</code> and <code>data(country_level_data)</code>. But remember, <code>{targets}</code> only loves pure functions, and <code>data()</code> is not pure! Let’s see what happens when you call <code>data(mtcars)</code>. If you’re using RStudio, this is really visible: in a fresh session, calling <code>data(mtcars)</code> shows the following in the <code>Environment</code> pane:</p>
+<figure class="figure">
+<img src="images/mtcars_promise.png" alt="What’s described as 'mtcars' is not a 'data.frame', yet." class="figure-img">
+<figcaption class="figure-caption">
+What’s described as ‘mtcars’ is not a ‘data.frame’, yet.
+</figcaption>
+</figure>
+<p>At this stage, <code>mtcars</code> is only a <code>promise</code>. It’s only if you need to interact with <code>mtcars</code> that the <code>promise</code> becomes a <code>data.frame</code>. So <code>data()</code> returns a promise, does this mean that we can save that into a variable? If you try the following:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">data</span>(mtcars)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>And check out <code>x</code>, you will see that <code>x</code> contains the string <code>"mtcars"</code> and is of class character! So <code>data()</code> returns a promise by saving it directly to the global environment (this is a side-effect) but it returns a string. Because <code>{targets}</code> needs pure functions, if we write:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tar_target</span>(</span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>  target_mtcars,</span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data</span>(mtcars)</span>
+<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>the <code>target_mtcars</code> target will be equal to the <code>"mtcars"</code> character string. This might be confusing, but just remember: a target must return something, and functions with side-effects don’t always return something. Also remember the example on plotting with <code>plot()</code>, which does not return an object. It’s actually the same issue here.</p>
+<p>So to solve this, we need a pure function that returns the <code>data.frame</code>. This means that it first needs to load the data, which results in a promise, and then evaluate that promise. The function to achieve this is as follows:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>read_data <span class="ot">&lt;-</span> <span class="cf">function</span>(data_name, package_name){</span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a>  temp <span class="ot">&lt;-</span> <span class="fu">new.env</span>(<span class="at">parent =</span> <span class="fu">emptyenv</span>())</span>
+<span id="cb51-4"><a href="#cb51-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-5"><a href="#cb51-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data</span>(<span class="at">list =</span> data_name,</span>
+<span id="cb51-6"><a href="#cb51-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">package =</span> package_name,</span>
+<span id="cb51-7"><a href="#cb51-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">envir =</span> temp)</span>
+<span id="cb51-8"><a href="#cb51-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-9"><a href="#cb51-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">get</span>(data_name, <span class="at">envir =</span> temp)</span>
+<span id="cb51-10"><a href="#cb51-10" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>This function takes <code>data_name</code> and <code>package_name</code> as arguments, both strings.</p>
+<p>Then, I used <code>data()</code> but with two arguments: <code>list =</code> and <code>package =</code>. <code>list =</code> is needed because we pass <code>data_name</code> as a string. If we did something like <code>data(data_name)</code> instead, hoping that <code>data_name</code> would get replaced by its bound value (<code>"commune_level_data"</code>) it would result in an error. This is because <code>data()</code> would be looking for a data set literally called <code>data_name</code> instead of replacing <code>data_name</code> by its bound value. The second argument, <code>package =</code> simply states that we’re looking for that dataset in the <code>{housing}</code> package and uses the value of <code>package_name</code>. Now comes the <code>envir =</code> argument. This argument tells <code>data()</code> where to load the data set. By default, this loads the data in the global environment. But remember, we want our function to be pure, meaning, it should only return the data object and not load it into the global environment as well! So that’s where the temporary environment created in the first line of the body of the function comes into play. What happens is that the functions loads the data object into this temporary environment, which is different from the global environment. Once we’re done, we can simply discard this environment, and so our global environment stays clean.</p>
+<p>The final step is using <code>get()</code>. Remember that once the line <code>data(list = data_name...)</code> has run, all we have is a promise. So if we stop there, the target would simply hold the character <code>"commune_level_data"</code>. In order to turn that promise into the data frame, we use <code>get()</code>. We’ve already encountered this function in Chapter 7. <code>get()</code> searches an object by name, and returns it. So in the line <code>get(data_name)</code>, <code>data_name</code> gets first replaced by its bound value, so <code>get("commune_level_data")</code> and hence we get the dataset back. Also, <code>get()</code> looks for that name in the temporary environment that was set up. This way, there is literally no interaction with the global environment, so that function is pure: it always returns the same output for the same input, and does not pollute, in any way, the global environment.</p>
+<p>This seems overly complicated, but it’s all a consequence of <code>{targets}</code> needing pure functions that actually return something to work well. Unfortunately some of R’s default functions are not pure, so we need this kind of workaround. However, all of this work is not in vain! By forcing us to use pure functions, <code>{targets}</code> contributes to the general quality and safety of our pipeline.</p>
+<p>Let’s continue the pipeline: here is what it will ultimately look like:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(targets)</span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tarchetypes)</span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a><span class="fu">tar_option_set</span>(<span class="at">packages =</span> <span class="st">"housing"</span>)</span>
+<span id="cb52-5"><a href="#cb52-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-6"><a href="#cb52-6" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"functions/read_data.R"</span>)</span>
+<span id="cb52-7"><a href="#cb52-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-8"><a href="#cb52-8" aria-hidden="true" tabindex="-1"></a><span class="fu">list</span>(</span>
+<span id="cb52-9"><a href="#cb52-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tar_target</span>(</span>
+<span id="cb52-10"><a href="#cb52-10" aria-hidden="true" tabindex="-1"></a>    commune_level_data,</span>
+<span id="cb52-11"><a href="#cb52-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">read_data</span>(<span class="st">"commune_level_data"</span>,</span>
+<span id="cb52-12"><a href="#cb52-12" aria-hidden="true" tabindex="-1"></a>              <span class="st">"housing"</span>)</span>
+<span id="cb52-13"><a href="#cb52-13" aria-hidden="true" tabindex="-1"></a>  ),</span>
+<span id="cb52-14"><a href="#cb52-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-15"><a href="#cb52-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tar_target</span>(</span>
+<span id="cb52-16"><a href="#cb52-16" aria-hidden="true" tabindex="-1"></a>    country_level_data,</span>
+<span id="cb52-17"><a href="#cb52-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">read_data</span>(<span class="st">"country_level_data"</span>,</span>
+<span id="cb52-18"><a href="#cb52-18" aria-hidden="true" tabindex="-1"></a>              <span class="st">"housing"</span>)</span>
+<span id="cb52-19"><a href="#cb52-19" aria-hidden="true" tabindex="-1"></a>  ),</span>
+<span id="cb52-20"><a href="#cb52-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-21"><a href="#cb52-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tar_target</span>(</span>
+<span id="cb52-22"><a href="#cb52-22" aria-hidden="true" tabindex="-1"></a>    commune_data,</span>
+<span id="cb52-23"><a href="#cb52-23" aria-hidden="true" tabindex="-1"></a>    <span class="fu">get_laspeyeres</span>(commune_level_data)</span>
+<span id="cb52-24"><a href="#cb52-24" aria-hidden="true" tabindex="-1"></a>  ),</span>
+<span id="cb52-25"><a href="#cb52-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-26"><a href="#cb52-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tar_target</span>(</span>
+<span id="cb52-27"><a href="#cb52-27" aria-hidden="true" tabindex="-1"></a>    country_data,</span>
+<span id="cb52-28"><a href="#cb52-28" aria-hidden="true" tabindex="-1"></a>    <span class="fu">get_laspeyeres</span>(country_level_data)</span>
+<span id="cb52-29"><a href="#cb52-29" aria-hidden="true" tabindex="-1"></a>  ),</span>
+<span id="cb52-30"><a href="#cb52-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-31"><a href="#cb52-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tar_target</span>(</span>
+<span id="cb52-32"><a href="#cb52-32" aria-hidden="true" tabindex="-1"></a>    communes,</span>
+<span id="cb52-33"><a href="#cb52-33" aria-hidden="true" tabindex="-1"></a>    <span class="fu">c</span>(<span class="st">"Luxembourg"</span>,</span>
+<span id="cb52-34"><a href="#cb52-34" aria-hidden="true" tabindex="-1"></a>      <span class="st">"Esch-sur-Alzette"</span>,</span>
+<span id="cb52-35"><a href="#cb52-35" aria-hidden="true" tabindex="-1"></a>      <span class="st">"Mamer"</span>,</span>
+<span id="cb52-36"><a href="#cb52-36" aria-hidden="true" tabindex="-1"></a>      <span class="st">"Schengen"</span>,</span>
+<span id="cb52-37"><a href="#cb52-37" aria-hidden="true" tabindex="-1"></a>      <span class="st">"Wincrange"</span>)</span>
+<span id="cb52-38"><a href="#cb52-38" aria-hidden="true" tabindex="-1"></a>  ),</span>
+<span id="cb52-39"><a href="#cb52-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-40"><a href="#cb52-40" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tar_render</span>(</span>
+<span id="cb52-41"><a href="#cb52-41" aria-hidden="true" tabindex="-1"></a>    analyse_data,</span>
+<span id="cb52-42"><a href="#cb52-42" aria-hidden="true" tabindex="-1"></a>    <span class="st">"analyse_data.Rmd"</span></span>
+<span id="cb52-43"><a href="#cb52-43" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb52-44"><a href="#cb52-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-45"><a href="#cb52-45" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Remember, the idea is that all the computation is taken out of the <code>.Rmd</code> file and put into a <code>{targets}</code> pipeline. This way, if certain targets need to get updated, we don’t need to recompute everything when knitting the <code>.Rmd</code> document. The document simply retrieves the required targets from the cache and thus gets knitted very quickly. Here is what <code>analyse_data.Rmd</code> now looks like:</p>
+<div class="sourceCode" id="cb53"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a>title: "Nominal house prices data in Luxembourg"</span>
+<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a>author: "Bruno Rodrigues"</span>
+<span id="cb53-4"><a href="#cb53-4" aria-hidden="true" tabindex="-1"></a>date: "`r Sys.Date()`"</span>
+<span id="cb53-5"><a href="#cb53-5" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb53-6"><a href="#cb53-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-7"><a href="#cb53-7" aria-hidden="true" tabindex="-1"></a>Let’s load the datasets (the Laspeyeres price index is already computed):</span>
+<span id="cb53-8"><a href="#cb53-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-9"><a href="#cb53-9" aria-hidden="true" tabindex="-1"></a>```{r}</span>
+<span id="cb53-10"><a href="#cb53-10" aria-hidden="true" tabindex="-1"></a>tar_load(commune_data)</span>
+<span id="cb53-11"><a href="#cb53-11" aria-hidden="true" tabindex="-1"></a>tar_load(country_data)</span>
+<span id="cb53-12"><a href="#cb53-12" aria-hidden="true" tabindex="-1"></a>```</span>
+<span id="cb53-13"><a href="#cb53-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-14"><a href="#cb53-14" aria-hidden="true" tabindex="-1"></a>We are going to create a plot for 5 communes and compare the price evolution in the communes</span>
+<span id="cb53-15"><a href="#cb53-15" aria-hidden="true" tabindex="-1"></a>to the national price evolution. Let’s first load the communes:</span>
+<span id="cb53-16"><a href="#cb53-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-17"><a href="#cb53-17" aria-hidden="true" tabindex="-1"></a>```{r}</span>
+<span id="cb53-18"><a href="#cb53-18" aria-hidden="true" tabindex="-1"></a>tar_load(communes)</span>
+<span id="cb53-19"><a href="#cb53-19" aria-hidden="true" tabindex="-1"></a>```</span>
+<span id="cb53-20"><a href="#cb53-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-21"><a href="#cb53-21" aria-hidden="true" tabindex="-1"></a>```{r, results = "asis"}</span>
+<span id="cb53-22"><a href="#cb53-22" aria-hidden="true" tabindex="-1"></a>res &lt;- lapply(communes, function(x){</span>
+<span id="cb53-23"><a href="#cb53-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-24"><a href="#cb53-24" aria-hidden="true" tabindex="-1"></a>  knitr::knit_child(text = c(</span>
+<span id="cb53-25"><a href="#cb53-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-26"><a href="#cb53-26" aria-hidden="true" tabindex="-1"></a>    '\n',</span>
+<span id="cb53-27"><a href="#cb53-27" aria-hidden="true" tabindex="-1"></a>    '## Plot for commune: `r x`',</span>
+<span id="cb53-28"><a href="#cb53-28" aria-hidden="true" tabindex="-1"></a>    '\n',</span>
+<span id="cb53-29"><a href="#cb53-29" aria-hidden="true" tabindex="-1"></a>    '```{r, echo = F}',</span>
+<span id="cb53-30"><a href="#cb53-30" aria-hidden="true" tabindex="-1"></a>    'print(make_plot(country_data, commune_data, x))',</span>
+<span id="cb53-31"><a href="#cb53-31" aria-hidden="true" tabindex="-1"></a>    '```'</span>
+<span id="cb53-32"><a href="#cb53-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-33"><a href="#cb53-33" aria-hidden="true" tabindex="-1"></a>     ),</span>
+<span id="cb53-34"><a href="#cb53-34" aria-hidden="true" tabindex="-1"></a>     envir = environment(),</span>
+<span id="cb53-35"><a href="#cb53-35" aria-hidden="true" tabindex="-1"></a>     quiet = TRUE)</span>
+<span id="cb53-36"><a href="#cb53-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-37"><a href="#cb53-37" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb53-38"><a href="#cb53-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-39"><a href="#cb53-39" aria-hidden="true" tabindex="-1"></a>cat(unlist(res), sep = "\n")</span>
+<span id="cb53-40"><a href="#cb53-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-41"><a href="#cb53-41" aria-hidden="true" tabindex="-1"></a>```</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>As you can see, the data gets loaded by using <code>targets::tar_load()</code> which loads the two pre-computed data sets. The end portion of the document looks fairly similar to what we had before turning our analysis into a package and then a pipeline. We use a child document to generate as many sections as required automatically (remember, Don’t Repeat Yourself!). Try to change something in the pipeline, for example remove some communes from the <code>communes</code> object, and rerun the whole pipeline using <code>tar_make()</code>.</p>
+<p>We are now done with this introduction to <code>{targets}</code>: we have turned our analysis into a pipeline, and now we need to ensure that the outputs it produces are reproducible. So the first step is to use <code>{renv}</code>; but as already discussed, this will not be enough, but it is essential that you do it! So let’s initialize <code>{renv}</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>renv<span class="sc">::</span><span class="fu">init</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>This will create an <code>renv.lock</code> file with all the dependencies of the pipeline listed. Very importantly, our Github package also gets listed:</p>
+<pre><code>"housing": {
+  "Package": "housing",
+  "Version": "0.1",
+  "Source": "GitHub",
+  "RemoteType": "github",
+  "RemoteHost": "api.github.com",
+  "RemoteRepo": "housing",
+  "RemoteUsername": "rap4all",
+  "RemoteRef": "fusen",
+  "RemoteSha": "1c860959310b80e67c41f7bbdc3e84cef00df18e",
+  "Hash": "859672476501daeea9b719b9218165f1",
+  "Requirements": [
+    "dplyr",
+    "ggplot2",
+    "janitor",
+    "purrr",
+    "readxl",
+    "rlang",
+    "rvest",
+    "stringr",
+    "tidyr"
+  ]
+},
+</code></pre>
+<p>If you look at the fields titled <code>RemoteSha</code> and <code>RemoteRef</code> you should recognize the commit hash and repository that were used to install the package:</p>
+<pre><code>"RemoteRef": "fusen",
+"RemoteSha": "1c860959310b80e67c41f7bbdc3e84cef00df18e",</code></pre>
+<p>This means that if someone wants to re-run our project, by running <code>renv::restore()</code> the correct version of the package will get installed! h To finish things, we should edit the <code>Readme.md</code> file and add instructions on how to re-run the project. This is what the <code>Readme.md</code> file could look like:</p>
+<div class="sourceCode" id="cb57"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a># How to run</span>
+<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a>- Clone the repository: `git clone git@github.com:rap4all/housing.git`</span>
+<span id="cb57-4"><a href="#cb57-4" aria-hidden="true" tabindex="-1"></a>- Switch to the `pipeline` branch: `git checkout pipeline`</span>
+<span id="cb57-5"><a href="#cb57-5" aria-hidden="true" tabindex="-1"></a>- Start an R session in the folder and run `renv::restore()` to install the project’s dependencies.</span>
+<span id="cb57-6"><a href="#cb57-6" aria-hidden="true" tabindex="-1"></a>- Run the pipeline with `targets::tar_make()`.</span>
+<span id="cb57-7"><a href="#cb57-7" aria-hidden="true" tabindex="-1"></a>- Checkout `analyse_data.html` for the output.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>If you followed along, don’t forget to change the <code>url</code> of the repository to your own.</p>
 </section>
 <section id="some-little-tips-before-concluding" class="level2" data-number="13.9">
 <h2 data-number="13.9" class="anchored" data-anchor-id="some-little-tips-before-concluding"><span class="header-section-number">13.9</span> Some little tips before concluding</h2>
-<section id="reusing-targets-in-another-project" class="level3" data-number="13.9.1">
-<h3 data-number="13.9.1" class="anchored" data-anchor-id="reusing-targets-in-another-project"><span class="header-section-number">13.9.1</span> Reusing targets in another project</h3>
-</section>
-<section id="common-mistakes" class="level3" data-number="13.9.2">
-<h3 data-number="13.9.2" class="anchored" data-anchor-id="common-mistakes"><span class="header-section-number">13.9.2</span> Common mistakes</h3>
+<section id="general-tricks" class="level3" data-number="13.9.1">
+<h3 data-number="13.9.1" class="anchored" data-anchor-id="general-tricks"><span class="header-section-number">13.9.1</span> General tricks</h3>
+<p><code>tar_load_everything()</code> <code>tar_manifest()</code> <code>tar_destroy()</code> <code>tar_visnetwork() %&gt;% visNetwork::visNetworkEditor()</code></p>
+<p><code>withr::with_dir(path, tar_load...)</code></p>
 <pre><code>
 targets::tar_make()
 Error:
