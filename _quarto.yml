@@ -10,23 +10,25 @@ book:
     - index.qmd
     - preface.qmd
     - intro.qmd
-    - part1_intro.qmd
-    - prerequisites.qmd
-    - project_start.qmd
-    - git.qmd
-    - github.qmd
-    - fprog.qmd
-    - lit_prog.qmd
-    - part1_conclusion.qmd
-    - part2_intro.qmd
-    - project_rewrite.qmd
-    - repro_intro.qmd
-    - packages.qmd
-    - testing.qmd
-    - targets.qmd
-    - repro_cont.qmd
-    - ci_cd.qmd
-    - part2_conclusion.qmd
+    - part: part1_intro.qmd
+      chapters:
+        - prerequisites.qmd
+        - project_start.qmd
+        - git.qmd
+        - github.qmd
+        - fprog.qmd
+        - lit_prog.qmd
+        - part1_conclusion.qmd
+    - part: part2_intro.qmd
+      chapters:
+        - project_rewrite.qmd
+        - repro_intro.qmd
+        - packages.qmd
+        - testing.qmd
+        - targets.qmd
+        - repro_cont.qmd
+        - ci_cd.qmd
+        - part2_conclusion.qmd
     - references.qmd
   page-navigation: true
 
