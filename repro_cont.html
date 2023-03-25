@@ -253,7 +253,7 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<p>If the book ended here, it would be titled “Building analytical pipelines with R”, because we have not ensured that the pipeline we built is reproducible. We did our best though:</p>
+<p>If the book ended at the end of the previous chapter, it would have been titled “Building analytical pipelines with R”, because we have not ensured that the pipeline we built is reproducible. We did our best though:</p>
 <ul>
 <li>we used functional and literate programming;</li>
 <li>we documented, tested and versioned the code;</li>
@@ -261,7 +261,16 @@ ul.task-list li input[type="checkbox"] {
 <li>the project is now a pipeline and re-running it is as easy as it can possibly get.</li>
 </ul>
 <p>But there are still many variables that we need to consider. If we go back to the reproducibility iceberg, you will notice that we can still go deeper. As the code stands now, we did our best using programming paradigms and libraries, but now we need to consider another tool, called Docker.</p>
-<p><em>Now that the readers are familiar with renv, but also its shortcomings, we can go a step further and introduce Docker. I think some primer on the Linux command line could be included here</em></p>
+<p>As already mentioned in the introduction and in Chapter 10, <code>{renv}</code> <em>only</em> restores package versions. The R version used for the analysis only gets recorded. So to make sure that the pipeline reproduces the same results, you’d need to install the same R version that was used to build the pipeline originally.</p>
+<p>Next comes the operating system on which the pipeline was developed. In practice, this rarely matters, but there have been cases where different code produces different results on different operating systems.</p>
+<p>And finally, I believe that we are in a transition period when it comes to hardware architecture. Apple will very likely completely switch over to an ARM architecture with their Apple silicon CPUs (as of writing, the Mac Pro is the only computer manufactured by Apple that doesn’t use an Apple silicon CPU and only because it was released in 2019) and it wouldn’t surprise me if other manufacturers follow suit and develop their own ARM cpus.</p>
+<p>So, as I explained in the previous chapter, we want our pipeline to be the composition of pure functions. Nothing in the global environment (apart from <code>{target}</code>-specific options) should influence the runs of the pipeline. But, what about the environment R is running in? The R engine is itself running in some kind of environment. This is what I’ve explained above: operating system (and all the math libraries these ship that R relies on to run code) and hardware.</p>
+<p>Think about it this way: when you running a pure function <code>f()</code> of one argument you think you do this:</p>
+<pre><code>f(1)</code></pre>
+<p>but actually what you’re doing is:</p>
+<pre><code>f(1, "windows 10 - build 22H2 - patch 10.0.19045.2075", "intel x86_64 cpu i9-13900F", "R version 4.2.2")</code></pre>
+<p>and so on. <code>f()</code> is only pure as far as the R version currently running <code>f()</code> is concerned. But everything else should also be taken into account! Remember, in technical terms this means that our function is not referentially transparent.</p>
+<p>And this is what Docker allows us to do: turn our the pipeline referentially transparent, by fixing R’s and the operating system’s versions (and the CPU architecture us well).</p>
 <section id="first-steps-with-docker" class="level2" data-number="14.1">
 <h2 data-number="14.1" class="anchored" data-anchor-id="first-steps-with-docker"><span class="header-section-number">14.1</span> First steps with Docker</h2>
 <p><em>To write your own Dockerfile, you need some familiarity with the Linux cli, so here’s…</em></p>
