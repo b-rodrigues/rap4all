@@ -18,11 +18,16 @@ As already mentioned in the introduction and in Chapter 10, `{renv}` *only*
 restores package versions. The R version used for the analysis only gets
 recorded. So to make sure that the pipeline reproduces the same results, you'd
 need to install the same R version that was used to build the pipeline
-originally.
+originally. But installing the right R version can be difficult sometimes; it
+depends on the operating system you want to install it on, and how old a version
+we’re talking about. Installing R 4.0 on Windows should be quite easy, but I
+wouldn’t be very keen on trying to install R 2.15.0 (released on March 2012) on
+a current Linux distribution.
 
 Next comes the operating system on which the pipeline was developed. In
-practice, this rarely matters, but there have been cases where different code
-produces different results on different operating systems.
+practice, this rarely matters, but there have been cases where the same code
+produces different results on different operating systems, sometimes even
+on different versions of the same operating system!
 
 And finally, I believe that we are in a transition period when it comes to
 hardware architecture. Apple will very likely completely switch over to an ARM
@@ -31,15 +36,16 @@ only computer manufactured by Apple that doesn't use an Apple silicon CPU and
 only because it was released in 2019) and it wouldn't surprise me if other
 manufacturers follow suit and develop their own ARM cpus. 
 
-So, as I explained in the previous chapter, we want our pipeline to be the composition
-of pure functions. Nothing in the global environment (apart from `{target}`-specific
-options) should influence the runs of the pipeline. But, what about the environment R 
-is running in? The R engine is itself running in some kind of environment. This is what
-I've explained above: operating system (and all the math libraries these ship that R 
-relies on to run code) and hardware.
+So, as I explained in the previous chapter, we want our pipeline to be the
+composition of pure functions. Nothing in the global environment (apart from
+`{target}`-specific options) should influence the runs of the pipeline. But,
+what about the environment R is running in? The R engine is itself running in
+some kind of environment. This is what I've explained above: operating system
+(and all the math libraries these ship that R relies on to run code) and
+hardware and variables that need to be recond and/or frozen as much as possible.
 
-Think about it this way: when you running a pure function `f()` of one argument you think
-you do this:
+Think about it this way: when you running a pure function `f()` of one argument
+you think you do this:
 
 ```
 f(1)
@@ -52,17 +58,290 @@ f(1, "windows 10 - build 22H2 - patch 10.0.19045.2075", "intel x86_64 cpu i9-139
 ```
 
 and so on. `f()` is only pure as far as the R version currently running `f()` is
-concerned. But everything else should also be taken into account! Remember, in technical
-terms this means that our function is not referentially transparent. 
+concerned. But everything else should also be taken into account! Remember, in
+technical terms this means that our function is not referentially transparent.
 
 And this is what Docker allows us to do: turn our the pipeline referentially
-transparent, by fixing R's and the operating system's versions (and the CPU
+transparent, by freezing R's and the operating system's versions (and the CPU
 architecture us well).
+
+## What is Docker?
+
+Let me first explain in very simple terms what Docker is.
+
+So in very simply (and technically wrong) terms, Docker makes it easy to run a
+Linux virtual machine (VM) on your computer. A VM is a computer within a
+computer: the idea is that a you turn on your computer, start Windows (the
+operating system you use everyday), but then start Ubuntu (a very popular Linux
+distribution) as if it were any other app installed on your computer and use it
+(almost) as you would normally. This is what a classic VM solution like
+*Virtualbox* offers you. You can start and use Ubuntu interactively from within
+Windows. This can be quite useful for testing purposes for example.
+
+The way Docker differs from Virtualbox (or VMware) though is that it strips down
+the VM to its bare essentials. There’s no graphical user interface for example,
+and you will not (typically) use a Docker VM interactively. What you will do
+instead is write down in a text file the specifications of the VM you want.
+Let’s call this text file a *Dockerfile*. For example, you want the VM to be
+based off Ubuntu. So that would be the first line in the Dockerfile. You then
+want it to have R installed. So that would be the second line. Then you need to
+install R packages, so you add those lines as well. Maybe you need to add some
+system dependencies? Add them. Finally, you add the code of the pipeline that
+you want to make reproducible as well.
+
+Once you’re done, you have this text file, the Dockerfile, with a complete
+recipe to generate a Docker VM. That VM is called an *image* (as as I said
+previously it’s technically not a true VM, but let’s not discuss this). So you
+have a text file, and this file helps you define and generate an image. Here,
+you should already see a first advantage of using Docker over a more traditional
+VM solution like Virtualbox: you can very easily write these Dockerfiles and
+version them. You can easily start off from another Dockerfile from another
+project and adapt it to your current project. And most importantly, because
+everything is written down, it’s reproducible (but more on that at the end of
+this chapter...).
+
+Ok so you have this image. This image will be based on some Linux distribution,
+very often Ubuntu. It comes with a specific version of Ubuntu, and you can add
+to it a specific version of R. You can also download a specific version of all
+the packages required for your project. You end with an environment that is
+tailor-made for your project. You can then run the project with this Docker
+image, and *always get exactly the same results, ever*. This is because,
+regardless of how, where or when you will run this *dockerized* project, the
+same version of R, with the same version of R packages, on the same Linux
+distribution will be used to reproduce the results of your pipeline. By the way,
+when you run a Docker image (as in, your executing your pipeline inside that
+container) this now is refered as a Docker container.
+
+So: a Dockerfile defines a Docker image, from which you can then run containers.
+I hope that the pictures below will help. The first picture shows what happens
+when you run the same pipeline on two different R versions and two different
+operating systems:
+
+<figure>
+    <img src="images/without_docker.png"
+         alt="Running a pipeline without Docker results (potentially) in different outputs."></img>
+    <figcaption>Running a pipeline without Docker results (potentially) in different outputs.</figcaption>
+</figure>
+
+Take a close look at the output, you will notice it’s different!
+
+Now, you run the same pipeline, which is now *dockerized*:
+
+<figure>
+    <img src="images/with_docker.png"
+         alt="Running a pipeline with Docker results in the same outputs."></img>
+    <figcaption>Running a pipeline with Docker results in the same outputs.</figcaption>
+</figure>
+
+Another way of looking at a Docker image: it’s an immutable sandbox, where the
+rules of the game are always the same. It doesn’t matter where or when you run
+this sandbox, the pipeline will always be executed in this same, well-defined
+space. Because the pipeline runs on the same versions of R (and packages)
+and on the same operating system defined within the Docker image, our pipeline
+is now truly reproducible.
+
+But why Linux though; why isn’t it possible to create Docker images based on
+Windows or macOS? Remember in the introduction, where I explained what 
+reproducibility is? I wrote:
+
+> Open source is a hard requirement for reproducibility.
+
+Open source is not just a requirement for the programming language used for
+building the pipeline, but extends to the operating system that the pipeline
+runs on as well. So the reason Docker uses Linux, is because you can use Linux
+distributions like Ubuntu for free and without restrictions. There aren’t any
+licenses that you need to buy or activate, and Linux distributions can be
+customized for any use-case imaginable. Thus Linux distributions are the only
+option available to Docker for this task.
+
+## A primer on Linux
+
+Up until this point, you could have followed along using any operating system.
+Most of the code shown in this book is R code, so it doesn’t matter on what
+operating system you’re running it. But there was some code that I ran in the
+Linux console (for example, I’ve used `ls` to list files). These commands should
+also work on macOS, and some even on Windows (`ls` also works on the Windows
+command prompt, and in Powershell as well). But you could have followed along
+using the user interface of your operating system. For example, in Chapter 11, I
+list the contents of the `dev/` directory using the following command:
+
+```
+owner@localhost ➤ ls dev/
+```
+
+but you could have just opened the `dev/` folder in the file explorer of your
+operating system of choice. But now, you will need to get to know Linux and the
+Linux ecosystem and concepts. No worries, it’s not as difficult as it sounds,
+and I think that you likely aren’t afraid of difficult things, or else you would
+have stopped reading this book much earlier.
+
+*Linux* is a not the name of any one specific operating system, but technically,
+of an operating system kernel. A kernel is an important component of an
+operating system. What sets the Linux kernel apart from the one used for Windows
+or macOS, is that the Linux kernel is open source and free software. So anyone
+can take that kernel, and add all the other components needed to build a
+complete operating system. This is why there are many *Linux distributions*: a
+Linux distribution is a complete operating system that use the Linux kernel. The
+most popular Linux distribution is called Ubuntu, and if one time you googled
+something along the lines of "easy linux os for beginners" the answer that came
+out on top was likely Ubuntu, or one the other variants of Ubuntu (yes, because
+Ubuntu itself is also open source and free software, it is possible to build a
+variant using Ubuntu as a basis, like Linux Mint).
+
+To define our Docker images, we will be using Ubuntu as a base. The Ubuntu
+operating system has two releases a year, one in April and one in October. Every
+two even years, the April release is long-term support (LTS) release. LTS
+releases get security updates for 5 years, and Docker images generally use an
+LTS release as a base. As of writing (April 2023), the current LTS is Ubuntu
+22.04 *Jammy Jellyfish* (Ubuntu releases are named with a number of the form
+YY.MM and then a code name based on some animal).
+
+If you want, you can install Ubuntu on your computer. But there’s no need for
+this, since you can use Docker to ship your projects.
+
+A major difference between Ubuntu (and other Linux distributions) and macOS and
+Windows, is how you install software. In short, software for Linux distributions
+is distributed as packages. If you want to install, say, the Emacs text editor,
+you can run the following command in the terminal:
+
+```
+sudo apt-get install emacs-gtk
+```
+
+Let’s break this down: `sudo` makes the next commands run as root. *root* is
+Linux jargon for administrator. So if I type `sudo xyz`, the command `xyz` will
+run with administrator privileges. Then comes `apt-get install`. `apt-get` is
+Ubuntu’s package manager, and `install` is the command that install `emacs-gtk`.
+`emacs-gtk` is the name of the Emacs package. Because you’re an R user, this
+should be somewhat familiar: after all, extensions for R are also installed
+using a package manager and a command: `install.packages("package_name")`. Just
+like in R, where the packages get downloaded from CRAN, Ubuntu downloads
+packages from a repository which you can browse
+[here](https://packages.ubuntu.com/jammy/). Of course, because using the command
+line is intimidating for beginners, it is also possible to install packages
+using a software store, just like on macOS or Windows. But remember, Docker only
+uses what it really needs to function, so there’s no interactive user interface.
+This is not because Docker’s developers don’t like user interfaces, but because
+the point of Docker is not to use Docker images interactively, so there’s no
+need for the user interface. So you need to know how to install Ubuntu packages
+with the command line.
+
+Just like for R, it is possible to install software from different sources. It
+is possible to add different repositories, and install software from there. We
+are not going to use this here, but just as an aside, if you are using Ubuntu on
+your computer as your daily driver operating system, you really should check out
+[r2u](https://github.com/eddelbuettel/r2u), an Ubuntu repository that comes with
+pre-compiled R packages that can get installed, very, very quickly. Even though
+we will not be using this here (and I’ll explain why later in this chapter), you
+should understand why r2u is so useful.
+
+Let’s suppose that you are using Ubuntu on your machine, and are using R. If you want
+to install the `{dplyr}` R package, something interesting happens when you type:
+
+```{r, eval = F}
+install.packages("dplyr")
+```
+
+On Windows and macOS, a compiled binary gets downloaded from CRAN and installed
+on your computer. A "binary" is the compiled source code of the package. Many R
+packages come with C++ or Fortran code, and this code cannot be used as is by R.
+So these bits of C++ and Fortran code need to be compiled to be used. Think of
+it this way: if the source code is the ingredients of a recipe, the compiled
+binary is the cooked meal. Now imagine that each time you want to eat
+Bouillabaisse, you have to cook it yourself... or you could get it delivered to
+your home. You’d probably go for the delivery (especially if it would free)
+instead of cooking it each time. But this supposes that there’s people out there
+cooking Bouillabaisse for you. CRAN essentially cooks the package source codes
+into binaries for Windows and macOS, as shown below:
+
+<figure>
+    <img src="images/tidyverse_packages.png"
+         alt="Download links to pre-compiled tidyverse binaries."></img>
+    <figcaption>Download links to pre-compiled tidyverse binaries.</figcaption>
+</figure>
+
+In the image above, you can see links to compiled binaries of the `{tidyverse}`
+package for Windows and macOS, but none for any Linux distribution. This is
+because, as stated in the introduction, there are many, many, many Linux
+distributions. So at best, CRAN could offer binaries for Ubuntu, but Ubuntu is
+not the only Linux distribution, and Ubuntu has two releases a year, which means
+that every CRAN package (that needs compilation) would need to get compiled
+twice a year. This is a huge undertaking, unless CRAN decided to only offer
+binaries for LTS releases. But that would still be every two years.
+
+So instead, what happens, is that the burden of compilation is pushed to the
+user. Every time you type `install.packages("package_name")`, and if that
+package requires compilation, that package gets compiled on your machine, which
+not only takes some time, but can also fail. This is because very often, R
+packages that require compilation need some additional system-level dependencies
+that need to be installed. For example, here are the Ubuntu dependencies that need
+to be installed for compilation of the `{tidyverse}` package to succeed:
+
+```
+libicu-dev
+zlib1g-dev
+make
+libcurl4-openssl-dev
+libssl-dev
+libfontconfig1-dev
+libfreetype6-dev
+libfribidi-dev
+libharfbuzz-dev
+libjpeg-dev
+libpng-dev
+libtiff-dev
+pandoc
+libxml2-dev
+```
+
+This why r2u is so useful: by adding this repository, what you’re essentially
+doing is telling R to not fetch the packages from CRAN, but from the r2u
+repository. And this repository contains compiled R packages for Ubuntu. So the
+required system-level dependencies get installed automatically and the R package
+doesn’t need compilation. So installation of the `{tidyverse}` package takes
+less than half a minute on a modern machine.
+
+But if r2u is so nice, why did I say above that we would not be using it?
+Unfortunately, this is because r2u does not archive compiled binaries of older
+packages, and this is exactly what we need for reproducibility. So when you’re
+building a Docker image to make a project reproducible, because that image will
+be based on Ubuntu, we will need to make sure that our Docker image contains the
+right system-level dependencies so that compilation of the R packages doesn’t
+fail. Thankfully, you’re reading the right book.
 
 ## First steps with Docker
 
-*To write your own Dockerfile, you need some familiarity with the Linux cli, so here's...*
+Let’s start by creating an "Hello World" Docker image. As I explained in the
+beginning, to define a Docker image, we need to create a `Dockerfile` with some
+instructions. But first, you need of course to install Docker. To install Docker
+on any operating system (Windows, macOS or Ubuntu or other Linuxes), you can
+install [Docker Desktop](https://docs.docker.com/desktop/). If you’re running
+Ubuntu (or another Linux distribution) and don’t want the GUI, and are using
+Ubuntu, you could install the [Docker
+engine](https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository)
+and then follow the post-installation [steps for
+Linux](https://docs.docker.com/engine/install/linux-postinstall/#manage-docker-as-a-non-root-user).
 
-## A primer on the Linux command line
+In any case, whatever operating system you’re using, we will be using the
+command line to interact with Docker. Once you’re done with installing Docker,
+create a folder somewhere on your computer, and create inside of this folder an
+empty text file with the name `Dockerfile`. This can be tricky on Windows,
+because you have to remove the `.txt` extension that gets added by default on
+Windows. You might need to turn on the option "File name extensions" in the
+`View` pane of the Windows file explorer to make this process easier.
+Then, open this file with your favourite text editor, and add the following lines:
 
-## Dockerizing your project
+```
+FROM ubuntu:jammy
+
+RUN lsb_release -cs
+```
+
+This very simple `Dockerfile` does two things: it starts by stating that it’s
+based on the Ubuntu Jammy (so version 22.04) operating system, and then runs the
+`lsb_release -cs` command. This command, which gets run inside the Ubunu
+commande line, returns the Ubuntu version. `FROM` and `RUN` are Docker commands;
+there are a couple others that we will discover a bit later. Now, what do you do
+with this `Dockerfile`?
+
+## Dockerizing your project 
