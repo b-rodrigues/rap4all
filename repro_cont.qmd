@@ -334,14 +334,180 @@ Then, open this file with your favourite text editor, and add the following line
 ```
 FROM ubuntu:jammy
 
-RUN lsb_release -cs
+RUN uname -a
 ```
 
 This very simple `Dockerfile` does two things: it starts by stating that it’s
 based on the Ubuntu Jammy (so version 22.04) operating system, and then runs the
-`lsb_release -cs` command. This command, which gets run inside the Ubunu
-commande line, returns the Ubuntu version. `FROM` and `RUN` are Docker commands;
-there are a couple others that we will discover a bit later. Now, what do you do
-with this `Dockerfile`?
+`uname -a` command. This command, which gets run inside the Ubunu command line,
+prints the Linux kernel version from that particular Ubuntu release. `FROM` and
+`RUN` are Docker commands; there are a couple others that we will discover a bit
+later. Now, what do you do with this `Dockerfile`? Remember, a `Dockerfile`
+defines an image. So now, we need to build this image. Open a terminal/command
+prompt in the folder where the `Dockerfile` is and type the following:
+
+```
+owner@localhost ➤ docker build -t raps_hello .
+```
+
+The `docker build` command builds an image from the `Dockerfile` that is in
+path `.` (a single `.` means "this current working directory"). The `-t` option
+tags that image with the name `raps_hello`. If everything goes well, you 
+should see this output:
+
+```
+Sending build context to Docker daemon  2.048kB
+Step 1/2 : FROM ubuntu:jammy
+ ---> 08d22c0ceb15
+Step 2/2 : RUN uname -a
+ ---> Running in 697194b9a519
+Linux 697194b9a519 6.2.6-1-default #1 SMP PREEMPT_DYNAMIC Mon Mar 13 10:57:27 UTC 2023 (fa1a4c6) x86_64 x86_64 x86_64 GNU/Linux
+Removing intermediate container 697194b9a519
+ ---> a0ea59f23d01
+Successfully built a0ea59f23d01
+Successfully tagged raps_hello:latest
+```
+
+Look at `Step 2/2`: you should see the output of the `uname -a` command:
+
+```
+Linux 697194b9a519 6.2.6-1-default #1 SMP PREEMPT_DYNAMIC Mon Mar 13 10:57:27 UTC 2023 (fa1a4c6) x86_64 x86_64 x86_64 GNU/Linux
+```
+
+Every `RUN` statement in the `Dockerfile` gets executed at build time: so this
+is what we will use to install R and the needed packages. This way, once the 
+image is built, we end up with an image that contains all the software we need.
+
+Now, we would like to be able to use this image. Using a built image, we can
+start one or several containers that we can use for whatever we want. Let's now
+create a more realistic example. Let's build a Docker image that comes with R
+pre-installed. But for this, we need to go back to our `Dockerfile` and change
+it a bit:
+
+```
+FROM ubuntu:jammy
+
+ENV TZ=Europe/Luxembourg
+
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+
+RUN apt-get update && apt-get install -y r-base
+
+CMD ["R"]
+```
+
+First we define a variable using `ENV`, called `TZ` and we set that to
+the `Europe/Luxembourg` time zone (you can change this to your own time zone).
+We then run a rather complex looking command that sets the defined time zone 
+system-wide. We had to do all this, because when we will later install R,
+a system-level dependency called `tzdata` gets installed. This tool then asks
+the user, to enter his or her time zone interactively. But we cannot interact
+with the image interactively as it's being built, so the build process gets
+stuck at this prompt. By using these two commands, we can set the correct 
+time zone and once `tzdata` gets installed, that tool doesn't ask for the time
+zone anymore, so the build process can continue. This is a rather known issue
+when building Docker images based on Ubuntu, so the fix is easily found with 
+a Google search (but I'm giving it to you, dear reader, for free).
+
+Then come `RUN` statements. The first one uses Ubuntu's package manager to first
+refresh the repositories (this ensures that our local Ubuntu installation
+repositories are in synch with the latest software updates that were pushed to
+the central Ubuntu repos). Then we use Ubuntu's package manager to install
+`r-base`. `r-base` is the package that installs R. We then finish this
+`Dockerfile` by running `CMD ["R"]`. This is the command that will be executed
+when we run the container.
+
+Let's build the image (this will take some time, because a lot of software gets
+installed):
+
+```
+owner@localhost ➤ docker build -t raps_ubuntu_r .
+```
+
+This builds an image called `raps_ubuntu_r`. This image is based on Ubuntu 
+22.04 Jammy Jellyfish and comes with R pre-installed. But the version of R
+that gets installed is the one made available through the Ubuntu repositories,
+and as of writing that is version 4.1.2, while the latest version available is
+R version 4.2.3. So the version available through the Ubuntu repositories lags
+behind the actual release. But no matter, we will deal with that later.
+
+We can now start a container with the following command:
+
+```
+owner@localhost ➤ docker run raps_ubuntu_r
+```
+
+And this is the output we get:
+
+```
+Fatal error: you must specify '--save', '--no-save' or '--vanilla'
+```
+
+What is going on here? When you run a container, the command specified by `CMD`
+gets executed, and then the container quits. So here, the container ran the
+command `R`, which started the R interpreter, but then quit immediately. When
+quitting R, users should specify if they want to save or not save the workspace.
+This is what the message above is telling us. So, how can be use this? Is there
+a way to use this R version interactively?
+
+Yes, there is a way to use this R version boxed inside our Docker image
+interactively, even though that's not really what we want to achieve. What we
+want instead is that our pipeline gets executed when we run the container. We
+don't want to mess with the container interactively. But let me show you how
+we can interact with this dockerized R version. First, you need to let the container
+run in the background. You can achieve this by running the following command:
+
+```
+owner@localhost ➤ docker run -d -it --name ubuntu_r_1 raps_ubuntu_r
+```
+
+This runs the container that we name "ubuntu_r_1" from the image "raps_ubuntu_r"
+(remember that we can run many containers from one single image definition).
+Thanks to the option `-d`, the container runs in the background, and the 
+option `-it` states that we want an interactive shell running. So the container
+runs in the background, with an interactive shell waiting for us, instead
+of launching (and then immediately stopping) the R command. You can now 
+"connect" to the interactive shell and start R in it using:
+
+```
+owner@localhost ➤ docker exec -it ubuntu_r_1 R
+```
+
+You should now see the familiar R prompt:
+
+```
+R version 4.1.2 (2021-11-01) -- "Bird Hippie"
+Copyright (C) 2021 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> 
+```
+
+Welcome to a dockerized version of R. Now, all of this might have felt overly
+complicated to you. And of course if this is the first time that you have
+played around with Docker, it is tricky indeed. However, you shouldn't worry
+too much about it, for several reasons:
+
+- we are not going to use Docker interactively, that's not really the point.
+- we will build our images on top of pre-built images from the [Rocker project](https://rocker-project.org/) and these images come with a lot of software pre-installed and configuration taken care of. 
+
+What you should take away from this section is that you need to write a 
+`Dockerfile` which then allows you to build an image. This image can then
+be used to run one (or several) containers. These containers, at run time,
+will execute our pipeline in an environment that is frozen, such that the
+output of this run will stay constant, forever.
+
 
 ## Dockerizing your project 
