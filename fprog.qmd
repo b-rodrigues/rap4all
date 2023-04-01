@@ -573,7 +573,7 @@ result
 
 Because the expression above resulted in an error, `Nothing` is returned.
 `Nothing` is a special value defined in the `{maybe}` package (check it out,
-very interesting package!). We can then even read the log to see what went
+a very interesting package!). We can then even read the log to see what went
 wrong:
 
 ```{r}
@@ -1314,7 +1314,7 @@ nested_unemp %>%
 
 This list-column based workflow is extremely powerful and I highly advise you to
 take the required time to master it. Remember, we never want to have to repeat
-ourselves. This might seem more complicated that repeating yourself, but imagine
+ourselves. This might seem more complicated than repeating yourself, but imagine
 that you need to do this for various countries, various variables, etc... What
 are you going to do, copy and paste code everywhere? This gets very tedious and
 more importantly, very error-prone, because you will forget to update the code
@@ -1378,8 +1378,8 @@ There are some other functions like this that you might want to check out: type
 
 Sometimes you may need to run code with side-effects, but want to avoid any
 interaction between these side-effects and the global environment. For example,
-you might want to run some code that create a plot and saves it to disk, or code
-that creates some data and write them to disk. `local()` can be used for this.
+you might want to run some code that creates a plot and saves it to disk, or code
+that creates some data and writes them to disk. `local()` can be used for this.
 `local()` runs code in a temporary environment that gets discarded at the end:
 
 ```{r}
@@ -1561,7 +1561,7 @@ h3("Bruno", seed = 123)
 ```
 
 In a previous example we downloaded a dataset and loaded it into memory; we did
-so by first created a temporary file, then downloading it and then loading it.
+so by first creating a temporary file, then downloading it and then loading it.
 Suppose that instead of loading this data into our session, we simply wanted to
 test whether the link was still working. We wouldn’t want to keep the loaded
 data in our session, so to avoid having to delete it again manually, we could
