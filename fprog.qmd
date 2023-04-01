@@ -493,7 +493,7 @@ example like this:
 ```{r}
 strict_sqrt <- function(x){
 
-  if(x <= 0) stop("x is negative")
+  if(x < 0) stop("x is negative")
 
   sqrt(x)
 
