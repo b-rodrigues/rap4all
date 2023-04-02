@@ -293,7 +293,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#what-is-docker" id="toc-what-is-docker" class="nav-link active" data-scroll-target="#what-is-docker"><span class="toc-section-number">14.1</span>  What is Docker?</a></li>
   <li><a href="#a-primer-on-linux" id="toc-a-primer-on-linux" class="nav-link" data-scroll-target="#a-primer-on-linux"><span class="toc-section-number">14.2</span>  A primer on Linux</a></li>
   <li><a href="#first-steps-with-docker" id="toc-first-steps-with-docker" class="nav-link" data-scroll-target="#first-steps-with-docker"><span class="toc-section-number">14.3</span>  First steps with Docker</a></li>
-  <li><a href="#dockerizing-your-project" id="toc-dockerizing-your-project" class="nav-link" data-scroll-target="#dockerizing-your-project"><span class="toc-section-number">14.4</span>  Dockerizing your project</a></li>
+  <li><a href="#the-rocker-project" id="toc-the-rocker-project" class="nav-link" data-scroll-target="#the-rocker-project"><span class="toc-section-number">14.4</span>  The Rocker project</a></li>
+  <li><a href="#dockerizing-our-project" id="toc-dockerizing-our-project" class="nav-link" data-scroll-target="#dockerizing-our-project"><span class="toc-section-number">14.5</span>  Dockerizing our project</a></li>
+  <li><a href="#sharing-your-images" id="toc-sharing-your-images" class="nav-link" data-scroll-target="#sharing-your-images"><span class="toc-section-number">14.6</span>  Sharing your images</a>
+  <ul class="collapse">
+  <li><a href="#sharing-on-docker-hub" id="toc-sharing-on-docker-hub" class="nav-link" data-scroll-target="#sharing-on-docker-hub"><span class="toc-section-number">14.6.1</span>  Sharing on Docker Hub</a></li>
+  <li><a href="#sharing-a-compressed-archive-of-your-image" id="toc-sharing-a-compressed-archive-of-your-image" class="nav-link" data-scroll-target="#sharing-a-compressed-archive-of-your-image"><span class="toc-section-number">14.6.2</span>  Sharing a compressed archive of your image</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -478,10 +484,66 @@ Type 'q()' to quit R.
 </ul>
 <p>What you should take away from this section is that you need to write a <code>Dockerfile</code> which then allows you to build an image. This image can then be used to run one (or several) containers. These containers, at run time, will execute our pipeline in an environment that is frozen, such that the output of this run will stay constant, forever.</p>
 </section>
-<section id="dockerizing-your-project" class="level2" data-number="14.4">
-<h2 data-number="14.4" class="anchored" data-anchor-id="dockerizing-your-project"><span class="header-section-number">14.4</span> Dockerizing your project</h2>
+<section id="the-rocker-project" class="level2" data-number="14.4">
+<h2 data-number="14.4" class="anchored" data-anchor-id="the-rocker-project"><span class="header-section-number">14.4</span> The Rocker project</h2>
+<p>The Rocker project offers a very large collection of “R-ready” Docker images that you can use for you own projects. Before using these images though, I still need to explain one very important Docker concept. Let’s go back to our “Hello World” Docker image:</p>
+<pre><code>FROM ubuntu:jammy
+
+RUN uname -a</code></pre>
+<p>The very first line, <code>FROM ubuntu:jammy</code> downloads an Ubuntu Jammy image, but from where? All these images get download from <em>Docker Hub</em>, which you can browse <a href="https://hub.docker.com/">here</a><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>. If you create an account you can even push your own images on there. For example we could push the image we built before, which we called <code>raps_ubuntu_r</code>, on Docker Hub. Then, if we wanted to create a new Docker image that builds upon <code>raps_ubuntu_r</code> we could simply type <code>FROM username:raps_ubuntu_r</code> (or something similar).</p>
+<p>It’s also possible to not use Docker Hub at all, and share the image you built as a file. We will explore this option later.</p>
+<p>The Rocker project offers many different images, which are described <a href="https://rocker-project.org/images/">here</a><a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>. We are going to be using the <em>versioned stack</em>. These are images that ship specific versions of R, which get built from source. This way, it doesn’t matter when the image gets build, the same version of R will be installed. Let me explain why building R from source is important. When we build the image from the Dockerfile we wrote before, R gets installed from the Ubuntu repositories. For this we use Ubuntu’s package manager and the following command: <code>apt-get install -y r-base</code>. As of writing, the version of R that gets installed is version 4.1.3. There’s two problems with installing R from Ubuntu’s repositories. First, we have to use whatever gets installed, which can be a problem with reproducibility. If we ran our analysis using R version 4.2.1, then we would like to dockerize that version of R. The second problem is that when we build the image today we get version 4.1.3. But it is not impossible that if we build the image in 6 months, we get R version 4.2.0, because it is likely that the version that ships in Ubuntu’s repositories will get updated at some point.</p>
+<p>This means that depending on <em>when</em> we build the image, we might get a different version of R. There are only two ways of avoiding this problem: either we build the image once, and archive it and make sure to always keep a copy and ship that copy forever (or for as long as we want to make sure that project is reproducible) just as you would ship data, code and any documentation required to make the project reproducible. Or we write the Dockerfile in such a way that it always produces the same image, regardless of <em>when</em> it gets built. I very strongly advise you to go for the second option, but to <em>also</em> archive the image. But of course, this also depends on how critical your project is. Maybe you don’t need to start archiving images, or maybe you don’t even need to make sure that the Dockerfile always produces the same image. But I would still highly recommend that you write your Dockerfiles in such a way that they always output the same image. It is safer, and it doesn’t really mean extra work, thanks to the Rocker project.</p>
+<p>So, let’s go back to the Rocker project, and specifically their <em>versioned</em> images which you can find <a href="https://rocker-project.org/images/versioned/r-ver.html">here</a><a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>. When you use one the versioned images as a base for your project, you get the following guarantees:</p>
+<ul>
+<li>a fixed version of R that gets built from source. It doesn’t matter <em>when</em> you build the image, it will always ship with the same version of R;</li>
+<li>the operating system will be the LTS release that was current when that specific version of R was current;</li>
+<li>the R repositories are set to the Posit Public Package Manager (PPPM) at a specific date. This ensures that R packages don’t need to be compiled as PPPM serves binary packages for the amd64 architecture (which is the architecture that virtually all non-Apple computers use these days).</li>
+</ul>
+<p>For installing the right version of R packages, we don’t need to worry too much about the repositories. We will be using the <code>renv.lock</code> file to ensure that the right packages get installed. As a quick introduction to using Rocker images, let’s grab the our project’s <code>renv.lock</code> file which you can download from <a href="https://raw.githubusercontent.com/rap4all/housing/renv/renv.lock">here</a><a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>.</p>
+<p>The important piece of information the <code>renv.lock</code> file gives us, is the R version that we need to use, in this case, R version 4.2.2. So that’s the version we will be using in our Dockerfile. Next, we need to check the version of <code>{renv}</code> that we used to build the <code>renv.lock</code> file. You don’t necessarily need to install the same version, but I recommend you do. For example, as I’m writing these lines, <code>{renv}</code> version 0.17.1 is available, but the <code>renv.lock</code> file was written by <code>{renv}</code> version 0.16.0. So to avoid any compatibility issue, we will also install the exact same version. Thankfully, that is quite easy to do (to check the version of <code>{renv}</code> that was used to write the lock file simply look for the word “renv” in the lock file).</p>
+<p>Create a new folder and call whatever you want and save the <code>renv.lock</code> file linked above inside of it. Then, create an empty text file and call it <code>Dockerfile</code>. Add the following lines:</p>
+<pre><code>FROM rocker/r-ver:4.2.2
+
+RUN R -e "install.packages('remotes')"
+
+RUN R -e "remotes::install_github('rstudio/renv@0.16.0')"
+
+RUN mkdir /home/housing
+
+COPY renv.lock /home/housing/renv.lock
+
+RUN R -e "setwd('/home/housing');renv::restore()"</code></pre>
+<p>The first line states that we will be basing our image on the image from the Rocker project that ships with R version 4.2.2, which is the right version that we need. Then, we install the <code>{remotes}</code> package. This will allow us to download a specific version from <code>{renv}</code> from Github.</p>
+</section>
+<section id="dockerizing-our-project" class="level2" data-number="14.5">
+<h2 data-number="14.5" class="anchored" data-anchor-id="dockerizing-our-project"><span class="header-section-number">14.5</span> Dockerizing our project</h2>
+</section>
+<section id="sharing-your-images" class="level2" data-number="14.6">
+<h2 data-number="14.6" class="anchored" data-anchor-id="sharing-your-images"><span class="header-section-number">14.6</span> Sharing your images</h2>
+<section id="sharing-on-docker-hub" class="level3" data-number="14.6.1">
+<h3 data-number="14.6.1" class="anchored" data-anchor-id="sharing-on-docker-hub"><span class="header-section-number">14.6.1</span> Sharing on Docker Hub</h3>
+</section>
+<section id="sharing-a-compressed-archive-of-your-image" class="level3" data-number="14.6.2">
+<h3 data-number="14.6.2" class="anchored" data-anchor-id="sharing-a-compressed-archive-of-your-image"><span class="header-section-number">14.6.2</span> Sharing a compressed archive of your image</h3>
+<p>This doesn’t compress the image:</p>
+<pre><code>owner@localhost ➤ docker save raps_ubuntu_r &gt; raps_ubuntu_r.tar</code></pre>
+<p>you can download it like so:</p>
+<pre><code>owner@localhost ➤ docker load &lt; raps_ubuntu_r.tar</code></pre>
+<p>but if you want to compress it, you can run the following (but this might only work on a Linux distribution, and only if the <code>xz</code> program is installed):</p>
+<pre><code>owner@localhost ➤ docker save raps_ubuntu_r | xz &gt; raps_ubuntu_r.tar.xz</code></pre>
 
 
+</section>
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1"><p>https://hub.docker.com/<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>https://rocker-project.org/images/<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>https://rocker-project.org/images/versioned/r-ver.html<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>https://is.gd/WB3KfN<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
 </section>
 
 </main> <!-- /main -->
