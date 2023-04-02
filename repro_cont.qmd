@@ -509,5 +509,134 @@ be used to run one (or several) containers. These containers, at run time,
 will execute our pipeline in an environment that is frozen, such that the
 output of this run will stay constant, forever.
 
+## The Rocker project
 
-## Dockerizing your project 
+The Rocker project offers a very large collection of "R-ready" Docker images
+that you can use for you own projects. Before using these images though, I still
+need to explain one very important Docker concept. Let's go back to our "Hello
+World" Docker image:
+
+```
+FROM ubuntu:jammy
+
+RUN uname -a
+```
+
+The very first line, `FROM ubuntu:jammy` downloads an Ubuntu Jammy image, but
+from where? All these images get download from *Docker Hub*, which you can
+browse [here](https://hub.docker.com/)^[https://hub.docker.com/]. If you create
+an account you can even push your own images on there. For example we could push
+the image we built before, which we called `raps_ubuntu_r`, on Docker Hub. Then,
+if we wanted to create a new Docker image that builds upon `raps_ubuntu_r` we
+could simply type `FROM username:raps_ubuntu_r` (or something similar).
+
+It's also possible to not use Docker Hub at all, and share the image you
+built as a file. We will explore this option later.
+
+The Rocker project offers many different images, which are described
+[here](https://rocker-project.org/images/)^[https://rocker-project.org/images/].
+We are going to be using the *versioned stack*. These are images that ship
+specific versions of R, which get built from source. This way, it doesn't matter
+when the image gets build, the same version of R will be installed. Let me
+explain why building R from source is important. When we build the image from
+the Dockerfile we wrote before, R gets installed from the Ubuntu repositories.
+For this we use Ubuntu's package manager and the following command: `apt-get
+install -y r-base`. As of writing, the version of R that gets installed is
+version 4.1.3. There's two problems with installing R from Ubuntu's
+repositories. First, we have to use whatever gets installed, which can be a
+problem with reproducibility. If we ran our analysis using R version 4.2.1, then
+we would like to dockerize that version of R. The second problem is that when we
+build the image today we get version 4.1.3. But it is not impossible that if we
+build the image in 6 months, we get R version 4.2.0, because it is likely that
+the version that ships in Ubuntu's repositories will get updated at some point.
+
+This means that depending on *when* we build the image, we might get a different
+version of R. There are only two ways of avoiding this problem: either we build
+the image once, and archive it and make sure to always keep a copy and ship that
+copy forever (or for as long as we want to make sure that project is
+reproducible) just as you would ship data, code and any documentation required
+to make the project reproducible. Or we write the Dockerfile in such a way that
+it always produces the same image, regardless of *when* it gets built. I very
+strongly advise you to go for the second option, but to *also* archive the
+image. But of course, this also depends on how critical your project is. Maybe
+you don't need to start archiving images, or maybe you don't even need to make
+sure that the Dockerfile always produces the same image. But I would still
+highly recommend that you write your Dockerfiles in such a way that they always
+output the same image. It is safer, and it doesn't really mean extra work,
+thanks to the Rocker project.
+
+So, let's go back to the Rocker project, and specifically their *versioned*
+images which you can find
+[here](https://rocker-project.org/images/versioned/r-ver.html)^[https://rocker-project.org/images/versioned/r-ver.html]. When you use one the versioned
+images as a base for your project, you get the following guarantees:
+
+- a fixed version of R that gets built from source. It doesn't matter *when* you build the image, it will always ship with the same version of R;
+- the operating system will be the LTS release that was current when that specific version of R was current;
+- the R repositories are set to the Posit Public Package Manager (PPPM) at a specific date. This ensures that R packages don't need to be compiled as PPPM serves binary packages for the amd64 architecture (which is the architecture that virtually all non-Apple computers use these days).
+
+For installing the right version of R packages, we don't need to worry too much
+about the repositories. We will be using the `renv.lock` file to ensure that the
+right packages get installed. As a quick introduction to using Rocker images,
+let's grab the our project's `renv.lock` file which you can download from
+[here](https://raw.githubusercontent.com/rap4all/housing/renv/renv.lock)^[https://is.gd/WB3KfN].
+
+The important piece of information the `renv.lock` file gives us, is the R
+version that we need to use, in this case, R version 4.2.2. So that's the
+version we will be using in our Dockerfile. Next, we need to check the version
+of `{renv}` that we used to build the `renv.lock` file. You don't necessarily
+need to install the same version, but I recommend you do. For example, as I'm
+writing these lines, `{renv}` version 0.17.1 is available, but the `renv.lock`
+file was written by `{renv}` version 0.16.0. So to avoid any compatibility
+issue, we will also install the exact same version. Thankfully, that is quite
+easy to do (to check the version of `{renv}` that was used to write the lock
+file simply look for the word "renv" in the lock file).
+
+Create a new folder and call whatever you want and save the `renv.lock` file
+linked above inside of it. Then, create an empty text file and call it
+`Dockerfile`. Add the following lines:
+
+```
+FROM rocker/r-ver:4.2.2
+
+RUN R -e "install.packages('remotes')"
+
+RUN R -e "remotes::install_github('rstudio/renv@0.16.0')"
+
+RUN mkdir /home/housing
+
+COPY renv.lock /home/housing/renv.lock
+
+RUN R -e "setwd('/home/housing');renv::restore()"
+```
+
+The first line states that we will be basing our image on the image
+from the Rocker project that ships with R version 4.2.2, which is the
+right version that we need. Then, we install the `{remotes}` package. This
+will allow us to download a specific version from `{renv}` from Github.
+
+## Dockerizing our project
+
+## Sharing your images
+
+### Sharing on Docker Hub
+
+### Sharing a compressed archive of your image
+
+This doesn't compress the image:
+
+```
+owner@localhost ➤ docker save raps_ubuntu_r > raps_ubuntu_r.tar
+```
+
+you can download it like so:
+
+```
+owner@localhost ➤ docker load < raps_ubuntu_r.tar
+```
+
+but if you want to compress it, you can run the following (but this might
+only work on a Linux distribution, and only if the `xz` program is installed):
+
+```
+owner@localhost ➤ docker save raps_ubuntu_r | xz > raps_ubuntu_r.tar.xz
+```
