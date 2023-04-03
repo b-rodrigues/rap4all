@@ -1,4 +1,4 @@
-# Advanced topics in reproducibility
+# Reproducible analytical pipelines with Docker
 
 If the book ended at the end of the previous chapter, it would have been titled
 "Building analytical pipelines with R", because we have not ensured that the
@@ -415,7 +415,8 @@ repositories are in synch with the latest software updates that were pushed to
 the central Ubuntu repos). Then we use Ubuntu's package manager to install
 `r-base`. `r-base` is the package that installs R. We then finish this
 `Dockerfile` by running `CMD ["R"]`. This is the command that will be executed
-when we run the container.
+when we run the container. Remember: `RUN` commands get executed at build-time,
+`CMD` commands at run-time. This distinction will be important later on.
 
 Let's build the image (this will take some time, because a lot of software gets
 installed):
@@ -500,14 +501,14 @@ complicated to you. And of course if this is the first time that you have
 played around with Docker, it is tricky indeed. However, you shouldn't worry
 too much about it, for several reasons:
 
-- we are not going to use Docker interactively, that's not really the point.
+- we are not going to use Docker containers interactively, that's not really the point, but it can be useful to login into the running container to check if things are working as expected;
 - we will build our images on top of pre-built images from the [Rocker project](https://rocker-project.org/) and these images come with a lot of software pre-installed and configuration taken care of. 
 
-What you should take away from this section is that you need to write a 
-`Dockerfile` which then allows you to build an image. This image can then
-be used to run one (or several) containers. These containers, at run time,
-will execute our pipeline in an environment that is frozen, such that the
-output of this run will stay constant, forever.
+What you should take away from this section is that you need to write a
+`Dockerfile` which then allows you to build an image. This image can then be
+used to run one (or several) containers. These containers, at run-time, will
+execute our pipeline in an environment that is frozen, such that the output of
+this run will stay constant, forever.
 
 ## The Rocker project
 
@@ -578,18 +579,40 @@ For installing the right version of R packages, we don't need to worry too much
 about the repositories. We will be using the `renv.lock` file to ensure that the
 right packages get installed. As a quick introduction to using Rocker images,
 let's grab the our project's `renv.lock` file which you can download from
-[here](https://raw.githubusercontent.com/rap4all/housing/renv/renv.lock)^[https://is.gd/WB3KfN].
+[here](https://raw.githubusercontent.com/rap4all/housing/980a1b0cd20c60a85322dbd4c6da45fbfcebd931/renv.lock)^[https://is.gd/5UcuxW].
+This is the latest `renv.lock` file that we generated for our project, it contains
+all the needed packages to run our pipeline, including the right versions of the
+`{targets}` package and the `{housing}` package that we developed.
 
-The important piece of information the `renv.lock` file gives us, is the R
-version that we need to use, in this case, R version 4.2.2. So that's the
-version we will be using in our Dockerfile. Next, we need to check the version
-of `{renv}` that we used to build the `renv.lock` file. You don't necessarily
-need to install the same version, but I recommend you do. For example, as I'm
-writing these lines, `{renv}` version 0.17.1 is available, but the `renv.lock`
-file was written by `{renv}` version 0.16.0. So to avoid any compatibility
-issue, we will also install the exact same version. Thankfully, that is quite
-easy to do (to check the version of `{renv}` that was used to write the lock
-file simply look for the word "renv" in the lock file).
+Another useful aspect of the `renv.lock` file is that it also records the R
+version that was used to originally develop the project, in this case, R version
+4.2.2. So that's the version we will be using in our Dockerfile. Next, we need
+to check the version of `{renv}` that we used to build the `renv.lock` file. You
+don't necessarily need to install the same version, but I recommend you do. For
+example, as I'm writing these lines, `{renv}` version 0.17.1 is available, but
+the `renv.lock` file was written by `{renv}` version 0.16.0. So to avoid any
+compatibility issue, we will also install the exact same version. Thankfully,
+that is quite easy to do (to check the version of `{renv}` that was used to
+write the lock file simply look for the word "renv" in the lock file).
+
+While `{renv}` takes care of installing the right R packages, it doesn’t take
+care of installing the right system-level dependencies. So that’s why we need to
+install these system-level dependencies ourselves. I will give you a list
+of system-level dependencies that you can install to avoid any issues below,
+but to I will also explain to you how I was able to come up with this list. 
+It is quite easy thanks to Posit and their PPPM. For example, 
+[here](https://packagemanager.rstudio.com/client/#/repos/2/packages/tidyverse)^[https://is.gd/ZaXHwa]
+is the summary page for the `{tidyverse}` package. If you select "Ubuntu 22.04 (Jammy)" on the 
+top right, and then scroll down, you will see a list of dependencies that you can
+simply copy and paste into your Dockerfile:
+
+<figure>
+    <img src="images/tidyverse_jammy_deps.png"
+         alt="System-level dependencies for the {tidyverse} package on Ubuntu."></img>
+    <figcaption>System-level dependencies for the {tidyverse} package on Ubuntu.</figcaption>
+</figure>
+
+We will use this list to install the required dependencies for our project.
 
 Create a new folder and call whatever you want and save the `renv.lock` file
 linked above inside of it. Then, create an empty text file and call it
@@ -597,6 +620,29 @@ linked above inside of it. Then, create an empty text file and call it
 
 ```
 FROM rocker/r-ver:4.2.2
+
+RUN apt-get update && apt-get install -y \
+    libglpk-dev \
+    libxml2-dev \
+    libcairo2-dev \
+    libgit2-dev \
+    default-libmysqlclient-dev \
+    libpq-dev \
+    libsasl2-dev \
+    libsqlite3-dev \
+    libssh2-1-dev \
+    libxtst6 \
+    libcurl4-openssl-dev \
+    libharfbuzz-dev \
+    libfribidi-dev \
+    libfreetype6-dev \
+    libpng-dev \
+    libtiff5-dev \
+    libjpeg-dev \
+    libxt-dev \
+    unixodbc-dev \
+    wget \
+    pandoc
 
 RUN R -e "install.packages('remotes')"
 
@@ -606,19 +652,281 @@ RUN mkdir /home/housing
 
 COPY renv.lock /home/housing/renv.lock
 
-RUN R -e "setwd('/home/housing');renv::restore()"
+RUN R -e "setwd('/home/housing');renv::init();renv::restore()"
 ```
 
-The first line states that we will be basing our image on the image
-from the Rocker project that ships with R version 4.2.2, which is the
-right version that we need. Then, we install the `{remotes}` package. This
-will allow us to download a specific version from `{renv}` from Github.
+The first line states that we will be basing our image on the image from the
+Rocker project that ships with R version 4.2.2, which is the right version that
+we need. Then, we install the required system-level dependencies using Ubuntu’s
+package manager, as previously explained. Then comes the `{remotes}` package.
+This will allow us to download a specific version from `{renv}` from Github,
+which is what we do in the next line. I want to stress again that I do this
+simply because the original `renv.lock` file was generated using `{renv}`
+version 0.16.0 and so to avoid any potential compatibility issues, I also use
+this one to restore the project. But it is very likely that I could have
+installed the current version of `{renv}` to restore the project, and that it
+would have worked without problems. So in the next line I install the right
+version of `{renv}`. By the way, I knew how to do this because I read [this
+vignette](https://rstudio.github.io/renv/articles/docker.html)^[https://rstudio.github.io/renv/articles/docker.html]
+that explains all these steps (but I’ve only kept the absolute essential lines
+of code to make it work). Next comes the line `RUN mkdir /home/housing`, which
+creates a folder (`mkdir` stands for *make directory*), inside the Docker image,
+in `/home/housing`. On Linux distributions, `/home/` is the directory that users
+use to store their files, so I create the `/home/` folder and inside of it, I
+create a new folder, `housing` which will contain the files for my project. It
+doesn’t really matter if you keep that structure or not, you could skip the
+`/home/` folder if you wanted. What matters is that you put the files where you
+can find them.
 
-## Dockerizing our project
+Next comes `COPY renv.lock /home/housing/renv.lock`. This copies the `renv.lock`
+from our computer (remember, I told you to save this file next to the
+`Dockerfile`) to `/home/housing/renv.lock`. By doing this, we include the
+`renv.lock` file inside of the Docker image which will be crucial for the next
+and final step: `RUN R -e "setwd('/home/housing');renv::init();renv::restore()"`.
 
-## Sharing your images
+This runs the `R` program from Linux command line with the option `-e`. This
+option allows you to pass `R` expression to the command line, which write
+between `""`. Using `R -e` will quickly become an habit, because this is how you
+can run R non-interactively, from the command line. The expression we pass sets
+the working directory to `/home/housing`, and then we use `renv::init()` and
+`renv::restore()` to restore the packages from the `renv.lock` file that we
+copied before. Using this Dockerfile, we can now build an image that will come
+with R version 4.2.2 pre-installed as well as all the same packages that we used
+to develop the `housing` project.
 
-### Sharing on Docker Hub
+Build the image using `docker build -t housing_image .` (don’t forget the `.` at
+the end).
+
+The build process will take some time, so I would advise you go get a hot
+beverage in the meantime. Now, we did half the work: we have an environment that
+contains the required software for our project, but the project files
+themselves, to actually run the pipeline, are missing. But before adding the pipeline
+itself, let’s see if the Docker image we built is working. For this, login to a command
+line inside a running Docker container started from this image with this single command:
+
+```
+docker run --rm -it --name housing_container housing_image bash
+```
+
+This starts `bash` (Ubuntu’s command line) inside the `housing_container` that gets started
+from the `housing_image` image. We add the `--rm` flag do `docker run`, this way the Docker
+container gets stopped when we log out (if not, then the Docker container will run in the
+background). Once logged in, we can move to the folder’s project using:
+
+```
+user@docker ➤ cd home/housing
+```
+
+and then start the R interpreter:
+
+```
+user@docker ➤ R
+```
+
+if everything goes well, you should see the familiar R prompt with a message from `{renv}` at the end:
+
+```
+R version 4.2.2 (2022-10-31) -- "Innocent and Trusting"
+Copyright (C) 2022 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+* Project '/home/housing' loaded. [renv 0.16.0]
+```
+
+Try to load the `{housing}` package with `library("housing")`. This should work flawlessly!
+
+## Dockerizing projects
+
+So we now have a Docker image that has the right environment for our project. We
+can now dockerize the project itself. There’s two ways to do this: we either
+simply add the required lines to our Dockerfile, meaning copying the
+`_targets.R` script to the Docker image at build time and then use
+`targets::tar_make()` to run the pipeline.
+
+Or we now create a new Dockerfile that will build upon this image and add the
+required lines there. In this section, we will use the first approach, and in
+the next section we will use the second. The advantage of the first approach is
+that we have a single Dockerfile, and everything we need is right there. Also,
+each Docker image is completely tailor-made for each project. The issue is that
+building takes some time, so if for every project we restart from scratch it can
+be tedious to have to wait for building to be done (especially if you use
+continuous integration, as we shall see in the next chapter).
+
+The advantage of the second approach is that we have a base that we can keep
+using for as long as we want. You will only need to wait once for R and the
+required packages to get installed. Then, you can use this base for any project
+that requires the same version of R and packages. This is especially useful if
+you don’t update your development environment very often, and develop a lot of
+projects with it.
+
+In summary, the first is approach is "dockerize projects", the second approach
+is "dockerize the dev environment and use it for many projects". It all depends
+on how you work: in research, you might want to go for the first approach, as
+each project likely depends on bleeding-edge versions of R and packages. But in
+industry, where people tend to put the old adage "if ain’t broke don’t fix it"
+into practice, dev environments are usually frozen for some time and only get 
+updated when really necessary (or according to a fixed schedule).
+
+To dockerize the project, we first need to understand something important with
+Docker, which I’ve already mentioned in passing: a Docker image is an immutable
+sandbox. This means that we cannot change it at run-time, only at build-time. So
+if we log in to a running Docker container (as we did before), and install an R
+package using `install.packages("package_name")`, that package will disappear if
+we stop that container. The same is true for any files that get created at
+run-time: they will also disappear once stop the container is stopped. So how
+are we supposed to get the outputs that our pipeline generates from the Docker
+container? For this, we need to create a volume. A volume is nothing more than a
+shared folder between the Docker container and the host machine that launches
+the container. We simply need to specify the path for this shared folder when
+running the container, and that’s it.
+
+Let’s first write a Dockerfile that contains all the necessary. We simply need
+to add the `_targets.R` script from our project, the `analyse_data.Rmd` markdown
+file and all the functions from the `functions/` folder (you can find all the
+required files
+[here](https://github.com/rap4all/housing/tree/pipeline)^[https://github.com/rap4all/housing/tree/pipeline]):
+
+```
+FROM rocker/r-ver:4.2.2
+
+RUN apt-get update && apt-get install -y \
+    libglpk-dev \
+    libxml2-dev \
+    libcairo2-dev \
+    libgit2-dev \
+    default-libmysqlclient-dev \
+    libpq-dev \
+    libsasl2-dev \
+    libsqlite3-dev \
+    libssh2-1-dev \
+    libxtst6 \
+    libcurl4-openssl-dev \
+    libharfbuzz-dev \
+    libfribidi-dev \
+    libfreetype6-dev \
+    libpng-dev \
+    libtiff5-dev \
+    libjpeg-dev \
+    libxt-dev \
+    unixodbc-dev \
+    wget \
+    pandoc
+
+RUN R -e "install.packages('remotes')"
+
+RUN R -e "remotes::install_github('rstudio/renv@0.16.0')"
+
+RUN mkdir /home/housing
+
+RUN mkdir /home/housing/pipeline_output
+
+RUN mkdir /home/housing/shared_folder
+
+COPY renv.lock /home/housing/renv.lock
+
+COPY functions /home/housing/functions
+
+COPY analyse_data.Rmd /home/housing/analyse_data.Rmd
+
+COPY _targets.R /home/housing/_targets.R
+
+RUN R -e "setwd('/home/housing');renv::init();renv::restore()"
+
+RUN cd /home/housing && R -e "targets::tar_make()"
+
+CMD mv /home/housing/pipeline_output/* /home/housing/shared_folder/
+```
+
+I’ve added some `COPY` to copy the files from our computer to the Docker image,
+and also created some new directories: the `pipeline_output` and the
+`shared_folder` directories. `pipeline_output` is the folder that will contain
+all the outputs from the pipeline, and `shared_folder` (you guessed it) will be
+the folder that we will use to save the outputs of the pipeline to our computer.
+
+We then use `targets::tar_make()` to run the pipeline, but we first need to use
+`cd /home/housing` to change directories to the project’s folder. This is
+because in order to use the library that `{renv}` installed, we need to start
+the R session in the right directory. So we move to the right directory, then we
+run the pipeline using `R -e "targets::tar_make()"`. Notice that we do both
+operations within a `RUN` statement. This means that the pipeline will run at
+build-time (remember, `RUN` statements run at build-time, `CMD` statements at
+run-time). In order words, the image will contain the outputs. This way, if the
+build process and the pipeline take a long time, you can simply leave them
+running overnight for example. In the morning, while sipping on your coffee, you
+can then simply run the container to instantly get the outputs. This is because
+we move the outputs of the pipeline from the folder `pipeline_output` to the
+`share_folder` folder using a `CMD` statament. Thus, when we run the container,
+the outputs get moved into the shared folder, and we can retrieve them.
+
+One last thing I had to do: I needed to change the last target in the `_targets.R`
+script. Before dockerizing it, it was like this:
+
+```{r, eval = F}
+tar_render(
+  analyse_data,
+  "analyse_data.Rmd"
+)
+```
+
+but I had to change it to this:
+
+```{r, eval = F}
+tar_render(
+  analyse_data,
+  "analyse_data.Rmd",
+  output_dir = "/home/housing/pipeline_output"
+)
+```
+
+`output_dir` gets passed to `knitr::knit()` and simply states the output files
+should be save in that folder. I can now build the image using `docker build -t
+housing_image .`. Once the build process is done, we can login to the container 
+to see if our files are there. But let me repeat again, that you are not really
+supposed to do so. You could simply run the container now and get your files.
+But let’s just take a quick look. You can login to a bash session using:
+
+```
+owner@localhost ➤ docker run --rm -it --name housing_container housing_image bash
+```
+
+If you then move to `/home/housing/pipeline_output` and run `ls` in that folder,
+you should see `analyse_data.html`. That’s our output! So how do we get it out?
+
+You need to run the container with the `-v` flag which allows you to specify
+the path to the shared folder on your computer, and the shared folder inside the Docker
+container. The code below shows how to do it (I’ve used the `\` to write break of this
+long command over two lines):
+
+```
+owner@localhost ➤ docker run --rm --name housing_container -v \
+                  /host/path/to/shared_folder:/home/housing/shared_folder:rw housing_image
+```
+
+`/host/path/to/shared_folder` is the path to the shared folder on my computer.
+`/home/housing/shared_folder` is the path to the shared folder inside the Docker
+container. When these lines run, the very last `CMD` statement from the
+Dockerfile runs, moving the contents from inside the Docker container to our
+computer. 
+
+That’s it, we have now a complete reproducible analytical pipeline.
+
+## Dockerizing development environments
+
+### Sharing images on Docker Hub
 
 ### Sharing a compressed archive of your image
 
@@ -640,3 +948,7 @@ only work on a Linux distribution, and only if the `xz` program is installed):
 ```
 owner@localhost ➤ docker save raps_ubuntu_r | xz > raps_ubuntu_r.tar.xz
 ```
+
+## The problems of relying so much on Docker
+
+## Is Docker enough?
