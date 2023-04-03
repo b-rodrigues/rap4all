@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Building reproducible analytical pipelines with R - 14&nbsp; Advanced topics in reproducibility</title>
+<title>Building reproducible analytical pipelines with R - 14&nbsp; Reproducible analytical pipelines with Docker</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -140,7 +140,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
     <div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Advanced topics in reproducibility</span></h1>
+      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Reproducible analytical pipelines with Docker</span></h1>
       <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
         <i class="bi bi-chevron-right"></i>
       </button>
@@ -261,7 +261,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./repro_cont.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Advanced topics in reproducibility</span></a>
+  <a href="./repro_cont.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Reproducible analytical pipelines with Docker</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -294,12 +294,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#a-primer-on-linux" id="toc-a-primer-on-linux" class="nav-link" data-scroll-target="#a-primer-on-linux"><span class="toc-section-number">14.2</span>  A primer on Linux</a></li>
   <li><a href="#first-steps-with-docker" id="toc-first-steps-with-docker" class="nav-link" data-scroll-target="#first-steps-with-docker"><span class="toc-section-number">14.3</span>  First steps with Docker</a></li>
   <li><a href="#the-rocker-project" id="toc-the-rocker-project" class="nav-link" data-scroll-target="#the-rocker-project"><span class="toc-section-number">14.4</span>  The Rocker project</a></li>
-  <li><a href="#dockerizing-our-project" id="toc-dockerizing-our-project" class="nav-link" data-scroll-target="#dockerizing-our-project"><span class="toc-section-number">14.5</span>  Dockerizing our project</a></li>
-  <li><a href="#sharing-your-images" id="toc-sharing-your-images" class="nav-link" data-scroll-target="#sharing-your-images"><span class="toc-section-number">14.6</span>  Sharing your images</a>
+  <li><a href="#dockerizing-projects" id="toc-dockerizing-projects" class="nav-link" data-scroll-target="#dockerizing-projects"><span class="toc-section-number">14.5</span>  Dockerizing projects</a></li>
+  <li><a href="#dockerizing-development-environments" id="toc-dockerizing-development-environments" class="nav-link" data-scroll-target="#dockerizing-development-environments"><span class="toc-section-number">14.6</span>  Dockerizing development environments</a>
   <ul class="collapse">
-  <li><a href="#sharing-on-docker-hub" id="toc-sharing-on-docker-hub" class="nav-link" data-scroll-target="#sharing-on-docker-hub"><span class="toc-section-number">14.6.1</span>  Sharing on Docker Hub</a></li>
+  <li><a href="#sharing-images-on-docker-hub" id="toc-sharing-images-on-docker-hub" class="nav-link" data-scroll-target="#sharing-images-on-docker-hub"><span class="toc-section-number">14.6.1</span>  Sharing images on Docker Hub</a></li>
   <li><a href="#sharing-a-compressed-archive-of-your-image" id="toc-sharing-a-compressed-archive-of-your-image" class="nav-link" data-scroll-target="#sharing-a-compressed-archive-of-your-image"><span class="toc-section-number">14.6.2</span>  Sharing a compressed archive of your image</a></li>
   </ul></li>
+  <li><a href="#the-problems-of-relying-so-much-on-docker" id="toc-the-problems-of-relying-so-much-on-docker" class="nav-link" data-scroll-target="#the-problems-of-relying-so-much-on-docker"><span class="toc-section-number">14.7</span>  The problems of relying so much on Docker</a></li>
+  <li><a href="#is-docker-enough" id="toc-is-docker-enough" class="nav-link" data-scroll-target="#is-docker-enough"><span class="toc-section-number">14.8</span>  Is Docker enough?</a></li>
   </ul>
 </nav>
     </div>
@@ -308,7 +310,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Advanced topics in reproducibility</span></h1>
+<h1 class="title d-none d-lg-block"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Reproducible analytical pipelines with Docker</span></h1>
 </div>
 
 
@@ -446,7 +448,7 @@ RUN apt-get update &amp;&amp; apt-get install -y r-base
 
 CMD ["R"]</code></pre>
 <p>First we define a variable using <code>ENV</code>, called <code>TZ</code> and we set that to the <code>Europe/Luxembourg</code> time zone (you can change this to your own time zone). We then run a rather complex looking command that sets the defined time zone system-wide. We had to do all this, because when we will later install R, a system-level dependency called <code>tzdata</code> gets installed. This tool then asks the user, to enter his or her time zone interactively. But we cannot interact with the image interactively as it’s being built, so the build process gets stuck at this prompt. By using these two commands, we can set the correct time zone and once <code>tzdata</code> gets installed, that tool doesn’t ask for the time zone anymore, so the build process can continue. This is a rather known issue when building Docker images based on Ubuntu, so the fix is easily found with a Google search (but I’m giving it to you, dear reader, for free).</p>
-<p>Then come <code>RUN</code> statements. The first one uses Ubuntu’s package manager to first refresh the repositories (this ensures that our local Ubuntu installation repositories are in synch with the latest software updates that were pushed to the central Ubuntu repos). Then we use Ubuntu’s package manager to install <code>r-base</code>. <code>r-base</code> is the package that installs R. We then finish this <code>Dockerfile</code> by running <code>CMD ["R"]</code>. This is the command that will be executed when we run the container.</p>
+<p>Then come <code>RUN</code> statements. The first one uses Ubuntu’s package manager to first refresh the repositories (this ensures that our local Ubuntu installation repositories are in synch with the latest software updates that were pushed to the central Ubuntu repos). Then we use Ubuntu’s package manager to install <code>r-base</code>. <code>r-base</code> is the package that installs R. We then finish this <code>Dockerfile</code> by running <code>CMD ["R"]</code>. This is the command that will be executed when we run the container. Remember: <code>RUN</code> commands get executed at build-time, <code>CMD</code> commands at run-time. This distinction will be important later on.</p>
 <p>Let’s build the image (this will take some time, because a lot of software gets installed):</p>
 <pre><code>owner@localhost ➤ docker build -t raps_ubuntu_r .</code></pre>
 <p>This builds an image called <code>raps_ubuntu_r</code>. This image is based on Ubuntu 22.04 Jammy Jellyfish and comes with R pre-installed. But the version of R that gets installed is the one made available through the Ubuntu repositories, and as of writing that is version 4.1.2, while the latest version available is R version 4.2.3. So the version available through the Ubuntu repositories lags behind the actual release. But no matter, we will deal with that later.</p>
@@ -479,10 +481,10 @@ Type 'q()' to quit R.
 &gt; </code></pre>
 <p>Welcome to a dockerized version of R. Now, all of this might have felt overly complicated to you. And of course if this is the first time that you have played around with Docker, it is tricky indeed. However, you shouldn’t worry too much about it, for several reasons:</p>
 <ul>
-<li>we are not going to use Docker interactively, that’s not really the point.</li>
+<li>we are not going to use Docker containers interactively, that’s not really the point, but it can be useful to login into the running container to check if things are working as expected;</li>
 <li>we will build our images on top of pre-built images from the <a href="https://rocker-project.org/">Rocker project</a> and these images come with a lot of software pre-installed and configuration taken care of.</li>
 </ul>
-<p>What you should take away from this section is that you need to write a <code>Dockerfile</code> which then allows you to build an image. This image can then be used to run one (or several) containers. These containers, at run time, will execute our pipeline in an environment that is frozen, such that the output of this run will stay constant, forever.</p>
+<p>What you should take away from this section is that you need to write a <code>Dockerfile</code> which then allows you to build an image. This image can then be used to run one (or several) containers. These containers, at run-time, will execute our pipeline in an environment that is frozen, such that the output of this run will stay constant, forever.</p>
 </section>
 <section id="the-rocker-project" class="level2" data-number="14.4">
 <h2 data-number="14.4" class="anchored" data-anchor-id="the-rocker-project"><span class="header-section-number">14.4</span> The Rocker project</h2>
@@ -500,10 +502,41 @@ RUN uname -a</code></pre>
 <li>the operating system will be the LTS release that was current when that specific version of R was current;</li>
 <li>the R repositories are set to the Posit Public Package Manager (PPPM) at a specific date. This ensures that R packages don’t need to be compiled as PPPM serves binary packages for the amd64 architecture (which is the architecture that virtually all non-Apple computers use these days).</li>
 </ul>
-<p>For installing the right version of R packages, we don’t need to worry too much about the repositories. We will be using the <code>renv.lock</code> file to ensure that the right packages get installed. As a quick introduction to using Rocker images, let’s grab the our project’s <code>renv.lock</code> file which you can download from <a href="https://raw.githubusercontent.com/rap4all/housing/renv/renv.lock">here</a><a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>.</p>
-<p>The important piece of information the <code>renv.lock</code> file gives us, is the R version that we need to use, in this case, R version 4.2.2. So that’s the version we will be using in our Dockerfile. Next, we need to check the version of <code>{renv}</code> that we used to build the <code>renv.lock</code> file. You don’t necessarily need to install the same version, but I recommend you do. For example, as I’m writing these lines, <code>{renv}</code> version 0.17.1 is available, but the <code>renv.lock</code> file was written by <code>{renv}</code> version 0.16.0. So to avoid any compatibility issue, we will also install the exact same version. Thankfully, that is quite easy to do (to check the version of <code>{renv}</code> that was used to write the lock file simply look for the word “renv” in the lock file).</p>
+<p>For installing the right version of R packages, we don’t need to worry too much about the repositories. We will be using the <code>renv.lock</code> file to ensure that the right packages get installed. As a quick introduction to using Rocker images, let’s grab the our project’s <code>renv.lock</code> file which you can download from <a href="https://raw.githubusercontent.com/rap4all/housing/980a1b0cd20c60a85322dbd4c6da45fbfcebd931/renv.lock">here</a><a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>. This is the latest <code>renv.lock</code> file that we generated for our project, it contains all the needed packages to run our pipeline, including the right versions of the <code>{targets}</code> package and the <code>{housing}</code> package that we developed.</p>
+<p>Another useful aspect of the <code>renv.lock</code> file is that it also records the R version that was used to originally develop the project, in this case, R version 4.2.2. So that’s the version we will be using in our Dockerfile. Next, we need to check the version of <code>{renv}</code> that we used to build the <code>renv.lock</code> file. You don’t necessarily need to install the same version, but I recommend you do. For example, as I’m writing these lines, <code>{renv}</code> version 0.17.1 is available, but the <code>renv.lock</code> file was written by <code>{renv}</code> version 0.16.0. So to avoid any compatibility issue, we will also install the exact same version. Thankfully, that is quite easy to do (to check the version of <code>{renv}</code> that was used to write the lock file simply look for the word “renv” in the lock file).</p>
+<p>While <code>{renv}</code> takes care of installing the right R packages, it doesn’t take care of installing the right system-level dependencies. So that’s why we need to install these system-level dependencies ourselves. I will give you a list of system-level dependencies that you can install to avoid any issues below, but to I will also explain to you how I was able to come up with this list. It is quite easy thanks to Posit and their PPPM. For example, <a href="https://packagemanager.rstudio.com/client/#/repos/2/packages/tidyverse">here</a><a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a> is the summary page for the <code>{tidyverse}</code> package. If you select “Ubuntu 22.04 (Jammy)” on the top right, and then scroll down, you will see a list of dependencies that you can simply copy and paste into your Dockerfile:</p>
+<figure class="figure">
+<img src="images/tidyverse_jammy_deps.png" alt="System-level dependencies for the {tidyverse} package on Ubuntu." class="figure-img">
+<figcaption class="figure-caption">
+System-level dependencies for the {tidyverse} package on Ubuntu.
+</figcaption>
+</figure>
+<p>We will use this list to install the required dependencies for our project.</p>
 <p>Create a new folder and call whatever you want and save the <code>renv.lock</code> file linked above inside of it. Then, create an empty text file and call it <code>Dockerfile</code>. Add the following lines:</p>
 <pre><code>FROM rocker/r-ver:4.2.2
+
+RUN apt-get update &amp;&amp; apt-get install -y \
+    libglpk-dev \
+    libxml2-dev \
+    libcairo2-dev \
+    libgit2-dev \
+    default-libmysqlclient-dev \
+    libpq-dev \
+    libsasl2-dev \
+    libsqlite3-dev \
+    libssh2-1-dev \
+    libxtst6 \
+    libcurl4-openssl-dev \
+    libharfbuzz-dev \
+    libfribidi-dev \
+    libfreetype6-dev \
+    libpng-dev \
+    libtiff5-dev \
+    libjpeg-dev \
+    libxt-dev \
+    unixodbc-dev \
+    wget \
+    pandoc
 
 RUN R -e "install.packages('remotes')"
 
@@ -513,16 +546,125 @@ RUN mkdir /home/housing
 
 COPY renv.lock /home/housing/renv.lock
 
-RUN R -e "setwd('/home/housing');renv::restore()"</code></pre>
-<p>The first line states that we will be basing our image on the image from the Rocker project that ships with R version 4.2.2, which is the right version that we need. Then, we install the <code>{remotes}</code> package. This will allow us to download a specific version from <code>{renv}</code> from Github.</p>
+RUN R -e "setwd('/home/housing');renv::init();renv::restore()"</code></pre>
+<p>The first line states that we will be basing our image on the image from the Rocker project that ships with R version 4.2.2, which is the right version that we need. Then, we install the required system-level dependencies using Ubuntu’s package manager, as previously explained. Then comes the <code>{remotes}</code> package. This will allow us to download a specific version from <code>{renv}</code> from Github, which is what we do in the next line. I want to stress again that I do this simply because the original <code>renv.lock</code> file was generated using <code>{renv}</code> version 0.16.0 and so to avoid any potential compatibility issues, I also use this one to restore the project. But it is very likely that I could have installed the current version of <code>{renv}</code> to restore the project, and that it would have worked without problems. So in the next line I install the right version of <code>{renv}</code>. By the way, I knew how to do this because I read <a href="https://rstudio.github.io/renv/articles/docker.html">this vignette</a><a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a> that explains all these steps (but I’ve only kept the absolute essential lines of code to make it work). Next comes the line <code>RUN mkdir /home/housing</code>, which creates a folder (<code>mkdir</code> stands for <em>make directory</em>), inside the Docker image, in <code>/home/housing</code>. On Linux distributions, <code>/home/</code> is the directory that users use to store their files, so I create the <code>/home/</code> folder and inside of it, I create a new folder, <code>housing</code> which will contain the files for my project. It doesn’t really matter if you keep that structure or not, you could skip the <code>/home/</code> folder if you wanted. What matters is that you put the files where you can find them.</p>
+<p>Next comes <code>COPY renv.lock /home/housing/renv.lock</code>. This copies the <code>renv.lock</code> from our computer (remember, I told you to save this file next to the <code>Dockerfile</code>) to <code>/home/housing/renv.lock</code>. By doing this, we include the <code>renv.lock</code> file inside of the Docker image which will be crucial for the next and final step: <code>RUN R -e "setwd('/home/housing');renv::init();renv::restore()"</code>.</p>
+<p>This runs the <code>R</code> program from Linux command line with the option <code>-e</code>. This option allows you to pass <code>R</code> expression to the command line, which write between <code>""</code>. Using <code>R -e</code> will quickly become an habit, because this is how you can run R non-interactively, from the command line. The expression we pass sets the working directory to <code>/home/housing</code>, and then we use <code>renv::init()</code> and <code>renv::restore()</code> to restore the packages from the <code>renv.lock</code> file that we copied before. Using this Dockerfile, we can now build an image that will come with R version 4.2.2 pre-installed as well as all the same packages that we used to develop the <code>housing</code> project.</p>
+<p>Build the image using <code>docker build -t housing_image .</code> (don’t forget the <code>.</code> at the end).</p>
+<p>The build process will take some time, so I would advise you go get a hot beverage in the meantime. Now, we did half the work: we have an environment that contains the required software for our project, but the project files themselves, to actually run the pipeline, are missing. But before adding the pipeline itself, let’s see if the Docker image we built is working. For this, login to a command line inside a running Docker container started from this image with this single command:</p>
+<pre><code>docker run --rm -it --name housing_container housing_image bash</code></pre>
+<p>This starts <code>bash</code> (Ubuntu’s command line) inside the <code>housing_container</code> that gets started from the <code>housing_image</code> image. We add the <code>--rm</code> flag do <code>docker run</code>, this way the Docker container gets stopped when we log out (if not, then the Docker container will run in the background). Once logged in, we can move to the folder’s project using:</p>
+<pre><code>user@docker ➤ cd home/housing</code></pre>
+<p>and then start the R interpreter:</p>
+<pre><code>user@docker ➤ R</code></pre>
+<p>if everything goes well, you should see the familiar R prompt with a message from <code>{renv}</code> at the end:</p>
+<pre><code>R version 4.2.2 (2022-10-31) -- "Innocent and Trusting"
+Copyright (C) 2022 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+* Project '/home/housing' loaded. [renv 0.16.0]</code></pre>
+<p>Try to load the <code>{housing}</code> package with <code>library("housing")</code>. This should work flawlessly!</p>
 </section>
-<section id="dockerizing-our-project" class="level2" data-number="14.5">
-<h2 data-number="14.5" class="anchored" data-anchor-id="dockerizing-our-project"><span class="header-section-number">14.5</span> Dockerizing our project</h2>
+<section id="dockerizing-projects" class="level2" data-number="14.5">
+<h2 data-number="14.5" class="anchored" data-anchor-id="dockerizing-projects"><span class="header-section-number">14.5</span> Dockerizing projects</h2>
+<p>So we now have a Docker image that has the right environment for our project. We can now dockerize the project itself. There’s two ways to do this: we either simply add the required lines to our Dockerfile, meaning copying the <code>_targets.R</code> script to the Docker image at build time and then use <code>targets::tar_make()</code> to run the pipeline.</p>
+<p>Or we now create a new Dockerfile that will build upon this image and add the required lines there. In this section, we will use the first approach, and in the next section we will use the second. The advantage of the first approach is that we have a single Dockerfile, and everything we need is right there. Also, each Docker image is completely tailor-made for each project. The issue is that building takes some time, so if for every project we restart from scratch it can be tedious to have to wait for building to be done (especially if you use continuous integration, as we shall see in the next chapter).</p>
+<p>The advantage of the second approach is that we have a base that we can keep using for as long as we want. You will only need to wait once for R and the required packages to get installed. Then, you can use this base for any project that requires the same version of R and packages. This is especially useful if you don’t update your development environment very often, and develop a lot of projects with it.</p>
+<p>In summary, the first is approach is “dockerize projects”, the second approach is “dockerize the dev environment and use it for many projects”. It all depends on how you work: in research, you might want to go for the first approach, as each project likely depends on bleeding-edge versions of R and packages. But in industry, where people tend to put the old adage “if ain’t broke don’t fix it” into practice, dev environments are usually frozen for some time and only get updated when really necessary (or according to a fixed schedule).</p>
+<p>To dockerize the project, we first need to understand something important with Docker, which I’ve already mentioned in passing: a Docker image is an immutable sandbox. This means that we cannot change it at run-time, only at build-time. So if we log in to a running Docker container (as we did before), and install an R package using <code>install.packages("package_name")</code>, that package will disappear if we stop that container. The same is true for any files that get created at run-time: they will also disappear once stop the container is stopped. So how are we supposed to get the outputs that our pipeline generates from the Docker container? For this, we need to create a volume. A volume is nothing more than a shared folder between the Docker container and the host machine that launches the container. We simply need to specify the path for this shared folder when running the container, and that’s it.</p>
+<p>Let’s first write a Dockerfile that contains all the necessary. We simply need to add the <code>_targets.R</code> script from our project, the <code>analyse_data.Rmd</code> markdown file and all the functions from the <code>functions/</code> folder (you can find all the required files <a href="https://github.com/rap4all/housing/tree/pipeline">here</a><a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a>):</p>
+<pre><code>FROM rocker/r-ver:4.2.2
+
+RUN apt-get update &amp;&amp; apt-get install -y \
+    libglpk-dev \
+    libxml2-dev \
+    libcairo2-dev \
+    libgit2-dev \
+    default-libmysqlclient-dev \
+    libpq-dev \
+    libsasl2-dev \
+    libsqlite3-dev \
+    libssh2-1-dev \
+    libxtst6 \
+    libcurl4-openssl-dev \
+    libharfbuzz-dev \
+    libfribidi-dev \
+    libfreetype6-dev \
+    libpng-dev \
+    libtiff5-dev \
+    libjpeg-dev \
+    libxt-dev \
+    unixodbc-dev \
+    wget \
+    pandoc
+
+RUN R -e "install.packages('remotes')"
+
+RUN R -e "remotes::install_github('rstudio/renv@0.16.0')"
+
+RUN mkdir /home/housing
+
+RUN mkdir /home/housing/pipeline_output
+
+RUN mkdir /home/housing/shared_folder
+
+COPY renv.lock /home/housing/renv.lock
+
+COPY functions /home/housing/functions
+
+COPY analyse_data.Rmd /home/housing/analyse_data.Rmd
+
+COPY _targets.R /home/housing/_targets.R
+
+RUN R -e "setwd('/home/housing');renv::init();renv::restore()"
+
+RUN cd /home/housing &amp;&amp; R -e "targets::tar_make()"
+
+CMD mv /home/housing/pipeline_output/* /home/housing/shared_folder/</code></pre>
+<p>I’ve added some <code>COPY</code> to copy the files from our computer to the Docker image, and also created some new directories: the <code>pipeline_output</code> and the <code>shared_folder</code> directories. <code>pipeline_output</code> is the folder that will contain all the outputs from the pipeline, and <code>shared_folder</code> (you guessed it) will be the folder that we will use to save the outputs of the pipeline to our computer.</p>
+<p>We then use <code>targets::tar_make()</code> to run the pipeline, but we first need to use <code>cd /home/housing</code> to change directories to the project’s folder. This is because in order to use the library that <code>{renv}</code> installed, we need to start the R session in the right directory. So we move to the right directory, then we run the pipeline using <code>R -e "targets::tar_make()"</code>. Notice that we do both operations within a <code>RUN</code> statement. This means that the pipeline will run at build-time (remember, <code>RUN</code> statements run at build-time, <code>CMD</code> statements at run-time). In order words, the image will contain the outputs. This way, if the build process and the pipeline take a long time, you can simply leave them running overnight for example. In the morning, while sipping on your coffee, you can then simply run the container to instantly get the outputs. This is because we move the outputs of the pipeline from the folder <code>pipeline_output</code> to the <code>share_folder</code> folder using a <code>CMD</code> statament. Thus, when we run the container, the outputs get moved into the shared folder, and we can retrieve them.</p>
+<p>One last thing I had to do: I needed to change the last target in the <code>_targets.R</code> script. Before dockerizing it, it was like this:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tar_render</span>(</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  analyse_data,</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"analyse_data.Rmd"</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>but I had to change it to this:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tar_render</span>(</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  analyse_data,</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"analyse_data.Rmd"</span>,</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">output_dir =</span> <span class="st">"/home/housing/pipeline_output"</span></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><code>output_dir</code> gets passed to <code>knitr::knit()</code> and simply states the output files should be save in that folder. I can now build the image using <code>docker build -t housing_image .</code>. Once the build process is done, we can login to the container to see if our files are there. But let me repeat again, that you are not really supposed to do so. You could simply run the container now and get your files. But let’s just take a quick look. You can login to a bash session using:</p>
+<pre><code>owner@localhost ➤ docker run --rm -it --name housing_container housing_image bash</code></pre>
+<p>If you then move to <code>/home/housing/pipeline_output</code> and run <code>ls</code> in that folder, you should see <code>analyse_data.html</code>. That’s our output! So how do we get it out?</p>
+<p>You need to run the container with the <code>-v</code> flag which allows you to specify the path to the shared folder on your computer, and the shared folder inside the Docker container. The code below shows how to do it (I’ve used the <code>\</code> to write break of this long command over two lines):</p>
+<pre><code>owner@localhost ➤ docker run --rm --name housing_container -v \
+                  /host/path/to/shared_folder:/home/housing/shared_folder:rw housing_image</code></pre>
+<p><code>/host/path/to/shared_folder</code> is the path to the shared folder on my computer. <code>/home/housing/shared_folder</code> is the path to the shared folder inside the Docker container. When these lines run, the very last <code>CMD</code> statement from the Dockerfile runs, moving the contents from inside the Docker container to our computer.</p>
+<p>That’s it, we have now a complete reproducible analytical pipeline.</p>
 </section>
-<section id="sharing-your-images" class="level2" data-number="14.6">
-<h2 data-number="14.6" class="anchored" data-anchor-id="sharing-your-images"><span class="header-section-number">14.6</span> Sharing your images</h2>
-<section id="sharing-on-docker-hub" class="level3" data-number="14.6.1">
-<h3 data-number="14.6.1" class="anchored" data-anchor-id="sharing-on-docker-hub"><span class="header-section-number">14.6.1</span> Sharing on Docker Hub</h3>
+<section id="dockerizing-development-environments" class="level2" data-number="14.6">
+<h2 data-number="14.6" class="anchored" data-anchor-id="dockerizing-development-environments"><span class="header-section-number">14.6</span> Dockerizing development environments</h2>
+<section id="sharing-images-on-docker-hub" class="level3" data-number="14.6.1">
+<h3 data-number="14.6.1" class="anchored" data-anchor-id="sharing-images-on-docker-hub"><span class="header-section-number">14.6.1</span> Sharing images on Docker Hub</h3>
 </section>
 <section id="sharing-a-compressed-archive-of-your-image" class="level3" data-number="14.6.2">
 <h3 data-number="14.6.2" class="anchored" data-anchor-id="sharing-a-compressed-archive-of-your-image"><span class="header-section-number">14.6.2</span> Sharing a compressed archive of your image</h3>
@@ -532,9 +674,15 @@ RUN R -e "setwd('/home/housing');renv::restore()"</code></pre>
 <pre><code>owner@localhost ➤ docker load &lt; raps_ubuntu_r.tar</code></pre>
 <p>but if you want to compress it, you can run the following (but this might only work on a Linux distribution, and only if the <code>xz</code> program is installed):</p>
 <pre><code>owner@localhost ➤ docker save raps_ubuntu_r | xz &gt; raps_ubuntu_r.tar.xz</code></pre>
-
-
 </section>
+</section>
+<section id="the-problems-of-relying-so-much-on-docker" class="level2" data-number="14.7">
+<h2 data-number="14.7" class="anchored" data-anchor-id="the-problems-of-relying-so-much-on-docker"><span class="header-section-number">14.7</span> The problems of relying so much on Docker</h2>
+</section>
+<section id="is-docker-enough" class="level2" data-number="14.8">
+<h2 data-number="14.8" class="anchored" data-anchor-id="is-docker-enough"><span class="header-section-number">14.8</span> Is Docker enough?</h2>
+
+
 </section>
 <section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr>
@@ -542,7 +690,10 @@ RUN R -e "setwd('/home/housing');renv::restore()"</code></pre>
 <li id="fn1"><p>https://hub.docker.com/<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn2"><p>https://rocker-project.org/images/<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn3"><p>https://rocker-project.org/images/versioned/r-ver.html<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn4"><p>https://is.gd/WB3KfN<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>https://is.gd/5UcuxW<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p>https://is.gd/ZaXHwa<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn6"><p>https://rstudio.github.io/renv/articles/docker.html<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn7"><p>https://github.com/rap4all/housing/tree/pipeline<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 
