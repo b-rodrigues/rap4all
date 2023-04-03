@@ -96,17 +96,17 @@ have a text file, and this file helps you define and generate an image. Here,
 you should already see a first advantage of using Docker over a more traditional
 VM solution like Virtualbox: you can very easily write these Dockerfiles and
 version them. You can easily start off from another Dockerfile from another
-project and adapt it to your current project. And most importantly, because
+project and adapt it to your current pipeline. And most importantly, because
 everything is written down, it’s reproducible (but more on that at the end of
 this chapter...).
 
 Ok so you have this image. This image will be based on some Linux distribution,
 very often Ubuntu. It comes with a specific version of Ubuntu, and you can add
 to it a specific version of R. You can also download a specific version of all
-the packages required for your project. You end with an environment that is
-tailor-made for your project. You can then run the project with this Docker
+the packages required for your pipeline. You end up with an environment that is
+tailor-made for your pipeline. You can then run the pipeline with this Docker
 image, and *always get exactly the same results, ever*. This is because,
-regardless of how, where or when you will run this *dockerized* project, the
+regardless of how, where or when you will run this *dockerized* pipeline, the
 same version of R, with the same version of R packages, on the same Linux
 distribution will be used to reproduce the results of your pipeline. By the way,
 when you run a Docker image (as in, your executing your pipeline inside that
@@ -513,9 +513,9 @@ this run will stay constant, forever.
 ## The Rocker project
 
 The Rocker project offers a very large collection of "R-ready" Docker images
-that you can use for you own projects. Before using these images though, I still
-need to explain one very important Docker concept. Let's go back to our "Hello
-World" Docker image:
+that you can use for you own pipelines. Before using these images though, I
+still need to explain one very important Docker concept. Let's go back to our
+"Hello World" Docker image:
 
 ```
 FROM ubuntu:jammy
@@ -554,9 +554,9 @@ the version that ships in Ubuntu's repositories will get updated at some point.
 This means that depending on *when* we build the image, we might get a different
 version of R. There are only two ways of avoiding this problem: either we build
 the image once, and archive it and make sure to always keep a copy and ship that
-copy forever (or for as long as we want to make sure that project is
+copy forever (or for as long as we want to make sure that pipeline is
 reproducible) just as you would ship data, code and any documentation required
-to make the project reproducible. Or we write the Dockerfile in such a way that
+to make the pipeline reproducible. Or we write the Dockerfile in such a way that
 it always produces the same image, regardless of *when* it gets built. I very
 strongly advise you to go for the second option, but to *also* archive the
 image. But of course, this also depends on how critical your project is. Maybe
@@ -568,8 +568,9 @@ thanks to the Rocker project.
 
 So, let's go back to the Rocker project, and specifically their *versioned*
 images which you can find
-[here](https://rocker-project.org/images/versioned/r-ver.html)^[https://rocker-project.org/images/versioned/r-ver.html]. When you use one the versioned
-images as a base for your project, you get the following guarantees:
+[here](https://rocker-project.org/images/versioned/r-ver.html)^[https://rocker-project.org/images/versioned/r-ver.html].
+When you use one the versioned images as a base for your project, you get the
+following guarantees:
 
 - a fixed version of R that gets built from source. It doesn't matter *when* you build the image, it will always ship with the same version of R;
 - the operating system will be the LTS release that was current when that specific version of R was current;
@@ -578,14 +579,14 @@ images as a base for your project, you get the following guarantees:
 For installing the right version of R packages, we don't need to worry too much
 about the repositories. We will be using the `renv.lock` file to ensure that the
 right packages get installed. As a quick introduction to using Rocker images,
-let's grab the our project's `renv.lock` file which you can download from
+let's grab the our pipeline's `renv.lock` file which you can download from
 [here](https://raw.githubusercontent.com/rap4all/housing/980a1b0cd20c60a85322dbd4c6da45fbfcebd931/renv.lock)^[https://is.gd/5UcuxW].
-This is the latest `renv.lock` file that we generated for our project, it contains
+This is the latest `renv.lock` file that we generated for our pipeline, it contains
 all the needed packages to run our pipeline, including the right versions of the
 `{targets}` package and the `{housing}` package that we developed.
 
 Another useful aspect of the `renv.lock` file is that it also records the R
-version that was used to originally develop the project, in this case, R version
+version that was used to originally develop the pipeline, in this case, R version
 4.2.2. So that's the version we will be using in our Dockerfile. Next, we need
 to check the version of `{renv}` that we used to build the `renv.lock` file. You
 don't necessarily need to install the same version, but I recommend you do. For
@@ -612,7 +613,7 @@ simply copy and paste into your Dockerfile:
     <figcaption>System-level dependencies for the {tidyverse} package on Ubuntu.</figcaption>
 </figure>
 
-We will use this list to install the required dependencies for our project.
+We will use this list to install the required dependencies for our pipeline.
 
 Create a new folder and call whatever you want and save the `renv.lock` file
 linked above inside of it. Then, create an empty text file and call it
@@ -663,10 +664,11 @@ This will allow us to download a specific version from `{renv}` from Github,
 which is what we do in the next line. I want to stress again that I do this
 simply because the original `renv.lock` file was generated using `{renv}`
 version 0.16.0 and so to avoid any potential compatibility issues, I also use
-this one to restore the project. But it is very likely that I could have
-installed the current version of `{renv}` to restore the project, and that it
-would have worked without problems. So in the next line I install the right
-version of `{renv}`. By the way, I knew how to do this because I read [this
+this one to restore the required packages for the pipeline. But it is very
+likely that I could have installed the current version of `{renv}` to restore
+the packages, and that it would have worked without problems. But just to be on
+the safe side, in the next line I install the right version of `{renv}`. By the
+way, I knew how to do this because I read [this
 vignette](https://rstudio.github.io/renv/articles/docker.html)^[https://rstudio.github.io/renv/articles/docker.html]
 that explains all these steps (but I’ve only kept the absolute essential lines
 of code to make it work). Next comes the line `RUN mkdir /home/housing`, which
@@ -692,17 +694,17 @@ the working directory to `/home/housing`, and then we use `renv::init()` and
 `renv::restore()` to restore the packages from the `renv.lock` file that we
 copied before. Using this Dockerfile, we can now build an image that will come
 with R version 4.2.2 pre-installed as well as all the same packages that we used
-to develop the `housing` project.
+to develop the `housing` pipeline.
 
 Build the image using `docker build -t housing_image .` (don’t forget the `.` at
 the end).
 
 The build process will take some time, so I would advise you go get a hot
 beverage in the meantime. Now, we did half the work: we have an environment that
-contains the required software for our project, but the project files
-themselves, to actually run the pipeline, are missing. But before adding the pipeline
-itself, let’s see if the Docker image we built is working. For this, login to a command
-line inside a running Docker container started from this image with this single command:
+contains the required software for our pipeline, but the pipeline files
+themselves are missing. But before adding the pipeline itself, let’s see if the
+Docker image we built is working. For this, login to a command line inside a
+running Docker container started from this image with this single command:
 
 ```
 docker run --rm -it --name housing_container housing_image bash
@@ -773,15 +775,15 @@ that requires the same version of R and packages. This is especially useful if
 you don’t update your development environment very often, and develop a lot of
 projects with it.
 
-In summary, the first is approach is "dockerize projects", the second approach
-is "dockerize the dev environment and use it for many projects". It all depends
+In summary, the first is approach is "dockerize pipelines", the second approach
+is "dockerize the dev environment and use it for many pipelines". It all depends
 on how you work: in research, you might want to go for the first approach, as
 each project likely depends on bleeding-edge versions of R and packages. But in
 industry, where people tend to put the old adage "if ain’t broke don’t fix it"
 into practice, dev environments are usually frozen for some time and only get 
 updated when really necessary (or according to a fixed schedule).
 
-To dockerize the project, we first need to understand something important with
+To dockerize the pipeline, we first need to understand something important with
 Docker, which I’ve already mentioned in passing: a Docker image is an immutable
 sandbox. This means that we cannot change it at run-time, only at build-time. So
 if we log in to a running Docker container (as we did before), and install an R
@@ -795,7 +797,7 @@ the container. We simply need to specify the path for this shared folder when
 running the container, and that’s it.
 
 Let’s first write a Dockerfile that contains all the necessary. We simply need
-to add the `_targets.R` script from our project, the `analyse_data.Rmd` markdown
+to add the `_targets.R` script from our pipeline, the `analyse_data.Rmd` markdown
 file and all the functions from the `functions/` folder (you can find all the
 required files
 [here](https://github.com/rap4all/housing/tree/pipeline)^[https://github.com/rap4all/housing/tree/pipeline]):
@@ -920,11 +922,36 @@ owner@localhost ➤ docker run --rm --name housing_container -v \
 `/home/housing/shared_folder` is the path to the shared folder inside the Docker
 container. When these lines run, the very last `CMD` statement from the
 Dockerfile runs, moving the contents from inside the Docker container to our
-computer. 
+computer. If you check the contents of the `shared_folder` on your computer, you
+will see `analyse_data.html` in there.
 
-That’s it, we have now a complete reproducible analytical pipeline.
+That’s it, we have now a complete reproducible analytical pipeline. We managed
+to tick every one of the following boxes when running our pipeline:
+
+- Same version of R that was used for development;
+- Same versions of all the packages that were used for development;
+- The whole stack runs "frozen" environment;
+- We can reproduce this environment (but more on that later...).
+
+We now need to share all this with the world. One simple solution is to share
+the Dockerfile on Github. For example, [this is the
+repository](https://github.com/rap4all/housing/tree/docker)^[https://github.com/rap4all/housing/tree/docker]
+with all the required code to build the Docker image and run the pipeline. But
+we could also share the built image already, so that users only need to run the
+pipeline to instantly get the results. In the next section, we will learn about
+dockerizing development environments, and then see how we can share images that
+have already been built.
 
 ## Dockerizing development environments
+
+In the previous section, I mentioned that you could either "dockerize pipelines"
+or "dockerize the dev environment and use it for many pipelines". What we
+learned up until now was how to dockerize one single pipeline. In this section,
+we will learn how to build and dockerize an environment, and then build
+pipelines that use these environment as starting points.
+
+Let me first explain, again, why (or when) you might want to use his approach instead
+of the "dockerizing pipelines" approach.
 
 ### Sharing images on Docker Hub
 
