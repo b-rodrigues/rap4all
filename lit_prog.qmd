@@ -543,7 +543,7 @@ data(iris)
 The iris dataset has `r nrow(iris)` rows.
 ````
 
-The last sentence from this example has an inline code chunk. This quite useful,
+The last sentence from this example has an inline code chunk. This is quite useful,
 as it allows to parameterise sentences and paragraphs, and thus avoids needing
 to copy and paste (and we will go quite far into how to avoid copy and pasting,
 thanks to more advanced features we will shortly discuss).
@@ -558,7 +558,7 @@ This sentence has a footnote.[^1]
 ````
 
 and that you can write LaTeX formulas as well. For example, add the following
-into the the example from before and render either a PDF or a html document
+into the example from before and render either a PDF or a html document
 (don’t put the LaTeX formula below inside a chunk, simply paste it as if it were
 normal text. This doesn’t work for Word output because Word does not support
 LaTeX equations):
@@ -586,7 +586,7 @@ is forbidden. Striving for this 0 copy and pasting will make our code much
 more robust and likely to be correct.
 
 We started by using functions, as discussed in the previous chapter, but we can
-much farther than that. For example, suppose that we need to write a document
+go much farther than that. For example, suppose that we need to write a document
 that has the following structure:
 
 - A title
@@ -637,7 +637,7 @@ good looking table for our rendered document:
 create_table(mtcars, "am")
 ```
 
-Let’ suppose that we want to generate a document that would look like this:
+Let’s suppose that we want to generate a document that would look like this:
 
 - first a section title, with the name of the variable of interest
 - then the table
@@ -677,7 +677,7 @@ invisible(lapply(colnames(mtcars), return_section, dataset = mtcars))
 
 ````
 
-The last function, named `return_section()` uses `knitr::knit_expdand()`, which
+The last function, named `return_section()` uses `knitr::knit_expand()`, which
 is the function that does the heavy lifting. This function returns literal R
 Markdown code. It returns `## Frequency table for variable: {{variable}}` which
 creates a level 2 section title with the text *Frequency table for variable:
@@ -932,7 +932,7 @@ to have one section dedicated to each unit of analysis within the same report,
 but rather, you want a complete separate report by unit of analysis. This is
 also possible thanks to parameterised reports.
 
-Let's modify the example from before, which consisted in creating one section
+Let's modify the example from before, which consisted of creating one section
 per column of the `mtcars` dataset and a frequency table, and make it now one
 separate report for each column. The R Markdown file will look like this:
 
@@ -1074,7 +1074,7 @@ replacing "mtcars" by "iris" in the code to compile the reports and see what
 happens, and then when you're comfortable with parameterised reports, try
 templating inside a parameterised report!
 
-It is important to not fall to the temptation of copy and pasting sections of
+It is important not to fall to the temptation of copy and pasting sections of
 your report, or parts of your script, instead of using these more advanced
 features provided by the language. It is tempting, especially under time
 pressure, to just copy and paste bits of code and get things done instead of
@@ -1091,7 +1091,7 @@ change? How often, and why? Can you also fix these parts or not? What if instead
 of five sections that I need to copy and paste, I had 50 sections? How could I
 scale that up?
 
-Asking yourself these questions, and solving them, will ultimately make you
+Asking yourself these questions, and solving them, will ultimately make you a
 better programmer.
 
 Remember: don't repeat yourself!
