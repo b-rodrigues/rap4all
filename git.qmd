@@ -462,7 +462,7 @@ no changes added to commit (use "git add" and/or "git commit -a")
 
 Yep, `analysis.R` is gone. And deleting on the console usually means that the
 file is gone forever. Well technically no, there are still ways to recover
-deleted files, but sence we were using Git we can use it to recover the files!
+deleted files, but since we were using Git we can use it to recover the files!
 Because we did not commit the deletion of the file, we can simple tell Git to
 ignore our changes. A simple way to achieve this is to stash the changes, and
 then *drop* (or delete) the stash:
@@ -608,6 +608,11 @@ Date:   Sun Feb 5 17:32:26 2023 +0100
 
     Project start
 ```
+
+Using a range of commits in `git revert` reverts all the commits from the
+starting commit (not included) to the last commit. In this example, because only
+the commit starting with `8e51867dc5` was included in that range, only this
+commit was reverted. You could have achieved the same result with `git revert 8e51867dc5`.
 
 This small example illustrates how useful Git is, even without using Github, and
 even if working alone on a project. At the very least it offers you a way to
