@@ -410,7 +410,7 @@ Changes not staged for commit:
         deleted:    analysis.R
 
 no changes added to commit (use "git add" and/or "git commit -a")</code></pre>
-<p>Yep, <code>analysis.R</code> is gone. And deleting on the console usually means that the file is gone forever. Well technically no, there are still ways to recover deleted files, but sence we were using Git we can use it to recover the files! Because we did not commit the deletion of the file, we can simple tell Git to ignore our changes. A simple way to achieve this is to stash the changes, and then <em>drop</em> (or delete) the stash:</p>
+<p>Yep, <code>analysis.R</code> is gone. And deleting on the console usually means that the file is gone forever. Well technically no, there are still ways to recover deleted files, but since we were using Git we can use it to recover the files! Because we did not commit the deletion of the file, we can simple tell Git to ignore our changes. A simple way to achieve this is to stash the changes, and then <em>drop</em> (or delete) the stash:</p>
 <pre><code>owner@localhost ➤ git stash</code></pre>
 <pre><code>Saved working directory and index state WIP on master: ab43b4b Added a comment to analysis.R</code></pre>
 <p>So the deletion was stashed away, (so in case we want it back we could get it back with <code>git stash pop</code>) and our project was rolled back to the previous commit. Simply take a look at the files:</p>
@@ -485,6 +485,7 @@ Author: User &lt;owner@mailbox.com&gt;
 Date:   Sun Feb 5 17:32:26 2023 +0100
 
     Project start</code></pre>
+<p>Using a range of commits in <code>git revert</code> reverts all the commits from the starting commit (not included) to the last commit. In this example, because only the commit starting with <code>8e51867dc5</code> was included in that range, only this commit was reverted. You could have achieved the same result with <code>git revert 8e51867dc5</code>.</p>
 <p>This small example illustrates how useful Git is, even without using Github, and even if working alone on a project. At the very least it offers you a way to simply walk back changes and gives you a nice timeline of your project. Maybe this does not impress you much, because we live in a world where cloud services like Dropbox made things like this very accessible. But where Git (with the help of a service like Github) really shines is when collaboration is needed. Git and code housing services like Github make it possible to collaborate at very large scale: thousands of developers contribute to the Linux kernel, arguably the most successful open source project ever, powering most of today’s smartphones, servers, supercomputers and embedded computer,<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> and you can use these tools to collaborate at a smaller scale very efficiently as well.</p>
 </section>
 <section id="git-and-github" class="level2" data-number="4.3">
