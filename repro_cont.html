@@ -297,8 +297,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#dockerizing-projects" id="toc-dockerizing-projects" class="nav-link" data-scroll-target="#dockerizing-projects"><span class="toc-section-number">14.5</span>  Dockerizing projects</a></li>
   <li><a href="#dockerizing-development-environments" id="toc-dockerizing-development-environments" class="nav-link" data-scroll-target="#dockerizing-development-environments"><span class="toc-section-number">14.6</span>  Dockerizing development environments</a>
   <ul class="collapse">
-  <li><a href="#sharing-images-on-docker-hub" id="toc-sharing-images-on-docker-hub" class="nav-link" data-scroll-target="#sharing-images-on-docker-hub"><span class="toc-section-number">14.6.1</span>  Sharing images on Docker Hub</a></li>
-  <li><a href="#sharing-a-compressed-archive-of-your-image" id="toc-sharing-a-compressed-archive-of-your-image" class="nav-link" data-scroll-target="#sharing-a-compressed-archive-of-your-image"><span class="toc-section-number">14.6.2</span>  Sharing a compressed archive of your image</a></li>
+  <li><a href="#creating-a-base-image-for-development" id="toc-creating-a-base-image-for-development" class="nav-link" data-scroll-target="#creating-a-base-image-for-development"><span class="toc-section-number">14.6.1</span>  Creating a base image for development</a></li>
+  <li><a href="#sharing-images-on-docker-hub" id="toc-sharing-images-on-docker-hub" class="nav-link" data-scroll-target="#sharing-images-on-docker-hub"><span class="toc-section-number">14.6.2</span>  Sharing images on Docker Hub</a></li>
+  <li><a href="#sharing-a-compressed-archive-of-your-image" id="toc-sharing-a-compressed-archive-of-your-image" class="nav-link" data-scroll-target="#sharing-a-compressed-archive-of-your-image"><span class="toc-section-number">14.6.3</span>  Sharing a compressed archive of your image</a></li>
   </ul></li>
   <li><a href="#the-problems-of-relying-so-much-on-docker" id="toc-the-problems-of-relying-so-much-on-docker" class="nav-link" data-scroll-target="#the-problems-of-relying-so-much-on-docker"><span class="toc-section-number">14.7</span>  The problems of relying so much on Docker</a></li>
   <li><a href="#is-docker-enough" id="toc-is-docker-enough" class="nav-link" data-scroll-target="#is-docker-enough"><span class="toc-section-number">14.8</span>  Is Docker enough?</a></li>
@@ -416,14 +417,14 @@ libxml2-dev</code></pre>
 </section>
 <section id="first-steps-with-docker" class="level2" data-number="14.3">
 <h2 data-number="14.3" class="anchored" data-anchor-id="first-steps-with-docker"><span class="header-section-number">14.3</span> First steps with Docker</h2>
-<p>Let’s start by creating an “Hello World” Docker image. As I explained in the beginning, to define a Docker image, we need to create a <code>Dockerfile</code> with some instructions. But first, you need of course to install Docker. To install Docker on any operating system (Windows, macOS or Ubuntu or other Linuxes), you can install <a href="https://docs.docker.com/desktop/">Docker Desktop</a>. If you’re running Ubuntu (or another Linux distribution) and don’t want the GUI, and are using Ubuntu, you could install the <a href="https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository">Docker engine</a> and then follow the post-installation <a href="https://docs.docker.com/engine/install/linux-postinstall/#manage-docker-as-a-non-root-user">steps for Linux</a>.</p>
-<p>In any case, whatever operating system you’re using, we will be using the command line to interact with Docker. Once you’re done with installing Docker, create a folder somewhere on your computer, and create inside of this folder an empty text file with the name <code>Dockerfile</code>. This can be tricky on Windows, because you have to remove the <code>.txt</code> extension that gets added by default on Windows. You might need to turn on the option “File name extensions” in the <code>View</code> pane of the Windows file explorer to make this process easier. Then, open this file with your favourite text editor, and add the following lines:</p>
+<p>Let’s start by creating an “Hello World” Docker image. As I explained in the beginning, to define a Docker image, we need to create a Dockerfile with some instructions. But first, you need of course to install Docker. To install Docker on any operating system (Windows, macOS or Ubuntu or other Linuxes), you can install <a href="https://docs.docker.com/desktop/">Docker Desktop</a>. If you’re running Ubuntu (or another Linux distribution) and don’t want the GUI, and are using Ubuntu, you could install the <a href="https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository">Docker engine</a> and then follow the post-installation <a href="https://docs.docker.com/engine/install/linux-postinstall/#manage-docker-as-a-non-root-user">steps for Linux</a>.</p>
+<p>In any case, whatever operating system you’re using, we will be using the command line to interact with Docker. Once you’re done with installing Docker, create a folder somewhere on your computer, and create inside of this folder an empty text file with the name Dockerfile. This can be tricky on Windows, because you have to remove the <code>.txt</code> extension that gets added by default on Windows. You might need to turn on the option “File name extensions” in the <code>View</code> pane of the Windows file explorer to make this process easier. Then, open this file with your favourite text editor, and add the following lines:</p>
 <pre><code>FROM ubuntu:jammy
 
 RUN uname -a</code></pre>
-<p>This very simple <code>Dockerfile</code> does two things: it starts by stating that it’s based on the Ubuntu Jammy (so version 22.04) operating system, and then runs the <code>uname -a</code> command. This command, which gets run inside the Ubunu command line, prints the Linux kernel version from that particular Ubuntu release. <code>FROM</code> and <code>RUN</code> are Docker commands; there are a couple others that we will discover a bit later. Now, what do you do with this <code>Dockerfile</code>? Remember, a <code>Dockerfile</code> defines an image. So now, we need to build this image. Open a terminal/command prompt in the folder where the <code>Dockerfile</code> is and type the following:</p>
+<p>This very simple Dockerfile does two things: it starts by stating that it’s based on the Ubuntu Jammy (so version 22.04) operating system, and then runs the <code>uname -a</code> command. This command, which gets run inside the Ubunu command line, prints the Linux kernel version from that particular Ubuntu release. <code>FROM</code> and <code>RUN</code> are Docker commands; there are a couple others that we will discover a bit later. Now, what do you do with this Dockerfile? Remember, a Dockerfile defines an image. So now, we need to build this image. Open a terminal/command prompt in the folder where the Dockerfile is and type the following:</p>
 <pre><code>owner@localhost ➤ docker build -t raps_hello .</code></pre>
-<p>The <code>docker build</code> command builds an image from the <code>Dockerfile</code> that is in path <code>.</code> (a single <code>.</code> means “this current working directory”). The <code>-t</code> option tags that image with the name <code>raps_hello</code>. If everything goes well, you should see this output:</p>
+<p>The <code>docker build</code> command builds an image from the Dockerfile that is in path <code>.</code> (a single <code>.</code> means “this current working directory”). The <code>-t</code> option tags that image with the name <code>raps_hello</code>. If everything goes well, you should see this output:</p>
 <pre><code>Sending build context to Docker daemon  2.048kB
 Step 1/2 : FROM ubuntu:jammy
  ---&gt; 08d22c0ceb15
@@ -436,8 +437,8 @@ Successfully built a0ea59f23d01
 Successfully tagged raps_hello:latest</code></pre>
 <p>Look at <code>Step 2/2</code>: you should see the output of the <code>uname -a</code> command:</p>
 <pre><code>Linux 697194b9a519 6.2.6-1-default #1 SMP PREEMPT_DYNAMIC Mon Mar 13 10:57:27 UTC 2023 (fa1a4c6) x86_64 x86_64 x86_64 GNU/Linux</code></pre>
-<p>Every <code>RUN</code> statement in the <code>Dockerfile</code> gets executed at build time: so this is what we will use to install R and the needed packages. This way, once the image is built, we end up with an image that contains all the software we need.</p>
-<p>Now, we would like to be able to use this image. Using a built image, we can start one or several containers that we can use for whatever we want. Let’s now create a more realistic example. Let’s build a Docker image that comes with R pre-installed. But for this, we need to go back to our <code>Dockerfile</code> and change it a bit:</p>
+<p>Every <code>RUN</code> statement in the Dockerfile gets executed at build time: so this is what we will use to install R and the needed packages. This way, once the image is built, we end up with an image that contains all the software we need.</p>
+<p>Now, we would like to be able to use this image. Using a built image, we can start one or several containers that we can use for whatever we want. Let’s now create a more realistic example. Let’s build a Docker image that comes with R pre-installed. But for this, we need to go back to our Dockerfile and change it a bit:</p>
 <pre><code>FROM ubuntu:jammy
 
 ENV TZ=Europe/Luxembourg
@@ -448,7 +449,7 @@ RUN apt-get update &amp;&amp; apt-get install -y r-base
 
 CMD ["R"]</code></pre>
 <p>First we define a variable using <code>ENV</code>, called <code>TZ</code> and we set that to the <code>Europe/Luxembourg</code> time zone (you can change this to your own time zone). We then run a rather complex looking command that sets the defined time zone system-wide. We had to do all this, because when we will later install R, a system-level dependency called <code>tzdata</code> gets installed. This tool then asks the user, to enter his or her time zone interactively. But we cannot interact with the image interactively as it’s being built, so the build process gets stuck at this prompt. By using these two commands, we can set the correct time zone and once <code>tzdata</code> gets installed, that tool doesn’t ask for the time zone anymore, so the build process can continue. This is a rather known issue when building Docker images based on Ubuntu, so the fix is easily found with a Google search (but I’m giving it to you, dear reader, for free).</p>
-<p>Then come <code>RUN</code> statements. The first one uses Ubuntu’s package manager to first refresh the repositories (this ensures that our local Ubuntu installation repositories are in synch with the latest software updates that were pushed to the central Ubuntu repos). Then we use Ubuntu’s package manager to install <code>r-base</code>. <code>r-base</code> is the package that installs R. We then finish this <code>Dockerfile</code> by running <code>CMD ["R"]</code>. This is the command that will be executed when we run the container. Remember: <code>RUN</code> commands get executed at build-time, <code>CMD</code> commands at run-time. This distinction will be important later on.</p>
+<p>Then come <code>RUN</code> statements. The first one uses Ubuntu’s package manager to first refresh the repositories (this ensures that our local Ubuntu installation repositories are in synch with the latest software updates that were pushed to the central Ubuntu repos). Then we use Ubuntu’s package manager to install <code>r-base</code>. <code>r-base</code> is the package that installs R. We then finish this Dockerfile by running <code>CMD ["R"]</code>. This is the command that will be executed when we run the container. Remember: <code>RUN</code> commands get executed at build-time, <code>CMD</code> commands at run-time. This distinction will be important later on.</p>
 <p>Let’s build the image (this will take some time, because a lot of software gets installed):</p>
 <pre><code>owner@localhost ➤ docker build -t raps_ubuntu_r .</code></pre>
 <p>This builds an image called <code>raps_ubuntu_r</code>. This image is based on Ubuntu 22.04 Jammy Jellyfish and comes with R pre-installed. But the version of R that gets installed is the one made available through the Ubuntu repositories, and as of writing that is version 4.1.2, while the latest version available is R version 4.2.3. So the version available through the Ubuntu repositories lags behind the actual release. But no matter, we will deal with that later.</p>
@@ -484,7 +485,7 @@ Type 'q()' to quit R.
 <li>we are not going to use Docker containers interactively, that’s not really the point, but it can be useful to login into the running container to check if things are working as expected;</li>
 <li>we will build our images on top of pre-built images from the <a href="https://rocker-project.org/">Rocker project</a> and these images come with a lot of software pre-installed and configuration taken care of.</li>
 </ul>
-<p>What you should take away from this section is that you need to write a <code>Dockerfile</code> which then allows you to build an image. This image can then be used to run one (or several) containers. These containers, at run-time, will execute our pipeline in an environment that is frozen, such that the output of this run will stay constant, forever.</p>
+<p>What you should take away from this section is that you need to write a Dockerfile which then allows you to build an image. This image can then be used to run one (or several) containers. These containers, at run-time, will execute our pipeline in an environment that is frozen, such that the output of this run will stay constant, forever.</p>
 </section>
 <section id="the-rocker-project" class="level2" data-number="14.4">
 <h2 data-number="14.4" class="anchored" data-anchor-id="the-rocker-project"><span class="header-section-number">14.4</span> The Rocker project</h2>
@@ -492,7 +493,7 @@ Type 'q()' to quit R.
 <pre><code>FROM ubuntu:jammy
 
 RUN uname -a</code></pre>
-<p>The very first line, <code>FROM ubuntu:jammy</code> downloads an Ubuntu Jammy image, but from where? All these images get download from <em>Docker Hub</em>, which you can browse <a href="https://hub.docker.com/">here</a><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>. If you create an account you can even push your own images on there. For example we could push the image we built before, which we called <code>raps_ubuntu_r</code>, on Docker Hub. Then, if we wanted to create a new Docker image that builds upon <code>raps_ubuntu_r</code> we could simply type <code>FROM username:raps_ubuntu_r</code> (or something similar).</p>
+<p>The very first line, <code>FROM ubuntu:jammy</code> downloads an Ubuntu Jammy image, but from where? All these images get downloaded from <em>Docker Hub</em>, which you can browse <a href="https://hub.docker.com/">here</a><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>. If you create an account you can even push your own images on there. For example we could push the image we built before, which we called <code>raps_ubuntu_r</code>, on Docker Hub. Then, if we wanted to create a new Docker image that builds upon <code>raps_ubuntu_r</code> we could simply type <code>FROM username:raps_ubuntu_r</code> (or something similar).</p>
 <p>It’s also possible to not use Docker Hub at all, and share the image you built as a file. We will explore this option later.</p>
 <p>The Rocker project offers many different images, which are described <a href="https://rocker-project.org/images/">here</a><a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>. We are going to be using the <em>versioned stack</em>. These are images that ship specific versions of R, which get built from source. This way, it doesn’t matter when the image gets build, the same version of R will be installed. Let me explain why building R from source is important. When we build the image from the Dockerfile we wrote before, R gets installed from the Ubuntu repositories. For this we use Ubuntu’s package manager and the following command: <code>apt-get install -y r-base</code>. As of writing, the version of R that gets installed is version 4.1.3. There’s two problems with installing R from Ubuntu’s repositories. First, we have to use whatever gets installed, which can be a problem with reproducibility. If we ran our analysis using R version 4.2.1, then we would like to dockerize that version of R. The second problem is that when we build the image today we get version 4.1.3. But it is not impossible that if we build the image in 6 months, we get R version 4.2.0, because it is likely that the version that ships in Ubuntu’s repositories will get updated at some point.</p>
 <p>This means that depending on <em>when</em> we build the image, we might get a different version of R. There are only two ways of avoiding this problem: either we build the image once, and archive it and make sure to always keep a copy and ship that copy forever (or for as long as we want to make sure that pipeline is reproducible) just as you would ship data, code and any documentation required to make the pipeline reproducible. Or we write the Dockerfile in such a way that it always produces the same image, regardless of <em>when</em> it gets built. I very strongly advise you to go for the second option, but to <em>also</em> archive the image. But of course, this also depends on how critical your project is. Maybe you don’t need to start archiving images, or maybe you don’t even need to make sure that the Dockerfile always produces the same image. But I would still highly recommend that you write your Dockerfiles in such a way that they always output the same image. It is safer, and it doesn’t really mean extra work, thanks to the Rocker project.</p>
@@ -512,7 +513,7 @@ System-level dependencies for the {tidyverse} package on Ubuntu.
 </figcaption>
 </figure>
 <p>We will use this list to install the required dependencies for our pipeline.</p>
-<p>Create a new folder and call whatever you want and save the <code>renv.lock</code> file linked above inside of it. Then, create an empty text file and call it <code>Dockerfile</code>. Add the following lines:</p>
+<p>Create a new folder and call whatever you want and save the <code>renv.lock</code> file linked above inside of it. Then, create an empty text file and call it Dockerfile. Add the following lines:</p>
 <pre><code>FROM rocker/r-ver:4.2.2
 
 RUN apt-get update &amp;&amp; apt-get install -y \
@@ -548,7 +549,7 @@ COPY renv.lock /home/housing/renv.lock
 
 RUN R -e "setwd('/home/housing');renv::init();renv::restore()"</code></pre>
 <p>The first line states that we will be basing our image on the image from the Rocker project that ships with R version 4.2.2, which is the right version that we need. Then, we install the required system-level dependencies using Ubuntu’s package manager, as previously explained. Then comes the <code>{remotes}</code> package. This will allow us to download a specific version from <code>{renv}</code> from Github, which is what we do in the next line. I want to stress again that I do this simply because the original <code>renv.lock</code> file was generated using <code>{renv}</code> version 0.16.0 and so to avoid any potential compatibility issues, I also use this one to restore the required packages for the pipeline. But it is very likely that I could have installed the current version of <code>{renv}</code> to restore the packages, and that it would have worked without problems. But just to be on the safe side, in the next line I install the right version of <code>{renv}</code>. By the way, I knew how to do this because I read <a href="https://rstudio.github.io/renv/articles/docker.html">this vignette</a><a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a> that explains all these steps (but I’ve only kept the absolute essential lines of code to make it work). Next comes the line <code>RUN mkdir /home/housing</code>, which creates a folder (<code>mkdir</code> stands for <em>make directory</em>), inside the Docker image, in <code>/home/housing</code>. On Linux distributions, <code>/home/</code> is the directory that users use to store their files, so I create the <code>/home/</code> folder and inside of it, I create a new folder, <code>housing</code> which will contain the files for my project. It doesn’t really matter if you keep that structure or not, you could skip the <code>/home/</code> folder if you wanted. What matters is that you put the files where you can find them.</p>
-<p>Next comes <code>COPY renv.lock /home/housing/renv.lock</code>. This copies the <code>renv.lock</code> from our computer (remember, I told you to save this file next to the <code>Dockerfile</code>) to <code>/home/housing/renv.lock</code>. By doing this, we include the <code>renv.lock</code> file inside of the Docker image which will be crucial for the next and final step: <code>RUN R -e "setwd('/home/housing');renv::init();renv::restore()"</code>.</p>
+<p>Next comes <code>COPY renv.lock /home/housing/renv.lock</code>. This copies the <code>renv.lock</code> from our computer (remember, I told you to save this file next to the Dockerfile) to <code>/home/housing/renv.lock</code>. By doing this, we include the <code>renv.lock</code> file inside of the Docker image which will be crucial for the next and final step: <code>RUN R -e "setwd('/home/housing');renv::init();renv::restore()"</code>.</p>
 <p>This runs the <code>R</code> program from Linux command line with the option <code>-e</code>. This option allows you to pass <code>R</code> expression to the command line, which write between <code>""</code>. Using <code>R -e</code> will quickly become an habit, because this is how you can run R non-interactively, from the command line. The expression we pass sets the working directory to <code>/home/housing</code>, and then we use <code>renv::init()</code> and <code>renv::restore()</code> to restore the packages from the <code>renv.lock</code> file that we copied before. Using this Dockerfile, we can now build an image that will come with R version 4.2.2 pre-installed as well as all the same packages that we used to develop the <code>housing</code> pipeline.</p>
 <p>Build the image using <code>docker build -t housing_image .</code> (don’t forget the <code>.</code> at the end).</p>
 <p>The build process will take some time, so I would advise you go get a hot beverage in the meantime. Now, we did half the work: we have an environment that contains the required software for our pipeline, but the pipeline files themselves are missing. But before adding the pipeline itself, let’s see if the Docker image we built is working. For this, login to a command line inside a running Docker container started from this image with this single command:</p>
@@ -666,27 +667,120 @@ CMD mv /home/housing/pipeline_output/* /home/housing/shared_folder/</code></pre>
 <li>The whole stack runs “frozen” environment;</li>
 <li>We can reproduce this environment (but more on that later…).</li>
 </ul>
-<p>We now need to share all this with the world. One simple solution is to share the Dockerfile on Github. For example, <a href="https://github.com/rap4all/housing/tree/docker">this is the repository</a><a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a> with all the required code to build the Docker image and run the pipeline. But we could also share the built image already, so that users only need to run the pipeline to instantly get the results. In the next section, we will learn about dockerizing development environments, and then see how we can share images that have already been built.</p>
+<p>We now need to share all this with the world. One simple solution is to share the Dockerfile on Github. For example, <a href="https://github.com/rap4all/housing/tree/docker">this is the repository</a><a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a> with all the required code to build the Docker image and run the pipeline. But we could also share the built image, so that users only need to run the pipeline to instantly get the results. In the next section, we will learn about dockerizing development environments, and then see how we can share images that have already been built.</p>
 </section>
 <section id="dockerizing-development-environments" class="level2" data-number="14.6">
 <h2 data-number="14.6" class="anchored" data-anchor-id="dockerizing-development-environments"><span class="header-section-number">14.6</span> Dockerizing development environments</h2>
+<section id="creating-a-base-image-for-development" class="level3" data-number="14.6.1">
+<h3 data-number="14.6.1" class="anchored" data-anchor-id="creating-a-base-image-for-development"><span class="header-section-number">14.6.1</span> Creating a base image for development</h3>
 <p>In the previous section, I mentioned that you could either “dockerize pipelines” or “dockerize the dev environment and use it for many pipelines”. What we learned up until now was how to dockerize one single pipeline. In this section, we will learn how to build and dockerize an environment, and then build pipelines that use these environment as starting points.</p>
 <p>Let me first explain, again, why (or when) you might want to use his approach instead of the “dockerizing pipelines” approach.</p>
-<section id="sharing-images-on-docker-hub" class="level3" data-number="14.6.1">
-<h3 data-number="14.6.1" class="anchored" data-anchor-id="sharing-images-on-docker-hub"><span class="header-section-number">14.6.1</span> Sharing images on Docker Hub</h3>
+<p>Depending on what or where you work, it is sometimes necessary to have a stable development environment that only gets rarely updated (following a strict schedule). In my own experience, when I was doing research I was almost always using the latest R version and packages. When I’ve joined the private sector, we worked on an environment that we developers could not update ourselves. That environment was updated according a fixed schedule and now that I’m back in the public sector (but not doing research), I work in a similar manner, on a “frozen” environment. Working on frozen environments like this minimizes the unexpected issues that frequent updates can bring. So how can we use Docker to use such an approach?</p>
+<p>The idea is to split up the Dockerfile we used in the previous section into two parts. The first part would consist in setting up everything that is “OS-related”. So installing R, packages, and system-level dependencies. The second Dockerfile would use the image defined thanks to the first Dockerfile as a base and then add the required lines to obtain the results from the pipeline. The first image, that focuses on the operating system, can be archived and re-used for as long as required to keep building pipelines. Once we update our environment, we can then re-generate a new Docker image that reflects this update.</p>
+<p>Let’s do this now. The first image would simply consist of these lines:</p>
+<pre><code>FROM rocker/r-ver:4.2.2
+
+RUN apt-get update &amp;&amp; apt-get install -y \
+    libglpk-dev \
+    libxml2-dev \
+    libcairo2-dev \
+    libgit2-dev \
+    default-libmysqlclient-dev \
+    libpq-dev \
+    libsasl2-dev \
+    libsqlite3-dev \
+    libssh2-1-dev \
+    libxtst6 \
+    libcurl4-openssl-dev \
+    libharfbuzz-dev \
+    libfribidi-dev \
+    libfreetype6-dev \
+    libpng-dev \
+    libtiff5-dev \
+    libjpeg-dev \
+    libxt-dev \
+    unixodbc-dev \
+    wget \
+    pandoc
+
+RUN R -e "install.packages('remotes')"
+
+RUN R -e "remotes::install_github('rstudio/renv@0.16.0')"</code></pre>
+<p>This image can then be built using <code>docker build -t dev_env_r .</code>. This simply installs all the packages and system-level dependencies that are common and needed for all pipelines. Then, each specific package libraries that are required for each pipelines will get installed using the pipeline-specific <code>renv.lock</code> file. This will be done with a second Dockerfile. But first, we need to make the <code>dev_env_r</code> image available, such that it becomes possible to build new images upon <code>dev_env_r</code>. There are two ways to make images available: either online through <a href="https://hub.docker.com/">Docker Hub</a> (in case there’s nothing sensitive about them) or locally, by compressing the images and sharing them internally (in case you don’t want to share your images with the world, because they contain proprietary software that you’ve developed within your company for example). I want to stress that making the image available through Docker Hub is different than sharing the Dockerfile through Github. You could just share the Dockerfiles through Github, and then tell users to first build the dev environment, and then build the pipeline image by building the second, pipeline-specific Dockerfile. But by sharing a built image from Docker Hub, users (including future you) will only need to build the pipeline-specific image and this is much faster. Just like we used <code>FROM ubuntu:jammy</code> in our Dockerfiles before, we will now use something like <code>FROM my_repo/my_image:version_number</code> from now on.</p>
+<p>In the next section I will discuss sharing images on Docker Hub, but before that, let me first address the elephant in the room: the development environment that you are using may not be the one you are dockerizing. For example, if you are using Windows or macOS on your computer, then the environment that you are dockerizing will be different, since it’s based on Ubuntu. There are only three solutions to this conundrum:</p>
+<ul>
+<li>You don’t care, and maybe that’s fine. As I stated multiple times, the same pipeline outputting different results due to different operating systems is in practice rare (but it can happen);</li>
+<li>You prefer being safe than sorry, and install Ubuntu on your pc as well. This is very often not an acceptable solution however.</li>
+<li>You develop on your host environment, but after you’re done you compare the results obtained from the Docker container to those obtained on your development environment.</li>
+<li>You use the Docker image not only to ship RAPs, but also for development.</li>
+</ul>
+<p>The last option implies that you use Docker interactively, which is not ideal, but it is possible. For example you could install RStudio server and run a Dockerized version of RStudio from a running Docker container. This is actually what happens if you follow the instructions on the Rocker project’s homepage. You can get a dockerized RStudio instance by running:</p>
+<pre><code>docker run --rm -ti -e PASSWORD=yourpassword -p 8787:8787 rocker/rstudio</code></pre>
+<p>and then going to <code>http://localhost:8787</code> on your web-browser. You can then log in with the username “rstudio” and the password “yourpassword”. But you would also need to mount a volume (I called it shared folder previously) to keep the files you edit on your computer (remember, Docker container are immutable, so any files creates within a Docker container will be lost when it’s stopped). Overall, I think that this is too cumbersome, especially because the risks of getting different results only because of your operating system are very, very, very low. I would simply advise the following:</p>
+<ul>
+<li>Use the same version of R on your computer and on Docker;</li>
+<li>Use the same package library on your computer and on Docker by using the same <code>renv.lock</code> file.</li>
+</ul>
+<p>By following these two rules, you should keep any issues to a minimum. When or if you need to update R and/or the package library on your machine, then you simply create a new Docker image that reflects these changes.</p>
+<p>However, if work in a field where operating system versions matter, then yes, you should find a way to either use the dockerized environment for development, or you should install Ubuntu on your computer (same version as in Docker of course).</p>
+<p>Let’s now discuss sharing images.</p>
 </section>
-<section id="sharing-a-compressed-archive-of-your-image" class="level3" data-number="14.6.2">
-<h3 data-number="14.6.2" class="anchored" data-anchor-id="sharing-a-compressed-archive-of-your-image"><span class="header-section-number">14.6.2</span> Sharing a compressed archive of your image</h3>
-<p>This doesn’t compress the image:</p>
-<pre><code>owner@localhost ➤ docker save raps_ubuntu_r &gt; raps_ubuntu_r.tar</code></pre>
-<p>you can download it like so:</p>
-<pre><code>owner@localhost ➤ docker load &lt; raps_ubuntu_r.tar</code></pre>
-<p>but if you want to compress it, you can run the following (but this might only work on a Linux distribution, and only if the <code>xz</code> program is installed):</p>
-<pre><code>owner@localhost ➤ docker save raps_ubuntu_r | xz &gt; raps_ubuntu_r.tar.xz</code></pre>
+<section id="sharing-images-on-docker-hub" class="level3" data-number="14.6.2">
+<h3 data-number="14.6.2" class="anchored" data-anchor-id="sharing-images-on-docker-hub"><span class="header-section-number">14.6.2</span> Sharing images on Docker Hub</h3>
+<p>If you want to share Docker images on Docker Hub, you first need to create a free account. A free account gives you unlimited public repositories. If you want to make your images private, you need a paid account. For our purposes though, a free account is more than enough. Again, in the next section we will discuss how you can build new images upon other images without using Docker Hub.</p>
+<p>If you want to follow along, make sure that you have also written a Dockerfile and build an image that you can upload on Docker Hub. I will be uploading the image <code>dev_env_r</code> to Docker Hub, so if you want you could use if for your own projects.</p>
+<p>If you built an image to upload, now is the right moment to talk about the <code>docker images</code> command. This will list all the images available on your computer. You should see something like this:</p>
+<p>You can also list the running containers with <code>docker container ls</code> (or <code>docker ps</code>). If a container is running you should see something like this:</p>
+<p>You can stop the container by running <code>docker stop CONTAINER ID</code>. So, list the images again using <code>docker images</code>. Take note of the image id of the image that you want to upload on Docker Hub. Now, login to Docker Hub using <code>docker login</code>. You will be asked for your credentials.</p>
+<p>Now, you need to tag the image (this gives it a version number). So you would write something like:</p>
+<pre><code>docker tag IMAGE_ID your_username_on_docker_hub/your_image:version1</code></pre>
+<p>so in my case it would be:</p>
+<pre><code>docker tag IMAGE_ID rap4all/dev_env_r:4.2.2</code></pre>
+<p>Next, I need to push it using <code>docker push</code>:</p>
+<pre><code>docker push rap4all/dev_env_r:4.2.2</code></pre>
+<p>You can go check your profile and your repositories, you should see your image there. In my case, you can find the image <a href="">here</a>.</p>
+<p>This image can now be used a stable base for developing our pipelines. Here’s I can now use this base image for my <code>housing</code> pipeline:</p>
+<pre><code>FROM rap4all/dev_env_r:4.2.2
+
+RUN mkdir /home/housing
+
+RUN mkdir /home/housing/pipeline_output
+
+RUN mkdir /home/housing/shared_folder
+
+COPY renv.lock /home/housing/renv.lock
+
+COPY functions /home/housing/functions
+
+COPY analyse_data.Rmd /home/housing/analyse_data.Rmd
+
+COPY _targets.R /home/housing/_targets.R
+
+RUN R -e "setwd('/home/housing');renv::init();renv::restore()"
+
+RUN cd /home/housing &amp;&amp; R -e "targets::tar_make()"
+
+CMD mv /home/housing/pipeline_output/* /home/housing/shared_folder/</code></pre>
+<p>Take a look at this Dockerfile’s first line: <code>FROM rap4all/dev_env_r:4.2.2</code>. This is different from before, where we pulled from <code>ubuntu:jammy</code>. Now we’re re-using the image that defines our development environment, and we can do so for as many projects as necessary. In time, we could update to a newer version of R, if required. But R and (Ubuntu) being quite stable, as long as we can install the packages required for our projects, we can keep using it for years (and LTS versions of Ubuntu like Jammy get supported for 5 years).</p>
+</section>
+<section id="sharing-a-compressed-archive-of-your-image" class="level3" data-number="14.6.3">
+<h3 data-number="14.6.3" class="anchored" data-anchor-id="sharing-a-compressed-archive-of-your-image"><span class="header-section-number">14.6.3</span> Sharing a compressed archive of your image</h3>
+<p>If you can’t upload the image on Docker Hub, you can still “save it” into a file and share that file instead (internally to your institution/company).</p>
+<p>Run <code>docker save</code> to save the image into a file:</p>
+<pre><code>owner@localhost ➤ docker save dev_env_r &gt; dev_env_r.tar</code></pre>
+<p>This will create a <code>.tar</code> file of the image. You can then compress this file with an archiving tool if you want.</p>
+<p>If you want to load this image, use <code>docker load</code>:</p>
+<pre><code>owner@localhost ➤ docker load &lt; dev_env_r.tar</code></pre>
+<p>You can then use <code>dev_env_r</code> for a pipeline by using this <code>FROM</code> statement in your Dockerfile:</p>
+<pre><code>FROM dev_env_r</code></pre>
+<p>Since the image is available locally, it’ll get used.</p>
 </section>
 </section>
 <section id="the-problems-of-relying-so-much-on-docker" class="level2" data-number="14.7">
 <h2 data-number="14.7" class="anchored" data-anchor-id="the-problems-of-relying-so-much-on-docker"><span class="header-section-number">14.7</span> The problems of relying so much on Docker</h2>
+<p>So we now know how to build truly reproducible analytical pipelines, but let’s be blunt, relying entirely on one single tool, Docker, is a bit of an issue… it’s a single point of failure. But the problem is not Docker itself, but the infrastructure.</p>
+<p>Let me explain: Docker is based on many different open source parts, and that’s great. This means that even if the company behind Docker ruins it by taking some weird decisions, we have alternatives that build upon the open source parts of Docker. There’s Podman, which is basically a drop-in replacement (when combined with other tools) made by Red Hat, which is completely open source as well. So the risk does not come from there, because even if for some reason Docker would disappear, or get abandoned or whatever, we could still work with Podman, and it would also be technically possible to create a fork from Docker.</p>
+<p>But the issue is the infrastructure. For now, using Docker and more importantly hosting images is free for personal use, education, open source communities and small businesses. So this means that a project like Rocker likely pays nothing for hosting all the images they produce (but who knows, I may be wrong on this). Docker recently announced that they would abandon their <em>Docker Free Team subscription</em> plans that some open source organizations use, and that they should upgrade to a paid subscription within 30 days. So it is reasonably to think that free users with a free account might also be forced to pay one day. Don’t get me wrong, I’m not saying that Docker is not allowed to make money. But it is something that you need to keep in mind in case you cannot afford a subscription (and who knows how much it’s going to cost). But, depeding on what you want to achieve, this might not be an issue. It is only a problem if you want to rely on pre-built images and also</p>
 </section>
 <section id="is-docker-enough" class="level2" data-number="14.8">
 <h2 data-number="14.8" class="anchored" data-anchor-id="is-docker-enough"><span class="header-section-number">14.8</span> Is Docker enough?</h2>
