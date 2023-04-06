@@ -161,6 +161,13 @@ version of Matlab" you will see that many researchers and engineers have this ne
     <figcaption>Wanting to run older versions of analytics software is a recurrent need.</figcaption>
 </figure>
 
+::: {.content-visible when-format="pdf"}
+```{r}
+#| fig-cap: "Wanting to run older versions of analytics software is a recurrent need."
+knitr::include_graphics("images/matlab_old_version.png")
+```
+:::
+
 And if you’re running old code written for version, say, R2008a, there’s no
 guarantee that it will produce the exact same results on version 2022b. And
 let’s not even mention the toolboxes (if you’re not familiar with MATLAB’s
@@ -233,6 +240,13 @@ it has to respect the following bullet points:
     <figcaption>A real sentence from a real paper published in *THE LANCET Regional Health*. How about *make the data available and I won’t scratch your car*, how’s that for a reasonable request?</figcaption>
 </figure>
 
+::: {.content-visible when-format="pdf"}
+```{r}
+#| fig-cap: "A real sentence from a real paper published in *THE LANCET Regional Health*. How about *make the data available and I won’t scratch your car*, how’s that for a reasonable request?"
+knitr::include_graphics("images/reasonable_request.png")
+```
+:::
+
 ## Are there different types of reproducibility?
 
 Let’s take one step back: we live in the real world, and in the real world,
@@ -289,6 +303,14 @@ result of this experiment:
     <figcaption>Examples from older versions of R run most of the time successfully on the current version of R</figcaption>
 </figure>
 
+::: {.content-visible when-format="pdf"}
+```{r}
+#| fig-cap: "Examples from older versions of R run most of the time successfully on the current version of R"
+knitr::include_graphics("images/wontrun.png")
+```
+:::
+
+
 This graph shows the following: for each version of R, starting with R version
 0.6.0 (released in 1997), how well the examples that came with a standard
 installation of R run on the current version of R (version 4.2.2 as of writing).
@@ -344,6 +366,13 @@ reintroduce the idea and call it the "reproducibility iceberg".
          alt="The reproducibility spectrum from Peng’s 2011 paper."></img>
     <figcaption>The reproducibility spectrum from Peng’s 2011 paper.</figcaption>
 </figure>
+
+::: {.content-visible when-format="pdf"}
+```{r}
+#| fig-cap: "The reproducibility spectrum from Peng’s 2011 paper."
+knitr::include_graphics("images/repro_spectrum.png")
+```
+:::
 
 Let me just finish this introduction by the last item on the previous list:
 hardware architecture by discussing a fairly recent event in computing. You see,

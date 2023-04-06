@@ -34,6 +34,14 @@ country.
     <figcaption>Luxembourg is about as big as the US State of Rhode Island.</figcaption>
 </figure>
 
+::: {.content-visible when-format="pdf"}
+```{r}
+#| fig-cap: "Luxembourg is about as big as the US State of Rhode Island."
+knitr::include_graphics("images/lux_rhode_island.png")
+```
+:::
+
+
 What you should also know is that the population is about 645.000 as of writing
 (January 2023), half of which are foreigners. Around 400.000 persons work in
 Luxembourg, of which half do not live in Luxembourg; so every morning from
@@ -133,6 +141,13 @@ well-known). The picture below shows an Excel made for human consumption:
          alt="An Excel file meant for human eyes."></img>
     <figcaption>An Excel file meant for human eyes.</figcaption>
 </figure>
+
+::: {.content-visible when-format="pdf"}
+```{r}
+#| fig-cap: "An Excel file meant for human eyes."
+knitr::include_graphics("images/obs_hab_xlsx_overview.png")
+```
+:::
 
 So why is this file not machine-readable? Here are some issues:
 
@@ -292,6 +307,13 @@ this is about:
          alt="Always look at your data."></img>
     <figcaption>Always look at your data.</figcaption>
 </figure>
+
+::: {.content-visible when-format="pdf"}
+```{r}
+#| fig-cap: "Always look at your data."
+knitr::include_graphics("images/obs_hab_xlsx_missing.png")
+```
+:::
 
 So it turns out that indeed, there are some rows that we need to remove. We can
 start by removing rows where `locality` is missing. Then we have a row where

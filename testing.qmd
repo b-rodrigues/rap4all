@@ -665,6 +665,13 @@ are lines that are not being tested:
     <figcaption>The output of report() inside a web browser.</figcaption>
 </figure>
 
+::: {.content-visible when-format="pdf"}
+```{r}
+#| fig-cap: "The output of report() inside a web browser."
+knitr::include_graphics("images/covr.PNG")
+```
+:::
+
 You could strive to get 100% coverage by painting all the lines green (by writing
 unit tests that test these lines). But in practice, it is not always so easy to 
 get 100% coverage, so don’t fret if don’t achieve perfection.

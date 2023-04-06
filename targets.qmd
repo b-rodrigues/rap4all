@@ -549,6 +549,13 @@ This opens an interactive network graph in your web browser that looks like this
     <figcaption>This image opens in your web-browser.</figcaption>
 </figure>
 
+::: {.content-visible when-format="pdf"}
+```{r}
+#| fig-cap: "This image opens in your web-browser."
+knitr::include_graphics("images/targets_visnetwork.png")
+```
+:::
+
 In the image above, each target has been computed, so they are all up-to-date.
 If we now change the input data as before, here is what you will see instead:
 
@@ -557,6 +564,14 @@ If we now change the input data as before, here is what you will see instead:
          alt="Because the input data got changed, we need to run the pipeline again."></img>
     <figcaption>Because the input data got changed, we need to run the pipeline again.</figcaption>
 </figure>
+
+::: {.content-visible when-format="pdf"}
+```{r}
+#| fig-cap: "Because the input data got changed, we need to run the pipeline again."
+knitr::include_graphics("images/targets_visnetwork_outdated.png")
+```
+:::
+
 
 Because all the targets depend on the input data, we need to re-run everything.
 Let's run the pipeline again to update all the targets using `tar_make()`. 
@@ -605,6 +620,13 @@ see the entire workflow:
     <figcaption>We clearly see that the pipeline has two completely independent parts.</figcaption>
 </figure>
 
+::: {.content-visible when-format="pdf"}
+```{r}
+#| fig-cap: "We clearly see that the pipeline has two completely independent parts."
+knitr::include_graphics("images/targets_visnetwork_iris.png")
+```
+:::
+
 We can see that there are now two independent parts, as well as two unused
 functions, `path_data()` and `summ()` which we could remove.
 
@@ -630,6 +652,13 @@ This target creates a list with the two summaries that we compute. Call
          alt="The two separate workflows end up in one output."></img>
     <figcaption>The two separate workflows end up in one output.</figcaption>
 </figure>
+
+::: {.content-visible when-format="pdf"}
+```{r}
+#| fig-cap: "The two separate workflows end up in one output."
+knitr::include_graphics("images/targets_visnetwork_list_summaries.png")
+```
+:::
 
 Finally, run the pipeline one last time to compute the final output.
 
@@ -701,6 +730,13 @@ here’s what the pipeline looks like before running:
          alt="slow_summary() is used instead of summary()."></img>
     <figcaption>slow_summary() is used instead of summary().</figcaption>
 </figure>
+
+::: {.content-visible when-format="pdf"}
+```{r}
+#| fig-cap: "slow_summary() is used instead of summary()."
+knitr::include_graphics("images/targets_visnetwork_slow_summary.png")
+```
+:::
 
 (You will also notice that I’ve removed the unneeded functions, `path_data()`
 and `summ()`).
@@ -968,6 +1004,13 @@ should be seeing something quite plain looking:
     <figcaption>The output of our pipeline. Our first data product!</figcaption>
 </figure>
 
+::: {.content-visible when-format="pdf"}
+```{r}
+#| fig-cap: "The output of our pipeline. Our first data product!"
+knitr::include_graphics("images/mtcars_rmd_1.png")
+```
+:::
+
 Don’t worry, we will make it look nice, but right at the end. Don’t waste time
 making things look good too early on. Ideally, try to get the pipeline to run on
 a simple example, and then keep adding features. Also, try to get *as much
@@ -1201,6 +1244,14 @@ shows the following in the `Environment` pane:
          alt="What’s described as 'mtcars' is not a 'data.frame', yet."></img>
     <figcaption>What’s described as 'mtcars' is not a 'data.frame', yet.</figcaption>
 </figure>
+
+::: {.content-visible when-format="pdf"}
+```{r}
+#| fig-cap: "What’s described as 'mtcars' is not a 'data.frame', yet."
+knitr::include_graphics("images/mtcars_promise.png")
+```
+:::
+
 
 At this stage, `mtcars` is only a `promise`. It’s only if you need to interact
 with `mtcars` that the `promise` becomes a `data.frame`. So `data()` returns a promise,

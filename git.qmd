@@ -662,6 +662,13 @@ a new repository:
     <figcaption>Creating a new repository from your dashboard.</figcaption>
 </figure>
 
+::: {.content-visible when-format="pdf"}
+```{r}
+#| fig-cap: "Creating a new repository from your dashboard."
+knitr::include_graphics("images/git_new_repo.png")
+```
+:::
+
 You will then land on this page:
 
 <figure>
@@ -669,6 +676,13 @@ You will then land on this page:
          alt="Name your repository and choose whether it's a public or private repository."></img>
     <figcaption>Name your repository and choose whether it's a public or private repository.</figcaption>
 </figure>
+
+::: {.content-visible when-format="pdf"}
+```{r}
+#| fig-cap: "Name your repository and choose whether it's a public or private repository."
+knitr::include_graphics("images/git_new_repo_2.png")
+```
+:::
 
 Name your repository, and choose whether it should be open to the word or if it
 should be private and only accessible to your coworkers. We are going to make it
@@ -683,6 +697,13 @@ We then land on this page:
     <figcaption>Some instructions to get you started.</figcaption>
 </figure>
 
+::: {.content-visible when-format="pdf"}
+```{r}
+#| fig-cap: "Some instructions to get you started."
+knitr::include_graphics("images/git_repo_start.png")
+```
+:::
+
 We get some instructions on how to actually get started with our project. The
 first thing you need to do though is to click on "SSH":
 
@@ -691,6 +712,13 @@ first thing you need to do though is to click on "SSH":
          alt="Make sure to select 'SSH'."></img>
     <figcaption>Make sure to select 'SSH'.</figcaption>
 </figure>
+
+::: {.content-visible when-format="pdf"}
+```{r}
+#| fig-cap: "Make sure to select 'SSH'."
+knitr::include_graphics("images/git_repo_start_ssh.png")
+```
+:::
 
 This will change the links in the instructions from `https` to `ssh`. We will
 explain why this is important in a couple of paragraphs. For now, let's read the
@@ -821,6 +849,13 @@ settings:
     <figcaption>Click on your user profile's image in the top-right corner.</figcaption>
 </figure>
 
+::: {.content-visible when-format="pdf"}
+```{r}
+#| fig-cap: "Click on your user profile's image in the top-right corner."
+knitr::include_graphics("images/github_settings.png")
+```
+:::
+
 And then click on "SSH and GPG keys":
 
 <figure>
@@ -828,6 +863,13 @@ And then click on "SSH and GPG keys":
          alt="Go to your user settings and choose 'SSH and GPG keys'."></img>
     <figcaption>Go to your user settings and choose 'SSH and GPG keys'.</figcaption>
 </figure>
+
+::: {.content-visible when-format="pdf"}
+```{r}
+#| fig-cap: "Go to your user settings and choose 'SSH and GPG keys'."
+knitr::include_graphics("images/github_gpg.png")
+```
+:::
 
 and then click on "New SSH key". Name this key (it's a good idea to write
 something that makes recognizing the machine the key was generated easily) and
@@ -838,6 +880,13 @@ paste the contents of `id_rsa.pub` in the text box and click on "add SSH key":
          alt="Copy the contents of the public key here."></img>
     <figcaption>Copy the contents of the public key here.</figcaption>
 </figure>
+
+::: {.content-visible when-format="pdf"}
+```{r}
+#| fig-cap: "Copy the contents of the public key here."
+knitr::include_graphics("images/github_add_ssh.png")
+```
+:::
 
 We can now go back to our terminal and try to push again:
 
@@ -878,6 +927,14 @@ repository's main page, we should see the following:
     <figcaption>Finally!</figcaption>
 </figure>
 
+::: {.content-visible when-format="pdf"}
+```{r}
+#| fig-cap: "Finally!"
+knitr::include_graphics("images/github_repo_1.png")
+```
+:::
+
+
 ## Getting to know Github
 
 We have succeeded in installing Git and making it work with our Github account.
@@ -895,6 +952,13 @@ continuing we are going to take a little tour of Github.
     <figcaption>You repository's landing page.</figcaption>
 </figure>
 
+::: {.content-visible when-format="pdf"}
+```{r}
+#| fig-cap: "You repository's landing page."
+knitr::include_graphics("images/github_repo_1.png")
+```
+:::
+
 Once you're on your repository's landing page you see the same files and folders
 as in the root directory of the project on your computer. In our case here, we
 see our two files. Github suggests that we add a README file; we are going to
@@ -906,6 +970,13 @@ repository's name:
          alt="Several options to choose from."></img>
     <figcaption>Several options to choose from.</figcaption>
 </figure>
+
+::: {.content-visible when-format="pdf"}
+```{r}
+#| fig-cap: "Several options to choose from."
+knitr::include_graphics("images/github_menu.png")
+```
+:::
 
 Most important for our needs is the "Issues", "Pull requests", "Actions" and
 "Settings" tab.
@@ -922,6 +993,13 @@ So let's start with "Settings".
     <figcaption>Choose the 'Settings' tab.</figcaption>
 </figure>
 
+::: {.content-visible when-format="pdf"}
+```{r}
+#| fig-cap: "Choose the 'Settings' tab."
+knitr::include_graphics("images/github_settings2.png")
+```
+:::
+
 There are many options that you can choose from, but what's important for our
 purposes is the "Collaborators" option. This is where you can invite people to
 contribute to the repository. People that are invited in this way can directly
@@ -933,6 +1011,13 @@ push to the repository. Let's invite the author of this book:
     <figcaption>Follow along to add a collaborator.</figcaption>
 </figure>
 
+::: {.content-visible when-format="pdf"}
+```{r}
+#| fig-cap: "Follow along to add a collaborator."
+knitr::include_graphics("images/github_add_collab.png")
+```
+:::
+
 
 Start by typing the person's Github username. You can also invite collaborators
 by providing their email address.
@@ -942,6 +1027,13 @@ by providing their email address.
          alt="Look for your collaborators."></img>
     <figcaption>Look for your collaborators.</figcaption>
 </figure>
+
+::: {.content-visible when-format="pdf"}
+```{r}
+#| fig-cap: "Look for your collaborators."
+knitr::include_graphics("images/github_add_collab2.png")
+```
+:::
 
 Click then on the user's profile and he or she should get an invitation per
 email.
@@ -953,6 +1045,13 @@ This is what it looks like from the perspective of Bruno's account now:
          alt="Bruno can now push as if he owned the repository."></img>
     <figcaption>Bruno can now push as if he owned the repository.</figcaption>
 </figure>
+
+::: {.content-visible when-format="pdf"}
+```{r}
+#| fig-cap: "Bruno can now push as if he owned the repository."
+knitr::include_graphics("images/github_collab_added.png")
+```
+:::
 
 It's important to understand the distinction between inviting someone to
 contribute to the repository and have someone from outside the project
@@ -971,6 +1070,13 @@ Let's open an issue to illustrate how this works:
     <figcaption>Click on 'New issue' in the 'Issues' tab of your project.</figcaption>
 </figure>
 
+::: {.content-visible when-format="pdf"}
+```{r}
+#| fig-cap: "Click on 'New issue' in the 'Issues' tab of your project."
+knitr::include_graphics("images/github_new_issue.png")
+```
+:::
+
 You will land on this interface:
 
 <figure>
@@ -979,6 +1085,12 @@ You will land on this interface:
     <figcaption>Write what the issue's about here.</figcaption>
 </figure>
 
+::: {.content-visible when-format="pdf"}
+```{r}
+#| fig-cap: "Write what the issue's about here."
+knitr::include_graphics("images/github_new_issue_empty.png")
+```
+:::
 
 Give a nice title to the issue (1), add a thorough description (2), (optionally)
 assign it to someone (3) and (optionally) add a label to it (4), finally click
@@ -989,6 +1101,13 @@ on "Submit new issue" (5) to submit the issue:
          alt="Try to provide as many details as possible."></img>
     <figcaption>Try to provide as many details as possible.</figcaption>
 </figure>
+
+::: {.content-visible when-format="pdf"}
+```{r}
+#| fig-cap: "Try to provide as many details as possible."
+knitr::include_graphics("images/github_new_issue2.png")
+```
+:::
 
 Sometimes issues don't need to be very long, and act more as reminders than
 anything else. For example here, the owner of the repository didn't have the

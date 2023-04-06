@@ -124,6 +124,14 @@ operating systems:
     <figcaption>Running a pipeline without Docker results (potentially) in different outputs.</figcaption>
 </figure>
 
+
+::: {.content-visible when-format="pdf"}
+```{r}
+#| fig-cap: "Running a pipeline without Docker results (potentially) in different outputs."
+knitr::include_graphics("images/without_docker.png")
+```
+:::
+
 Take a close look at the output, you will notice it’s different!
 
 Now, you run the same pipeline, which is now *dockerized*:
@@ -133,6 +141,14 @@ Now, you run the same pipeline, which is now *dockerized*:
          alt="Running a pipeline with Docker results in the same outputs."></img>
     <figcaption>Running a pipeline with Docker results in the same outputs.</figcaption>
 </figure>
+
+::: {.content-visible when-format="pdf"}
+```{r}
+#| fig-cap: "Running a pipeline with Docker results in the same outputs."
+knitr::include_graphics("images/with_docker.png")
+```
+:::
+
 
 Another way of looking at a Docker image: it’s an immutable sandbox, where the
 rules of the game are always the same. It doesn’t matter where or when you run
@@ -260,6 +276,13 @@ into binaries for Windows and macOS, as shown below:
          alt="Download links to pre-compiled tidyverse binaries."></img>
     <figcaption>Download links to pre-compiled tidyverse binaries.</figcaption>
 </figure>
+
+::: {.content-visible when-format="pdf"}
+```{r}
+#| fig-cap: "Download links to pre-compiled tidyverse binaries."
+knitr::include_graphics("images/tidyverse_packages.png")
+```
+:::
 
 In the image above, you can see links to compiled binaries of the `{tidyverse}`
 package for Windows and macOS, but none for any Linux distribution. This is
@@ -616,6 +639,13 @@ dependencies that you can simply copy and paste into your Dockerfile:
          alt="System-level dependencies for the {tidyverse} package on Ubuntu."></img>
     <figcaption>System-level dependencies for the {tidyverse} package on Ubuntu.</figcaption>
 </figure>
+
+::: {.content-visible when-format="pdf"}
+```{r}
+#| fig-cap: "System-level dependencies for the {tidyverse} package on Ubuntu."
+knitr::include_graphics("images/tidyverse_jammy_deps.png")
+```
+:::
 
 We will use this list to install the required dependencies for our pipeline.
 
