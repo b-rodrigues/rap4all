@@ -1327,3 +1327,51 @@ registry for its developers/data scientists/researchers). In any case, it's good
 to have options and now what potential risks using this technology entail.
 
 ## Is Docker enough?
+
+I would say that for 99% of applications, yes, Docker is enough for building
+RAPs. But strictly speaking, using a Dockerfile which installs a specific
+version of R and uses `{renv}` to install specific versions of packages and use
+an LTS release of Ubuntu, we could end up with two different images. This is
+because Ubuntu gets updated, so if you build an image in the beginning of 2022
+and then once again in 2023, the system-level libraries will be different. So
+strictly speaking, you end up with two different images, and it’s not absolutely
+impossible that this may impact your pipeline. So ideally, we would also need a
+way to always install the same system-level dependencies, regardless of when we
+build the image. There is a package manager called Nix that makes this possible,
+but this is outside the scope of this book. The reason is that, again, in
+practice if you use an LTS release you should be fine. But if *bitwise
+reproducibility* (i.e., two runs of the same pipeline will yield the same result
+to the last bit), then yes, you should definitely look into Nix (and who knows,
+I might write a book just about that titled *Building bitwise reproducible
+analytical pipelines (braps) using Nix*).
+
+Another issue with Docker is that images can be quite opaque, especially if you
+define images that pull from images that pull themselves from other images...
+Just look at our pipeline: it pulls from `dev_env_r`, which pulls from
+`rocker:4.2.2` which pulls itself from the official Ubuntu Jammy image. So to be
+fully transparent, we would need to link to all the Dockerfiles, or rewrite one
+big Dockerfile that pulls from Ubuntu Jammy only.
+
+## Conclusion
+
+This book could stop here. We have learned the following things:
+
+- version control;
+- functional programming;
+- literate programming;
+- package development;
+- testing;
+- build automation;
+- "basic" reproducibility using `{renv}`;
+- "total" reproducibility using Docker.
+
+It is now up to you to select the tools that are most relevant for your
+projects. You might not need to package code for example. Or maybe literate
+programming is irrelevant to your needs. But it is difficult to argue against
+Docker. If you need to keep re-running a pipeline for some years, Docker is
+(almost) the only option available (unless you dedicate an entire physical
+machine to running that pipeline and never, ever, again touch that machine).
+
+In the next and final chapter, we will learn some basics about continuous
+integration with Github Actions, which will allow us to automate even the 
+building of Docker images and running pipelines.
