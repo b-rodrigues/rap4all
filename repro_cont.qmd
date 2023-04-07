@@ -126,7 +126,7 @@ operating systems:
 
 
 ::: {.content-visible when-format="pdf"}
-```{r}
+```{r, echo = F}
 #| fig-cap: "Running a pipeline without Docker results (potentially) in different outputs."
 knitr::include_graphics("images/without_docker.png")
 ```
@@ -143,7 +143,7 @@ Now, you run the same pipeline, which is now *dockerized*:
 </figure>
 
 ::: {.content-visible when-format="pdf"}
-```{r}
+```{r, echo = F}
 #| fig-cap: "Running a pipeline with Docker results in the same outputs."
 knitr::include_graphics("images/with_docker.png")
 ```
@@ -278,7 +278,7 @@ into binaries for Windows and macOS, as shown below:
 </figure>
 
 ::: {.content-visible when-format="pdf"}
-```{r}
+```{r, echo = F}
 #| fig-cap: "Download links to pre-compiled tidyverse binaries."
 knitr::include_graphics("images/tidyverse_packages.png")
 ```
@@ -641,7 +641,7 @@ dependencies that you can simply copy and paste into your Dockerfile:
 </figure>
 
 ::: {.content-visible when-format="pdf"}
-```{r}
+```{r, echo = F}
 #| fig-cap: "System-level dependencies for the {tidyverse} package on Ubuntu."
 knitr::include_graphics("images/tidyverse_jammy_deps.png")
 ```
