@@ -484,7 +484,7 @@ there will be available to your package’s functions when you load the package.
 So if your function use `dplyr::mutate()` for example, your package needs to
 know where to look for `mutate()`. This is where the `NAMESPACE` file comes into
 play. Take the opportunity to list the dependencies of your function to review
-them: maybe your using a package for a single dependency that you could easily
+them: maybe you're using a package for a single dependency that you could easily
 remove. For example, I’m using `stringr::str_trim()` to remove whitespace around
 characters. But I could be using the base R function `trimws()` instead, which
 would remove this dependency. I’m going to keep it here, because I’m lazy
@@ -574,7 +574,7 @@ The objects `communes` and `flat_data` have to obviously exist for this test to
 pass. This was a very simple test that must be monitored interactively. If
 commune names are returned here, then this means that there are communes left
 that we need to include in our data. But remember: we are aiming at building a
-RAP, and don’t want to have to look at it as is running to see if everything is
+RAP, and don’t want to have to look at it as it is running to see if everything is
 alright. What we need is a test that returns an error if it fails. So for this
 we use the `{testthat}` package, and write a so-called *unit test*. We’re going
 to deep-dive into unit testing (and assertive testing) in the next chapter, so
@@ -745,7 +745,7 @@ file (ideally in a fresh R session). But how can you share it with colleagues or
 future you?
 
 Now that the package is ready, you need to be able to share it. This really
-depends on whether you can publish the code on Github or not, or whether you
+depends on whether you can publish the code on Github or not, or whether your 
 company/institution has a self-hosted version control system. In this section,
 we’re going to discover the following two scenarios: the package is hosted on
 Github (or in a private self-hosted version control system), or the package
@@ -847,7 +847,7 @@ start navigating the documentation!
 
 If your package is on Github, you can also host the website for free on Github
 pages. For this, first make sure that the `.gitignore` file in the root of your
-package does not contain the `docs/` folder. If yes remove it. Then, commit and
+package does not contain the `docs/` folder. If it does, remove it. Then, commit and
 push. This will upload the `docs/` package on Github. Then, go to the
 repository’s settings, and "Pages" and then choose the branch that contains the
 `docs/` folder:
