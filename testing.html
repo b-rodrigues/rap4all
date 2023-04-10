@@ -402,7 +402,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>})</span>
 <span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>```</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>The only difference is that instead of calling <code>testthat::expect_true()</code> directly, we have wrapped this call inside <code>testthat::test_that()</code>. This why, we can add a description to the test. This is useful if the test fails.</p>
+<p>The only difference is that instead of calling <code>testthat::expect_true()</code> directly, we have wrapped this call inside <code>testthat::test_that()</code>. This way, we can add a description to the test. This is useful if the test fails.</p>
 <p>Save <code>dev/save_data.Rmd</code> and go back to <code>0-dev_history.Rmd</code> to inflate <code>save_data.Rmd</code> again. Everything should work without problems.</p>
 <p>If the test fails, you get an informative message. To illustrate, I’ve added a typo in the test and inflated <code>save_data.Rmd</code>. Because tests always run when files get inflated, this test failed and here is what happened:</p>
 <pre><code>══ Failed tests ════════════════════════════════════════════════════════════════
@@ -451,7 +451,7 @@ Execution halted</code></pre>
 <span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>```</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>This second test checks what happens if we provide an empty dataset. This should not happen, but hey, it’s always a good idea to see what could happen. Here we also expect an error, so we use <code>expect_error()</code> as well. Inflating <code>save_data.Rmd</code> runs the tests again, all of them successfully.</p>
-<p>Now, I know what you’re thinking. Probably something along the lines of <em>“Bruno, you told me that making my projects reproducible and reliable and robust would not take much more time than what I was already doing before. This certainly doesn’t feel like it!”</em> to wish I answer that your feelings on the issue are wrong. It may not feel like it, but doing this does two things:</p>
+<p>Now, I know what you’re thinking. Probably something along the lines of <em>“Bruno, you told me that making my projects reproducible and reliable and robust would not take much more time than what I was already doing before. This certainly doesn’t feel like it!”</em>, to which I answer that your feelings on the issue are wrong. It may not feel like it, but doing this does two things:</p>
 <ul>
 <li>It ultimately saves you time. You typed the test once, and can now rerun it automatically every time you inflate the <code>.Rmd</code> files. You don’t need to remember to test the code, and don’t need to remember how to test the code.</li>
 <li>This saves you a lot of headaches. You don’t have to live in fear that you might forget to test the code, or forget how to test the code. You wrote the tests down, and now you’re free to concentrate on adding features or using the existing code knowing that you can trust its outputs.</li>
@@ -722,15 +722,15 @@ Actual message: "dataset must be one of `commune_level_data` or `country_level_d
 <div class="cell">
 <div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>covr<span class="sc">::</span><span class="fu">report</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>This should open a tab in your web browser with some statistics. You can click on the individual scripts to see the source code of your functions: each line that is highlighted in green represents a line that is being test, and lines in red are lines that are not being tested:</p>
+<p>This should open a tab in your web browser with some statistics. You can click on the individual scripts to see the source code of your functions: each line that is highlighted in green represents a line that is being tested, and lines in red are lines that are not being tested:</p>
 <figure class="figure">
 <img src="images/covr.PNG" alt="The output of report() inside a web browser." class="figure-img">
 <figcaption class="figure-caption">
 The output of report() inside a web browser.
 </figcaption>
 </figure>
-<p>You could strive to get 100% coverage by painting all the lines green (by writing unit tests that test these lines). But in practice, it is not always so easy to get 100% coverage, so don’t fret if don’t achieve perfection.</p>
-<p>If you’re working on a server (and thus do not have access to a graphical user interface) you can instead opt for a the <code>covr::package_coverage()</code> function which provides you with the following results (inside yoru console):</p>
+<p>You could strive to get 100% coverage by painting all the lines green (by writing unit tests that test these lines). But in practice, it is not always so easy to get 100% coverage, so don’t fret if you don’t achieve perfection.</p>
+<p>If you’re working on a server (and thus do not have access to a graphical user interface) you can instead opt for the <code>covr::package_coverage()</code> function which provides you with the following results (inside your console):</p>
 <pre><code>housing Coverage: 73.33%
 R/get_laspeyeres.R: 57.14%
 R/get_raw_data.R: 80.65%</code></pre>
@@ -738,14 +738,14 @@ R/get_raw_data.R: 80.65%</code></pre>
 </section>
 <section id="conclusion" class="level2" data-number="12.5">
 <h2 data-number="12.5" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">12.5</span> Conclusion</h2>
-<p>Testing is crucial and useful. Not just because it gives you peace of mind but also because writing tests forces you to think about your code, by putting yourself in the shoes of your users (which includes future you as well). In most cases, it is even something that you’ve been doing but perhaps not as systematically as you should.</p>
-<p>There really is no other way to say this: you need to consider writing tests as an integral part of the project, and need to take the required time it takes to write them into account when planning projects. But keep in mind that writing them makes you gain a lot of time in the long run, so actually, you might even be faster by writing tests! Tests also allow you to immediately see where something went wrong, when something goes wrong. So tests save you time here as well. Without tests, when something goes wrong, you have a hard time finding where the bug comes from, and end up wasting precious time. And worse, something things go wrong and break, but silently. You still get an output that may look ok at first glance, and only realise something is wrong way too late. Testing helps avoiding such situations.</p>
+<p>Testing is crucial and useful. Not just because it gives you peace of mind but also because writing tests forces you to think about your code, by putting yourself in the shoes of your users (which include future you as well). In most cases, it is even something that you’ve been doing but perhaps not as systematically as you should.</p>
+<p>There really is no other way to say this: you need to consider writing tests as an integral part of the project, and need to take the required time it takes to write them into account when planning projects. But keep in mind that writing them makes you gain a lot of time in the long run, so actually, you might even be faster by writing tests! Tests also allow you to immediately see where something went wrong, when something goes wrong. So tests save you time here as well. Without tests, when something goes wrong, you have a hard time finding where the bug comes from, and end up wasting precious time. And worse, sometimes things go wrong and break, but silently. You still get an output that may look ok at first glance, and only realise something is wrong way too late. Testing helps avoiding such situations.</p>
 <p>So remember: it might <em>feel</em> like packaging your code and writing tests for it takes time, but:</p>
 <ul>
 <li>you’re actually already doing it, albeit casually;</li>
 <li>it saves you time in the long run.</li>
 </ul>
-<p>The tools I’ve showed you in this chapter and in the last are probably the fastest, easiest way to go from your analysis to a documented and tested package in a matter of hours. The benefits these provide however are measured in days of work.</p>
+<p>The tools I’ve showed you in this chapter and in the previous chapter are probably the fastest, easiest way to go from your analysis to a documented and tested package in a matter of hours. The benefits these provide however are measured in days of work.</p>
 
 
 </section>
