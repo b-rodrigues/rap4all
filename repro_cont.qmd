@@ -602,15 +602,41 @@ following guarantees:
 - the operating system will be the LTS release that was current when that specific version of R was current;
 - the R repositories are set to the Posit Public Package Manager (PPPM) at a specific date. This ensures that R packages don't need to be compiled as PPPM serves binary packages for the amd64 architecture (which is the architecture that virtually all non-Apple computers use these days).
 
-For installing the right version of R packages, we don't need to worry too much
-about the repositories. We will be using the `renv.lock` file to ensure that the
-right packages get installed. As a quick introduction to using Rocker images,
-let's grab our pipeline's `renv.lock` file which you can download from
+This last point requires some more explanations. You should know that versioned
+Rocker images use the PPPM set at a specific date. This is a very neat feature
+of the PPPM. For example, the versioned Rocker image that comes with R 4.2.2 has
+the repos set at the 14th of March 2023, as you can see for yourself
+[here](https://github.com/rocker-org/rocker-versioned2/blob/fb1d32e70061b0f978b7e35f9c68e2b79bafb69a/dockerfiles/r-ver_4.2.2.Dockerfile#L16)^[https://is.gd/fdrq4p].
+This means that if you use `install.packages("dplyr")` inside a container
+running from that image, then the version of `{dplyr}` that will get installed
+is the one that was available on the 14th of March.
+
+This can be convenient in certain situations, and you may want, depending on
+your needs, to use the PPPM set a specific date to define Docker images, as the
+Rocker project does. You could even set the PPPM at a specific date for your
+main development machine (just follow the instructions
+[here](https://packagemanager.rstudio.com/client/#/repos/2/overview)^[https://is.gd/jbdTKC]).
+But keep in mind that you will not be getting any updates to packages, so if you
+want to install a fresh version of a package that may introduce some nice new
+features, you'll need to change the repos again. This is why I highly advise you
+to stay with your default repositories (or use r2u if you are on Ubuntu) and
+manage your projects' package libraries using `{renv}`. This way, you don't have
+to mess with anything, and have the flexibility to have a separate package library
+per project. The other added benefit is that you can then use the project's `renv.lock`
+file to install the exact same package library inside the Docker image.
+
+As a quick introduction to using Rocker images, let's grab our pipeline's
+`renv.lock` file which you can download from
 [here](https://raw.githubusercontent.com/rap4all/housing/980a1b0cd20c60a85322dbd4c6da45fbfcebd931/renv.lock)^[https://is.gd/5UcuxW].
 This is the latest `renv.lock` file that we generated for our pipeline, it
 contains all the needed packages to run our pipeline, including the right
 versions of the `{targets}` package and the `{housing}` package that we
-developed.
+developed. An important remark: it doesn't matter if the `renv.lock` file
+contains packages that were released after the 14th of March. Even if the
+repositories inside the Rocker image that we will be using are set to that date,
+the lock file also specifies the URL of the right repository to download the
+packages from. So that URL will be used instead of the one defined for the
+Rocker image.
 
 Another useful aspect of the `renv.lock` file is that it also records the R
 version that was used to originally develop the pipeline, in this case, R
