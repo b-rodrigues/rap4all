@@ -17,7 +17,7 @@ can help us.
 
 Script-based workflows are problematic for several reasons. The first is that
 scripts can, and will, be executed out of order. You can mitigate the problems
-this can make by using pure functions, but you still need to make sure to not
+this can create by using pure functions, but you still need to make sure not to
 run the scripts out of order. But what does that actually mean? Well, suppose
 that you changed a function, and only want to re-execute the parts of the
 pipeline that are impacted by that change. But this supposes that you can know,
@@ -73,7 +73,7 @@ Everything's in there. So what I'm going to do is really just give you a very
 quick intro to what I think are really the main points you should know about to
 get started.
 
-Let's start by a "hello-world" type pipeline. Create a new folder called
+Let's start with a "hello-world" type pipeline. Create a new folder called
 something like `targets_intro/`, and start a fresh R session in it. For now, let’s
 ignore `{renv}`. We will see how `{renv}` works together with `{targets}` to provide
 a reproducible pipeline later. In that fresh session inside the `targets_intro/`
@@ -87,7 +87,7 @@ this will create a template `_targets.R` file in that directory. This is the
 file in which we will define our pipeline. Open in it in your favourite editor.
 A `_targets.R** pipeline is roughly divided into three parts:
 
-- first is where packages are loaded and helper functions defined;
+- first is where packages are loaded and helper functions are defined;
 - second is where pipeline-specific options are defined;
 - third is the pipeline itself, defined as a series of *targets*.
 
@@ -115,8 +115,7 @@ pipeline itself (as we shall see in coming sections). But packages that are
 required by functions that are running inside the pipeline should ideally be
 loaded as in the template. Another way of saying this: at the top of the script,
 think "pipeline infrastructure" packages (`{targets}` and some others), but
-inside `tar_option_set()` think "packages for functions that run inside the
-pipeline" packages.
+inside `tar_option_set()` think "functions that run inside the pipeline" packages.
 
 Part two is where you set some global options for the pipeline. As discussed
 previously, this is where you should load packages that are required by the
