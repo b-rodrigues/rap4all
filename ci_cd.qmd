@@ -91,14 +91,49 @@ Each time code gets pushed to the repository containing this workflow file, a
 workflow file is thus defined as a series of steps (that can either run code, or
 an action) that get executed on a so-called runner (in essence, a container).
 This workflow gets executed when a specific event occurs, in the example above
-that event is pushing to the repo.
+that event is pushing to the repo. To see the output of the workflow, click 
+on "Actions" on your Github repository:
 
-There are many pre-defined actions that you can choose from to perform a series
-of common tasks, you can find them in the 
-[Github Actions Marketplace](https://github.com/marketplace)^[https://github.com/marketplace].
+<figure>
+    <img src="images/ga_actions.png"
+         alt="Click on 'Actions' to monitor your workflows."></img>
+    <figcaption>Click on 'Actions' to monitor your workflows.</figcaption>
+</figure>
 
-We are not going to use any actions from the Github Actions Marketplace, but instead, 
-we will be looking at a repository containing actions specifically made for R users.
+::: {.content-visible when-format="pdf"}
+```{r, echo = F}
+#| fig-cap: "Click on 'Actions' to monitor your workflows."
+knitr::include_graphics("images/ga_actions.png")
+```
+:::
+
+You should see a list of workflow runs, each corresponding to a commit. Click
+on the latest one and then click on the job named `my-job`. If your workflow
+has multiple jobs, they'll all be listed here. Once you click on the job, you
+should see a list of steps. The step that interested us here is `my-step`
+which should simply print "Hello World!". Click on it to see the output:
+
+<figure>
+    <img src="images/ga_hello-world.png"
+         alt="Congrats, that's your first GA workflow."></img>
+    <figcaption>Congrats, that's your first GA workflow.</figcaption>
+</figure>
+
+::: {.content-visible when-format="pdf"}
+```{r, echo = F}
+#| fig-cap: "Congrats, that's your first GA workflow."
+knitr::include_graphics("images/ga_hello-world.png")
+```
+:::
+
+To help you define complex workflows, you can use pre-defined actions that you
+can choose from to perform a series of common tasks. You can find them in the
+[Github Actions
+Marketplace](https://github.com/marketplace)^[https://github.com/marketplace].
+
+We are not going to use any actions from the Github Actions Marketplace just yet
+though, but instead, we will be looking at a repository containing actions
+specifically made for R users.
 
 ### Actions for R users
 
@@ -110,7 +145,7 @@ and and see how it’s used. Let me edit my `hello_world.yml` from before, and a
 that downloads R and prints `"Hello from R!"` using R:
 
 ```
-name: hello-world
+name: hello-from-R
 on: push
 jobs:
   my-job:
@@ -118,53 +153,83 @@ jobs:
     steps:
       - name: hello-from-bash
         run: echo "Hello from Bash!"
-    steps:
-      - name: hello-from-R
-      - uses: actions/checkout@v3
-      - uses: r-lib/actions/setup-r@v2
+        
+      - name: checkout-repo
+        uses: actions/checkout@v3
+        
+      - name: install-r
+        uses: r-lib/actions/setup-r@v2
         with:
           r-version: '3.5.3'
+      
+      - name: hello-r
         run: Rscript -e 'print("Hello from R!")'
 ```
 
-So now my job has two steps, one that prints `"Hello from Bash!"` and another
-that prints `"Hello from R!"`. The second step, called `hello-from-R` uses two
-actions, `actions/checkout@v3` and `r-lib/actions/setup-r@v2`. The first action,
-`actions/checkout@v3` is an action that you will see on almost any Github
-Actions workflow file, even though it is likely superfluous in this case. You
-can read about it
+So now my job performs two tasks, one that prints `"Hello from Bash!"` and
+another that prints `"Hello from R!"`. There are several steps involved, the
+second step, called `checkout-repo` runs the action `actions/checkout@v3` and
+the third step, called `install-r` uses the action `r-lib/actions/setup-r@v2`.
+The first action, `actions/checkout@v3` is an action that you will see on almost
+any Github Actions workflow file, even though it is likely superfluous in this
+case. You can read about it
 [here](https://github.com/actions/checkout)^[https://github.com/actions/checkout]
 and it essentially makes the files inside the repository available to the
 runner. Sometimes I think that it would have made more sense to call this action
 `clone`, like the `git clone` command. But I’m sure there’s a very good reason
-that this is not the case.
-The next action is `setup-r@v2` which downloads and installs, in our example here,
-R version 3.5.3. It then runs the command `Rscript -e 'print("Hello from R!")'`. We
-could have installed any other version of R by the way. We can keep adding steps, for
-example let’s add one to install `{renv}` and install packages from an `renv.lock` file
-(the file needs to be in our repository, and becomes available to the workflow thanks
-to `actions/checkout@v3`):
+that this is not the case. The next action is `setup-r@v2` which downloads and
+installs, in our example here, R version 3.5.3. The final step then runs the
+command `Rscript -e 'print("Hello from R!")'`. If you check out the "Actions"
+tab on Github, you should now see this:
+
+<figure>
+    <img src="images/ga_hello-from-r.png"
+         alt="This time it's R that's waving hello."></img>
+    <figcaption>This time it's R that's waving hello.</figcaption>
+</figure>
+
+::: {.content-visible when-format="pdf"}
+```{r, echo = F}
+#| fig-cap: "This time it's R that's waving hello."
+knitr::include_graphics("images/ga_hello-from-r.png")
+```
+:::
+
+
+We could have installed any other version of R by the way. We can keep adding
+steps, for example let’s add one to install `{renv}` and install packages from
+an `renv.lock` file (the file needs to be in our repository, and becomes
+available to the workflow thanks to `actions/checkout@v3`):
 
 ```
 name: my-pipeline
 on: push
 jobs:
-  setup-env:
+  my-job:
     runs-on: ubuntu-22.04
     steps:
-      - name: hello-from-R
-      - uses: actions/checkout@v3
-      - uses: r-lib/actions/setup-r@v2
+        
+      - name: checkout-repo
+        uses: actions/checkout@v3
+        
+      - name: install-r
+        uses: r-lib/actions/setup-r@v2
         with:
           r-version: '4.2.2'
-      - uses: r-lib/actions/setup-renv@v2
+      
+      - name: install-renv
+        uses: r-lib/actions/setup-renv@v2
 ```
 
 I think you’re starting to see where this is going. This workflow runs on Ubuntu
 22.04, installs R version 4.2.2 and installs all the packages defined in the
-`renv.lock` file living in our repository. So to have our RAP running in the
-cloud, we would simply need to add the other required files and finish the
-writing the workflow.
+`renv.lock` file living in our repository (and if you don't have an `renv.lock`
+file, only `{renv}` will get installed). So to have our RAP running in the
+cloud, we would simply need to add the other required files and finish writing
+the workflow. One note of warning though: if you're running pipelines defined
+like the above, each time you push, every step will run from scratch (apart from
+package installation using `r-lib/actions/setup-renv@v2` because packages will
+be cached for future runs of the workflow).
 
 ## Running a RAP using Github Actions
 
@@ -176,11 +241,11 @@ hope, is versioned using Git, right?), open an R session and run
 `.github/` in the root of your pipeline’s folder, with inside a `workflows/`
 folder, and inside a `targets.yaml` workflow file. This file is ready to use,
 but you may adapt it to your needs. For example, this workflow file runs on
-`ubuntu-latest` and installs the latest version of R. You may want to change
-that to the `ubuntu-22.04` (this way, Ubuntu 22.04 will keep getting used even
-when the next LTS, 24.04, will be released) and install R version 4.2.2 (or
-whichever version you used for your pipeline). This workflow file also runs some
-other useful actions, like caching packages, so they don’t need to get
+`ubuntu-latest` and installs the latest version of R. You may want to change the
+version of Ubuntu to `ubuntu-22.04` (this way, Ubuntu 22.04 will keep getting
+used even when the next LTS, 24.04, will be released) and install R version
+4.2.2 (or whichever version you used for your pipeline). This workflow file also
+runs some other useful actions, like caching packages, so they don’t need to get
 re-downloaded each time you push a change to the repository!
 
 You can see the end result over [here](). Don’t hesitate to use this repository
