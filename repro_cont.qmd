@@ -66,6 +66,15 @@ And this is what Docker allows us to do: turn our pipeline referentially
 transparent, by freezing R's and the operating system's versions (and the CPU
 architecture as well).
 
+Before continuing, let me warn you: if you’re using an Apple computer with an
+Apple Silicon CPU (M1 or M2), then you may have issues following along. I don’t
+own such a machine so I cannot test if the code below works flawlessly. What I
+can say is that I’ve read some users of these computers have had trouble using
+Docker in the past. These issues might have been solved in the meantime. It
+seems that enabling the option "use Rosetta for x86/amd64 emulation on Apple
+Silicon" in Docker Desktop (I will discuss Docker Desktop briefly in the
+following sections) may solve the issue.
+
 ## What is Docker?
 
 Let me first explain in very simple terms what Docker is.
