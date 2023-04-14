@@ -278,6 +278,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./book_conclusion.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Conclusion</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./references.html" class="sidebar-item-text sidebar-link">References</a>
   </div>
 </li>
@@ -345,6 +350,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <pre><code>f(1, "windows 10 - build 22H2 - patch 10.0.19045.2075", "intel x86_64 cpu i9-13900F", "R version 4.2.2")</code></pre>
 <p>and so on. <code>f()</code> is only pure as far as the R version currently running <code>f()</code> is concerned. But everything else should also be taken into account! Remember, in technical terms, this means that our function is not referentially transparent.</p>
 <p>And this is what Docker allows us to do: turn our pipeline referentially transparent, by freezing R’s and the operating system’s versions (and the CPU architecture as well).</p>
+<p>Before continuing, let me warn you: if you’re using an Apple computer with an Apple Silicon CPU (M1 or M2), then you may have issues following along. I don’t own such a machine so I cannot test if the code below works flawlessly. What I can say is that I’ve read some users of these computers have had trouble using Docker in the past. These issues might have been solved in the meantime. It seems that enabling the option “use Rosetta for x86/amd64 emulation on Apple Silicon” in Docker Desktop (I will discuss Docker Desktop briefly in the following sections) may solve the issue.</p>
 <section id="what-is-docker" class="level2" data-number="14.1">
 <h2 data-number="14.1" class="anchored" data-anchor-id="what-is-docker"><span class="header-section-number">14.1</span> What is Docker?</h2>
 <p>Let me first explain in very simple terms what Docker is.</p>

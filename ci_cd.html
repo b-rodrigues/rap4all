@@ -215,6 +215,11 @@ ul.task-list li input[type="checkbox"] {
   </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./book_conclusion.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Conclusion</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./references.html" class="sidebar-item-text sidebar-link">References</a>
   </div>
 </li>
@@ -223,7 +228,20 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#cicd-quickstart" id="toc-cicd-quickstart" class="nav-link active" data-scroll-target="#cicd-quickstart"><span class="toc-section-number">15.1</span>  CI/CD quickstart</a>
+  <ul class="collapse">
+  <li><a href="#actions-for-r-users" id="toc-actions-for-r-users" class="nav-link" data-scroll-target="#actions-for-r-users"><span class="toc-section-number">15.1.1</span>  Actions for R users</a></li>
+  </ul></li>
+  <li><a href="#running-a-rap-using-github-actions" id="toc-running-a-rap-using-github-actions" class="nav-link" data-scroll-target="#running-a-rap-using-github-actions"><span class="toc-section-number">15.2</span>  Running a RAP using Github Actions</a></li>
+  <li><a href="#build-a-docker-image" id="toc-build-a-docker-image" class="nav-link" data-scroll-target="#build-a-docker-image"><span class="toc-section-number">15.3</span>  Build a Docker image</a></li>
+  <li><a href="#run-a-docker-container" id="toc-run-a-docker-container" class="nav-link" data-scroll-target="#run-a-docker-container"><span class="toc-section-number">15.4</span>  Run a Docker container</a></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="toc-section-number">15.5</span>  Conclusion</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -245,8 +263,109 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
+<p>As I wrote in the conclusion of the previous chapter, the book could have stopped there. So consider this chapter as a bonus. What I’m going to show here is not the most important aspect of reproducibility, and you could even make the case that is not needed at all. However, I still think that it is worth showing you how to use Github Actions, even if only superficially, and then you decide whether this is a tool that you should add to your toolbox.</p>
+<p>The CI/CD platform I’ll be discussing here is Github Actions, which should not suprise you since we’ve been using Github for version control. But maybe you’re wondering what a “CI/CD platform” even is, so I’ll start by explaining what this is in very simple terms.</p>
+<p>Let’s go back to the first idea of this book: Don’t Repeat Yourself. We have written functions and used tools such as <code>{renv}</code> to avoid having to repeat ourselves. And yet, when it comes to using Docker, we need to keep building and running containers, writing the same commands over and over again. It would be great if instead we didn’t need to do it. This is what a CI/CD platform essentially allows you to do. The idea is that building, running and, if applicable, deploying are also tasks that can be automated, so why not automate them and only take care of writing code?</p>
+<p>This chapter can be seen as a small introduction to DevOps for data science.</p>
+<p>According to <a href="https://www.atlassian.com/devops">Atlassian</a><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>:</p>
+<blockquote class="blockquote">
+<p>DevOps is a set of practices, tools, and a cultural philosophy that automate and integrate the processes between software development and IT teams. It emphasizes team empowerment, cross-team communication and collaboration, and technology automation.</p>
+</blockquote>
+<p>Most of the tools and practices described in this book would make adopting DevOps in your day to day a breeze. Strictly speaking though, we will be using “GitOps”, because our Github repository will be the center-stage of our project. The Github repository will not only contain the code of our project, but also the definition of the infrastructure the code will run on. This way, our Github repository will be a single source of truth.</p>
+<p>Concretely this means that each time we will push code (or merge a pull request) to our Github repository, a Docker image gets built. This image can then be pushed to Docker Hub, or a container can be executed. This container in turn can run a pipeline and the output can then be downloaded from Github. All of this happens in the cloud, all you need to do is push changes in the code. As stated in the chapter on Git, Github offers 2000 minutes of computation time a month for CI/CD, which should be really sufficient for a lot of purposes (but of course, if your RAP takes hours to complete, you might want to run it locally).</p>
+<p>Github Actions is very flexible, and you could use it to perform many tasks, not just building Docker images or running containers. For example this book gets built and published online automatically each time I push an update to the <a href="https://github.com/b-rodrigues/rap4all">repository</a><a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>. If you’re developing a package, you could run <code>R CMD check</code> each time you push code to the repository. <code>R CMD check</code> runs many tests, including the package’s unit tests (when using <code>{fusen}</code>, <code>R CMD check</code> is run each time a flat file gets inflated.) and using Github Actions, it’s possible to run <code>R CMD check</code> on Ubuntu (Linux), Windows and even macOS (see <a href="https://docs.github.com/en/actions/using-jobs/using-a-matrix-for-your-jobs">this documentation page</a><a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> if you’re interested).</p>
+<p>In this chapter, I’m going to show you how to use Github Actions to:</p>
+<ul>
+<li>run R and some script each time changes get pushed to Github;</li>
+<li>build a Docker image and push it to Docker Hub when pushing changes to its Dockerfile;</li>
+<li>run a Docker container that runs a RAP and builds some output that we can then download from Github.</li>
+</ul>
+<section id="cicd-quickstart" class="level2" data-number="15.1">
+<h2 data-number="15.1" class="anchored" data-anchor-id="cicd-quickstart"><span class="header-section-number">15.1</span> CI/CD quickstart</h2>
+<p>Before defining an “Hello World” pipeline that gets exectude in the cloud, I need to define some terms. A workflow that runs on Github Actions is defined as a Yaml file, and this file contains a succession of “actions”, and each action performs a specific task. Here is the simplest Github Actions workflow file that you could write (source: <a href="https://gist.github.com/weibeld/f136048d0a82aacc063f42e684e3c494">link</a><a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>):</p>
+<pre><code>name: hello-world
+on: push
+jobs:
+  my-job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: my-step
+        run: echo "Hello World!"</code></pre>
+<p>This needs to be saved in a <code>hello_world.yml</code> file, and placed inside the <code>.github/workflows/</code> directories in your repository.</p>
+<p>Each time code gets pushed to the repository containing this workflow file, a <em>runner</em> runs the code <code>echo "Hello World!"</code> on the latest version of Ubuntu. A workflow file is thus defined as a series of steps (that can either run code, or an action) that get executed on a so-called runner (in essence, a container). This workflow gets executed when a specific event occurs, in the example above that event is pushing to the repo.</p>
+<p>There are many pre-defined actions that you can choose from to perform a series of common tasks, you can find them in the <a href="https://github.com/marketplace">Github Actions Marketplace</a><a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a>.</p>
+<p>We are not going to use any actions from the Github Actions Marketplace, but instead, we will be looking at a repository containing actions specifically made for R users.</p>
+<section id="actions-for-r-users" class="level3" data-number="15.1.1">
+<h3 data-number="15.1.1" class="anchored" data-anchor-id="actions-for-r-users"><span class="header-section-number">15.1.1</span> Actions for R users</h3>
+<p><a href="https://github.com/r-lib/actions">This repository</a><a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a> contains many actions for R users. For example, let’s say that you want to install R and run some code using Github Actions. Simply take a look at the <a href="https://github.com/r-lib/actions/tree/v2/setup-r">setup-r</a><a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a> and and see how it’s used. Let me edit my <code>hello_world.yml</code> from before, and add one step that downloads R and prints <code>"Hello from R!"</code> using R:</p>
+<pre><code>name: hello-world
+on: push
+jobs:
+  my-job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: hello-from-bash
+        run: echo "Hello from Bash!"
+    steps:
+      - name: hello-from-R
+      - uses: actions/checkout@v3
+      - uses: r-lib/actions/setup-r@v2
+        with:
+          r-version: '3.5.3'
+        run: Rscript -e 'print("Hello from R!")'</code></pre>
+<p>So now my job has two steps, one that prints <code>"Hello from Bash!"</code> and another that prints <code>"Hello from R!"</code>. The second step, called <code>hello-from-R</code> uses two actions, <code>actions/checkout@v3</code> and <code>r-lib/actions/setup-r@v2</code>. The first action, <code>actions/checkout@v3</code> is an action that you will see on almost any Github Actions workflow file, even though it is likely superfluous in this case. You can read about it <a href="https://github.com/actions/checkout">here</a><a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a> and it essentially makes the files inside the repository available to the runner. Sometimes I think that it would have made more sense to call this action <code>clone</code>, like the <code>git clone</code> command. But I’m sure there’s a very good reason that this is not the case. The next action is <code>setup-r@v2</code> which downloads and installs, in our example here, R version 3.5.3. It then runs the command <code>Rscript -e 'print("Hello from R!")'</code>. We could have installed any other version of R by the way. We can keep adding steps, for example let’s add one to install <code>{renv}</code> and install packages from an <code>renv.lock</code> file (the file needs to be in our repository, and becomes available to the workflow thanks to <code>actions/checkout@v3</code>):</p>
+<pre><code>name: my-pipeline
+on: push
+jobs:
+  setup-env:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: hello-from-R
+      - uses: actions/checkout@v3
+      - uses: r-lib/actions/setup-r@v2
+        with:
+          r-version: '4.2.2'
+      - uses: r-lib/actions/setup-renv@v2</code></pre>
+<p>I think you’re starting to see where this is going. This workflow runs on Ubuntu 22.04, installs R version 4.2.2 and installs all the packages defined in the <code>renv.lock</code> file living in our repository. So to have our RAP running in the cloud, we would simply need to add the other required files and finish the writing the workflow.</p>
+</section>
+</section>
+<section id="running-a-rap-using-github-actions" class="level2" data-number="15.2">
+<h2 data-number="15.2" class="anchored" data-anchor-id="running-a-rap-using-github-actions"><span class="header-section-number">15.2</span> Running a RAP using Github Actions</h2>
+<p>Because running <code>{targets}</code> pipelines on Github Actions is a common task, there is of course a way to do it very easily, without the need to write our own workflow file. Simply go to the folder that contains your pipeline (which, I hope, is versioned using Git, right?), open an R session and run <code>tarets::tar_github_actions()</code>. This will automatically create a folder called <code>.github/</code> in the root of your pipeline’s folder, with inside a <code>workflows/</code> folder, and inside a <code>targets.yaml</code> workflow file. This file is ready to use, but you may adapt it to your needs. For example, this workflow file runs on <code>ubuntu-latest</code> and installs the latest version of R. You may want to change that to the <code>ubuntu-22.04</code> (this way, Ubuntu 22.04 will keep getting used even when the next LTS, 24.04, will be released) and install R version 4.2.2 (or whichever version you used for your pipeline). This workflow file also runs some other useful actions, like caching packages, so they don’t need to get re-downloaded each time you push a change to the repository!</p>
+<p>You can see the end result over <a href="">here</a>. Don’t hesitate to use this repository as a template for your projects! Check out the <code>targets-runs</code> branch of the repository to see the outputs of the pipeline there.</p>
+<p>So it turns out that running a RAP on Github Actions is quite easy, you only need to use <code>targets::tar_github_actions()</code>, maybe adapt the <code>targets.yaml</code> file a little bit to install the right version of R and run it on the right version of Ubuntu (or Windows or macOS, but careful, you only have 2000 free minutes and Windows and macOS are more expensive than Ubuntu, 1 minute of CPU time on Ubuntu is equal to 2 minutes of run-time on macOS), and also use <code>{renv}</code> to create an <code>renv.lock</code> file. Then it should be as easy as pushing to the repo to the get the pipeline running there!</p>
+<p>But, and yes there is a but, you should think about the following, potential, issues:</p>
+<ul>
+<li>you are limited to 2000 minutes of free run-time. If your pipeline takes several hours to run, you might need to upgrade to a paid account, or run it locally;</li>
+<li>Github Actions does not keep old versions of operating systems for too long. For example, as of writing, only versions 20.04 and 22.04 of Ubuntu are available. Ubuntu 18.04 was removed in August 2022. If your RAP absolutely needs a specific version of Ubuntu for a very long time, Github Actions might not be the right solution. The same is true for Windows or macOS as well.</li>
+</ul>
+<p>So you need to think about it is you really need. Does you pipeline run relatively quickly, and you don’t need to keep it running forever on the same operating system? Then Github Actions is for you. Or perhaps you are writing a book using Rmarkdown, or Quarto and don’t want to bother building it and deploying it manually? Then Github Actions is for you as well (and take a look at this book’s workflow file <a href="">here</a> for an example of exactly this). But if you are working on a pipeline that may take several hours to run, and you want it to stay reproducible for a very long time, then using Docker might be a better option. Thankfully, you can also use Github Actions to build Docker images and upload them to Docker Hub. You can even then run a Docker container that runs your RAP (but here again, if your pipeline takes several hours to run, you may not want to do that).</p>
+</section>
+<section id="build-a-docker-image" class="level2" data-number="15.3">
+<h2 data-number="15.3" class="anchored" data-anchor-id="build-a-docker-image"><span class="header-section-number">15.3</span> Build a Docker image</h2>
+<p>https://github.com/marketplace/actions/build-and-push-docker-images</p>
+</section>
+<section id="run-a-docker-container" class="level2" data-number="15.4">
+<h2 data-number="15.4" class="anchored" data-anchor-id="run-a-docker-container"><span class="header-section-number">15.4</span> Run a Docker container</h2>
+</section>
+<section id="conclusion" class="level2" data-number="15.5">
+<h2 data-number="15.5" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">15.5</span> Conclusion</h2>
 
 
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1"><p>https://www.atlassian.com/devops<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>https://github.com/b-rodrigues/rap4all<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>https://is.gd/F9AOZI<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>https://is.gd/9mDykY<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p>https://github.com/marketplace<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn6"><p>https://github.com/r-lib/actions<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn7"><p>https://github.com/r-lib/actions/tree/v2/setup-r<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn8"><p>https://github.com/actions/checkout<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
