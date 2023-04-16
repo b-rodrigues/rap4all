@@ -143,6 +143,13 @@ Let's see what Bruno sees on Github:
     <figcaption>Bruno sees that the 'add_readme' branch has been recently updated.</figcaption>
 </figure>
 
+::: {.content-visible when-format="pdf"}
+```{r, echo = F}
+#| fig-cap: "Bruno sees that the 'add_readme' branch has been recently updated."
+knitr::include_graphics("images/github_add_readme_recent_push.png")
+```
+:::
+
 Bruno can now decide to continue working on this branch, or, since the purpose of
 this branch was only to add the readme file, decide instead to do a pull request. By
 clicking on the "Compare & pull request" button Bruno now sees this:
@@ -153,6 +160,13 @@ clicking on the "Compare & pull request" button Bruno now sees this:
     <figcaption>This screen makes it easy to see what changed.</figcaption>
 </figure>
 
+::: {.content-visible when-format="pdf"}
+```{r, echo = F}
+#| fig-cap: "This screen makes it easy to see what changed."
+knitr::include_graphics("images/github_pull_request.png")
+```
+:::
+
 Bruno can leave a comment, and see what changed (in this case, a single file was added)
 and most importantly, add a reviewer if needed:
 
@@ -162,6 +176,13 @@ and most importantly, add a reviewer if needed:
     <figcaption>Let boss decide if this is good enough.</figcaption>
 </figure>
 
+::: {.content-visible when-format="pdf"}
+```{r, echo = F}
+#| fig-cap: "Let boss decide if this is good enough."
+knitr::include_graphics("images/github_add_reviewer.png")
+```
+:::
+
 This is what Bruno sees now:
 
 <figure>
@@ -169,6 +190,13 @@ This is what Bruno sees now:
          alt="Github tells us that this branch can safely be merged."></img>
     <figcaption>Github tells us that this branch can safely be merged.</figcaption>
 </figure>
+
+::: {.content-visible when-format="pdf"}
+```{r, echo = F}
+#| fig-cap: "Github tells us that this branch can safely be merged."
+knitr::include_graphics("images/github_reviewer_requested.png")
+```
+:::
 
 Bruno requested the review, but Github tells us that the branch can safely be merged.
 This is because we added a file and did not touch anything else, and also because the
@@ -184,6 +212,13 @@ review the pull request:
     <figcaption>The owner was notified to review the pull request.</figcaption>
 </figure>
 
+::: {.content-visible when-format="pdf"}
+```{r, echo = F}
+#| fig-cap: "The owner was notified to review the pull request."
+knitr::include_graphics("images/github_reviewer_notified.png")
+```
+:::
+
 By clicking on the notification, the owner gets taken to this view:
 
 <figure>
@@ -191,6 +226,13 @@ By clicking on the notification, the owner gets taken to this view:
          alt="Time to review the pull request."></img>
     <figcaption>Time to review the pull request.</figcaption>
 </figure>
+
+::: {.content-visible when-format="pdf"}
+```{r, echo = F}
+#| fig-cap: "Time to review the pull request."
+knitr::include_graphics("images/github_review.png")
+```
+:::
 
 Here, the reviewer can check the commit, the files that were changed, and see if
 there are any conflicts between this code and the code base on the master (or trunk)
@@ -208,6 +250,13 @@ on "Add rule", the following screen appears:
     <figcaption>Choose how to protect the master branch.</figcaption>
 </figure>
 
+::: {.content-visible when-format="pdf"}
+```{r, echo = F}
+#| fig-cap: "Choose how to protect the master branch."
+knitr::include_graphics("images/github_rules.png")
+```
+:::
+
 By clicking the first option, more options appear:
 
 <figure>
@@ -215,6 +264,13 @@ By clicking the first option, more options appear:
          alt="Reviews are now required."></img>
     <figcaption>Reviews are now required.</figcaption>
 </figure>
+
+::: {.content-visible when-format="pdf"}
+```{r, echo = F}
+#| fig-cap: "Reviews are now required."
+knitr::include_graphics("images/github_rules_2.png")
+```
+:::
 
 By choosing these options, the owner can basically enforces trunk-based development
 (well, collaborators still have to submit pull requests frequently enough though,
@@ -232,6 +288,12 @@ Let's go back to the pull request. We can see now that the review is required:
     <figcaption>Time to review.</figcaption>
 </figure>
 
+::: {.content-visible when-format="pdf"}
+```{r, echo = F}
+#| fig-cap: "Time to review."
+knitr::include_graphics("images/github_review_required.png")
+```
+:::
 
 So now the owner actually has to go and see the files that were changed:
 
@@ -241,6 +303,13 @@ So now the owner actually has to go and see the files that were changed:
     <figcaption>Check the code, and add comments if needed.</figcaption>
 </figure>
 
+::: {.content-visible when-format="pdf"}
+```{r, echo = F}
+#| fig-cap: "Check the code, and add comments if needed."
+knitr::include_graphics("images/github_add_your_review.png")
+```
+:::
+
 It's possible to add comments to single lines if needed:
 
 <figure>
@@ -248,6 +317,13 @@ It's possible to add comments to single lines if needed:
          alt="It's possible to add comments to lines."></img>
     <figcaption>It's possible to add comments to lines.</figcaption>
 </figure>
+
+::: {.content-visible when-format="pdf"}
+```{r, echo = F}
+#| fig-cap: "It's possible to add comments to lines."
+knitr::include_graphics("images/github_review_comments.png")
+```
+:::
 
 By clicking on the plus sign, a box appears and it's possible to leave a comment. In
 this case, everything is fine, so the owner is going to click on the "Viewed" button:
@@ -257,6 +333,14 @@ this case, everything is fine, so the owner is going to click on the "Viewed" bu
          alt="Good job!"></img>
     <figcaption>Good job!</figcaption>
 </figure>
+
+::: {.content-visible when-format="pdf"}
+```{r, echo = F}
+#| fig-cap: "Good job!"
+knitr::include_graphics("images/github_file_viewed.png")
+```
+:::
+
 
 Then, by clicking on "Review changes", it's possible to either add a general comment,
 approve the pull request, or request changes that must be addressed before merging.
@@ -268,6 +352,14 @@ Let's go ahead and approve:
     <figcaption>Nothing to complain about.</figcaption>
 </figure>
 
+::: {.content-visible when-format="pdf"}
+```{r, echo = F}
+#| fig-cap: "Nothing to complain about."
+knitr::include_graphics("images/github_approve.png")
+```
+:::
+
+
 
 By submitting the review, the reviewer is taken back to the issue:
 
@@ -276,6 +368,13 @@ By submitting the review, the reviewer is taken back to the issue:
          alt="We're done, we can merge the pull request."></img>
     <figcaption>We're done, we can merge the pull request.</figcaption>
 </figure>
+
+::: {.content-visible when-format="pdf"}
+```{r, echo = F}
+#| fig-cap: "We're done, we can merge the pull request."
+knitr::include_graphics("images/github_changes_approved.png")
+```
+:::
 
 
 The reviewer can now merge the pull request by clicking on the "Merge pull request"
@@ -286,6 +385,13 @@ button. Github even suggests we deleted the branch, which served its purpose:
          alt="Let's get rid of this branch."></img>
     <figcaption>Let's get rid of this branch.</figcaption>
 </figure>
+
+::: {.content-visible when-format="pdf"}
+```{r, echo = F}
+#| fig-cap: "Let's get rid of this branch."
+knitr::include_graphics("images/github_pull_request_done.png")
+```
+:::
 
 Let's delete it (it's always possible to restore it).
 
@@ -467,6 +573,13 @@ two branches need to be merged back to the trunk. So Bruno does a pull request:
     <figcaption>Bruno opens a pull request after finishing his changes.</figcaption>
 </figure>
 
+::: {.content-visible when-format="pdf"}
+```{r, echo = F}
+#| fig-cap: "Bruno opens a pull request after finishing his changes."
+knitr::include_graphics("images/github_new_pull_request.png")
+```
+:::
+
 First, Bruno selects the feature branch (1), then clicks on "Contribute" (2) and then
 "Open pull request" (3). Bruno gets taken to this screen:
 
@@ -475,6 +588,13 @@ First, Bruno selects the feature branch (1), then clicks on "Contribute" (2) and
          alt="No conflicts, for now..."></img>
     <figcaption>No conflicts, for now...</figcaption>
 </figure>
+
+::: {.content-visible when-format="pdf"}
+```{r, echo = F}
+#| fig-cap: "No conflicts, for now..."
+knitr::include_graphics("images/github_new_pull_request_2.png")
+```
+:::
 
 Now Bruno can click on "Create pull request", but remember, because reviews are
 required, automatic merging is disabled.
@@ -485,8 +605,15 @@ there's now a notification for a pending review:
 <figure>
     <img src="images/github_new_pull_request_review_pending.png"
          alt="New review pending."></img>
-    <figcaption>Let's get rid of this branch.</figcaption>
+    <figcaption>New review pending.</figcaption>
 </figure>
+
+::: {.content-visible when-format="pdf"}
+```{r, echo = F}
+#| fig-cap: "New review pending."
+knitr::include_graphics("images/github_new_pull_request_review_pending.png")
+```
+:::
 
 
 By clicking on it, the project owner can review the pull request and decide what to
@@ -510,6 +637,13 @@ workflow:
     <figcaption>Conflict solving with trunk-based development.</figcaption>
 </figure>
 
+::: {.content-visible when-format="pdf"}
+```{r, echo = F}
+#| fig-cap: "Conflict solving with trunk-based development."
+knitr::include_graphics("images/github_conflict_tbd.png")
+```
+:::
+
 First step, the owner reviews and approves Bruno's pull request:
 
 <figure>
@@ -517,6 +651,13 @@ First step, the owner reviews and approves Bruno's pull request:
          alt="First, let's approve the changes."></img>
     <figcaption>First, let's approve the changes.</figcaption>
 </figure>
+
+::: {.content-visible when-format="pdf"}
+```{r, echo = F}
+#| fig-cap: "First, let's approve the changes."
+knitr::include_graphics("images/github_pull_request_approved.png")
+```
+:::
 
 The pull request can get merged and Bruno's feature branch deleted. Now, it wouldn't make
 sense for the project owner to create a pull request to merge his or her changes. They would
@@ -599,6 +740,14 @@ master.
     <figcaption>The conflict has been gracefully solved.</figcaption>
 </figure>
 
+::: {.content-visible when-format="pdf"}
+```{r, echo = F}
+#| fig-cap: "The conflict has been gracefully solved."
+knitr::include_graphics("images/github_conflict_solved.png")
+```
+:::
+
+
 In (1) we see the commit that deals with the conflict, in (2) the owner asks Bruno
 for a review and then in (3) we see that Bruno reviewed and approved. Finally, the
 pull request can be merged (4) and the feature branch deleted.
@@ -671,6 +820,13 @@ propose a fix. For example, consider this repository:
     <figcaption>A public repository.</figcaption>
 </figure>
 
+::: {.content-visible when-format="pdf"}
+```{r, echo = F}
+#| fig-cap: "A public repository."
+knitr::include_graphics("images/github_public_repo.png")
+```
+:::
+
 This repository contains code written by a fellow called "rap4all", and Bruno uses this code
 daily. However, Bruno notices a typo in the readme, and wants to propose a fix.
 
@@ -683,6 +839,13 @@ it online) and creates a fork:
     <figcaption>Bruno needs to create a fork of the repository.</figcaption>
 </figure>
 
+::: {.content-visible when-format="pdf"}
+```{r, echo = F}
+#| fig-cap: "Bruno needs to create a fork of the repository."
+knitr::include_graphics("images/github_fork.png")
+```
+:::
+
 Forking creates a copy of the repository to Bruno's account:
 
 <figure>
@@ -691,13 +854,27 @@ Forking creates a copy of the repository to Bruno's account:
     <figcaption>Bruno goes ahead with forking.</figcaption>
 </figure>
 
+::: {.content-visible when-format="pdf"}
+```{r, echo = F}
+#| fig-cap: "Bruno goes ahead with forking."
+knitr::include_graphics("images/github_create_fork.png")
+```
+:::
+
 Bruno now sees the fork on his account as well:
 
 <figure>
-    <img src="images/github_create_fork.png"
+    <img src="images/github_my_fork.png"
          alt="Bruno's fork."></img>
     <figcaption>Bruno's fork.</figcaption>
 </figure>
+
+::: {.content-visible when-format="pdf"}
+```{r, echo = F}
+#| fig-cap: "Bruno's fork."
+knitr::include_graphics("images/github_my_fork.png")
+```
+:::
 
 So now, Bruno can clone this repository and work on it, because he is working on a copy
 of the repository that he owns. Anything Bruno does on this copy will not affect the original
@@ -715,6 +892,13 @@ Bruno now fixes the typo in the `README.md` file, commits and pushes to his fork
     <figcaption>Bruno fixed the typo in his fork.</figcaption>
 </figure>
 
+::: {.content-visible when-format="pdf"}
+```{r, echo = F}
+#| fig-cap: "Bruno fixed the typo in his fork."
+knitr::include_graphics("images/github_typo_fixed.png")
+```
+:::
+
 As you can see, Bruno's fork is now ahead of the original repo by one commit. 
 By clicking on "Contribute", Bruno can open a pull request to propose his fix to the original
 repository. This pull request will be opened over at the original repository:
@@ -724,6 +908,13 @@ repository. This pull request will be opened over at the original repository:
          alt="Bruno opens a pull request to contribute his fix upstream."></img>
     <figcaption>Bruno opens a pull request to contribute his fix upstream.</figcaption>
 </figure>
+
+::: {.content-visible when-format="pdf"}
+```{r, echo = F}
+#| fig-cap: "Bruno opens a pull request to contribute his fix upstream."
+knitr::include_graphics("images/github_pull_request_typo.png")
+```
+:::
 
 What does the owner of the original repository, "rap4all" see? The pull request Bruno
 opened is now in the original repository's "Pull request" menu, and the owner can
@@ -737,6 +928,13 @@ reviews before merging (minus the forking of the repository).
     <figcaption>The owner of the original repository can now accept Bruno's fix.</figcaption>
 </figure>
 
+::: {.content-visible when-format="pdf"}
+```{r, echo = F}
+#| fig-cap: "The owner of the original repository can now accept Bruno's fix."
+knitr::include_graphics("images/github_merge_pull_request.png")
+```
+:::
+
 By merging the fix, the owner can now benefit from a grammatically correct
 Readme file as well:
 
@@ -745,6 +943,13 @@ Readme file as well:
          alt="The beauty of open source."></img>
     <figcaption>The beauty of open source.</figcaption>
 </figure>
+
+::: {.content-visible when-format="pdf"}
+```{r, echo = F}
+#| fig-cap: "The beauty of open source."
+knitr::include_graphics("images/github_contribution_done.png")
+```
+:::
 
 ## Further reading
 

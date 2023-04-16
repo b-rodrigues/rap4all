@@ -19,6 +19,13 @@ paper, just getting the results is not enough!
     <figcaption>The cursed report drafting loop.</figcaption>
 </figure>
 
+::: {.content-visible when-format="pdf"}
+```{r}
+#| fig-cap: "The cursed report drafting loop."
+knitr::include_graphics("images/report_draft_loop.png")
+```
+:::
+
 The problem is that this workflow is very often quite horrible. The picture
 above illustrates this cursed report drafting loop. Get some results, copy and
 paste images into Word or Powerpoint, get a change request, or notice a mistake,
@@ -39,6 +46,13 @@ But if we can make the loop look like this instead:
          alt="The holy report drafting loop."></img>
     <figcaption>The holy report drafting loop.</figcaption>
 </figure>
+
+::: {.content-visible when-format="pdf"}
+```{r}
+#| fig-cap: "The holy report drafting loop."
+knitr::include_graphics("images/md_draft_loop.png")
+```
+:::
 
 Basically, everything from cleaning, analysing and drafting is done in one
 single step? Well, this is what literate programming enables you to do. And even
@@ -120,6 +134,14 @@ above. This is what the final output looks like:
     <figcaption>More than 20 years later, the output is still the same.</figcaption>
 </figure>
 
+::: {.content-visible when-format="pdf"}
+```{r}
+#| fig-cap: "More than 20 years later, the output is still the same."
+knitr::include_graphics("images/hello_sweave.PNG")
+```
+:::
+
+
 Let us just state that the fact that it is still possible to compile this
 example more than 20 years later is an incredible testament to how mature and
 stable this software is (both R, Sweave, and LaTeX). But as impressive as this
@@ -169,6 +191,14 @@ This is what the output looks like:
          alt="It’s very close to the Sweave output."></img>
     <figcaption>It’s very close to the Sweave output.</figcaption>
 </figure>
+
+::: {.content-visible when-format="pdf"}
+```{r}
+#| fig-cap: "It’s very close to the Sweave output."
+knitr::include_graphics("images/hello_rmd.PNG")
+```
+:::
+
 
 Just like in a Sweave document, an Rmd source file also has a header in which
 authors can define a number of options. Here we only specified that we wanted a
@@ -235,6 +265,13 @@ Markdown knowledge to build many different outputs:
          alt="One format to rule them all."></img>
     <figcaption>One format to rule them all.</figcaption>
 </figure>
+
+::: {.content-visible when-format="pdf"}
+```{r}
+#| fig-cap: "One format to rule them all."
+knitr::include_graphics("images/rmd_to_many.PNG")
+```
+:::
 
 Finally, the latest in literate programming for R is a new tool developed by
 Posit, called Quarto. If you’re an R user and already know `{knitr}` and the Rmd
@@ -399,7 +436,7 @@ My favourite programming language for statistics is ~~SAS~~ R.
 
 ````
 
-save this document into a file called `rmd_intro.rmd` using you’re favourite
+save this document into a file called `rmd_intro.rmd` using your favourite
 text editor. Then render it into an Html file by running the following command
 in the R console:
 
@@ -416,6 +453,12 @@ and you should see the following:
     <figcaption>It’s very close to the Sweave output.</figcaption>
 </figure>
 
+::: {.content-visible when-format="pdf"}
+```{r}
+#| fig-cap: "It’s very close to the Sweave output."
+knitr::include_graphics("images/rmd_test.PNG")
+```
+:::
 
 Congratulations, you just *knitted* your first Rmd document!
 
@@ -523,7 +566,7 @@ There are several other options available that you can define in the header.
 Later on, when we’ll be building our project together, we will provide some more
 options (like having a table of contents).
 
-The finish this part on code chunks, you should know about inline code chunks.
+To finish this part on code chunks, you should know about inline code chunks.
 Take a look at the following example:
 
 ````{verbatim}
@@ -543,7 +586,7 @@ data(iris)
 The iris dataset has `r nrow(iris)` rows.
 ````
 
-The last sentence from this example has an inline code chunk. This quite useful,
+The last sentence from this example has an inline code chunk. This is quite useful,
 as it allows to parameterise sentences and paragraphs, and thus avoids needing
 to copy and paste (and we will go quite far into how to avoid copy and pasting,
 thanks to more advanced features we will shortly discuss).
@@ -558,7 +601,7 @@ This sentence has a footnote.[^1]
 ````
 
 and that you can write LaTeX formulas as well. For example, add the following
-into the the example from before and render either a PDF or a html document
+into the example from before and render either a PDF or a html document
 (don’t put the LaTeX formula below inside a chunk, simply paste it as if it were
 normal text. This doesn’t work for Word output because Word does not support
 LaTeX equations):
@@ -579,6 +622,12 @@ The LaTeX code above results in this equation:
     <figcaption>A rendered LaTeX equation.</figcaption>
 </figure>
 
+::: {.content-visible when-format="pdf"}
+```{r}
+#| fig-cap: "A rendered LaTeX equation."
+knitr::include_graphics("images/latex_equation.png")
+```
+
 ## Keeping it DRY
 
 Remember; we never, ever, want to have to repeat ourselves. Copy and pasting
@@ -586,7 +635,7 @@ is forbidden. Striving for this 0 copy and pasting will make our code much
 more robust and likely to be correct.
 
 We started by using functions, as discussed in the previous chapter, but we can
-much farther than that. For example, suppose that we need to write a document
+go much farther than that. For example, suppose that we need to write a document
 that has the following structure:
 
 - A title
@@ -637,7 +686,7 @@ good looking table for our rendered document:
 create_table(mtcars, "am")
 ```
 
-Let’ suppose that we want to generate a document that would look like this:
+Let’s suppose that we want to generate a document that would look like this:
 
 - first a section title, with the name of the variable of interest
 - then the table
@@ -677,7 +726,7 @@ invisible(lapply(colnames(mtcars), return_section, dataset = mtcars))
 
 ````
 
-The last function, named `return_section()` uses `knitr::knit_expdand()`, which
+The last function, named `return_section()` uses `knitr::knit_expand()`, which
 is the function that does the heavy lifting. This function returns literal R
 Markdown code. It returns `## Frequency table for variable: {{variable}}` which
 creates a level 2 section title with the text *Frequency table for variable:
@@ -884,6 +933,13 @@ flextable(my_table) |>
     <figcaption>The output of the code above.</figcaption>
 </figure>
 
+::: {.content-visible when-format="pdf"}
+```{r}
+#| fig-cap: "The output of the code above."
+knitr::include_graphics("images/flextable.png")
+```
+
+
 We won't go into much detail on how `{flextable}` works, but it is very
 powerful, and the fact that it works for PDF, Html, Word and Powerpoint outputs
 is really a massive plus. If you want to learn more about `{flextable}`, there's
@@ -914,6 +970,12 @@ modelsummary(models)
     <figcaption>The output of the code above.</figcaption>
 </figure>
 
+::: {.content-visible when-format="pdf"}
+```{r}
+#| fig-cap: "The output of the code above."
+knitr::include_graphics("images/modelsummary.png")
+```
+
 Here again, we won't got into much detail, but recommend instead that you read
 the package's
 [website](https://vincentarelbundock.github.io/modelsummary/articles/modelsummary.html)
@@ -932,7 +994,7 @@ to have one section dedicated to each unit of analysis within the same report,
 but rather, you want a complete separate report by unit of analysis. This is
 also possible thanks to parameterised reports.
 
-Let's modify the example from before, which consisted in creating one section
+Let's modify the example from before, which consisted of creating one section
 per column of the `mtcars` dataset and a frequency table, and make it now one
 separate report for each column. The R Markdown file will look like this:
 
@@ -1074,7 +1136,7 @@ replacing "mtcars" by "iris" in the code to compile the reports and see what
 happens, and then when you're comfortable with parameterised reports, try
 templating inside a parameterised report!
 
-It is important to not fall to the temptation of copy and pasting sections of
+It is important not to fall to the temptation of copy and pasting sections of
 your report, or parts of your script, instead of using these more advanced
 features provided by the language. It is tempting, especially under time
 pressure, to just copy and paste bits of code and get things done instead of
@@ -1091,7 +1153,7 @@ change? How often, and why? Can you also fix these parts or not? What if instead
 of five sections that I need to copy and paste, I had 50 sections? How could I
 scale that up?
 
-Asking yourself these questions, and solving them, will ultimately make you
+Asking yourself these questions, and solving them, will ultimately make you a
 better programmer.
 
 Remember: don't repeat yourself!

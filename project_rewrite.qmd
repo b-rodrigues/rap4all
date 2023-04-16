@@ -58,7 +58,7 @@ argued in the chapter on literate programming, a document that mixes prose and
 code is easier to read and share than a script. Next, since this Rmd file can
 get knitted into any type of document (PDF, Word, etc...), it also makes it
 easier to arrive at what interests us, the output. A script is simply a means,
-it’s not an end. The end is a document, (in most cases) so might as well use
+it’s not an end. The end is a document, (in most cases) so we might as well use
 literate programming to avoid the cursed loop mentioned in the chapter on
 literate programming, of changing the script, editing the document, going back
 to the script, etc.
@@ -66,11 +66,11 @@ to the script, etc.
 But there is yet another benefit; even if the Rmd file is not supposed to get
 shared with anyone else, we will, later on, use it as our starting point for the
 *Rmd first* method of package development as promoted by Sébastien Rochette, the
-author of `{fusen}`. This means that from a single Rmd file, we can not only
+author of `{fusen}`. This means that from a single Rmd file, we can
 have a document that is easier to read, easier to compile into our final output
 and, if needed, converted quite easily into a package. If you’re still not
 convinced, just push on, and all the pieces of the puzzle will elegantly fit in
-a couple chapters.
+a couple of chapters.
 
 ## An Rmd for cleaning the data
 
@@ -229,7 +229,7 @@ steps need to be taken:
 ````{verbatim}
 We need clean the data: "Luxembourg" is "Luxembourg-ville" in 2010 and 2011,
 then "Luxembourg". "Pétange" is also spelled non-consistently, and we also need
-to convert columns to right type. We also directly remove rows where the
+to convert columns to the right type. We also directly remove rows where the
 locality contains information on the "Source":
 
 ```{r}
@@ -532,7 +532,7 @@ group_var <- if(grepl("commune", which_dataset)){
 The first line replaces the variable `dataset` by its bound value (that’s what
 `substitute()` does) for example, `commune_level_data`, and then converts this
 variable name into a string (using `deparse()`). So when the user provides
-`commune_level_data`, `which_dataset` will defined as equal to
+`commune_level_data`, `which_dataset` will be defined as equal to
 `"commune_level_data"`. We then use this string to detect whether the data needs
 to be grouped or not. So if we detect the word "commune" in the `which_dataset`
 variable, we set the grouping variable to `locality`, if not to `NULL`. But you
@@ -564,7 +564,7 @@ data doesn’t get grouped.
 
 This is a big topic unto itself, so if you want to know more you can start by reading the 
 famous `{dplyr}` vignette called *Programming with dplyr* 
-[here](https://dplyr.tidyverse.org/articles/programming.html)^[https://dplyr.tidyverse.org/articles/programming.html]
+[here](https://dplyr.tidyverse.org/articles/programming.html)^[https://dplyr.tidyverse.org/articles/programming.html].
 In case you use `{dplyr}` a lot, I recommend you do because mastering *tidy evaluation* (the name
 of this framework) is key to become comfortable with programming using `{dplyr}` (and other
 *tidyverse* packages). You can also read the chapter I wrote on this in my other 
@@ -578,7 +578,7 @@ humans. This means that to make the document clear, I suggest that we create one
 subsection by commune that we plot. Thankfully, we have learned all about child
 documents in the literate programming chapter, and this is what we will be using
 to avoid having to repeat ourselves. The first part is simply the function that
-we’ve already wrote:
+we’ve already written:
 
 ````{verbatim}
 ```{r}
@@ -656,6 +656,6 @@ wasn’t supposed to be reproducible turns out it needs to be reproducible for w
 longer than expected...)
 
 Because I want this book to be a pragmatic guide, we will now talk about
-inputting the least amount of effort to make your current analysis reproducible,
+putting the least amount of effort to make your current analysis reproducible,
 and this is by freezing package versions, which we will do in the next chapter.
 

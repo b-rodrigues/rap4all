@@ -152,7 +152,7 @@ test_that("Check if all communes are accounted for", {
 ````
 
 The only difference is that instead of calling `testthat::expect_true()`
-directly, we have wrapped this call inside `testthat::test_that()`. This why, we
+directly, we have wrapped this call inside `testthat::test_that()`. This way, we
 can add a description to the test. This is useful if the test fails.
 
 Save `dev/save_data.Rmd` and go back to `0-dev_history.Rmd` to inflate
@@ -247,7 +247,7 @@ also expect an error, so we use `expect_error()` as well. Inflating
 Now, I know what you’re thinking. Probably something along the lines of *"Bruno,
 you told me that making my projects reproducible and reliable and robust would
 not take much more time than what I was already doing before. This certainly
-doesn’t feel like it!"* to wish I answer that your feelings on the issue are
+doesn’t feel like it!"*, to which I answer that your feelings on the issue are
 wrong. It may not feel like it, but doing this does two things:
 
 - It ultimately saves you time. You typed the test once, and can now rerun it automatically every time you inflate the `.Rmd` files. You don’t need to remember to test the code, and don’t need to remember how to test the code.
@@ -656,7 +656,7 @@ covr::report()
 
 This should open a tab in your web browser with some statistics. You can click
 on the individual scripts to see the source code of your functions: each line
-that is highlighted in green represents a line that is being test, and lines in red
+that is highlighted in green represents a line that is being tested, and lines in red
 are lines that are not being tested:
 
 <figure>
@@ -665,13 +665,20 @@ are lines that are not being tested:
     <figcaption>The output of report() inside a web browser.</figcaption>
 </figure>
 
+::: {.content-visible when-format="pdf"}
+```{r}
+#| fig-cap: "The output of report() inside a web browser."
+knitr::include_graphics("images/covr.PNG")
+```
+:::
+
 You could strive to get 100% coverage by painting all the lines green (by writing
 unit tests that test these lines). But in practice, it is not always so easy to 
-get 100% coverage, so don’t fret if don’t achieve perfection.
+get 100% coverage, so don’t fret if you don’t achieve perfection.
 
 If you’re working on a server (and thus do not have access to a graphical user interface)
-you can instead opt for a the `covr::package_coverage()` function which provides you
-with the following results (inside yoru console):
+you can instead opt for the `covr::package_coverage()` function which provides you
+with the following results (inside your console):
 
 ```
 housing Coverage: 73.33%
@@ -693,7 +700,7 @@ This is left as an exercise to the reader.
 
 Testing is crucial and useful. Not just because it gives you peace of mind but
 also because writing tests forces you to think about your code, by putting
-yourself in the shoes of your users (which includes future you as well).
+yourself in the shoes of your users (which include future you as well).
 In most cases, it is even something that you’ve been doing but perhaps not as
 systematically as you should. 
 
@@ -704,7 +711,7 @@ them makes you gain a lot of time in the long run, so actually, you might
 even be faster by writing tests! Tests also allow you to immediately see where
 something went wrong, when something goes wrong. So tests save you time here as
 well. Without tests, when something goes wrong, you have a hard time finding
-where the bug comes from, and end up wasting precious time. And worse, something
+where the bug comes from, and end up wasting precious time. And worse, sometimes
 things go wrong and break, but silently. You still get an output that may look
 ok at first glance, and only realise something is wrong way too late. Testing
 helps avoiding such situations.
@@ -715,7 +722,7 @@ takes time, but:
 - you’re actually already doing it, albeit casually;
 - it saves you time in the long run.
 
-The tools I’ve showed you in this chapter and in the last are probably the
+The tools I’ve showed you in this chapter and in the previous chapter are probably the
 fastest, easiest way to go from your analysis to a documented and tested package
 in a matter of hours. The benefits these provide however are measured in days of
 work.
