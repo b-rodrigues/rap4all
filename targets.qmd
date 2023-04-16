@@ -160,7 +160,7 @@ something like `tar_target(z, f(y))` (just like in the template).
 
 ## A pipeline is a composition of pure functions
 
-This pipeline can immediately be run using the `targets::tar_make()` command in
+This pipeline can immediately be ran using the `targets::tar_make()` command in
 a console. Doing so shows you the following output:
 
 ```{r, eval = F}
@@ -240,7 +240,7 @@ UseMethod("summary")
 Ok, so here, strictly speaking, you don’t see the source code from `summary()`.
 This is because `summary()` is a generic function, that simply picks the right
 `summary()` depending on what type of object you pass to it. Try with
-`summary.data.frame()` and yous should see the source code. So when you type
+`summary.data.frame()` and you should see the source code. So when you type
 `summary` after running the pipeline, because the pipeline is pure and nothing
 gets saved to the global environment, you see `summary`’s source code and not
 the target that got computed by the pipeline.
