@@ -20,6 +20,69 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1.6em;
   vertical-align: middle;
 }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 
@@ -232,7 +295,7 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#rs-anatomy" id="toc-rs-anatomy" class="nav-link active" data-scroll-target="#rs-anatomy"><span class="toc-section-number">2.1</span>  R’s anatomy</a></li>
+  <li><a href="#essential-knowledge" id="toc-essential-knowledge" class="nav-link active" data-scroll-target="#essential-knowledge"><span class="toc-section-number">2.1</span>  Essential knowledge</a></li>
   </ul>
 </nav>
     </div>
@@ -256,26 +319,45 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<section id="rs-anatomy" class="level2" data-number="2.1">
-<h2 data-number="2.1" class="anchored" data-anchor-id="rs-anatomy"><span class="header-section-number">2.1</span> R’s anatomy</h2>
+<p>This is not an introductory book, so before tackling the topics presented here, make sure that you are familiar with the different topics presented below. If you read this chapter and everything is obvious or known to you, then you should have no trouble following along. If instead what you read here is cryptic, then take some time to improve your understanding of these topics first.</p>
+<section id="essential-knowledge" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="essential-knowledge"><span class="header-section-number">2.1</span> Essential knowledge</h2>
+<p>It’s important to know the parts that constitute R. Let’s make something clear: R is not RStudio, or whatever interface you are using to interact with R. R is a domain-specific interpreted programming language. R is domain-specific because its primary use is in performing statistics. Interpreted, because results get returned immediately when you execute a script in the console. In other words, when you write <code>1+1</code> in the console, you get back <code>2</code> immediately. There are so-called programming languages, called compiled programming languages, that require code to be compiled into binaries before execution. C is such a language. The fact that R is interpreted makes interactive exploratory data analysis easy, but also introduces certain negative aspects. I will discuss these in detail in the book. R’s console is an example of REPL – <em>Read-Eval-Print-Loop</em> – environment. Code gets <em>read</em>, <em>evaluated</em>, <em>printed</em> and the read state gets returned, starting the <em>loop</em> over.</p>
+<p>To make working with R easier, you should not write code in the console and execute it, but instead write it in a text file. You can keep these text files, update and share them with collaborators. Such text files are called scripts. You <em>could</em> write these scripts using the most basic text editor included in your operating system (that would be Notepad.exe on Windows), but you should instead use a text editor made specifically to make programming easier. Popular choices include RStudio, Visual Studio Code, or maybe something more exotic like Emacs combined with ESS (my personal choice). Whatever text editor you choose, take time to configure it and learn how to use it. You will spend many, many, many hours inside that text editor. The code you write in that text editor is what’s going to feed you and your family. Learn your chosen text editor’s keyboard shortcuts and other advanced features. This initial investment will pay for itself many times over. Also, you need to know what an actual text file is. A document written in Word (with the <code>.docx</code> extension) is not a text file. It looks like text, but is not. The <code>.docx</code> format is a much more complex format with many layers of abstraction. “True”, plain, text files can be opened with the simplest text editor included in your operating system. I’ve had students trying to create text files with word processors like MS Word and then being confused when things would not work.</p>
+<p>As stated before, R is a domain-specific programming language mainly used for doing statistics, or whatever modernized term you may prefer like <em>“data science”</em>. Its base capabilities can be extended by installing packages. For example, a base installation of R provides you with useful functions like <code>mean()</code> or <code>sd()</code>, to compute the average or standard deviation of a vector of numbers, or <code>rnorm()</code> to compute random variates from a Gaussian (Normal) distribution. However, there is no function available to train a random forest. If you need to train a random forest you need to install a package using the <code>install.packages("randomForest")</code> command. The collection of packages installed is called a “library”. Packages get downloaded from CRAN, the <em>Comprehensive R Archive Network</em>. There is no doubt in my mind that the reason R became so popular is because it is quite easy to write packages for it; and this is something that we will learn as well!</p>
+<p>When you use R, you will load data sets, create plots, train models, etc. These data sets, plots, models, are all <em>objects</em> and they get saved in the global environment. To see a list of objects currently available in the global environment, type <code>ls()</code> in the R console. When you quit R, you get asked to save the <em>workspace</em>: this will save the current state of the global environment and load it next time you start R. I highly recommend for you to not save the workspace. If you are using RStudio you can change this behaviour in the global options (under <em>Workspace</em>, set <em>Save workspace to .RData on exit</em> to <em>Never</em>). Other editors might have a similar option. Saving and loading the workspace makes it impossible to start with a fresh R session (unless you start R with the <code>--vanilla</code> flag), which can cause issues that are difficult to pinpoint.</p>
+<p>You should also be comfortable with paths and your computer’s file system. Comfortable means having no problems finding where a file gets downloaded for example, or being able to navigate to any folder (either through a GUI file browser or through a terminal). I also highly recommend that you strive to use relative paths in your scripts, and not absolute paths. In other words: don’t start your scripts with a line such as:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">setwd</span>(<span class="st">"H:/Username/Projects/housing_regression/"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>but instead, use “Projects” if you’re using RStudio, or similar features from your IDE. This way, you can use relative paths instead. This makes collaborating much easier. Using “Projects” in RStudio, if you need to load data, you can simply write:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>dataset <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"data.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>and don’t need to set working directories using <code>setwd()</code>.</p>
+<p>There is also the <code>{here}</code> package that makes using relative paths easier, but I won’t discuss it in this book. If you’re interested you can read this <a href="https://github.com/jennybc/here_here">post</a><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>.</p>
+<p>You should be familiar with writing functions. This book has a whole chapter on functional programming, and I will teach you how to write functions, but if you’re already familiar with this, then it will make goig through that chapter easier.</p>
+<p>Finally, you should know how to ask for help. If you need help with this book, feel free to open an issue on the book’s Github repo <a href="https://github.com/b-rodrigues/rap4all">here</a><a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>, or open a thread on the book’s Leanpub forum (if you bought a copy) over <a href="https://community.leanpub.com/c/raps-with-r/">here</a><a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>. Just like for this book, if you have an issue with an R package, look for its repository: many packages’ source code is hosted on Github (but not always). You can also try to reach out to the author, or open a thread on Stackoverflow. Whataver you do, make sure that you do your homework first:</p>
 <ul>
-<li>read eval print loop</li>
-<li>console, editor</li>
-<li>packages, library</li>
-<li>CRAN</li>
-<li>.Rprofile</li>
-<li>workspace (don’t save it)</li>
+<li>Read the documentation. Maybe you’re using the tool wrong.</li>
+<li>Take note of the error message. Error messages can be cryptic sometimes, but as you gain in experience, you will learn to decrypt them.</li>
+<li>Write down the simplest script possible that reproduces this bug. This is called an MRE, “Minimal Reproducible Example”. If you need to open a thread asking for help, post this MRE, this will make helping you much easier. For general advice on how to write an MRE, you can read this <a href="https://jonskeet.uk/csharp/complete.html">classic blog post</a><a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>.</li>
 </ul>
-<p>Packages needed to follow along, look at <code>deps.R</code></p>
-<p>Get comfortable with paths</p>
-<ul>
-<li>absolute paths (no no)</li>
-<li>relative paths (yes)</li>
-</ul>
-<p><code>{here}</code> can help, but I won’t discuss it.</p>
-<p>What is a text editor, and what is text? Word is not a text editor, and work files are not text. Important to know the difference.</p>
+<p>Finally, keep in mind the following saying from my father, a mason (the ones that lay bricks, not the ones meeting in secrecy to govern the world):</p>
+<blockquote class="blockquote">
+<p>The tools are always right. If you’re using a tool and it’s not behaving as expected, it is much more likely that your expectations are wrong. Take this opportunity to review your knowledge of the tool.</p>
+</blockquote>
 
 
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1"><p>https://github.com/jennybc/here_here<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>https://github.com/b-rodrigues/rap4all<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>https://community.leanpub.com/c/raps-with-r/<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>https://jonskeet.uk/csharp/complete.html<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
 </section>
 
 </main> <!-- /main -->
