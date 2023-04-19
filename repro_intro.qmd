@@ -181,24 +181,25 @@ activate.R  library  settings.dcf
 
 So inside the `renv` folder, there is another folder called `library`: this is
 the folder that contains our isolated library for just this project. That’s
-something that we would not want to back up on Github as it grows quite large. So
-here is the right moment to introduce the `.gitignore` file (notice the `.` at
-the start of the name). This is a file that sits in the root of the directory,
-and simply lists files and folder that you want Git to ignore. Any file listed
-there will not get pushed to Github. Create this file using your favourite text
-editor and simply add the following:
+something that we would not want to back up on Github as it grows quite large.
+So here is the right moment to introduce the `.gitignore` file (notice the `.`
+at the start of the name). This is a file that contains the paths to other files
+and folders that should be ignored. You will notice that there is a `.gitignore`
+file in the `renv/` file. If you open it, you will see that the `library/` is
+listed there (among others) so it will be ignored. This is because it’s the
+folder that contains all the packages for the project and it might grow very
+large, so this is something that we don’t want to track.
+
+If you are working with sensitive data, you could also add a `.gitignore` file
+in the root of the project’s directory, and simply list files and folders that
+you want Git to ignore. Create this file using your favourite text editor and
+simply add, for example if you’re working with sensitive data, the following:
 
 ```
-renv/
+datasets/
 ```
 
-This will prevent the `renv/` folder from being tracked and backed up. If you are
-working with sensitive, or large, data, you can also add the folder where this data
-is to the `.gitignore` file as well.
-
-`activate.R` is the script that tells R to use the packages from the `library`
-folder at startup. The other file, `settings.dcf` contains general settings for
-`{renv}` which you can safely ignore.
+This will prevent the `datasets/` folder from being tracked and backed up. 
 
 Let’s start a fresh R session in our project’s directory; you should see the
 following startup message:

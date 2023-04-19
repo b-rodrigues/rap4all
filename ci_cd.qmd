@@ -244,34 +244,50 @@ but you may adapt it to your needs. For example, this workflow file runs on
 `ubuntu-latest` and installs the latest version of R. You may want to change the
 version of Ubuntu to `ubuntu-22.04` (this way, Ubuntu 22.04 will keep getting
 used even when the next LTS, 24.04, will be released) and install R version
-4.2.2 (or whichever version you used for your pipeline). This workflow file also
-runs some other useful actions, like caching packages, so they don’t need to get
-re-downloaded each time you push a change to the repository!
+4.2.2 (or whichever version you used for your pipeline). Also, don’t forget to
+install the Ubuntu dependencies under the "Install Linux System dependencies"
+step. There’s already some dependencies there, but you should add the others
+that we’ve listed in the Dockerfile (the syntax is slightly different from the 
+Dockerfile, so pay attention to it). This workflow file also runs some other
+useful actions, like caching packages, so they don’t need to get re-downloaded
+each time you push a change to the repository!
 
-You can see the end result over [here](). Don’t hesitate to use this repository
-as a template for your projects! Check out the `targets-runs` branch of the
-repository to see the outputs of the pipeline there.
+You can see the repository with the workflow file
+[here](https://github.com/rap4all/housing/tree/gitops-pipeline). The workflow
+file is inside the `.github/workflows/` folder
+[here](https://github.com/rap4all/housing/blob/gitops-pipeline/.github/workflows/targets.yaml).
+As I explained before, pay attention to line 29 (where I stated that the action
+should trigger when a change gets pushed to the branch `gitops-pipeline`), to
+line 35 where I changed the runner from `ubuntu-latest` to `ubuntu-22.04`, line
+43 where I install R version 4.2.2 and finally lines 53 to 74 where I install
+the required Ubuntu dependencies (the same as for the Dockerfile). Don’t
+hesitate to use this repository as a template for your projects! The rendered
+HTML file is in the newly created `targets-runs` branch of the repository. This
+branch gets created automatically by the workflow and the output gets saved in
+there automatically.
 
 So it turns out that running a RAP on Github Actions is quite easy, you only
-need to use `targets::tar_github_actions()`, maybe adapt the `targets.yaml` file
-a little bit to install the right version of R and run it on the right version
-of Ubuntu (or Windows or macOS, but careful, you only have 2000 free minutes and
+need to use `targets::tar_github_actions()`, and adapt the `targets.yaml` file a
+little bit to install the right version of R and run it on the right version of
+Ubuntu (or Windows or macOS, but careful, you only have 2000 free minutes and
 Windows and macOS are more expensive than Ubuntu, 1 minute of CPU time on Ubuntu
-is equal to 2 minutes of run-time on macOS), and also use `{renv}` to create an
-`renv.lock` file. Then it should be as easy as pushing to the repo to the get
-the pipeline running there!
+is equal to 2 minutes of run-time on macOS). By using `{renv}` and the generated
+`renv.lock` file, the pipeline dependencies get installed seamlessly as well.
+You can now focus on coding, each time you push to this branch, you will see
+the output get generated (and because caching is being used, runs will 
+executed rather quickly).
 
 But, and yes there is a but, you should think about the following, potential, issues:
 
-- you are limited to 2000 minutes of free run-time. If your pipeline takes several hours to run, you might need to upgrade to a paid account, or run it locally;
-- Github Actions does not keep old versions of operating systems for too long. For example, as of writing, only versions 20.04 and 22.04 of Ubuntu are available. Ubuntu 18.04 was removed in August 2022. If your RAP absolutely needs a specific version of Ubuntu for a very long time, Github Actions might not be the right solution. The same is true for Windows or macOS as well.
+- you are limited to 2000 minutes of free run-time. If your pipeline takes several hours to run, you might need to upgrade to a paid account, or run it locally (but this is mitigated thanks to caching on Github and by using `{targets}` that caches results as well);
+- Github Actions does not keep old versions of operating systems for too long. For example, as of writing, only versions 20.04 and 22.04 of Ubuntu are available. Ubuntu 18.04 was removed in August 2022. If your RAP absolutely needs a specific version of Ubuntu for a very long time, Github Actions might not be the right solution. The same is true for Windows or macOS as well. However, what you might want to do instead is migrate the pipeline to newer versions of Ubuntu when these become available. Generally speaking, this should not be a very painful process.
 
-So you need to think about it is you really need. Does you pipeline run
+So you need to think about what it is you really need. Does you pipeline run
 relatively quickly, and you don’t need to keep it running forever on the same
 operating system? Then Github Actions is for you. Or perhaps you are writing a
 book using Rmarkdown, or Quarto and don’t want to bother building it and
 deploying it manually? Then Github Actions is for you as well (and take a look
-at this book’s workflow file [here]() for an example of exactly this). But if
+at this book’s workflow file [here](https://github.com/b-rodrigues/rap4all/blob/master/.github/workflows/quarto-publish.yml) for an example of exactly this). But if
 you are working on a pipeline that may take several hours to run, and you want
 it to stay reproducible for a very long time, then using Docker might be a
 better option. Thankfully, you can also use Github Actions to build Docker
