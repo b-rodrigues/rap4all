@@ -264,7 +264,7 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 <p>As I wrote in the conclusion of the previous chapter, the book could have stopped there. So consider this chapter as a bonus. What I’m going to show here is not the most important aspect of reproducibility, and you could even make the case that is not needed at all. However, I still think that it is worth showing you how to use Github Actions, even if only superficially, and then you decide whether this is a tool that you should add to your toolbox.</p>
-<p>The CI/CD platform I’ll be discussing here is Github Actions, which should not suprise you since we’ve been using Github for version control. But maybe you’re wondering what a “CI/CD platform” even is, so I’ll start by explaining what this is in very simple terms.</p>
+<p>The CI/CD (<em>C</em>ontinuous <em>I</em>ntegration and <em>C</em>ontinuous <em>D</em>eployment or <em>D</em>elivery) platform I’ll be discussing here is Github Actions, which should not surprise you since we’ve been using Github for version control. But maybe you’re wondering what a “CI/CD platform” even is, so I’ll start by explaining what this is in very simple terms.</p>
 <p>Let’s go back to the first idea of this book: Don’t Repeat Yourself. We have written functions and used tools such as <code>{renv}</code> to avoid having to repeat ourselves. And yet, when it comes to using Docker, we need to keep building and running containers, writing the same commands over and over again. It would be great if instead we didn’t need to do it. This is what a CI/CD platform essentially allows you to do. The idea is that building, running and, if applicable, deploying are also tasks that can be automated, so why not automate them and only take care of writing code?</p>
 <p>This chapter can be seen as a small introduction to DevOps for data science.</p>
 <p>According to <a href="https://www.atlassian.com/devops">Atlassian</a><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>:</p>
@@ -272,7 +272,7 @@ ul.task-list li input[type="checkbox"] {
 <p>DevOps is a set of practices, tools, and a cultural philosophy that automate and integrate the processes between software development and IT teams. It emphasizes team empowerment, cross-team communication and collaboration, and technology automation.</p>
 </blockquote>
 <p>Most of the tools and practices described in this book would make adopting DevOps in your day to day a breeze. Strictly speaking though, we will be using “GitOps”, because our Github repository will be the center-stage of our project. The Github repository will not only contain the code of our project, but also the definition of the infrastructure the code will run on. This way, our Github repository will be a single source of truth.</p>
-<p>Concretely this means that each time we will push code (or merge a pull request) to our Github repository, a Docker image gets built. This image can then be pushed to Docker Hub, or a container can be executed. This container in turn can run a pipeline and the output can then be downloaded from Github. All of this happens in the cloud, all you need to do is push changes in the code. As stated in the chapter on Git, Github offers 2000 minutes of computation time a month for CI/CD, which should be really sufficient for a lot of purposes (but of course, if your RAP takes hours to complete, you might want to run it locally).</p>
+<p>Concretely this means that each time we will push code (or merge a pull request, or perform any other Git-related event) to our Github repository, any arbitrary action gets executed, like building a Docker image. This image can then be pushed to Docker Hub, or a container can be executed. This container in turn can run a pipeline and the output can then be downloaded from Github. All of this happens in the cloud, all you need to do is push changes in the code. As stated in the chapter on Git, Github offers 2000 minutes of computation time a month for CI/CD, which should be really sufficient for a lot of purposes (but of course, if your RAP takes hours to complete, you might want to run it locally).</p>
 <p>Github Actions is very flexible, and you could use it to perform many tasks, not just building Docker images or running containers. For example this book gets built and published online automatically each time I push an update to the <a href="https://github.com/b-rodrigues/rap4all">repository</a><a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>. If you’re developing a package, you could run <code>R CMD check</code> each time you push code to the repository. <code>R CMD check</code> runs many tests, including the package’s unit tests (when using <code>{fusen}</code>, <code>R CMD check</code> is run each time a flat file gets inflated.) and using Github Actions, it’s possible to run <code>R CMD check</code> on Ubuntu (Linux), Windows and even macOS (see <a href="https://docs.github.com/en/actions/using-jobs/using-a-matrix-for-your-jobs">this documentation page</a><a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> if you’re interested).</p>
 <p>In this chapter, I’m going to show you how to use Github Actions to:</p>
 <ul>
@@ -280,6 +280,7 @@ ul.task-list li input[type="checkbox"] {
 <li>build a Docker image and push it to Docker Hub when pushing changes to its Dockerfile;</li>
 <li>run a Docker container that runs a RAP and builds some output that we can then download from Github.</li>
 </ul>
+<p>Finally, what does <em>integration</em> and <em>deployment or delivery</em> even mean? Continuous integration means that that changes get merged to the master or main branch continuously. Remember Trunk-based development? In TBD, the goal is achieving continuous integration, and Gitops is one efficient way of doing so. Now, what’s the difference between deployment or delivery? Both obviously mean that we’re shipping a product. The difference is only in how the project is managed. If the code gets pushed immediately to production, then we speak of deployment. If instead the code gets pushed to a test server, and final deployment to production needs to be approved by a manager, then it’s delivery. For our purposes, this distinction doesn’t really matter.</p>
 <section id="cicd-quickstart" class="level2" data-number="15.1">
 <h2 data-number="15.1" class="anchored" data-anchor-id="cicd-quickstart"><span class="header-section-number">15.1</span> CI/CD quickstart</h2>
 <p>Before defining an “Hello World” pipeline that gets exectude in the cloud, I need to define some terms. A workflow that runs on Github Actions is defined as a Yaml file, and this file contains a succession of “actions”, and each action performs a specific task. Here is the simplest Github Actions workflow file that you could write (source: <a href="https://gist.github.com/weibeld/f136048d0a82aacc063f42e684e3c494">link</a><a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>):</p>
@@ -372,7 +373,59 @@ jobs:
 </section>
 <section id="build-a-docker-image" class="level2" data-number="15.3">
 <h2 data-number="15.3" class="anchored" data-anchor-id="build-a-docker-image"><span class="header-section-number">15.3</span> Build a Docker image</h2>
-<p>https://github.com/marketplace/actions/build-and-push-docker-images</p>
+<p>In this section we will learn how to build a Docker image using Github Actions. As stated before, the advantage is that you don’t rely on Github to have the base image (in our example, <code>ubuntu-22.04</code>, forever available, which they won’t).</p>
+<p>The idea is the same as before: work on the code of your project, define a Dockerfile and get an updated image each time you push your changes to the repository.</p>
+<p>Let’s start with the Github Actions workflow file that we need. Here it is:</p>
+<pre><code>name: build_docker
+
+on:
+  push:
+    branches:
+      - master
+      - main
+
+jobs:
+  docker:
+    runs-on: ubuntu-latest
+    env:
+      IMAGE_NAME: r_4.2.2
+    steps:
+      - name: Setup
+        uses: docker/setup-buildx-action@v2
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Build image and push to Docker Hub
+        uses: docker/build-push-action@v4
+        with:
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:${{ github.ref_name }}-${{ github.sha }}
+          push: true</code></pre>
+<p>I believe that this file is the simplest one you could have for this. Let’s study it in detail.</p>
+<p>The start of the file is pretty start: we give the workflow a new, and state that it should run on <code>ubuntu-latest</code> whenever anything gets pushed to either <code>main</code> or <code>master</code>. We define an environment variable called <code>4_2_2</code>. This is the name of the image that we are going to build. We will build an image that comes with R 4.2.2 pre-installed as well as many required Ubuntu packages; it’s the same image as we built in the previous chapter on top of which we will then build RAPs. Then we use the <code>docker/login-action@v2</code> to login from Github Actions to Docker Hub. Essentially, we need to be able to tell our Github Actions runner how to login to Docker Hub, and of course we want to do so in a secure manner (and it must run non-interactively). Then, the action <code>docker/setup-buildx-action@v2</code> and as its name indicates, this simply sets up everything for <code>buildx</code> to run smoothly (<code>buildx</code> will build the Docker image using the <code>docker buildx</code> command an alternative to <code>docker build</code>).</p>
+<p>To login to Docker Hub from Github Actions, you need first to create an access token from your Docker Hub account. Login to your Docker Hub account, got to your account settings and then to the “Security” tab:</p>
+<figure class="figure">
+<img src="images/docker_hub_token.png" alt="Create your access token." class="figure-img">
+<figcaption class="figure-caption">
+Create your access token.
+</figcaption>
+</figure>
+<p>Name it <code>github_actions</code> for example, and set its permissions to “Read, Write, Delete”. On the next window that pops up, make sure to save your access token:</p>
+<figure class="figure">
+<img src="images/docker_hub_copy_token.png" alt="Make sure to write it down!" class="figure-img">
+<figcaption class="figure-caption">
+Make sure to write it down!
+</figcaption>
+</figure>
+<p>You then need to go to the settings area of the repository. Under “Security”, “Secrets and variables” and finally “Actions” you can create a secret called <code>DOCKERHUB_TOKEN</code> and copy the value of the token in the free text area:</p>
+<figure class="figure">
+<img src="images/docker_hub_token_ga.png" alt="Copy the token in your repo's secrets." class="figure-img">
+<figcaption class="figure-caption">
+Copy the token in your repo’s secrets.
+</figcaption>
+</figure>
+<p>Create a second secret with your Docker Hub username called <code>DOCKERHUB_USERNAME</code>.</p>
 </section>
 <section id="run-a-docker-container" class="level2" data-number="15.4">
 <h2 data-number="15.4" class="anchored" data-anchor-id="run-a-docker-container"><span class="header-section-number">15.4</span> Run a Docker container</h2>
