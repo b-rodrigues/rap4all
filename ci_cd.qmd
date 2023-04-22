@@ -321,21 +321,50 @@ repository.
 Let's start with the Github Actions workflow file that we need. Here it is:
 
 ```
+name: build_docker
+
+on:
+  push:
+    branches:
+      - master
+      - main
+
+jobs:
+  docker:
+    runs-on: ubuntu-latest
+    env:
+      IMAGE_NAME: r_4.2.2
+    steps:
+      - name: Setup
+        uses: docker/setup-buildx-action@v2
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Build image and push to Docker Hub
+        uses: docker/build-push-action@v4
+        with:
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:${{ github.ref_name }}-${{ github.sha }}
+          push: true
 ```
 
 I believe that this file is the simplest one you could have for this. Let's study 
 it in detail.
 
-The start of the file is pretty start: we give the workflow a new, and state that 
-it should run on `ubuntu-latest` whenever anything gets pushed to either `main`
-or `master`. We define an environment variable called `4_2_2`. This is the name
-of the image that we are going to build. We will build an image that comes
-with R 4.2.2 pre-installed as well as many required Ubuntu packages; it's the
-same image as we built in the previous chapter on top of which we will then build
-RAPs. Then we use the `docker/login-action@v2` to login from Github Actions to Docker
-Hub. Essentially, we need to be able to tell our Github Actions runner how to login
-to Docker Hub, and of course we want to do so in a secure manner (and it must run
-non-interactively).
+The start of the file is pretty start: we give the workflow a new, and state
+that it should run on `ubuntu-latest` whenever anything gets pushed to either
+`main` or `master`. We define an environment variable called `4_2_2`. This is
+the name of the image that we are going to build. We will build an image that
+comes with R 4.2.2 pre-installed as well as many required Ubuntu packages; it's
+the same image as we built in the previous chapter on top of which we will then
+build RAPs. Then we use the `docker/login-action@v2` to login from Github
+Actions to Docker Hub. Essentially, we need to be able to tell our Github
+Actions runner how to login to Docker Hub, and of course we want to do so in a
+secure manner (and it must run non-interactively). Then, the action
+`docker/setup-buildx-action@v2` and as its name indicates, this simply sets up
+everything for `buildx` to run smoothly (`buildx` will build the Docker image
+using the `docker buildx` command an alternative to `docker build`).
 
 To login to Docker Hub from Github Actions, you need first to create an access
 token from your Docker Hub account. Login to your Docker Hub account, got to
