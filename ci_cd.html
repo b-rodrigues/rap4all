@@ -373,7 +373,8 @@ jobs:
 </section>
 <section id="build-a-docker-image" class="level2" data-number="15.3">
 <h2 data-number="15.3" class="anchored" data-anchor-id="build-a-docker-image"><span class="header-section-number">15.3</span> Build a Docker image</h2>
-<p>In this section we will learn how to build a Docker image using Github Actions. As stated before, the advantage is that you don’t rely on Github to have the base image (in our example, <code>ubuntu-22.04</code>, forever available, which they won’t).</p>
+<p>I’m going to describe the following <a href="https://github.com/b-rodrigues/ga_demo/tree/main">repository</a>. This repository contains a Dockerfile, and a <code>.github/workflows/</code> folder with a Github Actions workflow file. Each time I push any change to any file from this repository, a new Docker image gets built automatically and pushed to Docker Hub. I will now teach you how to do this.</p>
+<p>As stated before, the advantage of using Docker images for your RAPs instead of simply running them directly inside Github Actions, is that you don’t rely on Github to have the base image (in our example, <code>ubuntu-22.04</code>), forever available, which they won’t.</p>
 <p>The idea is the same as before: work on the code of your project, define a Dockerfile and get an updated image each time you push your changes to the repository.</p>
 <p>Let’s start with the Github Actions workflow file that we need. Here it is:</p>
 <pre><code>name: build_docker
@@ -403,8 +404,8 @@ jobs:
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:${{ github.ref_name }}-${{ github.sha }}
           push: true</code></pre>
 <p>I believe that this file is the simplest one you could have for this. Let’s study it in detail.</p>
-<p>The start of the file is pretty start: we give the workflow a new, and state that it should run on <code>ubuntu-latest</code> whenever anything gets pushed to either <code>main</code> or <code>master</code>. We define an environment variable called <code>4_2_2</code>. This is the name of the image that we are going to build. We will build an image that comes with R 4.2.2 pre-installed as well as many required Ubuntu packages; it’s the same image as we built in the previous chapter on top of which we will then build RAPs. Then we use the <code>docker/login-action@v2</code> to login from Github Actions to Docker Hub. Essentially, we need to be able to tell our Github Actions runner how to login to Docker Hub, and of course we want to do so in a secure manner (and it must run non-interactively). Then, the action <code>docker/setup-buildx-action@v2</code> and as its name indicates, this simply sets up everything for <code>buildx</code> to run smoothly (<code>buildx</code> will build the Docker image using the <code>docker buildx</code> command an alternative to <code>docker build</code>).</p>
-<p>To login to Docker Hub from Github Actions, you need first to create an access token from your Docker Hub account. Login to your Docker Hub account, got to your account settings and then to the “Security” tab:</p>
+<p>The start of the file is pretty start: we give the workflow a new, and state that it should run on <code>ubuntu-latest</code> whenever anything gets pushed to either <code>main</code> or <code>master</code>. We define an environment variable called <code>r_4.2.2</code>. This is the name of the image that we are going to build. We will build an image that comes with R 4.2.2 pre-installed as well as many required Ubuntu packages; it’s the same image as we built in the previous chapter on top of which we will then build RAPs. This image is based on the one from the Rocker project. We will take a look at the Dockerfile afterwards. Then, the action <code>docker/setup-buildx-action@v2</code> simply sets up everything for <code>buildx</code> to run smoothly (<code>buildx</code> will build the Docker image using the <code>docker buildx</code> command an alternative to <code>docker build</code>). Honestly, I don’t even know exactly what it sets up. I guess it may at least checkout the repository to make the files available to the next actions and maybe set some other variables for <code>docker buildx</code>.</p>
+<p>Then we use the <code>docker/login-action@v2</code> to login from Github Actions to Docker Hub. Essentially, we need to be able to tell our Github Actions runner how to login to Docker Hub, and of course we want to do so in a secure manner (and it must run non-interactively). To login to Docker Hub from Github Actions, you need first to create an access token from your Docker Hub account. Login to your Docker Hub account, got to your account settings and then to the “Security” tab:</p>
 <figure class="figure">
 <img src="images/docker_hub_token.png" alt="Create your access token." class="figure-img">
 <figcaption class="figure-caption">
@@ -425,7 +426,29 @@ Make sure to write it down!
 Copy the token in your repo’s secrets.
 </figcaption>
 </figure>
-<p>Create a second secret with your Docker Hub username called <code>DOCKERHUB_USERNAME</code>.</p>
+<p>Create a second secret with your Docker Hub username called <code>DOCKERHUB_USERNAME</code>. These can now be used in the workflow file using so-called <em>contexts</em>. Your Docker Hub username will get replaced wherever you write <code>${{ secrets.DOCKERHUB_USERNAME }}</code> in the workflow file, same for your Docker Hub token with <code>${{ secrets.DOCKERHUB_TOKEN }}</code>.</p>
+<p>Finally, we build and push the image to Docker Hub. This is done using one single action called <code>docker/build-push-action@v4</code>. We use the <code>tags</code> option to tag our image. The tag needs to start with your username, followed by a <code>/</code>, then the image name, and then a version, so something like <code>bob/r_4.2.2:latest</code> where <code>latest</code> would be the latest version of the image that is available. Getting <code>bob/r_4.2.2</code> is quite easy: simply use your Docker Hub username that you defined as a secret, then literally type <code>/</code> and then use the image name that you’ve defined in the beginning of the workflow file. Careful though: <code>bob/r_4.2.2</code> needs to exist on Docker Hub as well. <code>bob</code> is easy, that your Docker Hub username as already stated, but <code>r_4.2.2</code> is a repository that you need to create on Docker Hub. So both your image name and the repository on Docker Hub will be <code>r_4.2.2</code>. If you don’t create a repository on Docker Hub that is exactly named like that, your image will not get pushed, because Github Actions will not know where to push the image. So if this is not already the case, go back to Docker Hub and create a repository names <code>r_4.2.2</code>. For the version, you can do whatever you want, but I suggest to use the context <code>github.ref_name</code> and <code>github.sha</code>. <code>github.ref_name</code> gives the name of the branch that starts the workflow, and <code>github.sha</code> returns the hash number of the commit that starts the workflow. This way, your image will be named something like <code>bob/r_4.2.2:master-65ai9besta65948</code>. This allows you to see which commit generated which image, which is really useful. We then also set <code>push</code> to <code>true</code>, so that the image gets pushed.</p>
+<p>With this workflow file in hand, I can now build a Docker image and push it to Docker Hub simply by pushing code to my repository. Here are two commits that generated two images:</p>
+<figure class="figure">
+<img src="images/ga_dockerfile.png" alt="Two successful runs of Github Actions." class="figure-img">
+<figcaption class="figure-caption">
+Two successful runs of Github Actions.
+</figcaption>
+</figure>
+<p>and here are the two corresponding images on Docker Hub:</p>
+<figure class="figure">
+<img src="images/ga_dockerhub.png" alt="The corresponding images on Docker Hub." class="figure-img">
+<figcaption class="figure-caption">
+The corresponding images on Docker Hub.
+</figcaption>
+</figure>
+<p>I noticed a typo in my Dockerfile: originally, I was basing my image on R version 4.2.1. So I changed this, and pushed. This is the commit that starts with <code>b1950</code>. The image then got built, tagged, and pushed to Docker Hub without any manual intervention on my part. You can see that the tag is of the form <code>repo-hash</code>, in this case <code>main-b1950d</code>. Clicking on this tag on Docker Hub shows you some useful information:</p>
+<figure class="figure">
+<img src="images/docker_hub_image.png" alt="This is the image with the correct R version." class="figure-img">
+<figcaption class="figure-caption">
+This is the image with the correct R version.
+</figcaption>
+</figure>
 </section>
 <section id="run-a-docker-container" class="level2" data-number="15.4">
 <h2 data-number="15.4" class="anchored" data-anchor-id="run-a-docker-container"><span class="header-section-number">15.4</span> Run a Docker container</h2>
