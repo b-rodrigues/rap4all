@@ -565,8 +565,73 @@ I've built in the previous section. Apart from that, everything's the same.
 The magic happens with the workflow file. Here it is:
 
 ```
+name: Reproducible pipeline
 
+on:
+  push:
+    branches:
+      - main
+      - master
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Build the Docker image
+      run: docker build -t housing_image .
+
+    - name: Docker Run Action
+      run: docker run --rm --name housing_container -v /github/workspace/shared_folder:/home/housing/shared_folder:rw housing_image
+
+    - uses: actions/upload-artifact@v3
+      with:
+        name: housing_output_${{ github.sha }}
+        path: /github/workspace/shared_folder/
 ```
 
+By now, you should certainly understand this workflow file without much trouble.
+First we checkout the contents of the repository to make the files available to
+the other steps. Then we build the Docker image. For this, I'm doing this the
+"old-school" way by using the actual command that we would use on our local
+machine. Then we run the container. Once again I use the command that I would
+use locally. But you'll notice that I use `/github/workspace/shared_folder` as
+the path to the shared folder. You likely guessed it, `/github/workspace/` is
+the "local" path inside the Github Actions runner. This is equivalent to the
+`/home/` directory on a Linux machine.
+
+The final action, `actions/upload-artifact@v3` is used to upload the contents of
+the shared folder and name them `housing_output_${{ github.sha }}`, where `${{
+github.sha }}` will get replaced by the hash from the commit that triggered the
+action. This will be a zip file that you can then download. But download from
+where?
+
+Simply click on the "Actions" tab on the Github repository, and then click on the 
+run that you want the artifact from (pipeline outputs are called artifacts):
+
+<figure>
+    <img src="images/ga_artifacts.png"
+         alt="Artifacts (pipeline outputs) can be found by going into a run's details."></img>
+    <figcaption>Artifacts (pipeline outputs) can be found by going into a run's details.</figcaption>
+</figure>
+
+::: {.content-visible when-format="pdf"}
+```{r, echo = F}
+#| fig-cap: "Artifacts (pipeline outputs) can be found by going into a run's details."
+knitr::include_graphics("images/ga_artifacts.png")
+```
+:::
+
+And that's it! You could tweak the workflow file to instead push the files to a
+new branch in the repository, like the workflow file that
+`tarets::tar_github_actions()` generates. But I think that this solution is
+easier to use, and also, if you need to download the artifact from a previous
+run, it's all right there. Simply select a previous run and download the
+artifact. If instead you push the outputs to a new branch, you'd need to revert
+to that commit to get past outputs.
 
 ## Conclusion
