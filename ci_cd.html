@@ -232,13 +232,10 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#cicd-quickstart" id="toc-cicd-quickstart" class="nav-link active" data-scroll-target="#cicd-quickstart"><span class="toc-section-number">15.1</span>  CI/CD quickstart</a>
-  <ul class="collapse">
-  <li><a href="#actions-for-r-users" id="toc-actions-for-r-users" class="nav-link" data-scroll-target="#actions-for-r-users"><span class="toc-section-number">15.1.1</span>  Actions for R users</a></li>
-  </ul></li>
+  <li><a href="#cicd-quickstart-for-r-programmers-and-others" id="toc-cicd-quickstart-for-r-programmers-and-others" class="nav-link active" data-scroll-target="#cicd-quickstart-for-r-programmers-and-others"><span class="toc-section-number">15.1</span>  CI/CD quickstart for R programmers (and others)</a></li>
   <li><a href="#running-a-rap-using-github-actions" id="toc-running-a-rap-using-github-actions" class="nav-link" data-scroll-target="#running-a-rap-using-github-actions"><span class="toc-section-number">15.2</span>  Running a RAP using Github Actions</a></li>
-  <li><a href="#build-a-docker-image" id="toc-build-a-docker-image" class="nav-link" data-scroll-target="#build-a-docker-image"><span class="toc-section-number">15.3</span>  Build a Docker image</a></li>
-  <li><a href="#run-a-docker-container" id="toc-run-a-docker-container" class="nav-link" data-scroll-target="#run-a-docker-container"><span class="toc-section-number">15.4</span>  Run a Docker container</a></li>
+  <li><a href="#craft-a-dockerized-development-environment-with-github-actions" id="toc-craft-a-dockerized-development-environment-with-github-actions" class="nav-link" data-scroll-target="#craft-a-dockerized-development-environment-with-github-actions"><span class="toc-section-number">15.3</span>  Craft a dockerized development environment with Github Actions</a></li>
+  <li><a href="#run-a-rap-using-a-dockerized-development-environment-on-github-actions" id="toc-run-a-rap-using-a-dockerized-development-environment-on-github-actions" class="nav-link" data-scroll-target="#run-a-rap-using-a-dockerized-development-environment-on-github-actions"><span class="toc-section-number">15.4</span>  Run a RAP using a dockerized development environment on Github Actions</a></li>
   <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="toc-section-number">15.5</span>  Conclusion</a></li>
   </ul>
 </nav>
@@ -281,8 +278,8 @@ ul.task-list li input[type="checkbox"] {
 <li>run a Docker container that runs a RAP and builds some output that we can then download from Github.</li>
 </ul>
 <p>Finally, what does <em>integration</em> and <em>deployment or delivery</em> even mean? Continuous integration means that that changes get merged to the master or main branch continuously. Remember Trunk-based development? In TBD, the goal is achieving continuous integration, and Gitops is one efficient way of doing so. Now, what’s the difference between deployment or delivery? Both obviously mean that we’re shipping a product. The difference is only in how the project is managed. If the code gets pushed immediately to production, then we speak of deployment. If instead the code gets pushed to a test server, and final deployment to production needs to be approved by a manager, then it’s delivery. For our purposes, this distinction doesn’t really matter.</p>
-<section id="cicd-quickstart" class="level2" data-number="15.1">
-<h2 data-number="15.1" class="anchored" data-anchor-id="cicd-quickstart"><span class="header-section-number">15.1</span> CI/CD quickstart</h2>
+<section id="cicd-quickstart-for-r-programmers-and-others" class="level2" data-number="15.1">
+<h2 data-number="15.1" class="anchored" data-anchor-id="cicd-quickstart-for-r-programmers-and-others"><span class="header-section-number">15.1</span> CI/CD quickstart for R programmers (and others)</h2>
 <p>Before defining an “Hello World” pipeline that gets exectude in the cloud, I need to define some terms. A workflow that runs on Github Actions is defined as a Yaml file, and this file contains a succession of “actions”, and each action performs a specific task. Here is the simplest Github Actions workflow file that you could write (source: <a href="https://gist.github.com/weibeld/f136048d0a82aacc063f42e684e3c494">link</a><a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>):</p>
 <pre><code>name: hello-world
 on: push
@@ -308,9 +305,7 @@ Congrats, that’s your first GA workflow.
 </figcaption>
 </figure>
 <p>To help you define complex workflows, you can use pre-defined actions that you can choose from to perform a series of common tasks. You can find them in the <a href="https://github.com/marketplace">Github Actions Marketplace</a><a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a>.</p>
-<p>We are not going to use any actions from the Github Actions Marketplace just yet though, but instead, we will be looking at a repository containing actions specifically made for R users.</p>
-<section id="actions-for-r-users" class="level3" data-number="15.1.1">
-<h3 data-number="15.1.1" class="anchored" data-anchor-id="actions-for-r-users"><span class="header-section-number">15.1.1</span> Actions for R users</h3>
+<p>We are not going to use any actions from the Github Actions Marketplace just yet though, but instead, we will be looking at a repository containing actions specifically made for R users (if you’re using another programming language, it is quite likely that you might find a repository of actions for that programming language).</p>
 <p><a href="https://github.com/r-lib/actions">This repository</a><a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a> contains many actions for R users. For example, let’s say that you want to install R and run some code using Github Actions. Simply take a look at the <a href="https://github.com/r-lib/actions/tree/v2/setup-r">setup-r</a><a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a> and and see how it’s used. Let me edit my <code>hello_world.yml</code> from before, and add one step that downloads R and prints <code>"Hello from R!"</code> using R:</p>
 <pre><code>name: hello-from-R
 on: push
@@ -358,7 +353,6 @@ jobs:
         uses: r-lib/actions/setup-renv@v2</code></pre>
 <p>I think you’re starting to see where this is going. This workflow runs on Ubuntu 22.04, installs R version 4.2.2 and installs all the packages defined in the <code>renv.lock</code> file living in our repository (and if you don’t have an <code>renv.lock</code> file, only <code>{renv}</code> will get installed). So to have our RAP running in the cloud, we would simply need to add the other required files and finish writing the workflow. One note of warning though: if you’re running pipelines defined like the above, each time you push, every step will run from scratch (apart from package installation using <code>r-lib/actions/setup-renv@v2</code> because packages will be cached for future runs of the workflow).</p>
 </section>
-</section>
 <section id="running-a-rap-using-github-actions" class="level2" data-number="15.2">
 <h2 data-number="15.2" class="anchored" data-anchor-id="running-a-rap-using-github-actions"><span class="header-section-number">15.2</span> Running a RAP using Github Actions</h2>
 <p>Because running <code>{targets}</code> pipelines on Github Actions is a common task, there is of course a way to do it very easily, without the need to write our own workflow file. Simply go to the folder that contains your pipeline (which, I hope, is versioned using Git, right?), open an R session and run <code>tarets::tar_github_actions()</code>. This will automatically create a folder called <code>.github/</code> in the root of your pipeline’s folder, with inside a <code>workflows/</code> folder, and inside a <code>targets.yaml</code> workflow file. This file is ready to use, but you may adapt it to your needs. For example, this workflow file runs on <code>ubuntu-latest</code> and installs the latest version of R. You may want to change the version of Ubuntu to <code>ubuntu-22.04</code> (this way, Ubuntu 22.04 will keep getting used even when the next LTS, 24.04, will be released) and install R version 4.2.2 (or whichever version you used for your pipeline). Also, don’t forget to install the Ubuntu dependencies under the “Install Linux System dependencies” step. There’s already some dependencies there, but you should add the others that we’ve listed in the Dockerfile (the syntax is slightly different from the Dockerfile, so pay attention to it). This workflow file also runs some other useful actions, like caching packages, so they don’t need to get re-downloaded each time you push a change to the repository!</p>
@@ -371,9 +365,9 @@ jobs:
 </ul>
 <p>So you need to think about what it is you really need. Does you pipeline run relatively quickly, and you don’t need to keep it running forever on the same operating system? Then Github Actions is for you. Or perhaps you are writing a book using Rmarkdown, or Quarto and don’t want to bother building it and deploying it manually? Then Github Actions is for you as well (and take a look at this book’s workflow file <a href="https://github.com/b-rodrigues/rap4all/blob/master/.github/workflows/quarto-publish.yml">here</a> for an example of exactly this). But if you are working on a pipeline that may take several hours to run, and you want it to stay reproducible for a very long time, then using Docker might be a better option. Thankfully, you can also use Github Actions to build Docker images and upload them to Docker Hub. You can even then run a Docker container that runs your RAP (but here again, if your pipeline takes several hours to run, you may not want to do that).</p>
 </section>
-<section id="build-a-docker-image" class="level2" data-number="15.3">
-<h2 data-number="15.3" class="anchored" data-anchor-id="build-a-docker-image"><span class="header-section-number">15.3</span> Build a Docker image</h2>
-<p>I’m going to describe the following <a href="https://github.com/b-rodrigues/ga_demo/tree/main">repository</a>. This repository contains a Dockerfile, and a <code>.github/workflows/</code> folder with a Github Actions workflow file. Each time I push any change to any file from this repository, a new Docker image gets built automatically and pushed to Docker Hub. I will now teach you how to do this.</p>
+<section id="craft-a-dockerized-development-environment-with-github-actions" class="level2" data-number="15.3">
+<h2 data-number="15.3" class="anchored" data-anchor-id="craft-a-dockerized-development-environment-with-github-actions"><span class="header-section-number">15.3</span> Craft a dockerized development environment with Github Actions</h2>
+<p>I’m going to describe the following <a href="https://github.com/b-rodrigues/ga_demo/tree/main">repository</a><a href="#fn9" class="footnote-ref" id="fnref9" role="doc-noteref"><sup>9</sup></a>. This repository contains a Dockerfile, and a <code>.github/workflows/</code> folder with a Github Actions workflow file. Each time I push any change to any file from this repository, a new Docker image gets built automatically and pushed to Docker Hub. I will now teach you how to do this.</p>
 <p>As stated before, the advantage of using Docker images for your RAPs instead of simply running them directly inside Github Actions, is that you don’t rely on Github to have the base image (in our example, <code>ubuntu-22.04</code>), forever available, which they won’t.</p>
 <p>The idea is the same as before: work on the code of your project, define a Dockerfile and get an updated image each time you push your changes to the repository.</p>
 <p>Let’s start with the Github Actions workflow file that we need. Here it is:</p>
@@ -450,8 +444,8 @@ This is the image with the correct R version.
 </figcaption>
 </figure>
 </section>
-<section id="run-a-docker-container" class="level2" data-number="15.4">
-<h2 data-number="15.4" class="anchored" data-anchor-id="run-a-docker-container"><span class="header-section-number">15.4</span> Run a Docker container</h2>
+<section id="run-a-rap-using-a-dockerized-development-environment-on-github-actions" class="level2" data-number="15.4">
+<h2 data-number="15.4" class="anchored" data-anchor-id="run-a-rap-using-a-dockerized-development-environment-on-github-actions"><span class="header-section-number">15.4</span> Run a RAP using a dockerized development environment on Github Actions</h2>
 </section>
 <section id="conclusion" class="level2" data-number="15.5">
 <h2 data-number="15.5" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">15.5</span> Conclusion</h2>
@@ -469,6 +463,7 @@ This is the image with the correct R version.
 <li id="fn6"><p>https://github.com/r-lib/actions<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn7"><p>https://github.com/r-lib/actions/tree/v2/setup-r<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn8"><p>https://github.com/actions/checkout<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn9"><p>https://github.com/b-rodrigues/ga_demo/tree/main<a href="#fnref9" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 
