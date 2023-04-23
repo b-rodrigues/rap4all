@@ -77,7 +77,7 @@ deployment. If instead the code gets pushed to a test server, and final
 deployment to production needs to be approved by a manager, then it's delivery.
 For our purposes, this distinction doesn't really matter.
 
-## CI/CD quickstart
+## CI/CD quickstart for R programmers (and others)
 
 Before defining an "Hello World" pipeline that gets exectude in the cloud, I
 need to define some terms. A workflow that runs on Github Actions is defined as
@@ -146,9 +146,9 @@ Marketplace](https://github.com/marketplace)^[https://github.com/marketplace].
 
 We are not going to use any actions from the Github Actions Marketplace just yet
 though, but instead, we will be looking at a repository containing actions
-specifically made for R users.
-
-### Actions for R users
+specifically made for R users (if you're using another programming language, it
+is quite likely that you might find a repository of actions for that programming
+language).
 
 [This repository](https://github.com/r-lib/actions)^[https://github.com/r-lib/actions]
 contains many actions for R users. For example, let’s say that you want to install R
@@ -308,14 +308,14 @@ images and upload them to Docker Hub. You can even then run a Docker container
 that runs your RAP (but here again, if your pipeline takes several hours to run,
 you may not want to do that).
 
-## Build a Docker image
+## Craft a dockerized development environment with Github Actions
 
 I'm going to describe the following
-[repository](https://github.com/b-rodrigues/ga_demo/tree/main). This repository
-contains a Dockerfile, and a `.github/workflows/` folder with a Github Actions
-workflow file. Each time I push any change to any file from this repository, a
-new Docker image gets built automatically and pushed to Docker Hub. I will
-now teach you how to do this.
+[repository](https://github.com/b-rodrigues/ga_demo/tree/main)^[https://github.com/b-rodrigues/ga_demo/tree/main].
+This repository contains a Dockerfile, and a `.github/workflows/` folder with a
+Github Actions workflow file. Each time I push any change to any file from this
+repository, a new Docker image gets built automatically and pushed to Docker
+Hub. I will now teach you how to do this.
 
 As stated before, the advantage of using Docker images for your RAPs instead of
 simply running them directly inside Github Actions, is that you don't rely on
@@ -510,8 +510,6 @@ knitr::include_graphics("images/docker_hub_image.png")
 ```
 :::
 
-
-
-## Run a Docker container
+## Run a RAP using a dockerized development environment on Github Actions
 
 ## Conclusion
