@@ -20,7 +20,8 @@ running containers, writing the same commands over and over again. It would be
 great if instead we didn’t need to do it. This is what a CI/CD platform
 essentially allows you to do. The idea is that building, running and, if
 applicable, deploying are also tasks that can be automated, so why not automate
-them and only take care of writing code?
+them and only take care of writing code? And the size of your team grows, the
+need to automate these tasks grows as well.
 
 This chapter can be seen as a small introduction to DevOps for data science. 
 
@@ -310,17 +311,23 @@ you may not want to do that).
 
 ## Craft a dockerized development environment with Github Actions
 
+This section and the next are going to mirror the sections on dockerizing
+projects and dockerizing development environments from the previous chapter. The
+only difference is that all the heavy lifting will happen on Github Actions,
+instead of our own computer.
+
 I'm going to describe the following
 [repository](https://github.com/b-rodrigues/ga_demo/tree/main)^[https://github.com/b-rodrigues/ga_demo/tree/main].
 This repository contains a Dockerfile, and a `.github/workflows/` folder with a
 Github Actions workflow file. Each time I push any change to any file from this
 repository, a new Docker image gets built automatically and pushed to Docker
-Hub. I will now teach you how to do this.
+Hub. The image that gets built defines a development environment that we will
+then use for our RAPs.
 
 As stated before, the advantage of using Docker images for your RAPs instead of
-simply running them directly inside Github Actions, is that you don't rely on
-Github to have the base image (in our example, `ubuntu-22.04`), forever
-available, which they won't.
+simply running them directly inside Github Actions (as in the previous section),
+is that you don't rely on Github to have the base image (in our example,
+`ubuntu-22.04`), forever available, which they won't.
 
 The idea is the same as before: work on the code of your project, define a
 Dockerfile and get an updated image each time you push your changes to the
@@ -511,5 +518,55 @@ knitr::include_graphics("images/docker_hub_image.png")
 :::
 
 ## Run a RAP using a dockerized development environment on Github Actions
+
+Now that we have a dockerized development environment that gets built by pushing
+changes to a Github repo, it is now time to use it for our RAPs. As I wrote in
+the beginning, this will mirror the section on running a RAP that uses a
+dockerized environment, so we can start from that repository.
+[This](https://github.com/rap4all/housing/tree/docker)^[https://github.com/rap4all/housing/tree/docker]
+was the repository that we used at the time. You can create a new repository
+with the same content (but you can remove the `.gitignore` file, it won't be
+needed here). [This is what my
+repository](https://github.com/b-rodrigues/ga_demo_rap)^[https://github.com/b-rodrigues/ga_demo_rap]
+looks like. The only difference with the first repository is the Dockerfile and the 
+Github Actions workflow file that is inside `.github/workflows`. Let's take a look at the 
+Dockerfile first:
+
+
+```
+FROM brodriguesco/r_4.2.2:main-b1950d55ccbd8009de4ee2006a097c3e7ef1c529
+
+RUN mkdir /home/housing
+
+RUN mkdir /home/housing/pipeline_output
+
+RUN mkdir /home/housing/shared_folder
+
+COPY renv.lock /home/housing/renv.lock
+
+COPY functions /home/housing/functions
+
+COPY analyse_data.Rmd /home/housing/analyse_data.Rmd
+
+COPY _targets.R /home/housing/_targets.R
+
+RUN R -e "setwd('/home/housing');renv::init();renv::restore()"
+
+RUN cd /home/housing && R -e "targets::tar_make()"
+
+CMD mv /home/housing/pipeline_output/* /home/housing/shared_folder/
+```
+
+It is almost exactly the same as the one from the dockerized pipeline from the
+previous chapter. The only difference is the very first statement, where we pull
+the base image. Now I'm using the image from the dockerized environment that
+I've built in the previous section. Apart from that, everything's the same.
+
+The magic happens with the workflow file. Here it is:
+
+```
+
+```
+
 
 ## Conclusion
