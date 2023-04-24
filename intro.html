@@ -390,12 +390,14 @@ div.csl-indent {
 <p>Is your code open? That’s good. Or is it at least available to other people from your organisation, in a way that they could re-execute it if needed? Good.</p>
 <p>But is it code written in a proprietary program, like STATA, SAS or MATLAB? Then your project is not reproducible. It doesn’t matter if this code is well documented and written and available on a version control system (internally to your company or open to the public). This project is not reproducible. Why?</p>
 <p>Because there is no way to re-execute your code with the exact same version of this proprietary program down the line. As I’m writing these lines, MATLAB, for example, is at version R2022b. And buying an older version is not guaranteed. I’m sure if you contact their sales department they might be able to sell you an older version. Maybe you can even simply redownload older versions that you’ve already bought. But maybe it’s not that simple. Or maybe they won’t offer this option anymore in the future, who knows? In any case, if you google “purchase old version of Matlab” you will see that many researchers and engineers have this need.</p>
+<div>
 <figure class="figure">
 <img src="images/matlab_old_version.png" alt="Wanting to run older versions of analytics software is a recurrent need." class="figure-img">
 <figcaption class="figure-caption">
 Wanting to run older versions of analytics software is a recurrent need.
 </figcaption>
 </figure>
+</div>
 <p>And if you’re running old code written for version, say, R2008a, there’s no guarantee that it will produce the exact same results on version 2022b. And let’s not even mention the toolboxes (if you’re not familiar with MATLAB’s toolboxes, they’re the equivalent of packages or libraries in other programming languages). These evolve as well, and there’s no guarantee that you can purchase older versions of said toolboxes. And it’s likely that newer versions of toolboxes cannot even run on older versions of Matlab.</p>
 <p>And let me be clear, what I’m describing here with MATLAB could also be said for any other proprietary programs still commonly (unfortunately) used in research and in statistics (like STATA or SAS). And even if some, or even all, of the editors of these proprietary tools provide ways to buy and run older versions of their software, my point is that the fact that you have to rely on them for this is a barrier to reproducibility, and there is no guarantee they will provide the option to purchase older versions forever. Also, who guarantees that they will be around forever? Or, and that’s more likely, that they will keep offering a program that you install on your machine instead of shifting to a subscription based model?</p>
 <p><em>For just $199 a month, you can execute your SAS/STATA/MATLAB scripts on the cloud! Worry about data confidentiality? No worries, data gets encrypted and stored safely on our secure servers! Run your analysis from anywhere and don’t worry about losing your work if your cat knocks over your coffee on your laptop! And if you purchase the pro licence, for an additional $100 a month, you can even execute your code in parallel!</em></p>
@@ -418,12 +420,14 @@ Wanting to run older versions of analytics software is a recurrent need.
 <li>The project needs to be run on an open source operating system (thankfully, we can deal with this without having to install and learn to use a new operating system, thanks to Docker);</li>
 <li>Data and the paper/report need obviously to be accessible as well, if not publicly as is the case for research, then within your company. This means that the concept of “scripts and/or data available upon request” belongs in the trash.</li>
 </ul>
+<div>
 <figure class="figure">
 <img src="images/reasonable_request.png" alt="A real sentence from a real paper published in *THE LANCET Regional Health*. How about *make the data available and I won’t scratch your car*, how’s that for a reasonable request?" class="figure-img">
 <figcaption class="figure-caption">
 A real sentence from a real paper published in <em>THE LANCET Regional Health</em>. How about <em>make the data available and I won’t scratch your car</em>, how’s that for a reasonable request?
 </figcaption>
 </figure>
+</div>
 </section>
 </section>
 <section id="are-there-different-types-of-reproducibility" class="level2" data-number="1.5">
@@ -438,12 +442,14 @@ A real sentence from a real paper published in <em>THE LANCET Regional Health</e
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>                   etc))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>The issue here is that you need to make sure that the right versions of the packages get installed. If your script uses <code>{ggplot2}</code> version 2.2.1, then users should install this version as well, and by running the script above, the latest version of <code>{ggplot2}</code> (as of writing, version 3.4.0) will get installed. Maybe that’s not a problem, but it can be if your script uses a function from version 2.2.1 that is not available anymore in the latest version (or maybe its name got changed, or maybe it was modified somehow and doesn’t provide the exact same result). And the more packages the script uses (and the older it is), the higher the likelihood that some package version will not be compatible. There is also the issue of the R version itself. Generally speaking, recent versions of R seem to not be too bad when it comes to running older code written in R. I know this because in 2022 I’ve ran every example that comes bundled with R since version 0.6.0 on the then current version of R, version 4.2.2. Here is the result of this experiment:</p>
+<div>
 <figure class="figure">
 <img src="images/wontrun.png" alt="Examples from older versions of R run most of the time successfully on the current version of R" class="figure-img">
 <figcaption class="figure-caption">
 Examples from older versions of R run most of the time successfully on the current version of R
 </figcaption>
 </figure>
+</div>
 <p>This graph shows the following: for each version of R, starting with R version 0.6.0 (released in 1997), how well the examples that came with a standard installation of R run on the current version of R (version 4.2.2 as of writing). These are the examples from the default packages like <code>{base}</code>, <code>{stats}</code>, <code>{stats4}</code>, and so on. Turns out that more than 75% of the example code from version 0.6.0 still work on the current version of R. A small fraction output a message (which doesn’t mean the code doesn’t work), some 5% raise a warning, which again doesn’t necessarily mean that the code doesn’t work, and finally around 20% or so errors. As you can see, the closer we get to the current release, the fewer errors get raised (if you want to run the code for yourself, check out this <a href="https://github.com/b-rodrigues/code_longevity">Github repository</a>).</p>
 <p>(But something important should be noted: just because some old piece of code runs without error, doesn’t mean that the result is exactly the same. There might be cases where the same function returns different results on different versions of R.)</p>
 <p>But while this is evidence of R itself being quite stable through time, there are studies that show a less rosy picture. In a recent study (<span class="citation" data-cites="trisovic2022">Trisovic et al. (<a href="references.html#ref-trisovic2022" role="doc-biblioref">2022</a>)</span> <a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>), some researchers tried to rerun up to 9000 R scripts downloaded from the Harvard Dataverse. There were several issues when trying to rerun the scripts, which lead to, and I quote the paper here, “[…] 74% of R files [failing] to complete without error in the initial execution, while 56% failed when code cleaning was applied, showing that many errors can be prevented with good coding practices”.</p>
@@ -458,12 +464,14 @@ Examples from older versions of R run most of the time successfully on the curre
 </ul>
 <p>So by “reproducibility is on a continuum”, what I mean is that you could set up your project in a way that none, one, two, three, four or all of the preceding items are taken into consideration when making your project reproducible.</p>
 <p>This is not a novel, or new idea. <span class="citation" data-cites="peng2011">Peng (<a href="references.html#ref-peng2011" role="doc-biblioref">2011</a>)</span> already discussed this concept but named in the reproducibility spectrum. In part 2 of this book, I will reintroduce the idea and call it the “reproducibility iceberg”.</p>
+<div>
 <figure class="figure">
 <img src="images/repro_spectrum.png" alt="The reproducibility spectrum from Peng’s 2011 paper." class="figure-img">
 <figcaption class="figure-caption">
 The reproducibility spectrum from Peng’s 2011 paper.
 </figcaption>
 </figure>
+</div>
 <p>Let me just finish this introduction by the last item on the previous list: hardware architecture by discussing a fairly recent event in computing. You see, Apple has changed hardware architecture recently, their new computers switched from Intel based hardware to their own proprietary architecture (Apple Silicon) based on the ARM specification. And what does that mean concretely? It means that all the binary packages that were built for Intel based Apple computers cannot work on their new computers. Which means that if you have a recent M1 Macbook and need to install old CRAN packages to rerun a project (and we will learn how to do this later in the book), these need to be compiled to work on M1. You cannot even install older versions of R, unless you also compile those from source! This is because these older versions of R and packages were compiled to run on the previous architecture that Apple used for their computers, and cannot be run on the current architecture. Now I have read about a compatibility layer called Rosetta which enables to run binaries compiled for the Intel architecture on the ARM architecture, and maybe this works well with R and CRAN binaries compiled for Intel architecture. Maybe, I don’t know. But my point is that you never know what might come in the future, and thus needing to be able to compile from source is important, because compiling from source is what requires the least amount of dependencies that are outside of your control. Relying on binaries is not future-proof (and which is again, another reason why open-source tools are a hard requirement for reproducibility).</p>
 <p>And for you Windows users, don’t think that the preceding paragraph does not concern you. I think that it is very likely that Microsoft will push in the future for OEM manufacturers to develop more ARM based computers. There is already an ARM version of Windows after all, and it has been around for quite some time, and I think that Microsoft will not kill that version any time in the future. This is because ARM is much more energy efficient than other architectures, and any manufacturer can build its own ARM cpus by purchasing a license, which can be quite interesting. For example in the case of Apple Silicon cpus, Apple can now get exactly the cpus they want for their machines and make their software work seamlessly with it. I doubt that others will pass the chance to do the same.</p>
 <p>Also, something else that might happen is that we might move towards more and more cloud based computing, but I think that this scenario is less likely than the one from before. But who knows. And in that case it is quite likely that the actual code will be running on Linux servers that will likely be ARM based because of energy costs. Here again, if you want to run your historical code, you’ll have to compile old packages and R versions from source.</p>

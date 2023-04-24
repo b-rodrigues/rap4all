@@ -391,12 +391,14 @@ div.csl-indent {
 <li><code>0-dev_history.Rmd</code> contains lines of code that you typically run when you’re developing a package. For example, a line to initialise Git for the project, a line to add some dependencies, etc, etc. The idea is to <strong>write down everything</strong> that you type in the console in this file. This leaves a trace of what you have been doing, and also acts as a checklist so that you can make sure that you didn’t forget anything.</li>
 </ul>
 <p>Before describing these files in detail, I want to show you this image taken from <code>{fusen}</code>’s <a href="https://thinkr-open.github.io/fusen/">website</a><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>:</p>
+<div>
 <figure class="figure">
 <img src="images/fusen_inflate_functions.png" alt="fusen takes care of the boring stuff for you!" class="figure-img">
 <figcaption class="figure-caption">
 fusen takes care of the boring stuff for you!
 </figcaption>
 </figure>
+</div>
 <p>On the left-hand side of the image, we see the two template <code>.Rmd</code> files from <code>{fusen}</code>. <code>0-dev_history.Rmd</code> contains a chunk called <code>description</code>. This is the main chunk in that file that we need to execute to get started with <code>{fusen}</code>. Running this chunk will create the package’s <code>DESCRIPTION</code> file (don’t worry if you don’t know about this file yet, I will explain). Then, the second file <code>flat_minimal.Rmd</code> (or our very own <code>.Rmd</code> files) contain functions, tests, examples, and everything we need for our analysis. When we <em>inflate</em> the Rmd file, <code>{fusen}</code> places every piece from this <code>.Rmd</code> file in the right place: the functions get copied into the package’s <code>R/</code> folder, tests go into the <code>tests/</code> folder, and so on. <code>{fusen}</code> simply takes care of everything for us!</p>
 <p>But, for <code>{fusen}</code> to be able to work its magic, we do need to prepare our <code>.Rmd</code> file a bit. But don’t worry, it is mostly simply giving adequate names to our code chunks. Let’s take a look at the <code>flat_minimal.Rmd</code> file that was just generated. If you open it in a text editor, you should see that it is a fairly normal <code>.Rmd</code> file. There is a comment telling you to first run the <code>description</code> chunk in the <code>0-dev_history.Rmd</code> file before changing this one. But let’s keep reading <code>flat_minimal.Rmd</code>. What’s important comes next:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a># my_fun</span>
@@ -665,12 +667,14 @@ to your NAMESPACE file.</code></pre>
 <p>This website can then be hosted online if you wish, or it can be shared internally to your organisation, offline, as a means of providing documentation.</p>
 <p>Take a look at the very last section of the <code>0-dev_history.Rmd</code> file, titled “Share the package”. If you execute the lines in that chunk (ideally from a fresh R session), a website will be built automatically. This website will first be in the <code>docs/</code> folder: open the <code>index.html</code> file using a web-browser and you can start navigating the documentation!</p>
 <p>If your package is on Github, you can also host the website for free on Github pages. For this, first make sure that the <code>.gitignore</code> file in the root of your package does not contain the <code>docs/</code> folder. If it does, remove it. Then, commit and push. This will upload the <code>docs/</code> package on Github. Then, go to the repository’s settings, and “Pages” and then choose the branch that contains the <code>docs/</code> folder:</p>
+<div>
 <figure class="figure">
 <img src="images/pkgdown_deploy.png" alt="Choose these options to host your package’s website for free!" class="figure-img">
 <figcaption class="figure-caption">
 Choose these options to host your package’s website for free!
 </figcaption>
 </figure>
+</div>
 <p>As an example, you can visit the website of the package we’ve built together <a href="https://rap4all.github.io/housing/">here</a><a href="#fn11" class="footnote-ref" id="fnref11" role="doc-noteref"><sup>11</sup></a>.</p>
 <p>The package’s <code>README</code> will be shown, if available, on the starting page of the website. So if you want to add a <code>README</code> to your package, go to the <code>0-dev_history.Rmd</code> file and execute the line <code>usethis::use_readme_rmd()</code>, which adds a template <code>README</code> file in the root of your package. Regardless of whether you want to build a website, adding a <code>README</code> to it is always a good idea! You could explain what the main features of the package are, and how to install it, especially if you want your users or future you to install the package at a certain commit, it is quite useful to write it down clearly in the instructions. Something like:</p>
 <div class="sourceCode" id="cb33"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a></span>

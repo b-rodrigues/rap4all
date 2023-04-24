@@ -728,12 +728,14 @@ Actual message: "dataset must be one of `commune_level_data` or `country_level_d
 <div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>covr<span class="sc">::</span><span class="fu">report</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>This should open a tab in your web browser with some statistics. You can click on the individual scripts to see the source code of your functions: each line that is highlighted in green represents a line that is being tested, and lines in red are lines that are not being tested:</p>
+<div>
 <figure class="figure">
 <img src="images/covr.PNG" alt="The output of report() inside a web browser." class="figure-img">
 <figcaption class="figure-caption">
 The output of report() inside a web browser.
 </figcaption>
 </figure>
+</div>
 <p>You could strive to get 100% coverage by painting all the lines green (by writing unit tests that test these lines). But in practice, it is not always so easy to get 100% coverage, so don’t fret if you don’t achieve perfection.</p>
 <p>If you’re working on a server (and thus do not have access to a graphical user interface) you can instead opt for the <code>covr::package_coverage()</code> function which provides you with the following results (inside your console):</p>
 <pre><code>housing Coverage: 73.33%

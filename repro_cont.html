@@ -359,20 +359,24 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Once you’re done, you have this text file, the Dockerfile, with a complete recipe to generate a Docker VM. That VM is called an <em>image</em> (as I said previously it’s technically not a true VM, but let’s not discuss this). So you have a text file, and this file helps you define and generate an image. Here, you should already see a first advantage of using Docker over a more traditional VM solution like Virtualbox: you can very easily write these Dockerfiles and version them. You can easily start off from another Dockerfile from another project and adapt it to your current pipeline. And most importantly, because everything is written down, it’s reproducible (but more on that at the end of this chapter…).</p>
 <p>Ok, so you have this image. This image will be based on some Linux distribution, very often Ubuntu. It comes with a specific version of Ubuntu, and you can add to it a specific version of R. You can also download a specific version of all the packages required for your pipeline. You end up with an environment that is tailor-made for your pipeline. You can then run the pipeline with this Docker image, and <em>always get exactly the same results, ever</em>. This is because, regardless of how, where or when you will run this <em>dockerized</em> pipeline, the same version of R, with the same version of R packages, on the same Linux distribution will be used to reproduce the results of your pipeline. By the way, when you run a Docker image (as in, you’re executing your pipeline inside that container) this now is referred to as a Docker container.</p>
 <p>So: a Dockerfile defines a Docker image, from which you can then run containers. I hope that the pictures below will help. The first picture shows what happens when you run the same pipeline on two different R versions and two different operating systems:</p>
+<div>
 <figure class="figure">
 <img src="images/without_docker.png" alt="Running a pipeline without Docker results (potentially) in different outputs." class="figure-img">
 <figcaption class="figure-caption">
 Running a pipeline without Docker results (potentially) in different outputs.
 </figcaption>
 </figure>
+</div>
 <p>Take a close look at the output, you will notice it’s different!</p>
 <p>Now, you run the same pipeline, which is now <em>dockerized</em>:</p>
+<div>
 <figure class="figure">
 <img src="images/with_docker.png" alt="Running a pipeline with Docker results in the same outputs." class="figure-img">
 <figcaption class="figure-caption">
 Running a pipeline with Docker results in the same outputs.
 </figcaption>
 </figure>
+</div>
 <p>Another way of looking at a Docker image: it’s an immutable sandbox, where the rules of the game are always the same. It doesn’t matter where or when you run this sandbox, the pipeline will always be executed in this same, well-defined space. Because the pipeline runs on the same versions of R (and packages) and on the same operating system defined within the Docker image, our pipeline is now truly reproducible.</p>
 <p>But why Linux though; why isn’t it possible to create Docker images based on Windows or macOS? Remember in the introduction, where I explained what reproducibility is? I wrote:</p>
 <blockquote class="blockquote">
@@ -397,12 +401,14 @@ Running a pipeline with Docker results in the same outputs.
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"dplyr"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>On Windows and macOS, a compiled binary gets downloaded from CRAN and installed on your computer. A “binary” is the compiled source code of the package. Many R packages come with C++ or Fortran code, and this code cannot be used as is by R. So these bits of C++ and Fortran code need to be compiled to be used. Think of it this way: if the source code is the ingredients of a recipe, the compiled binary is the cooked meal. Now imagine that each time you want to eat Bouillabaisse, you have to cook it yourself… or you could get it delivered to your home. You’d probably go for the delivery (especially if it would be free) instead of cooking it each time. But this supposes that there are people out there cooking Bouillabaisse for you. CRAN essentially cooks the package source codes into binaries for Windows and macOS, as shown below:</p>
+<div>
 <figure class="figure">
 <img src="images/tidyverse_packages.png" alt="Download links to pre-compiled tidyverse binaries." class="figure-img">
 <figcaption class="figure-caption">
 Download links to pre-compiled tidyverse binaries.
 </figcaption>
 </figure>
+</div>
 <p>In the image above, you can see links to compiled binaries of the <code>{tidyverse}</code> package for Windows and macOS, but none for any Linux distribution. This is because, as stated in the introduction, there are many, many, many Linux distributions. So at best, CRAN could offer binaries for Ubuntu, but Ubuntu is not the only Linux distribution, and Ubuntu has two releases a year, which means that every CRAN package (that needs compilation) would need to get compiled twice a year. This is a huge undertaking unless CRAN decided to only offer binaries for LTS releases. But that would still be every two years.</p>
 <p>So instead, what happens, is that the burden of compilation is pushed to the user. Every time you type <code>install.packages("package_name")</code>, and if that package requires compilation, that package gets compiled on your machine which not only takes some time, but can also fail. This is because very often, R packages that require compilation need some additional system-level dependencies that need to be installed. For example, here are the Ubuntu dependencies that need to be installed for the installation of the <code>{tidyverse}</code> package to succeed:</p>
 <pre><code>libicu-dev
@@ -515,12 +521,14 @@ RUN uname -a</code></pre>
 <p>As a quick introduction to using Rocker images, let’s grab our pipeline’s <code>renv.lock</code> file which you can download from <a href="https://raw.githubusercontent.com/rap4all/housing/980a1b0cd20c60a85322dbd4c6da45fbfcebd931/renv.lock">here</a><a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a>. This is the latest <code>renv.lock</code> file that we generated for our pipeline, it contains all the needed packages to run our pipeline, including the right versions of the <code>{targets}</code> package and the <code>{housing}</code> package that we developed. An important remark: it doesn’t matter if the <code>renv.lock</code> file contains packages that were released after the 14th of March. Even if the repositories inside the Rocker image that we will be using are set to that date, the lock file also specifies the URL of the right repository to download the packages from. So that URL will be used instead of the one defined for the Rocker image.</p>
 <p>Another useful aspect of the <code>renv.lock</code> file is that it also records the R version that was used to originally develop the pipeline, in this case, R version 4.2.2. So that’s the version we will be using in our Dockerfile. Next, we need to check the version of <code>{renv}</code> that we used to build the <code>renv.lock</code> file. You don’t necessarily need to install the same version, but I recommend you do. For example, as I’m writing these lines, <code>{renv}</code> version 0.17.1 is available, but the <code>renv.lock</code> file was written by <code>{renv}</code> version 0.16.0. So to avoid any compatibility issues, we will also install the exact same version. Thankfully, that is quite easy to do (to check the version of <code>{renv}</code> that was used to write the lock file simply look for the word “renv” in the lock file).</p>
 <p>While <code>{renv}</code> takes care of installing the right R packages, it doesn’t take care of installing the right system-level dependencies. So that’s why we need to install these system-level dependencies ourselves. I will give you a list of system-level dependencies that you can install to avoid any issues below, but to I will also explain to you how I was able to come up with this list. It is quite easy thanks to Posit and their PPPM. For example, <a href="https://packagemanager.rstudio.com/client/#/repos/2/packages/tidyverse">here</a><a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a> is the summary page for the <code>{tidyverse}</code> package. If you select “Ubuntu 22.04 (Jammy)” on the top right, and then scroll down, you will see a list of dependencies that you can simply copy and paste into your Dockerfile:</p>
+<div>
 <figure class="figure">
 <img src="images/tidyverse_jammy_deps.png" alt="System-level dependencies for the {tidyverse} package on Ubuntu." class="figure-img">
 <figcaption class="figure-caption">
 System-level dependencies for the {tidyverse} package on Ubuntu.
 </figcaption>
 </figure>
+</div>
 <p>We will use this list to install the required dependencies for our pipeline.</p>
 <p>Create a new folder and call whatever you want and save the <code>renv.lock</code> file linked above inside of it. Then, create an empty text file and call it Dockerfile. Add the following lines:</p>
 <pre><code>FROM rocker/r-ver:4.2.2

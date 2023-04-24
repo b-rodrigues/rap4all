@@ -619,19 +619,23 @@ UseMethod("summary")
 <section id="the-dependency-graph" class="level2" data-number="14.1">
 <h2 data-number="14.1" class="anchored" data-anchor-id="the-dependency-graph"><span class="header-section-number">14.1</span> The dependency graph</h2>
 <p>As you’ve seen in the previous section (and as I told you in the introduction) <code>{targets}</code> keeps track of changes in files, but also in the functions that you use. Any change in any of these files will result in <code>{targets}</code> identifying which targets are now out-of-date and which should be re-computed (alongside any other target that depends on them). It is possible to visualise this using <code>targets::tar_visnetwork()</code>. This opens an interactive network graph in your web browser that looks like this:</p>
+<div>
 <figure class="figure">
 <img src="images/targets_visnetwork.png" alt="This image opens in your web-browser." class="figure-img">
 <figcaption class="figure-caption">
 This image opens in your web-browser.
 </figcaption>
 </figure>
+</div>
 <p>In the image above, each target has been computed, so they are all up-to-date. If we now change the input data as before, here is what you will see instead:</p>
+<div>
 <figure class="figure">
 <img src="images/targets_visnetwork_outdated.png" alt="Because the input data got changed, we need to run the pipeline again." class="figure-img">
 <figcaption class="figure-caption">
 Because the input data got changed, we need to run the pipeline again.
 </figcaption>
 </figure>
+</div>
 <p>Because all the targets depend on the input data, we need to re-run everything. Let’s run the pipeline again to update all the targets using <code>tar_make()</code>.</p>
 <p>Now let’s add another target to our pipeline, one that does not depend on the input data. Then, we will modify the input data again, and call <code>tar_visnetwork()</code> as well. Change the pipeline like so:</p>
 <div class="cell">
@@ -665,12 +669,14 @@ Because the input data got changed, we need to run the pipeline again.
 <span id="cb26-28"><a href="#cb26-28" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Before running the pipeline, we can call <code>targets::tar_visnetwork()</code> again to see the entire workflow:</p>
+<div>
 <figure class="figure">
 <img src="images/targets_visnetwork_iris.png" alt="We clearly see that the pipeline has two completely independent parts." class="figure-img">
 <figcaption class="figure-caption">
 We clearly see that the pipeline has two completely independent parts.
 </figcaption>
 </figure>
+</div>
 <p>We can see that there are now two independent parts, as well as two unused functions, <code>path_data()</code> and <code>summ()</code> which we could remove.</p>
 <p>Running the pipeline using <code>targets::tar_make()</code> builds everything successfully. Let’s add the following target, just before the very last one:</p>
 <div class="cell">
@@ -683,12 +689,14 @@ We clearly see that the pipeline has two completely independent parts.
 <span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>),</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>This target creates a list with the two summaries that we compute. Call <code>targets::tar_visnetwork()</code> again:</p>
+<div>
 <figure class="figure">
 <img src="images/targets_visnetwork_list_summaries.png" alt="The two separate workflows end up in one output." class="figure-img">
 <figcaption class="figure-caption">
 The two separate workflows end up in one output.
 </figcaption>
 </figure>
+</div>
 <p>Finally, run the pipeline one last time to compute the final output.</p>
 </section>
 <section id="running-the-pipeline-in-parallel" class="level2" data-number="14.2">
@@ -740,12 +748,14 @@ The two separate workflows end up in one output.
 <span id="cb29-35"><a href="#cb29-35" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>here’s what the pipeline looks like before running:</p>
+<div>
 <figure class="figure">
 <img src="images/targets_visnetwork_slow_summary.png" alt="slow_summary() is used instead of summary()." class="figure-img">
 <figcaption class="figure-caption">
 slow_summary() is used instead of summary().
 </figcaption>
 </figure>
+</div>
 <p>(You will also notice that I’ve removed the unneeded functions, <code>path_data()</code> and <code>summ()</code>).</p>
 <p>Running this pipeline sequentially will take about a minute. To re-run the pipeline completely from scratch, call <code>targets::tar_destroy()</code>. This will make all the targets outdated. Then, run the pipeline from scratch with <code>targets::tar_make()</code>:</p>
 <div class="cell">
@@ -938,12 +948,14 @@ targets::tar_make_future(workers = 2)</code></pre>
 <span id="cb37-36"><a href="#cb37-36" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Running this pipeline with <code>targets::tar_make()</code> will now create an <code>.html</code> file that you can open in your web-browser. Even if you want to build another format, I advise you to develop using the <code>.html</code> format. This is because you can open the <code>.html</code> file in the web-browser, and keep working on the source. Each time you run the pipeline after you made some changes to the file, you simply need to refresh the web-browser to see your changes. If instead you compile a Word document, you will need to always close the file, and then re-open it to see your changes, which is quite annoying. (A good second reason to have output in the <code>.html</code> format is that HTML is a text-only format, and thus can be tracked with version control systems covered in <a href="github.html"><span>Chapter&nbsp;5</span></a>. The MS Word format is binary, and tracking it in git is always an undecipherable mess. Keep in mind though that HTML files can get large, and you would want to invoke the special git extension called <a href="https://git-lfs.com/">git LFS</a>.) So if you open the output file, you should be seeing something quite plain looking:</p>
+<div>
 <figure class="figure">
 <img src="images/mtcars_rmd_1.png" alt="The output of our pipeline. Our first data product!" class="figure-img">
 <figcaption class="figure-caption">
 The output of our pipeline. Our first data product!
 </figcaption>
 </figure>
+</div>
 <p>Don’t worry, we will make it look nice, but right at the end. Don’t waste time making things look good too early on. Ideally, try to get the pipeline to run on a simple example, and then keep adding features. Also, try to get <em>as much feedback</em> as possible on the <em>content</em> as <em>early</em> as possible. Let’s now get the <code>ggplot</code> of the data to show in the document as well.</p>
 <p>For this, simply add:</p>
 <div class="sourceCode" id="cb38"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>tar_read(plot_mtcars)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1077,12 +1089,14 @@ owner@localhost ➤ git checkout -b pipeline #create and switch to the new branc
 </div>
 <p>You should at most have three files: <code>README.md</code>, <code>_targets.R</code> and <code>analyse_data.Rmd</code> (unless you started with an empty repo, in which case you don’t have the <code>README.md</code> file). The <code>_targets.R</code> script will contain the required code to perform the computations that we need. Inside <code>analyse_data.Rmd</code>, we will simply load the required, pre-computed targets, and show them in the document.</p>
 <p>First, we need to load the data. The two datasets we use are now part of the package, so we can simply load them using <code>data(commune_level_data)</code> and <code>data(country_level_data)</code>. But remember, <code>{targets}</code> only loves pure functions, and <code>data()</code> is not pure! Let’s see what happens when you call <code>data(mtcars)</code>. If you’re using RStudio, this is really visible: in a fresh session, calling <code>data(mtcars)</code> shows the following in the <code>Environment</code> pane:</p>
+<div>
 <figure class="figure">
 <img src="images/mtcars_promise.png" alt="What’s described as 'mtcars' is not a 'data.frame', yet." class="figure-img">
 <figcaption class="figure-caption">
 What’s described as ‘mtcars’ is not a ‘data.frame’, yet.
 </figcaption>
 </figure>
+</div>
 <p>At this stage, <code>mtcars</code> is only a <code>promise</code>. It’s only if you need to interact with <code>mtcars</code> that the <code>promise</code> becomes a <code>data.frame</code>. So <code>data()</code> returns a promise, does this mean that we can save that into a variable? If you try the following:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">data</span>(mtcars)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>

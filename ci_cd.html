@@ -262,7 +262,7 @@ ul.task-list li input[type="checkbox"] {
 
 <p>As I wrote in the conclusion of the previous chapter, the book could have stopped there. So consider this chapter as a bonus. What I’m going to show here is not the most important aspect of reproducibility, and you could even make the case that is not needed at all. However, I still think that it is worth showing you how to use Github Actions, even if only superficially, and then you decide whether this is a tool that you should add to your toolbox.</p>
 <p>The CI/CD (<em>C</em>ontinuous <em>I</em>ntegration and <em>C</em>ontinuous <em>D</em>eployment or <em>D</em>elivery) platform I’ll be discussing here is Github Actions, which should not surprise you since we’ve been using Github for version control. But maybe you’re wondering what a “CI/CD platform” even is, so I’ll start by explaining what this is in very simple terms.</p>
-<p>Let’s go back to the first idea of this book: Don’t Repeat Yourself. We have written functions and used tools such as <code>{renv}</code> to avoid having to repeat ourselves. And yet, when it comes to using Docker, we need to keep building and running containers, writing the same commands over and over again. It would be great if instead we didn’t need to do it. This is what a CI/CD platform essentially allows you to do. The idea is that building, running and, if applicable, deploying are also tasks that can be automated, so why not automate them and only take care of writing code? And the size of your team grows, the need to automate these tasks grows as well.</p>
+<p>Let’s go back to the first idea of this book: Don’t Repeat Yourself. We have written functions and used tools such as <code>{renv}</code> to avoid having to repeat ourselves. And yet, when it comes to using Docker, we need to keep building and running containers, running <code>docker build</code> and <code>docker run</code> over and over again. It would be great if instead we didn’t need to do it. This is what a CI/CD platform essentially allows you to do. The idea is that building, running and, if applicable, deploying are also tasks that can be automated, so why not automate them and only take care of writing code? And the size of your team grows, the need to automate these tasks grows as well.</p>
 <p>This chapter can be seen as a small introduction to DevOps for data science.</p>
 <p>According to <a href="https://www.atlassian.com/devops">Atlassian</a><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>:</p>
 <blockquote class="blockquote">
@@ -270,14 +270,15 @@ ul.task-list li input[type="checkbox"] {
 </blockquote>
 <p>Most of the tools and practices described in this book would make adopting DevOps in your day to day a breeze. Strictly speaking though, we will be using “GitOps”, because our Github repository will be the center-stage of our project. The Github repository will not only contain the code of our project, but also the definition of the infrastructure the code will run on. This way, our Github repository will be a single source of truth.</p>
 <p>Concretely this means that each time we will push code (or merge a pull request, or perform any other Git-related event) to our Github repository, any arbitrary action gets executed, like building a Docker image. This image can then be pushed to Docker Hub, or a container can be executed. This container in turn can run a pipeline and the output can then be downloaded from Github. All of this happens in the cloud, all you need to do is push changes in the code. As stated in the chapter on Git, Github offers 2000 minutes of computation time a month for CI/CD, which should be really sufficient for a lot of purposes (but of course, if your RAP takes hours to complete, you might want to run it locally).</p>
-<p>Github Actions is very flexible, and you could use it to perform many tasks, not just building Docker images or running containers. For example this book gets built and published online automatically each time I push an update to the <a href="https://github.com/b-rodrigues/rap4all">repository</a><a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>. If you’re developing a package, you could run <code>R CMD check</code> each time you push code to the repository. <code>R CMD check</code> runs many tests, including the package’s unit tests (when using <code>{fusen}</code>, <code>R CMD check</code> is run each time a flat file gets inflated.) and using Github Actions, it’s possible to run <code>R CMD check</code> on Ubuntu (Linux), Windows and even macOS (see <a href="https://docs.github.com/en/actions/using-jobs/using-a-matrix-for-your-jobs">this documentation page</a><a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> if you’re interested).</p>
+<p>Github Actions is very flexible, and you could use it to perform many tasks, not just building Docker images or running containers. For example this book gets built and published online automatically each time I push an update to the <a href="https://github.com/b-rodrigues/rap4all">repository</a><a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> holding the book’s source code. If you’re developing a package, you could run <code>R CMD check</code> each time you push code to the repository. <code>R CMD check</code> runs many tests, including the package’s unit tests (when using <code>{fusen}</code>, <code>R CMD check</code> is run each time a flat file gets inflated.) and using Github Actions, it’s possible to run <code>R CMD check</code> on Ubuntu (Linux), Windows and even macOS (see <a href="https://docs.github.com/en/actions/using-jobs/using-a-matrix-for-your-jobs">this documentation page</a><a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> if you’re interested).</p>
 <p>In this chapter, I’m going to show you how to use Github Actions to:</p>
 <ul>
-<li>run R and some script each time changes get pushed to Github;</li>
-<li>build a Docker image and push it to Docker Hub when pushing changes to its Dockerfile;</li>
+<li>run some simple arbitrary code;</li>
+<li>run a <code>{targets}</code> pipeline without Docker;</li>
+<li>build a Docker image containing a development envirornment and push it to Docker Hub when pushing changes to its Dockerfile on Github;</li>
 <li>run a Docker container that runs a RAP and builds some output that we can then download from Github.</li>
 </ul>
-<p>Finally, what does <em>integration</em> and <em>deployment or delivery</em> even mean? Continuous integration means that that changes get merged to the master or main branch continuously. Remember Trunk-based development? In TBD, the goal is achieving continuous integration, and Gitops is one efficient way of doing so. Now, what’s the difference between deployment or delivery? Both obviously mean that we’re shipping a product. The difference is only in how the project is managed. If the code gets pushed immediately to production, then we speak of deployment. If instead the code gets pushed to a test server, and final deployment to production needs to be approved by a manager, then it’s delivery. For our purposes, this distinction doesn’t really matter.</p>
+<p>Finally, what does <em>integration</em> and <em>deployment or delivery</em> even mean? Continuous integration means that that changes get merged to the master or main branch continuously. Remember Trunk-based development? In TBD, the goal is achieving continuous integration, and Gitops is one efficient way of doing so. Now, what’s the difference between deployment or delivery? Both obviously mean that we’re shipping a product. The difference is only in how the project is managed. If the code gets pushed immediately to production, then we speak of deployment. If instead the code gets pushed to a test server, and final deployment to production needs to be approved by a manager, then it’s delivery. For our purposes, this distinction doesn’t really matter. Think of delivery or deployment simply as “shipping”.</p>
 <section id="cicd-quickstart-for-r-programmers-and-others" class="level2" data-number="15.1">
 <h2 data-number="15.1" class="anchored" data-anchor-id="cicd-quickstart-for-r-programmers-and-others"><span class="header-section-number">15.1</span> CI/CD quickstart for R programmers (and others)</h2>
 <p>Before defining an “Hello World” pipeline that gets exectude in the cloud, I need to define some terms. A workflow that runs on Github Actions is defined as a Yaml file, and this file contains a succession of “actions”, and each action performs a specific task. Here is the simplest Github Actions workflow file that you could write (source: <a href="https://gist.github.com/weibeld/f136048d0a82aacc063f42e684e3c494">link</a><a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>):</p>
@@ -289,21 +290,25 @@ jobs:
     steps:
       - name: my-step
         run: echo "Hello World!"</code></pre>
-<p>This needs to be saved in a <code>hello_world.yml</code> file, and placed inside the <code>.github/workflows/</code> directories in your repository.</p>
+<p>This needs to be saved in a <code>hello_world.yml</code> file, and placed inside the <code>.github/workflows/</code> directories in the Github repository you want this action to run each time something gets pushed to the repo.</p>
 <p>Each time code gets pushed to the repository containing this workflow file, a <em>runner</em> runs the code <code>echo "Hello World!"</code> on the latest version of Ubuntu. A workflow file is thus defined as a series of steps (that can either run code, or an action) that get executed on a so-called runner (in essence, a container). This workflow gets executed when a specific event occurs, in the example above that event is pushing to the repo. To see the output of the workflow, click on “Actions” on your Github repository:</p>
+<div>
 <figure class="figure">
 <img src="images/ga_actions.png" alt="Click on 'Actions' to monitor your workflows." class="figure-img">
 <figcaption class="figure-caption">
 Click on ‘Actions’ to monitor your workflows.
 </figcaption>
 </figure>
+</div>
 <p>You should see a list of workflow runs, each corresponding to a commit. Click on the latest one and then click on the job named <code>my-job</code>. If your workflow has multiple jobs, they’ll all be listed here. Once you click on the job, you should see a list of steps. The step that interested us here is <code>my-step</code> which should simply print “Hello World!”. Click on it to see the output:</p>
+<div>
 <figure class="figure">
 <img src="images/ga_hello-world.png" alt="Congrats, that's your first GA workflow." class="figure-img">
 <figcaption class="figure-caption">
 Congrats, that’s your first GA workflow.
 </figcaption>
 </figure>
+</div>
 <p>To help you define complex workflows, you can use pre-defined actions that you can choose from to perform a series of common tasks. You can find them in the <a href="https://github.com/marketplace">Github Actions Marketplace</a><a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a>.</p>
 <p>We are not going to use any actions from the Github Actions Marketplace just yet though, but instead, we will be looking at a repository containing actions specifically made for R users (if you’re using another programming language, it is quite likely that you might find a repository of actions for that programming language).</p>
 <p><a href="https://github.com/r-lib/actions">This repository</a><a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a> contains many actions for R users. For example, let’s say that you want to install R and run some code using Github Actions. Simply take a look at the <a href="https://github.com/r-lib/actions/tree/v2/setup-r">setup-r</a><a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a> and and see how it’s used. Let me edit my <code>hello_world.yml</code> from before, and add one step that downloads R and prints <code>"Hello from R!"</code> using R:</p>
@@ -327,12 +332,14 @@ jobs:
       - name: hello-r
         run: Rscript -e 'print("Hello from R!")'</code></pre>
 <p>So now my job performs two tasks, one that prints <code>"Hello from Bash!"</code> and another that prints <code>"Hello from R!"</code>. There are several steps involved, the second step, called <code>checkout-repo</code> runs the action <code>actions/checkout@v3</code> and the third step, called <code>install-r</code> uses the action <code>r-lib/actions/setup-r@v2</code>. The first action, <code>actions/checkout@v3</code> is an action that you will see on almost any Github Actions workflow file, even though it is likely superfluous in this case. You can read about it <a href="https://github.com/actions/checkout">here</a><a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a> and it essentially makes the files inside the repository available to the runner. Sometimes I think that it would have made more sense to call this action <code>clone</code>, like the <code>git clone</code> command. But I’m sure there’s a very good reason that this is not the case. The next action is <code>setup-r@v2</code> which downloads and installs, in our example here, R version 3.5.3. The final step then runs the command <code>Rscript -e 'print("Hello from R!")'</code>. If you check out the “Actions” tab on Github, you should now see this:</p>
+<div>
 <figure class="figure">
 <img src="images/ga_hello-from-r.png" alt="This time it's R that's waving hello." class="figure-img">
 <figcaption class="figure-caption">
 This time it’s R that’s waving hello.
 </figcaption>
 </figure>
+</div>
 <p>We could have installed any other version of R by the way. We can keep adding steps, for example let’s add one to install <code>{renv}</code> and install packages from an <code>renv.lock</code> file (the file needs to be in our repository, and becomes available to the workflow thanks to <code>actions/checkout@v3</code>):</p>
 <pre><code>name: my-pipeline
 on: push
@@ -401,49 +408,61 @@ jobs:
 <p>I believe that this file is the simplest one you could have for this. Let’s study it in detail.</p>
 <p>The start of the file is pretty start: we give the workflow a new, and state that it should run on <code>ubuntu-latest</code> whenever anything gets pushed to either <code>main</code> or <code>master</code>. We define an environment variable called <code>r_4.2.2</code>. This is the name of the image that we are going to build. We will build an image that comes with R 4.2.2 pre-installed as well as many required Ubuntu packages; it’s the same image as we built in the previous chapter on top of which we will then build RAPs. This image is based on the one from the Rocker project. We will take a look at the Dockerfile afterwards. Then, the action <code>docker/setup-buildx-action@v2</code> simply sets up everything for <code>buildx</code> to run smoothly (<code>buildx</code> will build the Docker image using the <code>docker buildx</code> command an alternative to <code>docker build</code>). Honestly, I don’t even know exactly what it sets up. I guess it may at least checkout the repository to make the files available to the next actions and maybe set some other variables for <code>docker buildx</code>.</p>
 <p>Then we use the <code>docker/login-action@v2</code> to login from Github Actions to Docker Hub. Essentially, we need to be able to tell our Github Actions runner how to login to Docker Hub, and of course we want to do so in a secure manner (and it must run non-interactively). To login to Docker Hub from Github Actions, you need first to create an access token from your Docker Hub account. Login to your Docker Hub account, got to your account settings and then to the “Security” tab:</p>
+<div>
 <figure class="figure">
 <img src="images/docker_hub_token.png" alt="Create your access token." class="figure-img">
 <figcaption class="figure-caption">
 Create your access token.
 </figcaption>
 </figure>
+</div>
 <p>Name it <code>github_actions</code> for example, and set its permissions to “Read, Write, Delete”. On the next window that pops up, make sure to save your access token:</p>
+<div>
 <figure class="figure">
 <img src="images/docker_hub_copy_token.png" alt="Make sure to write it down!" class="figure-img">
 <figcaption class="figure-caption">
 Make sure to write it down!
 </figcaption>
 </figure>
+</div>
 <p>You then need to go to the settings area of the repository. Under “Security”, “Secrets and variables” and finally “Actions” you can create a secret called <code>DOCKERHUB_TOKEN</code> and copy the value of the token in the free text area:</p>
+<div>
 <figure class="figure">
 <img src="images/docker_hub_token_ga.png" alt="Copy the token in your repo's secrets." class="figure-img">
 <figcaption class="figure-caption">
 Copy the token in your repo’s secrets.
 </figcaption>
 </figure>
+</div>
 <p>Create a second secret with your Docker Hub username called <code>DOCKERHUB_USERNAME</code>. These can now be used in the workflow file using so-called <em>contexts</em>. Your Docker Hub username will get replaced wherever you write <code>${{ secrets.DOCKERHUB_USERNAME }}</code> in the workflow file, same for your Docker Hub token with <code>${{ secrets.DOCKERHUB_TOKEN }}</code>.</p>
 <p>Finally, we build and push the image to Docker Hub. This is done using one single action called <code>docker/build-push-action@v4</code>. We use the <code>tags</code> option to tag our image. The tag needs to start with your username, followed by a <code>/</code>, then the image name, and then a version, so something like <code>bob/r_4.2.2:latest</code> where <code>latest</code> would be the latest version of the image that is available. Getting <code>bob/r_4.2.2</code> is quite easy: simply use your Docker Hub username that you defined as a secret, then literally type <code>/</code> and then use the image name that you’ve defined in the beginning of the workflow file. Careful though: <code>bob/r_4.2.2</code> needs to exist on Docker Hub as well. <code>bob</code> is easy, that your Docker Hub username as already stated, but <code>r_4.2.2</code> is a repository that you need to create on Docker Hub. So both your image name and the repository on Docker Hub will be <code>r_4.2.2</code>. If you don’t create a repository on Docker Hub that is exactly named like that, your image will not get pushed, because Github Actions will not know where to push the image. So if this is not already the case, go back to Docker Hub and create a repository names <code>r_4.2.2</code>. For the version, you can do whatever you want, but I suggest to use the context <code>github.ref_name</code> and <code>github.sha</code>. <code>github.ref_name</code> gives the name of the branch that starts the workflow, and <code>github.sha</code> returns the hash number of the commit that starts the workflow. This way, your image will be named something like <code>bob/r_4.2.2:master-65ai9besta65948</code>. This allows you to see which commit generated which image, which is really useful. We then also set <code>push</code> to <code>true</code>, so that the image gets pushed.</p>
 <p>With this workflow file in hand, I can now build a Docker image and push it to Docker Hub simply by pushing code to my repository. Here are two commits that generated two images:</p>
+<div>
 <figure class="figure">
 <img src="images/ga_dockerfile.png" alt="Two successful runs of Github Actions." class="figure-img">
 <figcaption class="figure-caption">
 Two successful runs of Github Actions.
 </figcaption>
 </figure>
+</div>
 <p>and here are the two corresponding images on Docker Hub:</p>
+<div>
 <figure class="figure">
 <img src="images/ga_dockerhub.png" alt="The corresponding images on Docker Hub." class="figure-img">
 <figcaption class="figure-caption">
 The corresponding images on Docker Hub.
 </figcaption>
 </figure>
+</div>
 <p>I noticed a typo in my Dockerfile: originally, I was basing my image on R version 4.2.1. So I changed this, and pushed. This is the commit that starts with <code>b1950</code>. The image then got built, tagged, and pushed to Docker Hub without any manual intervention on my part. You can see that the tag is of the form <code>repo-hash</code>, in this case <code>main-b1950d</code>. Clicking on this tag on Docker Hub shows you some useful information:</p>
+<div>
 <figure class="figure">
 <img src="images/docker_hub_image.png" alt="This is the image with the correct R version." class="figure-img">
 <figcaption class="figure-caption">
 This is the image with the correct R version.
 </figcaption>
 </figure>
+</div>
 </section>
 <section id="run-a-rap-using-a-dockerized-development-environment-on-github-actions" class="level2" data-number="15.4">
 <h2 data-number="15.4" class="anchored" data-anchor-id="run-a-rap-using-a-dockerized-development-environment-on-github-actions"><span class="header-section-number">15.4</span> Run a RAP using a dockerized development environment on Github Actions</h2>
@@ -501,12 +520,14 @@ jobs:
 <p>By now, you should certainly understand this workflow file without much trouble. First we checkout the contents of the repository to make the files available to the other steps. Then we build the Docker image. For this, I’m doing this the “old-school” way by using the actual command that we would use on our local machine. Then we run the container. Once again I use the command that I would use locally. But you’ll notice that I use <code>/github/workspace/shared_folder</code> as the path to the shared folder. You likely guessed it, <code>/github/workspace/</code> is the “local” path inside the Github Actions runner. This is equivalent to the <code>/home/</code> directory on a Linux machine.</p>
 <p>The final action, <code>actions/upload-artifact@v3</code> is used to upload the contents of the shared folder and name them <code>housing_output_${{ github.sha }}</code>, where <code>${{ github.sha }}</code> will get replaced by the hash from the commit that triggered the action. This will be a zip file that you can then download. But download from where?</p>
 <p>Simply click on the “Actions” tab on the Github repository, and then click on the run that you want the artifact from (pipeline outputs are called artifacts):</p>
+<div>
 <figure class="figure">
 <img src="images/ga_artifacts.png" alt="Artifacts (pipeline outputs) can be found by going into a run's details." class="figure-img">
 <figcaption class="figure-caption">
 Artifacts (pipeline outputs) can be found by going into a run’s details.
 </figcaption>
 </figure>
+</div>
 <p>And that’s it! You could tweak the workflow file to instead push the files to a new branch in the repository, like the workflow file that <code>tarets::tar_github_actions()</code> generates. But I think that this solution is easier to use, and also, if you need to download the artifact from a previous run, it’s all right there. Simply select a previous run and download the artifact. If instead you push the outputs to a new branch, you’d need to revert to that commit to get past outputs.</p>
 </section>
 <section id="conclusion" class="level2" data-number="15.5">
