@@ -382,13 +382,13 @@ An Excel file meant for human eyes.
 <li>You don’t see it in the screenshot, but each year is in a separate sheet.</li>
 </ul>
 <p>That being said, this Excel file is still very tame, and going from this Excel to a tidy data frame will not be too difficult. In fact, we suspect that whoever made this Excel file is well aware of the contradicting requirements of human and machine readable formatting of data, and strove to find a compromise. Because more often than not, getting human readable data into a machine readable formatting is a nightmare.</p>
-<p>This is actually the file that we are going to use for our project, so if you want to follow along, you can download it <a href="https://github.com/b-rodrigues/rap4all/raw/master/datasets/vente-maison-2010-2021.xlsx">here</a> (downloaded on January 2023 from the <a href="https://data.public.lu/en/datasets/prix-annonces-des-logements-par-commune/">luxembourguish open data portal</a>). But you don’t need to follow along with code, because I will link the scripts for you to download later.</p>
+<p>This is actually the file that we are going to use for our project, so if you want to follow along, you can download it <a href="https://github.com/b-rodrigues/rap4all/raw/master/datasets/vente-maison-2010-2021.xlsx">here</a><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> (downloaded on January 2023 from the <a href="https://data.public.lu/en/datasets/prix-annonces-des-logements-par-commune/">luxembourguish open data portal</a><a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>). But you don’t need to follow along with code, because I will link the scripts for you to download later.</p>
 <p>Each sheet contains a dataset with the following columns:</p>
 <ul>
-<li>Commune: the commune</li>
-<li>Nombre d’offres: the total number of selling offers</li>
-<li>Prix moyen annoncé en Euros courants: Average selling price in nominal Euros</li>
-<li>Prix moyen annoncé au m2 en Euros courants: Average selling price in square meters in nominal Euros</li>
+<li><em>Commune</em>: the commune</li>
+<li><em>Nombre d’offres</em>: the total number of selling offers</li>
+<li><em>Prix moyen annoncé en Euros courants</em>: Average selling price in nominal Euros</li>
+<li><em>Prix moyen annoncé au m2 en Euros courants</em>: Average selling price in square meters in nominal Euros</li>
 </ul>
 <p>For ease of presentation, we are going to show you each function here separately, but we’ll be putting everything together in a single script once we’re done explaining each step. So first, let’s read in the data. The following lines do just that:</p>
 <div class="cell" data-messages="false">
@@ -661,12 +661,12 @@ Always look at your data.
 <pre><code>character(0)</code></pre>
 </div>
 </div>
-<p>Great! When we compare the communes that are in our data with every commune that has existed since 2010, we don’t have any commune that is unaccounted for. So are we done with cleaning the data? Yes, we can now actually start with analysing the data. Take a look <a href="https://raw.githubusercontent.com/b-rodrigues/rap4all/master/scripts/save_data.R">here</a><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> to see the finalised script. Also read some of the comments the I’ve added. This is a typical R script, and at first glance, one might wonder what is wrong with it. Actually, not much, but the problem if you leave this script as it is, is that it is very likely that we will have problems rerunning it in the future. As it turns out, this script is not reproducible. But we will discuss this in much more detail later on. For now, let’s analyse our cleaned data.</p>
+<p>Great! When we compare the communes that are in our data with every commune that has existed since 2010, we don’t have any commune that is unaccounted for. So are we done with cleaning the data? Yes, we can now actually start with analysing the data. Take a look <a href="https://raw.githubusercontent.com/b-rodrigues/rap4all/master/scripts/save_data.R">here</a><a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> to see the finalised script. Also read some of the comments the I’ve added. This is a typical R script, and at first glance, one might wonder what is wrong with it. Actually, not much, but the problem if you leave this script as it is, is that it is very likely that we will have problems rerunning it in the future. As it turns out, this script is not reproducible. But we will discuss this in much more detail later on. For now, let’s analyse our cleaned data.</p>
 </section>
 <section id="analysing-the-data" class="level2" data-number="3.3">
 <h2 data-number="3.3" class="anchored" data-anchor-id="analysing-the-data"><span class="header-section-number">3.3</span> Analysing the data</h2>
 <p>We are now going to analyse the data. The first thing we are going to do is compute a Laspeyeres price index. This price index allows us to make comparisons through time; for example, the index at year 2012 measures how much more expensive (or cheaper) housing became relative to the base year (2010). However, since we only have one good, this index becomes quite simple to compute: it is nothing but the prices at year <em>t</em> divided by the prices in 2010 (if we had a basket of goods, we would need to use the Laspeyeres index formula to compute the index at all periods).</p>
-<p>For this section, we will perform a rather simple analysis. We will immediately show you the R script: take a look at it <a href="https://raw.githubusercontent.com/b-rodrigues/rap4all/master/scripts/analysis.R">here</a><a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>. For our analysis we selected 5 communes and plotted the evolution of prices compared to the national average.</p>
+<p>For this section, we will perform a rather simple analysis. We will immediately show you the R script: take a look at it <a href="https://raw.githubusercontent.com/b-rodrigues/rap4all/master/scripts/analysis.R">here</a><a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>. For our analysis we selected 5 communes and plotted the evolution of prices compared to the national average.</p>
 <p>This analysis might seem trivially simple, but it contains all the needed ingredients to illustrate everything else that we’re going to teach you in this book.</p>
 <p>Most analyses would stop here: after all, we have what we need; our goal was to get the plots for the 5 communes of Luxemourg, Esch-sur-Alzette, Mamer, Schengen (which gave its name to the <a href="https://en.wikipedia.org/wiki/Schengen_Area">Schengen Area</a>) and Wincrange. However, let’s ask ourselves the following important questions:</p>
 <ul>
@@ -710,8 +710,10 @@ Always look at your data.
 <section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr>
 <ol>
-<li id="fn1"><p>https://is.gd/7PhUjd<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2"><p>https://is.gd/qCJEbi<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn1"><p>https://is.gd/1vvBAc<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>https://data.public.lu/en/datasets/prix-annonces-des-logements-par-commune/<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>https://is.gd/7PhUjd<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>https://is.gd/qCJEbi<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 
