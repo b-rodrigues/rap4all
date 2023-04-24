@@ -85,7 +85,7 @@ targets::tar_script()
 
 this will create a template `_targets.R` file in that directory. This is the
 file in which we will define our pipeline. Open in it in your favourite editor.
-A `_targets.R** pipeline is roughly divided into three parts:
+A `_targets.R` pipeline is roughly divided into three parts:
 
 - first is where packages are loaded and helper functions are defined;
 - second is where pipeline-specific options are defined;
@@ -404,7 +404,13 @@ between these two targets would break. Hence why the first option is preferable.
 Finally, you will have noticed that the last target also has the option `format =
 "file"`. This will be topic of the next section.
 
-## Handling files
+It is worth noting that the `ggplot` system has a "native" plot export function,
+`ggplot2::ggsave()`, which takes the `ggplot` objects as inputs. If the .png image
+is actually needed for your project, you would need to define _two_ targets,
+one for the `ggplot` object in the memory, and the other one for the file 
+on disk.
+
+# Handling files
 
 In this section, we will learn how `{targets}` handles files. First, run the
 following lines in the folder that contains the `_targets.R` script that we’ve
@@ -990,11 +996,18 @@ list(
 Running this pipeline with `targets::tar_make()` will now create an `.html` file
 that you can open in your web-browser. Even if you want to build another format,
 I advise you to develop using the `.html` format. This is because you can open
-the `.html** file in the web-browser, and keep working on the source. Each time
+the `.html` file in the web-browser, and keep working on the source. Each time
 you run the pipeline after you made some changes to the file, you simply need to
 refresh the web-browser to see your changes. If instead you compile a Word
 document, you will need to always close the file, and then re-open it to see
-your changes, which is quite annoying. So if you open the output file, you
+your changes, which is quite annoying. 
+(A good second reason to have output in the `.html` format is that HTML is 
+a text-only format, and thus can be tracked with version control systems covered 
+in @sec-chapter-github. The MS Word format is binary, and tracking it in
+git is always an undecipherable mess. Keep in mind though that HTML files
+can get large, and you would want to invoke the special git extension 
+called [git LFS](https://git-lfs.com/).)
+So if you open the output file, you
 should be seeing something quite plain looking:
 
 <figure>
@@ -1174,7 +1187,7 @@ stuff to it (like changing the theme of the ggplot). Once you’re happy with th
 contents, you can add `output: word_document` to the header of the document
 (just below `date: today` for example) to generate a Word document.
 
-## Rewriting our project as a pipeline and {renv} redux
+## Rewriting our project as a pipeline and {renv} redux {#sec-targets-rewrite}
 
 It is now time to turn our little project into a full-fledged pipeline. For
 this, we’re going back to our project’s folder and specifically to the `fusen`
@@ -1204,7 +1217,7 @@ owner@localhost ➤ rm save_data.Rmd
 ```
 
 Let’s now start an R session in that folder and install our `{housing}` package.
-Wether you followed along and developed the package, or skipped the previous
+Whether you followed along and developed the package, or skipped the previous
 parts and didn’t develop the package by following along, install it from my
 Github repository. This ensures that you have exactly the same version as me. Run
 the following lines (but make sure that you started a fresh R session in the
