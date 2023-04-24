@@ -103,14 +103,16 @@ Before describing these files in detail, I want to show you this image taken
 from `{fusen}`’s
 [website](https://thinkr-open.github.io/fusen/)^[https://is.gd/5pJi2h]:
 
+::: {.content-hidden when-format="pdf"}
 <figure>
     <img src="images/fusen_inflate_functions.png"
          alt="fusen takes care of the boring stuff for you!"></img>
     <figcaption>fusen takes care of the boring stuff for you!</figcaption>
 </figure>
+:::
 
 ::: {.content-visible when-format="pdf"}
-```{r}
+```{r, echo = F}
 #| fig-cap: "fusen takes care of the boring stuff for you!"
 knitr::include_graphics("images/fusen_inflate_functions.png")
 ```
@@ -852,14 +854,16 @@ push. This will upload the `docs/` package on Github. Then, go to the
 repository’s settings, and "Pages" and then choose the branch that contains the
 `docs/` folder:
 
+::: {.content-hidden when-format="pdf"}
 <figure>
     <img src="images/pkgdown_deploy.png"
          alt="Choose these options to host your package’s website for free!"></img>
     <figcaption>Choose these options to host your package’s website for free!</figcaption>
 </figure>
+:::
 
 ::: {.content-visible when-format="pdf"}
-```{r}
+```{r, echo = F}
 #| fig-cap: "Choose these options to host your package’s website for free!"
 knitr::include_graphics("images/pkgdown_deploy.png")
 ```

@@ -13,14 +13,16 @@ But usually, we don't really stop there. We now need to write a report, or maybe
 a Powerpoint presentation. If you're a researcher, you still need to write a
 paper, just getting the results is not enough!
 
+::: {.content-hidden when-format="pdf"}
 <figure>
     <img src="images/report_draft_loop.png"
          alt="The cursed report drafting loop."></img>
     <figcaption>The cursed report drafting loop.</figcaption>
 </figure>
+:::
 
 ::: {.content-visible when-format="pdf"}
-```{r}
+```{r, echo = F}
 #| fig-cap: "The cursed report drafting loop."
 knitr::include_graphics("images/report_draft_loop.png")
 ```
@@ -41,14 +43,16 @@ instead of dealing with this again.
 
 But if we can make the loop look like this instead:
 
+::: {.content-hidden when-format="pdf"}
 <figure>
     <img src="images/md_draft_loop.png"
          alt="The holy report drafting loop."></img>
     <figcaption>The holy report drafting loop.</figcaption>
 </figure>
+:::
 
 ::: {.content-visible when-format="pdf"}
-```{r}
+```{r, echo = F}
 #| fig-cap: "The holy report drafting loop."
 knitr::include_graphics("images/md_draft_loop.png")
 ```
@@ -128,14 +132,16 @@ installation since version 1.5.0, and still works to this day. For example, we
 can test that our Sweave installation works just fine by compiling the example
 above. This is what the final output looks like:
 
+::: {.content-hidden when-format="pdf"}
 <figure>
     <img src="images/hello_sweave.PNG"
          alt="More than 20 years later, the output is still the same."></img>
     <figcaption>More than 20 years later, the output is still the same.</figcaption>
 </figure>
+:::
 
 ::: {.content-visible when-format="pdf"}
-```{r}
+```{r, echo = F}
 #| fig-cap: "More than 20 years later, the output is still the same."
 knitr::include_graphics("images/hello_sweave.PNG")
 ```
@@ -186,14 +192,16 @@ boxplot(Ozone ~ Month, data = airquality)
 
 This is what the output looks like:
 
+::: {.content-hidden when-format="pdf"}
 <figure>
     <img src="images/hello_rmd.PNG"
          alt="It’s very close to the Sweave output."></img>
     <figcaption>It’s very close to the Sweave output.</figcaption>
 </figure>
+:::
 
 ::: {.content-visible when-format="pdf"}
-```{r}
+```{r, echo = F}
 #| fig-cap: "It’s very close to the Sweave output."
 knitr::include_graphics("images/hello_rmd.PNG")
 ```
@@ -260,14 +268,16 @@ types of documents. It is possible to write books, blogs, package documentation
 slides... It is extremely powerful because we can use the same general R
 Markdown knowledge to build many different outputs:
 
+::: {.content-hidden when-format="pdf"}
 <figure>
     <img src="images/rmd_to_many.PNG"
          alt="One format to rule them all."></img>
     <figcaption>One format to rule them all.</figcaption>
 </figure>
+:::
 
 ::: {.content-visible when-format="pdf"}
-```{r}
+```{r, echo = F}
 #| fig-cap: "One format to rule them all."
 knitr::include_graphics("images/rmd_to_many.PNG")
 ```
@@ -447,14 +457,16 @@ rmarkdown::render("path/to/rmd_test.rmd")
 This should create a file called `rmd_test.html`; open it with your web browser
 and you should see the following:
 
+::: {.content-hidden when-format="pdf"}
 <figure>
     <img src="images/rmd_test.PNG"
          alt="It’s very close to the Sweave output."></img>
     <figcaption>It’s very close to the Sweave output.</figcaption>
 </figure>
+:::
 
 ::: {.content-visible when-format="pdf"}
-```{r}
+```{r, echo = F}
 #| fig-cap: "It’s very close to the Sweave output."
 knitr::include_graphics("images/rmd_test.PNG")
 ```
@@ -616,14 +628,16 @@ S(\omega)
 
 The LaTeX code above results in this equation:
 
+::: {.content-hidden when-format="pdf"}
 <figure>
     <img src="images/latex_equation.png"
          alt="A rendered LaTeX equation."></img>
     <figcaption>A rendered LaTeX equation.</figcaption>
 </figure>
+:::
 
 ::: {.content-visible when-format="pdf"}
-```{r}
+```{r, echo = F}
 #| fig-cap: "A rendered LaTeX equation."
 knitr::include_graphics("images/latex_equation.png")
 ```
@@ -927,14 +941,16 @@ flextable(my_table) |>
 
 ```
 
+::: {.content-hidden when-format="pdf"}
 <figure>
     <img src="images/flextable.png"
          alt="The output of the code above."></img>
     <figcaption>The output of the code above.</figcaption>
 </figure>
+:::
 
 ::: {.content-visible when-format="pdf"}
-```{r}
+```{r, echo = F}
 #| fig-cap: "The output of the code above."
 knitr::include_graphics("images/flextable.png")
 ```
@@ -964,14 +980,16 @@ modelsummary(models)
 
 ```
 
+::: {.content-hidden when-format="pdf"}
 <figure>
     <img src="images/modelsummary.png"
          alt="The output of the code above."></img>
     <figcaption>The output of the code above.</figcaption>
 </figure>
+:::
 
 ::: {.content-visible when-format="pdf"}
-```{r}
+```{r, echo = F}
 #| fig-cap: "The output of the code above."
 knitr::include_graphics("images/modelsummary.png")
 ```

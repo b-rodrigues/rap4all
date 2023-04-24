@@ -127,11 +127,13 @@ I hope that the pictures below will help. The first picture shows what happens
 when you run the same pipeline on two different R versions and two different
 operating systems:
 
+::: {.content-hidden when-format="pdf"}
 <figure>
     <img src="images/without_docker.png"
          alt="Running a pipeline without Docker results (potentially) in different outputs."></img>
     <figcaption>Running a pipeline without Docker results (potentially) in different outputs.</figcaption>
 </figure>
+:::
 
 
 ::: {.content-visible when-format="pdf"}
@@ -145,11 +147,13 @@ Take a close look at the output, you will notice it’s different!
 
 Now, you run the same pipeline, which is now *dockerized*:
 
+::: {.content-hidden when-format="pdf"}
 <figure>
     <img src="images/with_docker.png"
          alt="Running a pipeline with Docker results in the same outputs."></img>
     <figcaption>Running a pipeline with Docker results in the same outputs.</figcaption>
 </figure>
+:::
 
 ::: {.content-visible when-format="pdf"}
 ```{r, echo = F}
@@ -280,11 +284,13 @@ instead of cooking it each time. But this supposes that there are people out the
 cooking Bouillabaisse for you. CRAN essentially cooks the package source codes
 into binaries for Windows and macOS, as shown below:
 
+::: {.content-hidden when-format="pdf"}
 <figure>
     <img src="images/tidyverse_packages.png"
          alt="Download links to pre-compiled tidyverse binaries."></img>
     <figcaption>Download links to pre-compiled tidyverse binaries.</figcaption>
 </figure>
+:::
 
 ::: {.content-visible when-format="pdf"}
 ```{r, echo = F}
@@ -669,11 +675,13 @@ is the summary page for the `{tidyverse}` package. If you select "Ubuntu 22.04
 (Jammy)" on the top right, and then scroll down, you will see a list of
 dependencies that you can simply copy and paste into your Dockerfile:
 
+::: {.content-hidden when-format="pdf"}
 <figure>
     <img src="images/tidyverse_jammy_deps.png"
          alt="System-level dependencies for the {tidyverse} package on Ubuntu."></img>
     <figcaption>System-level dependencies for the {tidyverse} package on Ubuntu.</figcaption>
 </figure>
+:::
 
 ::: {.content-visible when-format="pdf"}
 ```{r, echo = F}

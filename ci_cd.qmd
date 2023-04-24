@@ -16,12 +16,12 @@ is in very simple terms.
 Let’s go back to the first idea of this book: Don’t Repeat Yourself. We have
 written functions and used tools such as `{renv}` to avoid having to repeat
 ourselves. And yet, when it comes to using Docker, we need to keep building and
-running containers, writing the same commands over and over again. It would be
-great if instead we didn’t need to do it. This is what a CI/CD platform
-essentially allows you to do. The idea is that building, running and, if
-applicable, deploying are also tasks that can be automated, so why not automate
-them and only take care of writing code? And the size of your team grows, the
-need to automate these tasks grows as well.
+running containers, running `docker build` and `docker run` over and over again.
+It would be great if instead we didn’t need to do it. This is what a CI/CD
+platform essentially allows you to do. The idea is that building, running and,
+if applicable, deploying are also tasks that can be automated, so why not
+automate them and only take care of writing code? And the size of your team
+grows, the need to automate these tasks grows as well.
 
 This chapter can be seen as a small introduction to DevOps for data science. 
 
@@ -52,19 +52,21 @@ course, if your RAP takes hours to complete, you might want to run it locally).
 Github Actions is very flexible, and you could use it to perform many tasks, not
 just building Docker images or running containers. For example this book gets
 built and published online automatically each time I push an update to the
-[repository](https://github.com/b-rodrigues/rap4all)^[https://github.com/b-rodrigues/rap4all].
-If you’re developing a package, you could run `R CMD check` each time you push
-code to the repository. `R CMD check` runs many tests, including the package’s
-unit tests (when using `{fusen}`, `R CMD check` is run each time a flat file
-gets inflated.) and using Github Actions, it’s possible to run `R CMD check` on
-Ubuntu (Linux), Windows and even macOS (see [this documentation
-page](https://docs.github.com/en/actions/using-jobs/using-a-matrix-for-your-jobs)^[https://is.gd/F9AOZI] if 
-you’re interested).
+[repository](https://github.com/b-rodrigues/rap4all)^[https://github.com/b-rodrigues/rap4all]
+holding the book’s source code. If you’re developing a package, you could run `R
+CMD check` each time you push code to the repository. `R CMD check` runs many
+tests, including the package’s unit tests (when using `{fusen}`, `R CMD check`
+is run each time a flat file gets inflated.) and using Github Actions, it’s
+possible to run `R CMD check` on Ubuntu (Linux), Windows and even macOS (see
+[this documentation
+page](https://docs.github.com/en/actions/using-jobs/using-a-matrix-for-your-jobs)^[https://is.gd/F9AOZI]
+if you’re interested).
 
 In this chapter, I’m going to show you how to use Github Actions to:
 
-- run R and some script each time changes get pushed to Github;
-- build a Docker image and push it to Docker Hub when pushing changes to its Dockerfile;
+- run some simple arbitrary code;
+- run a `{targets}` pipeline without Docker;
+- build a Docker image containing a development envirornment and push it to Docker Hub when pushing changes to its Dockerfile on Github;
 - run a Docker container that runs a RAP and builds some output that we can then download from Github.
 
 Finally, what does *integration* and *deployment or delivery* even mean?
@@ -76,7 +78,8 @@ that we're shipping a product. The difference is only in how the project is
 managed. If the code gets pushed immediately to production, then we speak of
 deployment. If instead the code gets pushed to a test server, and final
 deployment to production needs to be approved by a manager, then it's delivery.
-For our purposes, this distinction doesn't really matter.
+For our purposes, this distinction doesn't really matter. Think of delivery or
+deployment simply as "shipping".
 
 ## CI/CD quickstart for R programmers (and others)
 
@@ -98,7 +101,8 @@ jobs:
 ```
 
 This needs to be saved in a `hello_world.yml` file, and placed inside the
-`.github/workflows/` directories in your repository.
+`.github/workflows/` directories in the Github repository you want this 
+action to run each time something gets pushed to the repo.
 
 Each time code gets pushed to the repository containing this workflow file, a
 *runner* runs the code `echo "Hello World!"` on the latest version of Ubuntu. A
@@ -108,11 +112,13 @@ This workflow gets executed when a specific event occurs, in the example above
 that event is pushing to the repo. To see the output of the workflow, click 
 on "Actions" on your Github repository:
 
+::: {.content-hidden when-format="pdf"}
 <figure>
     <img src="images/ga_actions.png"
          alt="Click on 'Actions' to monitor your workflows."></img>
     <figcaption>Click on 'Actions' to monitor your workflows.</figcaption>
 </figure>
+:::
 
 ::: {.content-visible when-format="pdf"}
 ```{r, echo = F}
@@ -127,11 +133,13 @@ has multiple jobs, they'll all be listed here. Once you click on the job, you
 should see a list of steps. The step that interested us here is `my-step`
 which should simply print "Hello World!". Click on it to see the output:
 
+::: {.content-hidden when-format="pdf"}
 <figure>
     <img src="images/ga_hello-world.png"
          alt="Congrats, that's your first GA workflow."></img>
     <figcaption>Congrats, that's your first GA workflow.</figcaption>
 </figure>
+:::
 
 ::: {.content-visible when-format="pdf"}
 ```{r, echo = F}
@@ -196,11 +204,13 @@ installs, in our example here, R version 3.5.3. The final step then runs the
 command `Rscript -e 'print("Hello from R!")'`. If you check out the "Actions"
 tab on Github, you should now see this:
 
+::: {.content-hidden when-format="pdf"}
 <figure>
     <img src="images/ga_hello-from-r.png"
          alt="This time it's R that's waving hello."></img>
     <figcaption>This time it's R that's waving hello.</figcaption>
 </figure>
+:::
 
 ::: {.content-visible when-format="pdf"}
 ```{r, echo = F}
@@ -389,11 +399,13 @@ must run non-interactively). To login to Docker Hub from Github Actions, you
 need first to create an access token from your Docker Hub account. Login to your
 Docker Hub account, got to your account settings and then to the "Security" tab:
 
+::: {.content-hidden when-format="pdf"}
 <figure>
     <img src="images/docker_hub_token.png"
          alt="Create your access token."></img>
     <figcaption>Create your access token.</figcaption>
 </figure>
+:::
 
 ::: {.content-visible when-format="pdf"}
 ```{r, echo = F}
@@ -405,11 +417,13 @@ knitr::include_graphics("images/docker_hub_token.png")
 Name it `github_actions` for example, and set its permissions to "Read, Write,
 Delete". On the next window that pops up, make sure to save your access token:
 
+::: {.content-hidden when-format="pdf"}
 <figure>
     <img src="images/docker_hub_copy_token.png"
          alt="Make sure to write it down!"></img>
     <figcaption>Make sure to write it down!</figcaption>
 </figure>
+:::
 
 ::: {.content-visible when-format="pdf"}
 ```{r, echo = F}
@@ -422,11 +436,13 @@ You then need to go to the settings area of the repository. Under "Security",
 "Secrets and variables" and finally "Actions" you can create a secret called
 `DOCKERHUB_TOKEN` and copy the value of the token in the free text area:
 
+::: {.content-hidden when-format="pdf"}
 <figure>
     <img src="images/docker_hub_token_ga.png"
          alt="Copy the token in your repo's secrets."></img>
     <figcaption>Copy the token in your repo's secrets.</figcaption>
 </figure>
+:::
 
 ::: {.content-visible when-format="pdf"}
 ```{r, echo = F}
@@ -469,11 +485,13 @@ With this workflow file in hand, I can now build a Docker image and push it to D
 Hub simply by pushing code to my repository. Here are two commits that generated two
 images:
 
+::: {.content-hidden when-format="pdf"}
 <figure>
     <img src="images/ga_dockerfile.png"
          alt="Two successful runs of Github Actions."></img>
     <figcaption>Two successful runs of Github Actions.</figcaption>
 </figure>
+:::
 
 ::: {.content-visible when-format="pdf"}
 ```{r, echo = F}
@@ -484,11 +502,13 @@ knitr::include_graphics("images/ga_dockerfile.png")
 
 and here are the two corresponding images on Docker Hub:
 
+::: {.content-hidden when-format="pdf"}
 <figure>
     <img src="images/ga_dockerhub.png"
          alt="The corresponding images on Docker Hub."></img>
     <figcaption>The corresponding images on Docker Hub.</figcaption>
 </figure>
+:::
 
 ::: {.content-visible when-format="pdf"}
 ```{r, echo = F}
@@ -504,11 +524,13 @@ any manual intervention on my part. You can see that the tag is of the form
 `repo-hash`, in this case `main-b1950d`. Clicking on this tag on Docker Hub
 shows you some useful information:
 
+::: {.content-hidden when-format="pdf"}
 <figure>
     <img src="images/docker_hub_image.png"
          alt="This is the image with the correct R version."></img>
     <figcaption>This is the image with the correct R version.</figcaption>
 </figure>
+:::
 
 ::: {.content-visible when-format="pdf"}
 ```{r, echo = F}
@@ -613,11 +635,13 @@ where?
 Simply click on the "Actions" tab on the Github repository, and then click on the 
 run that you want the artifact from (pipeline outputs are called artifacts):
 
+::: {.content-hidden when-format="pdf"}
 <figure>
     <img src="images/ga_artifacts.png"
          alt="Artifacts (pipeline outputs) can be found by going into a run's details."></img>
     <figcaption>Artifacts (pipeline outputs) can be found by going into a run's details.</figcaption>
 </figure>
+:::
 
 ::: {.content-visible when-format="pdf"}
 ```{r, echo = F}
@@ -635,3 +659,5 @@ artifact. If instead you push the outputs to a new branch, you'd need to revert
 to that commit to get past outputs.
 
 ## Conclusion
+
+
