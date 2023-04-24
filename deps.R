@@ -1,6 +1,7 @@
 library(covr)
 library(dplyr)
 library(flextable)
+library(formatR)
 library(fusen)
 library(ggplot2)
 library(janitor)
