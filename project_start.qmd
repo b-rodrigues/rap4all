@@ -169,18 +169,18 @@ formatting is a nightmare.
 
 This is actually the file that we are going to use for our project, so if you
 want to follow along, you can download it
-[here](https://github.com/b-rodrigues/rap4all/raw/master/datasets/vente-maison-2010-2021.xlsx) (downloaded on January 2023 from
-the [luxembourguish open data
-portal](https://data.public.lu/en/datasets/prix-annonces-des-logements-par-commune/)).
+[here](https://github.com/b-rodrigues/rap4all/raw/master/datasets/vente-maison-2010-2021.xlsx)^[https://is.gd/1vvBAc]
+(downloaded on January 2023 from the [luxembourguish open data
+portal](https://data.public.lu/en/datasets/prix-annonces-des-logements-par-commune/)^[https://data.public.lu/en/datasets/prix-annonces-des-logements-par-commune/]).
 But you don’t need to follow along with code, because I will link the scripts
 for you to download later.
 
 Each sheet contains a dataset with the following columns:
 
-- Commune: the commune
-- Nombre d'offres: the total number of selling offers
-- Prix moyen annoncé en Euros courants: Average selling price in nominal Euros
-- Prix moyen annoncé au m2 en Euros courants: Average selling price in square meters in nominal Euros
+- *Commune*: the commune
+- *Nombre d'offres*: the total number of selling offers
+- *Prix moyen annoncé en Euros courants*: Average selling price in nominal Euros
+- *Prix moyen annoncé au m2 en Euros courants*: Average selling price in square meters in nominal Euros
 
 For ease of presentation, we are going to show you each function here
 separately, but we'll be putting everything together in a single script once
@@ -389,8 +389,8 @@ We scrape the table from the Wikipedia page using `{rvest}`.
 then we use `purrr::pluck()` to keep the first table from the website, which is
 what we need (I made the calls to the packages explicit, because you might not
 be familiar with these packages). `janitor::clean_names()` transforms column
-names written for human eyes into machine friendly names (for example `Growth
-rate in %` would be transformed to `growth_rate_in_percent`).
+names written for human eyes into machine friendly names (for example `Growth rate in %` 
+would be transformed to `growth_rate_in_percent`).
 
 Let’s see if we have all the communes in our data:
 
