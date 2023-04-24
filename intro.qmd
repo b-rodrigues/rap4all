@@ -107,7 +107,8 @@ you should have written some functions already, know about loops and have some
 basic knowledge of data structures like lists. While this is not a book on
 visualisation, we will be making some graphs using the `{ggplot2}` package, so
 if you’re familiar with that, that’s good. If not, no worries, visualisation,
-data munging or data analysis is not the point of this book.
+data munging or data analysis is not the point of this book. Chapter 2, *Before
+we start* should help you gauge how easy you will be able to follow this book.
 
 Ideally, you should also not be afraid of not using Graphical User Interfaces
 (GUI). While you can follow along using an IDE like RStudio, we will not be
@@ -125,10 +126,10 @@ somewhere in the loop.
 
 ## What is reproducibility?
 
-A reproducible project means that this project can be rerun by anyone at 0 (or very
-minimal) cost. But there are different levels of reproducibility, and we will discuss
-this in the next section. Let’s discuss some requirements that a project must
-have to be considered a RAP.
+A reproducible project means that this project can be rerun by anyone at 0 (or
+very minimal) cost. But there are different levels of reproducibility, and we
+will discuss this in the next section. Let’s discuss some requirements that a
+project must have to be considered a RAP.
 
 ### Using open-source tools to build a RAP is a hard requirement
 
@@ -217,9 +218,9 @@ This is because the operating system the code runs on can also influence the
 reproducibility of the project. There are some particularities in operating
 systems that may make certain things work differently. Admittedly, this is in
 practice rarely a problem, but [it does
-happen](https://github.com/numpy/numpy/issues/9187), especially if you’re
-working with very high precision floating point arithmetic like you would do 
-in the financial sector.
+happen](https://github.com/numpy/numpy/issues/9187)^[https://github.com/numpy/numpy/issues/9187],
+especially if you’re working with very high precision floating point arithmetic
+like you would do in the financial sector.
 
 Thankfully, there is no need to change operating systems to deal with this
 issue, and we will learn how to use Docker to safeguard against this problem.
