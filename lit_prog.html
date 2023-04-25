@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.475">
+<meta name="generator" content="quarto-1.3.340">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -17,9 +17,10 @@ div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
   width: 0.8em;
-  margin: 0 0.8em 0.2em -1.6em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
@@ -46,48 +47,19 @@ pre.numberSource code > span > a:first-child::before
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
     padding: 0 4px; width: 4em;
-    color: #aaaaaa;
   }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
 div.sourceCode
   {   }
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { color: #008000; } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { color: #008000; font-weight: bold; } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+/* CSS for citations */
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
 }
-.hanging div.csl-entry {
+.hanging-indent div.csl-entry {
   margin-left:2em;
   text-indent:-2em;
 }
@@ -101,8 +73,7 @@ div.csl-right-inline {
 }
 div.csl-indent {
   margin-left: 2em;
-}
-</style>
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -157,11 +128,16 @@ div.csl-indent {
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
-  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
-    <div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Literate programming</span></h1>
-      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
-        <i class="bi bi-chevron-right"></i>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./part1_intro.html">Part 1: Don’t Repeat Yourself</a></li><li class="breadcrumb-item"><a href="./lit_prog.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Literate programming</span></a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
       </button>
     </div>
   </nav>
@@ -169,164 +145,187 @@ div.csl-indent {
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Building reproducible analytical pipelines with R</a> 
         <div class="sidebar-tools-main">
-  <a href="" class="quarto-color-scheme-toggle sidebar-tool" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
 </div>
     </div>
       </div>
-      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="mt-2 flex-shrink-0 align-items-center">
         <div class="sidebar-search">
         <div id="quarto-search" class="" title="Search"></div>
         </div>
-      </div>
+        </div>
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link">Welcome!</a>
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Welcome!</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./preface.html" class="sidebar-item-text sidebar-link">Preface</a>
+  <a href="./preface.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./intro.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></a>
+  <a href="./intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="./part1_intro.html" class="sidebar-item-text sidebar-link">Part 1: Don’t Repeat Yourself</a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+            <a href="./part1_intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Part 1: Don’t Repeat Yourself</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./prerequisites.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Before we start</span></a>
+  <a href="./prerequisites.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Before we start</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./project_start.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Project start</span></a>
+  <a href="./project_start.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Project start</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./git.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Version control</span></a>
+  <a href="./git.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Version control</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./github.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Collaborating with Github</span></a>
+  <a href="./github.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Collaborating with Github</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./fprog.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Functional programming</span></a>
+  <a href="./fprog.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Functional programming</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./lit_prog.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Literate programming</span></a>
+  <a href="./lit_prog.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Literate programming</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./part1_conclusion.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Conclusion of part 1</span></a>
+  <a href="./part1_conclusion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Conclusion of part 1</span></span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="./part2_intro.html" class="sidebar-item-text sidebar-link">Part 2: Write IT down</a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+            <a href="./part2_intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Part 2: Write IT down</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./project_rewrite.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Rewriting our project</span></a>
+  <a href="./project_rewrite.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Rewriting our project</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./repro_intro.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Introduction to reproducibility</span></a>
+  <a href="./repro_intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Introduction to reproducibility</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./packages.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Packaging your code</span></a>
+  <a href="./packages.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Packaging your code</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./testing.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Testing your code</span></a>
+  <a href="./testing.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Testing your code</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./targets.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Build automation</span></a>
+  <a href="./targets.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Build automation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./repro_cont.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Reproducible analytical pipelines with Docker</span></a>
+  <a href="./repro_cont.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Reproducible analytical pipelines with Docker</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ci_cd.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Continuous integration and continuous deployment/delivery</span></a>
+  <a href="./ci_cd.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Continuous integration and continuous deployment/delivery</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./part2_conclusion.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Conclusion of part 2</span></a>
+  <a href="./part2_conclusion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Conclusion of part 2</span></span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./book_conclusion.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Conclusion</span></a>
+  <a href="./book_conclusion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Conclusion</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./references.html" class="sidebar-item-text sidebar-link">References</a>
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
   </div>
 </li>
     </ul>
     </div>
 </nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#a-quick-history-of-literate-programming" id="toc-a-quick-history-of-literate-programming" class="nav-link active" data-scroll-target="#a-quick-history-of-literate-programming"><span class="toc-section-number">7.1</span>  A quick history of literate programming</a></li>
-  <li><a href="#knitr-basics" id="toc-knitr-basics" class="nav-link" data-scroll-target="#knitr-basics"><span class="toc-section-number">7.2</span>  <code>{knitr}</code> basics</a>
+  <li><a href="#a-quick-history-of-literate-programming" id="toc-a-quick-history-of-literate-programming" class="nav-link active" data-scroll-target="#a-quick-history-of-literate-programming"><span class="header-section-number">7.1</span> A quick history of literate programming</a></li>
+  <li><a href="#knitr-basics" id="toc-knitr-basics" class="nav-link" data-scroll-target="#knitr-basics"><span class="header-section-number">7.2</span> <code>{knitr}</code> basics</a>
   <ul class="collapse">
-  <li><a href="#set-up" id="toc-set-up" class="nav-link" data-scroll-target="#set-up"><span class="toc-section-number">7.2.1</span>  Set up</a></li>
-  <li><a href="#markdown-ultrabasics" id="toc-markdown-ultrabasics" class="nav-link" data-scroll-target="#markdown-ultrabasics"><span class="toc-section-number">7.2.2</span>  Markdown ultrabasics</a></li>
+  <li><a href="#set-up" id="toc-set-up" class="nav-link" data-scroll-target="#set-up"><span class="header-section-number">7.2.1</span> Set up</a></li>
+  <li><a href="#markdown-ultrabasics" id="toc-markdown-ultrabasics" class="nav-link" data-scroll-target="#markdown-ultrabasics"><span class="header-section-number">7.2.2</span> Markdown ultrabasics</a></li>
   </ul></li>
-  <li><a href="#keeping-it-dry" id="toc-keeping-it-dry" class="nav-link" data-scroll-target="#keeping-it-dry"><span class="toc-section-number">7.3</span>  Keeping it DRY</a>
+  <li><a href="#keeping-it-dry" id="toc-keeping-it-dry" class="nav-link" data-scroll-target="#keeping-it-dry"><span class="header-section-number">7.3</span> Keeping it DRY</a>
   <ul class="collapse">
-  <li><a href="#generating-r-markdown-code-from-code" id="toc-generating-r-markdown-code-from-code" class="nav-link" data-scroll-target="#generating-r-markdown-code-from-code"><span class="toc-section-number">7.3.1</span>  Generating R Markdown code from code</a></li>
-  <li><a href="#tables-in-r-markdown-documents" id="toc-tables-in-r-markdown-documents" class="nav-link" data-scroll-target="#tables-in-r-markdown-documents"><span class="toc-section-number">7.3.2</span>  Tables in R Markdown documents</a></li>
-  <li><a href="#parametrized-reports" id="toc-parametrized-reports" class="nav-link" data-scroll-target="#parametrized-reports"><span class="toc-section-number">7.3.3</span>  Parametrized reports</a></li>
+  <li><a href="#generating-r-markdown-code-from-code" id="toc-generating-r-markdown-code-from-code" class="nav-link" data-scroll-target="#generating-r-markdown-code-from-code"><span class="header-section-number">7.3.1</span> Generating R Markdown code from code</a></li>
+  <li><a href="#tables-in-r-markdown-documents" id="toc-tables-in-r-markdown-documents" class="nav-link" data-scroll-target="#tables-in-r-markdown-documents"><span class="header-section-number">7.3.2</span> Tables in R Markdown documents</a></li>
+  <li><a href="#parametrized-reports" id="toc-parametrized-reports" class="nav-link" data-scroll-target="#parametrized-reports"><span class="header-section-number">7.3.3</span> Parametrized reports</a></li>
   </ul></li>
-  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="toc-section-number">7.4</span>  Conclusion</a></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">7.4</span> Conclusion</a></li>
   </ul>
 </nav>
     </div>
@@ -335,7 +334,7 @@ div.csl-indent {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Literate programming</span></h1>
+<h1 class="title"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Literate programming</span></h1>
 </div>
 
 
@@ -352,25 +351,21 @@ div.csl-indent {
 
 <p>We now know about version control, how to collaborate using Github.com and functional programming. By only learning about this, we have actually already made some massive steps towards making our projects reproducible. Especially by using Git and Github. Even if you’re using private repos and work in the private sector, by using version control, you ensure that reusing this code for future projects is much easier. Auditing is greatly simplified as well.</p>
 <p>But this book is still far from over. Let’s think about our project up until now. We have downloaded some data, and wrote code to analyse it. Fair enough. But usually, we don’t really stop there. We now need to write a report, or maybe a Powerpoint presentation. If you’re a researcher, you still need to write a paper, just getting the results is not enough!</p>
-<div>
 <figure class="figure">
 <img src="images/report_draft_loop.png" alt="The cursed report drafting loop." class="figure-img">
 <figcaption class="figure-caption">
 The cursed report drafting loop.
 </figcaption>
 </figure>
-</div>
 <p>The problem is that this workflow is very often quite horrible. The picture above illustrates this cursed report drafting loop. Get some results, copy and paste images into Word or Powerpoint, get a change request, or notice a mistake, and start from scratch again. If you’re using LaTeX it’ll be easier for pictures, but you’ll still need to update tables by hand each time you need to touch your analysis code.</p>
 <p>Worse, what if you start with a Word or LaTeX document, but then get asked to make a Powerpoint presentation as well? Then you need to copy and paste everything into Powerpoint as well… and if you get a change request after you’re done and need to start over, you might seriously consider raising goats instead of dealing with this again.</p>
 <p>But if we can make the loop look like this instead:</p>
-<div>
 <figure class="figure">
 <img src="images/md_draft_loop.png" alt="The holy report drafting loop." class="figure-img">
 <figcaption class="figure-caption">
 The holy report drafting loop.
 </figcaption>
 </figure>
-</div>
 <p>Basically, everything from cleaning, analysing and drafting is done in one single step? Well, this is what literate programming enables you to do. And even if you get asked to make a Powerpoint presentation, you can start from the same source code as the original report, and remove everything that you don’t need and compile to a Powerpoint (or Beamer) presentation.</p>
 <section id="a-quick-history-of-literate-programming" class="level2" data-number="7.1">
 <h2 data-number="7.1" class="anchored" data-anchor-id="a-quick-history-of-literate-programming"><span class="header-section-number">7.1</span> A quick history of literate programming</h2>
@@ -402,14 +397,12 @@ boxplot(Ozone ~ Month, data = airquality)
 
 \end{document}</code></pre>
 <p>Even if you’ve never seen a LaTeX source file, you should be able to figure out what’s going on. The first line states what type of document we’re writing. Then comes <code>\begin{document}</code> which tells the compiler where the document starts. Then comes the content. You can see that it’s a mixture of plain English with R code defined inside chunks starting with <code>&lt;&lt;&gt;&gt;=</code> and ending with <code>@</code>. Finally, the documents ends with <code>\end{document}</code>. Getting a human readable PDF from this source is a two-step process: first this source gets converted into a <code>.tex</code> file and then this <code>.tex</code> file into a PDF. Sweave is included with every R installation since version 1.5.0, and still works to this day. For example, we can test that our Sweave installation works just fine by compiling the example above. This is what the final output looks like:</p>
-<div>
 <figure class="figure">
 <img src="images/hello_sweave.PNG" alt="More than 20 years later, the output is still the same." class="figure-img">
 <figcaption class="figure-caption">
 More than 20 years later, the output is still the same.
 </figcaption>
 </figure>
-</div>
 <p>Let us just state that the fact that it is still possible to compile this example more than 20 years later is an incredible testament to how mature and stable this software is (both R, Sweave, and LaTeX). But as impressive as this is, LaTeX has a steep learning curve, and Leisch even advocated the use of the Emacs text editor to edit Sweave files, which also has a very steep learning curve (but this is entirely optional; for example we edited and compiled the example on the Rstudio IDE).</p>
 <p>The next generation of literate programming tools was provided by a package called <code>{knitr}</code> in 2012. From the perspective of the user, the biggest change from Sweave is that <code>{knitr}</code> is able to use many different formats as source files. The one that became very likely the most widely used format is a flavour of the Markdown markup language, R Markdown (Rmd). But this is not the only difference with Sweave:<code>{knitr}</code> can also run code chunks for other languages, such as Python, Perl, Awk, Haskell, bash and more (<span class="citation" data-cites="xie2014">Xie (<a href="references.html#ref-xie2014" role="doc-biblioref">2014</a>)</span>). Since version 1.18, <code>{knitr}</code> uses the <code>{reticulate}</code> package to provide a Python engine for the Rmd format. To illustrate the Rmd format, let’s rewrite the example from Leisch’s Sweave paper into it:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>---</span>
@@ -433,15 +426,13 @@ More than 20 years later, the output is still the same.
 <span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>boxplot(Ozone ~ Month, data = airquality)</span>
 <span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>```</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>This is what the output looks like:</p>
-<div>
 <figure class="figure">
 <img src="images/hello_rmd.PNG" alt="It’s very close to the Sweave output." class="figure-img">
 <figcaption class="figure-caption">
 It’s very close to the Sweave output.
 </figcaption>
 </figure>
-</div>
-<p>Just like in a Sweave document, an Rmd source file also has a header in which authors can define a number of options. Here we only specified that we wanted a pdf document as an output file. We then copy and pasted the contents from the Sweave source, but changed the chunk delimiters from <code>&lt;&lt;&gt;&gt;=</code> and <code>@</code> to <code>```{r}</code> to start an R chunk and <code>```</code> to end it. Remember; we need to specify the engine in the chunk because <code>{knitr}</code> supports many engines. For example, it is possible to run a bash command by adding this chunk to the source:</p>
+<p>Just like in a Sweave document, an Rmd source file also has a header in which authors can define a number of options. Here we only specified that we wanted a pdf document as an output file. We then copy and pasted the contents from the Sweave source, but changed the chunk delimiters from <code>&lt;&lt;&gt;&gt;=</code> and <code>@</code> to <code>```hdq</code> to start an R chunk and <code>```</code> to end it. Remember; we need to specify the engine in the chunk because <code>{knitr}</code> supports many engines. For example, it is possible to run a bash command by adding this chunk to the source:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>---</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>output: pdf_document</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>---</span>
@@ -470,14 +461,12 @@ It’s very close to the Sweave output.
 <p>(bash’s <code>pwd</code> command shows the current working directory). You may have noticed that we also keep two LaTeX commands in the source Rmd, <code>\texttt{}</code> and <code>LaTeX</code>. This is because Rmd files get first converted into <code>LaTeX</code> files and then into a PDF. If you’re using RStudio, this document can be compiled by clicking a button or using a keyboard shortcut, but you can also use the <code>rmarkdown::render()</code> function. This function does two things transparently: it first converts the Rmd file into a source LaTeX file, and then converts it into a PDF. It is of course possible to convert the document to a Word document as well, but in this case, LaTeX commands will be ignored. Html is another widely used output format.</p>
 <p>If you’re a researcher and prefer working with LaTeX directly instead of having to switch to Markdown, you can either use Sweave, or use <code>{knitr}</code> but instead of writing your documents using the R Markdown format, you can use the <code>Rnw</code> format which is basically the same as Sweave, but uses <code>{knitr}</code> for compilation. Take a look at <a href="https://github.com/yihui/knitr/blob/master/inst/examples/knitr-minimal.Rnw">this example</a> from the <code>{knitr}</code> github repository for example.</p>
 <p>You should know that <code>{knitr}</code> makes it possible to author many, many different types of documents. It is possible to write books, blogs, package documentation (and even entire packages, as we shall see later in this book), Powerpoint slides… It is extremely powerful because we can use the same general R Markdown knowledge to build many different outputs:</p>
-<div>
 <figure class="figure">
 <img src="images/rmd_to_many.PNG" alt="One format to rule them all." class="figure-img">
 <figcaption class="figure-caption">
 One format to rule them all.
 </figcaption>
 </figure>
-</div>
 <p>Finally, the latest in literate programming for R is a new tool developed by Posit, called Quarto. If you’re an R user and already know <code>{knitr}</code> and the Rmd format, you should be able to immediately use Quarto. So what’s the difference? In practice and for R users not much but there are some things that Quarto is able to do out of the box for which you’d need extensions with <code>{knitr}</code>. Quarto has some nice defaults; in fact this book is written in Quarto’s Markdown flavour and compiled with Quarto instead of <code>{knitr}</code> because the default Quarto output looks nicer than the default <code>{knitr}</code> output. However, there may even be things that Quarto can’t do at all (at least for now) when compared to <code>{knitr}</code>. So why bother switching? Well, Quarto provides sane defaults and some nice features out of the box, and the cost of switching from the Rmd format to Quarto’s Qmd format is basically 0. Also, and this is probably the biggest reason to use Quarto, Quarto is not tied to R. Quarto is actually a standalone tool that needs to be installed alongside your R installation, and works completely independently. In fact, you can use Quarto without having R installed at all, as Quarto, just like <code>{knitr}</code> supports many engines. This means that if you’re primarily using Python, you can author documents with Quarto. Quarto also supports the Julia programming language and Observable JS, making it possible to include interactive visualisations into an Html document. Let’s take a look at how the example from Leisch’s paper looks as a Qmd file:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>---</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>output: pdf</span>
@@ -552,14 +541,12 @@ output: pdf
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>rmarkdown<span class="sc">::</span><span class="fu">render</span>(<span class="st">"path/to/rmd_test.rmd"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>This should create a file called <code>rmd_test.html</code>; open it with your web browser and you should see the following:</p>
-<div>
 <figure class="figure">
 <img src="images/rmd_test.PNG" alt="It’s very close to the Sweave output." class="figure-img">
 <figcaption class="figure-caption">
 It’s very close to the Sweave output.
 </figcaption>
 </figure>
-</div>
 <p>Congratulations, you just <em>knitted</em> your first Rmd document!</p>
 </section>
 <section id="markdown-ultrabasics" class="level3" data-number="7.2.2">
@@ -648,21 +635,19 @@ It’s very close to the Sweave output.
 <span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>&amp;= \frac{\alpha g^2}{\omega^5} \exp\Bigl[ -0.74\Bigl\{\frac{\omega U_\omega 19.5}{g}\Bigr\}^{\!-4}\,\Bigr] </span>
 <span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>\end{align*}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>The LaTeX code above results in this equation:</p>
-<div>
 <figure class="figure">
 <img src="images/latex_equation.png" alt="A rendered LaTeX equation." class="figure-img">
 <figcaption class="figure-caption">
 A rendered LaTeX equation.
 </figcaption>
 </figure>
-</div>
 <p>::: {.content-visible when-format=“pdf”}</p>
 <div class="cell">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="images/latex_equation.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">A rendered LaTeX equation.</figcaption><p></p>
+<figcaption class="figure-caption">A rendered LaTeX equation.</figcaption>
 </figure>
 </div>
 </div>
@@ -887,21 +872,19 @@ A rendered LaTeX equation.
 <span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_caption</span>(<span class="at">caption =</span> <span class="st">"Head of the mtcars dataset"</span>) <span class="sc">|&gt;</span></span>
 <span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_booktabs</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div>
 <figure class="figure">
 <img src="images/flextable.png" alt="The output of the code above." class="figure-img">
 <figcaption class="figure-caption">
 The output of the code above.
 </figcaption>
 </figure>
-</div>
 <p>::: {.content-visible when-format=“pdf”}</p>
 <div class="cell">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="images/flextable.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">The output of the code above.</figcaption><p></p>
+<figcaption class="figure-caption">The output of the code above.</figcaption>
 </figure>
 </div>
 </div>
@@ -919,21 +902,19 @@ The output of the code above.
 <span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a><span class="fu">modelsummary</span>(models)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div>
 <figure class="figure">
 <img src="images/modelsummary.png" alt="The output of the code above." class="figure-img">
 <figcaption class="figure-caption">
 The output of the code above.
 </figcaption>
 </figure>
-</div>
 <p>::: {.content-visible when-format=“pdf”}</p>
 <div class="cell">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="images/modelsummary.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">The output of the code above.</figcaption><p></p>
+<figcaption class="figure-caption">The output of the code above.</figcaption>
 </figure>
 </div>
 </div>
@@ -1039,20 +1020,20 @@ The output of the code above.
 <p>Remember: don’t repeat yourself!</p>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography" style="display: none">
-<div id="ref-arel22" class="csl-entry" role="doc-biblioentry">
+<div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
+<div id="ref-arel22" class="csl-entry" role="listitem">
 Arel-Bundock, Vincent. 2022. <span>“<span class="nocase">modelsummary</span>: Data and Model Summaries in <span>R</span>.”</span> <em>Journal of Statistical Software</em> 103 (1): 1–23.
 </div>
-<div id="ref-gohel23" class="csl-entry" role="doc-biblioentry">
+<div id="ref-gohel23" class="csl-entry" role="listitem">
 Gohel, David, and Panagiotis Skintzos. 2023. <em>Flextable: Functions for Tabular Reporting</em>.
 </div>
-<div id="ref-leisch2002" class="csl-entry" role="doc-biblioentry">
+<div id="ref-leisch2002" class="csl-entry" role="listitem">
 Leisch, Friedrich. 2002. <span>“Sweave: Dynamic Generation of Statistical Reports Using Literate Data Analysis.”</span> In <em>Compstat</em>, edited by Wolfgang Härdle and Bernd Rönz, 575–80. Physica-Verlag HD.
 </div>
-<div id="ref-xie2014" class="csl-entry" role="doc-biblioentry">
+<div id="ref-xie2014" class="csl-entry" role="listitem">
 Xie, Yihui. 2014. <span>“Knitr: A Comprehensive Tool for Reproducible Research in <span>R</span>.”</span> In <em>Implementing Reproducible Computational Research</em>, edited by Victoria Stodden, Friedrich Leisch, and Roger D. Peng. Chapman; Hall/CRC.
 </div>
-<div id="ref-xie2020r" class="csl-entry" role="doc-biblioentry">
+<div id="ref-xie2020r" class="csl-entry" role="listitem">
 Xie, Yihui, Christophe Dervieux, and Emily Riederer. 2020. <em>R Markdown Cookbook</em>. Chapman; Hall/CRC.
 </div>
 </div>
@@ -1207,9 +1188,23 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     icon: icon
   };
   anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
   const clipboard = new window.ClipboardJS('.code-copy-button', {
-    target: function(trigger) {
-      return trigger.previousElementSibling;
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
     }
   });
   clipboard.on('success', function(e) {
@@ -1274,6 +1269,92 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return note.innerHTML;
     });
   }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
   const findCites = (el) => {
     const parentEl = el.parentElement;
     if (parentEl) {

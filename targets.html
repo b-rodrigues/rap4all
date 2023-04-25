@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.475">
+<meta name="generator" content="quarto-1.3.340">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -17,9 +17,10 @@ div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
   width: 0.8em;
-  margin: 0 0.8em 0.2em -1.6em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
@@ -46,43 +47,13 @@ pre.numberSource code > span > a:first-child::before
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
     padding: 0 4px; width: 4em;
-    color: #aaaaaa;
   }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
 div.sourceCode
   {   }
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { color: #008000; } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { color: #008000; font-weight: bold; } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 
@@ -138,11 +109,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
-  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
-    <div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Build automation</span></h1>
-      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
-        <i class="bi bi-chevron-right"></i>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./part2_intro.html">Part 2: Write IT down</a></li><li class="breadcrumb-item"><a href="./targets.html"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Build automation</span></a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
       </button>
     </div>
   </nav>
@@ -150,172 +126,195 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Building reproducible analytical pipelines with R</a> 
         <div class="sidebar-tools-main">
-  <a href="" class="quarto-color-scheme-toggle sidebar-tool" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
 </div>
     </div>
       </div>
-      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="mt-2 flex-shrink-0 align-items-center">
         <div class="sidebar-search">
         <div id="quarto-search" class="" title="Search"></div>
         </div>
-      </div>
+        </div>
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link">Welcome!</a>
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Welcome!</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./preface.html" class="sidebar-item-text sidebar-link">Preface</a>
+  <a href="./preface.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./intro.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></a>
+  <a href="./intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="./part1_intro.html" class="sidebar-item-text sidebar-link">Part 1: Don’t Repeat Yourself</a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+            <a href="./part1_intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Part 1: Don’t Repeat Yourself</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./prerequisites.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Before we start</span></a>
+  <a href="./prerequisites.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Before we start</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./project_start.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Project start</span></a>
+  <a href="./project_start.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Project start</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./git.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Version control</span></a>
+  <a href="./git.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Version control</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./github.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Collaborating with Github</span></a>
+  <a href="./github.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Collaborating with Github</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./fprog.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Functional programming</span></a>
+  <a href="./fprog.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Functional programming</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./lit_prog.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Literate programming</span></a>
+  <a href="./lit_prog.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Literate programming</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./part1_conclusion.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Conclusion of part 1</span></a>
+  <a href="./part1_conclusion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Conclusion of part 1</span></span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="./part2_intro.html" class="sidebar-item-text sidebar-link">Part 2: Write IT down</a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+            <a href="./part2_intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Part 2: Write IT down</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./project_rewrite.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Rewriting our project</span></a>
+  <a href="./project_rewrite.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Rewriting our project</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./repro_intro.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Introduction to reproducibility</span></a>
+  <a href="./repro_intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Introduction to reproducibility</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./packages.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Packaging your code</span></a>
+  <a href="./packages.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Packaging your code</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./testing.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Testing your code</span></a>
+  <a href="./testing.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Testing your code</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./targets.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Build automation</span></a>
+  <a href="./targets.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Build automation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./repro_cont.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Reproducible analytical pipelines with Docker</span></a>
+  <a href="./repro_cont.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Reproducible analytical pipelines with Docker</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ci_cd.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Continuous integration and continuous deployment/delivery</span></a>
+  <a href="./ci_cd.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Continuous integration and continuous deployment/delivery</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./part2_conclusion.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Conclusion of part 2</span></a>
+  <a href="./part2_conclusion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Conclusion of part 2</span></span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./book_conclusion.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Conclusion</span></a>
+  <a href="./book_conclusion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Conclusion</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./references.html" class="sidebar-item-text sidebar-link">References</a>
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
   </div>
 </li>
     </ul>
     </div>
 </nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="toc-section-number">13.1</span>  Introduction</a></li>
-  <li><a href="#targets-quick-start" id="toc-targets-quick-start" class="nav-link" data-scroll-target="#targets-quick-start"><span class="toc-section-number">13.2</span>  {targets} quick-start</a>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="header-section-number">13.1</span> Introduction</a></li>
+  <li><a href="#targets-quick-start" id="toc-targets-quick-start" class="nav-link" data-scroll-target="#targets-quick-start"><span class="header-section-number">13.2</span> {targets} quick-start</a>
   <ul class="collapse">
-  <li><a href="#targets.rs-anatomy" id="toc-targets.rs-anatomy" class="nav-link" data-scroll-target="#targets.rs-anatomy"><span class="toc-section-number">13.2.1</span>  _targets.R’s anatomy</a></li>
+  <li><a href="#targets.rs-anatomy" id="toc-targets.rs-anatomy" class="nav-link" data-scroll-target="#targets.rs-anatomy"><span class="header-section-number">13.2.1</span> _targets.R’s anatomy</a></li>
   </ul></li>
-  <li><a href="#a-pipeline-is-a-composition-of-pure-functions" id="toc-a-pipeline-is-a-composition-of-pure-functions" class="nav-link" data-scroll-target="#a-pipeline-is-a-composition-of-pure-functions"><span class="toc-section-number">13.3</span>  A pipeline is a composition of pure functions</a></li>
-  <li><a href="#handling-files" id="toc-handling-files" class="nav-link" data-scroll-target="#handling-files"><span class="toc-section-number">13.4</span>  Handling files</a></li>
-  <li><a href="#the-dependency-graph" id="toc-the-dependency-graph" class="nav-link" data-scroll-target="#the-dependency-graph"><span class="toc-section-number">13.5</span>  The dependency graph</a></li>
-  <li><a href="#running-the-pipeline-in-parallel" id="toc-running-the-pipeline-in-parallel" class="nav-link" data-scroll-target="#running-the-pipeline-in-parallel"><span class="toc-section-number">13.6</span>  Running the pipeline in parallel</a></li>
-  <li><a href="#targets-and-rmarkdown-or-quarto" id="toc-targets-and-rmarkdown-or-quarto" class="nav-link" data-scroll-target="#targets-and-rmarkdown-or-quarto"><span class="toc-section-number">13.7</span>  {targets} and RMarkdown (or Quarto)</a></li>
-  <li><a href="#sec-targets-rewrite" id="toc-sec-targets-rewrite" class="nav-link" data-scroll-target="#sec-targets-rewrite"><span class="toc-section-number">13.8</span>  Rewriting our project as a pipeline and {renv} redux</a></li>
-  <li><a href="#some-little-tips-before-concluding" id="toc-some-little-tips-before-concluding" class="nav-link" data-scroll-target="#some-little-tips-before-concluding"><span class="toc-section-number">13.9</span>  Some little tips before concluding</a>
+  <li><a href="#a-pipeline-is-a-composition-of-pure-functions" id="toc-a-pipeline-is-a-composition-of-pure-functions" class="nav-link" data-scroll-target="#a-pipeline-is-a-composition-of-pure-functions"><span class="header-section-number">13.3</span> A pipeline is a composition of pure functions</a></li>
+  <li><a href="#handling-files" id="toc-handling-files" class="nav-link" data-scroll-target="#handling-files"><span class="header-section-number">13.4</span> Handling files</a></li>
+  <li><a href="#the-dependency-graph" id="toc-the-dependency-graph" class="nav-link" data-scroll-target="#the-dependency-graph"><span class="header-section-number">13.5</span> The dependency graph</a></li>
+  <li><a href="#running-the-pipeline-in-parallel" id="toc-running-the-pipeline-in-parallel" class="nav-link" data-scroll-target="#running-the-pipeline-in-parallel"><span class="header-section-number">13.6</span> Running the pipeline in parallel</a></li>
+  <li><a href="#targets-and-rmarkdown-or-quarto" id="toc-targets-and-rmarkdown-or-quarto" class="nav-link" data-scroll-target="#targets-and-rmarkdown-or-quarto"><span class="header-section-number">13.7</span> {targets} and RMarkdown (or Quarto)</a></li>
+  <li><a href="#sec-targets-rewrite" id="toc-sec-targets-rewrite" class="nav-link" data-scroll-target="#sec-targets-rewrite"><span class="header-section-number">13.8</span> Rewriting our project as a pipeline and {renv} redux</a></li>
+  <li><a href="#some-little-tips-before-concluding" id="toc-some-little-tips-before-concluding" class="nav-link" data-scroll-target="#some-little-tips-before-concluding"><span class="header-section-number">13.9</span> Some little tips before concluding</a>
   <ul class="collapse">
-  <li><a href="#load-every-target-at-once" id="toc-load-every-target-at-once" class="nav-link" data-scroll-target="#load-every-target-at-once"><span class="toc-section-number">13.9.1</span>  Load every target at once</a></li>
-  <li><a href="#get-metadata-information-on-your-pipeline" id="toc-get-metadata-information-on-your-pipeline" class="nav-link" data-scroll-target="#get-metadata-information-on-your-pipeline"><span class="toc-section-number">13.9.2</span>  Get metadata information on your pipeline</a></li>
-  <li><a href="#make-a-target-or-the-whole-pipeline-outdated" id="toc-make-a-target-or-the-whole-pipeline-outdated" class="nav-link" data-scroll-target="#make-a-target-or-the-whole-pipeline-outdated"><span class="toc-section-number">13.9.3</span>  Make a target (or the whole pipeline) outdated</a></li>
-  <li><a href="#customize-the-networks-visualisation" id="toc-customize-the-networks-visualisation" class="nav-link" data-scroll-target="#customize-the-networks-visualisation"><span class="toc-section-number">13.9.4</span>  Customize the network’s visualisation</a></li>
-  <li><a href="#use-targets-from-one-pipeline-in-another-project" id="toc-use-targets-from-one-pipeline-in-another-project" class="nav-link" data-scroll-target="#use-targets-from-one-pipeline-in-another-project"><span class="toc-section-number">13.9.5</span>  Use targets from one pipeline in another project</a></li>
-  <li><a href="#understanding-this-cryptic-error-message" id="toc-understanding-this-cryptic-error-message" class="nav-link" data-scroll-target="#understanding-this-cryptic-error-message"><span class="toc-section-number">13.9.6</span>  Understanding this cryptic error message</a></li>
+  <li><a href="#load-every-target-at-once" id="toc-load-every-target-at-once" class="nav-link" data-scroll-target="#load-every-target-at-once"><span class="header-section-number">13.9.1</span> Load every target at once</a></li>
+  <li><a href="#get-metadata-information-on-your-pipeline" id="toc-get-metadata-information-on-your-pipeline" class="nav-link" data-scroll-target="#get-metadata-information-on-your-pipeline"><span class="header-section-number">13.9.2</span> Get metadata information on your pipeline</a></li>
+  <li><a href="#make-a-target-or-the-whole-pipeline-outdated" id="toc-make-a-target-or-the-whole-pipeline-outdated" class="nav-link" data-scroll-target="#make-a-target-or-the-whole-pipeline-outdated"><span class="header-section-number">13.9.3</span> Make a target (or the whole pipeline) outdated</a></li>
+  <li><a href="#customize-the-networks-visualisation" id="toc-customize-the-networks-visualisation" class="nav-link" data-scroll-target="#customize-the-networks-visualisation"><span class="header-section-number">13.9.4</span> Customize the network’s visualisation</a></li>
+  <li><a href="#use-targets-from-one-pipeline-in-another-project" id="toc-use-targets-from-one-pipeline-in-another-project" class="nav-link" data-scroll-target="#use-targets-from-one-pipeline-in-another-project"><span class="header-section-number">13.9.5</span> Use targets from one pipeline in another project</a></li>
+  <li><a href="#understanding-this-cryptic-error-message" id="toc-understanding-this-cryptic-error-message" class="nav-link" data-scroll-target="#understanding-this-cryptic-error-message"><span class="header-section-number">13.9.6</span> Understanding this cryptic error message</a></li>
   </ul></li>
-  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="toc-section-number">13.10</span>  Conclusion</a></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">13.10</span> Conclusion</a></li>
   </ul>
 </nav>
     </div>
@@ -324,7 +323,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Build automation</span></h1>
+<h1 class="title"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Build automation</span></h1>
 </div>
 
 
@@ -618,23 +617,19 @@ UseMethod("summary")
 <section id="the-dependency-graph" class="level2" data-number="13.5">
 <h2 data-number="13.5" class="anchored" data-anchor-id="the-dependency-graph"><span class="header-section-number">13.5</span> The dependency graph</h2>
 <p>As you’ve seen in the previous section (and as I told you in the introduction) <code>{targets}</code> keeps track of changes in files, but also in the functions that you use. Any change in any of these files will result in <code>{targets}</code> identifying which targets are now out-of-date and which should be re-computed (alongside any other target that depends on them). It is possible to visualise this using <code>targets::tar_visnetwork()</code>. This opens an interactive network graph in your web browser that looks like this:</p>
-<div>
 <figure class="figure">
 <img src="images/targets_visnetwork.png" alt="This image opens in your web-browser." class="figure-img">
 <figcaption class="figure-caption">
 This image opens in your web-browser.
 </figcaption>
 </figure>
-</div>
 <p>In the image above, each target has been computed, so they are all up-to-date. If we now change the input data as before, here is what you will see instead:</p>
-<div>
 <figure class="figure">
 <img src="images/targets_visnetwork_outdated.png" alt="Because the input data got changed, we need to run the pipeline again." class="figure-img">
 <figcaption class="figure-caption">
 Because the input data got changed, we need to run the pipeline again.
 </figcaption>
 </figure>
-</div>
 <p>Because all the targets depend on the input data, we need to re-run everything. Let’s run the pipeline again to update all the targets using <code>tar_make()</code>.</p>
 <p>Now let’s add another target to our pipeline, one that does not depend on the input data. Then, we will modify the input data again, and call <code>tar_visnetwork()</code> as well. Change the pipeline like so:</p>
 <div class="cell">
@@ -668,14 +663,12 @@ Because the input data got changed, we need to run the pipeline again.
 <span id="cb26-28"><a href="#cb26-28" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Before running the pipeline, we can call <code>targets::tar_visnetwork()</code> again to see the entire workflow:</p>
-<div>
 <figure class="figure">
 <img src="images/targets_visnetwork_iris.png" alt="We clearly see that the pipeline has two completely independent parts." class="figure-img">
 <figcaption class="figure-caption">
 We clearly see that the pipeline has two completely independent parts.
 </figcaption>
 </figure>
-</div>
 <p>We can see that there are now two independent parts, as well as two unused functions, <code>path_data()</code> and <code>summ()</code> which we could remove.</p>
 <p>Running the pipeline using <code>targets::tar_make()</code> builds everything successfully. Let’s add the following target, just before the very last one:</p>
 <div class="cell">
@@ -688,14 +681,12 @@ We clearly see that the pipeline has two completely independent parts.
 <span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>),</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>This target creates a list with the two summaries that we compute. Call <code>targets::tar_visnetwork()</code> again:</p>
-<div>
 <figure class="figure">
 <img src="images/targets_visnetwork_list_summaries.png" alt="The two separate workflows end up in one output." class="figure-img">
 <figcaption class="figure-caption">
 The two separate workflows end up in one output.
 </figcaption>
 </figure>
-</div>
 <p>Finally, run the pipeline one last time to compute the final output.</p>
 </section>
 <section id="running-the-pipeline-in-parallel" class="level2" data-number="13.6">
@@ -747,14 +738,12 @@ The two separate workflows end up in one output.
 <span id="cb29-35"><a href="#cb29-35" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>here’s what the pipeline looks like before running:</p>
-<div>
 <figure class="figure">
 <img src="images/targets_visnetwork_slow_summary.png" alt="slow_summary() is used instead of summary()." class="figure-img">
 <figcaption class="figure-caption">
 slow_summary() is used instead of summary().
 </figcaption>
 </figure>
-</div>
 <p>(You will also notice that I’ve removed the unneeded functions, <code>path_data()</code> and <code>summ()</code>).</p>
 <p>Running this pipeline sequentially will take about a minute. To re-run the pipeline completely from scratch, call <code>targets::tar_destroy()</code>. This will make all the targets outdated. Then, run the pipeline from scratch with <code>targets::tar_make()</code>:</p>
 <div class="cell">
@@ -947,14 +936,12 @@ targets::tar_make_future(workers = 2)</code></pre>
 <span id="cb37-36"><a href="#cb37-36" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Running this pipeline with <code>targets::tar_make()</code> will now create an <code>.html</code> file that you can open in your web-browser. Even if you want to build another format, I advise you to develop using the <code>.html</code> format. This is because you can open the <code>.html</code> file in the web-browser, and keep working on the source. Each time you run the pipeline after you made some changes to the file, you simply need to refresh the web-browser to see your changes. If instead you compile a Word document, you will need to always close the file, and then re-open it to see your changes, which is quite annoying. (A good second reason to have output in the <code>.html</code> format is that HTML is a text-only format, and thus can be tracked with version control systems covered in <a href="github.html"><span>Chapter&nbsp;5</span></a>. The MS Word format is binary, and tracking it in git is always an undecipherable mess. Keep in mind though that HTML files can get large, and you would want to invoke the special git extension called <a href="https://git-lfs.com/">git LFS</a>.) So if you open the output file, you should be seeing something quite plain looking:</p>
-<div>
 <figure class="figure">
 <img src="images/mtcars_rmd_1.png" alt="The output of our pipeline. Our first data product!" class="figure-img">
 <figcaption class="figure-caption">
 The output of our pipeline. Our first data product!
 </figcaption>
 </figure>
-</div>
 <p>Don’t worry, we will make it look nice, but right at the end. Don’t waste time making things look good too early on. Ideally, try to get the pipeline to run on a simple example, and then keep adding features. Also, try to get <em>as much feedback</em> as possible on the <em>content</em> as <em>early</em> as possible. Let’s now get the <code>ggplot</code> of the data to show in the document as well.</p>
 <p>For this, simply add:</p>
 <div class="sourceCode" id="cb38"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>tar_read(plot_mtcars)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1088,14 +1075,12 @@ owner@localhost ➤ git checkout -b pipeline #create and switch to the new branc
 </div>
 <p>You should at most have three files: <code>README.md</code>, <code>_targets.R</code> and <code>analyse_data.Rmd</code> (unless you started with an empty repo, in which case you don’t have the <code>README.md</code> file). The <code>_targets.R</code> script will contain the required code to perform the computations that we need. Inside <code>analyse_data.Rmd</code>, we will simply load the required, pre-computed targets, and show them in the document.</p>
 <p>First, we need to load the data. The two datasets we use are now part of the package, so we can simply load them using <code>data(commune_level_data)</code> and <code>data(country_level_data)</code>. But remember, <code>{targets}</code> only loves pure functions, and <code>data()</code> is not pure! Let’s see what happens when you call <code>data(mtcars)</code>. If you’re using RStudio, this is really visible: in a fresh session, calling <code>data(mtcars)</code> shows the following in the <code>Environment</code> pane:</p>
-<div>
 <figure class="figure">
 <img src="images/mtcars_promise.png" alt="What’s described as 'mtcars' is not a 'data.frame', yet." class="figure-img">
 <figcaption class="figure-caption">
 What’s described as ‘mtcars’ is not a ‘data.frame’, yet.
 </figcaption>
 </figure>
-</div>
 <p>At this stage, <code>mtcars</code> is only a <code>promise</code>. It’s only if you need to interact with <code>mtcars</code> that the <code>promise</code> becomes a <code>data.frame</code>. So <code>data()</code> returns a promise, does this mean that we can save that into a variable? If you try the following:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">data</span>(mtcars)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1498,9 +1483,23 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     icon: icon
   };
   anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
   const clipboard = new window.ClipboardJS('.code-copy-button', {
-    target: function(trigger) {
-      return trigger.previousElementSibling;
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
     }
   });
   clipboard.on('success', function(e) {
@@ -1565,6 +1564,92 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return note.innerHTML;
     });
   }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
   const findCites = (el) => {
     const parentEl = el.parentElement;
     if (parentEl) {

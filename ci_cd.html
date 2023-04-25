@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.475">
+<meta name="generator" content="quarto-1.3.340">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -17,7 +17,7 @@ div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
   width: 0.8em;
-  margin: 0 0.8em 0.2em -1.6em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
 </style>
@@ -75,11 +75,16 @@ ul.task-list li input[type="checkbox"] {
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
-  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
-    <div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Continuous integration and continuous deployment/delivery</span></h1>
-      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
-        <i class="bi bi-chevron-right"></i>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./part2_intro.html">Part 2: Write IT down</a></li><li class="breadcrumb-item"><a href="./ci_cd.html"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Continuous integration and continuous deployment/delivery</span></a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
       </button>
     </div>
   </nav>
@@ -87,156 +92,179 @@ ul.task-list li input[type="checkbox"] {
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Building reproducible analytical pipelines with R</a> 
         <div class="sidebar-tools-main">
-  <a href="" class="quarto-color-scheme-toggle sidebar-tool" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
 </div>
     </div>
       </div>
-      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="mt-2 flex-shrink-0 align-items-center">
         <div class="sidebar-search">
         <div id="quarto-search" class="" title="Search"></div>
         </div>
-      </div>
+        </div>
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link">Welcome!</a>
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Welcome!</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./preface.html" class="sidebar-item-text sidebar-link">Preface</a>
+  <a href="./preface.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./intro.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></a>
+  <a href="./intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="./part1_intro.html" class="sidebar-item-text sidebar-link">Part 1: Don’t Repeat Yourself</a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+            <a href="./part1_intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Part 1: Don’t Repeat Yourself</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./prerequisites.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Before we start</span></a>
+  <a href="./prerequisites.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Before we start</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./project_start.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Project start</span></a>
+  <a href="./project_start.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Project start</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./git.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Version control</span></a>
+  <a href="./git.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Version control</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./github.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Collaborating with Github</span></a>
+  <a href="./github.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Collaborating with Github</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./fprog.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Functional programming</span></a>
+  <a href="./fprog.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Functional programming</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./lit_prog.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Literate programming</span></a>
+  <a href="./lit_prog.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Literate programming</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./part1_conclusion.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Conclusion of part 1</span></a>
+  <a href="./part1_conclusion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Conclusion of part 1</span></span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="./part2_intro.html" class="sidebar-item-text sidebar-link">Part 2: Write IT down</a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+            <a href="./part2_intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Part 2: Write IT down</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./project_rewrite.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Rewriting our project</span></a>
+  <a href="./project_rewrite.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Rewriting our project</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./repro_intro.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Introduction to reproducibility</span></a>
+  <a href="./repro_intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Introduction to reproducibility</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./packages.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Packaging your code</span></a>
+  <a href="./packages.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Packaging your code</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./testing.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Testing your code</span></a>
+  <a href="./testing.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Testing your code</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./targets.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Build automation</span></a>
+  <a href="./targets.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Build automation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./repro_cont.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Reproducible analytical pipelines with Docker</span></a>
+  <a href="./repro_cont.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Reproducible analytical pipelines with Docker</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ci_cd.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Continuous integration and continuous deployment/delivery</span></a>
+  <a href="./ci_cd.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Continuous integration and continuous deployment/delivery</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./part2_conclusion.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Conclusion of part 2</span></a>
+  <a href="./part2_conclusion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Conclusion of part 2</span></span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./book_conclusion.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Conclusion</span></a>
+  <a href="./book_conclusion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Conclusion</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./references.html" class="sidebar-item-text sidebar-link">References</a>
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
   </div>
 </li>
     </ul>
     </div>
 </nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#cicd-quickstart-for-r-programmers-and-others" id="toc-cicd-quickstart-for-r-programmers-and-others" class="nav-link active" data-scroll-target="#cicd-quickstart-for-r-programmers-and-others"><span class="toc-section-number">15.1</span>  CI/CD quickstart for R programmers (and others)</a></li>
-  <li><a href="#running-a-rap-using-github-actions" id="toc-running-a-rap-using-github-actions" class="nav-link" data-scroll-target="#running-a-rap-using-github-actions"><span class="toc-section-number">15.2</span>  Running a RAP using Github Actions</a></li>
-  <li><a href="#craft-a-dockerized-development-environment-with-github-actions" id="toc-craft-a-dockerized-development-environment-with-github-actions" class="nav-link" data-scroll-target="#craft-a-dockerized-development-environment-with-github-actions"><span class="toc-section-number">15.3</span>  Craft a dockerized development environment with Github Actions</a></li>
-  <li><a href="#run-a-rap-using-a-dockerized-development-environment-on-github-actions" id="toc-run-a-rap-using-a-dockerized-development-environment-on-github-actions" class="nav-link" data-scroll-target="#run-a-rap-using-a-dockerized-development-environment-on-github-actions"><span class="toc-section-number">15.4</span>  Run a RAP using a dockerized development environment on Github Actions</a></li>
-  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="toc-section-number">15.5</span>  Conclusion</a></li>
+  <li><a href="#cicd-quickstart-for-r-programmers-and-others" id="toc-cicd-quickstart-for-r-programmers-and-others" class="nav-link active" data-scroll-target="#cicd-quickstart-for-r-programmers-and-others"><span class="header-section-number">15.1</span> CI/CD quickstart for R programmers (and others)</a></li>
+  <li><a href="#running-a-rap-using-github-actions" id="toc-running-a-rap-using-github-actions" class="nav-link" data-scroll-target="#running-a-rap-using-github-actions"><span class="header-section-number">15.2</span> Running a RAP using Github Actions</a></li>
+  <li><a href="#craft-a-dockerized-development-environment-with-github-actions" id="toc-craft-a-dockerized-development-environment-with-github-actions" class="nav-link" data-scroll-target="#craft-a-dockerized-development-environment-with-github-actions"><span class="header-section-number">15.3</span> Craft a dockerized development environment with Github Actions</a></li>
+  <li><a href="#run-a-rap-using-a-dockerized-development-environment-on-github-actions" id="toc-run-a-rap-using-a-dockerized-development-environment-on-github-actions" class="nav-link" data-scroll-target="#run-a-rap-using-a-dockerized-development-environment-on-github-actions"><span class="header-section-number">15.4</span> Run a RAP using a dockerized development environment on Github Actions</a></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">15.5</span> Conclusion</a></li>
   </ul>
 </nav>
     </div>
@@ -245,7 +273,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Continuous integration and continuous deployment/delivery</span></h1>
+<h1 class="title"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Continuous integration and continuous deployment/delivery</span></h1>
 </div>
 
 
@@ -292,23 +320,19 @@ jobs:
         run: echo "Hello World!"</code></pre>
 <p>This needs to be saved in a <code>hello_world.yml</code> file, and placed inside the <code>.github/workflows/</code> directories in the Github repository you want this action to run each time something gets pushed to the repo.</p>
 <p>Each time code gets pushed to the repository containing this workflow file, a <em>runner</em> runs the code <code>echo "Hello World!"</code> on the latest version of Ubuntu. A workflow file is thus defined as a series of steps (that can either run code, or an action) that get executed on a so-called runner (in essence, a container). This workflow gets executed when a specific event occurs, in the example above that event is pushing to the repo. To see the output of the workflow, click on “Actions” on your Github repository:</p>
-<div>
 <figure class="figure">
 <img src="images/ga_actions.png" alt="Click on 'Actions' to monitor your workflows." class="figure-img">
 <figcaption class="figure-caption">
 Click on ‘Actions’ to monitor your workflows.
 </figcaption>
 </figure>
-</div>
 <p>You should see a list of workflow runs, each corresponding to a commit. Click on the latest one and then click on the job named <code>my-job</code>. If your workflow has multiple jobs, they’ll all be listed here. Once you click on the job, you should see a list of steps. The step that interested us here is <code>my-step</code> which should simply print “Hello World!”. Click on it to see the output:</p>
-<div>
 <figure class="figure">
 <img src="images/ga_hello-world.png" alt="Congrats, that's your first GA workflow." class="figure-img">
 <figcaption class="figure-caption">
 Congrats, that’s your first GA workflow.
 </figcaption>
 </figure>
-</div>
 <p>To help you define complex workflows, you can use pre-defined actions that you can choose from to perform a series of common tasks. You can find them in the <a href="https://github.com/marketplace">Github Actions Marketplace</a><a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a>.</p>
 <p>We are not going to use any actions from the Github Actions Marketplace just yet though, but instead, we will be looking at a repository containing actions specifically made for R users (if you’re using another programming language, it is quite likely that you might find a repository of actions for that programming language).</p>
 <p><a href="https://github.com/r-lib/actions">This repository</a><a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a> contains many actions for R users. For example, let’s say that you want to install R and run some code using Github Actions. Simply take a look at the <a href="https://github.com/r-lib/actions/tree/v2/setup-r">setup-r</a><a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a> and and see how it’s used. Let me edit my <code>hello_world.yml</code> from before, and add one step that downloads R and prints <code>"Hello from R!"</code> using R:</p>
@@ -332,14 +356,12 @@ jobs:
       - name: hello-r
         run: Rscript -e 'print("Hello from R!")'</code></pre>
 <p>So now my job performs two tasks, one that prints <code>"Hello from Bash!"</code> and another that prints <code>"Hello from R!"</code>. There are several steps involved, the second step, called <code>checkout-repo</code> runs the action <code>actions/checkout@v3</code> and the third step, called <code>install-r</code> uses the action <code>r-lib/actions/setup-r@v2</code>. The first action, <code>actions/checkout@v3</code> is an action that you will see on almost any Github Actions workflow file, even though it is likely superfluous in this case. You can read about it <a href="https://github.com/actions/checkout">here</a><a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a> and it essentially makes the files inside the repository available to the runner. Sometimes I think that it would have made more sense to call this action <code>clone</code>, like the <code>git clone</code> command. But I’m sure there’s a very good reason that this is not the case. The next action is <code>setup-r@v2</code> which downloads and installs, in our example here, R version 3.5.3. The final step then runs the command <code>Rscript -e 'print("Hello from R!")'</code>. If you check out the “Actions” tab on Github, you should now see this:</p>
-<div>
 <figure class="figure">
 <img src="images/ga_hello-from-r.png" alt="This time it's R that's waving hello." class="figure-img">
 <figcaption class="figure-caption">
 This time it’s R that’s waving hello.
 </figcaption>
 </figure>
-</div>
 <p>We could have installed any other version of R by the way. We can keep adding steps, for example let’s add one to install <code>{renv}</code> and install packages from an <code>renv.lock</code> file (the file needs to be in our repository, and becomes available to the workflow thanks to <code>actions/checkout@v3</code>):</p>
 <pre><code>name: my-pipeline
 on: push
@@ -408,61 +430,49 @@ jobs:
 <p>I believe that this file is the simplest one you could have for this. Let’s study it in detail.</p>
 <p>The start of the file is pretty start: we give the workflow a new, and state that it should run on <code>ubuntu-latest</code> whenever anything gets pushed to either <code>main</code> or <code>master</code>. We define an environment variable called <code>r_4.2.2</code>. This is the name of the image that we are going to build. We will build an image that comes with R 4.2.2 pre-installed as well as many required Ubuntu packages; it’s the same image as we built in the previous chapter on top of which we will then build RAPs. This image is based on the one from the Rocker project. We will take a look at the Dockerfile afterwards. Then, the action <code>docker/setup-buildx-action@v2</code> simply sets up everything for <code>buildx</code> to run smoothly (<code>buildx</code> will build the Docker image using the <code>docker buildx</code> command an alternative to <code>docker build</code>). Honestly, I don’t even know exactly what it sets up. I guess it may at least checkout the repository to make the files available to the next actions and maybe set some other variables for <code>docker buildx</code>.</p>
 <p>Then we use the <code>docker/login-action@v2</code> to login from Github Actions to Docker Hub. Essentially, we need to be able to tell our Github Actions runner how to login to Docker Hub, and of course we want to do so in a secure manner (and it must run non-interactively). To login to Docker Hub from Github Actions, you need first to create an access token from your Docker Hub account. Login to your Docker Hub account, got to your account settings and then to the “Security” tab:</p>
-<div>
 <figure class="figure">
 <img src="images/docker_hub_token.png" alt="Create your access token." class="figure-img">
 <figcaption class="figure-caption">
 Create your access token.
 </figcaption>
 </figure>
-</div>
 <p>Name it <code>github_actions</code> for example, and set its permissions to “Read, Write, Delete”. On the next window that pops up, make sure to save your access token:</p>
-<div>
 <figure class="figure">
 <img src="images/docker_hub_copy_token.png" alt="Make sure to write it down!" class="figure-img">
 <figcaption class="figure-caption">
 Make sure to write it down!
 </figcaption>
 </figure>
-</div>
 <p>You then need to go to the settings area of the repository. Under “Security”, “Secrets and variables” and finally “Actions” you can create a secret called <code>DOCKERHUB_TOKEN</code> and copy the value of the token in the free text area:</p>
-<div>
 <figure class="figure">
 <img src="images/docker_hub_token_ga.png" alt="Copy the token in your repo's secrets." class="figure-img">
 <figcaption class="figure-caption">
 Copy the token in your repo’s secrets.
 </figcaption>
 </figure>
-</div>
 <p>Create a second secret with your Docker Hub username called <code>DOCKERHUB_USERNAME</code>. These can now be used in the workflow file using so-called <em>contexts</em>. Your Docker Hub username will get replaced wherever you write <code>${{ secrets.DOCKERHUB_USERNAME }}</code> in the workflow file, same for your Docker Hub token with <code>${{ secrets.DOCKERHUB_TOKEN }}</code>.</p>
 <p>Finally, we build and push the image to Docker Hub. This is done using one single action called <code>docker/build-push-action@v4</code>. We use the <code>tags</code> option to tag our image. The tag needs to start with your username, followed by a <code>/</code>, then the image name, and then a version, so something like <code>bob/r_4.2.2:latest</code> where <code>latest</code> would be the latest version of the image that is available. Getting <code>bob/r_4.2.2</code> is quite easy: simply use your Docker Hub username that you defined as a secret, then literally type <code>/</code> and then use the image name that you’ve defined in the beginning of the workflow file. Careful though: <code>bob/r_4.2.2</code> needs to exist on Docker Hub as well. <code>bob</code> is easy, that your Docker Hub username as already stated, but <code>r_4.2.2</code> is a repository that you need to create on Docker Hub. So both your image name and the repository on Docker Hub will be <code>r_4.2.2</code>. If you don’t create a repository on Docker Hub that is exactly named like that, your image will not get pushed, because Github Actions will not know where to push the image. So if this is not already the case, go back to Docker Hub and create a repository names <code>r_4.2.2</code>. For the version, you can do whatever you want, but I suggest to use the context <code>github.ref_name</code> and <code>github.sha</code>. <code>github.ref_name</code> gives the name of the branch that starts the workflow, and <code>github.sha</code> returns the hash number of the commit that starts the workflow. This way, your image will be named something like <code>bob/r_4.2.2:master-65ai9besta65948</code>. This allows you to see which commit generated which image, which is really useful. We then also set <code>push</code> to <code>true</code>, so that the image gets pushed.</p>
 <p>With this workflow file in hand, I can now build a Docker image and push it to Docker Hub simply by pushing code to my repository. Here are two commits that generated two images:</p>
-<div>
 <figure class="figure">
 <img src="images/ga_dockerfile.png" alt="Two successful runs of Github Actions." class="figure-img">
 <figcaption class="figure-caption">
 Two successful runs of Github Actions.
 </figcaption>
 </figure>
-</div>
 <p>and here are the two corresponding images on Docker Hub:</p>
-<div>
 <figure class="figure">
 <img src="images/ga_dockerhub.png" alt="The corresponding images on Docker Hub." class="figure-img">
 <figcaption class="figure-caption">
 The corresponding images on Docker Hub.
 </figcaption>
 </figure>
-</div>
 <p>I noticed a typo in my Dockerfile: originally, I was basing my image on R version 4.2.1. So I changed this, and pushed. This is the commit that starts with <code>b1950</code>. The image then got built, tagged, and pushed to Docker Hub without any manual intervention on my part. You can see that the tag is of the form <code>repo-hash</code>, in this case <code>main-b1950d</code>. Clicking on this tag on Docker Hub shows you some useful information:</p>
-<div>
 <figure class="figure">
 <img src="images/docker_hub_image.png" alt="This is the image with the correct R version." class="figure-img">
 <figcaption class="figure-caption">
 This is the image with the correct R version.
 </figcaption>
 </figure>
-</div>
 </section>
 <section id="run-a-rap-using-a-dockerized-development-environment-on-github-actions" class="level2" data-number="15.4">
 <h2 data-number="15.4" class="anchored" data-anchor-id="run-a-rap-using-a-dockerized-development-environment-on-github-actions"><span class="header-section-number">15.4</span> Run a RAP using a dockerized development environment on Github Actions</h2>
@@ -520,14 +530,12 @@ jobs:
 <p>By now, you should certainly understand this workflow file without much trouble. First we checkout the contents of the repository to make the files available to the other steps. Then we build the Docker image. For this, I’m doing this the “old-school” way by using the actual command that we would use on our local machine. Then we run the container. Once again I use the command that I would use locally. But you’ll notice that I use <code>/github/workspace/shared_folder</code> as the path to the shared folder. You likely guessed it, <code>/github/workspace/</code> is the “local” path inside the Github Actions runner. This is equivalent to the <code>/home/</code> directory on a Linux machine.</p>
 <p>The final action, <code>actions/upload-artifact@v3</code> is used to upload the contents of the shared folder and name them <code>housing_output_${{ github.sha }}</code>, where <code>${{ github.sha }}</code> will get replaced by the hash from the commit that triggered the action. This will be a zip file that you can then download. But download from where?</p>
 <p>Simply click on the “Actions” tab on the Github repository, and then click on the run that you want the artifact from (pipeline outputs are called artifacts):</p>
-<div>
 <figure class="figure">
 <img src="images/ga_artifacts.png" alt="Artifacts (pipeline outputs) can be found by going into a run's details." class="figure-img">
 <figcaption class="figure-caption">
 Artifacts (pipeline outputs) can be found by going into a run’s details.
 </figcaption>
 </figure>
-</div>
 <p>And that’s it! You could tweak the workflow file to instead push the files to a new branch in the repository, like the workflow file that <code>tarets::tar_github_actions()</code> generates. But I think that this solution is easier to use, and also, if you need to download the artifact from a previous run, it’s all right there. Simply select a previous run and download the artifact. If instead you push the outputs to a new branch, you’d need to revert to that commit to get past outputs.</p>
 </section>
 <section id="conclusion" class="level2" data-number="15.5">
@@ -695,9 +703,23 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     icon: icon
   };
   anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
   const clipboard = new window.ClipboardJS('.code-copy-button', {
-    target: function(trigger) {
-      return trigger.previousElementSibling;
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
     }
   });
   clipboard.on('success', function(e) {
@@ -762,6 +784,92 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return note.innerHTML;
     });
   }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
   const findCites = (el) => {
     const parentEl = el.parentElement;
     if (parentEl) {

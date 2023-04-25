@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.475">
+<meta name="generator" content="quarto-1.3.340">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -17,7 +17,7 @@ div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
   width: 0.8em;
-  margin: 0 0.8em 0.2em -1.6em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
 </style>
@@ -75,11 +75,16 @@ ul.task-list li input[type="checkbox"] {
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
-  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
-    <div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Version control</span></h1>
-      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
-        <i class="bi bi-chevron-right"></i>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./part1_intro.html">Part 1: Don’t Repeat Yourself</a></li><li class="breadcrumb-item"><a href="./git.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Version control</span></a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
       </button>
     </div>
   </nav>
@@ -87,156 +92,179 @@ ul.task-list li input[type="checkbox"] {
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Building reproducible analytical pipelines with R</a> 
         <div class="sidebar-tools-main">
-  <a href="" class="quarto-color-scheme-toggle sidebar-tool" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
 </div>
     </div>
       </div>
-      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="mt-2 flex-shrink-0 align-items-center">
         <div class="sidebar-search">
         <div id="quarto-search" class="" title="Search"></div>
         </div>
-      </div>
+        </div>
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link">Welcome!</a>
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Welcome!</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./preface.html" class="sidebar-item-text sidebar-link">Preface</a>
+  <a href="./preface.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./intro.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></a>
+  <a href="./intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="./part1_intro.html" class="sidebar-item-text sidebar-link">Part 1: Don’t Repeat Yourself</a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+            <a href="./part1_intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Part 1: Don’t Repeat Yourself</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./prerequisites.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Before we start</span></a>
+  <a href="./prerequisites.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Before we start</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./project_start.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Project start</span></a>
+  <a href="./project_start.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Project start</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./git.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Version control</span></a>
+  <a href="./git.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Version control</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./github.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Collaborating with Github</span></a>
+  <a href="./github.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Collaborating with Github</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./fprog.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Functional programming</span></a>
+  <a href="./fprog.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Functional programming</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./lit_prog.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Literate programming</span></a>
+  <a href="./lit_prog.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Literate programming</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./part1_conclusion.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Conclusion of part 1</span></a>
+  <a href="./part1_conclusion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Conclusion of part 1</span></span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="./part2_intro.html" class="sidebar-item-text sidebar-link">Part 2: Write IT down</a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+            <a href="./part2_intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Part 2: Write IT down</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./project_rewrite.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Rewriting our project</span></a>
+  <a href="./project_rewrite.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Rewriting our project</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./repro_intro.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Introduction to reproducibility</span></a>
+  <a href="./repro_intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Introduction to reproducibility</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./packages.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Packaging your code</span></a>
+  <a href="./packages.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Packaging your code</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./testing.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Testing your code</span></a>
+  <a href="./testing.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Testing your code</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./targets.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Build automation</span></a>
+  <a href="./targets.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Build automation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./repro_cont.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Reproducible analytical pipelines with Docker</span></a>
+  <a href="./repro_cont.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Reproducible analytical pipelines with Docker</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ci_cd.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Continuous integration and continuous deployment/delivery</span></a>
+  <a href="./ci_cd.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Continuous integration and continuous deployment/delivery</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./part2_conclusion.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Conclusion of part 2</span></a>
+  <a href="./part2_conclusion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Conclusion of part 2</span></span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./book_conclusion.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Conclusion</span></a>
+  <a href="./book_conclusion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Conclusion</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./references.html" class="sidebar-item-text sidebar-link">References</a>
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
   </div>
 </li>
     </ul>
     </div>
 </nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#installing-git-and-opening-a-github-account" id="toc-installing-git-and-opening-a-github-account" class="nav-link active" data-scroll-target="#installing-git-and-opening-a-github-account"><span class="toc-section-number">4.1</span>  Installing Git and opening a Github account</a></li>
-  <li><a href="#git-superbasics" id="toc-git-superbasics" class="nav-link" data-scroll-target="#git-superbasics"><span class="toc-section-number">4.2</span>  Git superbasics</a></li>
-  <li><a href="#git-and-github" id="toc-git-and-github" class="nav-link" data-scroll-target="#git-and-github"><span class="toc-section-number">4.3</span>  Git and Github</a></li>
-  <li><a href="#getting-to-know-github" id="toc-getting-to-know-github" class="nav-link" data-scroll-target="#getting-to-know-github"><span class="toc-section-number">4.4</span>  Getting to know Github</a></li>
-  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="toc-section-number">4.5</span>  Conclusion</a></li>
+  <li><a href="#installing-git-and-opening-a-github-account" id="toc-installing-git-and-opening-a-github-account" class="nav-link active" data-scroll-target="#installing-git-and-opening-a-github-account"><span class="header-section-number">4.1</span> Installing Git and opening a Github account</a></li>
+  <li><a href="#git-superbasics" id="toc-git-superbasics" class="nav-link" data-scroll-target="#git-superbasics"><span class="header-section-number">4.2</span> Git superbasics</a></li>
+  <li><a href="#git-and-github" id="toc-git-and-github" class="nav-link" data-scroll-target="#git-and-github"><span class="header-section-number">4.3</span> Git and Github</a></li>
+  <li><a href="#getting-to-know-github" id="toc-getting-to-know-github" class="nav-link" data-scroll-target="#getting-to-know-github"><span class="header-section-number">4.4</span> Getting to know Github</a></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">4.5</span> Conclusion</a></li>
   </ul>
 </nav>
     </div>
@@ -245,7 +273,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Version control</span></h1>
+<h1 class="title"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Version control</span></h1>
 </div>
 
 
@@ -301,14 +329,12 @@ sudo apt-get install git</code></pre>
 <p>We are not going to use any graphical user interface however. This is because there is no common, universal graphical user interface; they all work slightly differently. The only universal is the command line. Also, learning how to use Git via the command line will make it easier the day you will need to use it from a server, which will very likely happen. It also makes our job easier: it is simpler to tell you which commands to run and explain them to you than littering the book with dozens upon dozens of screenshots that might get outdated as soon as a new version of the interface gets released.</p>
 <p>Don’t worry, using the command line is not as hard as it sounds.</p>
 <p>If you don’t have already a Github account, now is the time to create one. Just go over to <a href="https://github.com/">https://github.com/</a> and simply follow the instructions and select the free tier to open your account.</p>
-<div>
 <figure class="figure">
 <img src="images/git_1.png" alt="This is your Github dashboard." class="figure-img">
 <figcaption class="figure-caption">
 This is your Github dashboard.
 </figcaption>
 </figure>
-</div>
 <p>Now that we have an opened account, we can go to the folder that contains the two scripts we wrote at the start of the book.</p>
 </section>
 <section id="git-superbasics" class="level2" data-number="4.2">
@@ -502,42 +528,34 @@ Date:   Sun Feb 5 17:32:26 2023 +0100
 <p>So we got some work done on our machine and made some commits. We are now ready to push these commits to Github. “Pushing” means essentially uploading these changes to Github. This makes them available to your coworkers if you’re pushing to a private repository, or makes them available to the world if you’re pushing to a public repository.</p>
 <p>Before pushing anything to Github though, we need to create a new repository. This repository will contain the code for our project, as well as all the changes that Git has been tracking on our machine. So if, for example, a new team member joins, he or she will be able to clone the repository to his or her computer and every change, every commit message and every single bit of history of the project will be accessible. If it’s a public repository, anyone will be able to clone the repository and contribute code to it. We are going to walk you true some examples of how to collaborate with Git using Github in the remained of this chapter.</p>
 <p>So, let’s first go back to <a href="https://github.com/">https://github.com/</a> and create a new repository:</p>
-<div>
 <figure class="figure">
 <img src="images/git_new_repo.png" alt="Creating a new repository from your dashboard." class="figure-img">
 <figcaption class="figure-caption">
 Creating a new repository from your dashboard.
 </figcaption>
 </figure>
-</div>
 <p>You will then land on this page:</p>
-<div>
 <figure class="figure">
 <img src="images/git_new_repo_2.png" alt="Name your repository and choose whether it's a public or private repository." class="figure-img">
 <figcaption class="figure-caption">
 Name your repository and choose whether it’s a public or private repository.
 </figcaption>
 </figure>
-</div>
 <p>Name your repository, and choose whether it should be open to the word or if it should be private and only accessible to your coworkers. We are going to make it a public repository, but you could make it private and follow along, this would change nothing to what we’re going to learn.</p>
 <p>We then land on this page:</p>
-<div>
 <figure class="figure">
 <img src="images/git_repo_start.png" alt="Some instructions to get you started." class="figure-img">
 <figcaption class="figure-caption">
 Some instructions to get you started.
 </figcaption>
 </figure>
-</div>
 <p>We get some instructions on how to actually get started with our project. The first thing you need to do though is to click on “SSH”:</p>
-<div>
 <figure class="figure">
 <img src="images/git_repo_start_ssh.png" alt="Make sure to select 'SSH'." class="figure-img">
 <figcaption class="figure-caption">
 Make sure to select ‘SSH’.
 </figcaption>
 </figure>
-</div>
 <p>This will change the links in the instructions from <code>https</code> to <code>ssh</code>. We will explain why this is important in a couple of paragraphs. For now, let’s read the instructions. Since we have already started working, we need to follow the instructions titled “…or push an existing repository from the command line”. Let’s review these commands. This is what Github suggests we run:</p>
 <pre><code>git remote add origin git@github.com:rap4all/housing.git
 git branch -M main
@@ -583,32 +601,26 @@ The key's randomart image is:
 |            ..=oo|
 +----[SHA256]-----+</code></pre>
 <p>If now you go to the specified path on the first line (so in our case <code>/home/user/.ssh/</code> you should see two files, <code>id_rsa</code> and <code>id_rsa.pub</code>, the private and public keys respectively. We’re almost done: what you need to do now is copy the contents of the <code>id_rsa.pub</code> file to Github. Go to your profile settings:</p>
-<div>
 <figure class="figure">
 <img src="images/github_settings.png" alt="Click on your user profile's image in the top-right corner." class="figure-img">
 <figcaption class="figure-caption">
 Click on your user profile’s image in the top-right corner.
 </figcaption>
 </figure>
-</div>
 <p>And then click on “SSH and GPG keys”:</p>
-<div>
 <figure class="figure">
 <img src="images/github_gpg.png" alt="Go to your user settings and choose 'SSH and GPG keys'." class="figure-img">
 <figcaption class="figure-caption">
 Go to your user settings and choose ‘SSH and GPG keys’.
 </figcaption>
 </figure>
-</div>
 <p>and then click on “New SSH key”. Name this key (it’s a good idea to write something that makes recognizing the machine the key was generated easily) and paste the contents of <code>id_rsa.pub</code> in the text box and click on “add SSH key”:</p>
-<div>
 <figure class="figure">
 <img src="images/github_add_ssh.png" alt="Copy the contents of the public key here." class="figure-img">
 <figcaption class="figure-caption">
 Copy the contents of the public key here.
 </figcaption>
 </figure>
-</div>
 <p>We can now go back to our terminal and try to push again:</p>
 <pre><code>owner@localhost ➤ git push -u origin master</code></pre>
 <p>The following message gets printed:</p>
@@ -628,103 +640,83 @@ To github.com:rap4all/housing.git
  * [new branch]      master -&gt; master
 Branch 'master' set up to track remote branch 'master' from 'origin'.</code></pre>
 <p>And we’re done! Our commits are now safely backed up on Github. If we go to our repository’s main page, we should see the following:</p>
-<div>
 <figure class="figure">
 <img src="images/github_repo_1.png" alt="Finally!" class="figure-img">
 <figcaption class="figure-caption">
 Finally!
 </figcaption>
 </figure>
-</div>
 </section>
 <section id="getting-to-know-github" class="level2" data-number="4.4">
 <h2 data-number="4.4" class="anchored" data-anchor-id="getting-to-know-github"><span class="header-section-number">4.4</span> Getting to know Github</h2>
 <p>We have succeeded in installing Git and making it work with our Github account. If you use another machine for development, you will need to generate another rsa key pair on that machine and add the public key to Github. If you use another code hosting platform, you can use the same rsa key pair, but will need to add the public key to this other code hosting platform. You can even use the same key pair as a passwordless authentication method for ssh (for example to log into a server, but this is outside the scope of the present book). Before continuing we are going to take a little tour of Github.</p>
-<div>
 <figure class="figure">
 <img src="images/github_repo_1.png" alt="You repository's landing page." class="figure-img">
 <figcaption class="figure-caption">
 You repository’s landing page.
 </figcaption>
 </figure>
-</div>
 <p>Once you’re on your repository’s landing page you see the same files and folders as in the root directory of the project on your computer. In our case here, we see our two files. Github suggests that we add a README file; we are going to ignore this for now. Take a closer look at the menu at the top, below your repository’s name:</p>
-<div>
 <figure class="figure">
 <img src="images/github_menu.png" alt="Several options to choose from." class="figure-img">
 <figcaption class="figure-caption">
 Several options to choose from.
 </figcaption>
 </figure>
-</div>
 <p>Most important for our needs is the “Issues”, “Pull requests”, “Actions” and “Settings” tab.</p>
 <p>In the next chapter we are going to learn about pull requests which are essential for collaborating using Git and Github.com. We will learn about the “Actions” tab in the second part of the book.</p>
 <p>So let’s start with “Settings”.</p>
-<div>
 <figure class="figure">
 <img src="images/github_settings2.png" alt="Choose the 'Settings' tab." class="figure-img">
 <figcaption class="figure-caption">
 Choose the ‘Settings’ tab.
 </figcaption>
 </figure>
-</div>
 <p>There are many options that you can choose from, but what’s important for our purposes is the “Collaborators” option. This is where you can invite people to contribute to the repository. People that are invited in this way can directly push to the repository. Let’s invite the author of this book:</p>
-<div>
 <figure class="figure">
 <img src="images/github_add_collab.png" alt="Follow along to add a collaborator." class="figure-img">
 <figcaption class="figure-caption">
 Follow along to add a collaborator.
 </figcaption>
 </figure>
-</div>
 <p>Start by typing the person’s Github username. You can also invite collaborators by providing their email address.</p>
-<div>
 <figure class="figure">
 <img src="images/github_add_collab2.png" alt="Look for your collaborators." class="figure-img">
 <figcaption class="figure-caption">
 Look for your collaborators.
 </figcaption>
 </figure>
-</div>
 <p>Click then on the user’s profile and he or she should get an invitation per email.</p>
 <p>This is what it looks like from the perspective of Bruno’s account now:</p>
-<div>
 <figure class="figure">
 <img src="images/github_collab_added.png" alt="Bruno can now push as if he owned the repository." class="figure-img">
 <figcaption class="figure-caption">
 Bruno can now push as if he owned the repository.
 </figcaption>
 </figure>
-</div>
 <p>It’s important to understand the distinction between inviting someone to contribute to the repository and have someone from outside the project contribute. We are going to explore these two scenarios in the next section, but before that, let’s see what the “Issues” tab is about.</p>
 <p>If the repository is public, anyone can open an issue to either submit a bug, or suggest some ideas, and if the repository is private, only invited collaborators can do this.</p>
 <p>Let’s open an issue to illustrate how this works:</p>
-<div>
 <figure class="figure">
 <img src="images/github_new_issue.png" alt="Click on 'New issue' in the 'Issues' tab of your project." class="figure-img">
 <figcaption class="figure-caption">
 Click on ‘New issue’ in the ‘Issues’ tab of your project.
 </figcaption>
 </figure>
-</div>
 <p>You will land on this interface:</p>
-<div>
 <figure class="figure">
 <img src="images/github_new_issue_empty.png" alt="Write what the issue's about here." class="figure-img">
 <figcaption class="figure-caption">
 Write what the issue’s about here.
 </figcaption>
 </figure>
-</div>
 <p>Give a nice title to the issue (1), add a thorough description (2), (optionally) assign it to someone (3) and (optionally) add a label to it (4), finally click on “Submit new issue” (5) to submit the issue:</p>
-<div>
 <figure class="figure">
 <img src="images/github_new_issue2.png" alt="Try to provide as many details as possible." class="figure-img">
 <figcaption class="figure-caption">
 Try to provide as many details as possible.
 </figcaption>
 </figure>
-</div>
 <p>Sometimes issues don’t need to be very long, and act more as reminders than anything else. For example here, the owner of the repository didn’t have the time to add a Readme, but didn’t want to forget to add one later on. The author assigned the issue to Bruno: so it’ll be Bruno’s job to add the Readme. Issue-driven project management is a very valid strategy when working asynchronously and in a decentralized fashion.</p>
 <p>If you encountered a bug and want to open an issue, it is very important that you provide a minimal, reproducible example (MRE). MREs are snippets of code that can be run very easily by someone other than yourself and which produce the bug reliably. Interestingly, if you understand what makes an MRE minimal and reproducible, you understand what will make our pipelines reproducible as well. So what’s important for an MRE?</p>
 <p>First, the code needs to be self-contained. For example, if some data is required you need to provide the data. If the data is sensitive, you need to think about the bug in greater detail: is the bug due to the structure of the data, or does the bug manifest itself on any kind of data? If that’s the case, use some of the built-in datasets to R (<code>iris</code>, <code>mtcars</code>, etc) for your MRE.</p>
@@ -892,9 +884,23 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     icon: icon
   };
   anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
   const clipboard = new window.ClipboardJS('.code-copy-button', {
-    target: function(trigger) {
-      return trigger.previousElementSibling;
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
     }
   });
   clipboard.on('success', function(e) {
@@ -959,6 +965,92 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return note.innerHTML;
     });
   }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
   const findCites = (el) => {
     const parentEl = el.parentElement;
     if (parentEl) {

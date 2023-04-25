@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.475">
+<meta name="generator" content="quarto-1.3.340">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -17,9 +17,10 @@ div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
   width: 0.8em;
-  margin: 0 0.8em 0.2em -1.6em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
@@ -46,48 +47,19 @@ pre.numberSource code > span > a:first-child::before
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
     padding: 0 4px; width: 4em;
-    color: #aaaaaa;
   }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
 div.sourceCode
   {   }
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { color: #008000; } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { color: #008000; font-weight: bold; } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+/* CSS for citations */
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
 }
-.hanging div.csl-entry {
+.hanging-indent div.csl-entry {
   margin-left:2em;
   text-indent:-2em;
 }
@@ -101,8 +73,7 @@ div.csl-right-inline {
 }
 div.csl-indent {
   margin-left: 2em;
-}
-</style>
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -157,11 +128,16 @@ div.csl-indent {
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
-  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
-    <div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Collaborating with Github</span></h1>
-      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
-        <i class="bi bi-chevron-right"></i>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./part1_intro.html">Part 1: Don’t Repeat Yourself</a></li><li class="breadcrumb-item"><a href="./github.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Collaborating with Github</span></a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
       </button>
     </div>
   </nav>
@@ -169,161 +145,184 @@ div.csl-indent {
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Building reproducible analytical pipelines with R</a> 
         <div class="sidebar-tools-main">
-  <a href="" class="quarto-color-scheme-toggle sidebar-tool" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
 </div>
     </div>
       </div>
-      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="mt-2 flex-shrink-0 align-items-center">
         <div class="sidebar-search">
         <div id="quarto-search" class="" title="Search"></div>
         </div>
-      </div>
+        </div>
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link">Welcome!</a>
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Welcome!</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./preface.html" class="sidebar-item-text sidebar-link">Preface</a>
+  <a href="./preface.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./intro.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></a>
+  <a href="./intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="./part1_intro.html" class="sidebar-item-text sidebar-link">Part 1: Don’t Repeat Yourself</a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+            <a href="./part1_intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Part 1: Don’t Repeat Yourself</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./prerequisites.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Before we start</span></a>
+  <a href="./prerequisites.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Before we start</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./project_start.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Project start</span></a>
+  <a href="./project_start.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Project start</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./git.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Version control</span></a>
+  <a href="./git.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Version control</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./github.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Collaborating with Github</span></a>
+  <a href="./github.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Collaborating with Github</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./fprog.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Functional programming</span></a>
+  <a href="./fprog.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Functional programming</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./lit_prog.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Literate programming</span></a>
+  <a href="./lit_prog.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Literate programming</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./part1_conclusion.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Conclusion of part 1</span></a>
+  <a href="./part1_conclusion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Conclusion of part 1</span></span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="./part2_intro.html" class="sidebar-item-text sidebar-link">Part 2: Write IT down</a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+            <a href="./part2_intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Part 2: Write IT down</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./project_rewrite.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Rewriting our project</span></a>
+  <a href="./project_rewrite.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Rewriting our project</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./repro_intro.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Introduction to reproducibility</span></a>
+  <a href="./repro_intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Introduction to reproducibility</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./packages.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Packaging your code</span></a>
+  <a href="./packages.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Packaging your code</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./testing.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Testing your code</span></a>
+  <a href="./testing.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Testing your code</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./targets.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Build automation</span></a>
+  <a href="./targets.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Build automation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./repro_cont.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Reproducible analytical pipelines with Docker</span></a>
+  <a href="./repro_cont.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Reproducible analytical pipelines with Docker</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ci_cd.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Continuous integration and continuous deployment/delivery</span></a>
+  <a href="./ci_cd.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Continuous integration and continuous deployment/delivery</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./part2_conclusion.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Conclusion of part 2</span></a>
+  <a href="./part2_conclusion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Conclusion of part 2</span></span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./book_conclusion.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Conclusion</span></a>
+  <a href="./book_conclusion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Conclusion</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./references.html" class="sidebar-item-text sidebar-link">References</a>
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
   </div>
 </li>
     </ul>
     </div>
 </nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#collaborating-as-a-team-using-trunk-based-development" id="toc-collaborating-as-a-team-using-trunk-based-development" class="nav-link active" data-scroll-target="#collaborating-as-a-team-using-trunk-based-development"><span class="toc-section-number">5.1</span>  Collaborating as a team using <em>trunk-based development</em></a>
+  <li><a href="#collaborating-as-a-team-using-trunk-based-development" id="toc-collaborating-as-a-team-using-trunk-based-development" class="nav-link active" data-scroll-target="#collaborating-as-a-team-using-trunk-based-development"><span class="header-section-number">5.1</span> Collaborating as a team using <em>trunk-based development</em></a>
   <ul class="collapse">
-  <li><a href="#tbd-basics" id="toc-tbd-basics" class="nav-link" data-scroll-target="#tbd-basics"><span class="toc-section-number">5.1.1</span>  TBD basics</a></li>
-  <li><a href="#handling-conflicts" id="toc-handling-conflicts" class="nav-link" data-scroll-target="#handling-conflicts"><span class="toc-section-number">5.1.2</span>  Handling conflicts</a></li>
-  <li><a href="#make-sure-you-blame-the-right-person" id="toc-make-sure-you-blame-the-right-person" class="nav-link" data-scroll-target="#make-sure-you-blame-the-right-person"><span class="toc-section-number">5.1.3</span>  Make sure you blame the right person</a></li>
-  <li><a href="#simplified-trunk-based-development" id="toc-simplified-trunk-based-development" class="nav-link" data-scroll-target="#simplified-trunk-based-development"><span class="toc-section-number">5.1.4</span>  Simplified trunk-based development</a></li>
-  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="toc-section-number">5.1.5</span>  Conclusion</a></li>
+  <li><a href="#tbd-basics" id="toc-tbd-basics" class="nav-link" data-scroll-target="#tbd-basics"><span class="header-section-number">5.1.1</span> TBD basics</a></li>
+  <li><a href="#handling-conflicts" id="toc-handling-conflicts" class="nav-link" data-scroll-target="#handling-conflicts"><span class="header-section-number">5.1.2</span> Handling conflicts</a></li>
+  <li><a href="#make-sure-you-blame-the-right-person" id="toc-make-sure-you-blame-the-right-person" class="nav-link" data-scroll-target="#make-sure-you-blame-the-right-person"><span class="header-section-number">5.1.3</span> Make sure you blame the right person</a></li>
+  <li><a href="#simplified-trunk-based-development" id="toc-simplified-trunk-based-development" class="nav-link" data-scroll-target="#simplified-trunk-based-development"><span class="header-section-number">5.1.4</span> Simplified trunk-based development</a></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">5.1.5</span> Conclusion</a></li>
   </ul></li>
-  <li><a href="#contributing-to-public-repositories" id="toc-contributing-to-public-repositories" class="nav-link" data-scroll-target="#contributing-to-public-repositories"><span class="toc-section-number">5.2</span>  Contributing to public repositories</a></li>
-  <li><a href="#further-reading" id="toc-further-reading" class="nav-link" data-scroll-target="#further-reading"><span class="toc-section-number">5.3</span>  Further reading</a></li>
+  <li><a href="#contributing-to-public-repositories" id="toc-contributing-to-public-repositories" class="nav-link" data-scroll-target="#contributing-to-public-repositories"><span class="header-section-number">5.2</span> Contributing to public repositories</a></li>
+  <li><a href="#further-reading" id="toc-further-reading" class="nav-link" data-scroll-target="#further-reading"><span class="header-section-number">5.3</span> Further reading</a></li>
   </ul>
 </nav>
     </div>
@@ -332,7 +331,7 @@ div.csl-indent {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span id="sec-chapter-github" class="quarto-section-identifier d-none d-lg-block"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Collaborating with Github</span></span></h1>
+<h1 class="title"><span id="sec-chapter-github" class="quarto-section-identifier"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Collaborating with Github</span></span></h1>
 </div>
 
 
@@ -402,144 +401,114 @@ remote:
 To github.com:rap4all/housing.git
  * [new branch]      add_readme -&gt; add_readme</code></pre>
 <p>Git tells us that we now need to create a pull request. What is that? Well, if we want to merge our brunch back to the trunk, we need to do so by using a pull request. Let’s see what Bruno sees on Github:</p>
-<div>
 <figure class="figure">
 <img src="images/github_add_readme_recent_push.png" alt="Bruno sees that the 'add_readme' branch has been recently updated." class="figure-img">
 <figcaption class="figure-caption">
 Bruno sees that the ‘add_readme’ branch has been recently updated.
 </figcaption>
 </figure>
-</div>
 <p>Bruno can now decide to continue working on this branch, or, since the purpose of this branch was only to add the readme file, decide instead to do a pull request. By clicking on the “Compare &amp; pull request” button Bruno now sees this:</p>
-<div>
 <figure class="figure">
 <img src="images/github_pull_request.png" alt="This screen makes it easy to see what changed." class="figure-img">
 <figcaption class="figure-caption">
 This screen makes it easy to see what changed.
 </figcaption>
 </figure>
-</div>
 <p>Bruno can leave a comment, and see what changed (in this case, a single file was added) and most importantly, add a reviewer if needed:</p>
-<div>
 <figure class="figure">
 <img src="images/github_add_reviewer.png" alt="Let boss decide if this is good enough." class="figure-img">
 <figcaption class="figure-caption">
 Let boss decide if this is good enough.
 </figcaption>
 </figure>
-</div>
 <p>This is what Bruno sees now:</p>
-<div>
 <figure class="figure">
 <img src="images/github_reviewer_requested.png" alt="Github tells us that this branch can safely be merged." class="figure-img">
 <figcaption class="figure-caption">
 Github tells us that this branch can safely be merged.
 </figcaption>
 </figure>
-</div>
 <p>Bruno requested the review, but Github tells us that the branch can safely be merged. This is because we added a file and did not touch anything else, and also because the owner of the repository was asleep while Bruno was working, so there was no opportunity for conflicts to arise.</p>
 <p>Let’s see what the owner now sees. The owner should have gotten a notification to review the pull request:</p>
-<div>
 <figure class="figure">
 <img src="images/github_reviewer_notified.png" alt="The owner was notified to review the pull request." class="figure-img">
 <figcaption class="figure-caption">
 The owner was notified to review the pull request.
 </figcaption>
 </figure>
-</div>
 <p>By clicking on the notification, the owner gets taken to this view:</p>
-<div>
 <figure class="figure">
 <img src="images/github_review.png" alt="Time to review the pull request." class="figure-img">
 <figcaption class="figure-caption">
 Time to review the pull request.
 </figcaption>
 </figure>
-</div>
 <p>Here, the reviewer can check the commit, the files that were changed, and see if there are any conflicts between this code and the code base on the master (or trunk) branch. Github also tells us two interesting things: the owner can add a rule that states that any pull request must be approved, and also that continuous integration has not been set up (we are going to see what this means in the second part of this book).</p>
 <p>Let’s go ahead and add a rule that each pull request has to be approved. By clicking on “Add rule”, the following screen appears:</p>
-<div>
 <figure class="figure">
 <img src="images/github_rules.png" alt="Choose how to protect the master branch." class="figure-img">
 <figcaption class="figure-caption">
 Choose how to protect the master branch.
 </figcaption>
 </figure>
-</div>
 <p>By clicking the first option, more options appear:</p>
-<div>
 <figure class="figure">
 <img src="images/github_rules_2.png" alt="Reviews are now required." class="figure-img">
 <figcaption class="figure-caption">
 Reviews are now required.
 </figcaption>
 </figure>
-</div>
 <p>By choosing these options, the owner can basically enforces trunk-based development (well, collaborators still have to submit pull requests frequently enough though, because if they don’t, we can be in a situation where merging can be very difficult).</p>
 <p>Let’s choose one last option: by scrolling down, it’s possible to select the option “Do not allow bypassing the above settings”. This makes sure that even administrations (the owners of the project) must abide by the same rules.</p>
 <p>Let’s go back to the pull request. We can see now that the review is required:</p>
-<div>
 <figure class="figure">
 <img src="images/github_review_required.png" alt="Time to review." class="figure-img">
 <figcaption class="figure-caption">
 Time to review.
 </figcaption>
 </figure>
-</div>
 <p>So now the owner actually has to go and see the files that were changed:</p>
-<div>
 <figure class="figure">
 <img src="images/github_add_your_review.png" alt="Check the code, and add comments if needed." class="figure-img">
 <figcaption class="figure-caption">
 Check the code, and add comments if needed.
 </figcaption>
 </figure>
-</div>
 <p>It’s possible to add comments to single lines if needed:</p>
-<div>
 <figure class="figure">
 <img src="images/github_review_comments.png" alt="It's possible to add comments to lines." class="figure-img">
 <figcaption class="figure-caption">
 It’s possible to add comments to lines.
 </figcaption>
 </figure>
-</div>
 <p>By clicking on the plus sign, a box appears and it’s possible to leave a comment. In this case, everything is fine, so the owner is going to click on the “Viewed” button:</p>
-<div>
 <figure class="figure">
 <img src="images/github_file_viewed.png" alt="Good job!" class="figure-img">
 <figcaption class="figure-caption">
 Good job!
 </figcaption>
 </figure>
-</div>
 <p>Then, by clicking on “Review changes”, it’s possible to either add a general comment, approve the pull request, or request changes that must be addressed before merging. Let’s go ahead and approve:</p>
-<div>
 <figure class="figure">
 <img src="images/github_approve.png" alt="Nothing to complain about." class="figure-img">
 <figcaption class="figure-caption">
 Nothing to complain about.
 </figcaption>
 </figure>
-</div>
 <p>By submitting the review, the reviewer is taken back to the issue:</p>
-<div>
 <figure class="figure">
 <img src="images/github_changes_approved.png" alt="We're done, we can merge the pull request." class="figure-img">
 <figcaption class="figure-caption">
 We’re done, we can merge the pull request.
 </figcaption>
 </figure>
-</div>
 <p>The reviewer can now merge the pull request by clicking on the “Merge pull request” button. Github even suggests we deleted the branch, which served its purpose:</p>
-<div>
 <figure class="figure">
 <img src="images/github_pull_request_done.png" alt="Let's get rid of this branch." class="figure-img">
 <figcaption class="figure-caption">
 Let’s get rid of this branch.
 </figcaption>
 </figure>
-</div>
 <p>Let’s delete it (it’s always possible to restore it).</p>
 </section>
 <section id="handling-conflicts" class="level3" data-number="5.1.2">
@@ -634,52 +603,42 @@ remote:
 To github.com:rap4all/housing.git
  * [new branch]      add_sweet_feature -&gt; add_sweet_feature</code></pre>
 <p>So, let’s think about what just happened: two developers changed the same file, <code>analysis.R</code> in two separate branches. They did what they had to do, and now these two branches need to be merged back to the trunk. So Bruno does a pull request:</p>
-<div>
 <figure class="figure">
 <img src="images/github_new_pull_request.png" alt="Bruno opens a pull request after finishing his changes." class="figure-img">
 <figcaption class="figure-caption">
 Bruno opens a pull request after finishing his changes.
 </figcaption>
 </figure>
-</div>
 <p>First, Bruno selects the feature branch (1), then clicks on “Contribute” (2) and then “Open pull request” (3). Bruno gets taken to this screen:</p>
-<div>
 <figure class="figure">
 <img src="images/github_new_pull_request_2.png" alt="No conflicts, for now..." class="figure-img">
 <figcaption class="figure-caption">
 No conflicts, for now…
 </figcaption>
 </figure>
-</div>
 <p>Now Bruno can click on “Create pull request”, but remember, because reviews are required, automatic merging is disabled.</p>
 <p>If now we go see what happens from the project owner’s side of things, first of all, there’s now a notification for a pending review:</p>
-<div>
 <figure class="figure">
 <img src="images/github_new_pull_request_review_pending.png" alt="New review pending." class="figure-img">
 <figcaption class="figure-caption">
 New review pending.
 </figcaption>
 </figure>
-</div>
 <p>By clicking on it, the project owner can review the pull request and decide what to do with it. So at this point, the owner did not open a pull request for the feature he or she worked on yet. And maybe that’s a good thing, because now the project owner can see that the changes that Bruno made on the file will conflict with the project owner’s changes.</p>
 <p>So how to move forward? Simple: the project owner can decide to approve the pull request, which will merge Bruno’s changes into the master branch (or the trunk). Then, instead of opening a pull request for merging his or her changes into trunk, which will cause a conflict, the project owner can instead merge the changes from the trunk into his or her feature branch. This will also create a conflict, but now the project owner can easily deal with it on his or her machine, and then push a new commit with both changes integrated gracefully. The image below illustrates this workflow:</p>
-<div>
 <figure class="figure">
 <img src="images/github_conflict_tbd.png" alt="Conflict solving with trunk-based development." class="figure-img">
 <figcaption class="figure-caption">
 Conflict solving with trunk-based development.
 </figcaption>
 </figure>
-</div>
 <p>First step, the owner reviews and approves Bruno’s pull request:</p>
-<div>
 <figure class="figure">
 <img src="images/github_pull_request_approved.png" alt="First, let's approve the changes." class="figure-img">
 <figcaption class="figure-caption">
 First, let’s approve the changes.
 </figcaption>
 </figure>
-</div>
 <p>The pull request can get merged and Bruno’s feature branch deleted. Now, it wouldn’t make sense for the project owner to create a pull request to merge his or her changes. They would conflict with what Bruno did. So the project owner goes back to the computer and essentially updates the code in his or her feature branch by merging master into it.</p>
 <p>So, the project owner checks that he or she is working on the feature branch:</p>
 <pre><code>owner@localhost ➤ git status</code></pre>
@@ -710,14 +669,12 @@ filtered_data &lt;- commune_level_data |&gt;
 &gt;&gt;&gt;&gt;&gt;&gt;&gt; a43c68f5596563ffca33b3729451bffc762782c3</code></pre>
 <p>We both see how the lines look on the owner’s computer and how they look in the master branch (or trunk). These are the lines between <code>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</code> and <code>=======</code>. The lines between <code>=======</code> and <code>&gt;&gt;&gt;&gt;&gt;&gt;&gt; a43c68f5596563ffca33b3729451bffc762782c3</code> are how they look in the master branch (or trunk). This very long chain of characters that starts with <code>a43c68f</code> is the hash of the commit from which these lines come from.</p>
 <p>So this makes things quite easy; one simply needs to remove the outdated code, and then commit and push the fixed file! The project owner only needs to remove <code>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</code> and <code>=======</code> and what’s between these lines, as well as the lines that show the hash commit. The project owner can now commit and push the changes, open a pull request, ask Bruno to review the changes one last time and merge everything back to master.</p>
-<div>
 <figure class="figure">
 <img src="images/github_conflict_solved.png" alt="The conflict has been gracefully solved." class="figure-img">
 <figcaption class="figure-caption">
 The conflict has been gracefully solved.
 </figcaption>
 </figure>
-</div>
 <p>In (1) we see the commit that deals with the conflict, in (2) the owner asks Bruno for a review and then in (3) we see that Bruno reviewed and approved. Finally, the pull request can be merged (4) and the feature branch deleted.</p>
 </section>
 <section id="make-sure-you-blame-the-right-person" class="level3" data-number="5.1.3">
@@ -752,88 +709,72 @@ b7f82ee1 (Bruno   2023-02-05 18:03:37 +0100 25)
 <section id="contributing-to-public-repositories" class="level2" data-number="5.2">
 <h2 data-number="5.2" class="anchored" data-anchor-id="contributing-to-public-repositories"><span class="header-section-number">5.2</span> Contributing to public repositories</h2>
 <p>In this last section, we are going to briefly discuss how to contribute to a project when we are not a team member of that project. For example, maybe we use an R package and notice a bug, and want to propose a fix. Or maybe we simply spotted a typo in the README of said package, and want to propose a correction. Whatever it may be, if the repository is public, anyone can propose a fix. For example, consider this repository:</p>
-<div>
 <figure class="figure">
 <img src="images/github_public_repo.png" alt="A public repository." class="figure-img">
 <figcaption class="figure-caption">
 A public repository.
 </figcaption>
 </figure>
-</div>
 <p>This repository contains code written by a fellow called “rap4all”, and Bruno uses this code daily. However, Bruno notices a typo in the readme, and wants to propose a fix.</p>
 <p>First, Bruno visits the repository on Github (since it’s a public repository, anyone can view it online) and creates a fork:</p>
-<div>
 <figure class="figure">
 <img src="images/github_fork.png" alt="Bruno needs to create a fork of the repository." class="figure-img">
 <figcaption class="figure-caption">
 Bruno needs to create a fork of the repository.
 </figcaption>
 </figure>
-</div>
 <p>Forking creates a copy of the repository to Bruno’s account:</p>
-<div>
 <figure class="figure">
 <img src="images/github_create_fork.png" alt="Bruno goes ahead with forking." class="figure-img">
 <figcaption class="figure-caption">
 Bruno goes ahead with forking.
 </figcaption>
 </figure>
-</div>
 <p>Bruno now sees the fork on his account as well:</p>
-<div>
 <figure class="figure">
 <img src="images/github_my_fork.png" alt="Bruno's fork." class="figure-img">
 <figcaption class="figure-caption">
 Bruno’s fork.
 </figcaption>
 </figure>
-</div>
 <p>So now, Bruno can clone this repository and work on it, because he is working on a copy of the repository that he owns. Anything Bruno does on this copy will not affect the original repository.</p>
 <pre><code>bruno@computer ➤ git clone git@github.com:b-rodrigues/my_cool_project.git </code></pre>
 <p>Bruno now fixes the typo in the <code>README.md</code> file, commits and pushes to his fork:</p>
-<div>
 <figure class="figure">
 <img src="images/github_typo_fixed.png" alt="Bruno fixed the typo in his fork." class="figure-img">
 <figcaption class="figure-caption">
 Bruno fixed the typo in his fork.
 </figcaption>
 </figure>
-</div>
 <p>As you can see, Bruno’s fork is now ahead of the original repo by one commit. By clicking on “Contribute”, Bruno can open a pull request to propose his fix to the original repository. This pull request will be opened over at the original repository:</p>
-<div>
 <figure class="figure">
 <img src="images/github_pull_request_typo.png" alt="Bruno opens a pull request to contribute his fix upstream." class="figure-img">
 <figcaption class="figure-caption">
 Bruno opens a pull request to contribute his fix upstream.
 </figcaption>
 </figure>
-</div>
 <p>What does the owner of the original repository, “rap4all” see? The pull request Bruno opened is now in the original repository’s “Pull request” menu, and the owner can check what the contribution is, if it breaks code or not, etc. This is essentially the same workflow as the one presented before in trunk-based development with pull requests and reviews before merging (minus the forking of the repository).</p>
-<div>
 <figure class="figure">
 <img src="images/github_merge_pull_request.png" alt="The owner of the original repository can now accept Bruno's fix." class="figure-img">
 <figcaption class="figure-caption">
 The owner of the original repository can now accept Bruno’s fix.
 </figcaption>
 </figure>
-</div>
 <p>By merging the fix, the owner can now benefit from a grammatically correct Readme file as well:</p>
-<div>
 <figure class="figure">
 <img src="images/github_contribution_done.png" alt="The beauty of open source." class="figure-img">
 <figcaption class="figure-caption">
 The beauty of open source.
 </figcaption>
 </figure>
-</div>
 </section>
 <section id="further-reading" class="level2" data-number="5.3">
 <h2 data-number="5.3" class="anchored" data-anchor-id="further-reading"><span class="header-section-number">5.3</span> Further reading</h2>
 <p>To know everything about trunk-based development, check out <span class="citation" data-cites="hammant2020">Hammant (<a href="references.html#ref-hammant2020" role="doc-biblioref">2020</a>)</span>. A free, online, version of the book is available at <a href="https://trunkbaseddevelopment.com/">https://trunkbaseddevelopment.com/</a>.</p>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography" style="display: none">
-<div id="ref-hammant2020" class="csl-entry" role="doc-biblioentry">
+<div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
+<div id="ref-hammant2020" class="csl-entry" role="listitem">
 Hammant, Paul. 2020. <em>Trunk-Based Development and Branch by Abstraction</em>. Leanpub.
 </div>
 </div>
@@ -988,9 +929,23 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     icon: icon
   };
   anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
   const clipboard = new window.ClipboardJS('.code-copy-button', {
-    target: function(trigger) {
-      return trigger.previousElementSibling;
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
     }
   });
   clipboard.on('success', function(e) {
@@ -1055,6 +1010,92 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return note.innerHTML;
     });
   }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
   const findCites = (el) => {
     const parentEl = el.parentElement;
     if (parentEl) {
