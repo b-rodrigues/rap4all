@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.340">
+<meta name="generator" content="quarto-1.4.4">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -250,7 +250,7 @@ div.csl-indent {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./repro_intro.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Freezing packages versions, or basic reproducibility with</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Freezing packages versions, or basic reproducibility with renv</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -268,7 +268,7 @@ div.csl-indent {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./targets.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Build automation with</span></span></a>
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Build automation with targets</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -432,7 +432,7 @@ More than 20 years later, the output is still the same.
 It’s very close to the Sweave output.
 </figcaption>
 </figure>
-<p>Just like in a Sweave document, an Rmd source file also has a header in which authors can define a number of options. Here we only specified that we wanted a pdf document as an output file. We then copy and pasted the contents from the Sweave source, but changed the chunk delimiters from <code>&lt;&lt;&gt;&gt;=</code> and <code>@</code> to <code>```gwj</code> to start an R chunk and <code>```</code> to end it. Remember; we need to specify the engine in the chunk because <code>{knitr}</code> supports many engines. For example, it is possible to run a bash command by adding this chunk to the source:</p>
+<p>Just like in a Sweave document, an Rmd source file also has a header in which authors can define a number of options. Here we only specified that we wanted a pdf document as an output file. We then copy and pasted the contents from the Sweave source, but changed the chunk delimiters from <code>&lt;&lt;&gt;&gt;=</code> and <code>@</code> to <code>```stw</code> to start an R chunk and <code>```</code> to end it. Remember; we need to specify the engine in the chunk because <code>{knitr}</code> supports many engines. For example, it is possible to run a bash command by adding this chunk to the source:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>---</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>output: pdf_document</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>---</span>
