@@ -203,13 +203,13 @@ div.csl-indent {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./git.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Version control</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Version control with Git</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./github.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Collaborating with Github</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Collaborating using Trunk-based development with Github</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -250,7 +250,7 @@ div.csl-indent {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./repro_intro.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Introduction to reproducibility</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Freezing packages versions, or basic reproducibility with</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -268,7 +268,7 @@ div.csl-indent {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./targets.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Build automation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Build automation with</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -447,7 +447,7 @@ Examples from older versions of R run most of the time successfully on the curre
 <p>(But something important should be noted: just because some old piece of code runs without error, doesn’t mean that the result is exactly the same. There might be cases where the same function returns different results on different versions of R.)</p>
 <p>But while this is evidence of R itself being quite stable through time, there are studies that show a less rosy picture. In a recent study (<span class="citation" data-cites="trisovic2022">Trisovic et al. (<a href="references.html#ref-trisovic2022" role="doc-biblioref">2022</a>)</span> <a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>), some researchers tried to rerun up to 9000 R scripts downloaded from the Harvard Dataverse. There were several issues when trying to rerun the scripts, which lead to, and I quote the paper here, “[…] 74% of R files [failing] to complete without error in the initial execution, while 56% failed when code cleaning was applied, showing that many errors can be prevented with good coding practices”.</p>
 <p>The take-away message is that counting on the language itself being stable through time as a sufficient condition for reproducibility is not enough. We have to set up the code in a way that it actually is reproducible.</p>
-<p>So what does this all mean? This means that reproducibility is on a continuum, and depending on the constraints you face your project can not very reproducible to totally reproducible. Let’s consider the following list of anything that can influence how reproducible your project truly is:</p>
+<p>So what does this all mean? This means that reproducibility is on a continuum, and depending on the constraints you face your project can be “not very reproducible” to “totally reproducible”. Let’s consider the following list of anything that can influence how reproducible your project truly is:</p>
 <ul>
 <li>Version of the programming language used;</li>
 <li>Versions of the packages/libraries of said programming language used;</li>
