@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Building reproducible analytical pipelines with R - 11&nbsp; Packaging your code</title>
+<title>Building reproducible analytical pipelines with R - 13&nbsp; Packaging your code</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -133,7 +133,7 @@ div.csl-indent {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./part2_intro.html">Part 2: Write IT down</a></li><li class="breadcrumb-item"><a href="./packages.html"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Packaging your code</span></a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./packages.html"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Packaging your code</span></a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -179,122 +179,112 @@ div.csl-indent {
  <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
   </div>
 </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a href="./part1_intro.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Part 1: Don’t Repeat Yourself</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part1_intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Part 1: Don’t Repeat Yourself</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./prerequisites.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Before we start</span></span></a>
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Before we start</span></span></a>
   </div>
 </li>
-          <li class="sidebar-item">
+        <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./project_start.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Project start</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Project start</span></span></a>
   </div>
 </li>
-          <li class="sidebar-item">
+        <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./git.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Version control</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Version control</span></span></a>
   </div>
 </li>
-          <li class="sidebar-item">
+        <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./github.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Collaborating with Github</span></span></a>
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Collaborating with Github</span></span></a>
   </div>
 </li>
-          <li class="sidebar-item">
+        <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./fprog.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Functional programming</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Functional programming</span></span></a>
   </div>
 </li>
-          <li class="sidebar-item">
+        <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./lit_prog.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Literate programming</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Literate programming</span></span></a>
   </div>
 </li>
-          <li class="sidebar-item">
+        <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./part1_conclusion.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Conclusion of part 1</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Conclusion of part 1</span></span></a>
   </div>
 </li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a href="./part2_intro.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Part 2: Write IT down</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part2_intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Part 2: Write IT down</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./project_rewrite.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Rewriting our project</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Rewriting our project</span></span></a>
   </div>
 </li>
-          <li class="sidebar-item">
+        <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./repro_intro.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Introduction to reproducibility</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Introduction to reproducibility</span></span></a>
   </div>
 </li>
-          <li class="sidebar-item">
+        <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./packages.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Packaging your code</span></span></a>
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Packaging your code</span></span></a>
   </div>
 </li>
-          <li class="sidebar-item">
+        <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./testing.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Testing your code</span></span></a>
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Testing your code</span></span></a>
   </div>
 </li>
-          <li class="sidebar-item">
+        <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./targets.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Build automation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Build automation</span></span></a>
   </div>
 </li>
-          <li class="sidebar-item">
+        <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./repro_cont.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Reproducible analytical pipelines with Docker</span></span></a>
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Reproducible analytical pipelines with Docker</span></span></a>
   </div>
 </li>
-          <li class="sidebar-item">
+        <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./ci_cd.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Continuous integration and continuous deployment/delivery</span></span></a>
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Continuous integration and continuous deployment/delivery</span></span></a>
   </div>
 </li>
-          <li class="sidebar-item">
+        <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./part2_conclusion.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Conclusion of part 2</span></span></a>
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Conclusion of part 2</span></span></a>
   </div>
 </li>
-      </ul>
-  </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./book_conclusion.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Conclusion</span></span></a>
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Conclusion</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -313,17 +303,17 @@ div.csl-indent {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#benefits-of-packages" id="toc-benefits-of-packages" class="nav-link active" data-scroll-target="#benefits-of-packages"><span class="header-section-number">11.1</span> Benefits of packages</a></li>
-  <li><a href="#fusen-quickstart" id="toc-fusen-quickstart" class="nav-link" data-scroll-target="#fusen-quickstart"><span class="header-section-number">11.2</span> <code>{fusen}</code> quickstart</a></li>
-  <li><a href="#turning-our-rmds-into-a-package" id="toc-turning-our-rmds-into-a-package" class="nav-link" data-scroll-target="#turning-our-rmds-into-a-package"><span class="header-section-number">11.3</span> Turning our Rmds into a package</a></li>
-  <li><a href="#including-datasets" id="toc-including-datasets" class="nav-link" data-scroll-target="#including-datasets"><span class="header-section-number">11.4</span> Including datasets</a></li>
-  <li><a href="#installing-and-sharing-the-package" id="toc-installing-and-sharing-the-package" class="nav-link" data-scroll-target="#installing-and-sharing-the-package"><span class="header-section-number">11.5</span> Installing and sharing the package</a>
+  <li><a href="#benefits-of-packages" id="toc-benefits-of-packages" class="nav-link active" data-scroll-target="#benefits-of-packages"><span class="header-section-number">13.1</span> Benefits of packages</a></li>
+  <li><a href="#fusen-quickstart" id="toc-fusen-quickstart" class="nav-link" data-scroll-target="#fusen-quickstart"><span class="header-section-number">13.2</span> <code>{fusen}</code> quickstart</a></li>
+  <li><a href="#turning-our-rmds-into-a-package" id="toc-turning-our-rmds-into-a-package" class="nav-link" data-scroll-target="#turning-our-rmds-into-a-package"><span class="header-section-number">13.3</span> Turning our Rmds into a package</a></li>
+  <li><a href="#including-datasets" id="toc-including-datasets" class="nav-link" data-scroll-target="#including-datasets"><span class="header-section-number">13.4</span> Including datasets</a></li>
+  <li><a href="#installing-and-sharing-the-package" id="toc-installing-and-sharing-the-package" class="nav-link" data-scroll-target="#installing-and-sharing-the-package"><span class="header-section-number">13.5</span> Installing and sharing the package</a>
   <ul class="collapse">
-  <li><a href="#code-is-hosted" id="toc-code-is-hosted" class="nav-link" data-scroll-target="#code-is-hosted"><span class="header-section-number">11.5.1</span> Code is hosted</a></li>
-  <li><a href="#code-cannot-be-hosted" id="toc-code-cannot-be-hosted" class="nav-link" data-scroll-target="#code-cannot-be-hosted"><span class="header-section-number">11.5.2</span> Code cannot be hosted</a></li>
-  <li><a href="#marketing-your-work" id="toc-marketing-your-work" class="nav-link" data-scroll-target="#marketing-your-work"><span class="header-section-number">11.5.3</span> Marketing your work</a></li>
+  <li><a href="#code-is-hosted" id="toc-code-is-hosted" class="nav-link" data-scroll-target="#code-is-hosted"><span class="header-section-number">13.5.1</span> Code is hosted</a></li>
+  <li><a href="#code-cannot-be-hosted" id="toc-code-cannot-be-hosted" class="nav-link" data-scroll-target="#code-cannot-be-hosted"><span class="header-section-number">13.5.2</span> Code cannot be hosted</a></li>
+  <li><a href="#marketing-your-work" id="toc-marketing-your-work" class="nav-link" data-scroll-target="#marketing-your-work"><span class="header-section-number">13.5.3</span> Marketing your work</a></li>
   </ul></li>
-  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">11.6</span> Conclusion</a></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">13.6</span> Conclusion</a></li>
   </ul>
 </nav>
     </div>
@@ -332,7 +322,7 @@ div.csl-indent {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Packaging your code</span></h1>
+<h1 class="title"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Packaging your code</span></h1>
 </div>
 
 
@@ -364,14 +354,14 @@ div.csl-indent {
 <blockquote class="blockquote">
 <p>If you have written an Rmd file, you have (almost) already written a package.</p>
 </blockquote>
-<section id="benefits-of-packages" class="level2" data-number="11.1">
-<h2 data-number="11.1" class="anchored" data-anchor-id="benefits-of-packages"><span class="header-section-number">11.1</span> Benefits of packages</h2>
+<section id="benefits-of-packages" class="level2" data-number="13.1">
+<h2 data-number="13.1" class="anchored" data-anchor-id="benefits-of-packages"><span class="header-section-number">13.1</span> Benefits of packages</h2>
 <p>Let’s first go over the benefits of turning your analysis into a package once again, as this is crucial.</p>
 <p>The main point is not to turn the analysis into a package to publish on CRAN (but you can if you want to). The point is that when you analyse data, more often than not you have to write a lot of custom code, and very often, you don’t expect to write that much custom code. Let’s think about our little project: all we wanted was to create some plots from Luxembourguish houses’ price data. And yet, we had to scrape Wikipedia on two occasions, clean an Excel file, and write a test… the project was quite modest, and yet, the amount of code (and thus opportunities to make mistakes) is quite large. But, that’s not something that we could have anticipated, hence why we never really start by writing a package, but a script (or rather, an <code>.Rmd</code>) instead. But then as this script grows larger and larger, we realise that we might need something else than a simple <code>.Rmd</code> file.</p>
 <p>The other benefit of turning all this code into a package is that we get a clear separation between the code that we wrote purely to get our analysis going (what I called the <em>software development part</em> before) from the analysis itself (which would then typically consist in computing descriptive statistics, running regression or machine learning models, and visualisation). This then in turn means that we can more easily maintain and update each part separately. So the pure software development part goes into the package, which then gives us the possibility to use many great tools to ensure that our code is properly documented and tested, and then the analysis can go inside a purely reproducible pipeline.</p>
 </section>
-<section id="fusen-quickstart" class="level2" data-number="11.2">
-<h2 data-number="11.2" class="anchored" data-anchor-id="fusen-quickstart"><span class="header-section-number">11.2</span> <code>{fusen}</code> quickstart</h2>
+<section id="fusen-quickstart" class="level2" data-number="13.2">
+<h2 data-number="13.2" class="anchored" data-anchor-id="fusen-quickstart"><span class="header-section-number">13.2</span> <code>{fusen}</code> quickstart</h2>
 <p>If you haven’t already, install the <code>{fusen}</code> package:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"fusen"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -467,8 +457,8 @@ fusen takes care of the boring stuff for you!
 </div>
 <p>This will build a website for your package and open your web browser and show you how it looks like. The files for this website are in the newly created <code>docs/</code> folder in the root of your package folder. This can then be hosted, for free, with Github so people can explore the package’s functions and documentation without having to install the package!</p>
 </section>
-<section id="turning-our-rmds-into-a-package" class="level2" data-number="11.3">
-<h2 data-number="11.3" class="anchored" data-anchor-id="turning-our-rmds-into-a-package"><span class="header-section-number">11.3</span> Turning our Rmds into a package</h2>
+<section id="turning-our-rmds-into-a-package" class="level2" data-number="13.3">
+<h2 data-number="13.3" class="anchored" data-anchor-id="turning-our-rmds-into-a-package"><span class="header-section-number">13.3</span> Turning our Rmds into a package</h2>
 <p>Ok, so I hope to have convinced you that <code>{fusen}</code> is definitely something that you should add to your toolbox. Let’s now turn our analysis into a package, but before diving right into it, let’s think about it for a moment.</p>
 <p>We have two <code>.Rmd</code> files, one for getting and cleaning the data, which we called <code>save_data.Rmd</code> and another for analysing this data, called <code>analyse_data.Rmd</code>.</p>
 <p>In both <code>.Rmd</code> files, we defined a bunch of functions, but most of the functions were defined in the <code>save_data.Rmd</code> script. In fact, in the <code>analyse_data.Rmd</code> file we defined only two functions, <code>get_laspeyeres()</code>, the function to get the Laspeyeres price index, and <code>make_plot()</code>, the function to create the plots for our analysis.</p>
@@ -594,8 +584,8 @@ to your NAMESPACE file.</code></pre>
 <p>This chunk contains the code that we need to run, manually, to inflate the package. However, I’ve removed it, and the reason is that I prefer to have it inside the <code>0-dev_history.Rmd</code> file. I think that it makes more sense to have it there. Take a look at my <code>0-dev_history.Rmd</code> <a href="https://is.gd/JsJJVN">here</a><a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a>. By reading that file, you see all the different developer actions that were taken. Your team-mates, or future you could read this, and immediately understand what happened, and what was done. Under the section title “Inflate save_data.Rmd”, you see that the chunk to inflate the <code>.Rmd</code> file and generate the package is there. I can run this chunk from <code>0-dev_history.Rmd</code> and have my package successfully generated. Something important to notice as well: my fusen-ready <code>.Rmd</code> file is simply called <code>save_data.Rmd</code>, while the generated, inflated file, that will be part of the package under the <code>vignettes/</code> folder is called <code>dev-save_data.Rmd</code>.</p>
 <p>I suggest that you stop here, and really try to get this working as well. You can start by simply cloning your fork of this <a href="https://github.com/b-rodrigues/housing">repository</a><a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a> I linked in the beginning of this chapter, and follow along. After inflating, take a look at the vignette generated from the inflated <code>dev-save_data.Rmd</code>, which you can find under the <code>vignettes/</code> folder. One thing you need to understand, is that the <code>save_data.Rmd</code> file that you inflate, under <code>dev/</code>, is a working file for <em>developers</em>. The generated vignette on the other hand, can be read by stakeholders other than developers as well. In my case, I’ve added the prefix <code>dev-</code> because this vignette deals with preparing data for including in the package, and there is not much point for a stakeholder other than a developer to read this vignette. You will notice that the generated vignette does not contain the function chunks. This is normal, because after inflating the <code>.Rmd</code> file, the functions get saved under the <code>R/</code> folder. Really take some time to understand this. Because what follows will assume that you have groked <code>{fusen}</code>.</p>
 </section>
-<section id="including-datasets" class="level2" data-number="11.4">
-<h2 data-number="11.4" class="anchored" data-anchor-id="including-datasets"><span class="header-section-number">11.4</span> Including datasets</h2>
+<section id="including-datasets" class="level2" data-number="13.4">
+<h2 data-number="13.4" class="anchored" data-anchor-id="including-datasets"><span class="header-section-number">13.4</span> Including datasets</h2>
 <p>Another difference between our initial <code>.Rmd</code> and the fusen-ready <code>.Rmd</code>, is that the fusen-ready <code>save_data.Rmd</code> file does not save the datasets as <code>.csv</code> files anymore. This is because it is much better to include them directly in the package, and make them available to users like so:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">"commune_level_data"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -610,12 +600,12 @@ to your NAMESPACE file.</code></pre>
 <p>Finally, we need to document the datasets. For this, we use another <code>.Rmd</code> file that we inflate as well. You can find it under <code>dev/data_doc.Rmd</code>, or by clicking <a href="https://is.gd/wjkNAO">here</a><a href="#fn9" class="footnote-ref" id="fnref9" role="doc-noteref"><sup>9</sup></a>. Datasets get defined inside chunks, just like functions, using <code>{roxygen2}</code>-type comments.</p>
 <p>This basically covers what you need to know to package code. Of course, there are many other topics that we could discuss, but for our purposes, this is enough. We now know how to take advantage of the tools that make package development easy, and have diverted them for our use. If you want to develop a proper package and push it to CRAN, then I highly recommend you read the <a href="https://r-pkgs.org/">second edition of <em>R packages</em></a><a href="#fn10" class="footnote-ref" id="fnref10" role="doc-noteref"><sup>10</sup></a> by <span class="citation" data-cites="wickham2023">Wickham and Bryan (<a href="references.html#ref-wickham2023" role="doc-biblioref">2023</a>)</span>. This book goes into all the nitty gritty details of full package development. But let me be clear: this does not mean that you cannot develop a full, CRAN-ready, package using <code>{fusen}</code>. You absolutely can! It’s just that this is outside the scope of the present book.</p>
 </section>
-<section id="installing-and-sharing-the-package" class="level2" data-number="11.5">
-<h2 data-number="11.5" class="anchored" data-anchor-id="installing-and-sharing-the-package"><span class="header-section-number">11.5</span> Installing and sharing the package</h2>
+<section id="installing-and-sharing-the-package" class="level2" data-number="13.5">
+<h2 data-number="13.5" class="anchored" data-anchor-id="installing-and-sharing-the-package"><span class="header-section-number">13.5</span> Installing and sharing the package</h2>
 <p>To install the package on the same machine that you developed it, you can simply run the line <code>remotes::install_local()</code> on line 46 of the <code>0-dev_history.Rmd</code> file (ideally in a fresh R session). But how can you share it with colleagues or future you?</p>
 <p>Now that the package is ready, you need to be able to share it. This really depends on whether you can publish the code on Github or not, or whether your company/institution has a self-hosted version control system. In this section, we’re going to discover the following two scenarios: the package is hosted on Github (or in a private self-hosted version control system), or the package cannot be hosted for whatever reason.</p>
-<section id="code-is-hosted" class="level3" data-number="11.5.1">
-<h3 data-number="11.5.1" class="anchored" data-anchor-id="code-is-hosted"><span class="header-section-number">11.5.1</span> Code is hosted</h3>
+<section id="code-is-hosted" class="level3" data-number="13.5.1">
+<h3 data-number="13.5.1" class="anchored" data-anchor-id="code-is-hosted"><span class="header-section-number">13.5.1</span> Code is hosted</h3>
 <p>So if the code is hosted on Github (or on a self-hosted, private, version control system), users of the package can install it directly from Github. This can be done using the <code>{remotes}</code> package, like this:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"github_username/repository_name"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -636,8 +626,8 @@ to your NAMESPACE file.</code></pre>
 </div>
 <p>So the package in the <code>fusen</code> branch and at commit “ae42601” gets installed. Keep in mind that you can specify the commit hash to install the exact version you need, because this is going to do wonders for reproducibility.</p>
 </section>
-<section id="code-cannot-be-hosted" class="level3" data-number="11.5.2">
-<h3 data-number="11.5.2" class="anchored" data-anchor-id="code-cannot-be-hosted"><span class="header-section-number">11.5.2</span> Code cannot be hosted</h3>
+<section id="code-cannot-be-hosted" class="level3" data-number="13.5.2">
+<h3 data-number="13.5.2" class="anchored" data-anchor-id="code-cannot-be-hosted"><span class="header-section-number">13.5.2</span> Code cannot be hosted</h3>
 <p>If the code cannot be hosted, then you have to share it <em>manually</em>. That’s less than ideal, but sometimes there simply is no alternative. In that case, you need to prepare a compressed archive that you can share. This is easily done using <code>devtools::build()</code>. Start a new session in the root directory of you package, and run <code>devtools::build()</code>. This will create a <code>.tar.gz</code> file that you can send to you team-mates, or archive for future you. Ideally, before creating this file, you should go to <code>0-dev_history.Rmd</code> and update the version number in the <code>fusen::fill_description()</code> function, like so:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>fusen<span class="sc">::</span><span class="fu">fill_description</span>(</span>
@@ -658,8 +648,8 @@ to your NAMESPACE file.</code></pre>
 <p>You have to be very disciplined here, because you have to make sure that you keep updating this and documenting which version of the package should get used for which project. Also, make sure that you can store generated <code>.tar.gz</code> alongside the project and that you provide clear installation instructions. To install a package from a <code>.tar.gz</code> file, open a new R session and run the following:</p>
 <pre><code>remotes::install_local("path/to/package/housing_0.0.0.9000.tar.gz")</code></pre>
 </section>
-<section id="marketing-your-work" class="level3" data-number="11.5.3">
-<h3 data-number="11.5.3" class="anchored" data-anchor-id="marketing-your-work"><span class="header-section-number">11.5.3</span> Marketing your work</h3>
+<section id="marketing-your-work" class="level3" data-number="13.5.3">
+<h3 data-number="13.5.3" class="anchored" data-anchor-id="marketing-your-work"><span class="header-section-number">13.5.3</span> Marketing your work</h3>
 <p>Once your package is done, whether it is destined for CRAN or not, whether it can only be shared within your organisation or not, it is important to market it and make it discoverable. This is where building a website for the package is important, and thankfully, it but takes two lines of code to build a fully functioning site. In the introduction we built the website for the template included with <code>{fusen}</code>, let’s now build a website for our housing package.</p>
 <p>This website can then be hosted online if you wish, or it can be shared internally to your organisation, offline, as a means of providing documentation.</p>
 <p>Take a look at the very last section of the <code>0-dev_history.Rmd</code> file, titled “Share the package”. If you execute the lines in that chunk (ideally from a fresh R session), a website will be built automatically. This website will first be in the <code>docs/</code> folder: open the <code>index.html</code> file using a web-browser and you can start navigating the documentation!</p>
@@ -682,8 +672,8 @@ Choose these options to host your package’s website for free!
 <span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a>```</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 </section>
-<section id="conclusion" class="level2" data-number="11.6">
-<h2 data-number="11.6" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">11.6</span> Conclusion</h2>
+<section id="conclusion" class="level2" data-number="13.6">
+<h2 data-number="13.6" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">13.6</span> Conclusion</h2>
 <p>Turning our analysis into a package is useful, because we can divert a lot of tools that are originally intended for package development towards improving our analysis. We can now more easily document the code, define its dependencies, and also share it with teammates, our future selves or the world. What’s more, we clearly separate two tasks from each other: the pure software engineering part, which consisted in building the package, from the pure data analysis part, which will eventually become our pipeline.</p>
 <p>There is one chapter left before we actually build a full-fledged pipeline. In the next chapter, we will learn how to use unit and assertive testing to further improve the code of our package, which will thus also improve the quality of our analysis.</p>
 
@@ -1063,12 +1053,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="./repro_intro.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Introduction to reproducibility</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Introduction to reproducibility</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="./testing.html" class="pagination-link">
-        <span class="nav-page-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Testing your code</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Testing your code</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

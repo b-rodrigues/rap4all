@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Building reproducible analytical pipelines with R - 14&nbsp; Reproducible analytical pipelines with Docker</title>
+<title>Building reproducible analytical pipelines with R - 16&nbsp; Reproducible analytical pipelines with Docker</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -114,7 +114,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./part2_intro.html">Part 2: Write IT down</a></li><li class="breadcrumb-item"><a href="./repro_cont.html"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Reproducible analytical pipelines with Docker</span></a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./repro_cont.html"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Reproducible analytical pipelines with Docker</span></a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -160,122 +160,112 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
   </div>
 </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a href="./part1_intro.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Part 1: Don’t Repeat Yourself</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part1_intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Part 1: Don’t Repeat Yourself</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./prerequisites.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Before we start</span></span></a>
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Before we start</span></span></a>
   </div>
 </li>
-          <li class="sidebar-item">
+        <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./project_start.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Project start</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Project start</span></span></a>
   </div>
 </li>
-          <li class="sidebar-item">
+        <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./git.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Version control</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Version control</span></span></a>
   </div>
 </li>
-          <li class="sidebar-item">
+        <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./github.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Collaborating with Github</span></span></a>
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Collaborating with Github</span></span></a>
   </div>
 </li>
-          <li class="sidebar-item">
+        <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./fprog.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Functional programming</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Functional programming</span></span></a>
   </div>
 </li>
-          <li class="sidebar-item">
+        <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./lit_prog.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Literate programming</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Literate programming</span></span></a>
   </div>
 </li>
-          <li class="sidebar-item">
+        <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./part1_conclusion.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Conclusion of part 1</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Conclusion of part 1</span></span></a>
   </div>
 </li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a href="./part2_intro.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Part 2: Write IT down</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part2_intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Part 2: Write IT down</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./project_rewrite.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Rewriting our project</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Rewriting our project</span></span></a>
   </div>
 </li>
-          <li class="sidebar-item">
+        <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./repro_intro.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Introduction to reproducibility</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Introduction to reproducibility</span></span></a>
   </div>
 </li>
-          <li class="sidebar-item">
+        <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./packages.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Packaging your code</span></span></a>
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Packaging your code</span></span></a>
   </div>
 </li>
-          <li class="sidebar-item">
+        <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./testing.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Testing your code</span></span></a>
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Testing your code</span></span></a>
   </div>
 </li>
-          <li class="sidebar-item">
+        <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./targets.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Build automation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Build automation</span></span></a>
   </div>
 </li>
-          <li class="sidebar-item">
+        <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./repro_cont.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Reproducible analytical pipelines with Docker</span></span></a>
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Reproducible analytical pipelines with Docker</span></span></a>
   </div>
 </li>
-          <li class="sidebar-item">
+        <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./ci_cd.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Continuous integration and continuous deployment/delivery</span></span></a>
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Continuous integration and continuous deployment/delivery</span></span></a>
   </div>
 </li>
-          <li class="sidebar-item">
+        <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./part2_conclusion.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Conclusion of part 2</span></span></a>
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Conclusion of part 2</span></span></a>
   </div>
 </li>
-      </ul>
-  </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./book_conclusion.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Conclusion</span></span></a>
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Conclusion</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -294,20 +284,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#what-is-docker" id="toc-what-is-docker" class="nav-link active" data-scroll-target="#what-is-docker"><span class="header-section-number">14.1</span> What is Docker?</a></li>
-  <li><a href="#a-primer-on-linux" id="toc-a-primer-on-linux" class="nav-link" data-scroll-target="#a-primer-on-linux"><span class="header-section-number">14.2</span> A primer on Linux</a></li>
-  <li><a href="#first-steps-with-docker" id="toc-first-steps-with-docker" class="nav-link" data-scroll-target="#first-steps-with-docker"><span class="header-section-number">14.3</span> First steps with Docker</a></li>
-  <li><a href="#the-rocker-project" id="toc-the-rocker-project" class="nav-link" data-scroll-target="#the-rocker-project"><span class="header-section-number">14.4</span> The Rocker project</a></li>
-  <li><a href="#dockerizing-projects" id="toc-dockerizing-projects" class="nav-link" data-scroll-target="#dockerizing-projects"><span class="header-section-number">14.5</span> Dockerizing projects</a></li>
-  <li><a href="#dockerizing-development-environments" id="toc-dockerizing-development-environments" class="nav-link" data-scroll-target="#dockerizing-development-environments"><span class="header-section-number">14.6</span> Dockerizing development environments</a>
+  <li><a href="#what-is-docker" id="toc-what-is-docker" class="nav-link active" data-scroll-target="#what-is-docker"><span class="header-section-number">16.1</span> What is Docker?</a></li>
+  <li><a href="#a-primer-on-linux" id="toc-a-primer-on-linux" class="nav-link" data-scroll-target="#a-primer-on-linux"><span class="header-section-number">16.2</span> A primer on Linux</a></li>
+  <li><a href="#first-steps-with-docker" id="toc-first-steps-with-docker" class="nav-link" data-scroll-target="#first-steps-with-docker"><span class="header-section-number">16.3</span> First steps with Docker</a></li>
+  <li><a href="#the-rocker-project" id="toc-the-rocker-project" class="nav-link" data-scroll-target="#the-rocker-project"><span class="header-section-number">16.4</span> The Rocker project</a></li>
+  <li><a href="#dockerizing-projects" id="toc-dockerizing-projects" class="nav-link" data-scroll-target="#dockerizing-projects"><span class="header-section-number">16.5</span> Dockerizing projects</a></li>
+  <li><a href="#dockerizing-development-environments" id="toc-dockerizing-development-environments" class="nav-link" data-scroll-target="#dockerizing-development-environments"><span class="header-section-number">16.6</span> Dockerizing development environments</a>
   <ul class="collapse">
-  <li><a href="#creating-a-base-image-for-development" id="toc-creating-a-base-image-for-development" class="nav-link" data-scroll-target="#creating-a-base-image-for-development"><span class="header-section-number">14.6.1</span> Creating a base image for development</a></li>
-  <li><a href="#sharing-images-on-docker-hub" id="toc-sharing-images-on-docker-hub" class="nav-link" data-scroll-target="#sharing-images-on-docker-hub"><span class="header-section-number">14.6.2</span> Sharing images on Docker Hub</a></li>
-  <li><a href="#sharing-a-compressed-archive-of-your-image" id="toc-sharing-a-compressed-archive-of-your-image" class="nav-link" data-scroll-target="#sharing-a-compressed-archive-of-your-image"><span class="header-section-number">14.6.3</span> Sharing a compressed archive of your image</a></li>
+  <li><a href="#creating-a-base-image-for-development" id="toc-creating-a-base-image-for-development" class="nav-link" data-scroll-target="#creating-a-base-image-for-development"><span class="header-section-number">16.6.1</span> Creating a base image for development</a></li>
+  <li><a href="#sharing-images-on-docker-hub" id="toc-sharing-images-on-docker-hub" class="nav-link" data-scroll-target="#sharing-images-on-docker-hub"><span class="header-section-number">16.6.2</span> Sharing images on Docker Hub</a></li>
+  <li><a href="#sharing-a-compressed-archive-of-your-image" id="toc-sharing-a-compressed-archive-of-your-image" class="nav-link" data-scroll-target="#sharing-a-compressed-archive-of-your-image"><span class="header-section-number">16.6.3</span> Sharing a compressed archive of your image</a></li>
   </ul></li>
-  <li><a href="#the-problems-of-relying-so-much-on-docker" id="toc-the-problems-of-relying-so-much-on-docker" class="nav-link" data-scroll-target="#the-problems-of-relying-so-much-on-docker"><span class="header-section-number">14.7</span> The problems of relying so much on Docker</a></li>
-  <li><a href="#is-docker-enough" id="toc-is-docker-enough" class="nav-link" data-scroll-target="#is-docker-enough"><span class="header-section-number">14.8</span> Is Docker enough?</a></li>
-  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">14.9</span> Conclusion</a></li>
+  <li><a href="#the-problems-of-relying-so-much-on-docker" id="toc-the-problems-of-relying-so-much-on-docker" class="nav-link" data-scroll-target="#the-problems-of-relying-so-much-on-docker"><span class="header-section-number">16.7</span> The problems of relying so much on Docker</a></li>
+  <li><a href="#is-docker-enough" id="toc-is-docker-enough" class="nav-link" data-scroll-target="#is-docker-enough"><span class="header-section-number">16.8</span> Is Docker enough?</a></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">16.9</span> Conclusion</a></li>
   </ul>
 </nav>
     </div>
@@ -316,7 +306,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Reproducible analytical pipelines with Docker</span></h1>
+<h1 class="title"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Reproducible analytical pipelines with Docker</span></h1>
 </div>
 
 
@@ -350,8 +340,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>and so on. <code>f()</code> is only pure as far as the R version currently running <code>f()</code> is concerned. But everything else should also be taken into account! Remember, in technical terms, this means that our function is not referentially transparent.</p>
 <p>And this is what Docker allows us to do: turn our pipeline referentially transparent, by freezing R’s and the operating system’s versions (and the CPU architecture as well).</p>
 <p>Before continuing, let me warn you: if you’re using an Apple computer with an Apple Silicon CPU (M1 or M2), then you may have issues following along. I don’t own such a machine so I cannot test if the code below works flawlessly. What I can say is that I’ve read some users of these computers have had trouble using Docker in the past. These issues might have been solved in the meantime. It seems that enabling the option “use Rosetta for x86/amd64 emulation on Apple Silicon” in Docker Desktop (I will discuss Docker Desktop briefly in the following sections) may solve the issue.</p>
-<section id="what-is-docker" class="level2" data-number="14.1">
-<h2 data-number="14.1" class="anchored" data-anchor-id="what-is-docker"><span class="header-section-number">14.1</span> What is Docker?</h2>
+<section id="what-is-docker" class="level2" data-number="16.1">
+<h2 data-number="16.1" class="anchored" data-anchor-id="what-is-docker"><span class="header-section-number">16.1</span> What is Docker?</h2>
 <p>Let me first explain in very simple terms what Docker is.</p>
 <p>In very simple (and technically wrong) terms, Docker makes it easy to run a Linux virtual machine (VM) on your computer. A VM is a computer within a computer: the idea is that you turn on your computer, start Windows (the operating system you use every day), but then start Ubuntu (a very popular Linux distribution) as if it were any other app installed on your computer and use it (almost) as you would normally. This is what a classic VM solution like <em>Virtualbox</em> offers you. You can start and use Ubuntu interactively from within Windows. This can be quite useful for testing purposes for example.</p>
 <p>The way Docker differs from Virtualbox (or VMware) though is that it strips down the VM to its bare essentials. There’s no graphical user interface for example, and you will not (typically) use a Docker VM interactively. What you will do instead is write down in a text file the specifications of the VM you want. Let’s call this text file a <em>Dockerfile</em>. For example, you want the VM to be based on Ubuntu. So that would be the first line in the Dockerfile. You then want it to have R installed. So that would be the second line. Then you need to install R packages, so you add those lines as well. Maybe you need to add some system dependencies? Add them. Finally, you add the code of the pipeline that you want to make reproducible as well.</p>
@@ -379,8 +369,8 @@ Running a pipeline with Docker results in the same outputs.
 </blockquote>
 <p>Open source is not just a requirement for the programming language used for building the pipeline but extends to the operating system that the pipeline runs on as well. So the reason Docker uses Linux is because you can use Linux distributions like Ubuntu for free and without restrictions. There aren’t any licenses that you need to buy or activate, and Linux distributions can be customized for any use case imaginable. Thus Linux distributions are the only option available to Docker for this task.</p>
 </section>
-<section id="a-primer-on-linux" class="level2" data-number="14.2">
-<h2 data-number="14.2" class="anchored" data-anchor-id="a-primer-on-linux"><span class="header-section-number">14.2</span> A primer on Linux</h2>
+<section id="a-primer-on-linux" class="level2" data-number="16.2">
+<h2 data-number="16.2" class="anchored" data-anchor-id="a-primer-on-linux"><span class="header-section-number">16.2</span> A primer on Linux</h2>
 <p>Up until this point, you could have followed along using any operating system. Most of the code shown in this book is R code, so it doesn’t matter on what operating system you’re running it. But there was some code that I ran in the Linux console (for example, I’ve used <code>ls</code> to list files). These commands should also work on macOS, and some even on Windows (<code>ls</code> also works on the Windows command prompt, and in Powershell as well). But you could have followed along using the user interface of your operating system. For example, in Chapter 11, I list the contents of the <code>dev/</code> directory using the following command:</p>
 <pre><code>owner@localhost ➤ ls dev/</code></pre>
 <p>but you could have just opened the <code>dev/</code> folder in the file explorer of your operating system of choice. But now, you will need to get to know Linux and the Linux ecosystem and concepts. No worries, it’s not as difficult as it sounds, and I think that you likely aren’t afraid of difficult things, or else you would have stopped reading this book much earlier.</p>
@@ -421,8 +411,8 @@ libxml2-dev</code></pre>
 <p>This why r2u is so useful: by adding this repository, what you’re essentially doing is telling R to not fetch the packages from CRAN, but from the r2u repository. And this repository contains compiled R packages for Ubuntu. So the required system-level dependencies get installed automatically and the R package doesn’t need compilation. So installation of the <code>{tidyverse}</code> package takes less than half a minute on a modern machine.</p>
 <p>But if r2u is so nice, why did I say above that we would not be using it? Unfortunately, this is because r2u does not archive compiled binaries of older packages, and this is exactly what we need for reproducibility. So when you’re building a Docker image to make a project reproducible, because that image will be based on Ubuntu, we will need to make sure that our Docker image contains the right system-level dependencies so that compilation of the R packages doesn’t fail. Thankfully, you’re reading the right book.</p>
 </section>
-<section id="first-steps-with-docker" class="level2" data-number="14.3">
-<h2 data-number="14.3" class="anchored" data-anchor-id="first-steps-with-docker"><span class="header-section-number">14.3</span> First steps with Docker</h2>
+<section id="first-steps-with-docker" class="level2" data-number="16.3">
+<h2 data-number="16.3" class="anchored" data-anchor-id="first-steps-with-docker"><span class="header-section-number">16.3</span> First steps with Docker</h2>
 <p>Let’s start by creating a “Hello World” Docker image. As I explained in the beginning, to define a Docker image, we need to create a Dockerfile with some instructions. But first, you need of course to install Docker. To install Docker on any operating system (Windows, macOS or Ubuntu or other Linuxes), you can install <a href="https://docs.docker.com/desktop/">Docker Desktop</a>. If you’re running Ubuntu (or another Linux distribution) and don’t want the GUI, and are using Ubuntu, you could install the <a href="https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository">Docker engine</a> and then follow the post-installation <a href="https://docs.docker.com/engine/install/linux-postinstall/#manage-docker-as-a-non-root-user">steps for Linux</a>.</p>
 <p>In any case, whatever operating system you’re using, we will be using the command line to interact with Docker. Once you’re done with installing Docker, create a folder somewhere on your computer, and create inside of this folder an empty text file with the name Dockerfile. This can be tricky on Windows, because you have to remove the <code>.txt</code> extension that gets added by default on Windows. You might need to turn on the option “File name extensions” in the <code>View</code> pane of the Windows file explorer to make this process easier. Then, open this file with your favourite text editor, and add the following lines:</p>
 <pre><code>FROM ubuntu:jammy
@@ -493,8 +483,8 @@ Type 'q()' to quit R.
 </ul>
 <p>What you should take away from this section is that you need to write a Dockerfile which then allows you to build an image. This image can then be used to run one (or several) containers. These containers, at run-time, will execute our pipeline in an environment that is frozen, such that the output of this run will stay constant, forever.</p>
 </section>
-<section id="the-rocker-project" class="level2" data-number="14.4">
-<h2 data-number="14.4" class="anchored" data-anchor-id="the-rocker-project"><span class="header-section-number">14.4</span> The Rocker project</h2>
+<section id="the-rocker-project" class="level2" data-number="16.4">
+<h2 data-number="16.4" class="anchored" data-anchor-id="the-rocker-project"><span class="header-section-number">16.4</span> The Rocker project</h2>
 <p>The Rocker project offers a very large collection of “R-ready” Docker images that you can use for your own pipelines. Before using these images though, I still need to explain one very important Docker concept. Let’s go back to our “Hello World” Docker image:</p>
 <pre><code>FROM ubuntu:jammy
 
@@ -588,8 +578,8 @@ Type 'q()' to quit R.
 * Project '/home/housing' loaded. [renv 0.16.0]</code></pre>
 <p>Try to load the <code>{housing}</code> package with <code>library("housing")</code>. This should work flawlessly!</p>
 </section>
-<section id="dockerizing-projects" class="level2" data-number="14.5">
-<h2 data-number="14.5" class="anchored" data-anchor-id="dockerizing-projects"><span class="header-section-number">14.5</span> Dockerizing projects</h2>
+<section id="dockerizing-projects" class="level2" data-number="16.5">
+<h2 data-number="16.5" class="anchored" data-anchor-id="dockerizing-projects"><span class="header-section-number">16.5</span> Dockerizing projects</h2>
 <p>So we now have a Docker image that has the right environment for our project. We can now dockerize the project itself. There are two ways to do this: we either simply add the required lines to our Dockerfile, meaning copying the <code>_targets.R</code> script to the Docker image at build time and then use <code>targets::tar_make()</code> to run the pipeline.</p>
 <p>Or we now create a new Dockerfile that will build upon this image and add the required lines there. In this section, we will use the first approach, and in the next section, we will use the second. The advantage of the first approach is that we have a single Dockerfile, and everything we need is right there. Also, each Docker image is completely tailor-made for each project. The issue is that building takes some time, so if for every project we restart from scratch it can be tedious to have to wait for the build process to be done (especially if you use continuous integration, as we shall see in the next chapter).</p>
 <p>The advantage of the second approach is that we have a base that we can keep using for as long as we want. You will only need to wait once for R and the required packages to get installed. Then, you can use this base for any project that requires the same version of R and packages. This is especially useful if you don’t update your development environment very often, and develop a lot of projects with it.</p>
@@ -677,10 +667,10 @@ CMD mv /home/housing/pipeline_output/* /home/housing/shared_folder/</code></pre>
 </ul>
 <p>We now need to share all this with the world. One simple solution is to share the Dockerfile on Github. For example, <a href="https://github.com/rap4all/housing/tree/docker">this is the repository</a><a href="#fn10" class="footnote-ref" id="fnref10" role="doc-noteref"><sup>10</sup></a> with all the required code to build the Docker image and run the pipeline. But we could also share the built image so that users only need to run the pipeline to instantly get the results. In the next section, we will learn about dockerizing development environments, and then see how we can share images that have already been built.</p>
 </section>
-<section id="dockerizing-development-environments" class="level2" data-number="14.6">
-<h2 data-number="14.6" class="anchored" data-anchor-id="dockerizing-development-environments"><span class="header-section-number">14.6</span> Dockerizing development environments</h2>
-<section id="creating-a-base-image-for-development" class="level3" data-number="14.6.1">
-<h3 data-number="14.6.1" class="anchored" data-anchor-id="creating-a-base-image-for-development"><span class="header-section-number">14.6.1</span> Creating a base image for development</h3>
+<section id="dockerizing-development-environments" class="level2" data-number="16.6">
+<h2 data-number="16.6" class="anchored" data-anchor-id="dockerizing-development-environments"><span class="header-section-number">16.6</span> Dockerizing development environments</h2>
+<section id="creating-a-base-image-for-development" class="level3" data-number="16.6.1">
+<h3 data-number="16.6.1" class="anchored" data-anchor-id="creating-a-base-image-for-development"><span class="header-section-number">16.6.1</span> Creating a base image for development</h3>
 <p>In the previous section, I mentioned that you could either “dockerize pipelines” or “dockerize the dev environment and use it for many pipelines”. What we learned up until now was how to dockerize one single pipeline. In this section, we will learn how to build and dockerize an environment, and then build pipelines that use these environment as starting points.</p>
 <p>Let me first explain, again, why (or when) you might want to use his approach instead of the “dockerizing pipelines” approach.</p>
 <p>Depending on what or where you work, it is sometimes necessary to have a stable development environment that only gets rarely updated (following a strict schedule). In my own experience, when I was doing research I was almost always using the latest R version and packages. When I’ve joined the private sector, we worked on an environment that we developers could not update ourselves. That environment was updated according a fixed schedule and now that I’m back in the public sector (but not doing research), I work in a similar manner, on a “frozen” environment. Working on frozen environments like this minimizes the unexpected issues that frequent updates can bring. So how can we use Docker to use such an approach?</p>
@@ -733,8 +723,8 @@ RUN R -e "remotes::install_github('rstudio/renv@0.16.0')"</code></pre>
 <p>However, if work in a field where operating system versions matter, then yes, you should find a way to either use the dockerized environment for development, or you should install Ubuntu on your computer (the same version as in Docker of course).</p>
 <p>Let’s now discuss sharing images.</p>
 </section>
-<section id="sharing-images-on-docker-hub" class="level3" data-number="14.6.2">
-<h3 data-number="14.6.2" class="anchored" data-anchor-id="sharing-images-on-docker-hub"><span class="header-section-number">14.6.2</span> Sharing images on Docker Hub</h3>
+<section id="sharing-images-on-docker-hub" class="level3" data-number="16.6.2">
+<h3 data-number="16.6.2" class="anchored" data-anchor-id="sharing-images-on-docker-hub"><span class="header-section-number">16.6.2</span> Sharing images on Docker Hub</h3>
 <p>If you want to share Docker images on Docker Hub, you first need to create a free account. A free account gives you unlimited public repositories. If you want to make your images private, you need a paid account. For our purposes though, a free account is more than enough. Again, in the next section, we will discuss how you can build new images upon other images without using Docker Hub.</p>
 <p>If you want to follow along, make sure that you have also written a Dockerfile and built an image that you can upload on Docker Hub. I will be uploading the image <code>dev_env_r</code> to Docker Hub, so if you want you could use for your own projects.</p>
 <p>If you built an image to upload, now is the right moment to talk about the <code>docker images</code> command. This will list all the images available on your computer. You should see something like this:</p>
@@ -783,8 +773,8 @@ CMD mv /home/housing/pipeline_output/* /home/housing/shared_folder/</code></pre>
 <p>If you want to test this, you could delete all images and containers from your system. This way, when you will build the image using the above Dockerfile, it will have to pull from Docker Hub. To delete all containers, start by using <code>docker system prune</code>. You can then delete all images using <code>docker rmi $(docker images -a -q)</code>. This should remove everything. Now, let’s build the image using the above Dockerfile using <code>docker build -t housing_image .</code> (don’t forget to add the necessary files for the build process to succeed, <code>renv.lock</code>, <code>_targets.R</code>, <code>analyse_data.Rmd</code> and the <code>functions</code> folder). You should see the image getting pulled from Docker Hub and then the build process resumes.</p>
 <p>In the next section, I’ll explain to you how you can re-use base images like we just did, but without using Docker Hub, in case you cannot, or do not want, to rely on it.</p>
 </section>
-<section id="sharing-a-compressed-archive-of-your-image" class="level3" data-number="14.6.3">
-<h3 data-number="14.6.3" class="anchored" data-anchor-id="sharing-a-compressed-archive-of-your-image"><span class="header-section-number">14.6.3</span> Sharing a compressed archive of your image</h3>
+<section id="sharing-a-compressed-archive-of-your-image" class="level3" data-number="16.6.3">
+<h3 data-number="16.6.3" class="anchored" data-anchor-id="sharing-a-compressed-archive-of-your-image"><span class="header-section-number">16.6.3</span> Sharing a compressed archive of your image</h3>
 <p>If you can’t upload the image on Docker Hub, you can still “save it” into a file and share that file instead (internally to your institution/company).</p>
 <p>Run <code>docker save</code> to save the image into a file:</p>
 <pre><code>owner@localhost ➤ docker save dev_env_r &gt; dev_env_r.tar</code></pre>
@@ -819,19 +809,19 @@ Loaded image: dev_env_r:latest
 <p>But… yes there is a but, and I’ll discuss that in the next section.</p>
 </section>
 </section>
-<section id="the-problems-of-relying-so-much-on-docker" class="level2" data-number="14.7">
-<h2 data-number="14.7" class="anchored" data-anchor-id="the-problems-of-relying-so-much-on-docker"><span class="header-section-number">14.7</span> The problems of relying so much on Docker</h2>
+<section id="the-problems-of-relying-so-much-on-docker" class="level2" data-number="16.7">
+<h2 data-number="16.7" class="anchored" data-anchor-id="the-problems-of-relying-so-much-on-docker"><span class="header-section-number">16.7</span> The problems of relying so much on Docker</h2>
 <p>So we now know how to build truly reproducible analytical pipelines, but let’s be blunt, relying entirely on one single tool, Docker, is a bit of an issue… it’s a single point of failure. But the problem is not Docker itself, but the infrastructure.</p>
 <p>Let me explain: Docker is based on many different open-source parts, and that’s great. This means that even if the company behind Docker ruins it by taking some weird decisions, we have alternatives that build upon the open-source parts of Docker. There’s Podman, which is a drop-in replacement (when combined with other tools) made by Red Hat, which is completely open-source as well. So the risk does not come from there, because even if for some reason Docker would disappear, or get abandoned or whatever, we could still work with Podman, and it would also be technically possible to create a fork from Docker.</p>
 <p>But the issue is the infrastructure. For now, using Docker and more importantly hosting images is free for personal use, education, open-source communities and small businesses. So this means that a project like Rocker likely pays nothing for hosting all the images they produce (but who knows, I may be wrong on this). Docker recently announced that they would abandon their <em>Docker Free Team subscription</em> plans that some open-source organizations use, and that they should upgrade to a paid subscription within 30 days. So it is not unreasonable to think that free users with a free account might also be forced to pay one day. Don’t get me wrong, I’m not saying that Docker is not allowed to make money. But it is something that you need to keep in mind in case you cannot afford a subscription (and who knows how much it’s going to cost). This is definitely a risk that needs mitigation, and a plan B. This plan B could be to host the images yourself, by saving them using <code>docker save</code>. Or you could even self-host an image registry (or lobby your employer/institution/etc to host a registry for its developers/data scientists/researchers). In any case, it’s good to have options and now what potential risks using this technology entail.</p>
 </section>
-<section id="is-docker-enough" class="level2" data-number="14.8">
-<h2 data-number="14.8" class="anchored" data-anchor-id="is-docker-enough"><span class="header-section-number">14.8</span> Is Docker enough?</h2>
+<section id="is-docker-enough" class="level2" data-number="16.8">
+<h2 data-number="16.8" class="anchored" data-anchor-id="is-docker-enough"><span class="header-section-number">16.8</span> Is Docker enough?</h2>
 <p>I would say that for 99% of applications, yes, Docker is enough for building RAPs. But strictly speaking, using a Dockerfile which installs a specific version of R and uses <code>{renv}</code> to install specific versions of packages and use an LTS release of Ubuntu, we could end up with two different images. This is because Ubuntu gets updated, so if you build an image in the beginning of 2022 and then once again in 2023, the system-level libraries will be different. So strictly speaking, you end up with two different images, and it’s not absolutely impossible that this may impact your pipeline. So ideally, we would also need a way to always install the same system-level dependencies, regardless of when we build the image. There is a package manager called Nix that makes this possible, but this is outside the scope of this book. The reason is that, again, in practice if you use an LTS release you should be fine. But if <em>bitwise reproducibility</em> (i.e., two runs of the same pipeline will yield the same result to the last bit), then yes, you should definitely look into Nix (and who knows, I might write a book just about that titled <em>Building bitwise reproducible analytical pipelines (braps) using Nix</em>).</p>
 <p>Another issue with Docker is that images can be quite opaque, especially if you define images that pull from images that pull themselves from other images… Just look at our pipeline: it pulls from <code>dev_env_r</code>, which pulls from <code>rocker:4.2.2</code> which pulls itself from the official Ubuntu Jammy image. So to be fully transparent, we would need to link to all the Dockerfiles, or rewrite one big Dockerfile that pulls from Ubuntu Jammy only.</p>
 </section>
-<section id="conclusion" class="level2" data-number="14.9">
-<h2 data-number="14.9" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">14.9</span> Conclusion</h2>
+<section id="conclusion" class="level2" data-number="16.9">
+<h2 data-number="16.9" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">16.9</span> Conclusion</h2>
 <p>This book could stop here. We have learned the following things:</p>
 <ul>
 <li>version control;</li>
@@ -1216,12 +1206,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="./targets.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Build automation</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Build automation</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="./ci_cd.html" class="pagination-link">
-        <span class="nav-page-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Continuous integration and continuous deployment/delivery</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Continuous integration and continuous deployment/delivery</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

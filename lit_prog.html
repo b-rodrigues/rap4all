@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Building reproducible analytical pipelines with R - 7&nbsp; Literate programming</title>
+<title>Building reproducible analytical pipelines with R - 8&nbsp; Literate programming</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -133,7 +133,7 @@ div.csl-indent {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./part1_intro.html">Part 1: Don’t Repeat Yourself</a></li><li class="breadcrumb-item"><a href="./lit_prog.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Literate programming</span></a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./lit_prog.html"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Literate programming</span></a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -179,122 +179,112 @@ div.csl-indent {
  <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
   </div>
 </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a href="./part1_intro.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Part 1: Don’t Repeat Yourself</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part1_intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Part 1: Don’t Repeat Yourself</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./prerequisites.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Before we start</span></span></a>
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Before we start</span></span></a>
   </div>
 </li>
-          <li class="sidebar-item">
+        <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./project_start.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Project start</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Project start</span></span></a>
   </div>
 </li>
-          <li class="sidebar-item">
+        <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./git.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Version control</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Version control</span></span></a>
   </div>
 </li>
-          <li class="sidebar-item">
+        <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./github.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Collaborating with Github</span></span></a>
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Collaborating with Github</span></span></a>
   </div>
 </li>
-          <li class="sidebar-item">
+        <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./fprog.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Functional programming</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Functional programming</span></span></a>
   </div>
 </li>
-          <li class="sidebar-item">
+        <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./lit_prog.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Literate programming</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Literate programming</span></span></a>
   </div>
 </li>
-          <li class="sidebar-item">
+        <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./part1_conclusion.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Conclusion of part 1</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Conclusion of part 1</span></span></a>
   </div>
 </li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a href="./part2_intro.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Part 2: Write IT down</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part2_intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Part 2: Write IT down</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./project_rewrite.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Rewriting our project</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Rewriting our project</span></span></a>
   </div>
 </li>
-          <li class="sidebar-item">
+        <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./repro_intro.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Introduction to reproducibility</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Introduction to reproducibility</span></span></a>
   </div>
 </li>
-          <li class="sidebar-item">
+        <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./packages.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Packaging your code</span></span></a>
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Packaging your code</span></span></a>
   </div>
 </li>
-          <li class="sidebar-item">
+        <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./testing.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Testing your code</span></span></a>
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Testing your code</span></span></a>
   </div>
 </li>
-          <li class="sidebar-item">
+        <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./targets.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Build automation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Build automation</span></span></a>
   </div>
 </li>
-          <li class="sidebar-item">
+        <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./repro_cont.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Reproducible analytical pipelines with Docker</span></span></a>
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Reproducible analytical pipelines with Docker</span></span></a>
   </div>
 </li>
-          <li class="sidebar-item">
+        <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./ci_cd.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Continuous integration and continuous deployment/delivery</span></span></a>
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Continuous integration and continuous deployment/delivery</span></span></a>
   </div>
 </li>
-          <li class="sidebar-item">
+        <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./part2_conclusion.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Conclusion of part 2</span></span></a>
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Conclusion of part 2</span></span></a>
   </div>
 </li>
-      </ul>
-  </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./book_conclusion.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Conclusion</span></span></a>
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Conclusion</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -313,19 +303,19 @@ div.csl-indent {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#a-quick-history-of-literate-programming" id="toc-a-quick-history-of-literate-programming" class="nav-link active" data-scroll-target="#a-quick-history-of-literate-programming"><span class="header-section-number">7.1</span> A quick history of literate programming</a></li>
-  <li><a href="#knitr-basics" id="toc-knitr-basics" class="nav-link" data-scroll-target="#knitr-basics"><span class="header-section-number">7.2</span> <code>{knitr}</code> basics</a>
+  <li><a href="#a-quick-history-of-literate-programming" id="toc-a-quick-history-of-literate-programming" class="nav-link active" data-scroll-target="#a-quick-history-of-literate-programming"><span class="header-section-number">8.1</span> A quick history of literate programming</a></li>
+  <li><a href="#knitr-basics" id="toc-knitr-basics" class="nav-link" data-scroll-target="#knitr-basics"><span class="header-section-number">8.2</span> <code>{knitr}</code> basics</a>
   <ul class="collapse">
-  <li><a href="#set-up" id="toc-set-up" class="nav-link" data-scroll-target="#set-up"><span class="header-section-number">7.2.1</span> Set up</a></li>
-  <li><a href="#markdown-ultrabasics" id="toc-markdown-ultrabasics" class="nav-link" data-scroll-target="#markdown-ultrabasics"><span class="header-section-number">7.2.2</span> Markdown ultrabasics</a></li>
+  <li><a href="#set-up" id="toc-set-up" class="nav-link" data-scroll-target="#set-up"><span class="header-section-number">8.2.1</span> Set up</a></li>
+  <li><a href="#markdown-ultrabasics" id="toc-markdown-ultrabasics" class="nav-link" data-scroll-target="#markdown-ultrabasics"><span class="header-section-number">8.2.2</span> Markdown ultrabasics</a></li>
   </ul></li>
-  <li><a href="#keeping-it-dry" id="toc-keeping-it-dry" class="nav-link" data-scroll-target="#keeping-it-dry"><span class="header-section-number">7.3</span> Keeping it DRY</a>
+  <li><a href="#keeping-it-dry" id="toc-keeping-it-dry" class="nav-link" data-scroll-target="#keeping-it-dry"><span class="header-section-number">8.3</span> Keeping it DRY</a>
   <ul class="collapse">
-  <li><a href="#generating-r-markdown-code-from-code" id="toc-generating-r-markdown-code-from-code" class="nav-link" data-scroll-target="#generating-r-markdown-code-from-code"><span class="header-section-number">7.3.1</span> Generating R Markdown code from code</a></li>
-  <li><a href="#tables-in-r-markdown-documents" id="toc-tables-in-r-markdown-documents" class="nav-link" data-scroll-target="#tables-in-r-markdown-documents"><span class="header-section-number">7.3.2</span> Tables in R Markdown documents</a></li>
-  <li><a href="#parametrized-reports" id="toc-parametrized-reports" class="nav-link" data-scroll-target="#parametrized-reports"><span class="header-section-number">7.3.3</span> Parametrized reports</a></li>
+  <li><a href="#generating-r-markdown-code-from-code" id="toc-generating-r-markdown-code-from-code" class="nav-link" data-scroll-target="#generating-r-markdown-code-from-code"><span class="header-section-number">8.3.1</span> Generating R Markdown code from code</a></li>
+  <li><a href="#tables-in-r-markdown-documents" id="toc-tables-in-r-markdown-documents" class="nav-link" data-scroll-target="#tables-in-r-markdown-documents"><span class="header-section-number">8.3.2</span> Tables in R Markdown documents</a></li>
+  <li><a href="#parametrized-reports" id="toc-parametrized-reports" class="nav-link" data-scroll-target="#parametrized-reports"><span class="header-section-number">8.3.3</span> Parametrized reports</a></li>
   </ul></li>
-  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">7.4</span> Conclusion</a></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">8.4</span> Conclusion</a></li>
   </ul>
 </nav>
     </div>
@@ -334,7 +324,7 @@ div.csl-indent {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Literate programming</span></h1>
+<h1 class="title"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Literate programming</span></h1>
 </div>
 
 
@@ -367,8 +357,8 @@ The holy report drafting loop.
 </figcaption>
 </figure>
 <p>Basically, everything from cleaning, analysing and drafting is done in one single step? Well, this is what literate programming enables you to do. And even if you get asked to make a Powerpoint presentation, you can start from the same source code as the original report, and remove everything that you don’t need and compile to a Powerpoint (or Beamer) presentation.</p>
-<section id="a-quick-history-of-literate-programming" class="level2" data-number="7.1">
-<h2 data-number="7.1" class="anchored" data-anchor-id="a-quick-history-of-literate-programming"><span class="header-section-number">7.1</span> A quick history of literate programming</h2>
+<section id="a-quick-history-of-literate-programming" class="level2" data-number="8.1">
+<h2 data-number="8.1" class="anchored" data-anchor-id="a-quick-history-of-literate-programming"><span class="header-section-number">8.1</span> A quick history of literate programming</h2>
 <p>In literate programming, we mix code and prose together, which makes the output of our programs not just a series of tables, or graphs or predictions, but a complete report that contains the results of our analysis directly. Scripts written using literate programming are also very easy to compile, or render, into a variety of document formats like <code>html</code>, <code>docx</code>, <code>pdf</code> or even <code>pptx</code>. R supports several frameworks for literate programming: Sweave, knitr and Quarto.</p>
 <p>Sweave was the first tool available to R (and S) users, and allowed the mixing of R and LaTeX code to create a document. Friedrich Leisch developed Sweave in 2002 and described it in his 2002 paper (<span class="citation" data-cites="leisch2002">Leisch (<a href="references.html#ref-leisch2002" role="doc-biblioref">2002</a>)</span>). As Leisch argues, <em>the traditional way of writing a report as part of a statistical data analysis project uses two separate steps</em>: running the analysis using some software, and then copy and pasting the results into a word processing tool (as illustrated above). To really drive that point home: the problem with this approach is that much time is wasted copy and pasting things, so experimenting with different layouts or data analysis techniques is very time consuming. Copy and paste mistakes will also happen (it’s not a question of if, but when) and updating reports (for example, when new data comes in) means that someone will have, again, to copy and paste the updated results into a new document.</p>
 <p>Sweave provided (and still provides, as it is still well functioning!) a way to embed the analysis in the document itself, in this case a LaTeX source file, and R code was executed whenever the document was compiled. This gave researchers considerable time savings when it was time to update a report or drafting a research paper.</p>
@@ -432,7 +422,7 @@ More than 20 years later, the output is still the same.
 It’s very close to the Sweave output.
 </figcaption>
 </figure>
-<p>Just like in a Sweave document, an Rmd source file also has a header in which authors can define a number of options. Here we only specified that we wanted a pdf document as an output file. We then copy and pasted the contents from the Sweave source, but changed the chunk delimiters from <code>&lt;&lt;&gt;&gt;=</code> and <code>@</code> to <code>```bdf</code> to start an R chunk and <code>```</code> to end it. Remember; we need to specify the engine in the chunk because <code>{knitr}</code> supports many engines. For example, it is possible to run a bash command by adding this chunk to the source:</p>
+<p>Just like in a Sweave document, an Rmd source file also has a header in which authors can define a number of options. Here we only specified that we wanted a pdf document as an output file. We then copy and pasted the contents from the Sweave source, but changed the chunk delimiters from <code>&lt;&lt;&gt;&gt;=</code> and <code>@</code> to <code>```qyl</code> to start an R chunk and <code>```</code> to end it. Remember; we need to specify the engine in the chunk because <code>{knitr}</code> supports many engines. For example, it is possible to run a bash command by adding this chunk to the source:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>---</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>output: pdf_document</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>---</span>
@@ -504,11 +494,11 @@ output: pdf
 <p>While Quarto is the latest option in literate programming, it is quite recent, and as such, I feel it might be better to stick with <code>{knitr}</code> and the Rmd format for now, so that’s what we’re going to use going forward. Also, the <code>{knitr}</code> and the Rmd format are here to stay, so there’s little risk in keeping using it, and anyways, as already stated, if switching to Quarto becomes a necessity, the cost of switch would be very, very low. In what follows, I won’t be focused on anything really <code>{knitr}</code> or Rmd specific, so should you want to use Quarto instead, you should be able to follow along without any problems at all, since the Rmd and Qmd formats have so much overlap.</p>
 <p>In the next two sections, we will discuss how to set up and use <code>{knitr}</code> as well as give you a quick overview of the R Markdown syntax. However, we will very quickly focus on the templating capabilities of <code>{knitr}</code>: expanding text, using child documents, and parameterised reports. These are advanced topics and not easy to tackle if you’re not comfortable with R already. Just as functions and higher-order functions like <code>lapply()</code> avoid having to repeat yourself, so does templating, but for literate programming. The goal is to write functions that return literal R Markdown code, so that you can loop over these functions to build entire sections of your documents. However, the learning curve for these features is quite steep, but by now, you should have noticed that this book expects a lot from you. Keep going, and you shall be handsomely rewarded.</p>
 </section>
-<section id="knitr-basics" class="level2" data-number="7.2">
-<h2 data-number="7.2" class="anchored" data-anchor-id="knitr-basics"><span class="header-section-number">7.2</span> <code>{knitr}</code> basics</h2>
+<section id="knitr-basics" class="level2" data-number="8.2">
+<h2 data-number="8.2" class="anchored" data-anchor-id="knitr-basics"><span class="header-section-number">8.2</span> <code>{knitr}</code> basics</h2>
 <p>This section will be a very small intro to <code>{knitr}</code>. We are going to teach you just enough to get started, and we are going to focus on the Rmd format. There are many resources out there that you can use if you want to dig deeper, for instance the <a href="https://rmarkdown.rstudio.com/lesson-1.html">R Markdown website</a> from Posit, or the <a href="https://bookdown.org/yihui/rmarkdown/">R Markdown: The Definitive Guide</a> and <a href="https://bookdown.org/yihui/rmarkdown-cookbook/">R Markdown Cookbook</a> eBooks. We will also not assume that you are using the RStudio IDE and give you instead the lower level commands to render documents. If you use RStudio and want to know how to use it effectively to author Rmd documents, you should take a look at <a href="https://rmarkdown.rstudio.com/authoring_quick_tour.html">Quick Tour</a> page. In fact, this section will basically focus on the same topics, but without focusing on how to use RStudio.</p>
-<section id="set-up" class="level3" data-number="7.2.1">
-<h3 data-number="7.2.1" class="anchored" data-anchor-id="set-up"><span class="header-section-number">7.2.1</span> Set up</h3>
+<section id="set-up" class="level3" data-number="8.2.1">
+<h3 data-number="8.2.1" class="anchored" data-anchor-id="set-up"><span class="header-section-number">8.2.1</span> Set up</h3>
 <p>The first step is to install the <code>{knitr}</code> and the <code>{rmarkdown}</code> packages. That’s easy, just type:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"rmarkdown"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -549,8 +539,8 @@ It’s very close to the Sweave output.
 </figure>
 <p>Congratulations, you just <em>knitted</em> your first Rmd document!</p>
 </section>
-<section id="markdown-ultrabasics" class="level3" data-number="7.2.2">
-<h3 data-number="7.2.2" class="anchored" data-anchor-id="markdown-ultrabasics"><span class="header-section-number">7.2.2</span> Markdown ultrabasics</h3>
+<section id="markdown-ultrabasics" class="level3" data-number="8.2.2">
+<h3 data-number="8.2.2" class="anchored" data-anchor-id="markdown-ultrabasics"><span class="header-section-number">8.2.2</span> Markdown ultrabasics</h3>
 <p>R Markdown is a flavour of Markdown, which means that you should know some Markdown to really take full advantage of R Markdown. The example document from before should have already shown you some basics: titles, sections and subsections all start with a <code>#</code> and the depth level is determined by the number of <code>#</code>s. For bold text, simply put the words in between <code>**</code> and for italics use only one <code>*</code>. If you want <strong><em>bold and italics</em></strong>, use <code>***</code>. The original designer of Markdown did not think that underlining text was important, so there is no <em>easy</em> way of doing it unfortunately. For this, you need to use a somewhat hidden feature; without going into too much technical details, the program that converts Rmd files to the final output format is called Pandoc, and it’s possible to use some of Pandoc’s features to format text. For example, for underlining:</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>[This is some underlined text in a R Markdown document]{.underline}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>This will underline the text between square brackets.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
@@ -654,8 +644,8 @@ A rendered LaTeX equation.
 </div>
 </section>
 </section>
-<section id="keeping-it-dry" class="level2" data-number="7.3">
-<h2 data-number="7.3" class="anchored" data-anchor-id="keeping-it-dry"><span class="header-section-number">7.3</span> Keeping it DRY</h2>
+<section id="keeping-it-dry" class="level2" data-number="8.3">
+<h2 data-number="8.3" class="anchored" data-anchor-id="keeping-it-dry"><span class="header-section-number">8.3</span> Keeping it DRY</h2>
 <p>Remember; we never, ever, want to have to repeat ourselves. Copy and pasting is forbidden. Striving for this 0 copy and pasting will make our code much more robust and likely to be correct.</p>
 <p>We started by using functions, as discussed in the previous chapter, but we can go much farther than that. For example, suppose that we need to write a document that has the following structure:</p>
 <ul>
@@ -668,8 +658,8 @@ A rendered LaTeX equation.
 <li>Yet another table inside this section</li>
 </ul>
 <p>Is there a way to automate the creation of such a document by taking advantage of the repeating structure? Of course there is. The question is not, <em>is it possible to do X?</em>, but <em>how to do X?</em>.</p>
-<section id="generating-r-markdown-code-from-code" class="level3" data-number="7.3.1">
-<h3 data-number="7.3.1" class="anchored" data-anchor-id="generating-r-markdown-code-from-code"><span class="header-section-number">7.3.1</span> Generating R Markdown code from code</h3>
+<section id="generating-r-markdown-code-from-code" class="level3" data-number="8.3.1">
+<h3 data-number="8.3.1" class="anchored" data-anchor-id="generating-r-markdown-code-from-code"><span class="header-section-number">8.3.1</span> Generating R Markdown code from code</h3>
 <p>The example below is a fully working minimal example of this. Copy it inside a document titled something like <code>rmd_templating.Rmd</code> and render it. You will see that the output contains more sections than defined in the source. This is because we use templating at the end. Take some time to read the document, as the text inside explains what is going on:</p>
 <div class="sourceCode" id="cb19"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>---</span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>title: "Templating"</span>
@@ -854,8 +844,8 @@ A rendered LaTeX equation.
 <p>Click <a href="https://fastidious-bavarois-3b17b9.netlify.app/">here</a> to take a look at the output.</p>
 <p>Here again, take some time to play with the above example. Change the child document, try to print other types of output, really take your time to understand this. To know more about child documents, take a look at <a href="https://bookdown.org/yihui/rmarkdown-cookbook/child-document.html#child-document">this section</a> of the R Markdown Cookbook (<span class="citation" data-cites="xie2020r">Xie, Dervieux, and Riederer (<a href="references.html#ref-xie2020r" role="doc-biblioref">2020</a>)</span>).</p>
 </section>
-<section id="tables-in-r-markdown-documents" class="level3" data-number="7.3.2">
-<h3 data-number="7.3.2" class="anchored" data-anchor-id="tables-in-r-markdown-documents"><span class="header-section-number">7.3.2</span> Tables in R Markdown documents</h3>
+<section id="tables-in-r-markdown-documents" class="level3" data-number="8.3.2">
+<h3 data-number="8.3.2" class="anchored" data-anchor-id="tables-in-r-markdown-documents"><span class="header-section-number">8.3.2</span> Tables in R Markdown documents</h3>
 <p>Getting tables right in Rmd documents is not always an easy task. There are several packages specifically made just for this task.</p>
 <p>In this short section, we want to point you towards two packages that check the following boxes:</p>
 <ul>
@@ -923,8 +913,8 @@ The output of the code above.
 <p>These packages can help you keeping it DRY, so take some time to learn them.</p>
 <p>And one last thing: if you’re a researcher, take a look at the <a href="https://pkgs.rstudio.com/rticles/articles/examples.html"><code>{rticles}</code></a> package, which provides Rmd templates to write articles for many scientific journals.</p>
 </section>
-<section id="parametrized-reports" class="level3" data-number="7.3.3">
-<h3 data-number="7.3.3" class="anchored" data-anchor-id="parametrized-reports"><span class="header-section-number">7.3.3</span> Parametrized reports</h3>
+<section id="parametrized-reports" class="level3" data-number="8.3.3">
+<h3 data-number="8.3.3" class="anchored" data-anchor-id="parametrized-reports"><span class="header-section-number">8.3.3</span> Parametrized reports</h3>
 <p>Templating and child documents are very powerful, but sometimes you don’t want to have one section dedicated to each unit of analysis within the same report, but rather, you want a complete separate report by unit of analysis. This is also possible thanks to parameterised reports.</p>
 <p>Let’s modify the example from before, which consisted of creating one section per column of the <code>mtcars</code> dataset and a frequency table, and make it now one separate report for each column. The R Markdown file will look like this:</p>
 <div class="sourceCode" id="cb25"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>---</span>
@@ -1012,8 +1002,8 @@ The output of the code above.
 <p>By now, this should not intimidate you anymore; we use <code>lapply()</code> to loop over a list of column names (that we get using <code>colnames()</code>). Because we don’t want to overwrite the report we need to change the name of the output file. We do so by using <code>paste0()</code> which creates a new string that contains the variable name, so each report gets its own name. <code>x</code> inside the <code>paste0()</code> function is each element, one after the other, of the <code>columns</code> variable we defined first. Think of it as the <code>i</code> in a for loop. We then must also pass this to the <code>params</code> list, hence the <code>var = x</code>. The complete call to <code>rmarkdown::render()</code> is wrapped inside an anonymous function, because we need to use the argument <code>x</code> (which is each column defined in the columns list) in different places.</p>
 </section>
 </section>
-<section id="conclusion" class="level2" data-number="7.4">
-<h2 data-number="7.4" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">7.4</span> Conclusion</h2>
+<section id="conclusion" class="level2" data-number="8.4">
+<h2 data-number="8.4" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">8.4</span> Conclusion</h2>
 <p>Before continuing, I highly recommend that you try running this yourself, and also that you try to build your own little parameterised reports. Maybe start by replacing “mtcars” by “iris” in the code to compile the reports and see what happens, and then when you’re comfortable with parameterised reports, try templating inside a parameterised report!</p>
 <p>It is important not to fall to the temptation of copy and pasting sections of your report, or parts of your script, instead of using these more advanced features provided by the language. It is tempting, especially under time pressure, to just copy and paste bits of code and get things done instead of writing what seems to be unnecessary code to finally achieve the same thing. The problem however, is that in practice copy and pasting code to simply get things done will come bite you sooner rather than later. Especially when you’re still in the exploration/drafting phase of the project. It may take more time to set up, but once you’re done, it is much easier to experiment with different parameters, test the code or even re-use the code for other projects. Not only that, but forcing you to actually think about how to set up your code in a way that avoids repeating yourself also helps with truly understanding the problem at hand. What part of the problem is constant and does not change? What does change? How often, and why? Can you also fix these parts or not? What if instead of five sections that I need to copy and paste, I had 50 sections? How could I scale that up?</p>
 <p>Asking yourself these questions, and solving them, will ultimately make you a better programmer.</p>
@@ -1397,12 +1387,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="./fprog.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Functional programming</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Functional programming</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="./part1_conclusion.html" class="pagination-link">
-        <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Conclusion of part 1</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Conclusion of part 1</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
