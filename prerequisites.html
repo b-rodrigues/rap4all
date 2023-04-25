@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Building reproducible analytical pipelines with R - 3&nbsp; Before we start</title>
+<title>Building reproducible analytical pipelines with R - 2&nbsp; Before we start</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -114,7 +114,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./prerequisites.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Before we start</span></a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./part1_intro.html">Part 1: Don’t Repeat Yourself</a></li><li class="breadcrumb-item"><a href="./prerequisites.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Before we start</span></a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -160,112 +160,122 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
   </div>
 </li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./part1_intro.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Part 1: Don’t Repeat Yourself</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./part1_intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Part 1: Don’t Repeat Yourself</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./prerequisites.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Before we start</span></span></a>
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Before we start</span></span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./project_start.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Project start</span></span></a>
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Project start</span></span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./git.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Version control</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Version control</span></span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./github.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Collaborating with Github</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Collaborating with Github</span></span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./fprog.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Functional programming</span></span></a>
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Functional programming</span></span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./lit_prog.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Literate programming</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Literate programming</span></span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./part1_conclusion.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Conclusion of part 1</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Conclusion of part 1</span></span></a>
   </div>
 </li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./part2_intro.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Part 2: Write IT down</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./part2_intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Part 2: Write IT down</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./project_rewrite.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Rewriting our project</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Rewriting our project</span></span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./repro_intro.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Introduction to reproducibility</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Introduction to reproducibility</span></span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./packages.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Packaging your code</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Packaging your code</span></span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./testing.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Testing your code</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Testing your code</span></span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./targets.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Build automation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Build automation</span></span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./repro_cont.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Reproducible analytical pipelines with Docker</span></span></a>
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Reproducible analytical pipelines with Docker</span></span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./ci_cd.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Continuous integration and continuous deployment/delivery</span></span></a>
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Continuous integration and continuous deployment/delivery</span></span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./part2_conclusion.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Conclusion of part 2</span></span></a>
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Conclusion of part 2</span></span></a>
   </div>
 </li>
+      </ul>
+  </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./book_conclusion.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Conclusion</span></span></a>
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Conclusion</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -284,7 +294,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#essential-knowledge" id="toc-essential-knowledge" class="nav-link active" data-scroll-target="#essential-knowledge"><span class="header-section-number">3.1</span> Essential knowledge</a></li>
+  <li><a href="#essential-knowledge" id="toc-essential-knowledge" class="nav-link active" data-scroll-target="#essential-knowledge"><span class="header-section-number">2.1</span> Essential knowledge</a></li>
   </ul>
 </nav>
     </div>
@@ -293,7 +303,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Before we start</span></h1>
+<h1 class="title"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Before we start</span></h1>
 </div>
 
 
@@ -309,8 +319,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 <p>This is not an introductory book, so before tackling the topics presented here, make sure that you are familiar with the different topics presented below. If you read this chapter and everything is obvious or known to you, then you should have no trouble following along. If instead what you read here is cryptic, then take some time to improve your understanding of these topics first.</p>
-<section id="essential-knowledge" class="level2" data-number="3.1">
-<h2 data-number="3.1" class="anchored" data-anchor-id="essential-knowledge"><span class="header-section-number">3.1</span> Essential knowledge</h2>
+<section id="essential-knowledge" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="essential-knowledge"><span class="header-section-number">2.1</span> Essential knowledge</h2>
 <p>It’s important to know the parts that constitute R. Let’s make something clear: R is not RStudio, or whatever interface you are using to interact with R. R is a domain-specific interpreted programming language. R is domain-specific because its primary use is in performing statistics. Interpreted, because results get returned immediately when you execute a script in the console. In other words, when you write <code>1+1</code> in the console, you get back <code>2</code> immediately. There are so-called programming languages, called compiled programming languages, that require code to be compiled into binaries before execution. C is such a language. The fact that R is interpreted makes interactive exploratory data analysis easy, but also introduces certain negative aspects. I will discuss these in detail in the book. R’s console is an example of REPL – <em>Read-Eval-Print-Loop</em> – environment. Code gets <em>read</em>, <em>evaluated</em>, <em>printed</em> and the read state gets returned, starting the <em>loop</em> over.</p>
 <p>To make working with R easier, you should not write code in the console and execute it, but instead write it in a text file. You can keep these text files, update and share them with collaborators. Such text files are called scripts. You <em>could</em> write these scripts using the most basic text editor included in your operating system (that would be Notepad.exe on Windows), but you should instead use a text editor made specifically to make programming easier. Popular choices include RStudio, Visual Studio Code, or maybe something more exotic like Emacs combined with ESS (my personal choice). Whatever text editor you choose, take time to configure it and learn how to use it. You will spend many, many, many hours inside that text editor. The code you write in that text editor is what’s going to feed you and your family. Learn your chosen text editor’s keyboard shortcuts and other advanced features. This initial investment will pay for itself many times over. Also, you need to know what an actual text file is. A document written in Word (with the <code>.docx</code> extension) is not a text file. It looks like text, but is not. The <code>.docx</code> format is a much more complex format with many layers of abstraction. “True”, plain, text files can be opened with the simplest text editor included in your operating system. I’ve had students trying to create text files with word processors like MS Word and then being confused when things would not work.</p>
 <p>As stated before, R is a domain-specific programming language mainly used for doing statistics, or whatever modernized term you may prefer like <em>“data science”</em>. Its base capabilities can be extended by installing packages. For example, a base installation of R provides you with useful functions like <code>mean()</code> or <code>sd()</code>, to compute the average or standard deviation of a vector of numbers, or <code>rnorm()</code> to compute random variates from a Gaussian (Normal) distribution. However, there is no function available to train a random forest. If you need to train a random forest you need to install a package using the <code>install.packages("randomForest")</code> command. The collection of packages installed is called a “library”. Packages get downloaded from CRAN, the <em>Comprehensive R Archive Network</em>. There is no doubt in my mind that the reason R became so popular is because it is quite easy to write packages for it; and this is something that we will learn as well!</p>
@@ -701,12 +711,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="./part1_intro.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Part 1: Don’t Repeat Yourself</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Part 1: Don’t Repeat Yourself</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="./project_start.html" class="pagination-link">
-        <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Project start</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Project start</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

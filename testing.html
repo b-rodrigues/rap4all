@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Building reproducible analytical pipelines with R - 14&nbsp; Testing your code</title>
+<title>Building reproducible analytical pipelines with R - 12&nbsp; Testing your code</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -114,7 +114,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./testing.html"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Testing your code</span></a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./part2_intro.html">Part 2: Write IT down</a></li><li class="breadcrumb-item"><a href="./testing.html"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Testing your code</span></a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -160,112 +160,122 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
   </div>
 </li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./part1_intro.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Part 1: Don’t Repeat Yourself</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./part1_intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Part 1: Don’t Repeat Yourself</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./prerequisites.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Before we start</span></span></a>
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Before we start</span></span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./project_start.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Project start</span></span></a>
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Project start</span></span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./git.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Version control</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Version control</span></span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./github.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Collaborating with Github</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Collaborating with Github</span></span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./fprog.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Functional programming</span></span></a>
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Functional programming</span></span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./lit_prog.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Literate programming</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Literate programming</span></span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./part1_conclusion.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Conclusion of part 1</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Conclusion of part 1</span></span></a>
   </div>
 </li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./part2_intro.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Part 2: Write IT down</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./part2_intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Part 2: Write IT down</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./project_rewrite.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Rewriting our project</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Rewriting our project</span></span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./repro_intro.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Introduction to reproducibility</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Introduction to reproducibility</span></span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./packages.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Packaging your code</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Packaging your code</span></span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./testing.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Testing your code</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Testing your code</span></span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./targets.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Build automation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Build automation</span></span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./repro_cont.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Reproducible analytical pipelines with Docker</span></span></a>
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Reproducible analytical pipelines with Docker</span></span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./ci_cd.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Continuous integration and continuous deployment/delivery</span></span></a>
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Continuous integration and continuous deployment/delivery</span></span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./part2_conclusion.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Conclusion of part 2</span></span></a>
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Conclusion of part 2</span></span></a>
   </div>
 </li>
+      </ul>
+  </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./book_conclusion.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Conclusion</span></span></a>
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Conclusion</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -284,11 +294,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#unit-testing" id="toc-unit-testing" class="nav-link active" data-scroll-target="#unit-testing"><span class="header-section-number">14.1</span> Unit testing</a></li>
-  <li><a href="#assertive-programming" id="toc-assertive-programming" class="nav-link" data-scroll-target="#assertive-programming"><span class="header-section-number">14.2</span> Assertive programming</a></li>
-  <li><a href="#test-driven-development" id="toc-test-driven-development" class="nav-link" data-scroll-target="#test-driven-development"><span class="header-section-number">14.3</span> Test-driven development</a></li>
-  <li><a href="#code-coverage" id="toc-code-coverage" class="nav-link" data-scroll-target="#code-coverage"><span class="header-section-number">14.4</span> Code coverage</a></li>
-  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">14.5</span> Conclusion</a></li>
+  <li><a href="#unit-testing" id="toc-unit-testing" class="nav-link active" data-scroll-target="#unit-testing"><span class="header-section-number">12.1</span> Unit testing</a></li>
+  <li><a href="#assertive-programming" id="toc-assertive-programming" class="nav-link" data-scroll-target="#assertive-programming"><span class="header-section-number">12.2</span> Assertive programming</a></li>
+  <li><a href="#test-driven-development" id="toc-test-driven-development" class="nav-link" data-scroll-target="#test-driven-development"><span class="header-section-number">12.3</span> Test-driven development</a></li>
+  <li><a href="#code-coverage" id="toc-code-coverage" class="nav-link" data-scroll-target="#code-coverage"><span class="header-section-number">12.4</span> Code coverage</a></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">12.5</span> Conclusion</a></li>
   </ul>
 </nav>
     </div>
@@ -297,7 +307,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Testing your code</span></h1>
+<h1 class="title"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Testing your code</span></h1>
 </div>
 
 
@@ -320,8 +330,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>assertive testing: these are executed at runtime. These make sure, for example, that the inputs a function receives are sane.</li>
 </ul>
 <p>Let’s start with unit testing.</p>
-<section id="unit-testing" class="level2" data-number="14.1">
-<h2 data-number="14.1" class="anchored" data-anchor-id="unit-testing"><span class="header-section-number">14.1</span> Unit testing</h2>
+<section id="unit-testing" class="level2" data-number="12.1">
+<h2 data-number="12.1" class="anchored" data-anchor-id="unit-testing"><span class="header-section-number">12.1</span> Unit testing</h2>
 <p>Unit testing is the testing of units. What’s a unit? Functions are units! We actually already encountered one unit test before, in the <code>save_data.Rmd</code> script:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>```{r tests-clean_flat_data}</span>
@@ -519,8 +529,8 @@ Execution halted</code></pre>
 <p>Once again, inflate <code>save_data.Rmd</code>. This will run the tests, and if everything went well, you should end up, again, with a functioning package. I highly advise that you consult <code>{testthat}</code>’s documentation to learn about all the other functions that you can use for writing unit tests.</p>
 <p>Let’s now go to assertive programming.</p>
 </section>
-<section id="assertive-programming" class="level2" data-number="14.2">
-<h2 data-number="14.2" class="anchored" data-anchor-id="assertive-programming"><span class="header-section-number">14.2</span> Assertive programming</h2>
+<section id="assertive-programming" class="level2" data-number="12.2">
+<h2 data-number="12.2" class="anchored" data-anchor-id="assertive-programming"><span class="header-section-number">12.2</span> Assertive programming</h2>
 <p>Remember in chapter 6, where I discussed safe functions? As a refresher, here’s the <code>nchar()</code> function, providing a correct output when the input is a character:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nchar</span>(<span class="st">"100000000"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -698,8 +708,8 @@ Actual message: "dataset must be one of `commune_level_data` or `country_level_d
 </ul>
 <p>I won’t discuss any of them; what’s important is for you to know that assertive programming is something that is useful, and that you should add to your toolbox.</p>
 </section>
-<section id="test-driven-development" class="level2" data-number="14.3">
-<h2 data-number="14.3" class="anchored" data-anchor-id="test-driven-development"><span class="header-section-number">14.3</span> Test-driven development</h2>
+<section id="test-driven-development" class="level2" data-number="12.3">
+<h2 data-number="12.3" class="anchored" data-anchor-id="test-driven-development"><span class="header-section-number">12.3</span> Test-driven development</h2>
 <p>Test-driven development, or TDD, is the programming paradigm in which instead of writing a function and then several tests to ensure that it’s working as expected, you start with several tests. Of course, since there is no function to test, these tests will all fail at first. But the goal is to then write a function such that the tests pass.</p>
 <p>TDD is interesting in at least two scenarios:</p>
 <ul>
@@ -709,8 +719,8 @@ Actual message: "dataset must be one of `commune_level_data` or `country_level_d
 <p>I tend to use TDD when I need to write a function but don’t quite know where to start. I start by writing the most basic tests and make them ever more complicated. At some point, I start having an idea for the function’s implementation and have a go at it. Sometimes this makes me even realise that I was testing for something irrelevant!</p>
 <p>Some programmers only do TDD; so they start by writing many, many tests, and then only start writing their functions. Personally, I think that this is also not ideal, because you could waste a lot of time writing meaningless tests.</p>
 </section>
-<section id="code-coverage" class="level2" data-number="14.4">
-<h2 data-number="14.4" class="anchored" data-anchor-id="code-coverage"><span class="header-section-number">14.4</span> Code coverage</h2>
+<section id="code-coverage" class="level2" data-number="12.4">
+<h2 data-number="12.4" class="anchored" data-anchor-id="code-coverage"><span class="header-section-number">12.4</span> Code coverage</h2>
 <p>It is useful to have an idea of which functions are tested and which are not, but also <em>how much</em> of a function is being tested. For example, suppose that you have an <code>if...else...</code> clause somewhere in a function. Did you write a test for each of the outcomes of this clause? Maybe you only wrote a test when this clause evaluates to <code>TRUE</code>, but forgot to write a test for the case it is <code>FALSE</code>.</p>
 <p>The packages <code>{covr}</code> allows you to track the test coverage of your package. Install <code>{covr}</code> and run <code>report()</code> in the console to get the results:</p>
 <div class="cell">
@@ -730,8 +740,8 @@ R/get_laspeyeres.R: 57.14%
 R/get_raw_data.R: 80.65%</code></pre>
 <p>The percentage represents the share of lines of code that are tested by our unit tests. We see that the share of lines being tested in <code>get_laspeyeres().R</code> is 57%: this is because the script <code>get_laspeyeres()</code> contains two functions, <code>get_laspeyeres()</code> and <code>make_plot()</code>. We do not test <code>make_plot()</code> at all, hence why the percentage is so low. We could move <code>make_plot()</code> to another script by simply putting the function under a level two header in the original <code>.Rmd</code> file and then inflating again. But in any case, this would not improve the overall coverage of the package; we would ideally need to write a test for <code>make_plot()</code>. This is left as an exercise to the reader.</p>
 </section>
-<section id="conclusion" class="level2" data-number="14.5">
-<h2 data-number="14.5" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">14.5</span> Conclusion</h2>
+<section id="conclusion" class="level2" data-number="12.5">
+<h2 data-number="12.5" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">12.5</span> Conclusion</h2>
 <p>Testing is crucial and useful. Not just because it gives you peace of mind but also because writing tests forces you to think about your code, by putting yourself in the shoes of your users (which include future you as well). In most cases, it is even something that you’ve been doing but perhaps not as systematically as you should.</p>
 <p>There really is no other way to say this: you need to consider writing tests as an integral part of the project, and need to take the required time it takes to write them into account when planning projects. But keep in mind that writing them makes you gain a lot of time in the long run, so actually, you might even be faster by writing tests! Tests also allow you to immediately see where something went wrong, when something goes wrong. So tests save you time here as well. Without tests, when something goes wrong, you have a hard time finding where the bug comes from, and end up wasting precious time. And worse, sometimes things go wrong and break, but silently. You still get an output that may look ok at first glance, and only realise something is wrong way too late. Testing helps avoiding such situations.</p>
 <p>So remember: it might <em>feel</em> like packaging your code and writing tests for it takes time, but:</p>
@@ -1096,12 +1106,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="./packages.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Packaging your code</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Packaging your code</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="./targets.html" class="pagination-link">
-        <span class="nav-page-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Build automation</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Build automation</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
