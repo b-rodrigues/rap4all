@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.4">
+<meta name="generator" content="quarto-1.4.6">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -935,7 +935,7 @@ targets::tar_make_future(workers = 2)</code></pre>
 <span id="cb37-35"><a href="#cb37-35" aria-hidden="true" tabindex="-1"></a>  )</span>
 <span id="cb37-36"><a href="#cb37-36" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Running this pipeline with <code>targets::tar_make()</code> will now create an <code>.html</code> file that you can open in your web-browser. Even if you want to build another format, I advise you to develop using the <code>.html</code> format. This is because you can open the <code>.html</code> file in the web-browser, and keep working on the source. Each time you run the pipeline after you made some changes to the file, you simply need to refresh the web-browser to see your changes. If instead you compile a Word document, you will need to always close the file, and then re-open it to see your changes, which is quite annoying. (A good second reason to have output in the <code>.html</code> format is that HTML is a text-only format, and thus can be tracked with version control systems covered in <a href="github.html"><span>Chapter&nbsp;5</span></a>. The MS Word format is binary, and tracking it in git is always an undecipherable mess. Keep in mind though that HTML files can get large, and you would want to invoke the special git extension called <a href="https://git-lfs.com/">git LFS</a>.) So if you open the output file, you should be seeing something quite plain looking:</p>
+<p>Running this pipeline with <code>targets::tar_make()</code> will now create an <code>.html</code> file that you can open in your web-browser. Even if you want to build another format, I advise you to develop using the <code>.html</code> format. This is because you can open the <code>.html</code> file in the web-browser, and keep working on the source. Each time you run the pipeline after you made some changes to the file, you simply need to refresh the web-browser to see your changes. If instead you compile a Word document, you will need to always close the file, and then re-open it to see your changes, which is quite annoying. (A good second reason to have output in the <code>.html</code> format is that HTML is a text-only format, and thus can be tracked with version control systems covered in <a href="github.html" class="quarto-xref"><span>Chapter&nbsp;5</span></a>. The MS Word format is binary, and tracking it in git is always an undecipherable mess. Keep in mind though that HTML files can get large, and you would want to invoke the special git extension called <a href="https://git-lfs.com/">git LFS</a>.) So if you open the output file, you should be seeing something quite plain looking:</p>
 <figure class="figure">
 <img src="images/mtcars_rmd_1.png" alt="The output of our pipeline. Our first data product!" class="figure-img">
 <figcaption class="figure-caption">
@@ -1562,6 +1562,30 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
       return note.innerHTML;
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, function() {
+      let href = xref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children.length > 2) {
+          for (let i = 0; i < 2; i++) {
+            container.appendChild(note.children[i].cloneNode(true));
+          }
+          return container.innerHTML
+        } else {
+          return note.innerHTML;
+        }
+      } else {
+        return note.innerHTML;
+      }
     });
   }
       let selectedAnnoteEl;
