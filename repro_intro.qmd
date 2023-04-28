@@ -1,4 +1,4 @@
-# Freezing packages versions, or basic reproducibility with {renv}
+# Basic reproducibility: freezing packages
 
 We are at a stage where the analysis is done. Converting our scripts into Rmds
 was quite easy to justify because writing the Rmds is also writing the report
@@ -281,7 +281,8 @@ You should be prompted to activate the project before restoring:
 
 ```{r, eval = F}
 This project has not yet been activated.
-Activating this project will ensure the project library is used during restore.
+Activating this project will ensure the project library
+is used during restore.
 Please see `?renv::activate` for more details.
 
 Would you like to activate this project before restore? [Y/n]: 
@@ -293,7 +294,8 @@ get installed. If you pay attention to the links, you should see that many of
 them get pulled from the CRAN archive, for example:
 
 ```
-Retrieving 'https://cloud.r-project.org/src/contrib/Archive/vroom/vroom_1.5.5.tar.gz' ...
+Retrieving 
+  'https://cloud.r-project.org/src/contrib/Archive/vroom/vroom_1.5.5.tar.gz' ...
 ```
 
 Notice the word "Archive" in the url? That’s because this project uses `{vroom}`

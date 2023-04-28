@@ -1172,7 +1172,8 @@ knitr::opts_chunk$set(echo = F)
 
 ## Load the summary statistics
 
-I really like to see the distribution of the variables as a cell of a table:
+I really like to see the distribution of the 
+variables as a cell of a table:
 
 ```{r}
 tar_read(summary_mtcars) %>%
@@ -1215,8 +1216,11 @@ create an entirely new repository if you want. It’s up to you. If you create a
 branch, start from the `rmd` branch, since this will provide a nice starting point.
 
 ```
-owner@localhost ➤ git checkout rmd #switch to the rmd branch
-owner@localhost ➤ git checkout -b pipeline #create and switch to the new branch called pipeline
+#switch to the rmd branch
+owner@localhost ➤ git checkout rmd
+
+#create and switch to the new branch called pipeline
+owner@localhost ➤ git checkout -b pipeline 
 ```
 
 If you start with a fresh repository, you can grab the `analyse_data.Rmd` from 
@@ -1440,8 +1444,9 @@ tar_load(commune_data)
 tar_load(country_data)
 ```
 
-We are going to create a plot for 5 communes and compare the price evolution in
-the communes to the national price evolution. Let’s first load the communes:
+We are going to create a plot for 5 communes and compare the
+price evolution in the communes to the national price evolution. 
+Let’s first load the communes:
 
 ```{r}
 tar_load(communes)
@@ -1536,7 +1541,8 @@ to re-run the project. This is what the `Readme.md` file could look like:
 
 - Clone the repository: `git clone git@github.com:rap4all/housing.git`
 - Switch to the `pipeline` branch: `git checkout pipeline`
-- Start an R session in the folder and run `renv::restore()` to install the project’s dependencies.
+- Start an R session in the folder and run `renv::restore()` 
+   to install the project’s dependencies.
 - Run the pipeline with `targets::tar_make()`.
 - Checkout `analyse_data.html` for the output.
 ````
@@ -1599,7 +1605,8 @@ targets::tar_make()
 Warning messages:
 1: this is a warning 
 2: this is a warning 
-3: 2 targets produced warnings. Run tar_meta(fields = warnings, complete_only = TRUE) for the messages. 
+3: 2 targets produced warnings. Run tar_meta(fields = warnings, 
+  complete_only = TRUE) for the messages. 
 > 
 ```
 

@@ -55,7 +55,9 @@ f(1)
 but actually what you're doing is:
 
 ```
-f(1, "windows 10 - build 22H2 - patch 10.0.19045.2075", "intel x86_64 cpu i9-13900F", "R version 4.2.2")
+f(1, "windows 10 - build 22H2 - patch 10.0.19045.2075", 
+  "intel x86_64 cpu i9-13900F", 
+  "R version 4.2.2")
 ```
 
 and so on. `f()` is only pure as far as the R version currently running `f()` is
@@ -401,7 +403,8 @@ Step 1/2 : FROM ubuntu:jammy
  ---> 08d22c0ceb15
 Step 2/2 : RUN uname -a
  ---> Running in 697194b9a519
-Linux 697194b9a519 6.2.6-1-default #1 SMP PREEMPT_DYNAMIC Mon Mar 13 10:57:27 UTC 2023 (fa1a4c6) x86_64 x86_64 x86_64 GNU/Linux
+Linux 697194b9a519 6.2.6-1-default #1 SMP PREEMPT_DYNAMIC 
+     Mon Mar 13 10:57:27 UTC 2023 (fa1a4c6) x86_64 x86_64 x86_64 GNU/Linux
 Removing intermediate container 697194b9a519
  ---> a0ea59f23d01
 Successfully built a0ea59f23d01
@@ -411,7 +414,8 @@ Successfully tagged raps_hello:latest
 Look at `Step 2/2`: you should see the output of the `uname -a` command:
 
 ```
-Linux 697194b9a519 6.2.6-1-default #1 SMP PREEMPT_DYNAMIC Mon Mar 13 10:57:27 UTC 2023 (fa1a4c6) x86_64 x86_64 x86_64 GNU/Linux
+Linux 697194b9a519 6.2.6-1-default #1 SMP PREEMPT_DYNAMIC
+     Mon Mar 13 10:57:27 UTC 2023 (fa1a4c6) x86_64 x86_64 x86_64 GNU/Linux
 ```
 
 Every `RUN` statement in the Dockerfile gets executed at build time: so this is
@@ -543,7 +547,7 @@ around with Docker, it is tricky indeed. However, you shouldn't worry too much
 about it, for several reasons:
 
 - we are not going to use Docker containers interactively, that's not really the point, but it can be useful to log in into the running container to check if things are working as expected;
-- we will build our images on top of pre-built images from the [Rocker project](https://rocker-project.org/) and these images come with a lot of software pre-installed and configuration taken care of. 
+- we will build our images on top of pre-built images from the [Rocker project](https://rocker-project.org/)^[https://rocker-project.org/] and these images come with a lot of software pre-installed and configuration taken care of. 
 
 What you should take away from this section is that you need to write a
 Dockerfile which then allows you to build an image. This image can then be used
@@ -996,7 +1000,8 @@ this long command over two lines):
 
 ```
 owner@localhost ➤ docker run --rm --name housing_container -v \
-                  /host/path/to/shared_folder:/home/housing/shared_folder:rw housing_image
+                  /host/path/to/shared_folder:/home/housing/shared_folder:rw \
+                  housing_image
 ```
 
 `/host/path/to/shared_folder` is the path to the shared folder on my computer.
@@ -1196,8 +1201,11 @@ You can also list the running containers with `docker container ls` (or `docker 
 If a container is running you should see something like this:
 
 ```
-CONTAINER ID   IMAGE              COMMAND   CREATED         STATUS         PORTS                                       NAMES
-545e4538a28a   rocker/tidyverse   "/init"   3 minutes ago   Up 3 minutes   0.0.0.0:8787->8787/tcp, :::8787->8787/tcp   elastic_morse
+CONTAINER ID   IMAGE              COMMAND   CREATED
+545e4538a28a   rocker/tidyverse   "/init"   3 minutes ago
+
+STATUS         PORTS                                       NAMES
+Up 3 minutes   0.0.0.0:8787->8787/tcp, :::8787->8787/tcp   elastic_morse
 ```
 
 You can stop the container by running `docker stop CONTAINER ID`. So, list the
@@ -1308,14 +1316,14 @@ owner@localhost ➤ docker load < dev_env_r.tar
 you should see an output like this:
 
 ```
-202fe64c3ce3: Loading layer [==================================================>]  80.33MB/80.33MB
-e7484d5519b7: Loading layer [==================================================>]  6.144kB/6.144kB
-a0f5608ee4a8: Loading layer [==================================================>]  645.4MB/645.4MB
-475d1d69813f: Loading layer [==================================================>]  102.9kB/102.9kB
-d7963749937d: Loading layer [==================================================>]  108.9MB/108.9MB
-224a0042a76f: Loading layer [==================================================>]    600MB/600MB
-a75e978c1654: Loading layer [==================================================>]  605.7kB/605.7kB
-7efc10233531: Loading layer [==================================================>]  1.474MB/1.474MB
+202fe64c3ce3: Loading layer [======================>]  80.33MB/80.33MB
+e7484d5519b7: Loading layer [======================>]  6.144kB/6.144kB
+a0f5608ee4a8: Loading layer [======================>]  645.4MB/645.4MB
+475d1d69813f: Loading layer [======================>]  102.9kB/102.9kB
+d7963749937d: Loading layer [======================>]  108.9MB/108.9MB
+224a0042a76f: Loading layer [======================>]    600MB/600MB
+a75e978c1654: Loading layer [======================>]  605.7kB/605.7kB
+7efc10233531: Loading layer [======================>]  1.474MB/1.474MB
 Loaded image: dev_env_r:latest
 
 ```

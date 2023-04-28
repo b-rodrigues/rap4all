@@ -79,7 +79,8 @@ starting from a template included in the `{fusen}` package. Start an R session
 from your home (or Documents) directory and run the following:
 
 ```{r, eval = F}
-fusen::create_fusen(path = "fusen.quickstart", template = "minimal")
+fusen::create_fusen(path = "fusen.quickstart",
+                    template = "minimal")
 ```
 
 This will create a directory called `fusen.quickstart` inside your home (or
@@ -208,10 +209,12 @@ fusen::fill_description(
     Title = "Build A Package From Rmarkdown File",
     Description = "Use Rmarkdown First method to build your package.
                    Start your package with documentation.
-                   Everything can be set from a Rmarkdown file in your project.",
+                   Everything can be set from a Rmarkdown file
+                   in your project.",
     `Authors@R` = c(
       person("Sebastien", "Rochette", email = "sebastien@thinkr.fr",
-             role = c("aut", "cre"), comment = c(ORCID = "0000-0002-1565-9313")),
+             role = c("aut", "cre"),
+             comment = c(ORCID = "0000-0002-1565-9313")),
       person(given = "ThinkR", role = "cph")
     )
   )
@@ -395,7 +398,9 @@ First order of business: create a `{fusen}` template in the folder. Start a
 fresh R session inside the `housing/` folder, and run the following:
 
 ```{r, eval = F}
-fusen::create_fusen(path = ".", template = "minimal", overwrite = TRUE)
+fusen::create_fusen(path = ".",
+                    template = "minimal",
+                    overwrite = TRUE)
 ```
 
 Because we already have a folder for our project, called `housing/` we use the
@@ -465,7 +470,8 @@ forget to document one. If that happens, when you will inflate the file, you
 will get a warning in the console:
 
 ```
-inflate warings and errors: Undocumented arguments in documentation object 'get_raw_data'
+inflate warnings and errors: Undocumented arguments in documentation 
+object 'get_raw_data'
   'url'
 ```
 
@@ -597,9 +603,7 @@ communes <- get_test_communes(
   current_communes
 )
 
-raw_data <- get_raw_data(url =
-  "https://github.com/b-rodrigues/rap4all/raw/master/datasets/vente-maison-2010-2021.xlsx"
-)
+raw_data <- get_raw_data(url = "https://is.gd/1vvBAc")
 
 flat_data <- clean_raw_data(raw_data)
 
@@ -876,14 +880,13 @@ The package’s `README` will be shown, if available, on the starting page of th
 website. So if you want to add a `README` to your package, go to the
 `0-dev_history.Rmd` file and execute the line `usethis::use_readme_rmd()`, which
 adds a template `README` file in the root of your package. Regardless of whether
-you want to build a website, adding a `README` to it is always a good idea! You 
+you want to build a website, adding a `README` to it is always a good idea! You
 could explain what the main features of the package are, and how to install it,
-especially if you want your users or future you to install the package at a certain
-commit, it is quite useful to write it down clearly in the instructions. Something
-like:
+especially if you want your users or future you to install the package at a
+certain commit, it is quite useful to write it down clearly in the instructions.
+Something like:
 
 ````{verbatim}
-
 To install this package, run the following lines of code:
 
 ```

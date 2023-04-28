@@ -46,9 +46,7 @@ communes <- get_test_communes(
   current_communes
 )
 
-raw_data <- get_raw_data(
-  url = "https://github.com/b-rodrigues/rap4all/raw/master/datasets/vente-maison-2010-2021.xlsx"
-)
+raw_data <- get_raw_data(url = "https://is.gd/1vvBAc")
 
 flat_data <- clean_raw_data(raw_data)
 
@@ -135,9 +133,7 @@ communes <- get_test_communes(
   current_communes
 )
 
-raw_data <- get_raw_data(
-  url = "https://github.com/b-rodrigues/rap4all/raw/master/datasets/vente-maison-2010-2021.xlsx"
-)
+raw_data <- get_raw_data(url = "https://is.gd/1vvBAc")
 
 flat_data <- clean_raw_data(raw_data)
 
@@ -168,7 +164,8 @@ files get inflated, this test failed and here is what happened:
 Error in `communs %in% unique(flat_data$locality)`: object 'communs' not found
 Backtrace:
     ▆
- 1. ├─testthat::expect_true(all(communs %in% unique(flat_data$locality))) at test-get_raw_data.R:18:2
+ 1. ├─testthat::expect_true(all(communs %in% unique(flat_data$locality))) 
+    at test-get_raw_data.R:18:2
  2. │ └─testthat::quasi_label(enquo(object), label, arg = "object")
  3. │   └─rlang::eval_bare(expr, quo_get_env(quo))
  4. └─communs %in% unique(flat_data$locality)
@@ -327,8 +324,13 @@ expected_df$p0 <- c(234, 234, 560, 560)
 expected_df$p0_m2 <- c(23, 23, 56, 56)
 
 # pl should be equal to the price divided by p0
-expected_df$pl <- expected_df$average_price_nominal_euros/expected_df$p0 * 100
-expected_df$pl_m2 <- expected_df$average_price_m2_nominal_euros/expected_df$p0_m2 * 100
+expected_df$pl <-
+  expected_df$average_price_nominal_euros/
+    expected_df$p0 * 100
+
+expected_df$pl_m2 <-
+  expected_df$average_price_m2_nominal_euros/
+    expected_df$p0_m2 * 100
 ```
 
 If you look at each line, you see that this is basically what `get_laspeyeres()`
@@ -438,17 +440,19 @@ nchar3 <- function(x, result = 0){
 
 ```
 
-If we go back to `get_laspeyeres()`, we should be using assertive programming to make
-sure that the provided datasets are one of `commune_level_data` and `country_level_data`. 
-This is how we could rewrite the function:
+If we go back to `get_laspeyeres()`, we should be using assertive programming to
+make sure that the provided datasets are one of `commune_level_data` and
+`country_level_data`. This is how we could rewrite the function:
 
 ```{r, eval = F}
 get_laspeyeres <- function(dataset){
 
   which_dataset <- deparse(substitute(dataset))
 
-  stopifnot("dataset must be one of `commune_level_data` or `country_level_data`" =
-              (which_dataset %in% c("commune_level_data", "country_level_data")))
+  stopifnot("dataset must be one of `commune_level_data`
+             or `country_level_data`" =
+              (which_dataset %in% c("commune_level_data",
+                                    "country_level_data")))
 
   group_var <- if(grepl("commune", which_dataset)){
                  quo(locality)
@@ -457,9 +461,19 @@ get_laspeyeres <- function(dataset){
                }
   dataset |>
     group_by(!!group_var) |>
-    mutate(p0 = ifelse(year == "2010", average_price_nominal_euros, NA)) |>
+    mutate(
+      p0 = ifelse(
+        year == "2010",
+        average_price_nominal_euros,
+        NA)
+    ) |>
     fill(p0, .direction = "down") |>
-    mutate(p0_m2 = ifelse(year == "2010", average_price_m2_nominal_euros, NA)) |>
+    mutate(
+      p0_m2 = ifelse(
+        year == "2010",
+        average_price_m2_nominal_euros,
+        NA)
+    ) |>
     fill(p0_m2, .direction = "down") |>
     ungroup() |>
     mutate(pl = average_price_nominal_euros/p0*100,
@@ -495,7 +509,8 @@ happens if I use the wrong message as the `regex` argument:
 ── Failure ('test-get_laspeyeres.R:6'): Wrong data ─────────────────────────────
 `get_laspeyeres(mtcars)` threw an error with unexpected message.
 Expected match: "message is wrong"
-Actual message: "dataset must be one of `commune_level_data` or `country_level_data`"
+Actual message: "dataset must be one of `commune_level_data`
+                   or `country_level_data`"
 ```
 
 So now, not only does our function fail for the right reasons, our test is able

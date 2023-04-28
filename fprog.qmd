@@ -168,7 +168,7 @@ Before calling this function, run `ls()` again. You should see the same objects
 as before, plus the new functions we've defined:
 
 ```{r, eval = F}
-[1] "a"         "f"          "g"         "h"         "mtcars"   
+[1] "a"       "f"        "g"         "h"         "mtcars"
 ```
 
 Let's now run `h()` once:
@@ -181,7 +181,7 @@ h("Bruno")
 And now `ls()` again:
 
 ```{r, eval = F}
-[1] "a"         "f"         "food_list" "g"         "h"         "mtcars" 
+[1] "a"       "f"       "food_list" "g"       "h"       "mtcars"
 ```
 
 Running `h()` did two things: it printed the message, but also created a
@@ -252,8 +252,9 @@ default. This avoids the users from having to manually specify it.
 We can call it like this:
 
 ```{r, eval = F}
-food_list <- h("Bruno", food_list) # since food_list is already defined,
-                                   # we don't need to start with an empty list
+food_list <- h("Bruno", food_list) # since food_list is
+                                   # already defined,  we don't
+                                   # need to start with an empty list
 ```
 
 ```{r, eval = F}
@@ -461,7 +462,9 @@ arguments, but don’t want to have to rewrite them all to make them arguments o
 
 ```{r}
 w <- function(...){
-paste0("First argument: ", ..1, ", second argument: ", ..2, ", last argument: ", ..3)
+  paste0("First argument: ", ..1,
+         ", second argument: ", ..2,
+         ", last argument: ", ..3)
 }
 
 w(1, 2, 3)

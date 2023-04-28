@@ -74,8 +74,9 @@ Let's add a file called `README.md` and add the following to it:
 ````
 # Housing data for Luxembourg
 
-These scripts for the R programming language download nominal housing prices
-from the *Observatoire de l'Habitat* and tidy them up into a flat data frame.
+These scripts for the R programming language download nominal 
+housing prices from the *Observatoire de l'Habitat* and 
+tidy them up into a flat data frame.
 
 - save_data.R: downloads, cleans, and creates data frames from the data
 - analysis.R: creates plots of the data
@@ -808,10 +809,10 @@ and you will see a detailed history, line by line, with the user name of the
 contributors and a date stamp:
 
 ```
-b7f82ee1 (Bruno   2023-02-05 18:03:37 +0100 24) #Let’s also compute it for the whole country:
+b7f82ee1 (Bruno   2023-02-05 18:03:37 +0100 24) #Let’s also compute it...
 b7f82ee1 (Bruno   2023-02-05 18:03:37 +0100 25) 
-55804ccb (Owner   2023-02-11 22:33:20 +0000 26) country_level_data <- country_level_data |>
-55804ccb (Owner   2023-02-11 22:33:20 +0000 27)   mutate(p0 = ifelse(year == "2010", average_price_nominal_euros, NA)) |>
+55804ccb (Owner   2023-02-11 22:33:20 +0000 26) country_level_data <- ...
+55804ccb (Owner   2023-02-11 22:33:20 +0000 27)   mutate(p0 = ifelse(y...
 ```
 
 We can see that Bruno edited lines 24 and 25 on the 5th of February as part of

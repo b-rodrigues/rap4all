@@ -1,4 +1,4 @@
-# Continuous integration and continuous deployment/delivery
+# Continuous integration and continuous deployment
 
 As I wrote in the conclusion of the previous chapter, the book could have
 stopped there. So consider this chapter as a bonus. What I’m going to show here
@@ -370,9 +370,15 @@ jobs:
       - name: Build image and push to Docker Hub
         uses: docker/build-push-action@v4
         with:
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:${{ github.ref_name }}-${{ github.sha }}
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:
+            ${{ github.ref_name }}-${{ github.sha }}
           push: true
 ```
+
+(Just one remark: I had to split the `tags:` line into two lines. When copying
+this line into the yaml file, put the two lines back into one line.  Click
+[here](https://raw.githubusercontent.com/b-rodrigues/ga_demo/6b7bba10b9ce8efc9c4877bb4908d742b1663a7c/.github/workflows/build-renv.yml)^[https://is.gd/0xqH22]
+for the actual file.)
 
 I believe that this file is the simplest one you could have for this. Let's study 
 it in detail.
@@ -608,7 +614,10 @@ jobs:
       run: docker build -t housing_image .
 
     - name: Docker Run Action
-      run: docker run --rm --name housing_container -v /github/workspace/shared_folder:/home/housing/shared_folder:rw housing_image
+      run: > 
+        docker run --rm --name housing_container -v
+        /github/workspace/shared_folder:/home/housing/shared_folder:rw 
+        housing_image
 
     - uses: actions/upload-artifact@v3
       with:
@@ -624,7 +633,9 @@ machine. Then we run the container. Once again I use the command that I would
 use locally. But you'll notice that I use `/github/workspace/shared_folder` as
 the path to the shared folder. You likely guessed it, `/github/workspace/` is
 the "local" path inside the Github Actions runner. This is equivalent to the
-`/home/` directory on a Linux machine.
+`/home/` directory on a Linux machine. The command is also on multiple lines
+(remember, to write a command over multiple lines on github actions, you need to
+start by `>` and then use as many lines as you need).
 
 The final action, `actions/upload-artifact@v3` is used to upload the contents of
 the shared folder and name them `housing_output_${{ github.sha }}`, where `${{
@@ -660,4 +671,22 @@ to that commit to get past outputs.
 
 ## Conclusion
 
+At the start of this chapter, I stated that this chapter was optional, because it
+is not necessary to use a CI/CD service to ensure that your projects are
+reproducible. However, I believe that setting up your project to make it run on
+Github Actions (or any other CI/CD service) truly forces you to master all the
+topics presented in this book. In the conclusion of part 1 of the book, I wrote
+that it seemed as if functional programming was only about putting restrictions
+to our code, for very little gain. In some ways, forcing yourself to use a CI/CD
+service can feel similar. But here’s the thing: if your project builds
+successfully on a CI/CD service, and if the results remain stable through time,
+then your project is reproducible. Someone else could then run it locally by
+simply following the same steps as in the workflow file, which would consist in
+the very same basic steps: clone the repository, build a Docker image and run a
+container (or set up the required R package library using `{renv}` and then run
+the pipeline with `{targets}` if you’re not using Docker).
 
+If you work in research, but cannot push the data to Github, you could always
+work on the code and the infrastructure using synthetic data for instance. The
+repository alongside the synthetic data could then be a nice complement to the
+paper (but again, only in case the data cannot be published).
