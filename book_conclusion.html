@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.6">
+<meta name="generator" content="quarto-1.4.11">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Building reproducible analytical pipelines with R - 17&nbsp; Conclusion</title>
+<title>Building reproducible analytical pipelines with R - 17&nbsp; “So what?”</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -80,7 +80,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./book_conclusion.html"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Conclusion</span></a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./book_conclusion.html"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">"So what?"</span></a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -197,7 +197,7 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./repro_intro.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Freezing packages versions, or basic reproducibility with renv</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Basic reproducibility: freezing packages</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -227,7 +227,7 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./ci_cd.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Continuous integration and continuous deployment/delivery</span></span></a>
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Continuous integration and continuous deployment</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -241,7 +241,7 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./book_conclusion.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Conclusion</span></span></a>
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">“So what?”</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -256,20 +256,14 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Table of contents</h2>
-   
-  <ul>
-  <li><a href="#so-what" id="toc-so-what" class="nav-link active" data-scroll-target="#so-what"><span class="header-section-number">17.1</span> “So what?”</a></li>
-  </ul>
-</nav>
+        
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Conclusion</span></h1>
+<h1 class="title"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">“So what?”</span></h1>
 </div>
 
 
@@ -284,20 +278,19 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<section id="so-what" class="level2" data-number="17.1">
-<h2 data-number="17.1" class="anchored" data-anchor-id="so-what"><span class="header-section-number">17.1</span> “So what?”</h2>
-<p>You’ve reached the end of the book, congratulations! This was not easy, and I hope that it was worth your time. But if you’ve reached this conclusion and are thinking “so what?” I hope to this last attempt of mine to convince you that RAPs are important will be successful.</p>
-<p>So, why bother building RAPs? I think that it all boils down to these factors:</p>
+<p>You’ve reached the end of the book, congratulations! This was not easy, and I hope that it was worth your time. But if you’ve reached this conclusion and are still thinking “so what?” I hope to this last attempt of mine to convince you that RAPs are important will be successful.</p>
+<p>So, why bother building RAPs? Firstly, there are purely technical considerations. It is not impossible that we will work on ever thinner clients while the the heavy-duty computations will run on the cloud. Should this be the case, being comfortable with the topics discussed in this book will be valuable. Also, in the very near future, large language models will be able to set up most, if not all, of the required boilerplate code to set up a RAP. This means that you will be able to focus on analysis, but you still need to understand what are the different pieces of a RAP, and how they fit together. And it is not a stretch to imagine that simple analyses could be taken over by large language models as well. So you might very soon find yourself in a position where you will not be the one doing an analysis and setting up a RAP, but instead check, verify and adjust an analysis and a RAP built by an AI. Being familiar with the concepts laid out in this book will help you successfully perform these tasks.</p>
+<p>But more importantly, the following factors are inherently part of data analysis:</p>
 <ul>
 <li>transparency;</li>
 <li>sustainability;</li>
 <li>scalability.</li>
 </ul>
-<p>It doesn’t matter if you’re working in research, for a public institution or a private sector company: the three points above are incredibly important and it’s becoming impossible to perform data analysis without taking these into account. Also, in the very near future, large language models will be able to set up most, if not all, of the required boilerplate code to set up a RAP. This means that you will be able to focus on analysis, but you still need to understand what are the different pieces of a RAP, and how they fit together. And it is not a stretch to imagine that simple analyses could be taken over by large language models as well. So you might very soon find yourself in a position where you will not be the one doing an analysis and setting up a RAP, but instead check, verify and adjust an analysis and a RAP built by an AI. Being familiar with the concepts laid out in this book will help you successfully perform these tasks.</p>
-<p>Remote dev envs vs local dev envs</p>
+<p>It doesn’t matter if you’re working in research, for a public institution or a private sector company: the three points above are incredibly important and it’s impossible to perform data analysis without taking these into consideration.</p>
+<p>Data analysis, at whatever level and for whatever field, is not just about getting to a result, the way to get to the result is part of it! This is true for science, this is true for industry, this is true everywhere. You get to decide where on the iceberg of reproducibility you want to settle, but the lower, the better.</p>
+<p>So why build RAPs? Well, because there’s no alternative.</p>
 
 
-</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

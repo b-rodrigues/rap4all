@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.6">
+<meta name="generator" content="quarto-1.4.11">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Building reproducible analytical pipelines with R - 10&nbsp; Freezing packages versions, or basic reproducibility with renv</title>
+<title>Building reproducible analytical pipelines with R - 10&nbsp; Basic reproducibility: freezing packages</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -133,7 +133,7 @@ div.csl-indent {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./part2_intro.html">Part 2: Write IT down</a></li><li class="breadcrumb-item"><a href="./repro_intro.html"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Freezing packages versions, or basic reproducibility with renv</span></a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./part2_intro.html">Part 2: Write IT down</a></li><li class="breadcrumb-item"><a href="./repro_intro.html"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Basic reproducibility: freezing packages</span></a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -250,7 +250,7 @@ div.csl-indent {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./repro_intro.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Freezing packages versions, or basic reproducibility with renv</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Basic reproducibility: freezing packages</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -280,7 +280,7 @@ div.csl-indent {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./ci_cd.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Continuous integration and continuous deployment/delivery</span></span></a>
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Continuous integration and continuous deployment</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -294,7 +294,7 @@ div.csl-indent {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./book_conclusion.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Conclusion</span></span></a>
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">“So what?”</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -313,23 +313,23 @@ div.csl-indent {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#recording-packages-version-with-renv" id="toc-recording-packages-version-with-renv" class="nav-link active" data-scroll-target="#recording-packages-version-with-renv"><span class="header-section-number">10.1</span> Recording packages’ version with <code>{renv}</code></a>
+  <li><a href="#recording-packages-version-with-renv" id="toc-recording-packages-version-with-renv" class="nav-link active" data-scroll-target="#recording-packages-version-with-renv">Recording packages’ version with <code>{renv}</code></a>
   <ul class="collapse">
-  <li><a href="#daily-renv-usage" id="toc-daily-renv-usage" class="nav-link" data-scroll-target="#daily-renv-usage"><span class="header-section-number">10.1.1</span> Daily <code>{renv}</code> usage</a></li>
-  <li><a href="#collaborating-with-renv" id="toc-collaborating-with-renv" class="nav-link" data-scroll-target="#collaborating-with-renv"><span class="header-section-number">10.1.2</span> Collaborating with <code>{renv}</code></a></li>
-  <li><a href="#renvs-shortcomings" id="toc-renvs-shortcomings" class="nav-link" data-scroll-target="#renvs-shortcomings"><span class="header-section-number">10.1.3</span> {renv}’s shortcomings</a></li>
+  <li><a href="#daily-renv-usage" id="toc-daily-renv-usage" class="nav-link" data-scroll-target="#daily-renv-usage">Daily <code>{renv}</code> usage</a></li>
+  <li><a href="#collaborating-with-renv" id="toc-collaborating-with-renv" class="nav-link" data-scroll-target="#collaborating-with-renv">Collaborating with <code>{renv}</code></a></li>
+  <li><a href="#renvs-shortcomings" id="toc-renvs-shortcomings" class="nav-link" data-scroll-target="#renvs-shortcomings">{renv}’s shortcomings</a></li>
   </ul></li>
-  <li><a href="#becoming-an-r-cheologist" id="toc-becoming-an-r-cheologist" class="nav-link" data-scroll-target="#becoming-an-r-cheologist"><span class="header-section-number">10.2</span> Becoming an R-cheologist</a></li>
-  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">10.3</span> Conclusion</a></li>
+  <li><a href="#becoming-an-r-cheologist" id="toc-becoming-an-r-cheologist" class="nav-link" data-scroll-target="#becoming-an-r-cheologist">Becoming an R-cheologist</a></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
+<main class="content page-columns page-full" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Freezing packages versions, or basic reproducibility with renv</span></h1>
+<h1 class="title"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Basic reproducibility: freezing packages</span></h1>
 </div>
 
 
@@ -348,7 +348,7 @@ div.csl-indent {
 <p>So I hope that I made my point clear: it is not recommended to stop at this stage, but I also recognize that we live in the real world with real physical constraints. So because we live in this imperfect world, sometimes we need to deliver imperfect work. So let’s see what we can do that is very cheap in terms of effort and time, but still allow us to have some hope of having our analysis reproducible using the <code>{renv}</code> package. It is quite easy to get started with <code>{renv}</code>: simply install it, and get a record of the used packages and their versions with one single command. This record gets saved inside a file that can then be used to restore this project’s library in the future, and without interfering with the other packages that you already have installed on your machine. You see, <code>{renv}</code> creates a per-project library (a library is the set of packages installed on your machine) which means that you can have as many versions of, say, <code>{dplyr}</code> as needed (one per project). The right version of <code>{dplyr}</code> will be installed and used for the right project only, and without interfering with other installed versions.</p>
 <p>Let’s see how this works by creating such a project-wide library for our little project.</p>
 <section id="recording-packages-version-with-renv" class="level2" data-number="10.1">
-<h2 data-number="10.1" class="anchored" data-anchor-id="recording-packages-version-with-renv"><span class="header-section-number">10.1</span> Recording packages’ version with <code>{renv}</code></h2>
+<h2 data-number="10.1" class="anchored" data-anchor-id="recording-packages-version-with-renv">Recording packages’ version with <code>{renv}</code></h2>
 <p>So now that you’ve used functional and literate programming, we need to start thinking about the infrastructure surrounding our code. By infrastructure I mean:</p>
 <ul>
 <li>the R version;</li>
@@ -462,13 +462,15 @@ drwxr-xr-x 1 LLP685 Domain Users     0 Feb 27 12:44 renv
 <p>You should be prompted to activate the project before restoring:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>This project has not yet been activated.</span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>Activating this project will ensure the project library is used during restore.</span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>Please see <span class="st">`</span><span class="at">?renv::activate</span><span class="st">`</span> <span class="cf">for</span> more details.</span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>Would you like to activate this project before restore? [Y<span class="sc">/</span>n]<span class="sc">:</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>Activating this project will ensure the project library</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>is used during restore.</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>Please see <span class="st">`</span><span class="at">?renv::activate</span><span class="st">`</span> <span class="cf">for</span> more details.</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>Would you like to activate this project before restore? [Y<span class="sc">/</span>n]<span class="sc">:</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Type <code>Y</code> and you should see a list of packages that need to be installed. You’ll get asked once more if you want to proceed, type <code>y</code> and watch as the packages get installed. If you pay attention to the links, you should see that many of them get pulled from the CRAN archive, for example:</p>
-<pre><code>Retrieving 'https://cloud.r-project.org/src/contrib/Archive/vroom/vroom_1.5.5.tar.gz' ...</code></pre>
+<pre><code>Retrieving 
+  'https://cloud.r-project.org/src/contrib/Archive/vroom/vroom_1.5.5.tar.gz' ...</code></pre>
 <p>Notice the word “Archive” in the url? That’s because this project uses <code>{vroom}</code> 1.5.5, but as of writing (early 2023), <code>{vroom}</code> is at version 1.6.1.</p>
 <p>Now, maybe you’ve run <code>renv::restore()</code>, but the installation of the packages failed. If that’s the case, let me explain what likely happened.</p>
 <p>I tried restoring the project’s library on two different machines: a Windows laptop and a Linux workstation. <code>renv::restore()</code> failed on the Windows laptop, but succeeded on the Linux workstation.</p>
@@ -483,7 +485,7 @@ drwxr-xr-x 1 LLP685 Domain Users     0 Feb 27 12:44 renv
 </ul>
 <p>In the next section, we’ll quickly review how to use <code>{renv}</code> on a “daily basis”.</p>
 <section id="daily-renv-usage" class="level3" data-number="10.1.1">
-<h3 data-number="10.1.1" class="anchored" data-anchor-id="daily-renv-usage"><span class="header-section-number">10.1.1</span> Daily <code>{renv}</code> usage</h3>
+<h3 data-number="10.1.1" class="anchored" data-anchor-id="daily-renv-usage">Daily <code>{renv}</code> usage</h3>
 <p>So let’s say that you start a new project and want to use <code>{renv}</code> right from the start. You start with an empty directory, and add a template <code>.Rmd</code> file, and let’s say it looks like this:</p>
 <div class="sourceCode" id="cb21"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>---</span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>title: "My new project"</span>
@@ -523,12 +525,12 @@ Error in library(ggplot2) : there is no package called 'ggplot2'</code></pre>
 <p>The second option can be interesting if your project took some time to be developed, and you want to deliver something that depends on current packages. However, only do so if you have written enough tests to detect if a package update could break your project, or else you run the risk of providing a lock file that will install packages with which your project can’t actually run! If you want to play it safe, simply go for the first option.</p>
 </section>
 <section id="collaborating-with-renv" class="level3" data-number="10.1.2">
-<h3 data-number="10.1.2" class="anchored" data-anchor-id="collaborating-with-renv"><span class="header-section-number">10.1.2</span> Collaborating with <code>{renv}</code></h3>
+<h3 data-number="10.1.2" class="anchored" data-anchor-id="collaborating-with-renv">Collaborating with <code>{renv}</code></h3>
 <p><code>{renv}</code> is also quite useful when collaborating. You can start the project and generate the lock file, and when your team-mates clone the repository from Github, they can get the exact same package versions as you. You all only need to make sure that everyone is running the same R version to avoid any issues.</p>
 <p>There is a vignette on just this that I invite you to read for more details, see <a href="https://rstudio.github.io/renv/articles/collaborating.html">here</a><a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>.</p>
 </section>
 <section id="renvs-shortcomings" class="level3" data-number="10.1.3">
-<h3 data-number="10.1.3" class="anchored" data-anchor-id="renvs-shortcomings"><span class="header-section-number">10.1.3</span> {renv}’s shortcomings</h3>
+<h3 data-number="10.1.3" class="anchored" data-anchor-id="renvs-shortcomings">{renv}’s shortcomings</h3>
 <p>In the next section, I’m going to go over two packages that make it easy to install old packages, which can be useful for reproducibility as well. But before that, let’s discuss <code>{renv}</code>’s shortcomings (which we already alluded to before). It is quite important to understand what <code>{renv}</code> does and what it doesn’t do, and why <code>{renv}</code> alone is not enough.</p>
 <p>The first problem, and I’m repeating myself here, is that <code>{renv}</code> only records the R version used for the project, but does not restore it when calling <code>renv::restore()</code>. You need to install the right R version yourself. On Windows this should be fairly easy to do, but you then need to make sure that you’re running the right version of R with the right scripts, which can get confusing.</p>
 <p>There is the <code>{rig}</code> package that makes it easy to install and switch between R versions that you could check <a href="https://github.com/r-lib/rig">out</a><a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> if you’re interested. However, I don’t think that <code>{rig}</code> should be used for our purposes. I believe that it is safer to use Docker instead, and we shall see how to do so in the coming chapters.</p>
@@ -538,7 +540,7 @@ Error in library(ggplot2) : there is no package called 'ggplot2'</code></pre>
 </section>
 </section>
 <section id="becoming-an-r-cheologist" class="level2" data-number="10.2">
-<h2 data-number="10.2" class="anchored" data-anchor-id="becoming-an-r-cheologist"><span class="header-section-number">10.2</span> Becoming an R-cheologist</h2>
+<h2 data-number="10.2" class="anchored" data-anchor-id="becoming-an-r-cheologist">Becoming an R-cheologist</h2>
 <p>So let’s say that you need to run an old script, and there’s no <code>renv.lock</code> file around for you to restore the packages as they were. There might still be a solution (apart from running the script on the current version on R and packages, and hope that everything goes well), but for this you need to at least know roughly <em>when</em> that script was written. Let’s say that you know that this script was written back in 2017, somewhere around October. If you know that, you can use the <code>{rang}</code> and <code>{groundhog}</code> packages to download the packages as of October 2018 in a separate library and then run your script.</p>
 <p><code>{rang}</code> is fairly recent as of writing (February 2023) so I won’t go into too much detail now, as it is likely that the package will keep evolving rapidly in the coming weeks. So if you want to use it already and follow its development, take a look at its Github repository <a href="https://github.com/chainsawriot/rang">here</a><a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a> and read the <a href="https://arxiv.org/abs/2303.04758">prepint</a> (<span class="citation" data-cites="schoch2023">Chan and Schoch (<a href="references.html#ref-schoch2023" role="doc-biblioref">2023</a>)</span>).</p>
 <p><code>{groundhog}</code> is another option that has been around for more time and is fairly easy to use. Suppose that you have a script from October 2018 that looks like this:</p>
@@ -600,7 +602,7 @@ Error in library(ggplot2) : there is no package called 'ggplot2'</code></pre>
 <p>So here again, the solution is to take care of the missing piece of the reproducibility puzzle, which is the whole computational environment itself.</p>
 </section>
 <section id="conclusion" class="level2" data-number="10.3">
-<h2 data-number="10.3" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">10.3</span> Conclusion</h2>
+<h2 data-number="10.3" class="anchored" data-anchor-id="conclusion">Conclusion</h2>
 <p>In this chapter you had a first (maybe a bit sour) taste of reproducibility. This is because while the tools presented here are very useful, they will not be sufficient if we want our project to be truly reproducible. There are too many things that can go wrong when re-installing old package versions, so we must instead provide a way for users to not have to do it at all. This is where Docker is going to be helpful. But before that, we need to hit the development bench again. We are actually not quite done with our project; before going to full reproducibility, we should turn our analysis into a package. And so you will see, this is going to be much, much, easier than you might expect. You already did 95% of the job! There are many advantages to turning our analysis into a package, and not only from a reproducibility perspective.</p>
 
 
@@ -610,7 +612,7 @@ Chan, Chung-hong, and David Schoch. 2023. <span>“RANG: Reconstructing Reproduc
 </div>
 </div>
 </section>
-<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<aside id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr>
 <ol>
 <li id="fn1"><p>https://is.gd/jMVfCu<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
@@ -619,7 +621,7 @@ Chan, Chung-hong, and David Schoch. 2023. <span>“RANG: Reconstructing Reproduc
 <li id="fn4"><p>https://is.gd/dvH2Sj<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn5"><p>https://is.gd/sQu7NV<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
-</section>
+</aside>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

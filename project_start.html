@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.6">
+<meta name="generator" content="quarto-1.4.11">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -231,7 +231,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./repro_intro.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Freezing packages versions, or basic reproducibility with renv</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Basic reproducibility: freezing packages</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -261,7 +261,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./ci_cd.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Continuous integration and continuous deployment/delivery</span></span></a>
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Continuous integration and continuous deployment</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -275,7 +275,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./book_conclusion.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Conclusion</span></span></a>
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">“So what?”</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -294,22 +294,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#housing-in-luxembourg" id="toc-housing-in-luxembourg" class="nav-link active" data-scroll-target="#housing-in-luxembourg"><span class="header-section-number">3.1</span> Housing in Luxembourg</a></li>
-  <li><a href="#saving-trapped-data-from-excel" id="toc-saving-trapped-data-from-excel" class="nav-link" data-scroll-target="#saving-trapped-data-from-excel"><span class="header-section-number">3.2</span> Saving trapped data from Excel</a></li>
-  <li><a href="#analysing-the-data" id="toc-analysing-the-data" class="nav-link" data-scroll-target="#analysing-the-data"><span class="header-section-number">3.3</span> Analysing the data</a></li>
-  <li><a href="#your-project-is-not-done" id="toc-your-project-is-not-done" class="nav-link" data-scroll-target="#your-project-is-not-done"><span class="header-section-number">3.4</span> Your project is not done</a>
+  <li><a href="#housing-in-luxembourg" id="toc-housing-in-luxembourg" class="nav-link active" data-scroll-target="#housing-in-luxembourg">Housing in Luxembourg</a></li>
+  <li><a href="#saving-trapped-data-from-excel" id="toc-saving-trapped-data-from-excel" class="nav-link" data-scroll-target="#saving-trapped-data-from-excel">Saving trapped data from Excel</a></li>
+  <li><a href="#analysing-the-data" id="toc-analysing-the-data" class="nav-link" data-scroll-target="#analysing-the-data">Analysing the data</a></li>
+  <li><a href="#your-project-is-not-done" id="toc-your-project-is-not-done" class="nav-link" data-scroll-target="#your-project-is-not-done">Your project is not done</a>
   <ul class="collapse">
-  <li><a href="#how-easy-would-it-be-for-someone-else-to-rerun-the-analysis" id="toc-how-easy-would-it-be-for-someone-else-to-rerun-the-analysis" class="nav-link" data-scroll-target="#how-easy-would-it-be-for-someone-else-to-rerun-the-analysis"><span class="header-section-number">3.4.1</span> How easy would it be for someone else to rerun the analysis?</a></li>
-  <li><a href="#how-easy-would-it-be-to-update-the-project" id="toc-how-easy-would-it-be-to-update-the-project" class="nav-link" data-scroll-target="#how-easy-would-it-be-to-update-the-project"><span class="header-section-number">3.4.2</span> How easy would it be to update the project?</a></li>
-  <li><a href="#how-easy-would-it-be-to-reuse-this-code-for-another-project" id="toc-how-easy-would-it-be-to-reuse-this-code-for-another-project" class="nav-link" data-scroll-target="#how-easy-would-it-be-to-reuse-this-code-for-another-project"><span class="header-section-number">3.4.3</span> How easy would it be to reuse this code for another project?</a></li>
-  <li><a href="#what-guarantee-do-we-have-that-the-output-is-stable-through-time" id="toc-what-guarantee-do-we-have-that-the-output-is-stable-through-time" class="nav-link" data-scroll-target="#what-guarantee-do-we-have-that-the-output-is-stable-through-time"><span class="header-section-number">3.4.4</span> What guarantee do we have that the output is stable through time?</a></li>
+  <li><a href="#how-easy-would-it-be-for-someone-else-to-rerun-the-analysis" id="toc-how-easy-would-it-be-for-someone-else-to-rerun-the-analysis" class="nav-link" data-scroll-target="#how-easy-would-it-be-for-someone-else-to-rerun-the-analysis">How easy would it be for someone else to rerun the analysis?</a></li>
+  <li><a href="#how-easy-would-it-be-to-update-the-project" id="toc-how-easy-would-it-be-to-update-the-project" class="nav-link" data-scroll-target="#how-easy-would-it-be-to-update-the-project">How easy would it be to update the project?</a></li>
+  <li><a href="#how-easy-would-it-be-to-reuse-this-code-for-another-project" id="toc-how-easy-would-it-be-to-reuse-this-code-for-another-project" class="nav-link" data-scroll-target="#how-easy-would-it-be-to-reuse-this-code-for-another-project">How easy would it be to reuse this code for another project?</a></li>
+  <li><a href="#what-guarantee-do-we-have-that-the-output-is-stable-through-time" id="toc-what-guarantee-do-we-have-that-the-output-is-stable-through-time" class="nav-link" data-scroll-target="#what-guarantee-do-we-have-that-the-output-is-stable-through-time">What guarantee do we have that the output is stable through time?</a></li>
   </ul></li>
-  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">3.5</span> Conclusion</a></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
+<main class="content page-columns page-full" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
@@ -331,7 +331,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>In this chapter, we are going to work together on a very simple project. This project will stay with us until the end of the book. For now, we are going to keep it simple; our goal here is to get an analysis done. We are going to download some data, and analyse it. After we’re done with our analysis, we are going to keep it on the side for some time: we will then learn about tools and new programming paradigms and then rewrite our analysis at the start of the second part of this book using the techniques we’ve learned from part 1.</p>
 <p>But for now, our main concern is to get our work done.</p>
 <section id="housing-in-luxembourg" class="level2" data-number="3.1">
-<h2 data-number="3.1" class="anchored" data-anchor-id="housing-in-luxembourg"><span class="header-section-number">3.1</span> Housing in Luxembourg</h2>
+<h2 data-number="3.1" class="anchored" data-anchor-id="housing-in-luxembourg">Housing in Luxembourg</h2>
 <p>We are going to download data about house prices in Luxembourg. Luxembourg is a little Western European country the author hails from that looks like a shoe and is about the size of .98 Rhode Islands. Did you know that Luxembourg is a constitutional monarchy, and not a kingdom like Belgium, but a Grand-Duchy, and actually the last Grand-Duchy in the World? Also, what you should know to understand what we will be doing is that the country of Luxembourg is divided into Cantons, and each Cantons into Communes. If Luxembourg was the USA, Cantons would be States and Communes would be Counties (or Parishes or Boroughs). What’s confusing is that “Luxembourg” is also the name of a Canton, and of a Commune, which also has the status of a city and is the capital of the country. So Luxembourg the country, is divided into Cantons, one of which is called Luxembourg as well, cantons are divided into communes, and inside the canton of Luxembourg there’s the commune of Luxembourg which is also the city of Luxembourg, sometimes called Luxembourg-City, which is the capital of the country.</p>
 <figure class="figure">
 <img src="images/lux_rhode_island.png" alt="Luxembourg is about as big as the US State of Rhode Island." class="figure-img">
@@ -361,7 +361,7 @@ Luxembourg is about as big as the US State of Rhode Island.
 <p>We are going to start in the most basic way possible; we are simply going to write a script and deal with each step separately.</p>
 </section>
 <section id="saving-trapped-data-from-excel" class="level2" data-number="3.2">
-<h2 data-number="3.2" class="anchored" data-anchor-id="saving-trapped-data-from-excel"><span class="header-section-number">3.2</span> Saving trapped data from Excel</h2>
+<h2 data-number="3.2" class="anchored" data-anchor-id="saving-trapped-data-from-excel">Saving trapped data from Excel</h2>
 <p>Getting data from Excel into a tidy data frame can be very tricky. This is because very often, Excel is used as some kind of dashboard, or presentation tool. So data is made human-readable, in contrast to machine readable. Let us quickly discuss this topic as it is essential to grasp the difference between the two (and in our experience, a lot of collective pain inflicted to statisticians and researchers could have been avoided if this concept was more well-known). The picture below shows an Excel made for human consumption:</p>
 <figure class="figure">
 <img src="images/obs_hab_xlsx_overview.png" alt="An Excel file meant for human eyes." class="figure-img">
@@ -460,14 +460,23 @@ Attaching package: 'janitor'</code></pre>
 <p>If you are familiar with the <code>{tidyverse}</code> the above code should be quite easy to follow. We start by downloading the raw Excel file and save the sheet names into a variable. We then use a function called <code>read_clean()</code>, which takes the path to the Excel file and the sheet names as an argument to read the required sheet into a data frame. We use <code>skip = 10</code> to skip the first 10 lines in each Excel sheet because the first 10 lines contain a header. The last thing this function does is add a new column called <code>year</code> which contains the year of the data. We’re lucky, because the sheet names are the years: “2010”, “2011” and so on. We then map this function to the list of sheet names, thus reading in all the data from all the sheets into one list of data frames. We then use <code>bind_rows()</code>, to bind each data frame into a single data frame, by row. Finally, we rename the columns (by translating their names from French to English) and only select the required columns. If you don’t understand each step of what is going on, don’t worry too much about it; this book is not about learning how to use R.</p>
 <p>Running this code results in a neat data set:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(raw_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>raw_data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>tibble [1,343 × 5] (S3: tbl_df/tbl/data.frame)
- $ year                          : chr [1:1343] "2010" "2010" "2010" "2010" ...
- $ locality                      : chr [1:1343] "Bascharage" "Beaufort" "Bech" "Beckerich" ...
- $ n_offers                      : num [1:1343] 192 266 65 176 111 264 304 94 119 70 ...
- $ average_price_nominal_euros   : chr [1:1343] "593698.31000000006" "461160.29" "621760.22" "444498.68" ...
- $ average_price_m2_nominal_euros: chr [1:1343] "3603.57" "2902.76" "3280.51" "2867.88" ...</code></pre>
+<pre><code># A tibble: 1,343 × 5
+   year  locality    n_offers average_price_nominal_euros average_price_m2_nom…¹
+   &lt;chr&gt; &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt;                       &lt;chr&gt;                 
+ 1 2010  Bascharage       192 593698.31000000006          3603.57               
+ 2 2010  Beaufort         266 461160.29                   2902.76               
+ 3 2010  Bech              65 621760.22                   3280.51               
+ 4 2010  Beckerich        176 444498.68                   2867.88               
+ 5 2010  Berdorf          111 504040.85                   3055.99               
+ 6 2010  Bertrange        264 795338.87                   4266.46               
+ 7 2010  Bettembourg      304 555628.29                   3343.22               
+ 8 2010  Bettendorf        94 495074.38                   3235.26               
+ 9 2010  Betzdorf         119 625914.47                   3343.05               
+10 2010  Bissen            70 516465.57                   3321.65               
+# … with 1,333 more rows, and abbreviated variable name
+#   ¹​average_price_m2_nominal_euros</code></pre>
 </div>
 </div>
 <p>But there’s a problem: columns that should be of type numeric are of type character instead (<code>average_price_nominal_euros</code> and <code>average_price_m2_nominal_euros</code>). There’s also another issue, which you would eventually catch as you would be exploring the data: naming of the communes is not consistent. Let’s take a look:</p>
@@ -657,7 +666,7 @@ Always look at your data.
 <p>Great! When we compare the communes that are in our data with every commune that has existed since 2010, we don’t have any commune that is unaccounted for. So are we done with cleaning the data? Yes, we can now actually start with analysing the data. Take a look <a href="https://raw.githubusercontent.com/b-rodrigues/rap4all/master/scripts/save_data.R">here</a><a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> to see the finalised script. Also read some of the comments the I’ve added. This is a typical R script, and at first glance, one might wonder what is wrong with it. Actually, not much, but the problem if you leave this script as it is, is that it is very likely that we will have problems rerunning it in the future. As it turns out, this script is not reproducible. But we will discuss this in much more detail later on. For now, let’s analyse our cleaned data.</p>
 </section>
 <section id="analysing-the-data" class="level2" data-number="3.3">
-<h2 data-number="3.3" class="anchored" data-anchor-id="analysing-the-data"><span class="header-section-number">3.3</span> Analysing the data</h2>
+<h2 data-number="3.3" class="anchored" data-anchor-id="analysing-the-data">Analysing the data</h2>
 <p>We are now going to analyse the data. The first thing we are going to do is compute a Laspeyeres price index. This price index allows us to make comparisons through time; for example, the index at year 2012 measures how much more expensive (or cheaper) housing became relative to the base year (2010). However, since we only have one good, this index becomes quite simple to compute: it is nothing but the prices at year <em>t</em> divided by the prices in 2010 (if we had a basket of goods, we would need to use the Laspeyeres index formula to compute the index at all periods).</p>
 <p>For this section, we will perform a rather simple analysis. We will immediately show you the R script: take a look at it <a href="https://raw.githubusercontent.com/b-rodrigues/rap4all/master/scripts/analysis.R">here</a><a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>. For our analysis we selected 5 communes and plotted the evolution of prices compared to the national average.</p>
 <p>This analysis might seem trivially simple, but it contains all the needed ingredients to illustrate everything else that we’re going to teach you in this book.</p>
@@ -671,36 +680,36 @@ Always look at your data.
 <p>Let’s answer these questions one by one.</p>
 </section>
 <section id="your-project-is-not-done" class="level2" data-number="3.4">
-<h2 data-number="3.4" class="anchored" data-anchor-id="your-project-is-not-done"><span class="header-section-number">3.4</span> Your project is not done</h2>
+<h2 data-number="3.4" class="anchored" data-anchor-id="your-project-is-not-done">Your project is not done</h2>
 <section id="how-easy-would-it-be-for-someone-else-to-rerun-the-analysis" class="level3" data-number="3.4.1">
-<h3 data-number="3.4.1" class="anchored" data-anchor-id="how-easy-would-it-be-for-someone-else-to-rerun-the-analysis"><span class="header-section-number">3.4.1</span> How easy would it be for someone else to rerun the analysis?</h3>
+<h3 data-number="3.4.1" class="anchored" data-anchor-id="how-easy-would-it-be-for-someone-else-to-rerun-the-analysis">How easy would it be for someone else to rerun the analysis?</h3>
 <p>The analysis is composed of two R scripts, one to prepare the data, another to actually run the analysis proper. This might seem quite easy, because each script contains comments as to what is going on, and the code is not that complicated. However, we are missing any project-level documentation, that would provide clear instructions as to how to run it. This might seem simple for us who wrote these scripts, but we are familiar with R, and this is still fresh in our brains. Should someone less familiar with R have to run the script, there is no clue for them as to how they should do it. And of course, should the analysis be more complex (suppose it’s composed of a dozens scripts), this gets even worse. It might not even be easy for you to remember how to run this in 5 months!</p>
 <p>And what about the required dependencies? Many packages were used in the analysis. How should these get installed? Ideally, the same versions of the packages you used and the same version of R should get used by that person to rerun the analysis.</p>
 <p>All of this still needs to get documented, but documenting packages and their versions takes quite some time. Thankfully, in part 2, we will learn about the <code>{renv}</code> package to deal with this in a couple lines of code.</p>
 </section>
 <section id="how-easy-would-it-be-to-update-the-project" class="level3" data-number="3.4.2">
-<h3 data-number="3.4.2" class="anchored" data-anchor-id="how-easy-would-it-be-to-update-the-project"><span class="header-section-number">3.4.2</span> How easy would it be to update the project?</h3>
+<h3 data-number="3.4.2" class="anchored" data-anchor-id="how-easy-would-it-be-to-update-the-project">How easy would it be to update the project?</h3>
 <p>If new data gets published, all the points discussed previously are still valid, plus you need to make sure that the updated data is still close enough to the previous data that it can pass through the data cleaning steps you wrote. You should also make sure that the update did not introduce a mistake in past data, or at least alert you if that is the case. Sometimes, when new years get added, data for previous years also get corrected, so it would be nice to make sure that you know this. Also, in the specific case of our data, communes might get fused into a new one, or maybe even divided into smaller communes (even though this is has not happened in a long time, it is not entirely out of the question).</p>
 <p>In summary, what is missing from the current project are enough tests to make sure that an update to the data can happen smoothly.</p>
 </section>
 <section id="how-easy-would-it-be-to-reuse-this-code-for-another-project" class="level3" data-number="3.4.3">
-<h3 data-number="3.4.3" class="anchored" data-anchor-id="how-easy-would-it-be-to-reuse-this-code-for-another-project"><span class="header-section-number">3.4.3</span> How easy would it be to reuse this code for another project?</h3>
+<h3 data-number="3.4.3" class="anchored" data-anchor-id="how-easy-would-it-be-to-reuse-this-code-for-another-project">How easy would it be to reuse this code for another project?</h3>
 <p>Said plainly, not very easy. With code in this state you have no choice but to copy and paste it into a new script and change it adequately. For re-usability, nothing beats structuring your code into functions and ideally you would even package them. We are going to learn just that in future chapters of this book.</p>
 <p>But sometimes you might not be interested in reusing code for another project: however, even if that’s the case, structuring your code into functions and packaging them makes it easy to reuse even inside the same project. Look at the last part of the <code>analysis.R</code> script: we copy and pasted the same code 5 times and only slightly changed it. We are going to learn how not to repeat ourselves by using functions and you will immediately see the benefits of writing functions, even when simply to reuse inside the same project.</p>
 </section>
 <section id="what-guarantee-do-we-have-that-the-output-is-stable-through-time" class="level3" data-number="3.4.4">
-<h3 data-number="3.4.4" class="anchored" data-anchor-id="what-guarantee-do-we-have-that-the-output-is-stable-through-time"><span class="header-section-number">3.4.4</span> What guarantee do we have that the output is stable through time?</h3>
+<h3 data-number="3.4.4" class="anchored" data-anchor-id="what-guarantee-do-we-have-that-the-output-is-stable-through-time">What guarantee do we have that the output is stable through time?</h3>
 <p>Now this might seem weird: after all, if we start from the same dataset, does it matter <em>when</em> we run the scripts? We should be getting the same result if we build the project today, in 5 months or in 5 years. Well, not necessarily. While it is true that R is quite stable, this cannot necessarily be said of the packages that get used. There is no guarantee that the authors of the packages will not change the package’s functions to work differently, or take arguments in a different order, or even that the packages will all be available at all in 5 years. And even if the packages are still available and function the same, bugs in the packages might get corrected that could alter the result. This might seem like a non-problem; after all, if bugs get corrected, shouldn’t you be happy to update your results as well? But this depends on what it is we’re talking about. Sometimes it is necessary to reproduce results exactly as they were, even if it they were wrong, for example in the context of an audit.</p>
 <p>So we also need a way to somehow snapshot and freeze the computational environment that was used to create the project originally.</p>
 </section>
 </section>
 <section id="conclusion" class="level2" data-number="3.5">
-<h2 data-number="3.5" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">3.5</span> Conclusion</h2>
+<h2 data-number="3.5" class="anchored" data-anchor-id="conclusion">Conclusion</h2>
 <p>We now have a basic analysis that has all we need to get started. In the coming chapters, we are going to learn about topics that will make it easy to write code that is more robust, better documented and tested, and most importantly easy to rerun (and thus to reproduce the results). The first step will actually not involve having to start rewriting our scripts though; next we are going to learn about Git, a tool that will make our life easier by versioning our code.</p>
 
 
 </section>
-<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<aside id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr>
 <ol>
 <li id="fn1"><p>https://is.gd/1vvBAc<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
@@ -708,7 +717,7 @@ Always look at your data.
 <li id="fn3"><p>https://is.gd/7PhUjd<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn4"><p>https://is.gd/qCJEbi<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
-</section>
+</aside>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

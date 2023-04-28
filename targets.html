@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.6">
+<meta name="generator" content="quarto-1.4.11">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -231,7 +231,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./repro_intro.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Freezing packages versions, or basic reproducibility with renv</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Basic reproducibility: freezing packages</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -261,7 +261,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./ci_cd.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Continuous integration and continuous deployment/delivery</span></span></a>
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Continuous integration and continuous deployment</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -275,7 +275,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./book_conclusion.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Conclusion</span></span></a>
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">“So what?”</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -294,32 +294,32 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="header-section-number">13.1</span> Introduction</a></li>
-  <li><a href="#targets-quick-start" id="toc-targets-quick-start" class="nav-link" data-scroll-target="#targets-quick-start"><span class="header-section-number">13.2</span> {targets} quick-start</a>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#targets-quick-start" id="toc-targets-quick-start" class="nav-link" data-scroll-target="#targets-quick-start">{targets} quick-start</a>
   <ul class="collapse">
-  <li><a href="#targets.rs-anatomy" id="toc-targets.rs-anatomy" class="nav-link" data-scroll-target="#targets.rs-anatomy"><span class="header-section-number">13.2.1</span> _targets.R’s anatomy</a></li>
+  <li><a href="#targets.rs-anatomy" id="toc-targets.rs-anatomy" class="nav-link" data-scroll-target="#targets.rs-anatomy">_targets.R’s anatomy</a></li>
   </ul></li>
-  <li><a href="#a-pipeline-is-a-composition-of-pure-functions" id="toc-a-pipeline-is-a-composition-of-pure-functions" class="nav-link" data-scroll-target="#a-pipeline-is-a-composition-of-pure-functions"><span class="header-section-number">13.3</span> A pipeline is a composition of pure functions</a></li>
-  <li><a href="#handling-files" id="toc-handling-files" class="nav-link" data-scroll-target="#handling-files"><span class="header-section-number">13.4</span> Handling files</a></li>
-  <li><a href="#the-dependency-graph" id="toc-the-dependency-graph" class="nav-link" data-scroll-target="#the-dependency-graph"><span class="header-section-number">13.5</span> The dependency graph</a></li>
-  <li><a href="#running-the-pipeline-in-parallel" id="toc-running-the-pipeline-in-parallel" class="nav-link" data-scroll-target="#running-the-pipeline-in-parallel"><span class="header-section-number">13.6</span> Running the pipeline in parallel</a></li>
-  <li><a href="#targets-and-rmarkdown-or-quarto" id="toc-targets-and-rmarkdown-or-quarto" class="nav-link" data-scroll-target="#targets-and-rmarkdown-or-quarto"><span class="header-section-number">13.7</span> {targets} and RMarkdown (or Quarto)</a></li>
-  <li><a href="#sec-targets-rewrite" id="toc-sec-targets-rewrite" class="nav-link" data-scroll-target="#sec-targets-rewrite"><span class="header-section-number">13.8</span> Rewriting our project as a pipeline and {renv} redux</a></li>
-  <li><a href="#some-little-tips-before-concluding" id="toc-some-little-tips-before-concluding" class="nav-link" data-scroll-target="#some-little-tips-before-concluding"><span class="header-section-number">13.9</span> Some little tips before concluding</a>
+  <li><a href="#a-pipeline-is-a-composition-of-pure-functions" id="toc-a-pipeline-is-a-composition-of-pure-functions" class="nav-link" data-scroll-target="#a-pipeline-is-a-composition-of-pure-functions">A pipeline is a composition of pure functions</a></li>
+  <li><a href="#handling-files" id="toc-handling-files" class="nav-link" data-scroll-target="#handling-files">Handling files</a></li>
+  <li><a href="#the-dependency-graph" id="toc-the-dependency-graph" class="nav-link" data-scroll-target="#the-dependency-graph">The dependency graph</a></li>
+  <li><a href="#running-the-pipeline-in-parallel" id="toc-running-the-pipeline-in-parallel" class="nav-link" data-scroll-target="#running-the-pipeline-in-parallel">Running the pipeline in parallel</a></li>
+  <li><a href="#targets-and-rmarkdown-or-quarto" id="toc-targets-and-rmarkdown-or-quarto" class="nav-link" data-scroll-target="#targets-and-rmarkdown-or-quarto">{targets} and RMarkdown (or Quarto)</a></li>
+  <li><a href="#sec-targets-rewrite" id="toc-sec-targets-rewrite" class="nav-link" data-scroll-target="#sec-targets-rewrite">Rewriting our project as a pipeline and {renv} redux</a></li>
+  <li><a href="#some-little-tips-before-concluding" id="toc-some-little-tips-before-concluding" class="nav-link" data-scroll-target="#some-little-tips-before-concluding">Some little tips before concluding</a>
   <ul class="collapse">
-  <li><a href="#load-every-target-at-once" id="toc-load-every-target-at-once" class="nav-link" data-scroll-target="#load-every-target-at-once"><span class="header-section-number">13.9.1</span> Load every target at once</a></li>
-  <li><a href="#get-metadata-information-on-your-pipeline" id="toc-get-metadata-information-on-your-pipeline" class="nav-link" data-scroll-target="#get-metadata-information-on-your-pipeline"><span class="header-section-number">13.9.2</span> Get metadata information on your pipeline</a></li>
-  <li><a href="#make-a-target-or-the-whole-pipeline-outdated" id="toc-make-a-target-or-the-whole-pipeline-outdated" class="nav-link" data-scroll-target="#make-a-target-or-the-whole-pipeline-outdated"><span class="header-section-number">13.9.3</span> Make a target (or the whole pipeline) outdated</a></li>
-  <li><a href="#customize-the-networks-visualisation" id="toc-customize-the-networks-visualisation" class="nav-link" data-scroll-target="#customize-the-networks-visualisation"><span class="header-section-number">13.9.4</span> Customize the network’s visualisation</a></li>
-  <li><a href="#use-targets-from-one-pipeline-in-another-project" id="toc-use-targets-from-one-pipeline-in-another-project" class="nav-link" data-scroll-target="#use-targets-from-one-pipeline-in-another-project"><span class="header-section-number">13.9.5</span> Use targets from one pipeline in another project</a></li>
-  <li><a href="#understanding-this-cryptic-error-message" id="toc-understanding-this-cryptic-error-message" class="nav-link" data-scroll-target="#understanding-this-cryptic-error-message"><span class="header-section-number">13.9.6</span> Understanding this cryptic error message</a></li>
+  <li><a href="#load-every-target-at-once" id="toc-load-every-target-at-once" class="nav-link" data-scroll-target="#load-every-target-at-once">Load every target at once</a></li>
+  <li><a href="#get-metadata-information-on-your-pipeline" id="toc-get-metadata-information-on-your-pipeline" class="nav-link" data-scroll-target="#get-metadata-information-on-your-pipeline">Get metadata information on your pipeline</a></li>
+  <li><a href="#make-a-target-or-the-whole-pipeline-outdated" id="toc-make-a-target-or-the-whole-pipeline-outdated" class="nav-link" data-scroll-target="#make-a-target-or-the-whole-pipeline-outdated">Make a target (or the whole pipeline) outdated</a></li>
+  <li><a href="#customize-the-networks-visualisation" id="toc-customize-the-networks-visualisation" class="nav-link" data-scroll-target="#customize-the-networks-visualisation">Customize the network’s visualisation</a></li>
+  <li><a href="#use-targets-from-one-pipeline-in-another-project" id="toc-use-targets-from-one-pipeline-in-another-project" class="nav-link" data-scroll-target="#use-targets-from-one-pipeline-in-another-project">Use targets from one pipeline in another project</a></li>
+  <li><a href="#understanding-this-cryptic-error-message" id="toc-understanding-this-cryptic-error-message" class="nav-link" data-scroll-target="#understanding-this-cryptic-error-message">Understanding this cryptic error message</a></li>
   </ul></li>
-  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">13.10</span> Conclusion</a></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
+<main class="content page-columns page-full" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
@@ -343,7 +343,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Without a build automation tool, a pipeline is nothing but a series of scripts that get called one after the other, or perhaps the pipeline is only one very long script that does the required operations successfully.</p>
 <p>There are several problems with this approach, so let’s see how build automation can help us.</p>
 <section id="introduction" class="level2" data-number="13.1">
-<h2 data-number="13.1" class="anchored" data-anchor-id="introduction"><span class="header-section-number">13.1</span> Introduction</h2>
+<h2 data-number="13.1" class="anchored" data-anchor-id="introduction">Introduction</h2>
 <p>Script-based workflows are problematic for several reasons. The first is that scripts can, and will, be executed out of order. You can mitigate the problems this can create by using pure functions, but you still need to make sure not to run the scripts out of order. But what does that actually mean? Well, suppose that you changed a function, and only want to re-execute the parts of the pipeline that are impacted by that change. But this supposes that you can know, in your head, which part of the script was impacted and which was not. And this can be quite difficult to figure out, especially when the pipeline is huge. So you will run certain parts of the script, and not others, in the hope that you don’t need to re-run everything.</p>
 <p>Another issue, but this one is perhaps more subjective, is that pipelines written as scripts are usually quite difficult to read and understand. To mitigate this, what you’d typically do is write a lot of comments. But here again you face the problem of needing to maintain these comments, and once the comments and the code are out of synch… the problems start (or rather, they continue).</p>
 <p>Running the different parts of the pipeline in parallel is also very complicated if your pipeline is defined as script. You would need to break the script into independent parts (and make really sure that these parts are independent) and execute them in parallel, perhaps using a separate R session for each script. The good news is that if you followed the advice from this book you have been using functional programming and so your pipeline is a series of function calls, which is “easy” to break up and run in parallel.</p>
@@ -358,7 +358,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Just like many of the other tools that we have encountered in this book, what build automation tools do is allow you to not have to rely on your brain. You <em>write down</em> the recipe once, and then you can focus again on just the code of your actual project. You shouldn’t have to think about the pipeline itself, nor think about how to best run it. Let your computer figure that out for you, it’s much better at such tasks than you.</p>
 </section>
 <section id="targets-quick-start" class="level2" data-number="13.2">
-<h2 data-number="13.2" class="anchored" data-anchor-id="targets-quick-start"><span class="header-section-number">13.2</span> {targets} quick-start</h2>
+<h2 data-number="13.2" class="anchored" data-anchor-id="targets-quick-start">{targets} quick-start</h2>
 <p>First thing’s first: to know everything about the <code>{targets}</code> package, you should read the excellent <a href="https://books.ropensci.org/targets/"><code>{targets}</code> manual</a><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>. Everything’s in there. So what I’m going to do is really just give you a very quick intro to what I think are really the main points you should know about to get started.</p>
 <p>Let’s start with a “hello-world” type pipeline. Create a new folder called something like <code>targets_intro/</code>, and start a fresh R session in it. For now, let’s ignore <code>{renv}</code>. We will see how <code>{renv}</code> works together with <code>{targets}</code> to provide a reproducible pipeline later. In that fresh session inside the <code>targets_intro/</code> run the following line:</p>
 <div class="cell">
@@ -372,7 +372,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul>
 <p>Let’s go through all these parts one by one.</p>
 <section id="targets.rs-anatomy" class="level3" data-number="13.2.1">
-<h3 data-number="13.2.1" class="anchored" data-anchor-id="targets.rs-anatomy"><span class="header-section-number">13.2.1</span> _targets.R’s anatomy</h3>
+<h3 data-number="13.2.1" class="anchored" data-anchor-id="targets.rs-anatomy">_targets.R’s anatomy</h3>
 <p>The first part of the pipeline is where packages get loaded as well as helper functions. In the template, the very first line is a <code>library(targets)</code> call followed by a function definition. There are two important things here that you need to understand.</p>
 <p>If your pipeline needs, say, the <code>{dplyr}</code> package to run, you could write <code>library(dplyr)</code> right after the <code>library(targets)</code> call. However, it is best to actually do as in the template, and load the packages using <code>tar_option_set(packages = "dplyr")</code>. This is because if you execute the pipeline in a cluster, you need to make sure that all the packages are available to all the workers. If you load the packages at the top of the <code>_targets.R</code> script, the packages will be available for the session that called <code>library(...)</code>, but not any worker sessions spawned for parallel execution.</p>
 <p>So, the idea is that at the very top of your script, you only load the <code>{targets}</code> library and other packages that are required for running the pipeline itself (as we shall see in coming sections). But packages that are required by functions that are running inside the pipeline should ideally be loaded as in the template. Another way of saying this: at the top of the script, think “pipeline infrastructure” packages (<code>{targets}</code> and some others), but inside <code>tar_option_set()</code> think “functions that run inside the pipeline” packages.</p>
@@ -395,7 +395,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 </section>
 <section id="a-pipeline-is-a-composition-of-pure-functions" class="level2" data-number="13.3">
-<h2 data-number="13.3" class="anchored" data-anchor-id="a-pipeline-is-a-composition-of-pure-functions"><span class="header-section-number">13.3</span> A pipeline is a composition of pure functions</h2>
+<h2 data-number="13.3" class="anchored" data-anchor-id="a-pipeline-is-a-composition-of-pure-functions">A pipeline is a composition of pure functions</h2>
 <p>This pipeline can immediately be ran using the <code>targets::tar_make()</code> command in a console. Doing so shows you the following output:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>targets<span class="sc">::</span><span class="fu">tar_make</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -527,7 +527,7 @@ UseMethod("summary")
 <p>It is worth noting that the <code>ggplot</code> system has a “native” plot export function, <code>ggplot2::ggsave()</code>, which takes the <code>ggplot</code> objects as inputs. If the .png image is actually needed for your project, you would need to define <em>two</em> targets, one for the <code>ggplot</code> object in the memory, and the other one for the file on disk.</p>
 </section>
 <section id="handling-files" class="level2" data-number="13.4">
-<h2 data-number="13.4" class="anchored" data-anchor-id="handling-files"><span class="header-section-number">13.4</span> Handling files</h2>
+<h2 data-number="13.4" class="anchored" data-anchor-id="handling-files">Handling files</h2>
 <p>In this section, we will learn how <code>{targets}</code> handles files. First, run the following lines in the folder that contains the <code>_targets.R</code> script that we’ve been using up until now:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(mtcars)</span>
@@ -615,7 +615,7 @@ UseMethod("summary")
 <p>Now, run the pipeline again using <code>targets::tar_make()</code>: this time you should see that <code>{targets}</code> correctly identified the change and runs the pipeline again accordingly!</p>
 </section>
 <section id="the-dependency-graph" class="level2" data-number="13.5">
-<h2 data-number="13.5" class="anchored" data-anchor-id="the-dependency-graph"><span class="header-section-number">13.5</span> The dependency graph</h2>
+<h2 data-number="13.5" class="anchored" data-anchor-id="the-dependency-graph">The dependency graph</h2>
 <p>As you’ve seen in the previous section (and as I told you in the introduction) <code>{targets}</code> keeps track of changes in files, but also in the functions that you use. Any change in any of these files will result in <code>{targets}</code> identifying which targets are now out-of-date and which should be re-computed (alongside any other target that depends on them). It is possible to visualise this using <code>targets::tar_visnetwork()</code>. This opens an interactive network graph in your web browser that looks like this:</p>
 <figure class="figure">
 <img src="images/targets_visnetwork.png" alt="This image opens in your web-browser." class="figure-img">
@@ -690,7 +690,7 @@ The two separate workflows end up in one output.
 <p>Finally, run the pipeline one last time to compute the final output.</p>
 </section>
 <section id="running-the-pipeline-in-parallel" class="level2" data-number="13.6">
-<h2 data-number="13.6" class="anchored" data-anchor-id="running-the-pipeline-in-parallel"><span class="header-section-number">13.6</span> Running the pipeline in parallel</h2>
+<h2 data-number="13.6" class="anchored" data-anchor-id="running-the-pipeline-in-parallel">Running the pipeline in parallel</h2>
 <p><code>{targets}</code> make it easy to run independent parts of our pipeline in parallel. In the example from before, it was quite obvious to know which parts were independent, but when the pipeline grows in complexity, it can be very difficult to see which parts are independent.</p>
 <p>Let’s now run the example from before in parallel. But first, we need to create a function that takes some time to run. <code>summary()</code> is so quick that running both of its calls in parallel is not worth it (and would actually even run slower, I’ll explain why at the end). Let’s define a new function called <code>slow_summary()</code>:</p>
 <div class="cell">
@@ -848,7 +848,7 @@ targets::tar_make_future(workers = 2)</code></pre>
 <p>As you can see, this was faster but not quite twice as fast, but faster nonetheless. The reason this isn’t exactly twice as fast is because there is some overhead to run code in parallel. New R session have to be spawned by <code>{targets}</code> and data needs to be transferred, and packages loaded, in these new sessions. This is why it’s only worth parallelizing code that takes some time to run. If you decrease the number of sleep seconds in <code>slow_summary(...)</code> (for example to 10), running the code in parallel might even be slower, because of that overhead. But if you have several long-running computations, it’s really worth the very small price that you pay for the initial setup.</p>
 </section>
 <section id="targets-and-rmarkdown-or-quarto" class="level2" data-number="13.7">
-<h2 data-number="13.7" class="anchored" data-anchor-id="targets-and-rmarkdown-or-quarto"><span class="header-section-number">13.7</span> {targets} and RMarkdown (or Quarto)</h2>
+<h2 data-number="13.7" class="anchored" data-anchor-id="targets-and-rmarkdown-or-quarto">{targets} and RMarkdown (or Quarto)</h2>
 <p>It is also possible to compile documents using RMardown (or Quarto) and <code>{targets}</code>. The way this works is by setting up a pipeline that produce the outputs you need in the document. For example, if you’re showing a table in the document, create a target in the pipeline that builds the underlying data. Do the same for a plot, or a statistical model that you run on some data. Then, in the <code>.Rmd</code> (or <code>.Qmd</code>) source file, use <code>targets::tar_load()</code> or <code>targets::tar_read()</code>to load the different objects you need.</p>
 <p>Consider the following <code>_targets.R</code> file:</p>
 <div class="cell">
@@ -1032,35 +1032,39 @@ The output of our pipeline. Our first data product!
 <span id="cb44-11"><a href="#cb44-11" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb44-12"><a href="#cb44-12" aria-hidden="true" tabindex="-1"></a>## Load the summary statistics</span>
 <span id="cb44-13"><a href="#cb44-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-14"><a href="#cb44-14" aria-hidden="true" tabindex="-1"></a>I really like to see the distribution of the variables as a cell of a table:</span>
-<span id="cb44-15"><a href="#cb44-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-16"><a href="#cb44-16" aria-hidden="true" tabindex="-1"></a>```{r}</span>
-<span id="cb44-17"><a href="#cb44-17" aria-hidden="true" tabindex="-1"></a>tar_read(summary_mtcars) %&gt;%</span>
-<span id="cb44-18"><a href="#cb44-18" aria-hidden="true" tabindex="-1"></a>  select(Variable = skim_variable,</span>
-<span id="cb44-19"><a href="#cb44-19" aria-hidden="true" tabindex="-1"></a>         Mean = numeric.mean,</span>
-<span id="cb44-20"><a href="#cb44-20" aria-hidden="true" tabindex="-1"></a>         SD = numeric.sd,</span>
-<span id="cb44-21"><a href="#cb44-21" aria-hidden="true" tabindex="-1"></a>         Histogram = numeric.hist) %&gt;%</span>
-<span id="cb44-22"><a href="#cb44-22" aria-hidden="true" tabindex="-1"></a>  flextable() %&gt;%</span>
-<span id="cb44-23"><a href="#cb44-23" aria-hidden="true" tabindex="-1"></a>  set_caption("Summary statistics for mtcars")</span>
-<span id="cb44-24"><a href="#cb44-24" aria-hidden="true" tabindex="-1"></a>```</span>
-<span id="cb44-25"><a href="#cb44-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-14"><a href="#cb44-14" aria-hidden="true" tabindex="-1"></a>I really like to see the distribution of the </span>
+<span id="cb44-15"><a href="#cb44-15" aria-hidden="true" tabindex="-1"></a>variables as a cell of a table:</span>
+<span id="cb44-16"><a href="#cb44-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-17"><a href="#cb44-17" aria-hidden="true" tabindex="-1"></a>```{r}</span>
+<span id="cb44-18"><a href="#cb44-18" aria-hidden="true" tabindex="-1"></a>tar_read(summary_mtcars) %&gt;%</span>
+<span id="cb44-19"><a href="#cb44-19" aria-hidden="true" tabindex="-1"></a>  select(Variable = skim_variable,</span>
+<span id="cb44-20"><a href="#cb44-20" aria-hidden="true" tabindex="-1"></a>         Mean = numeric.mean,</span>
+<span id="cb44-21"><a href="#cb44-21" aria-hidden="true" tabindex="-1"></a>         SD = numeric.sd,</span>
+<span id="cb44-22"><a href="#cb44-22" aria-hidden="true" tabindex="-1"></a>         Histogram = numeric.hist) %&gt;%</span>
+<span id="cb44-23"><a href="#cb44-23" aria-hidden="true" tabindex="-1"></a>  flextable() %&gt;%</span>
+<span id="cb44-24"><a href="#cb44-24" aria-hidden="true" tabindex="-1"></a>  set_caption("Summary statistics for mtcars")</span>
+<span id="cb44-25"><a href="#cb44-25" aria-hidden="true" tabindex="-1"></a>```</span>
 <span id="cb44-26"><a href="#cb44-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-27"><a href="#cb44-27" aria-hidden="true" tabindex="-1"></a>## Graphics</span>
-<span id="cb44-28"><a href="#cb44-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-29"><a href="#cb44-29" aria-hidden="true" tabindex="-1"></a>The plot below is really nice, just look at it:</span>
-<span id="cb44-30"><a href="#cb44-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-31"><a href="#cb44-31" aria-hidden="true" tabindex="-1"></a>```{r, fig.cap = "Scatterplot of `mpg` and `hp` by type of transmission"}</span>
-<span id="cb44-32"><a href="#cb44-32" aria-hidden="true" tabindex="-1"></a>tar_read(plot_mtcars) +</span>
-<span id="cb44-33"><a href="#cb44-33" aria-hidden="true" tabindex="-1"></a>  theme_minimal() +</span>
-<span id="cb44-34"><a href="#cb44-34" aria-hidden="true" tabindex="-1"></a>  theme(legend.position = "bottom")</span>
-<span id="cb44-35"><a href="#cb44-35" aria-hidden="true" tabindex="-1"></a>```</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb44-27"><a href="#cb44-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-28"><a href="#cb44-28" aria-hidden="true" tabindex="-1"></a>## Graphics</span>
+<span id="cb44-29"><a href="#cb44-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-30"><a href="#cb44-30" aria-hidden="true" tabindex="-1"></a>The plot below is really nice, just look at it:</span>
+<span id="cb44-31"><a href="#cb44-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-32"><a href="#cb44-32" aria-hidden="true" tabindex="-1"></a>```{r, fig.cap = "Scatterplot of `mpg` and `hp` by type of transmission"}</span>
+<span id="cb44-33"><a href="#cb44-33" aria-hidden="true" tabindex="-1"></a>tar_read(plot_mtcars) +</span>
+<span id="cb44-34"><a href="#cb44-34" aria-hidden="true" tabindex="-1"></a>  theme_minimal() +</span>
+<span id="cb44-35"><a href="#cb44-35" aria-hidden="true" tabindex="-1"></a>  theme(legend.position = "bottom")</span>
+<span id="cb44-36"><a href="#cb44-36" aria-hidden="true" tabindex="-1"></a>```</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>As you can see, once I’ve used <code>targets::tar_read()</code>, I get back the object just as if I had generated it from within the <code>.Rmd</code> source file, and can simply add stuff to it (like changing the theme of the ggplot). Once you’re happy with the contents, you can add <code>output: word_document</code> to the header of the document (just below <code>date: today</code> for example) to generate a Word document.</p>
 </section>
 <section id="sec-targets-rewrite" class="level2" data-number="13.8">
-<h2 data-number="13.8" class="anchored" data-anchor-id="sec-targets-rewrite"><span class="header-section-number">13.8</span> Rewriting our project as a pipeline and {renv} redux</h2>
+<h2 data-number="13.8" class="anchored" data-anchor-id="sec-targets-rewrite">Rewriting our project as a pipeline and {renv} redux</h2>
 <p>It is now time to turn our little project into a full-fledged pipeline. For this, we’re going back to our project’s folder and specifically to the <code>fusen</code> branch. This is the branch where we used <code>{fusen}</code> to turn our <code>.Rmd</code> into a package. This package contains the functions that we need to update the data. But remember, we wrote the analysis in another <code>.Rmd</code> file that we did not inflate, <code>analyse_data.Rmd</code>. We are now going to write a <code>{targets}</code> pipeline that will make use of the inflated package and compute all the targets required for the analysis. The first step is to create a new branch, but you could also create an entirely new repository if you want. It’s up to you. If you create a new branch, start from the <code>rmd</code> branch, since this will provide a nice starting point.</p>
-<pre><code>owner@localhost ➤ git checkout rmd #switch to the rmd branch
-owner@localhost ➤ git checkout -b pipeline #create and switch to the new branch called pipeline</code></pre>
+<pre><code>#switch to the rmd branch
+owner@localhost ➤ git checkout rmd
+
+#create and switch to the new branch called pipeline
+owner@localhost ➤ git checkout -b pipeline </code></pre>
 <p>If you start with a fresh repository, you can grab the <code>analyse_data.Rmd</code> from <a href="https://raw.githubusercontent.com/b-rodrigues/rap4all/master/rmds/analyse_data.Rmd">here</a><a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>.</p>
 <p>First order of business, let’s delete <code>save_data.Rmd</code> (unless you started with an empty repo). We don’t need that file anymore, since everything is now available in the package we developed:</p>
 <pre><code>owner@localhost ➤ rm save_data.Rmd</code></pre>
@@ -1172,34 +1176,35 @@ What’s described as ‘mtcars’ is not a ‘data.frame’, yet.
 <span id="cb53-11"><a href="#cb53-11" aria-hidden="true" tabindex="-1"></a>tar_load(country_data)</span>
 <span id="cb53-12"><a href="#cb53-12" aria-hidden="true" tabindex="-1"></a>```</span>
 <span id="cb53-13"><a href="#cb53-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb53-14"><a href="#cb53-14" aria-hidden="true" tabindex="-1"></a>We are going to create a plot for 5 communes and compare the price evolution in</span>
-<span id="cb53-15"><a href="#cb53-15" aria-hidden="true" tabindex="-1"></a>the communes to the national price evolution. Let’s first load the communes:</span>
-<span id="cb53-16"><a href="#cb53-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb53-17"><a href="#cb53-17" aria-hidden="true" tabindex="-1"></a>```{r}</span>
-<span id="cb53-18"><a href="#cb53-18" aria-hidden="true" tabindex="-1"></a>tar_load(communes)</span>
-<span id="cb53-19"><a href="#cb53-19" aria-hidden="true" tabindex="-1"></a>```</span>
-<span id="cb53-20"><a href="#cb53-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb53-21"><a href="#cb53-21" aria-hidden="true" tabindex="-1"></a>```{r, results = "asis"}</span>
-<span id="cb53-22"><a href="#cb53-22" aria-hidden="true" tabindex="-1"></a>res &lt;- lapply(communes, function(x){</span>
-<span id="cb53-23"><a href="#cb53-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb53-24"><a href="#cb53-24" aria-hidden="true" tabindex="-1"></a>  knitr::knit_child(text = c(</span>
-<span id="cb53-25"><a href="#cb53-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb53-26"><a href="#cb53-26" aria-hidden="true" tabindex="-1"></a>    '\n',</span>
-<span id="cb53-27"><a href="#cb53-27" aria-hidden="true" tabindex="-1"></a>    '## Plot for commune: `r x`',</span>
-<span id="cb53-28"><a href="#cb53-28" aria-hidden="true" tabindex="-1"></a>    '\n',</span>
-<span id="cb53-29"><a href="#cb53-29" aria-hidden="true" tabindex="-1"></a>    '```{r, echo = F}',</span>
-<span id="cb53-30"><a href="#cb53-30" aria-hidden="true" tabindex="-1"></a>    'print(make_plot(country_data, commune_data, x))',</span>
-<span id="cb53-31"><a href="#cb53-31" aria-hidden="true" tabindex="-1"></a>    '```'</span>
-<span id="cb53-32"><a href="#cb53-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb53-33"><a href="#cb53-33" aria-hidden="true" tabindex="-1"></a>     ),</span>
-<span id="cb53-34"><a href="#cb53-34" aria-hidden="true" tabindex="-1"></a>     envir = environment(),</span>
-<span id="cb53-35"><a href="#cb53-35" aria-hidden="true" tabindex="-1"></a>     quiet = TRUE)</span>
-<span id="cb53-36"><a href="#cb53-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb53-37"><a href="#cb53-37" aria-hidden="true" tabindex="-1"></a>})</span>
-<span id="cb53-38"><a href="#cb53-38" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb53-39"><a href="#cb53-39" aria-hidden="true" tabindex="-1"></a>cat(unlist(res), sep = "\n")</span>
-<span id="cb53-40"><a href="#cb53-40" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb53-41"><a href="#cb53-41" aria-hidden="true" tabindex="-1"></a>```</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb53-14"><a href="#cb53-14" aria-hidden="true" tabindex="-1"></a>We are going to create a plot for 5 communes and compare the</span>
+<span id="cb53-15"><a href="#cb53-15" aria-hidden="true" tabindex="-1"></a>price evolution in the communes to the national price evolution. </span>
+<span id="cb53-16"><a href="#cb53-16" aria-hidden="true" tabindex="-1"></a>Let’s first load the communes:</span>
+<span id="cb53-17"><a href="#cb53-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-18"><a href="#cb53-18" aria-hidden="true" tabindex="-1"></a>```{r}</span>
+<span id="cb53-19"><a href="#cb53-19" aria-hidden="true" tabindex="-1"></a>tar_load(communes)</span>
+<span id="cb53-20"><a href="#cb53-20" aria-hidden="true" tabindex="-1"></a>```</span>
+<span id="cb53-21"><a href="#cb53-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-22"><a href="#cb53-22" aria-hidden="true" tabindex="-1"></a>```{r, results = "asis"}</span>
+<span id="cb53-23"><a href="#cb53-23" aria-hidden="true" tabindex="-1"></a>res &lt;- lapply(communes, function(x){</span>
+<span id="cb53-24"><a href="#cb53-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-25"><a href="#cb53-25" aria-hidden="true" tabindex="-1"></a>  knitr::knit_child(text = c(</span>
+<span id="cb53-26"><a href="#cb53-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-27"><a href="#cb53-27" aria-hidden="true" tabindex="-1"></a>    '\n',</span>
+<span id="cb53-28"><a href="#cb53-28" aria-hidden="true" tabindex="-1"></a>    '## Plot for commune: `r x`',</span>
+<span id="cb53-29"><a href="#cb53-29" aria-hidden="true" tabindex="-1"></a>    '\n',</span>
+<span id="cb53-30"><a href="#cb53-30" aria-hidden="true" tabindex="-1"></a>    '```{r, echo = F}',</span>
+<span id="cb53-31"><a href="#cb53-31" aria-hidden="true" tabindex="-1"></a>    'print(make_plot(country_data, commune_data, x))',</span>
+<span id="cb53-32"><a href="#cb53-32" aria-hidden="true" tabindex="-1"></a>    '```'</span>
+<span id="cb53-33"><a href="#cb53-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-34"><a href="#cb53-34" aria-hidden="true" tabindex="-1"></a>     ),</span>
+<span id="cb53-35"><a href="#cb53-35" aria-hidden="true" tabindex="-1"></a>     envir = environment(),</span>
+<span id="cb53-36"><a href="#cb53-36" aria-hidden="true" tabindex="-1"></a>     quiet = TRUE)</span>
+<span id="cb53-37"><a href="#cb53-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-38"><a href="#cb53-38" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb53-39"><a href="#cb53-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-40"><a href="#cb53-40" aria-hidden="true" tabindex="-1"></a>cat(unlist(res), sep = "\n")</span>
+<span id="cb53-41"><a href="#cb53-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-42"><a href="#cb53-42" aria-hidden="true" tabindex="-1"></a>```</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>As you can see, the data gets loaded by using <code>targets::tar_load()</code> which loads the two pre-computed data sets. The end portion of the document looks fairly similar to what we had before turning our analysis into a package and then a pipeline. We use a child document to generate as many sections as required automatically (remember, Don’t Repeat Yourself!). Try to change something in the pipeline, for example remove some communes from the <code>communes</code> object, and rerun the whole pipeline using <code>tar_make()</code>.</p>
 <p>We are now done with this introduction to <code>{targets}</code>: we have turned our analysis into a pipeline, and now we need to ensure that the outputs it produces are reproducible. So the first step is to use <code>{renv}</code>; but as already discussed, this will not be enough, but it is essential that you do it! So let’s initialize <code>{renv}</code>:</p>
 <div class="cell">
@@ -1238,20 +1243,21 @@ What’s described as ‘mtcars’ is not a ‘data.frame’, yet.
 <span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a>- Clone the repository: `git clone git@github.com:rap4all/housing.git`</span>
 <span id="cb57-4"><a href="#cb57-4" aria-hidden="true" tabindex="-1"></a>- Switch to the `pipeline` branch: `git checkout pipeline`</span>
-<span id="cb57-5"><a href="#cb57-5" aria-hidden="true" tabindex="-1"></a>- Start an R session in the folder and run `renv::restore()` to install the project’s dependencies.</span>
-<span id="cb57-6"><a href="#cb57-6" aria-hidden="true" tabindex="-1"></a>- Run the pipeline with `targets::tar_make()`.</span>
-<span id="cb57-7"><a href="#cb57-7" aria-hidden="true" tabindex="-1"></a>- Checkout `analyse_data.html` for the output.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb57-5"><a href="#cb57-5" aria-hidden="true" tabindex="-1"></a>- Start an R session in the folder and run `renv::restore()` </span>
+<span id="cb57-6"><a href="#cb57-6" aria-hidden="true" tabindex="-1"></a>   to install the project’s dependencies.</span>
+<span id="cb57-7"><a href="#cb57-7" aria-hidden="true" tabindex="-1"></a>- Run the pipeline with `targets::tar_make()`.</span>
+<span id="cb57-8"><a href="#cb57-8" aria-hidden="true" tabindex="-1"></a>- Checkout `analyse_data.html` for the output.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>If you followed along, don’t forget to change the <code>url</code> of the repository to your own.</p>
 </section>
 <section id="some-little-tips-before-concluding" class="level2" data-number="13.9">
-<h2 data-number="13.9" class="anchored" data-anchor-id="some-little-tips-before-concluding"><span class="header-section-number">13.9</span> Some little tips before concluding</h2>
+<h2 data-number="13.9" class="anchored" data-anchor-id="some-little-tips-before-concluding">Some little tips before concluding</h2>
 <p>In this section I’ll be showing you some other useful functions included in the <code>{targets}</code> package that I think you should know!</p>
 <section id="load-every-target-at-once" class="level3" data-number="13.9.1">
-<h3 data-number="13.9.1" class="anchored" data-anchor-id="load-every-target-at-once"><span class="header-section-number">13.9.1</span> Load every target at once</h3>
+<h3 data-number="13.9.1" class="anchored" data-anchor-id="load-every-target-at-once">Load every target at once</h3>
 <p>It is possible to load every target included in the cache at once using <code>tar_load_everything()</code>. But be careful, if your pipeline builds many targets, this can take some time!</p>
 </section>
 <section id="get-metadata-information-on-your-pipeline" class="level3" data-number="13.9.2">
-<h3 data-number="13.9.2" class="anchored" data-anchor-id="get-metadata-information-on-your-pipeline"><span class="header-section-number">13.9.2</span> Get metadata information on your pipeline</h3>
+<h3 data-number="13.9.2" class="anchored" data-anchor-id="get-metadata-information-on-your-pipeline">Get metadata information on your pipeline</h3>
 <p><code>tar_meta()</code> will return a data frame with some information about the pipeline. I find it quite useful after running the pipeline, and it turns out that some warnings or errors were raised. This is how this data frame looks like:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>targets<span class="sc">::</span><span class="fu">tar_meta</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1282,7 +1288,8 @@ What’s described as ‘mtcars’ is not a ‘data.frame’, yet.
 Warning messages:
 1: this is a warning 
 2: this is a warning 
-3: 2 targets produced warnings. Run tar_meta(fields = warnings, complete_only = TRUE) for the messages. 
+3: 2 targets produced warnings. Run tar_meta(fields = warnings, 
+  complete_only = TRUE) for the messages. 
 &gt; </code></pre>
 <p>Because warnings were raised, the pipeline raises another warning telling you to run <code>tar_meta(fields = warnings, complete_only = TRUE)</code> so let’s do it:</p>
 <div class="cell">
@@ -1297,15 +1304,15 @@ Warning messages:
 <p>So now you can better see what is going on.</p>
 </section>
 <section id="make-a-target-or-the-whole-pipeline-outdated" class="level3" data-number="13.9.3">
-<h3 data-number="13.9.3" class="anchored" data-anchor-id="make-a-target-or-the-whole-pipeline-outdated"><span class="header-section-number">13.9.3</span> Make a target (or the whole pipeline) outdated</h3>
+<h3 data-number="13.9.3" class="anchored" data-anchor-id="make-a-target-or-the-whole-pipeline-outdated">Make a target (or the whole pipeline) outdated</h3>
 <p>With <code>tar_invalidate()</code> you can make a target outdated, so that when you rerun the pipeline, it gets re-computed (alongside every target that depends on it). This can sometimes be useful to make sure that everything is running correctly. Try running <code>tar_invalidate("communes")</code> and see what happens. It is also possible to complete nuke the whole pipeline and rerun it from scratch using <code>tar_destroy()</code>. You’ll get asked to confirm if that’s what you want to do, and if yes, reruning the pipeline after that will start from scratch.</p>
 </section>
 <section id="customize-the-networks-visualisation" class="level3" data-number="13.9.4">
-<h3 data-number="13.9.4" class="anchored" data-anchor-id="customize-the-networks-visualisation"><span class="header-section-number">13.9.4</span> Customize the network’s visualisation</h3>
+<h3 data-number="13.9.4" class="anchored" data-anchor-id="customize-the-networks-visualisation">Customize the network’s visualisation</h3>
 <p>By calling <code>visNetwork::visNetworkEditor(tar_visnetwork())</code>, a Shiny app gets started that lets you customize the look of your pipeline’s network. You can play around with the options and see the effect they have on the look of the network. It is also possible to generate R code that you can then paste into a script to consistently generate the same look.</p>
 </section>
 <section id="use-targets-from-one-pipeline-in-another-project" class="level3" data-number="13.9.5">
-<h3 data-number="13.9.5" class="anchored" data-anchor-id="use-targets-from-one-pipeline-in-another-project"><span class="header-section-number">13.9.5</span> Use targets from one pipeline in another project</h3>
+<h3 data-number="13.9.5" class="anchored" data-anchor-id="use-targets-from-one-pipeline-in-another-project">Use targets from one pipeline in another project</h3>
 <p>If you need to load some targets inside another project (for example, because you need to reference an older study), you can do so easily with <code>{withr}</code>:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a>withr<span class="sc">::</span><span class="fu">with_dir</span>(</span>
@@ -1314,7 +1321,7 @@ Warning messages:
 </div>
 </section>
 <section id="understanding-this-cryptic-error-message" class="level3" data-number="13.9.6">
-<h3 data-number="13.9.6" class="anchored" data-anchor-id="understanding-this-cryptic-error-message"><span class="header-section-number">13.9.6</span> Understanding this cryptic error message</h3>
+<h3 data-number="13.9.6" class="anchored" data-anchor-id="understanding-this-cryptic-error-message">Understanding this cryptic error message</h3>
 <p>Sometimes, when you try to run the pipeline, you get the following error message:</p>
 <pre><code>Error:
 ! Error running targets::tar_make()
@@ -1325,20 +1332,20 @@ Warning messages:
 </section>
 </section>
 <section id="conclusion" class="level2" data-number="13.10">
-<h2 data-number="13.10" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">13.10</span> Conclusion</h2>
+<h2 data-number="13.10" class="anchored" data-anchor-id="conclusion">Conclusion</h2>
 <p>I hope to have convinced you that you need to add build automation tools to your toolbox. <code>{targets}</code> is a fantastic package, because it takes care of something incredibly tedious for you. By using <code>{targets}</code> you don’t have to remember which objects you need to recompute when you need to change code. You don’t need to rewrite your code to make it run in parallel. And by using <code>{renv}</code>, other users can run your pipeline in a couple of lines and reproduce the results.</p>
 <p>In the next chapter, we will be going deeper in the iceberg of reproducibility still.</p>
 
 
 </section>
-<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<aside id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr>
 <ol>
 <li id="fn1"><p>https://is.gd/VS6vSs<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn2"><p>https://is.gd/lm4QoO<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn3"><p>https://is.gd/L2GICG<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
-</section>
+</aside>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

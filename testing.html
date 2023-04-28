@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.6">
+<meta name="generator" content="quarto-1.4.11">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -231,7 +231,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./repro_intro.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Freezing packages versions, or basic reproducibility with renv</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Basic reproducibility: freezing packages</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -261,7 +261,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./ci_cd.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Continuous integration and continuous deployment/delivery</span></span></a>
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Continuous integration and continuous deployment</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -275,7 +275,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./book_conclusion.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Conclusion</span></span></a>
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">“So what?”</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -294,11 +294,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#unit-testing" id="toc-unit-testing" class="nav-link active" data-scroll-target="#unit-testing"><span class="header-section-number">12.1</span> Unit testing</a></li>
-  <li><a href="#assertive-programming" id="toc-assertive-programming" class="nav-link" data-scroll-target="#assertive-programming"><span class="header-section-number">12.2</span> Assertive programming</a></li>
-  <li><a href="#test-driven-development" id="toc-test-driven-development" class="nav-link" data-scroll-target="#test-driven-development"><span class="header-section-number">12.3</span> Test-driven development</a></li>
-  <li><a href="#code-coverage" id="toc-code-coverage" class="nav-link" data-scroll-target="#code-coverage"><span class="header-section-number">12.4</span> Code coverage</a></li>
-  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">12.5</span> Conclusion</a></li>
+  <li><a href="#unit-testing" id="toc-unit-testing" class="nav-link active" data-scroll-target="#unit-testing">Unit testing</a></li>
+  <li><a href="#assertive-programming" id="toc-assertive-programming" class="nav-link" data-scroll-target="#assertive-programming">Assertive programming</a></li>
+  <li><a href="#test-driven-development" id="toc-test-driven-development" class="nav-link" data-scroll-target="#test-driven-development">Test-driven development</a></li>
+  <li><a href="#code-coverage" id="toc-code-coverage" class="nav-link" data-scroll-target="#code-coverage">Code coverage</a></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
   </ul>
 </nav>
     </div>
@@ -331,7 +331,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul>
 <p>Let’s start with unit testing.</p>
 <section id="unit-testing" class="level2" data-number="12.1">
-<h2 data-number="12.1" class="anchored" data-anchor-id="unit-testing"><span class="header-section-number">12.1</span> Unit testing</h2>
+<h2 data-number="12.1" class="anchored" data-anchor-id="unit-testing">Unit testing</h2>
 <p>Unit testing is the testing of units. What’s a unit? Functions are units! We actually already encountered one unit test before, in the <code>save_data.Rmd</code> script:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>```{r tests-clean_flat_data}</span>
@@ -348,16 +348,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  current_communes</span>
 <span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>raw_data &lt;- get_raw_data(</span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>  url = "https://github.com/b-rodrigues/rap4all/raw/master/datasets/vente-maison-2010-2021.xlsx"</span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>raw_data &lt;- get_raw_data(url = "https://is.gd/1vvBAc")</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>flat_data &lt;- clean_raw_data(raw_data)</span>
 <span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>flat_data &lt;- clean_raw_data(raw_data)</span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>testthat::expect_true(</span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>            all(communes %in% unique(flat_data$locality))</span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>                      )</span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>```</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>testthat::expect_true(</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>            all(communes %in% unique(flat_data$locality))</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>                      )</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>```</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>When using <code>{fusen}</code>, a unit test should be a self-contained chunk that can be executed completely independently. This is why in this chunk we re-created the different variables that we needed, <code>communes</code> and <code>flat_data</code>. If you were developing the package without <code>{fusen}</code>, you would do the same, so don’t think that this is somehow a limitation of <code>{fusen}</code>.</p>
 <p>The test above ensures that we find all the former and current communes of Luxembourg in our dataset. Let me explain again why we want to write such a test down in a script and not simply try it out in our console.</p>
 <p>For this test to pass, a lot of moving pieces have to fall together. If anything changes, be it because you changed something in either <code>get_raw_data()</code> or <code>clean_raw_data()</code> or because something changed with the Wikipedia tables you scraped, this test will not pass. And you should be made aware of failures as soon as possible! Also, this test ensures that when the data gets updated, you are certain that if you use the code in <code>save_data.Rmd</code> you will get a new dataset that is likely correct, even if new communes merge. And mergers will happen around 2024 by the way, the communes of Groussbous and Wal will merge, and the communes of Bous and Waldbredimus as well. So you need to make sure that when this happens, your code knows how to handle this, or at least gives out an error as early as possible.</p>
@@ -392,20 +390,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>  current_communes</span>
 <span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>raw_data &lt;- get_raw_data(</span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>  url = "https://github.com/b-rodrigues/rap4all/raw/master/datasets/vente-maison-2010-2021.xlsx"</span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>raw_data &lt;- get_raw_data(url = "https://is.gd/1vvBAc")</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>flat_data &lt;- clean_raw_data(raw_data)</span>
 <span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>flat_data &lt;- clean_raw_data(raw_data)</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>test_that("Check if all communes are accounted for", {</span>
 <span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>test_that("Check if all communes are accounted for", {</span>
-<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>  expect_true(</span>
-<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>    all(communes %in% unique(flat_data$locality))</span>
-<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>})</span>
-<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>```</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>  expect_true(</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>    all(communes %in% unique(flat_data$locality))</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>```</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>The only difference is that instead of calling <code>testthat::expect_true()</code> directly, we have wrapped this call inside <code>testthat::test_that()</code>. This way, we can add a description to the test. This is useful if the test fails.</p>
 <p>Save <code>dev/save_data.Rmd</code> and go back to <code>0-dev_history.Rmd</code> to inflate <code>save_data.Rmd</code> again. Everything should work without problems.</p>
 <p>If the test fails, you get an informative message. To illustrate, I’ve added a typo in the test and inflated <code>save_data.Rmd</code>. Because tests always run when files get inflated, this test failed and here is what happened:</p>
@@ -414,7 +410,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 Error in `communs %in% unique(flat_data$locality)`: object 'communs' not found
 Backtrace:
     ▆
- 1. ├─testthat::expect_true(all(communs %in% unique(flat_data$locality))) at test-get_raw_data.R:18:2
+ 1. ├─testthat::expect_true(all(communs %in% unique(flat_data$locality))) 
+    at test-get_raw_data.R:18:2
  2. │ └─testthat::quasi_label(enquo(object), label, arg = "object")
  3. │   └─rlang::eval_bare(expr, quo_get_env(quo))
  4. └─communs %in% unique(flat_data$locality)
@@ -493,8 +490,13 @@ Execution halted</code></pre>
 <span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>expected_df<span class="sc">$</span>p0_m2 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">23</span>, <span class="dv">23</span>, <span class="dv">56</span>, <span class="dv">56</span>)</span>
 <span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="co"># pl should be equal to the price divided by p0</span></span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>expected_df<span class="sc">$</span>pl <span class="ot">&lt;-</span> expected_df<span class="sc">$</span>average_price_nominal_euros<span class="sc">/</span>expected_df<span class="sc">$</span>p0 <span class="sc">*</span> <span class="dv">100</span></span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>expected_df<span class="sc">$</span>pl_m2 <span class="ot">&lt;-</span> expected_df<span class="sc">$</span>average_price_m2_nominal_euros<span class="sc">/</span>expected_df<span class="sc">$</span>p0_m2 <span class="sc">*</span> <span class="dv">100</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>expected_df<span class="sc">$</span>pl <span class="ot">&lt;-</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>  expected_df<span class="sc">$</span>average_price_nominal_euros<span class="sc">/</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>    expected_df<span class="sc">$</span>p0 <span class="sc">*</span> <span class="dv">100</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>expected_df<span class="sc">$</span>pl_m2 <span class="ot">&lt;-</span></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>  expected_df<span class="sc">$</span>average_price_m2_nominal_euros<span class="sc">/</span></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>    expected_df<span class="sc">$</span>p0_m2 <span class="sc">*</span> <span class="dv">100</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>If you look at each line, you see that this is basically what <code>get_laspeyeres()</code> does. We can inspect the results, maybe even calculate each cell using a pocket calculator. It doesn’t matter, what’s important is that the <code>expected_df</code> is correct and saved. This is what the full test looks like:</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>```{r, eval = F}</span>
@@ -530,7 +532,7 @@ Execution halted</code></pre>
 <p>Let’s now go to assertive programming.</p>
 </section>
 <section id="assertive-programming" class="level2" data-number="12.2">
-<h2 data-number="12.2" class="anchored" data-anchor-id="assertive-programming"><span class="header-section-number">12.2</span> Assertive programming</h2>
+<h2 data-number="12.2" class="anchored" data-anchor-id="assertive-programming">Assertive programming</h2>
 <p>Remember in chapter 6, where I discussed safe functions? As a refresher, here’s the <code>nchar()</code> function, providing a correct output when the input is a character:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nchar</span>(<span class="st">"100000000"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -585,25 +587,37 @@ Execution halted</code></pre>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  which_dataset <span class="ot">&lt;-</span> <span class="fu">deparse</span>(<span class="fu">substitute</span>(dataset))</span>
 <span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stopifnot</span>(<span class="st">"dataset must be one of `commune_level_data` or `country_level_data`"</span> <span class="ot">=</span></span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>              (which_dataset <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"commune_level_data"</span>, <span class="st">"country_level_data"</span>)))</span>
-<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>  group_var <span class="ot">&lt;-</span> <span class="cf">if</span>(<span class="fu">grepl</span>(<span class="st">"commune"</span>, which_dataset)){</span>
-<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>                 <span class="fu">quo</span>(locality)</span>
-<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>               } <span class="cf">else</span> {</span>
-<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>                 <span class="cn">NULL</span></span>
-<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>               }</span>
-<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>  dataset <span class="sc">|&gt;</span></span>
-<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(<span class="sc">!!</span>group_var) <span class="sc">|&gt;</span></span>
-<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">p0 =</span> <span class="fu">ifelse</span>(year <span class="sc">==</span> <span class="st">"2010"</span>, average_price_nominal_euros, <span class="cn">NA</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">fill</span>(p0, <span class="at">.direction =</span> <span class="st">"down"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">p0_m2 =</span> <span class="fu">ifelse</span>(year <span class="sc">==</span> <span class="st">"2010"</span>, average_price_m2_nominal_euros, <span class="cn">NA</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb17-18"><a href="#cb17-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">fill</span>(p0_m2, <span class="at">.direction =</span> <span class="st">"down"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb17-19"><a href="#cb17-19" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ungroup</span>() <span class="sc">|&gt;</span></span>
-<span id="cb17-20"><a href="#cb17-20" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">pl =</span> average_price_nominal_euros<span class="sc">/</span>p0<span class="sc">*</span><span class="dv">100</span>,</span>
-<span id="cb17-21"><a href="#cb17-21" aria-hidden="true" tabindex="-1"></a>           <span class="at">pl_m2 =</span> average_price_m2_nominal_euros<span class="sc">/</span>p0_m2<span class="sc">*</span><span class="dv">100</span>)</span>
-<span id="cb17-22"><a href="#cb17-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-23"><a href="#cb17-23" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stopifnot</span>(<span class="st">"dataset must be one of `commune_level_data`</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="st">             or `country_level_data`"</span> <span class="ot">=</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>              (which_dataset <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"commune_level_data"</span>,</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>                                    <span class="st">"country_level_data"</span>)))</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>  group_var <span class="ot">&lt;-</span> <span class="cf">if</span>(<span class="fu">grepl</span>(<span class="st">"commune"</span>, which_dataset)){</span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>                 <span class="fu">quo</span>(locality)</span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>               } <span class="cf">else</span> {</span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>                 <span class="cn">NULL</span></span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>               }</span>
+<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a>  dataset <span class="sc">|&gt;</span></span>
+<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(<span class="sc">!!</span>group_var) <span class="sc">|&gt;</span></span>
+<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(</span>
+<span id="cb17-18"><a href="#cb17-18" aria-hidden="true" tabindex="-1"></a>      <span class="at">p0 =</span> <span class="fu">ifelse</span>(</span>
+<span id="cb17-19"><a href="#cb17-19" aria-hidden="true" tabindex="-1"></a>        year <span class="sc">==</span> <span class="st">"2010"</span>,</span>
+<span id="cb17-20"><a href="#cb17-20" aria-hidden="true" tabindex="-1"></a>        average_price_nominal_euros,</span>
+<span id="cb17-21"><a href="#cb17-21" aria-hidden="true" tabindex="-1"></a>        <span class="cn">NA</span>)</span>
+<span id="cb17-22"><a href="#cb17-22" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb17-23"><a href="#cb17-23" aria-hidden="true" tabindex="-1"></a>    <span class="fu">fill</span>(p0, <span class="at">.direction =</span> <span class="st">"down"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb17-24"><a href="#cb17-24" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(</span>
+<span id="cb17-25"><a href="#cb17-25" aria-hidden="true" tabindex="-1"></a>      <span class="at">p0_m2 =</span> <span class="fu">ifelse</span>(</span>
+<span id="cb17-26"><a href="#cb17-26" aria-hidden="true" tabindex="-1"></a>        year <span class="sc">==</span> <span class="st">"2010"</span>,</span>
+<span id="cb17-27"><a href="#cb17-27" aria-hidden="true" tabindex="-1"></a>        average_price_m2_nominal_euros,</span>
+<span id="cb17-28"><a href="#cb17-28" aria-hidden="true" tabindex="-1"></a>        <span class="cn">NA</span>)</span>
+<span id="cb17-29"><a href="#cb17-29" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb17-30"><a href="#cb17-30" aria-hidden="true" tabindex="-1"></a>    <span class="fu">fill</span>(p0_m2, <span class="at">.direction =</span> <span class="st">"down"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb17-31"><a href="#cb17-31" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ungroup</span>() <span class="sc">|&gt;</span></span>
+<span id="cb17-32"><a href="#cb17-32" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">pl =</span> average_price_nominal_euros<span class="sc">/</span>p0<span class="sc">*</span><span class="dv">100</span>,</span>
+<span id="cb17-33"><a href="#cb17-33" aria-hidden="true" tabindex="-1"></a>           <span class="at">pl_m2 =</span> average_price_m2_nominal_euros<span class="sc">/</span>p0_m2<span class="sc">*</span><span class="dv">100</span>)</span>
+<span id="cb17-34"><a href="#cb17-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-35"><a href="#cb17-35" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We can now also edit the unit test from before, the one where we provide the wrong data. This unit test would fail, as expected, but for the wrong reason. We now want to make sure that it fails for the right reason, so for this we change the unit tests like this:</p>
 <div class="cell">
@@ -621,7 +635,8 @@ Execution halted</code></pre>
 ── Failure ('test-get_laspeyeres.R:6'): Wrong data ─────────────────────────────
 `get_laspeyeres(mtcars)` threw an error with unexpected message.
 Expected match: "message is wrong"
-Actual message: "dataset must be one of `commune_level_data` or `country_level_data`"</code></pre>
+Actual message: "dataset must be one of `commune_level_data`
+                   or `country_level_data`"</code></pre>
 <p>So now, not only does our function fail for the right reasons, our test is able to tell us that as well!</p>
 <p>Before inflating to run these tests, you should also change the test titled “get_laspeyeres() provides correct answers”. This is because the name of the input dataset used for the test is <code>input_df</code>. So if you leave it like this, the assertion that we’ve included in the function will make this test fail. So change this test by simply saving <code>input_df</code> <code>commune_level_data</code>:</p>
 <div class="cell">
@@ -709,7 +724,7 @@ Actual message: "dataset must be one of `commune_level_data` or `country_level_d
 <p>I won’t discuss any of them; what’s important is for you to know that assertive programming is something that is useful, and that you should add to your toolbox.</p>
 </section>
 <section id="test-driven-development" class="level2" data-number="12.3">
-<h2 data-number="12.3" class="anchored" data-anchor-id="test-driven-development"><span class="header-section-number">12.3</span> Test-driven development</h2>
+<h2 data-number="12.3" class="anchored" data-anchor-id="test-driven-development">Test-driven development</h2>
 <p>Test-driven development, or TDD, is the programming paradigm in which instead of writing a function and then several tests to ensure that it’s working as expected, you start with several tests. Of course, since there is no function to test, these tests will all fail at first. But the goal is to then write a function such that the tests pass.</p>
 <p>TDD is interesting in at least two scenarios:</p>
 <ul>
@@ -720,7 +735,7 @@ Actual message: "dataset must be one of `commune_level_data` or `country_level_d
 <p>Some programmers only do TDD; so they start by writing many, many tests, and then only start writing their functions. Personally, I think that this is also not ideal, because you could waste a lot of time writing meaningless tests.</p>
 </section>
 <section id="code-coverage" class="level2" data-number="12.4">
-<h2 data-number="12.4" class="anchored" data-anchor-id="code-coverage"><span class="header-section-number">12.4</span> Code coverage</h2>
+<h2 data-number="12.4" class="anchored" data-anchor-id="code-coverage">Code coverage</h2>
 <p>It is useful to have an idea of which functions are tested and which are not, but also <em>how much</em> of a function is being tested. For example, suppose that you have an <code>if...else...</code> clause somewhere in a function. Did you write a test for each of the outcomes of this clause? Maybe you only wrote a test when this clause evaluates to <code>TRUE</code>, but forgot to write a test for the case it is <code>FALSE</code>.</p>
 <p>The packages <code>{covr}</code> allows you to track the test coverage of your package. Install <code>{covr}</code> and run <code>report()</code> in the console to get the results:</p>
 <div class="cell">
@@ -741,7 +756,7 @@ R/get_raw_data.R: 80.65%</code></pre>
 <p>The percentage represents the share of lines of code that are tested by our unit tests. We see that the share of lines being tested in <code>get_laspeyeres().R</code> is 57%: this is because the script <code>get_laspeyeres()</code> contains two functions, <code>get_laspeyeres()</code> and <code>make_plot()</code>. We do not test <code>make_plot()</code> at all, hence why the percentage is so low. We could move <code>make_plot()</code> to another script by simply putting the function under a level two header in the original <code>.Rmd</code> file and then inflating again. But in any case, this would not improve the overall coverage of the package; we would ideally need to write a test for <code>make_plot()</code>. This is left as an exercise to the reader.</p>
 </section>
 <section id="conclusion" class="level2" data-number="12.5">
-<h2 data-number="12.5" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">12.5</span> Conclusion</h2>
+<h2 data-number="12.5" class="anchored" data-anchor-id="conclusion">Conclusion</h2>
 <p>Testing is crucial and useful. Not just because it gives you peace of mind but also because writing tests forces you to think about your code, by putting yourself in the shoes of your users (which include future you as well). In most cases, it is even something that you’ve been doing but perhaps not as systematically as you should.</p>
 <p>There really is no other way to say this: you need to consider writing tests as an integral part of the project, and need to take the required time it takes to write them into account when planning projects. But keep in mind that writing them makes you gain a lot of time in the long run, so actually, you might even be faster by writing tests! Tests also allow you to immediately see where something went wrong, when something goes wrong. So tests save you time here as well. Without tests, when something goes wrong, you have a hard time finding where the bug comes from, and end up wasting precious time. And worse, sometimes things go wrong and break, but silently. You still get an output that may look ok at first glance, and only realise something is wrong way too late. Testing helps avoiding such situations.</p>
 <p>So remember: it might <em>feel</em> like packaging your code and writing tests for it takes time, but:</p>
