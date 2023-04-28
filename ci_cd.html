@@ -263,6 +263,8 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#cicd-quickstart-for-r-programmers-and-others" id="toc-cicd-quickstart-for-r-programmers-and-others" class="nav-link active" data-scroll-target="#cicd-quickstart-for-r-programmers-and-others">CI/CD quickstart for R programmers (and others)</a></li>
   <li><a href="#running-a-rap-using-github-actions" id="toc-running-a-rap-using-github-actions" class="nav-link" data-scroll-target="#running-a-rap-using-github-actions">Running a RAP using Github Actions</a></li>
   <li><a href="#craft-a-dockerized-development-environment-with-github-actions" id="toc-craft-a-dockerized-development-environment-with-github-actions" class="nav-link" data-scroll-target="#craft-a-dockerized-development-environment-with-github-actions">Craft a dockerized development environment with Github Actions</a></li>
+  <li><a href="#run-a-rap-using-a-dockerized-development-environment-on-github-actions" id="toc-run-a-rap-using-a-dockerized-development-environment-on-github-actions" class="nav-link" data-scroll-target="#run-a-rap-using-a-dockerized-development-environment-on-github-actions">Run a RAP using a dockerized development environment on Github Actions</a></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
   </ul>
 </nav>
     </div>
@@ -426,7 +428,125 @@ jobs:
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:
             ${{ github.ref_name }}-${{ github.sha }}
           push: true</code></pre>
-<p>(Just one remark: I had to split the <code>tags:</code> line into two lines. When copying this line into the yaml file, put the two lines back into one line.</p>
+<p>Just one remark: I had to split the <code>tags:</code> line into two lines. When copying this line into the yaml file, put the two lines back into one line. <a href="https://raw.githubusercontent.com/b-rodrigues/ga_demo/6b7bba10b9ce8efc9c4877bb4908d742b1663a7c/.github/workflows/build-renv.yml">Click here</a><a href="#fn10" class="footnote-ref" id="fnref10" role="doc-noteref"><sup>10</sup></a> for the actual file.</p>
+<p>I believe that this file is the simplest one you could have for this. Let’s study it in detail.</p>
+<p>The start of the file is pretty start: we give the workflow a new, and state that it should run on <code>ubuntu-latest</code> whenever anything gets pushed to either <code>main</code> or <code>master</code>. We define an environment variable called <code>r_4.2.2</code>. This is the name of the image that we are going to build. We will build an image that comes with R 4.2.2 pre-installed as well as many required Ubuntu packages; it’s the same image as we built in the previous chapter on top of which we will then build RAPs. This image is based on the one from the Rocker project. We will take a look at the Dockerfile afterwards. Then, the action <code>docker/setup-buildx-action@v2</code> simply sets up everything for <code>buildx</code> to run smoothly (<code>buildx</code> will build the Docker image using the <code>docker buildx</code> command an alternative to <code>docker build</code>). Honestly, I don’t even know exactly what it sets up. I guess it may at least checkout the repository to make the files available to the next actions and maybe set some other variables for <code>docker buildx</code>.</p>
+<p>Then we use the <code>docker/login-action@v2</code> to login from Github Actions to Docker Hub. Essentially, we need to be able to tell our Github Actions runner how to login to Docker Hub, and of course we want to do so in a secure manner (and it must run non-interactively). To login to Docker Hub from Github Actions, you need first to create an access token from your Docker Hub account. Login to your Docker Hub account, got to your account settings and then to the “Security” tab:</p>
+<figure class="figure">
+<img src="images/docker_hub_token.png" alt="Create your access token." class="figure-img">
+<figcaption class="figure-caption">
+Create your access token.
+</figcaption>
+</figure>
+<p>Name it <code>github_actions</code> for example, and set its permissions to “Read, Write, Delete”. On the next window that pops up, make sure to save your access token:</p>
+<figure class="figure">
+<img src="images/docker_hub_copy_token.png" alt="Make sure to write it down!" class="figure-img">
+<figcaption class="figure-caption">
+Make sure to write it down!
+</figcaption>
+</figure>
+<p>You then need to go to the settings area of the repository. Under “Security”, “Secrets and variables” and finally “Actions” you can create a secret called <code>DOCKERHUB_TOKEN</code> and copy the value of the token in the free text area:</p>
+<figure class="figure">
+<img src="images/docker_hub_token_ga.png" alt="Copy the token in your repo's secrets." class="figure-img">
+<figcaption class="figure-caption">
+Copy the token in your repo’s secrets.
+</figcaption>
+</figure>
+<p>Create a second secret with your Docker Hub username called <code>DOCKERHUB_USERNAME</code>. These can now be used in the workflow file using so-called <em>contexts</em>. Your Docker Hub username will get replaced wherever you write <code>${{ secrets.DOCKERHUB_USERNAME }}</code> in the workflow file, same for your Docker Hub token with <code>${{ secrets.DOCKERHUB_TOKEN }}</code>.</p>
+<p>Finally, we build and push the image to Docker Hub. This is done using one single action called <code>docker/build-push-action@v4</code>. We use the <code>tags</code> option to tag our image. The tag needs to start with your username, followed by a <code>/</code>, then the image name, and then a version, so something like <code>bob/r_4.2.2:latest</code> where <code>latest</code> would be the latest version of the image that is available. Getting <code>bob/r_4.2.2</code> is quite easy: simply use your Docker Hub username that you defined as a secret, then literally type <code>/</code> and then use the image name that you’ve defined in the beginning of the workflow file. Careful though: <code>bob/r_4.2.2</code> needs to exist on Docker Hub as well. <code>bob</code> is easy, that your Docker Hub username as already stated, but <code>r_4.2.2</code> is a repository that you need to create on Docker Hub. So both your image name and the repository on Docker Hub will be <code>r_4.2.2</code>. If you don’t create a repository on Docker Hub that is exactly named like that, your image will not get pushed, because Github Actions will not know where to push the image. So if this is not already the case, go back to Docker Hub and create a repository names <code>r_4.2.2</code>. For the version, you can do whatever you want, but I suggest to use the context <code>github.ref_name</code> and <code>github.sha</code>. <code>github.ref_name</code> gives the name of the branch that starts the workflow, and <code>github.sha</code> returns the hash number of the commit that starts the workflow. This way, your image will be named something like <code>bob/r_4.2.2:master-65ai9besta65948</code>. This allows you to see which commit generated which image, which is really useful. We then also set <code>push</code> to <code>true</code>, so that the image gets pushed.</p>
+<p>With this workflow file in hand, I can now build a Docker image and push it to Docker Hub simply by pushing code to my repository. Here are two commits that generated two images:</p>
+<figure class="figure">
+<img src="images/ga_dockerfile.png" alt="Two successful runs of Github Actions." class="figure-img">
+<figcaption class="figure-caption">
+Two successful runs of Github Actions.
+</figcaption>
+</figure>
+<p>and here are the two corresponding images on Docker Hub:</p>
+<figure class="figure">
+<img src="images/ga_dockerhub.png" alt="The corresponding images on Docker Hub." class="figure-img">
+<figcaption class="figure-caption">
+The corresponding images on Docker Hub.
+</figcaption>
+</figure>
+<p>I noticed a typo in my Dockerfile: originally, I was basing my image on R version 4.2.1. So I changed this, and pushed. This is the commit that starts with <code>b1950</code>. The image then got built, tagged, and pushed to Docker Hub without any manual intervention on my part. You can see that the tag is of the form <code>repo-hash</code>, in this case <code>main-b1950d</code>. Clicking on this tag on Docker Hub shows you some useful information:</p>
+<figure class="figure">
+<img src="images/docker_hub_image.png" alt="This is the image with the correct R version." class="figure-img">
+<figcaption class="figure-caption">
+This is the image with the correct R version.
+</figcaption>
+</figure>
+</section>
+<section id="run-a-rap-using-a-dockerized-development-environment-on-github-actions" class="level2" data-number="15.4">
+<h2 data-number="15.4" class="anchored" data-anchor-id="run-a-rap-using-a-dockerized-development-environment-on-github-actions">Run a RAP using a dockerized development environment on Github Actions</h2>
+<p>Now that we have a dockerized development environment that gets built by pushing changes to a Github repo, it is now time to use it for our RAPs. As I wrote in the beginning, this will mirror the section on running a RAP that uses a dockerized environment, so we can start from that repository. <a href="https://github.com/rap4all/housing/tree/docker">This</a><a href="#fn11" class="footnote-ref" id="fnref11" role="doc-noteref"><sup>11</sup></a> was the repository that we used at the time. You can create a new repository with the same content (but you can remove the <code>.gitignore</code> file, it won’t be needed here). <a href="https://github.com/b-rodrigues/ga_demo_rap">This is what my repository</a><a href="#fn12" class="footnote-ref" id="fnref12" role="doc-noteref"><sup>12</sup></a> looks like. The only difference with the first repository is the Dockerfile and the Github Actions workflow file that is inside <code>.github/workflows</code>. Let’s take a look at the Dockerfile first:</p>
+<pre><code>FROM brodriguesco/r_4.2.2:main-b1950d55ccbd8009de4ee2006a097c3e7ef1c529
+
+RUN mkdir /home/housing
+
+RUN mkdir /home/housing/pipeline_output
+
+RUN mkdir /home/housing/shared_folder
+
+COPY renv.lock /home/housing/renv.lock
+
+COPY functions /home/housing/functions
+
+COPY analyse_data.Rmd /home/housing/analyse_data.Rmd
+
+COPY _targets.R /home/housing/_targets.R
+
+RUN R -e "setwd('/home/housing');renv::init();renv::restore()"
+
+RUN cd /home/housing &amp;&amp; R -e "targets::tar_make()"
+
+CMD mv /home/housing/pipeline_output/* /home/housing/shared_folder/</code></pre>
+<p>It is almost exactly the same as the one from the dockerized pipeline from the previous chapter. The only difference is the very first statement, where we pull the base image. Now I’m using the image from the dockerized environment that I’ve built in the previous section. Apart from that, everything’s the same.</p>
+<p>The magic happens with the workflow file. Here it is:</p>
+<pre><code>name: Reproducible pipeline
+
+on:
+  push:
+    branches:
+      - main
+      - master
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Build the Docker image
+      run: docker build -t housing_image .
+
+    - name: Docker Run Action
+      run: &gt; 
+        docker run --rm --name housing_container -v
+        /github/workspace/shared_folder:/home/housing/shared_folder:rw 
+        housing_image
+
+    - uses: actions/upload-artifact@v3
+      with:
+        name: housing_output_${{ github.sha }}
+        path: /github/workspace/shared_folder/</code></pre>
+<p>By now, you should certainly understand this workflow file without much trouble. First we checkout the contents of the repository to make the files available to the other steps. Then we build the Docker image. For this, I’m doing this the “old-school” way by using the actual command that we would use on our local machine. Then we run the container. Once again I use the command that I would use locally. But you’ll notice that I use <code>/github/workspace/shared_folder</code> as the path to the shared folder. You likely guessed it, <code>/github/workspace/</code> is the “local” path inside the Github Actions runner. This is equivalent to the <code>/home/</code> directory on a Linux machine. The command is also on multiple lines (remember, to write a command over multiple lines on github actions, you need to start by <code>&gt;</code> and then use as many lines as you need).</p>
+<p>The final action, <code>actions/upload-artifact@v3</code> is used to upload the contents of the shared folder and name them <code>housing_output_${{ github.sha }}</code>, where <code>${{ github.sha }}</code> will get replaced by the hash from the commit that triggered the action. This will be a zip file that you can then download. But download from where?</p>
+<p>Simply click on the “Actions” tab on the Github repository, and then click on the run that you want the artifact from (pipeline outputs are called artifacts):</p>
+<figure class="figure">
+<img src="images/ga_artifacts.png" alt="Artifacts (pipeline outputs) can be found by going into a run's details." class="figure-img">
+<figcaption class="figure-caption">
+Artifacts (pipeline outputs) can be found by going into a run’s details.
+</figcaption>
+</figure>
+<p>And that’s it! You could tweak the workflow file to instead push the files to a new branch in the repository, like the workflow file that <code>tarets::tar_github_actions()</code> generates. But I think that this solution is easier to use, and also, if you need to download the artifact from a previous run, it’s all right there. Simply select a previous run and download the artifact. If instead you push the outputs to a new branch, you’d need to revert to that commit to get past outputs.</p>
+</section>
+<section id="conclusion" class="level2" data-number="15.5">
+<h2 data-number="15.5" class="anchored" data-anchor-id="conclusion">Conclusion</h2>
+<p>At the start of this chapter, I stated that this chapter was optional, because it is not necessary to use a CI/CD service to ensure that your projects are reproducible. However, I believe that setting up your project to make it run on Github Actions (or any other CI/CD service) truly forces you to master all the topics presented in this book. In the conclusion of part 1 of the book, I wrote that it seemed as if functional programming was only about putting restrictions to our code, for very little gain. In some ways, forcing yourself to use a CI/CD service can feel similar. But here’s the thing: if your project builds successfully on a CI/CD service, and if the results remain stable through time, then your project is reproducible. Someone else could then run it locally by simply following the same steps as in the workflow file, which would consist in the very same basic steps: clone the repository, build a Docker image and run a container (or set up the required R package library using <code>{renv}</code> and then run the pipeline with <code>{targets}</code> if you’re not using Docker).</p>
+<p>If you work in research, but cannot push the data to Github, you could always work on the code and the infrastructure using synthetic data for instance. The repository alongside the synthetic data could then be a nice complement to the paper (but again, only in case the data cannot be published).</p>
 
 
 </section>
@@ -442,6 +562,9 @@ jobs:
 <li id="fn7"><p>https://github.com/r-lib/actions/tree/v2/setup-r<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn8"><p>https://github.com/actions/checkout<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn9"><p>https://github.com/b-rodrigues/ga_demo/tree/main<a href="#fnref9" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn10"><p>https://is.gd/0xqH22<a href="#fnref10" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn11"><p>https://github.com/rap4all/housing/tree/docker<a href="#fnref11" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn12"><p>https://github.com/b-rodrigues/ga_demo_rap<a href="#fnref12" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </aside>
 
