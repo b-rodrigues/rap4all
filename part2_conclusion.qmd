@@ -1,1 +1,19 @@
 # Conclusion of part 2
+
+Congratulations, you're done with the book (well, there's still the book's
+overall conclusion) and I hope you learned a thing or two. 
+
+Part 1 focused on teaching you best practices, tools and techniques to make your
+code as clean as possible. In part 2, I taught how to turn your project into a
+pipeline, and then how to make this pipeline reproducible using `{renv}` and
+Docker. To summarise, here are all the things that we need to think about
+to write a RAP:
+
+- Write code that is as clean as possible: keep it DRY, document and test it well;
+- Record package dependencies of the project;
+- Record the R version that you use;
+- Use a tool that builds the project for you;
+- Record the computational environment.
+
+If you tick all these boxes, you, or anyone else, should not have any 
+problems reproducing the results of your project.
