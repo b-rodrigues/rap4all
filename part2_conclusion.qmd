@@ -1,19 +1,82 @@
 # Conclusion of part 2
 
-Congratulations, you're done with the book (well, there's still the book's
-overall conclusion) and I hope you learned a thing or two. 
+Congratulations, we are done going down the reproducibility iceberg. Our project
+should now be entirely reproducible. I showed you how to reuse the same R
+version and the same package library as the one that was used to develop the
+pipeline originally. If in addition you've used the software engineering best
+practices from part 1, your project is also well tested and documented.
 
-Part 1 focused on teaching you best practices, tools and techniques to make your
-code as clean as possible. In part 2, I taught how to turn your project into a
-pipeline, and then how to make this pipeline reproducible using `{renv}` and
-Docker. To summarise, here are all the things that we need to think about
-to write a RAP:
+This part of the book focused on the operating system your pipeline runs on.
+It's a bit trickier to "freeze" an operating system, like we froze the R version
+and the packages library. Strictly speaking, we should develop and deploy our
+pipeline on the same operating system. If you're using Ubuntu as your daily
+driver, that is not an issue, but if you're a Windows or a macOS user, then this
+*could* potentially be a problem. After all, Docker images are based on Ubuntu
+(or other Linux distributions), so the best we can do is either start developing
+with the end in mind from the beginning; which means that we develop our project
+from inside a Docker environment, or we must ensure that running the pipeline
+inside Docker returns the same results as on your operating system of choice.
+This should most of the time not be an issue, but as already mentioned in this
+book, running the same code on Linux or Windows does sometimes return different
+results (this is rarer, at least in my experience, when comparing Linux to
+macOS).
 
-- Write code that is as clean as possible: keep it DRY, document and test it well;
-- Record package dependencies of the project;
-- Record the R version that you use;
-- Use a tool that builds the project for you;
-- Record the computational environment.
+But there is yet another, potential, issue. Let's assume the best case scenario:
+the pipeline returns the same result inside Docker as on your development
+machine (which should be the case most of the time anyways). Is using Docker
+truly the best we can do? Is the pipeline truly reproducible? Well, *strictly*
+speaking, not quite. Indeed, the base operating system inside Docker also gets
+updated. So if you build an image based on Ubuntu 22.04 today, and then again in
+6 months, the operating system is not the same anymore, because the software it
+ships got updated. So even if the R package library and R version remain fixed,
+the operating system does not. Now, I realize that this is really pushing it,
+but I want to be as thorough as possible. So there are two ways around this, if
+you really, absolutely, need also Ubuntu to remain frozen. 
 
-If you tick all these boxes, you, or anyone else, should not have any 
-problems reproducing the results of your project.
+The first solution is the simplest and is explained in the [reproducibility
+page](https://rocker-project.org/use/reproducibility.html)^[https://is.gd/YKL0T4]
+of the Rocker project. The idea is to use a digest, which is the equivalent of a
+commit hash on Github but for Docker images instead. As the example in the
+linked page above shows, instead of this:
+
+```
+FROM rocker/r-ver:4.2.0
+```
+
+which would base your Docker image on the latest Ubuntu 22.04 shipping R version
+4.2.0, you would use this:
+
+```
+FROM rocker/r-ver@sha256:b343df137d83b0701e0c9f5abfb24286394cb2fdfd39afcf241ad4d6948acf3d
+```
+
+which is the digest of the latest rebuild of that image. You can find digests
+on the Docker Hub page:
+
+::: {.content-hidden when-format="pdf"}
+<figure>
+    <img src="images/digest.png"
+         alt="You can find Docker image digests on Docker Hub."></img>
+    <figcaption>You can find Docker image digests on Docker Hub.</figcaption>
+</figure>
+:::
+
+::: {.content-visible when-format="pdf"}
+```{r, echo = F}
+#| fig-cap: "You can find Docker image digests on Docker Hub."
+knitr::include_graphics("images/digest.png")
+```
+:::
+
+If you use a digest instead of a tag, it doesn't matter when the image
+gets built, you'll be using the exact same Ubuntu version under the hood that
+was current *at that time*.
+
+The second way around this is to use a functional package manager like Guix or
+Nix. As I stated in the reproducibility iceberg, this is outside the scope of
+this book, but the idea of these package managers is that they allow users to
+reproduce the entirety of a project (so including the operating system
+libraries) to the exact same byte. If you want to know more, take a look at
+@vallet2022 ([open access
+article](https://www.nature.com/articles/s41597-022-01720-9#Abs1)) which shows
+how Guix works by reproducing the results from another paper.
