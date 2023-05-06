@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.14">
+<meta name="generator" content="quarto-1.4.37">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -294,14 +294,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#an-rmd-for-cleaning-the-data" id="toc-an-rmd-for-cleaning-the-data" class="nav-link active" data-scroll-target="#an-rmd-for-cleaning-the-data">An Rmd for cleaning the data</a></li>
-  <li><a href="#an-rmd-for-analysing-the-data" id="toc-an-rmd-for-analysing-the-data" class="nav-link" data-scroll-target="#an-rmd-for-analysing-the-data">An Rmd for analysing the data</a></li>
-  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
+  <li><a href="#an-rmd-for-cleaning-the-data" id="toc-an-rmd-for-cleaning-the-data" class="nav-link active" data-scroll-target="#an-rmd-for-cleaning-the-data"><span class="header-section-number">9.1</span> An Rmd for cleaning the data</a></li>
+  <li><a href="#an-rmd-for-analysing-the-data" id="toc-an-rmd-for-analysing-the-data" class="nav-link" data-scroll-target="#an-rmd-for-analysing-the-data"><span class="header-section-number">9.2</span> An Rmd for analysing the data</a></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">9.3</span> Conclusion</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
-<main class="content page-columns page-full" id="quarto-document-content">
+<main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
@@ -336,7 +336,7 @@ owner@localhost ➤ git push origin rmd</code></pre>
 <p>Before moving forward now is the right moment to actually discuss why you would want to convert the script into an Rmd. There are several reasons. First, as argued in the chapter on literate programming, a document that mixes prose and code is easier to read and share than a script. Next, since this Rmd file can get knitted into any type of document (PDF, Word, etc…), it also makes it easier to arrive at what interests us, the output. A script is simply a means, it’s not an end. The end is a document, (in most cases) so we might as well use literate programming to avoid the cursed loop mentioned in the chapter on literate programming, of changing the script, editing the document, going back to the script, etc.</p>
 <p>But there is yet another benefit; even if the Rmd file is not supposed to get shared with anyone else, we will, later on, use it as our starting point for the <em>Rmd first</em> method of package development as promoted by Sébastien Rochette, the author of <code>{fusen}</code>. This means that from a single Rmd file, we can have a document that is easier to read, easier to compile into our final output and, if needed, converted quite easily into a package. If you’re still not convinced, just push on, and all the pieces of the puzzle will elegantly fit in a couple of chapters.</p>
 <section id="an-rmd-for-cleaning-the-data" class="level2" data-number="9.1">
-<h2 data-number="9.1" class="anchored" data-anchor-id="an-rmd-for-cleaning-the-data">An Rmd for cleaning the data</h2>
+<h2 data-number="9.1" class="anchored" data-anchor-id="an-rmd-for-cleaning-the-data"><span class="header-section-number">9.1</span> An Rmd for cleaning the data</h2>
 <p>So, let’s start with the <code>save_data.R</code> script. Since we are going to use functional programming and literate programming, we are going to start from an empty <code>.Rmd</code> file. So open an empty <code>.Rmd</code> file and start with the following lines:</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>---</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>title: "Nominal house prices data in Luxembourg - Data cleaning"</span>
@@ -604,7 +604,7 @@ owner@localhost ➤ git push origin rmd</code></pre>
 <p>Let’s now do the same thing for the analysis script.</p>
 </section>
 <section id="an-rmd-for-analysing-the-data" class="level2" data-number="9.2">
-<h2 data-number="9.2" class="anchored" data-anchor-id="an-rmd-for-analysing-the-data">An Rmd for analysing the data</h2>
+<h2 data-number="9.2" class="anchored" data-anchor-id="an-rmd-for-analysing-the-data"><span class="header-section-number">9.2</span> An Rmd for analysing the data</h2>
 <p>We will follow the same steps as before to convert the analysis script into an analysis markdown. Instead of showing the whole file here, I will instead show you two important points.</p>
 <p>The first point is removing redundancy. In the original script, we had the following lines:</p>
 <div class="cell">
@@ -722,7 +722,7 @@ owner@localhost ➤ git push origin rmd</code></pre>
 <p>I won’t explain this now in great detail, since that was already done in the chapter on literate programming. Before continuing, really make sure that you understand what is going on here. Take a look at the finalised file <a href="https://raw.githubusercontent.com/b-rodrigues/rap4all/master/rmds/analyse_data.Rmd">here</a><a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a>.</p>
 </section>
 <section id="conclusion" class="level2" data-number="9.3">
-<h2 data-number="9.3" class="anchored" data-anchor-id="conclusion">Conclusion</h2>
+<h2 data-number="9.3" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">9.3</span> Conclusion</h2>
 <p>This chapter was short, but quite dense, especially when we converted the analysis script to an Rmd, because we’ve had to use two advanced concepts, <em>tidy evaluation</em> and Rmarkdown child documents. <em>Tidy</em> evaluation is not a topic that I wanted to discuss in this book, because it doesn’t have anything to do with the main topic at hand. However, part of building a robust, reproducible pipeline is to avoid repetition. In this sense, programming with <code>{dplyr}</code> and tidy evaluation are quite important. As suggested before, take a look at the linked vignette above, and then the chapter from my other (free) ebook. This should help get you started.</p>
 <p>The end of this chapter marks an important step: many analyses stop here, and this can be due to a variety of reasons. Maybe there’s no time left to go further, and, after all, we got the results we wanted. Maybe this analysis is useful, but we don’t necessarily need it to be reproducible in 5, 10 years, so all we want is to make sure that we can at least rerun it in some months or a couple of years (but be careful with this assessment, sometimes an analysis that wasn’t supposed to be reproducible turns out it needs to be reproducible for way longer than expected…)</p>
 <p>Because I want this book to be a pragmatic guide, we will now talk about putting the least amount of effort to make your current analysis reproducible, and this is by freezing package versions, which we will do in the next chapter.</p>
@@ -782,6 +782,33 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       } else {
         el.classList.add('notransition');
       }
+    }
+  }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
     }
   }
   const toggleColorMode = (alternate) => {
@@ -850,13 +877,15 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return localAlternateSentinel;
     }
   }
-  let localAlternateSentinel = 'default';
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
   // Dark / light mode switch
   window.quartoToggleColorScheme = () => {
     // Read the current dark / light value 
     let toAlternate = !hasAlternateSentinel();
     toggleColorMode(toAlternate);
     setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
   };
   // Ensure there is a toggle, if there isn't float one in the top right
   if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {

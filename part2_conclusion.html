@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.14">
+<meta name="generator" content="quarto-1.4.37">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -20,7 +20,26 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -278,18 +297,35 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<p>Congratulations, you’re done with the book (well, there’s still the book’s overall conclusion) and I hope you learned a thing or two.</p>
-<p>Part 1 focused on teaching you best practices, tools and techniques to make your code as clean as possible. In part 2, I taught how to turn your project into a pipeline, and then how to make this pipeline reproducible using <code>{renv}</code> and Docker. To summarise, here are all the things that we need to think about to write a RAP:</p>
-<ul>
-<li>Write code that is as clean as possible: keep it DRY, document and test it well;</li>
-<li>Record package dependencies of the project;</li>
-<li>Record the R version that you use;</li>
-<li>Use a tool that builds the project for you;</li>
-<li>Record the computational environment.</li>
-</ul>
-<p>If you tick all these boxes, you, or anyone else, should not have any problems reproducing the results of your project.</p>
+<p>Congratulations, we are done going down the reproducibility iceberg. Our project should now be entirely reproducible. I showed you how to reuse the same R version and the same package library as the one that was used to develop the pipeline originally. If in addition you’ve used the software engineering best practices from part 1, your project is also well tested and documented.</p>
+<p>This part of the book focused on the operating system your pipeline runs on. It’s a bit trickier to “freeze” an operating system, like we froze the R version and the packages library. Strictly speaking, we should develop and deploy our pipeline on the same operating system. If you’re using Ubuntu as your daily driver, that is not an issue, but if you’re a Windows or a macOS user, then this <em>could</em> potentially be a problem. After all, Docker images are based on Ubuntu (or other Linux distributions), so the best we can do is either start developing with the end in mind from the beginning; which means that we develop our project from inside a Docker environment, or we must ensure that running the pipeline inside Docker returns the same results as on your operating system of choice. This should most of the time not be an issue, but as already mentioned in this book, running the same code on Linux or Windows does sometimes return different results (this is rarer, at least in my experience, when comparing Linux to macOS).</p>
+<p>But there is yet another, potential, issue. Let’s assume the best case scenario: the pipeline returns the same result inside Docker as on your development machine (which should be the case most of the time anyways). Is using Docker truly the best we can do? Is the pipeline truly reproducible? Well, <em>strictly</em> speaking, not quite. Indeed, the base operating system inside Docker also gets updated. So if you build an image based on Ubuntu 22.04 today, and then again in 6 months, the operating system is not the same anymore, because the software it ships got updated. So even if the R package library and R version remain fixed, the operating system does not. Now, I realize that this is really pushing it, but I want to be as thorough as possible. So there are two ways around this, if you really, absolutely, need also Ubuntu to remain frozen.</p>
+<p>The first solution is the simplest and is explained in the <a href="https://rocker-project.org/use/reproducibility.html">reproducibility page</a><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> of the Rocker project. The idea is to use a digest, which is the equivalent of a commit hash on Github but for Docker images instead. As the example in the linked page above shows, instead of this:</p>
+<pre><code>FROM rocker/r-ver:4.2.0</code></pre>
+<p>which would base your Docker image on the latest Ubuntu 22.04 shipping R version 4.2.0, you would use this:</p>
+<pre><code>FROM rocker/r-ver@sha256:b343df137d83b0701e0c9f5abfb24286394cb2fdfd39afcf241ad4d6948acf3d</code></pre>
+<p>which is the digest of the latest rebuild of that image. You can find digests on the Docker Hub page:</p>
+<figure class="figure">
+<img src="images/digest.png" alt="You can find Docker image digests on Docker Hub." class="figure-img">
+<figcaption class="figure-caption">
+You can find Docker image digests on Docker Hub.
+</figcaption>
+</figure>
+<p>If you use a digest instead of a tag, it doesn’t matter when the image gets built, you’ll be using the exact same Ubuntu version under the hood that was current <em>at that time</em>.</p>
+<p>The second way around this is to use a functional package manager like Guix or Nix. As I stated in the reproducibility iceberg, this is outside the scope of this book, but the idea of these package managers is that they allow users to reproduce the entirety of a project (so including the operating system libraries) to the exact same byte. If you want to know more, take a look at <span class="citation" data-cites="vallet2022">Vallet, Michonneau, and Tournier (<a href="references.html#ref-vallet2022" role="doc-biblioref">2022</a>)</span> (<a href="https://www.nature.com/articles/s41597-022-01720-9#Abs1">open access article</a>) which shows how Guix works by reproducing the results from another paper.</p>
 
 
+<div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
+<div id="ref-vallet2022" class="csl-entry" role="listitem">
+Vallet, Nicolas, David Michonneau, and Simon Tournier. 2022. <span>“Toward Practical Transparent Verifiable and Long-Term Reproducible Research Using Guix.”</span> <em>Scientific Data</em> 9 (1): 597.
+</div>
+</div>
+<aside id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1"><p>https://is.gd/YKL0T4<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</aside>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -333,6 +369,33 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       } else {
         el.classList.add('notransition');
       }
+    }
+  }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
     }
   }
   const toggleColorMode = (alternate) => {
@@ -401,13 +464,15 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return localAlternateSentinel;
     }
   }
-  let localAlternateSentinel = 'default';
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
   // Dark / light mode switch
   window.quartoToggleColorScheme = () => {
     // Read the current dark / light value 
     let toAlternate = !hasAlternateSentinel();
     toggleColorMode(toAlternate);
     setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
   };
   // Ensure there is a toggle, if there isn't float one in the top right
   if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {

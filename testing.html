@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.14">
+<meta name="generator" content="quarto-1.4.37">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -294,11 +294,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#unit-testing" id="toc-unit-testing" class="nav-link active" data-scroll-target="#unit-testing">Unit testing</a></li>
-  <li><a href="#assertive-programming" id="toc-assertive-programming" class="nav-link" data-scroll-target="#assertive-programming">Assertive programming</a></li>
-  <li><a href="#test-driven-development" id="toc-test-driven-development" class="nav-link" data-scroll-target="#test-driven-development">Test-driven development</a></li>
-  <li><a href="#code-coverage" id="toc-code-coverage" class="nav-link" data-scroll-target="#code-coverage">Code coverage</a></li>
-  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
+  <li><a href="#unit-testing" id="toc-unit-testing" class="nav-link active" data-scroll-target="#unit-testing"><span class="header-section-number">12.1</span> Unit testing</a></li>
+  <li><a href="#assertive-programming" id="toc-assertive-programming" class="nav-link" data-scroll-target="#assertive-programming"><span class="header-section-number">12.2</span> Assertive programming</a></li>
+  <li><a href="#test-driven-development" id="toc-test-driven-development" class="nav-link" data-scroll-target="#test-driven-development"><span class="header-section-number">12.3</span> Test-driven development</a></li>
+  <li><a href="#code-coverage" id="toc-code-coverage" class="nav-link" data-scroll-target="#code-coverage"><span class="header-section-number">12.4</span> Code coverage</a></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">12.5</span> Conclusion</a></li>
   </ul>
 </nav>
     </div>
@@ -331,7 +331,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul>
 <p>Let’s start with unit testing.</p>
 <section id="unit-testing" class="level2" data-number="12.1">
-<h2 data-number="12.1" class="anchored" data-anchor-id="unit-testing">Unit testing</h2>
+<h2 data-number="12.1" class="anchored" data-anchor-id="unit-testing"><span class="header-section-number">12.1</span> Unit testing</h2>
 <p>Unit testing is the testing of units. What’s a unit? Functions are units! We actually already encountered one unit test before, in the <code>save_data.Rmd</code> script:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>```{r tests-clean_flat_data}</span>
@@ -532,7 +532,7 @@ Execution halted</code></pre>
 <p>Let’s now go to assertive programming.</p>
 </section>
 <section id="assertive-programming" class="level2" data-number="12.2">
-<h2 data-number="12.2" class="anchored" data-anchor-id="assertive-programming">Assertive programming</h2>
+<h2 data-number="12.2" class="anchored" data-anchor-id="assertive-programming"><span class="header-section-number">12.2</span> Assertive programming</h2>
 <p>Remember in chapter 6, where I discussed safe functions? As a refresher, here’s the <code>nchar()</code> function, providing a correct output when the input is a character:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nchar</span>(<span class="st">"100000000"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -724,7 +724,7 @@ Actual message: "dataset must be one of `commune_level_data`
 <p>I won’t discuss any of them; what’s important is for you to know that assertive programming is something that is useful, and that you should add to your toolbox.</p>
 </section>
 <section id="test-driven-development" class="level2" data-number="12.3">
-<h2 data-number="12.3" class="anchored" data-anchor-id="test-driven-development">Test-driven development</h2>
+<h2 data-number="12.3" class="anchored" data-anchor-id="test-driven-development"><span class="header-section-number">12.3</span> Test-driven development</h2>
 <p>Test-driven development, or TDD, is the programming paradigm in which instead of writing a function and then several tests to ensure that it’s working as expected, you start with several tests. Of course, since there is no function to test, these tests will all fail at first. But the goal is to then write a function such that the tests pass.</p>
 <p>TDD is interesting in at least two scenarios:</p>
 <ul>
@@ -735,7 +735,7 @@ Actual message: "dataset must be one of `commune_level_data`
 <p>Some programmers only do TDD; so they start by writing many, many tests, and then only start writing their functions. Personally, I think that this is also not ideal, because you could waste a lot of time writing meaningless tests.</p>
 </section>
 <section id="code-coverage" class="level2" data-number="12.4">
-<h2 data-number="12.4" class="anchored" data-anchor-id="code-coverage">Code coverage</h2>
+<h2 data-number="12.4" class="anchored" data-anchor-id="code-coverage"><span class="header-section-number">12.4</span> Code coverage</h2>
 <p>It is useful to have an idea of which functions are tested and which are not, but also <em>how much</em> of a function is being tested. For example, suppose that you have an <code>if...else...</code> clause somewhere in a function. Did you write a test for each of the outcomes of this clause? Maybe you only wrote a test when this clause evaluates to <code>TRUE</code>, but forgot to write a test for the case it is <code>FALSE</code>.</p>
 <p>The packages <code>{covr}</code> allows you to track the test coverage of your package. Install <code>{covr}</code> and run <code>report()</code> in the console to get the results:</p>
 <div class="cell">
@@ -756,7 +756,7 @@ R/get_raw_data.R: 80.65%</code></pre>
 <p>The percentage represents the share of lines of code that are tested by our unit tests. We see that the share of lines being tested in <code>get_laspeyeres().R</code> is 57%: this is because the script <code>get_laspeyeres()</code> contains two functions, <code>get_laspeyeres()</code> and <code>make_plot()</code>. We do not test <code>make_plot()</code> at all, hence why the percentage is so low. We could move <code>make_plot()</code> to another script by simply putting the function under a level two header in the original <code>.Rmd</code> file and then inflating again. But in any case, this would not improve the overall coverage of the package; we would ideally need to write a test for <code>make_plot()</code>. This is left as an exercise to the reader.</p>
 </section>
 <section id="conclusion" class="level2" data-number="12.5">
-<h2 data-number="12.5" class="anchored" data-anchor-id="conclusion">Conclusion</h2>
+<h2 data-number="12.5" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">12.5</span> Conclusion</h2>
 <p>Testing is crucial and useful. Not just because it gives you peace of mind but also because writing tests forces you to think about your code, by putting yourself in the shoes of your users (which include future you as well). In most cases, it is even something that you’ve been doing but perhaps not as systematically as you should.</p>
 <p>There really is no other way to say this: you need to consider writing tests as an integral part of the project, and need to take the required time it takes to write them into account when planning projects. But keep in mind that writing them makes you gain a lot of time in the long run, so actually, you might even be faster by writing tests! Tests also allow you to immediately see where something went wrong, when something goes wrong. So tests save you time here as well. Without tests, when something goes wrong, you have a hard time finding where the bug comes from, and end up wasting precious time. And worse, sometimes things go wrong and break, but silently. You still get an output that may look ok at first glance, and only realise something is wrong way too late. Testing helps avoiding such situations.</p>
 <p>So remember: it might <em>feel</em> like packaging your code and writing tests for it takes time, but:</p>
@@ -811,6 +811,33 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       } else {
         el.classList.add('notransition');
       }
+    }
+  }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
     }
   }
   const toggleColorMode = (alternate) => {
@@ -879,13 +906,15 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return localAlternateSentinel;
     }
   }
-  let localAlternateSentinel = 'default';
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
   // Dark / light mode switch
   window.quartoToggleColorScheme = () => {
     // Read the current dark / light value 
     let toAlternate = !hasAlternateSentinel();
     toggleColorMode(toAlternate);
     setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
   };
   // Ensure there is a toggle, if there isn't float one in the top right
   if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {

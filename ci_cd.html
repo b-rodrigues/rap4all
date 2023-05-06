@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.14">
+<meta name="generator" content="quarto-1.4.37">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -260,16 +260,16 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#cicd-quickstart-for-r-programmers-and-others" id="toc-cicd-quickstart-for-r-programmers-and-others" class="nav-link active" data-scroll-target="#cicd-quickstart-for-r-programmers-and-others">CI/CD quickstart for R programmers (and others)</a></li>
-  <li><a href="#running-a-rap-using-github-actions" id="toc-running-a-rap-using-github-actions" class="nav-link" data-scroll-target="#running-a-rap-using-github-actions">Running a RAP using Github Actions</a></li>
-  <li><a href="#craft-a-dockerized-development-environment-with-github-actions" id="toc-craft-a-dockerized-development-environment-with-github-actions" class="nav-link" data-scroll-target="#craft-a-dockerized-development-environment-with-github-actions">Craft a dockerized development environment with Github Actions</a></li>
-  <li><a href="#run-a-rap-using-a-dockerized-development-environment-on-github-actions" id="toc-run-a-rap-using-a-dockerized-development-environment-on-github-actions" class="nav-link" data-scroll-target="#run-a-rap-using-a-dockerized-development-environment-on-github-actions">Run a RAP using a dockerized development environment on Github Actions</a></li>
-  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
+  <li><a href="#cicd-quickstart-for-r-programmers-and-others" id="toc-cicd-quickstart-for-r-programmers-and-others" class="nav-link active" data-scroll-target="#cicd-quickstart-for-r-programmers-and-others"><span class="header-section-number">15.1</span> CI/CD quickstart for R programmers (and others)</a></li>
+  <li><a href="#running-a-rap-using-github-actions" id="toc-running-a-rap-using-github-actions" class="nav-link" data-scroll-target="#running-a-rap-using-github-actions"><span class="header-section-number">15.2</span> Running a RAP using Github Actions</a></li>
+  <li><a href="#craft-a-dockerized-development-environment-with-github-actions" id="toc-craft-a-dockerized-development-environment-with-github-actions" class="nav-link" data-scroll-target="#craft-a-dockerized-development-environment-with-github-actions"><span class="header-section-number">15.3</span> Craft a dockerized development environment with Github Actions</a></li>
+  <li><a href="#run-a-rap-using-a-dockerized-development-environment-on-github-actions" id="toc-run-a-rap-using-a-dockerized-development-environment-on-github-actions" class="nav-link" data-scroll-target="#run-a-rap-using-a-dockerized-development-environment-on-github-actions"><span class="header-section-number">15.4</span> Run a RAP using a dockerized development environment on Github Actions</a></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">15.5</span> Conclusion</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
-<main class="content page-columns page-full" id="quarto-document-content">
+<main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
@@ -308,7 +308,7 @@ ul.task-list li input[type="checkbox"] {
 </ul>
 <p>Finally, what does <em>integration</em> and <em>deployment or delivery</em> even mean? Continuous integration means that that changes get merged to the master or main branch continuously. Remember Trunk-based development? In TBD, the goal is achieving continuous integration, and Gitops is one efficient way of doing so. Now, what’s the difference between deployment or delivery? Both obviously mean that we’re shipping a product. The difference is only in how the project is managed. If the code gets pushed immediately to production, then we speak of deployment. If instead the code gets pushed to a test server, and final deployment to production needs to be approved by a manager, then it’s delivery. For our purposes, this distinction doesn’t really matter. Think of delivery or deployment simply as “shipping”.</p>
 <section id="cicd-quickstart-for-r-programmers-and-others" class="level2" data-number="15.1">
-<h2 data-number="15.1" class="anchored" data-anchor-id="cicd-quickstart-for-r-programmers-and-others">CI/CD quickstart for R programmers (and others)</h2>
+<h2 data-number="15.1" class="anchored" data-anchor-id="cicd-quickstart-for-r-programmers-and-others"><span class="header-section-number">15.1</span> CI/CD quickstart for R programmers (and others)</h2>
 <p>Before defining an “Hello World” pipeline that gets exectude in the cloud, I need to define some terms. A workflow that runs on Github Actions is defined as a Yaml file, and this file contains a succession of “actions”, and each action performs a specific task. Here is the simplest Github Actions workflow file that you could write (source: <a href="https://gist.github.com/weibeld/f136048d0a82aacc063f42e684e3c494">link</a><a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>):</p>
 <pre><code>name: hello-world
 on: push
@@ -383,7 +383,7 @@ jobs:
 <p>I think you’re starting to see where this is going. This workflow runs on Ubuntu 22.04, installs R version 4.2.2 and installs all the packages defined in the <code>renv.lock</code> file living in our repository (and if you don’t have an <code>renv.lock</code> file, only <code>{renv}</code> will get installed). So to have our RAP running in the cloud, we would simply need to add the other required files and finish writing the workflow. One note of warning though: if you’re running pipelines defined like the above, each time you push, every step will run from scratch (apart from package installation using <code>r-lib/actions/setup-renv@v2</code> because packages will be cached for future runs of the workflow).</p>
 </section>
 <section id="running-a-rap-using-github-actions" class="level2" data-number="15.2">
-<h2 data-number="15.2" class="anchored" data-anchor-id="running-a-rap-using-github-actions">Running a RAP using Github Actions</h2>
+<h2 data-number="15.2" class="anchored" data-anchor-id="running-a-rap-using-github-actions"><span class="header-section-number">15.2</span> Running a RAP using Github Actions</h2>
 <p>Because running <code>{targets}</code> pipelines on Github Actions is a common task, there is of course a way to do it very easily, without the need to write our own workflow file. Simply go to the folder that contains your pipeline (which, I hope, is versioned using Git, right?), open an R session and run <code>tarets::tar_github_actions()</code>. This will automatically create a folder called <code>.github/</code> in the root of your pipeline’s folder, with inside a <code>workflows/</code> folder, and inside a <code>targets.yaml</code> workflow file. This file is ready to use, but you may adapt it to your needs. For example, this workflow file runs on <code>ubuntu-latest</code> and installs the latest version of R. You may want to change the version of Ubuntu to <code>ubuntu-22.04</code> (this way, Ubuntu 22.04 will keep getting used even when the next LTS, 24.04, will be released) and install R version 4.2.2 (or whichever version you used for your pipeline). Also, don’t forget to install the Ubuntu dependencies under the “Install Linux System dependencies” step. There’s already some dependencies there, but you should add the others that we’ve listed in the Dockerfile (the syntax is slightly different from the Dockerfile, so pay attention to it). This workflow file also runs some other useful actions, like caching packages, so they don’t need to get re-downloaded each time you push a change to the repository!</p>
 <p>You can see the repository with the workflow file <a href="https://github.com/rap4all/housing/tree/gitops-pipeline">here</a>. The workflow file is inside the <code>.github/workflows/</code> folder <a href="https://github.com/rap4all/housing/blob/gitops-pipeline/.github/workflows/targets.yaml">here</a>. As I explained before, pay attention to line 29 (where I stated that the action should trigger when a change gets pushed to the branch <code>gitops-pipeline</code>), to line 35 where I changed the runner from <code>ubuntu-latest</code> to <code>ubuntu-22.04</code>, line 43 where I install R version 4.2.2 and finally lines 53 to 74 where I install the required Ubuntu dependencies (the same as for the Dockerfile). Don’t hesitate to use this repository as a template for your projects! The rendered HTML file is in the newly created <code>targets-runs</code> branch of the repository. This branch gets created automatically by the workflow and the output gets saved in there automatically.</p>
 <p>So it turns out that running a RAP on Github Actions is quite easy, you only need to use <code>targets::tar_github_actions()</code>, and adapt the <code>targets.yaml</code> file a little bit to install the right version of R and run it on the right version of Ubuntu (or Windows or macOS, but careful, you only have 2000 free minutes and Windows and macOS are more expensive than Ubuntu, 1 minute of CPU time on Ubuntu is equal to 2 minutes of run-time on macOS). By using <code>{renv}</code> and the generated <code>renv.lock</code> file, the pipeline dependencies get installed seamlessly as well. You can now focus on coding, each time you push to this branch, you will see the output get generated (and because caching is being used, runs will executed rather quickly).</p>
@@ -395,7 +395,7 @@ jobs:
 <p>So you need to think about what it is you really need. Does you pipeline run relatively quickly, and you don’t need to keep it running forever on the same operating system? Then Github Actions is for you. Or perhaps you are writing a book using Rmarkdown, or Quarto and don’t want to bother building it and deploying it manually? Then Github Actions is for you as well (and take a look at this book’s workflow file <a href="https://github.com/b-rodrigues/rap4all/blob/master/.github/workflows/quarto-publish.yml">here</a> for an example of exactly this). But if you are working on a pipeline that may take several hours to run, and you want it to stay reproducible for a very long time, then using Docker might be a better option. Thankfully, you can also use Github Actions to build Docker images and upload them to Docker Hub. You can even then run a Docker container that runs your RAP (but here again, if your pipeline takes several hours to run, you may not want to do that).</p>
 </section>
 <section id="craft-a-dockerized-development-environment-with-github-actions" class="level2" data-number="15.3">
-<h2 data-number="15.3" class="anchored" data-anchor-id="craft-a-dockerized-development-environment-with-github-actions">Craft a dockerized development environment with Github Actions</h2>
+<h2 data-number="15.3" class="anchored" data-anchor-id="craft-a-dockerized-development-environment-with-github-actions"><span class="header-section-number">15.3</span> Craft a dockerized development environment with Github Actions</h2>
 <p>This section and the next are going to mirror the sections on dockerizing projects and dockerizing development environments from the previous chapter. The only difference is that all the heavy lifting will happen on Github Actions, instead of our own computer.</p>
 <p>I’m going to describe the following <a href="https://github.com/b-rodrigues/ga_demo/tree/main">repository</a><a href="#fn9" class="footnote-ref" id="fnref9" role="doc-noteref"><sup>9</sup></a>. This repository contains a Dockerfile, and a <code>.github/workflows/</code> folder with a Github Actions workflow file. Each time I push any change to any file from this repository, a new Docker image gets built automatically and pushed to Docker Hub. The image that gets built defines a development environment that we will then use for our RAPs.</p>
 <p>As stated before, the advantage of using Docker images for your RAPs instead of simply running them directly inside Github Actions (as in the previous section), is that you don’t rely on Github to have the base image (in our example, <code>ubuntu-22.04</code>), forever available, which they won’t.</p>
@@ -477,7 +477,7 @@ This is the image with the correct R version.
 </figure>
 </section>
 <section id="run-a-rap-using-a-dockerized-development-environment-on-github-actions" class="level2" data-number="15.4">
-<h2 data-number="15.4" class="anchored" data-anchor-id="run-a-rap-using-a-dockerized-development-environment-on-github-actions">Run a RAP using a dockerized development environment on Github Actions</h2>
+<h2 data-number="15.4" class="anchored" data-anchor-id="run-a-rap-using-a-dockerized-development-environment-on-github-actions"><span class="header-section-number">15.4</span> Run a RAP using a dockerized development environment on Github Actions</h2>
 <p>Now that we have a dockerized development environment that gets built by pushing changes to a Github repo, it is now time to use it for our RAPs. As I wrote in the beginning, this will mirror the section on running a RAP that uses a dockerized environment, so we can start from that repository. <a href="https://github.com/rap4all/housing/tree/docker">This</a><a href="#fn11" class="footnote-ref" id="fnref11" role="doc-noteref"><sup>11</sup></a> was the repository that we used at the time. You can create a new repository with the same content (but you can remove the <code>.gitignore</code> file, it won’t be needed here). <a href="https://github.com/b-rodrigues/ga_demo_rap">This is what my repository</a><a href="#fn12" class="footnote-ref" id="fnref12" role="doc-noteref"><sup>12</sup></a> looks like. The only difference with the first repository is the Dockerfile and the Github Actions workflow file that is inside <code>.github/workflows</code>. Let’s take a look at the Dockerfile first:</p>
 <pre><code>FROM brodriguesco/r_4.2.2:main-b1950d55ccbd8009de4ee2006a097c3e7ef1c529
 
@@ -544,7 +544,7 @@ Artifacts (pipeline outputs) can be found by going into a run’s details.
 <p>And that’s it! You could tweak the workflow file to instead push the files to a new branch in the repository, like the workflow file that <code>tarets::tar_github_actions()</code> generates. But I think that this solution is easier to use, and also, if you need to download the artifact from a previous run, it’s all right there. Simply select a previous run and download the artifact. If instead you push the outputs to a new branch, you’d need to revert to that commit to get past outputs.</p>
 </section>
 <section id="conclusion" class="level2" data-number="15.5">
-<h2 data-number="15.5" class="anchored" data-anchor-id="conclusion">Conclusion</h2>
+<h2 data-number="15.5" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">15.5</span> Conclusion</h2>
 <p>At the start of this chapter, I stated that this chapter was optional, because it is not necessary to use a CI/CD service to ensure that your projects are reproducible. However, I believe that setting up your project to make it run on Github Actions (or any other CI/CD service) truly forces you to master all the topics presented in this book. In the conclusion of part 1 of the book, I wrote that it seemed as if functional programming was only about putting restrictions to our code, for very little gain. In some ways, forcing yourself to use a CI/CD service can feel similar. But here’s the thing: if your project builds successfully on a CI/CD service, and if the results remain stable through time, then your project is reproducible. Someone else could then run it locally by simply following the same steps as in the workflow file, which would consist in the very same basic steps: clone the repository, build a Docker image and run a container (or set up the required R package library using <code>{renv}</code> and then run the pipeline with <code>{targets}</code> if you’re not using Docker).</p>
 <p>If you work in research, but cannot push the data to Github, you could always work on the code and the infrastructure using synthetic data for instance. The repository alongside the synthetic data could then be a nice complement to the paper (but again, only in case the data cannot be published).</p>
 
@@ -610,6 +610,33 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       } else {
         el.classList.add('notransition');
       }
+    }
+  }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
     }
   }
   const toggleColorMode = (alternate) => {
@@ -678,13 +705,15 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return localAlternateSentinel;
     }
   }
-  let localAlternateSentinel = 'default';
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
   // Dark / light mode switch
   window.quartoToggleColorScheme = () => {
     // Read the current dark / light value 
     let toAlternate = !hasAlternateSentinel();
     toggleColorMode(toAlternate);
     setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
   };
   // Ensure there is a toggle, if there isn't float one in the top right
   if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {

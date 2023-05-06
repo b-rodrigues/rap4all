@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.14">
+<meta name="generator" content="quarto-1.4.37">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -294,12 +294,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#essential-knowledge" id="toc-essential-knowledge" class="nav-link active" data-scroll-target="#essential-knowledge">Essential knowledge</a></li>
+  <li><a href="#essential-knowledge" id="toc-essential-knowledge" class="nav-link active" data-scroll-target="#essential-knowledge"><span class="header-section-number">2.1</span> Essential knowledge</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
-<main class="content page-columns page-full" id="quarto-document-content">
+<main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
@@ -320,7 +320,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <p>This is not an introductory book, so before tackling the topics presented here, make sure that you are familiar with the different topics presented below. If you read this chapter and everything is obvious or known to you, then you should have no trouble following along. If instead what you read here is cryptic, then take some time to improve your understanding of these topics first.</p>
 <section id="essential-knowledge" class="level2" data-number="2.1">
-<h2 data-number="2.1" class="anchored" data-anchor-id="essential-knowledge">Essential knowledge</h2>
+<h2 data-number="2.1" class="anchored" data-anchor-id="essential-knowledge"><span class="header-section-number">2.1</span> Essential knowledge</h2>
 <p>It’s important to know the parts that constitute R. Let’s make something clear: R is not RStudio, or whatever interface you are using to interact with R. R is a domain-specific interpreted programming language. R is domain-specific because its primary use is in performing statistics. Interpreted, because results get returned immediately when you execute a script in the console. In other words, when you write <code>1+1</code> in the console, you get back <code>2</code> immediately. There are so-called programming languages, called compiled programming languages, that require code to be compiled into binaries before execution. C is such a language. The fact that R is interpreted makes interactive exploratory data analysis easy, but also introduces certain negative aspects. I will discuss these in detail in the book. R’s console is an example of REPL – <em>Read-Eval-Print-Loop</em> – environment. Code gets <em>read</em>, <em>evaluated</em>, <em>printed</em> and the read state gets returned, starting the <em>loop</em> over.</p>
 <p>To make working with R easier, you should not write code in the console and execute it, but instead write it in a text file. You can keep these text files, update and share them with collaborators. Such text files are called scripts. You <em>could</em> write these scripts using the most basic text editor included in your operating system (that would be Notepad.exe on Windows), but you should instead use a text editor made specifically to make programming easier. Popular choices include RStudio, Visual Studio Code, or maybe something more exotic like Emacs combined with ESS (my personal choice). Whatever text editor you choose, take time to configure it and learn how to use it. You will spend many, many, many hours inside that text editor. The code you write in that text editor is what’s going to feed you and your family. Learn your chosen text editor’s keyboard shortcuts and other advanced features. This initial investment will pay for itself many times over. Also, you need to know what an actual text file is. A document written in Word (with the <code>.docx</code> extension) is not a text file. It looks like text, but is not. The <code>.docx</code> format is a much more complex format with many layers of abstraction. “True”, plain, text files can be opened with the simplest text editor included in your operating system. I’ve had students trying to create text files with word processors like MS Word and then being confused when things would not work.</p>
 <p>As stated before, R is a domain-specific programming language mainly used for doing statistics, or whatever modernized term you may prefer like <em>“data science”</em>. Its base capabilities can be extended by installing packages. For example, a base installation of R provides you with useful functions like <code>mean()</code> or <code>sd()</code>, to compute the average or standard deviation of a vector of numbers, or <code>rnorm()</code> to compute random variates from a Gaussian (Normal) distribution. However, there is no function available to train a random forest. If you need to train a random forest you need to install a package using the <code>install.packages("randomForest")</code> command. The collection of packages installed is called a “library”. Packages get downloaded from CRAN, the <em>Comprehensive R Archive Network</em>. There is no doubt in my mind that the reason R became so popular is because it is quite easy to write packages for it; and this is something that we will learn as well!</p>
@@ -403,6 +403,33 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       }
     }
   }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
+    }
+  }
   const toggleColorMode = (alternate) => {
     // Switch the stylesheets
     const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
@@ -469,13 +496,15 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return localAlternateSentinel;
     }
   }
-  let localAlternateSentinel = 'default';
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
   // Dark / light mode switch
   window.quartoToggleColorScheme = () => {
     // Read the current dark / light value 
     let toAlternate = !hasAlternateSentinel();
     toggleColorMode(toAlternate);
     setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
   };
   // Ensure there is a toggle, if there isn't float one in the top right
   if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
