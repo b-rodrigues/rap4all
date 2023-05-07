@@ -111,28 +111,28 @@ basic knowledge of data structures like lists. While this is not a book on
 visualisation, we will be making some graphs using the `{ggplot2}` package, so
 if you’re familiar with that, that’s good. If not, no worries, visualisation,
 data munging or data analysis is not the point of this book. Chapter 2, *Before
-we start* should help you gauge how easy you will be able to follow this book.
+we start* should help you gauge how easily you will be able to follow this book.
 
 Ideally, you should also not be afraid of not using Graphical User Interfaces
-(GUI). While you can follow along using an IDE like RStudio, we will not be
-teaching any features from any program with a GUI. This is not to
-gatekeep, but because interacting graphically with a program is simply not
-reproducible. This is the second lesson of building RAPs: there should be no
-human intervention needed to get the outputs once the RAP is started. So our
-target is to write code that can be executed non-interactively by a machine.
-This is because one necessary condition for a workflow to be reproducible and
-get referred to as a RAP, is for the workflow to be able to be executed by a
-machine, automatically, without any human intervention. If this is the case,
-then your workflow is likely reproducible, or can at least be made reproducible
-much more easily than if it requires some special manipulation by a human
-somewhere in the loop.
+(GUIs). While you can follow along using an IDE like RStudio, I will not be
+teaching any features from any program with a GUI. This is not to make things
+harder than they should be (quite the contrary actually) but because interacting
+graphically with a program is simply not reproducible. So our aim is to write
+code that can be executed non-interactively by a machine. This is because one
+necessary condition for a workflow to be reproducible and get referred to as a
+RAP, is for the workflow to be able to be executed by a machine, automatically,
+without any human intervention. This is the second lesson of building RAPs:
+there should be no human intervention needed to get the outputs once the RAP is
+started. If you achieve this, then your workflow is likely reproducible, or can
+at least be made reproducible much more easily than if it requires some special
+manipulation by a human somewhere in the loop.
 
-## What is reproducibility?
+## What actually is reproducibility?
 
 A reproducible project means that this project can be rerun by anyone at 0 (or
-very minimal) cost. But there are different levels of reproducibility, and we
-will discuss this in the next section. Let’s discuss some requirements that a
-project must have to be considered a RAP.
+very minimal) cost. But there are different levels of reproducibility, and I
+will discuss this in the next section. Let’s first discuss some requirements
+that a project must have to be considered a RAP.
 
 ### Using open-source tools to build a RAP is a hard requirement
 
@@ -148,16 +148,19 @@ your organisation, in a way that they could re-execute it if needed? Good.
 But is it code written in a proprietary program, like STATA, SAS or MATLAB? Then
 your project is not reproducible. It doesn’t matter if this code is well
 documented and written and available on a version control system (internally to
-your company or open to the public). This project is not reproducible. Why?
+your company or open to the public). This project is just not reproducible. Why?
 
-Because there is no way to re-execute your code with the exact same version of
-this proprietary program down the line. As I’m writing these lines, MATLAB, for
-example, is at version R2022b. And buying an older version is not guaranteed. I’m 
-sure if you contact their sales department they might be able to sell you an older 
-version. Maybe you can even simply redownload older versions that you’ve already
-bought. But maybe it’s not that simple. Or maybe they won’t offer this option
+Because on a long enough time horizon, there is no way to re-execute your code
+with the exact same version of the proprietary programming language and on the
+exact same version of the operating system that was used at the time the project
+was developed. As I’m writing these lines, MATLAB, for example, is at version
+R2022b. And buying an older version may not be simple. I’m sure if you contact
+their sales department they might be able to sell you an older version. Maybe
+you can even simply re-download older versions that you’ve already bought their
+website. But maybe it’s not that simple. Or maybe they won’t offer this option
 anymore in the future, who knows? In any case, if you google "purchase old
-version of Matlab" you will see that many researchers and engineers have this need.
+version of Matlab" you will see that many researchers and engineers have this
+need.
 
 ::: {.content-hidden when-format="pdf"}
 <figure>
@@ -184,14 +187,14 @@ toolboxes cannot even run on older versions of Matlab.
 
 And let me be clear, what I’m describing here with MATLAB could also be said for
 any other proprietary programs still commonly (unfortunately) used in research
-and in statistics (like STATA or SAS). And even if some, or even all, of the
-editors of these proprietary tools provide ways to buy and run older versions of
-their software, my point is that the fact that you have to rely on them for this
-is a barrier to reproducibility, and there is no guarantee they will provide the
-option to purchase older versions forever. Also, who guarantees that they will
-be around forever? Or, and that’s more likely, that they will keep offering a
-program that you install on your machine instead of shifting to a subscription
-based model?
+and in statistics (like STATA, SAS or SPSS). And even if some, or even all, of
+the editors of these proprietary tools provide ways to buy and run older
+versions of their software, my point is that the fact that you have to rely on
+them for this is a barrier to reproducibility, and there is no guarantee they
+will provide the option to purchase older versions forever. Also, who guarantees
+that the editors of these tools will be around forever? Or, and that’s more
+likely, that they will keep offering a program that you install on your machine
+instead of shifting to a subscription based model?
 
 *For just $199 a month, you can execute your SAS/STATA/MATLAB scripts on the
 cloud! Worry about data confidentiality? No worries, data gets encrypted and
@@ -200,7 +203,8 @@ worry about losing your work if your cat knocks over your coffee on your laptop!
 And if you purchase the pro licence, for an additional $100 a month, you can
 even execute your code in parallel!*
 
-Think this is science fiction? Google "SAS cloud" to see SAS’s cloud based offering.
+Think this is science fiction? Google "SAS cloud" to see SAS’s cloud based
+offering.
 
 ### There are hidden dependencies that can hinder the reproducibility of a project
 
@@ -218,12 +222,12 @@ Well, if the analysis ran on a proprietary operating system, then the conclusion
 is: your project is not reproducible.
 
 This is because the operating system the code runs on can also influence the
-reproducibility of the project. There are some particularities in operating
+outputs that your pipeline builds. There are some particularities in operating
 systems that may make certain things work differently. Admittedly, this is in
 practice rarely a problem, but [it does
 happen](https://github.com/numpy/numpy/issues/9187)^[https://github.com/numpy/numpy/issues/9187],
 especially if you’re working with very high precision floating point arithmetic
-like you would do in the financial sector.
+like you would do in the financial sector for instance.
 
 Thankfully, there is no need to change operating systems to deal with this
 issue, and we will learn how to use Docker to safeguard against this problem.
@@ -302,8 +306,8 @@ higher the likelihood that some package version will not be compatible. There is
 also the issue of the R version itself. Generally speaking, recent versions of R
 seem to not be too bad when it comes to running older code written in R. I know
 this because in 2022 I’ve ran every example that comes bundled with R since
-version 0.6.0 on the then current version of R, version 4.2.2. Here is the
-result of this experiment:
+version 0.6.0 on the then current version (as of writing) of R, version 4.2.2.
+Here is the result of this experiment:
 
 ::: {.content-hidden when-format="pdf"}
 <figure>
@@ -319,7 +323,6 @@ result of this experiment:
 knitr::include_graphics("images/wontrun.png")
 ```
 :::
-
 
 This graph shows the following: for each version of R, starting with R version
 0.6.0 (released in 1997), how well the examples that came with a standard
@@ -353,9 +356,9 @@ time as a sufficient condition for reproducibility is not enough. We have to set
 up the code in a way that it actually is reproducible.
 
 So what does this all mean? This means that reproducibility is on a continuum,
-and depending on the constraints you face your project can be "not very reproducible"
-to "totally reproducible". Let’s consider the following list of anything that can
-influence how reproducible your project truly is:
+and depending on the constraints you face your project can be "not very
+reproducible" to "totally reproducible". Let’s consider the following list of
+anything that can influence how reproducible your project truly is:
 
 - Version of the programming language used;
 - Versions of the packages/libraries of said programming language used;
@@ -363,12 +366,12 @@ influence how reproducible your project truly is:
 - Versions of the underlying system libraries (which often go hand in hand with OS version, but not necessarily).
 - And even the hardware architecture that you run all that software stack on.
 
-So by “reproducibility is on a continuum”, what I mean is that you could set up
+So by "reproducibility is on a continuum", what I mean is that you could set up
 your project in a way that none, one, two, three, four or all of the preceding
 items are taken into consideration when making your project reproducible.
 
-This is not a novel, or new idea. @peng2011 already discussed this concept 
-but named in the reproducibility spectrum. In part 2 of this book, I will 
+This is not a novel, or new idea. @peng2011 already discussed this concept
+but named it the *reproducibility spectrum*. In part 2 of this book, I will
 reintroduce the idea and call it the "reproducibility iceberg".
 
 ::: {.content-hidden when-format="pdf"}
@@ -386,46 +389,46 @@ knitr::include_graphics("images/repro_spectrum.png")
 ```
 :::
 
-Let me just finish this introduction by the last item on the previous list:
-hardware architecture by discussing a fairly recent event in computing. You see,
-Apple has changed hardware architecture recently, their new computers switched
-from Intel based hardware to their own proprietary architecture (Apple Silicon)
-based on the ARM specification. And what does that mean concretely? It means
-that all the binary packages that were built for Intel based Apple computers
-cannot work on their new computers. Which means that if you have a recent M1
-Macbook and need to install old CRAN packages to rerun a project (and we will
-learn how to do this later in the book), these need to be compiled to work on
-M1. You cannot even install older versions of R, unless you also compile those
-from source! This is because these older versions of R and packages were
-compiled to run on the previous architecture that Apple used for their
-computers, and cannot be run on the current architecture. Now I have read about
-a compatibility layer called Rosetta which enables to run binaries compiled for
-the Intel architecture on the ARM architecture, and maybe this works well with R
-and CRAN binaries compiled for Intel architecture. Maybe, I don’t know. But my
-point is that you never know what might come in the future, and thus needing to
-be able to compile from source is important, because compiling from source is
-what requires the least amount of dependencies that are outside of your control.
-Relying on binaries is not future-proof (and which is again, another reason why
-open-source tools are a hard requirement for reproducibility).
+Let me just finish this introduction by discussing the last item on the previous
+list: hardware architecture. You see, Apple has changed the hardware
+architecture of their computers recently. Their new computers don't use Intel
+based hardware anymore, but instead Apple's own proprietary architecture (Apple
+Silicon) based on the ARM specification. And what does that mean concretely? It
+means that all the binary packages that were built for Intel based Apple
+computers cannot run on their new computers (at least not without a
+compatibility layer). Which means that if you have a recent M1 or M2 Macbook and
+need to install old CRAN packages to rerun a project (and we will learn how to
+do this later in the book), these need to be compiled to work on Apple Silicon
+first. You cannot even install older versions of R, unless you also compile
+those from source! Now I have read about a compatibility layer called Rosetta
+which enables to run binaries compiled for the Intel architecture on the ARM
+architecture, and maybe this works well with R and CRAN binaries compiled for
+Intel architecture. Maybe, I don’t know. But my point is that you never know
+what might come in the future, and thus needing to be able to compile from
+source is important, because compiling from source is what requires the least
+amount of dependencies that are outside of your control. Relying on binaries is
+not future-proof (and which is again, another reason why open-source tools are a
+hard requirement for reproducibility).
 
 And for you Windows users, don’t think that the preceding paragraph does not
 concern you. I think that it is very likely that Microsoft will push in the
-future for OEM manufacturers to develop more ARM based computers. There is
-already an ARM version of Windows after all, and it has been around for quite
-some time, and I think that Microsoft will not kill that version any time in the
-future. This is because ARM is much more energy efficient than other
-architectures, and any manufacturer can build its own ARM cpus by purchasing a
-license, which can be quite interesting. For example in the case of Apple
-Silicon cpus, Apple can now get exactly the cpus they want for their machines
-and make their software work seamlessly with it. I doubt that others will pass
-the chance to do the same.
+future for OEM manufacturers to build more ARM based computers. There is already
+an ARM version of Windows after all, and it has been around for quite some time,
+and I think that Microsoft will not kill that version any time in the future.
+This is because ARM is much more energy efficient than other architectures, and
+any manufacturer can build its own ARM cpus by purchasing a license, which can
+be quite interesting from a business perspective. For example in the case of
+Apple Silicon cpus, Apple can now get exactly the cpus they want for their
+machines and make their software work seamlessly with it (also, further locking
+in their users to their hardware). I doubt that others will pass the chance to
+do the same.
 
 Also, something else that might happen is that we might move towards more and
 more cloud based computing, but I think that this scenario is less likely than
 the one from before. But who knows. And in that case it is quite likely that the
 actual code will be running on Linux servers that will likely be ARM based
-because of energy costs. Here again, if you want to run your historical code,
-you’ll have to compile old packages and R versions from source.
+because of energy and licensing costs. Here again, if you want to run your
+historical code, you’ll have to compile old packages and R versions from source.
 
 Ok, so this might seem all incredibly complicated. How on earth are we supposed
 to manage all these risks and balance the immediate need for results with the
