@@ -16,17 +16,17 @@ write a RAP:
 If you tick all these boxes, you, or anyone else, should not have any problems
 reproducing the results of your project. While it may seem that ticking these
 boxes takes up valuable time from other tasks, if you use the techniques and
-tools that I've showed you, this should not be the case, and you might end up
-even gaining time. The only exception to this will be preparing a Docker image,
-but if you supply at the very least an `renv.lock` file, creating a Docker image
-to run a project could even be done much later, and only if it's really needed
-(and maybe even by someone else).
+tools that I've showed you in part 1, this should not be the case, and you might
+end up even gaining time. The only exception to this will be preparing a Docker
+image, but if you supply at the very least an `renv.lock` file, creating a
+Docker image to run a project could even be done much later, and only if it's
+really needed (and maybe even by someone else).
 
 # "So what?"
 
 If you’ve reached this conclusion and are still thinking "meh, yeah,
-reproducibility is nice and all, but... so what?" I hope to this last attempt of
-mine to convince you that RAPs are important will be successful.
+reproducibility is nice and all, but... so what?" I hope that this last attempt
+of mine to convince you that RAPs are important will be successful.
 
 So, why bother building RAPs? Firstly, there are purely technical
 considerations. It is not impossible that in quite a near future, we will work
@@ -55,7 +55,20 @@ It doesn’t matter if you’re working in research, for a public institution or
 private sector company: the three points above are incredibly important and it’s
 impossible to perform data analysis without taking these into consideration,
 regardless of whether AIs take over some, or most, of the tasks you perform
-today.
+today. In the case of research, the *publish or perish* model has distorted
+incentives so much that unfortunately a lot of researchers are focused on
+getting published as quickly as possible, and see the three factors listed above
+as hurdles to get published quickly. Herculean efforts have to be made to
+reproduce studies that are not reproducible, and more often than not, people
+that try to reproduce the results are unsuccessful. Thankfully, things are
+changing and there are more and more efforts that are being made to make
+research reproducible by design, and not as an afterthought. In the private
+sector, tight deadlines lead to the same problem: analysts think that making the
+project reproducible as an hindrance to being able to deliver on time. But here
+as well, taking the time to make the project will help with making sure that
+what is delivered is of high quality, and it will also help with making reusing
+existing code for future projects much easier, even further accelerating
+development.
 
 Data analysis, at whatever level and for whatever field, is not just about
 getting to a result, the way to get to the result is part of it! This is true

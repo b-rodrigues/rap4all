@@ -1,7 +1,7 @@
 # Introduction
 
 This book will not teach you about machine learning, statistics or
-visualisation. 
+visualisation.
 
 The goal is to teach you a set of tools, practices and project management
 techniques that should make your projects easier to reproduce, replicate and
@@ -35,7 +35,7 @@ process is, at its core, always very similar:
 This book will already assume some familiarity with programming, and in
 particular the R programming language. However, if you’re comfortable with
 another programming language like Python, you could still learn a lot from
-reading this book. The  tools presented in this book are specific to R, but
+reading this book. The tools presented in this book are specific to R, but
 there will always be an alternative for the language you prefer using, meaning
 that you could apply the advice from this book to your needs and preferences.
 
@@ -43,31 +43,34 @@ that you could apply the advice from this book to your needs and preferences.
 
 The aim of this book is to make the process of analysing data as reliable,
 retraceable, and reproducible as possible, and do this by design. This means
-that once we’re done with the analysis, we’re done. We don’t want to spend time,
-which we often don't have anyways, to rewrite or refactor an analysis and make
-it reproducible after the fact. We all know that this is not going to happen.
-Once an analysis is done, it’s time to go to the next analysis. And if we need
-to rerun an older analysis (for example, because the data got updated), then
-we’ll simply figure it out at that point. Hopefully, we will remember every
-quirk of our code and know which script to run at which point in the process,
-which comments are outdated and can be safely ignored, what features of the data
-need to be checked (and when they need to be checked), and so on...
+that once you’re done with the analysis, you’re done. You don’t want to spend
+time, which you often don't have anyways, to rewrite or refactor an analysis and
+make it reproducible after the fact. We both know that this is not going to
+happen. Once an analysis is done, it’s time to go to the next analysis. And if
+you need to rerun an older analysis (for example, because the data got updated),
+then you’ll simply figure it out at that point, right? That's a problem for
+future you, right? Hopefully, future you will remember every quirk of your code
+and know which script to run at which point in the process, which comments are
+outdated and can be safely ignored, what features of the data need to be checked
+(and when they need to be checked), and so on... You better hope future you is a
+more diligent worker than you!
 
-Going forward, we’re going to refer to the process above as a "reproducible
-analytical pipeline", or RAP for short. There are only two ways to make such a
-RAP reproducible; either we are lucky enough to have someone on the team whose
-job is to do this, or we do it ourselves. And this second option is very likely
-the most common. The issue is, as stated above, that we simply don’t do it. We
-are always in the rush to get to the results, and don’t think about making the
-process reproducible. This is because we always think that making the process
-reproducible takes time and this time is better employed to perform the analysis
-itself. But this is a misconception, for two reasons.
+Going forward, I'm going to refer to a project that is reproducible as a
+"reproducible analytical pipeline", or RAP for short. There are only two ways to
+make such a RAP; either you are lucky enough to have someone on the team whose
+job is to turn your messy code into a RAP, or you do it yourself. And this
+second option is very likely the most common. The issue is, as stated above,
+that most of us simply don’t do it. We are always in the rush to get to the
+results, and don’t think about making the process reproducible. This is because
+we always think that making the process reproducible takes time and this time is
+better spent working on the analysis itself. But this is a misconception, for
+two reasons.
 
 The first reason is that employing the techniques that we are going to discuss
-in this book, won’t actually take much time. As you will see, they’re not really
-things that you "add on top of the analysis" that take time, but will be part of
-the analysis and project management themselves. And some of these techniques will
-even save you time (especially testing) and headaches. 
+in this book won't actually take much time. As you will see, they're not really
+things that you "add on top of the analysis", but will be part of the analysis
+itself, and they will also help with managing the project. And some of these
+techniques will even save you time (especially testing) and headaches.
 
 The second reason is that an analysis is never, ever, a one-shot. Only the most
 simple things, like pulling out a number from some data base may be a one-shot.
@@ -76,9 +79,9 @@ pull out a variation of that number (for example, by disaggregating by one or
 several variables). Or maybe you’ll get asked for an update to that number in
 six months. So you will learn very quickly to keep that SQL query in a script
 somewhere to make sure that you provide a number that is consistent. But what
-about more complex analyses? Is keeping the script enough? Well that’s already a
-good start. The problem is that very often, there is no script, or not a script
-for each step of the analysis.
+about more complex analyses? Is keeping the script enough? Keeping the script is
+already a good start of course. The problem is that very often, there is no
+script, or not a script for each step of the analysis.
 
 I’ve seen this play out many times in many different organisations. It’s that
 time of the year again, we have to write a report. 10 people are involved, and
