@@ -1,14 +1,12 @@
 # Project start
 
 In this chapter, we are going to work together on a very simple project. This
-project will stay with us until the end of the book. For now, we are going to
-keep it simple; our goal here is to get an analysis done. We are going to
-download some data, and analyse it. After we’re done with our analysis, we are
-going to keep it on the side for some time: we will then learn about tools and
-new programming paradigms and then rewrite our analysis at the start of the
-second part of this book using the techniques we’ve learned from part 1.
-
-But for now, our main concern is to get our work done.
+project will stay with us until the end of the book. As we will go deeper in the
+book together, you will rewrite that project by implementing the techniques I
+will teach you. By the end of the book you will have built a reproducible
+analytical pipeline. To get things going, we are going to keep it simple; our
+goal here is to get an analysis done, that's it. We won't focus on
+reproducibility. We are going to download some data, and analyse it, that's it.
 
 ## Housing in Luxembourg
 
@@ -43,11 +41,10 @@ knitr::include_graphics("images/lux_rhode_island.png")
 ```
 :::
 
-
 What you should also know is that the population is about 645.000 as of writing
 (January 2023), half of which are foreigners. Around 400.000 persons work in
 Luxembourg, of which half do not live in Luxembourg; so every morning from
-Monday to Friday, 200.000 people enter the country to work, and leave in the
+Monday to Friday, 200.000 people enter the country to work and then leave in the
 evening to go back to either Belgium, France or Germany, the neighbouring
 countries. As you can imagine, this puts enormous pressure on the transportation
 system and on the roads, but also on the housing market; everyone wants to live
@@ -76,7 +73,7 @@ withr::with_package("ggplot2",
 
 ```
 
-If you want to download the data, click [here](https://ec.europa.eu/eurostat/databrowser/view/PRC_HPI_A__custom_4705395/bookmark/table?lang=en&bookmarkId=21530d9a-c423-4ab7-998a-7170326136cd).
+If you want to download the data, click [here](https://github.com/b-rodrigues/rap4all/raw/master/datasets/prc_hpi_a__custom_4705395_page_linear.csv.gz).
 
 Let us paste the definition of the HPI in here (taken from the HPI's
 [metadata](https://ec.europa.eu/eurostat/cache/metadata/en/prc_hpi_inx_esms.htm) page):
@@ -86,12 +83,12 @@ captures price changes of all types of dwellings purchased by households (flats,
 terraced houses, etc.). Only transacted dwellings are considered, self-build dwellings are
 excluded. The land component of the dwelling is included.*
 
-So from the plot, we can see that the price of dwellings more than doubled between 2010 and 2021;
-the value of the index is 214.81 in 2021 for Luxembourg, and 138.92 for the European Union
-as a whole. 
+So from the plot, we can see that the price of dwellings more than doubled
+between 2010 and 2021; the value of the index is 214.81 in 2021 for Luxembourg,
+and 138.92 for the European Union as a whole.
 
-There is a lot of heterogeneity though; the capital and the communes immediately
-next to the capital are much more expensive than communes from the less densely
+There is a lot of heterogeneity though; the capital and the communes right next
+to the capital are much more expensive than communes from the less densely
 populated north, for example. The south of the country is also more expensive
 than the north, but not as much as the capital and surrounding communes. Not
 only is price driven by demand, but also by scarcity; in 2021, .5% of residents
@@ -105,19 +102,20 @@ l'Habitat*, a service from the Ministry of Housing, which monitors the evolution
 of prices in the housing market, among other useful services like the
 identification of vacant lots). The advantage of their data when compared to
 Eurostat's data is that the data is disaggregated by commune. The disadvantage
-is that they only supply nominal prices, and no index. Nominal prices are the
-prices that you read on price tags in shops. The problem with nominal prices is
-that it is difficult to compare them through time. Ask yourself the following
-question: would you prefer to have had 500€ (or USDs) in 2003 or in 2023? You
-probably would have preferred them in 2003, as you could purchase a lot more
-with $500 then than now. In fact, according to a random inflation calculator I
-googled, to match the purchasing power of $500 in 2003, you'd need to have $793
-in 2023 (and I'd say that we find very similar values for €). But it doesn't
-really matter if that calculation is 100% correct: what matters is that the
-value of money changes, and comparisons through time are difficult, hence why an
-index is quite useful. So we are going to convert these nominal prices to real
-prices. Real prices take inflation into account and so allow us to compare
-prices through time. So we will need to also get some data to achieve this.
+is that they only supply nominal prices, and no index (and the data is trapped
+inside Excel and not ready for analysis with R). Nominal prices are the prices
+that you read on price tags in shops. The problem with nominal prices is that it
+is difficult to compare them through time. Ask yourself the following question:
+would you prefer to have had 500€ (or USDs) in 2003 or in 2023? You probably
+would have preferred them in 2003, as you could purchase a lot more with $500
+then than now. In fact, according to a random inflation calculator I googled, to
+match the purchasing power of $500 in 2003, you'd need to have $793 in 2023 (and
+I'd say that we find very similar values for €). But it doesn't really matter if
+that calculation is 100% correct: what matters is that the value of money
+changes, and comparisons through time are difficult, hence why an index is quite
+useful. So we are going to convert these nominal prices to real prices. Real
+prices take inflation into account and so allow us to compare prices through
+time.
 
 So to summarise; our goal is to:
 
@@ -131,7 +129,7 @@ write a script and deal with each step separately.
 ## Saving trapped data from Excel
 
 Getting data from Excel into a tidy data frame can be very tricky. This is
-because very often, Excel is used as some kind of dashboard, or presentation
+because very often, Excel is used as some kind of dashboard or presentation
 tool. So data is made human-readable, in contrast to machine readable. Let us
 quickly discuss this topic as it is essential to grasp the difference between
 the two (and in our experience, a lot of collective pain inflicted to
@@ -165,27 +163,25 @@ to a tidy data frame will not be too difficult. In fact, we suspect that whoever
 made this Excel file is well aware of the contradicting requirements of human
 and machine readable formatting of data, and strove to find a compromise.
 Because more often than not, getting human readable data into a machine readable
-formatting is a nightmare.
+format is a nightmare. We could call data like this *machine-friendly* data.
 
-This is actually the file that we are going to use for our project, so if you
-want to follow along, you can download it
+If you want to follow along, you can download the Excel file
 [here](https://github.com/b-rodrigues/rap4all/raw/master/datasets/vente-maison-2010-2021.xlsx)^[https://is.gd/1vvBAc]
 (downloaded on January 2023 from the [luxembourguish open data
 portal](https://data.public.lu/en/datasets/prix-annonces-des-logements-par-commune/)^[https://data.public.lu/en/datasets/prix-annonces-des-logements-par-commune/]).
-But you don’t need to follow along with code, because I will link the scripts
-for you to download later.
+But you don’t need to follow along with code, because I will link the completed
+scripts for you to download later.
 
 Each sheet contains a dataset with the following columns:
 
-- *Commune*: the commune
-- *Nombre d'offres*: the total number of selling offers
-- *Prix moyen annoncé en Euros courants*: Average selling price in nominal Euros
-- *Prix moyen annoncé au m2 en Euros courants*: Average selling price in square meters in nominal Euros
+- *Commune*: the commune (the smallest administrative division of territory);
+- *Nombre d'offres*: the total number of selling offers;
+- *Prix moyen annoncé en Euros courants*: Average selling price in nominal Euros;
+- *Prix moyen annoncé au m2 en Euros courants*: Average selling price in square meters in nominal Euros.
 
-For ease of presentation, we are going to show you each function here
-separately, but we'll be putting everything together in a single script once
-we’re done explaining each step. So first, let's read in the data. The following
-lines do just that:
+For ease of presentation, I'm going to show you each step of the analysis here
+separately, but I'll be putting everything together in a single script once
+I'm done explaining each step. So first, let's load some packages:
 
 ```{r, messages = FALSE}
 library(dplyr)
@@ -195,7 +191,7 @@ library(stringr)
 library(janitor)
 ```
 
-The code below downloads the data, and puts it in a data frame:
+Next, the code below downloads the data, and puts it in a data frame:
 
 ```{r}
 # The url below points to an Excel file
