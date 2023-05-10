@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.37">
+<meta name="generator" content="quarto-1.4.43">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -345,11 +345,11 @@ Luxembourg is about as big as the US State of Rhode Island.
 <p><img src="project_start_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>If you want to download the data, click <a href="https://github.com/b-rodrigues/rap4all/raw/master/datasets/prc_hpi_a__custom_4705395_page_linear.csv.gz">here</a>.</p>
-<p>Let us paste the definition of the HPI in here (taken from the HPI’s <a href="https://ec.europa.eu/eurostat/cache/metadata/en/prc_hpi_inx_esms.htm">metadata</a> page):</p>
+<p>If you want to download the data, click <a href="https://github.com/b-rodrigues/rap4all/raw/master/datasets/prc_hpi_a__custom_4705395_page_linear.csv.gz">here</a><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>.</p>
+<p>Let us paste the definition of the HPI in here (taken from the HPI’s <a href="https://archive.is/OrQwA">metadata</a><a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> page):</p>
 <p><em>The House Price Index (HPI) measures inflation in the residential property market. The HPI captures price changes of all types of dwellings purchased by households (flats, detached houses, terraced houses, etc.). Only transacted dwellings are considered, self-build dwellings are excluded. The land component of the dwelling is included.</em></p>
 <p>So from the plot, we can see that the price of dwellings more than doubled between 2010 and 2021; the value of the index is 214.81 in 2021 for Luxembourg, and 138.92 for the European Union as a whole.</p>
-<p>There is a lot of heterogeneity though; the capital and the communes right next to the capital are much more expensive than communes from the less densely populated north, for example. The south of the country is also more expensive than the north, but not as much as the capital and surrounding communes. Not only is price driven by demand, but also by scarcity; in 2021, .5% of residents owned 50% of the buildable land for housing purposes (Source: <em>Observatoire de l’Habitat, Note 29</em>, <a href="https://archive.org/download/note-29/note-29.pdf">archived download link</a>).</p>
+<p>There is a lot of heterogeneity though; the capital and the communes right next to the capital are much more expensive than communes from the less densely populated north, for example. The south of the country is also more expensive than the north, but not as much as the capital and surrounding communes. Not only is price driven by demand, but also by scarcity; in 2021, .5% of residents owned 50% of the buildable land for housing purposes (Source: <em>Observatoire de l’Habitat, Note 29</em>, <a href="https://archive.org/download/note-29/note-29.pdf">archived download link</a><a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>).</p>
 <p>Our project will be quite simple; we are going to download some data, supplied as an Excel file, compiled by the Housing Observatory (<em>Observatoire de l’Habitat</em>, a service from the Ministry of Housing, which monitors the evolution of prices in the housing market, among other useful services like the identification of vacant lots). The advantage of their data when compared to Eurostat’s data is that the data is disaggregated by commune. The disadvantage is that they only supply nominal prices, and no index (and the data is trapped inside Excel and not ready for analysis with R). Nominal prices are the prices that you read on price tags in shops. The problem with nominal prices is that it is difficult to compare them through time. Ask yourself the following question: would you prefer to have had 500€ (or USDs) in 2003 or in 2023? You probably would have preferred them in 2003, as you could purchase a lot more with $500 then than now. In fact, according to a random inflation calculator I googled, to match the purchasing power of $500 in 2003, you’d need to have $793 in 2023 (and I’d say that we find very similar values for €). But it doesn’t really matter if that calculation is 100% correct: what matters is that the value of money changes, and comparisons through time are difficult, hence why an index is quite useful. So we are going to convert these nominal prices to real prices. Real prices take inflation into account and so allow us to compare prices through time.</p>
 <p>So to summarise; our goal is to:</p>
 <ul>
@@ -376,7 +376,7 @@ An Excel file meant for human eyes.
 <li>You don’t see it in the screenshot, but each year is in a separate sheet.</li>
 </ul>
 <p>That being said, this Excel file is still very tame, and going from this Excel to a tidy data frame will not be too difficult. In fact, we suspect that whoever made this Excel file is well aware of the contradicting requirements of human and machine readable formatting of data, and strove to find a compromise. Because more often than not, getting human readable data into a machine readable format is a nightmare. We could call data like this <em>machine-friendly</em> data.</p>
-<p>If you want to follow along, you can download the Excel file <a href="https://github.com/b-rodrigues/rap4all/raw/master/datasets/vente-maison-2010-2021.xlsx">here</a><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> (downloaded on January 2023 from the <a href="https://data.public.lu/en/datasets/prix-annonces-des-logements-par-commune/">luxembourguish open data portal</a><a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>). But you don’t need to follow along with code, because I will link the completed scripts for you to download later.</p>
+<p>If you want to follow along, you can download the Excel file <a href="https://github.com/b-rodrigues/rap4all/raw/master/datasets/vente-maison-2010-2021.xlsx">here</a><a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> (downloaded on January 2023 from the <a href="https://data.public.lu/en/datasets/prix-annonces-des-logements-par-commune/">luxembourguish open data portal</a><a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a>). But you don’t need to follow along with code, because I will link the completed scripts for you to download later.</p>
 <p>Each sheet contains a dataset with the following columns:</p>
 <ul>
 <li><em>Commune</em>: the commune (the smallest administrative division of territory);</li>
@@ -478,7 +478,7 @@ Attaching package: 'janitor'</code></pre>
 #   ¹​average_price_m2_nominal_euros</code></pre>
 </div>
 </div>
-<p>But there’s a problem: columns that should be of type numeric are of type character instead (<code>average_price_nominal_euros</code> and <code>average_price_m2_nominal_euros</code>). There’s also another issue, which you would eventually catch as you would be exploring the data: naming of the communes is not consistent. Let’s take a look:</p>
+<p>But there’s a problem: columns that should be of type numeric are of type character instead (<code>average_price_nominal_euros</code> and <code>average_price_m2_nominal_euros</code>). There’s also another issue, which you would eventually catch as you’ll explore the data: naming of the communes is not consistent. Let’s take a look:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>raw_data <span class="sc">|&gt;</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">grepl</span>(<span class="st">"Luxembourg"</span>, locality)) <span class="sc">|&gt;</span></span>
@@ -504,7 +504,7 @@ Attaching package: 'janitor'</code></pre>
 2 Pétange      2</code></pre>
 </div>
 </div>
-<p>So sometimes it is spelled correctly, with an “é”, sometimes not. Let’s write some code to correct this:</p>
+<p>So sometimes it is spelled correctly, with an “é”, sometimes not. Let’s write some code to correct both these issues:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>raw_data <span class="ot">&lt;-</span> raw_data <span class="sc">|&gt;</span></span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">locality =</span> <span class="fu">ifelse</span>(<span class="fu">grepl</span>(<span class="st">"Luxembourg-Ville"</span>, locality),</span>
@@ -550,7 +550,7 @@ Warning in mask$eval_all_mutate(quo): NAs introduced by coercion</code></pre>
 Always look at your data.
 </figcaption>
 </figure>
-<p>So it turns out that indeed, there are some rows that we need to remove. We can start by removing rows where <code>locality</code> is missing. Then we have a row where <code>locality</code> is equal to “Total d’offres”. This is simply the total of every offer from every commune. We could keep that in a separate data frame, or even remove it. Finally there’s a row, the last one, that states the source of the data, which we can remove.</p>
+<p>So it turns out that there are some rows that we need to remove. We can start by removing rows where <code>locality</code> is missing. Then we have a row where <code>locality</code> is equal to “Total d’offres”. This is simply the total of every offer from every commune. We could keep that in a separate data frame, or even remove it. Finally there’s a row, the last one, that states the source of the data, which we can remove.</p>
 <p>In the screenshot above, we see another row that we don’t see in our filtered data frame: one where <code>n_offers</code> is missing. This row gives the national average for columns <code>average_prince_nominal_euros</code> and <code>average_price_m2_nominal_euros</code>. What we are going to do is create two datasets: one with data on communes, and the other on national prices. Let’s first remove the rows stating the sources:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>raw_data <span class="ot">&lt;-</span> raw_data <span class="sc">|&gt;</span></span>
@@ -579,7 +579,7 @@ Always look at your data.
 <pre><code>Joining, by = "year"</code></pre>
 </div>
 </div>
-<p>Now the data looks clean, and we can start the actual analysis… or can we? Before proceeding, it would be nice to make sure that we got every commune in there. For this, we need a list of communes from Luxembourg. <a href="https://en.wikipedia.org/wiki/List_of_communes_of_Luxembourg">Thankfully, Wikipedia has such a list.</a></p>
+<p>Now the data looks clean, and we can start the actual analysis… or can we? Before proceeding, it would be nice to make sure that we got every commune in there. For this, we need a list of communes from Luxembourg. <a href="https://en.wikipedia.org/wiki/List_of_communes_of_Luxembourg">Thankfully, Wikipedia has such a list.</a><a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a></p>
 <p>Let’s scrape and save this list:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>current_communes <span class="ot">&lt;-</span></span>
@@ -604,7 +604,7 @@ Always look at your data.
 [22] "Tuntange"            "Wellenstein"         "Kaerjeng"           </code></pre>
 </div>
 </div>
-<p>We see many communes that are in our <code>commune_level_data</code>, but not in <code>current_communes</code>. There’s one obvious reason: differences in spelling, for example, “Kaerjeng” in our data, but “Käerjeng” in the table from Wikipedia. But there’s also a less obvious reason; since 2010, several communes have merged into new ones. So there are communes that are in our data, say, in 2010 and 2011, but disappear from 2012 onwards. So we need to do several things: first, get a list of all existing communes from 2010 onwards, and then, harmonise spelling. Here again, we can use a list of Wikipedia:</p>
+<p>We see many communes that are in our <code>commune_level_data</code>, but not in <code>current_communes</code>. There’s one obvious reason: differences in spelling, for example, “Kaerjeng” in our data, but “Käerjeng” in the table from Wikipedia. But there’s also a less obvious reason; since 2010, several communes have merged into new ones. So there are communes that are in our data in 2010 and 2011, but disappear from 2012 onwards. So we need to do several things: first, get a list of all existing communes from 2010 onwards, and then, harmonise spelling. Here again, we can use a list of Wikipedia:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>former_communes <span class="ot">&lt;-</span></span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"https://en.wikipedia.org/wiki/Communes_of_Luxembourg#Former_communes"</span> <span class="sc">|&gt;</span>  </span>
@@ -662,14 +662,14 @@ Always look at your data.
 <pre><code>character(0)</code></pre>
 </div>
 </div>
-<p>Great! When we compare the communes that are in our data with every commune that has existed since 2010, we don’t have any commune that is unaccounted for. So are we done with cleaning the data? Yes, we can now actually start with analysing the data. Take a look <a href="https://raw.githubusercontent.com/b-rodrigues/rap4all/master/scripts/save_data.R">here</a><a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> to see the finalised script. Also read some of the comments the I’ve added. This is a typical R script, and at first glance, one might wonder what is wrong with it. Actually, not much, but the problem if you leave this script as it is, is that it is very likely that we will have problems rerunning it in the future. As it turns out, this script is not reproducible. But we will discuss this in much more detail later on. For now, let’s analyse our cleaned data.</p>
+<p>Great! When we compare the communes that are in our data with every commune that has existed since 2010, we don’t have any commune that is unaccounted for. So are we done with cleaning the data? Yes, we can now start with analysing the data. Take a look <a href="https://raw.githubusercontent.com/b-rodrigues/rap4all/master/scripts/save_data.R">here</a><a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a> to see the finalised script. Also read some of the comments the I’ve added. This is a typical R script, and at first glance, one might wonder what is wrong with it. Actually, not much, but the problem if you leave this script as it is, is that it is very likely that we will have problems rerunning it in the future. As it turns out, this script is not reproducible. But we will discuss this in much more detail later on. For now, let’s analyse our cleaned data.</p>
 </section>
 <section id="analysing-the-data" class="level2" data-number="3.3">
 <h2 data-number="3.3" class="anchored" data-anchor-id="analysing-the-data"><span class="header-section-number">3.3</span> Analysing the data</h2>
 <p>We are now going to analyse the data. The first thing we are going to do is compute a Laspeyeres price index. This price index allows us to make comparisons through time; for example, the index at year 2012 measures how much more expensive (or cheaper) housing became relative to the base year (2010). However, since we only have one good, this index becomes quite simple to compute: it is nothing but the prices at year <em>t</em> divided by the prices in 2010 (if we had a basket of goods, we would need to use the Laspeyeres index formula to compute the index at all periods).</p>
-<p>For this section, we will perform a rather simple analysis. We will immediately show you the R script: take a look at it <a href="https://raw.githubusercontent.com/b-rodrigues/rap4all/master/scripts/analysis.R">here</a><a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>. For our analysis we selected 5 communes and plotted the evolution of prices compared to the national average.</p>
-<p>This analysis might seem trivially simple, but it contains all the needed ingredients to illustrate everything else that we’re going to teach you in this book.</p>
-<p>Most analyses would stop here: after all, we have what we need; our goal was to get the plots for the 5 communes of Luxemourg, Esch-sur-Alzette, Mamer, Schengen (which gave its name to the <a href="https://en.wikipedia.org/wiki/Schengen_Area">Schengen Area</a>) and Wincrange. However, let’s ask ourselves the following important questions:</p>
+<p>For this section, I will perform a rather simple analysis. I will immediately show you the R script: take a look at it <a href="https://raw.githubusercontent.com/b-rodrigues/rap4all/master/scripts/analysis.R">here</a><a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a>. For the analysis I selected 5 communes and plotted the evolution of prices compared to the national average.</p>
+<p>This analysis might seem trivially simple, but it contains all the needed ingredients to illustrate everything else that I’m going to teach you in this book.</p>
+<p>Most analyses would stop here: after all, we have what we need; our goal was to get the plots for the 5 communes of Luxemourg, Esch-sur-Alzette, Mamer, Schengen (which gave its name to the <a href="https://en.wikipedia.org/wiki/Schengen_Area">Schengen Area</a><a href="#fn9" class="footnote-ref" id="fnref9" role="doc-noteref"><sup>9</sup></a>) and Wincrange. However, let’s ask ourselves the following important questions:</p>
 <ul>
 <li>How easy would it be for someone else to rerun the analysis?</li>
 <li>How easy would it be to update the analysis once new data gets published?</li>
@@ -682,19 +682,19 @@ Always look at your data.
 <h2 data-number="3.4" class="anchored" data-anchor-id="your-project-is-not-done"><span class="header-section-number">3.4</span> Your project is not done</h2>
 <section id="how-easy-would-it-be-for-someone-else-to-rerun-the-analysis" class="level3" data-number="3.4.1">
 <h3 data-number="3.4.1" class="anchored" data-anchor-id="how-easy-would-it-be-for-someone-else-to-rerun-the-analysis"><span class="header-section-number">3.4.1</span> How easy would it be for someone else to rerun the analysis?</h3>
-<p>The analysis is composed of two R scripts, one to prepare the data, another to actually run the analysis proper. This might seem quite easy, because each script contains comments as to what is going on, and the code is not that complicated. However, we are missing any project-level documentation, that would provide clear instructions as to how to run it. This might seem simple for us who wrote these scripts, but we are familiar with R, and this is still fresh in our brains. Should someone less familiar with R have to run the script, there is no clue for them as to how they should do it. And of course, should the analysis be more complex (suppose it’s composed of a dozens scripts), this gets even worse. It might not even be easy for you to remember how to run this in 5 months!</p>
+<p>The analysis is composed of two R scripts, one to prepare the data, another to actually run the analysis proper. Performing the analysis might seem quite easy, because each script contains comments as to what is going on, and the code is not that complicated. However, we are missing any project-level documentation that would provide clear instructions as to how to run the analysis. This might seem simple for us who wrote these scripts, but we are familiar with R, and this is still fresh in our brains. Should someone less familiar with R have to run the script, there is no clue for them as to how they should do it. And of course, should the analysis be more complex (suppose it’s composed of a dozens scripts), this gets even worse. It might not even be easy for you to remember how to run this in 5 months!</p>
 <p>And what about the required dependencies? Many packages were used in the analysis. How should these get installed? Ideally, the same versions of the packages you used and the same version of R should get used by that person to rerun the analysis.</p>
-<p>All of this still needs to get documented, but documenting packages and their versions takes quite some time. Thankfully, in part 2, we will learn about the <code>{renv}</code> package to deal with this in a couple lines of code.</p>
+<p>All of this still needs to get documented, but listing the packages that were used for an analysis and their versions takes quite some time. Thankfully, in part 2, we will learn about the <code>{renv}</code> package to deal with this in a couple lines of code.</p>
 </section>
 <section id="how-easy-would-it-be-to-update-the-project" class="level3" data-number="3.4.2">
 <h3 data-number="3.4.2" class="anchored" data-anchor-id="how-easy-would-it-be-to-update-the-project"><span class="header-section-number">3.4.2</span> How easy would it be to update the project?</h3>
-<p>If new data gets published, all the points discussed previously are still valid, plus you need to make sure that the updated data is still close enough to the previous data that it can pass through the data cleaning steps you wrote. You should also make sure that the update did not introduce a mistake in past data, or at least alert you if that is the case. Sometimes, when new years get added, data for previous years also get corrected, so it would be nice to make sure that you know this. Also, in the specific case of our data, communes might get fused into a new one, or maybe even divided into smaller communes (even though this is has not happened in a long time, it is not entirely out of the question).</p>
+<p>If new data gets published, all the points discussed previously are still valid, plus you need to make sure that the updated data is still close enough to the previous data such that it can pass through the data cleaning steps you wrote. You should also make sure that the update did not introduce a mistake in past data, or at least alert you if that is the case. Sometimes, when new years get added, data for previous years also get corrected, so it would be nice to make sure that you know this. Also, in the specific case of our data, communes might get fused into a new one, or maybe even divided into smaller communes (even though this is has not happened in a long time, it is not entirely out of the question).</p>
 <p>In summary, what is missing from the current project are enough tests to make sure that an update to the data can happen smoothly.</p>
 </section>
 <section id="how-easy-would-it-be-to-reuse-this-code-for-another-project" class="level3" data-number="3.4.3">
 <h3 data-number="3.4.3" class="anchored" data-anchor-id="how-easy-would-it-be-to-reuse-this-code-for-another-project"><span class="header-section-number">3.4.3</span> How easy would it be to reuse this code for another project?</h3>
 <p>Said plainly, not very easy. With code in this state you have no choice but to copy and paste it into a new script and change it adequately. For re-usability, nothing beats structuring your code into functions and ideally you would even package them. We are going to learn just that in future chapters of this book.</p>
-<p>But sometimes you might not be interested in reusing code for another project: however, even if that’s the case, structuring your code into functions and packaging them makes it easy to reuse even inside the same project. Look at the last part of the <code>analysis.R</code> script: we copy and pasted the same code 5 times and only slightly changed it. We are going to learn how not to repeat ourselves by using functions and you will immediately see the benefits of writing functions, even when simply to reuse inside the same project.</p>
+<p>But sometimes you might not be interested in reusing code for another project: however, even if that’s the case, structuring your code into functions and packaging them makes it easy to reuse code even inside the same project. Look at the last part of the <code>analysis.R</code> script: we copy and pasted the same code 5 times and only slightly changed it. We are going to learn how not to repeat ourselves by using functions and you will immediately see the benefits of writing functions, even when simply to reuse them inside the same project.</p>
 </section>
 <section id="what-guarantee-do-we-have-that-the-output-is-stable-through-time" class="level3" data-number="3.4.4">
 <h3 data-number="3.4.4" class="anchored" data-anchor-id="what-guarantee-do-we-have-that-the-output-is-stable-through-time"><span class="header-section-number">3.4.4</span> What guarantee do we have that the output is stable through time?</h3>
@@ -711,10 +711,15 @@ Always look at your data.
 <aside id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr>
 <ol>
-<li id="fn1"><p>https://is.gd/1vvBAc<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2"><p>https://data.public.lu/en/datasets/prix-annonces-des-logements-par-commune/<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn3"><p>https://is.gd/7PhUjd<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn4"><p>https://is.gd/qCJEbi<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn1"><p>https://is.gd/AET0ir<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>https://archive.is/OrQwA, archived link for posterity.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>https://archive.org/download/note-29/note-29.pdf<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>https://is.gd/1vvBAc<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p>https://data.public.lu/en/datasets/prix-annonces-des-logements-par-commune/<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn6"><p>https://en.wikipedia.org/wiki/List_of_communes_of_Luxembourg<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn7"><p>https://is.gd/7PhUjd<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn8"><p>https://is.gd/qCJEbi<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn9"><p>https://en.wikipedia.org/wiki/Schengen_Area<a href="#fnref9" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </aside>
 
@@ -969,30 +974,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
       return note.innerHTML;
-    });
-  }
-  const xrefs = window.document.querySelectorAll('a.quarto-xref');
-  for (var i=0; i<xrefs.length; i++) {
-    const xref = xrefs[i];
-    tippyHover(xref, function() {
-      let href = xref.getAttribute('href');
-      try { href = new URL(href).hash; } catch {}
-      const id = href.replace(/^#\/?/, "");
-      const note = window.document.getElementById(id);
-      if (id.startsWith('sec-')) {
-        // Special case sections, only their first couple elements
-        const container = document.createElement("div");
-        if (note.children.length > 2) {
-          for (let i = 0; i < 2; i++) {
-            container.appendChild(note.children[i].cloneNode(true));
-          }
-          return container.innerHTML
-        } else {
-          return note.innerHTML;
-        }
-      } else {
-        return note.innerHTML;
-      }
     });
   }
       let selectedAnnoteEl;

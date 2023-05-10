@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.37">
+<meta name="generator" content="quarto-1.4.43">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -292,7 +292,7 @@ ul.task-list li input[type="checkbox"] {
 <p>But what is version control anyway?</p>
 <p>Version control tools make it easy to keep track of the changes that were made to text files (like R scripts). Any change made to any file of a project is cataloged, making it possible to trace back how the file changed, who made the changes, and when these changes were made. Using version control it is also quite easy to collaborate on a project by forcing team members to deal explicitly with the potential conflicts that might arise when the same file got changed by different people at the same time. Should your computer get lost, stolen, or explode, your projects are safely backed up on a server: this is because version control tools make use of a server which keeps track of all the changes (and in some cases, this <em>server</em> is actually your teammates’ computers!)</p>
 <p>Version control tools also make it easy to experiment with new ideas. You can start new <em>branches</em> which essentially make a copy of your current project. In this new branch, you can safely experiment with new features, and if the experiments are not conclusive, you can simply discard this branch: the <em>original</em> copy of your project will remain untouched. We will also use branches to implement features, fix bugs quickly, and manage the project in a paradigm called <em>trunk-based development</em>.</p>
-<p>There are several version control tools out there, but Git is undoubtedly the most popular one. You might have heard of Github; this is a service that hosts repositories for your projects, and provides other project management tools such as an issue tracker, project wiki, feature requests… and also very importantly continuous integration. Don’t worry if this all sounds very abstract: by the end of this, and the next, chapter you will have all the basic knowledge to use Git and Github.com for your projects.</p>
+<p>There are several version control tools out there, but Git is undoubtedly the most popular one. You might have heard of Github; this is a service that hosts repositories for your projects, and provides other project management tools such as an issue tracker, project wiki, feature requests… and also very importantly continuous integration. Don’t worry if this all sounds very abstract: by the end of the next chapter you will have all the basic knowledge to use Git and Github.com for your projects.</p>
 <p>Git is a tool that you must install on your computer to get started. Once Git is installed, you can immediately start using it; you don’t need to open an account on Github (or a similar service), but it is recommended to make collaboration easier (it is possible to collaborate with several people using Git without a service like Github, by setting up a bare repository on a server or on a network drive you control, but this is outside the scope of this book).</p>
 <p>You should know that Github offers private repositories for free, so if you don’t want your work to be accessible to the public, that is possible. Only people that you invite to your private repositories will be able to see the code and collaborate with you. It is also possible that your work place has set up a self-hosted Git platform, ask your IT department! Usually these self-hosted platforms are Gitea or Gitlab instances. Gitea, Gitlab, Bitbucket, Codeberg, these are all similar services to Github. All have their advantages and disadvantages.</p>
 <p>The advantages of Github are twofold:</p>
@@ -306,14 +306,14 @@ ul.task-list li input[type="checkbox"] {
 <li>It is not possible to self-host an instance of Github (not for free at least).</li>
 </ul>
 <p>The fact it is owned by Microsoft may not seem like an issue, but Microsoft’s track record of previous acquisitions is not great (Nokia, Skype), and the <a href="https://web.archive.org/web/20230130103241/https://www.theverge.com/2021/7/7/22561180/github-copilot-legal-copyright-fair-use-public-code">recent discussions about using source code hosted on Github to train machine learning models (Copilot)</a><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> can make one uneasy about relying too much on Github.</p>
-<p>So while we are going to use Github to host our projects in the remainder of this book, almost everything you are going to learn will be easily transferable to another code hosting platform such as Gitlab or Bitbucket, should you want to switch (or if your workplace has a self-hosted instance from one of Github’s competitors). Installing and configuring Git will be exactly the same regardless of the hosting service we use, and all the commands we will use to actually interact with our repositories will be the same as well. So why did we write <em>almost everything</em> is the same across any of the code hosting platforms? Well, the two advantages we cited above really give Github an edge; many developers, researchers and data scientists have a Github account already and so if one day you need to collaborate with people, chances are they have an account on Github and not on another code hosting platform.</p>
+<p>So while we are going to use Github to host our projects in the remainder of this book, almost everything you are going to learn will be easily transferable to another code hosting platform such as Gitlab or Bitbucket, should you want to switch (or if your workplace has a self-hosted instance from one of Github’s competitors). Installing and configuring Git will be exactly the same regardless of the hosting service we use, and all the commands we will use to actually interact with our repositories will be the same as well. So why did I write <em>almost everything</em> is the same across any of the code hosting platforms? Well, the two advantages I cited above really give Github an edge; many developers, researchers and data scientists have a Github account already and so if one day you need to collaborate with people, chances are they have an account on Github and not on another code hosting platform.</p>
 <p>But what really sets up Github.com apart is Github Actions, Github’s continuous integration service. Github Actions is literally a computer in the cloud that you can use to run a set of actions each time you interact with the repository (or at defined moments as well). For example, it would be possible to run automated tests each time a collaborator uploads some changes to the project. This way, we can make sure that no change introduced a bug. Or take this book; each time I write and push a new section or chapter to Github, the website, PDF and Epub of this book get re-generated and updated automatically. Each Github account gets 2000 minutes a month of free computing time a month, which is really a lot. In part 2, we will make use of Github Actions to run our RAP in the cloud, by simply pushing updates to our code on Github.</p>
-<p>By the way, if you’re using a cloud service like Dropbox, Onedrive, and the like, DO NOT put projects tracked by Git in them! We really need to stress this: do not track projects with both something like Dropbox and Git. This is because Dropbox and similar services do not deal gracefully with conflicts: if two collaborators change the same file, Dropbox makes two copies of the files. One of the collaborators then has to manually deal with this. The issue is that inside a project that is being tracked by Git, there is a hidden folder with many files that get used for synching the project and making sure that everything runs smoothly. If you put a Git-enabled project inside a Dropbox folder, these files will get accessed simultaneously by different people, and Dropbox will start making copies of these because of conflicts. This really messes up the project and can lead to data loss. Let Git handle the tracking and the collaborating for you. It might seem more complex than a service like Dropbox, and it is, but it is immensely more powerful, and what steep learning curve it might have, it more than makes up for it with the many features it makes available at your fingertips. Unlike Dropbox (or similar services), Git deals with conflicts not on a per-file basis, but on a per line basis. So if two collaborators change the same file, but different lines of this same file, there will be no conflict.</p>
+<p>By the way, if you’re using a cloud service like Dropbox, Onedrive, and the like, DO NOT put projects tracked by Git in them! I really need to stress this: do not track projects with both something like Dropbox and Git. This is because Dropbox and similar services do not deal gracefully with conflicts: if two collaborators change the same file, Dropbox makes two copies of the files. One of the collaborators then has to manually deal with the conflict. The issue is that inside a project that is being tracked by Git, there is a hidden folder with many files that get used for synching the project and making sure that everything runs smoothly. If you put a Git-enabled project inside a Dropbox folder, these files will get accessed simultaneously by different people, and Dropbox will start making copies of these because of conflicts. This really messes up the project and can lead to data loss. Let Git handle the tracking and the collaborating for you. It might seem more complex than a service like Dropbox, and it is, but it is immensely more powerful, and what steep learning curve it might have, it more than makes up for it with the many features it makes available at your fingertips. Unlike Dropbox (or similar services), Git deals with conflicts not on a per-file basis, but on a per-line basis. So if two collaborators change the same file, but different lines of this same file, there will be no conflict: Git will handle the merge on its own.</p>
 <p>Finally, before starting, there is something important that you need to understand, and people sometimes get confused by it: if a repository is public, this does not mean that anyone can make changes to the code. What this means is that anyone can fork the repository (essentially making a copy of the repository to their Github account) and then <em>suggest</em> some changes in a so-called pull request. The maintainer and owner of the original project can then accept these edits or not.</p>
-<p>In the remainder of this chapter, you are going to learn how to set up Git on your machine, open a Github account and start using it right away. Then, we are going to show you several scenarios:</p>
+<p>In the remainder of this chapter, you are going to learn how to set up Git on your machine, open a Github account and start using it right away. Then, I’m going to discuss several scenarios:</p>
 <ul>
-<li>How to collaborate, as a team, on a project;</li>
-<li>How to contribute to someone else’s project.</li>
+<li>how to collaborate, as a team, on a project;</li>
+<li>how to contribute to someone else’s project.</li>
 </ul>
 <section id="installing-git-and-opening-a-github-account" class="level2" data-number="4.1">
 <h2 data-number="4.1" class="anchored" data-anchor-id="installing-git-and-opening-a-github-account"><span class="header-section-number">4.1</span> Installing Git and opening a Github account</h2>
@@ -324,9 +324,8 @@ ul.task-list li input[type="checkbox"] {
 <p>gets shown instead, then this means that Git is not installed on your system. To install Git, use your distribution’s package manager, as it is very likely that Git is packaged for your system. On Ubuntu, arguably the most popular Linux distribution, this means running:</p>
 <pre><code>sudo apt-get update
 sudo apt-get install git</code></pre>
-<p>On macOS and Windows, follow the instructions from the <a href="https://git-scm.com/book/en/v2/Getting-Started-Installing-Git">Git Book</a><a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>. It should be as easy as running an installer.</p>
-<p>Depending on your operating system, a graphical user interface might have been installed with Git, making it possible to interact with Git outside of the command line. It is also possible to use Git from within RStudio and many other editors have interfaces to Git as well.</p>
-<p>We are not going to use any graphical user interface however. This is because there is no common, universal graphical user interface; they all work slightly differently. The only universal is the command line. Also, learning how to use Git via the command line will make it easier the day you will need to use it from a server, which will very likely happen. It also makes our job easier: it is simpler to tell you which commands to run and explain them to you than littering the book with dozens upon dozens of screenshots that might get outdated as soon as a new version of the interface gets released.</p>
+<p>On macOS and Windows, follow the instructions from the <a href="https://git-scm.com/book/en/v2/Getting-Started-Installing-Git">Git Book</a><a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>. It should be as easy as running an installer for any program.</p>
+<p>Depending on your operating system, a graphical user interface might have been installed with Git, making it possible to interact with Git outside of the command line. It is also possible to use Git from within RStudio and many other editors have interfaces to Git as well. We are not going to use any graphical user interface however. This is because there is no common, universal graphical user interface; they all work slightly differently. The only universal is the command line. Also, learning how to use Git via the command line will make it easier the day you will need to use it from a server, which will very likely happen. It also makes my job easier: it is simpler to tell you which commands to run and explain them to you than littering the book with dozens upon dozens of screenshots that might get outdated as soon as a new version of the interface gets released.</p>
 <p>Don’t worry, using the command line is not as hard as it sounds.</p>
 <p>If you don’t have already a Github account, now is the time to create one. Just go over to <a href="https://github.com/">https://github.com/</a> and simply follow the instructions and select the free tier to open your account.</p>
 <figure class="figure">
@@ -335,24 +334,24 @@ sudo apt-get install git</code></pre>
 This is your Github dashboard.
 </figcaption>
 </figure>
-<p>Now that we have an opened account, we can go to the folder that contains the two scripts we wrote at the start of the book.</p>
+<p>In the next section, we are going to learn some basic Git commands by versioning the two scripts that we wrote before.</p>
 </section>
 <section id="git-superbasics" class="level2" data-number="4.2">
 <h2 data-number="4.2" class="anchored" data-anchor-id="git-superbasics"><span class="header-section-number">4.2</span> Git superbasics</h2>
-<p>Open the folder that contains the two scripts in a file explorer. On most Linux desktop environments you should be able to right-click inside that folder anywhere and select an option titled something like “Open Terminal here”. On Windows, do the same, but the option is titled “Open Git Bash here”. On macOS, you need to first activate this option. Simply google for “open terminal at folder macOS” and follow the instructions. It is also possible to drag and drop a folder into a terminal which will then open the correct path in the terminal. Another option, of course, is to simply open a terminal and navigate to the correct folder using <code>cd</code> (<strong>c</strong>hange <strong>d</strong>irectory:</p>
-<pre><code>cd /home/user/housing/</code></pre>
-<p>(The above command assumes that our project is inside a folder called “housing”). Make sure that you are in the right folder by <strong>l</strong>i<strong>s</strong>ting the contents of the folder:</p>
-<pre><code>ls</code></pre>
-<p>One little thing: from now on, the prompt of a terminal (or Git bash terminal on Windows) will start with <code>owner@localhost</code>. This is the user called <code>owner</code> (“owner” simply because that will be the project manager in our examples from now on) and the computer <code>owner</code> uses is called <code>localhost</code>. So here is what happens when <code>owner</code> runs <code>ls</code> on the root directory of the project:</p>
-<pre><code>owner@localhost ➤ ls
-analysis.R save_data.R</code></pre>
-<p>(on Linux you could also try <code>ll</code> which is often available. It is an alias for <code>ls -l</code> which provides a more detailed view. There’s also <code>ls -la</code> which also lists hidden files).</p>
-<p>If you want to follow along, create a folder called <code>housing</code> and put the two scripts we developed before in there:</p>
+<p>We are going to use the two script that we wrote in the previous section. If you want to follow along, create a folder called <code>housing</code> and put the two scripts we developed before in there:</p>
 <ul>
 <li>save_data.R: https://is.gd/7PhUjd</li>
 <li>analysis.R: https://is.gd/qCJEbi</li>
 </ul>
-<p>Open a terminal in that folder and run <code>ls</code> and make sure that you see the two files listed.</p>
+<p>Open the folder that contains the two scripts in a file explorer. On most Linux desktop environments you should be able to right-click inside that folder anywhere and select an option titled something like “Open Terminal here”. On Windows, do the same, but the option is titled “Open Git Bash here”. On macOS, you need to first activate this option. Simply google for “open terminal at folder macOS” and follow the instructions. It is also possible to drag and drop a folder into a terminal which will then open the correct path in the terminal. Another option, of course, is to simply open a terminal and navigate to the correct folder using <code>cd</code> (<strong>c</strong>hange <strong>d</strong>irectory, this should work the same on Windows, macOS and Linux):</p>
+<pre><code>cd /home/user/housing/</code></pre>
+<p>Make sure that you are in the right folder by <strong>l</strong>i<strong>s</strong>ting the contents of the folder:</p>
+<pre><code>ls</code></pre>
+<p>One little thing: from now on, the prompt of a terminal (or Git bash terminal on Windows) will start with <code>owner@localhost</code>. This is the user called <code>owner</code> (“owner” simply because that will be the project manager in our examples from now on) and the computer <code>owner</code> uses is called <code>localhost</code> (this prompt can look different on your machine, sometimes the full path to the current working directory is listed instead). So here is what happens when <code>owner</code> runs <code>ls</code> on the root directory of the project:</p>
+<pre><code>owner@localhost ➤ ls
+analysis.R save_data.R</code></pre>
+<p>(on Linux you could also try <code>ll</code> which is often available. It is an alias for <code>ls -l</code> which provides a more detailed view. There’s also <code>ls -la</code> which also lists hidden files).</p>
+<p>Make sure that you see the two scripts being listed when running <code>ls</code>. If not, this means that you are in the wrong directory, so make sure that to open the terminal in the correct folder.</p>
 <p>It’s now time to start tracking these files using Git. In the same window in which we ran <code>ls</code>, run now the following <code>git</code> command:</p>
 <pre><code>git init</code></pre>
 <pre><code>owner@localhost ➤ git init</code></pre>
@@ -993,30 +992,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
       return note.innerHTML;
-    });
-  }
-  const xrefs = window.document.querySelectorAll('a.quarto-xref');
-  for (var i=0; i<xrefs.length; i++) {
-    const xref = xrefs[i];
-    tippyHover(xref, function() {
-      let href = xref.getAttribute('href');
-      try { href = new URL(href).hash; } catch {}
-      const id = href.replace(/^#\/?/, "");
-      const note = window.document.getElementById(id);
-      if (id.startsWith('sec-')) {
-        // Special case sections, only their first couple elements
-        const container = document.createElement("div");
-        if (note.children.length > 2) {
-          for (let i = 0; i < 2; i++) {
-            container.appendChild(note.children[i].cloneNode(true));
-          }
-          return container.innerHTML
-        } else {
-          return note.innerHTML;
-        }
-      } else {
-        return note.innerHTML;
-      }
     });
   }
       let selectedAnnoteEl;

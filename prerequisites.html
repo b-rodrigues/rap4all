@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.37">
+<meta name="generator" content="quarto-1.4.43">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -325,7 +325,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>To make working with R easier, you should not write code in the console and execute it, but instead write it in a text file. You can keep these text files, update and share them with collaborators. Such text files are called scripts. You <em>could</em> write these scripts using the most basic text editor included in your operating system (that would be Notepad.exe on Windows for example), but you should instead use a text editor made specifically to make programming easier. Popular choices among R users include RStudio, Visual Studio Code, or maybe something more exotic like Emacs combined with ESS (my personal choice). Whatever text editor you choose, take time to configure it and learn how to use it. You will spend many, many, many hours inside that text editor. The code you write in that text editor is what’s going to feed you and your family. Learn your chosen text editor’s keyboard shortcuts and other advanced features. This initial investment will pay for itself many times over. Also, you need to know what an actual text file is. A document written in Word (with the <code>.docx</code> extension) is not a text file. It looks like text, but is not. The <code>.docx</code> format is a much more complex format with many layers of abstraction. “True” plain text files can be opened with the simplest text editor included in your operating system. I’ve had students trying to create text files with word processors like MS Word and then being confused when things would not work.</p>
 <p>As stated before, R is a domain-specific programming language mainly used for doing statistics, or whatever modernized term you may prefer like <em>“data science”</em>. Its base capabilities can be extended by installing packages. For example, a base installation of R provides you with useful functions like <code>mean()</code> or <code>sd()</code>, to compute the average or standard deviation of a vector of numbers, or <code>rnorm()</code> to compute random variates from a Gaussian (Normal) distribution. However, there is no function available to train a random forest. If you need to train a random forest you need to install a package using the <code>install.packages("randomForest")</code> command. This installs the <code>{randomForest}</code> package (in the rest of the book, I will surround package names with curly braces). The collection of packages installed is called a “library”. Packages get downloaded from CRAN, the <em>Comprehensive R Archive Network</em>. There is no doubt in my mind that the reason R became so popular is because it is quite easy to write packages for it; and this is something that we will learn as well! Some packages are written with other programming languages, very often Fortran or C++. The code included in these packages is then compiled and can be executed by R using a user-facing function. For example, if you dig into the source code of the <code>{randomForest}</code> package, you will find C and Fortran code. This is important to know, because sometimes R packages need to be compiled by <code>install.packages()</code>, and this compilation can sometimes fail (especially on Linux, but more on that later in the book).</p>
 <p>When you use R, you will load data sets, create plots, train models, etc. These data sets, plots, models, are all <em>objects</em> and they get saved in the global environment. To see a list of objects currently available in the global environment, type <code>ls()</code> in the R console. When you quit R, you get asked to save the <em>workspace</em>: this will save the current state of the global environment and load it next time you start R. I highly recommend for you to not save the workspace. If you are using RStudio you can change this behaviour in the global options (under <em>Workspace</em>, set <em>Save workspace to .RData on exit</em> to <em>Never</em>). Other editors might have a similar option. Saving and loading the workspace makes it impossible to start with a fresh R session (unless you start R with the <code>--vanilla</code> flag), which can cause issues that are difficult to pinpoint.</p>
-<p>You should also be comfortable with paths and your computer’s file system. <em>Comfortable</em> means having no problems finding where a file gets downloaded for example, or being able to navigate to any folder (either through a GUI file browser or through a terminal). I also highly recommend that you strive to use relative paths in your scripts, and not absolute paths. In other words: don’t start your scripts with a line such as:</p>
+<p>You should also be comfortable with paths and your computer’s file system. <em>Comfortable</em> means having no problems finding where a file gets downloaded for example, or being able to navigate to any folder, either through a GUI file browser or through a terminal (if you’re familiar with navigating your computer using the terminal, you will have an easier time with this book than if you didn’t). I also highly recommend that you strive to use relative paths in your scripts, and not absolute paths. In other words: don’t start your scripts with a line such as:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">setwd</span>(<span class="st">"H:/Username/Projects/housing_regression/"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -610,30 +610,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
       return note.innerHTML;
-    });
-  }
-  const xrefs = window.document.querySelectorAll('a.quarto-xref');
-  for (var i=0; i<xrefs.length; i++) {
-    const xref = xrefs[i];
-    tippyHover(xref, function() {
-      let href = xref.getAttribute('href');
-      try { href = new URL(href).hash; } catch {}
-      const id = href.replace(/^#\/?/, "");
-      const note = window.document.getElementById(id);
-      if (id.startsWith('sec-')) {
-        // Special case sections, only their first couple elements
-        const container = document.createElement("div");
-        if (note.children.length > 2) {
-          for (let i = 0; i < 2; i++) {
-            container.appendChild(note.children[i].cloneNode(true));
-          }
-          return container.innerHTML
-        } else {
-          return note.innerHTML;
-        }
-      } else {
-        return note.innerHTML;
-      }
     });
   }
       let selectedAnnoteEl;
