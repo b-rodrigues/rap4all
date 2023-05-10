@@ -35,8 +35,8 @@ most popular one. You might have heard of Github; this is a service that hosts
 repositories for your projects, and provides other project management tools such
 as an issue tracker, project wiki, feature requests... and also very importantly
 continuous integration. Don’t worry if this all sounds very abstract: by the end
-of this, and the next, chapter you will have all the basic knowledge to use Git
-and Github.com for your projects.
+of the next chapter you will have all the basic knowledge to use Git and
+Github.com for your projects.
 
 Git is a tool that you must install on your computer to get started. Once Git is
 installed, you can immediately start using it; you don’t need to open an account
@@ -77,9 +77,9 @@ to another code hosting platform such as Gitlab or Bitbucket, should you want to
 switch (or if your workplace has a self-hosted instance from one of Github’s
 competitors). Installing and configuring Git will be exactly the same regardless
 of the hosting service we use, and all the commands we will use to actually
-interact with our repositories will be the same as well. So why did we write
+interact with our repositories will be the same as well. So why did I write
 *almost everything* is the same across any of the code hosting platforms? Well,
-the two advantages we cited above really give Github an edge; many developers,
+the two advantages I cited above really give Github an edge; many developers,
 researchers and data scientists have a Github account already and so if one day
 you need to collaborate with people, chances are they have an account on Github
 and not on another code hosting platform.
@@ -96,14 +96,14 @@ account gets 2000 minutes a month of free computing time a month, which is
 really a lot. In part 2, we will make use of Github Actions to run our RAP in
 the cloud, by simply pushing updates to our code on Github.
 
-By the way, if you're using a cloud service like Dropbox, Onedrive, and the like,
-DO NOT put projects tracked by Git in them! We really need to stress this: do
-not track projects with both something like Dropbox and Git. This is because
+By the way, if you're using a cloud service like Dropbox, Onedrive, and the
+like, DO NOT put projects tracked by Git in them! I really need to stress this:
+do not track projects with both something like Dropbox and Git. This is because
 Dropbox and similar services do not deal gracefully with conflicts: if two
 collaborators change the same file, Dropbox makes two copies of the files. One
-of the collaborators then has to manually deal with this. The issue is that
-inside a project that is being tracked by Git, there is a hidden folder with
-many files that get used for synching the project and making sure that
+of the collaborators then has to manually deal with the conflict. The issue is
+that inside a project that is being tracked by Git, there is a hidden folder
+with many files that get used for synching the project and making sure that
 everything runs smoothly. If you put a Git-enabled project inside a Dropbox
 folder, these files will get accessed simultaneously by different people, and
 Dropbox will start making copies of these because of conflicts. This really
@@ -112,9 +112,9 @@ the collaborating for you. It might seem more complex than a service like
 Dropbox, and it is, but it is immensely more powerful, and what steep learning
 curve it might have, it more than makes up for it with the many features it
 makes available at your fingertips. Unlike Dropbox (or similar services), Git
-deals with conflicts not on a per-file basis, but on a per line basis. So if two
+deals with conflicts not on a per-file basis, but on a per-line basis. So if two
 collaborators change the same file, but different lines of this same file, there
-will be no conflict.
+will be no conflict: Git will handle the merge on its own.
 
 Finally, before starting, there is something important that you need to
 understand, and people sometimes get confused by it: if a repository is public,
@@ -125,11 +125,11 @@ request. The maintainer and owner of the original project can then accept these
 edits or not.
 
 In the remainder of this chapter, you are going to learn how to set up Git on
-your machine, open a Github account and start using it right away. Then, we are
-going to show you several scenarios:
+your machine, open a Github account and start using it right away. Then, I’m
+going to discuss several scenarios:
 
-- How to collaborate, as a team, on a project;
-- How to contribute to someone else’s project.
+- how to collaborate, as a team, on a project;
+- how to contribute to someone else’s project.
 
 ## Installing Git and opening a Github account
 
@@ -160,21 +160,20 @@ sudo apt-get install git
 
 On macOS and Windows, follow the instructions from the [Git
 Book](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)^[https://is.gd/9HZqW4].
-It should be as easy as running an installer.
+It should be as easy as running an installer for any program.
 
 Depending on your operating system, a graphical user interface might have been
 installed with Git, making it possible to interact with Git outside of the
 command line. It is also possible to use Git from within RStudio and many other
-editors have interfaces to Git as well.
-
-We are not going to use any graphical user interface however. This is because
-there is no common, universal graphical user interface; they all work slightly
-differently. The only universal is the command line. Also, learning how to use
-Git via the command line will make it easier the day you will need to use it
-from a server, which will very likely happen. It also makes our job easier: it
-is simpler to tell you which commands to run and explain them to you than
-littering the book with dozens upon dozens of screenshots that might get
-outdated as soon as a new version of the interface gets released.
+editors have interfaces to Git as well. We are not going to use any graphical
+user interface however. This is because there is no common, universal graphical
+user interface; they all work slightly differently. The only universal is the
+command line. Also, learning how to use Git via the command line will make it
+easier the day you will need to use it from a server, which will very likely
+happen. It also makes my job easier: it is simpler to tell you which commands
+to run and explain them to you than littering the book with dozens upon dozens
+of screenshots that might get outdated as soon as a new version of the interface
+gets released.
 
 Don’t worry, using the command line is not as hard as it sounds.
 
@@ -197,10 +196,17 @@ knitr::include_graphics("images/git_1.png")
 ```
 :::
 
-Now that we have an opened account, we can go to the folder that contains the
-two scripts we wrote at the start of the book.
+In the next section, we are going to learn some basic Git commands by versioning
+the two scripts that we wrote before.
 
 ## Git superbasics
+
+We are going to use the two script that we wrote in the previous section. 
+If you want to follow along, create a folder called `housing` and put the two scripts
+we developed before in there:
+
+- save_data.R: https://is.gd/7PhUjd
+- analysis.R: https://is.gd/qCJEbi
 
 Open the folder that contains the two scripts in a file explorer. On most Linux
 desktop environments you should be able to right-click inside that folder
@@ -210,15 +216,15 @@ you need to first activate this option. Simply google for "open terminal at
 folder macOS" and follow the instructions. It is also possible to drag and drop
 a folder into a terminal which will then open the correct path in the terminal.
 Another option, of course, is to simply open a terminal and navigate to the
-correct folder using `cd` (**c**hange **d**irectory:
+correct folder using `cd` (**c**hange **d**irectory, this should work the same
+on Windows, macOS and Linux):
 
 ```
 cd /home/user/housing/
 ```
 
-(The above command assumes that our project is inside a folder called
-"housing"). Make sure that you are in the right folder by **l**i**s**ting the
-contents of the folder:
+Make sure that you are in the right folder by **l**i**s**ting the contents of
+the folder:
 
 ```
 ls
@@ -227,8 +233,10 @@ ls
 One little thing: from now on, the prompt of a terminal (or Git bash terminal on
 Windows) will start with `owner@localhost`. This is the user called `owner`
 ("owner" simply because that will be the project manager in our examples from
-now on) and the computer `owner` uses is called `localhost`. So here is what
-happens when `owner` runs `ls` on the root directory of the project:
+now on) and the computer `owner` uses is called `localhost` (this prompt can
+look different on your machine, sometimes the full path to the current working
+directory is listed instead). So here is what happens when `owner` runs `ls` on
+the root directory of the project:
 
 ```
 owner@localhost ➤ ls
@@ -239,14 +247,9 @@ analysis.R save_data.R
 `ls -l` which provides a more detailed view. There's also `ls -la` which also
 lists hidden files).
 
-If you want to follow along, create a folder called `housing` and put the two scripts
-we developed before in there:
-
-- save_data.R: https://is.gd/7PhUjd
-- analysis.R: https://is.gd/qCJEbi
-
-Open a terminal in that folder and run `ls` and make sure that you see the two
-files listed.
+Make sure that you see the two scripts being listed when running `ls`. If not,
+this means that you are in the wrong directory, so make sure that to open the
+terminal in the correct folder.
 
 It's now time to start tracking these files using Git. In the same window in
 which we ran `ls`, run now the following `git` command:

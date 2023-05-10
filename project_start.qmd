@@ -73,10 +73,11 @@ withr::with_package("ggplot2",
 
 ```
 
-If you want to download the data, click [here](https://github.com/b-rodrigues/rap4all/raw/master/datasets/prc_hpi_a__custom_4705395_page_linear.csv.gz).
+If you want to download the data, click
+[here](https://github.com/b-rodrigues/rap4all/raw/master/datasets/prc_hpi_a__custom_4705395_page_linear.csv.gz)^[https://is.gd/AET0ir].
 
 Let us paste the definition of the HPI in here (taken from the HPI's
-[metadata](https://ec.europa.eu/eurostat/cache/metadata/en/prc_hpi_inx_esms.htm) page):
+[metadata](https://archive.is/OrQwA)^[https://archive.is/OrQwA, archived link for posterity.] page):
 
 *The House Price Index (HPI) measures inflation in the residential property market. The HPI
 captures price changes of all types of dwellings purchased by households (flats, detached houses,
@@ -94,7 +95,7 @@ than the north, but not as much as the capital and surrounding communes. Not
 only is price driven by demand, but also by scarcity; in 2021, .5% of residents
 owned 50% of the buildable land for housing purposes (Source: *Observatoire de
 l'Habitat, Note 29*, [archived download
-link](https://archive.org/download/note-29/note-29.pdf)).
+link](https://archive.org/download/note-29/note-29.pdf)^[https://archive.org/download/note-29/note-29.pdf]).
 
 Our project will be quite simple; we are going to download some data, supplied
 as an Excel file, compiled by the Housing Observatory (*Observatoire de
@@ -256,7 +257,7 @@ raw_data
 But there’s a problem: columns that should be of type numeric are of type
 character instead (`average_price_nominal_euros` and
 `average_price_m2_nominal_euros`). There's also another issue, which you would
-eventually catch as you would be exploring the data: naming of the communes is
+eventually catch as you’ll explore the data: naming of the communes is
 not consistent. Let's take a look:
 
 ```{r}
@@ -277,7 +278,7 @@ raw_data |>
 ```
 
 So sometimes it is spelled correctly, with an "é", sometimes not. Let's write
-some code to correct this:
+some code to correct both these issues:
 
 ```{r}
 raw_data <- raw_data |>
@@ -319,12 +320,12 @@ knitr::include_graphics("images/obs_hab_xlsx_missing.png")
 ```
 :::
 
-So it turns out that indeed, there are some rows that we need to remove. We can
-start by removing rows where `locality` is missing. Then we have a row where
-`locality` is equal to "Total d'offres". This is simply the total of every offer
-from every commune. We could keep that in a separate data frame, or even remove
-it. Finally there's a row, the last one, that states the source of the data,
-which we can remove.
+So it turns out that there are some rows that we need to remove. We can start by
+removing rows where `locality` is missing. Then we have a row where `locality`
+is equal to "Total d'offres". This is simply the total of every offer from every
+commune. We could keep that in a separate data frame, or even remove it. Finally
+there's a row, the last one, that states the source of the data, which we can
+remove.
 
 In the screenshot above, we see another row that we don't see in our filtered
 data frame: one where `n_offers` is missing. This row gives the national average
@@ -366,7 +367,7 @@ Now the data looks clean, and we can start the actual analysis... or can we?
 Before proceeding, it would be nice to make sure that we got every commune in
 there. For this, we need a list of communes from Luxembourg. [Thankfully,
 Wikipedia has such a
-list.](https://en.wikipedia.org/wiki/List_of_communes_of_Luxembourg)
+list.](https://en.wikipedia.org/wiki/List_of_communes_of_Luxembourg)^[https://en.wikipedia.org/wiki/List_of_communes_of_Luxembourg]
 
 Let's scrape and save this list:
 
@@ -385,8 +386,8 @@ We scrape the table from the Wikipedia page using `{rvest}`.
 then we use `purrr::pluck()` to keep the first table from the website, which is
 what we need (I made the calls to the packages explicit, because you might not
 be familiar with these packages). `janitor::clean_names()` transforms column
-names written for human eyes into machine friendly names (for example `Growth rate in %` 
-would be transformed to `growth_rate_in_percent`).
+names written for human eyes into machine friendly names (for example `Growth
+rate in %` would be transformed to `growth_rate_in_percent`).
 
 Let’s see if we have all the communes in our data:
 
@@ -398,7 +399,7 @@ We see many communes that are in our `commune_level_data`, but not in
 `current_communes`. There’s one obvious reason: differences in spelling, for
 example, "Kaerjeng" in our data, but "Käerjeng" in the table from Wikipedia. But
 there’s also a less obvious reason; since 2010, several communes have merged
-into new ones. So there are communes that are in our data, say, in 2010 and
+into new ones. So there are communes that are in our data in 2010 and
 2011, but disappear from 2012 onwards. So we need to do several things: first,
 get a list of all existing communes from 2010 onwards, and then, harmonise
 spelling. Here again, we can use a list of Wikipedia:
@@ -442,15 +443,15 @@ setdiff(unique(commune_level_data$locality), communes)
 
 Great! When we compare the communes that are in our data with every commune that
 has existed since 2010, we don’t have any commune that is unaccounted for. So
-are we done with cleaning the data? Yes, we can now actually start with
-analysing the data. Take a look
+are we done with cleaning the data? Yes, we can now start with analysing the
+data. Take a look
 [here](https://raw.githubusercontent.com/b-rodrigues/rap4all/master/scripts/save_data.R)^[https://is.gd/7PhUjd]
-to see the finalised script. Also read some of the comments the I’ve added.
-This is a typical R script, and at first glance, one might wonder what is wrong
-with it. Actually, not much, but the problem if you leave this script as it is,
-is that it is very likely that we will have problems rerunning it in the future.
-As it turns out, this script is not reproducible. But we will discuss this in
-much more detail later on. For now, let’s analyse our cleaned data.
+to see the finalised script. Also read some of the comments the I’ve added. This
+is a typical R script, and at first glance, one might wonder what is wrong with
+it. Actually, not much, but the problem if you leave this script as it is, is
+that it is very likely that we will have problems rerunning it in the future. As
+it turns out, this script is not reproducible. But we will discuss this in much
+more detail later on. For now, let’s analyse our cleaned data.
 
 ## Analysing the data
 
@@ -463,21 +464,21 @@ nothing but the prices at year *t* divided by the prices in 2010 (if we had a
 basket of goods, we would need to use the Laspeyeres index formula to compute
 the index at all periods).
 
-For this section, we will perform a rather simple analysis. We will immediately
+For this section, I will perform a rather simple analysis. I will immediately
 show you the R script: take a look at it
 [here](https://raw.githubusercontent.com/b-rodrigues/rap4all/master/scripts/analysis.R)^[https://is.gd/qCJEbi].
-For our analysis we selected 5 communes and plotted the evolution of prices
+For the analysis I selected 5 communes and plotted the evolution of prices
 compared to the national average.
 
 This analysis might seem trivially simple, but it contains all the needed
-ingredients to illustrate everything else that we’re going to teach you in this
+ingredients to illustrate everything else that I’m going to teach you in this
 book.
 
 Most analyses would stop here: after all, we have what we need; our goal was to
 get the plots for the 5 communes of Luxemourg, Esch-sur-Alzette, Mamer, Schengen
 (which gave its name to the [Schengen
-Area](https://en.wikipedia.org/wiki/Schengen_Area)) and Wincrange. However,
-let’s ask ourselves the following important questions:
+Area](https://en.wikipedia.org/wiki/Schengen_Area)^[https://en.wikipedia.org/wiki/Schengen_Area])
+and Wincrange. However, let’s ask ourselves the following important questions:
 
 - How easy would it be for someone else to rerun the analysis?
 - How easy would it be to update the analysis once new data gets published?
@@ -491,37 +492,38 @@ Let’s answer these questions one by one.
 ### How easy would it be for someone else to rerun the analysis?
 
 The analysis is composed of two R scripts, one to prepare the data, another to
-actually run the analysis proper. This might seem quite easy, because each
-script contains comments as to what is going on, and the code is not that
-complicated. However, we are missing any project-level documentation, that would
-provide clear instructions as to how to run it. This might seem simple for us
-who wrote these scripts, but we are familiar with R, and this is still fresh in
-our brains. Should someone less familiar with R have to run the script, there is
-no clue for them as to how they should do it. And of course, should the analysis
-be more complex (suppose it’s composed of a dozens scripts), this gets even
-worse. It might not even be easy for you to remember how to run this in 5
-months!
+actually run the analysis proper. Performing the analysis might seem quite easy,
+because each script contains comments as to what is going on, and the code is
+not that complicated. However, we are missing any project-level documentation
+that would provide clear instructions as to how to run the analysis. This might
+seem simple for us who wrote these scripts, but we are familiar with R, and this
+is still fresh in our brains. Should someone less familiar with R have to run
+the script, there is no clue for them as to how they should do it. And of
+course, should the analysis be more complex (suppose it’s composed of a dozens
+scripts), this gets even worse. It might not even be easy for you to remember
+how to run this in 5 months!
 
 And what about the required dependencies? Many packages were used in the
 analysis. How should these get installed? Ideally, the same versions of the
 packages you used and the same version of R should get used by that person to
 rerun the analysis.
 
-All of this still needs to get documented, but documenting packages and their
-versions takes quite some time. Thankfully, in part 2, we will learn about the
-`{renv}` package to deal with this in a couple lines of code.
+All of this still needs to get documented, but listing the packages that were
+used for an analysis and their versions takes quite some time. Thankfully, in
+part 2, we will learn about the `{renv}` package to deal with this in a couple
+lines of code.
 
 ### How easy would it be to update the project?
 
 If new data gets published, all the points discussed previously are still valid,
 plus you need to make sure that the updated data is still close enough to the
-previous data that it can pass through the data cleaning steps you wrote. You
-should also make sure that the update did not introduce a mistake in past data,
-or at least alert you if that is the case. Sometimes, when new years get added,
-data for previous years also get corrected, so it would be nice to make sure
-that you know this. Also, in the specific case of our data, communes might get
-fused into a new one, or maybe even divided into smaller communes (even though
-this is has not happened in a long time, it is not entirely out of the
+previous data such that it can pass through the data cleaning steps you wrote.
+You should also make sure that the update did not introduce a mistake in past
+data, or at least alert you if that is the case. Sometimes, when new years get
+added, data for previous years also get corrected, so it would be nice to make
+sure that you know this. Also, in the specific case of our data, communes might
+get fused into a new one, or maybe even divided into smaller communes (even
+though this is has not happened in a long time, it is not entirely out of the
 question).
 
 In summary, what is missing from the current project are enough tests to make
@@ -536,11 +538,11 @@ package them. We are going to learn just that in future chapters of this book.
 
 But sometimes you might not be interested in reusing code for another project:
 however, even if that’s the case, structuring your code into functions and
-packaging them makes it easy to reuse even inside the same project. Look at the
-last part of the `analysis.R` script: we copy and pasted the same code 5 times
-and only slightly changed it. We are going to learn how not to repeat ourselves
-by using functions and you will immediately see the benefits of writing
-functions, even when simply to reuse inside the same project.
+packaging them makes it easy to reuse code even inside the same project. Look at
+the last part of the `analysis.R` script: we copy and pasted the same code 5
+times and only slightly changed it. We are going to learn how not to repeat
+ourselves by using functions and you will immediately see the benefits of
+writing functions, even when simply to reuse them inside the same project.
 
 ### What guarantee do we have that the output is stable through time?
 
