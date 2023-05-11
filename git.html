@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.53">
+<meta name="generator" content="quarto-1.4.54">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -433,8 +433,8 @@ no changes added to commit (use "git add" and/or "git commit -a")</code></pre>
 <p>(You can run <code>git status</code> at this point to check if the file was correctly added to be committed.)</p>
 <p>Then, we need to commit the changes and add a nice commit message:</p>
 <pre><code>owner@localhost ➤ git commit -am "Added a comment to analysis.R"</code></pre>
-<p>Try to keep commit message as short and as explicit as possible. This is not always easy, but it really pays off to strive for short, clear messages. Also, ideally, you would want to keep commits as small as possible, ideally one commit per change. For example, if you’re adding and amending comments in scripts, once you’re done with that make this a commit. Then, maybe clean up some code. That’s another, separate commit. This makes rolling back changes or reviewing them much easier. This will be crucial later on when we will use trunk based development to collaborate with our teammates on a project. It is generally not a good idea to code all day and then only push one single big fat commit at the end of the day, but that is what happens very often…</p>
-<p>By the way, even if our changes are still not on Github.com, we can still now roll back to previous commits. For example, suppose that I delete the file accidentally by running <code>rm analysis.R</code>:</p>
+<p>Try to keep commit messages as short and as explicit as possible. This is not always easy, but it really pays off to strive for short, clear messages. Also, ideally, you would want to keep commits as small as possible, ideally one commit per change. For example, if you’re adding and amending comments in scripts, once you’re done with that make this a commit. Then, maybe clean up some code. That’s another, separate commit. This makes rolling back changes or reviewing them much easier. This will be crucial later on when we will use trunk based development to collaborate with our teammates on a project. It is generally not a good idea to code all day and then only push one single big fat commit at the end of the day, but that is what happens very often…</p>
+<p>By the way, even if our changes are still not on Github.com, we can still roll back to previous commits. For example, suppose that I delete the file accidentally by running <code>rm analysis.R</code>:</p>
 <pre><code>owner@localhost ➤ rm analysis.R</code></pre>
 <p>Let’s run <code>git status</code> and look for the changes (it’s a line starting with the word <code>deleted</code>):</p>
 <pre><code>On branch master
