@@ -88,11 +88,21 @@ Documents) directory. Inside that folder, you will find another folder called
 `dev/`. Let’s see what’s inside (I use the command line to list the files, but
 you’re free to use your file explorer program):
 
+::: {.content-hidden when-format="pdf"}
 ```
 owner@localhost ➤ ls dev/
 
 0-dev_history.Rmd  flat_minimal.Rmd
 ```
+:::
+
+::: {.content-visible when-format="pdf"}
+```
+owner@localhost $ ls dev/
+
+0-dev_history.Rmd  flat_minimal.Rmd
+```
+:::
 
 `dev/` contains two `.Rmd` files, `0-dev_history.Rmd` and `flat_miminal.Rmd`.
 They’re both important, so let me explain what they do:
@@ -358,15 +368,32 @@ go back to our repository and switch back to the `rmd` branch that contains the
 `.Rmd` files (let’s ignore freezing packages with `{renv}` and thus the `renv`
 branch for now):
 
+::: {.content-hidden when-format="pdf"}
 ```
 owner@localhost ➤ git checkout rmd
 ```
+:::
+
+::: {.content-visible when-format="pdf"}
+```
+owner@localhost $ git checkout rmd
+```
+:::
+
 
 From, there, let’s create a new branch called `fusen`:
 
+::: {.content-hidden when-format="pdf"}
 ```
 owner@localhost ➤ git checkout -b fusen
 ```
+:::
+
+::: {.content-visible when-format="pdf"}
+```
+owner@localhost $ git checkout -b fusen
+```
+:::
 
 ```
 Switched to a new branch 'fusen'
@@ -375,11 +402,22 @@ Switched to a new branch 'fusen'
 We will now be working on this branch. Simply work as usual, but when pushing,
 make sure to push to the `fusen` branch:
 
+::: {.content-hidden when-format="pdf"}
 ```
 owner@localhost ➤ git add .
 owner@localhost ➤ git commit -am "some changes"
 owner@localhost ➤ git push origin fusen
 ```
+:::
+
+::: {.content-visible when-format="pdf"}
+```
+owner@localhost $ git add .
+owner@localhost $ git commit -am "some changes"
+owner@localhost $ git push origin fusen
+```
+:::
+
 
 By now, that repository should have four branches:
 
