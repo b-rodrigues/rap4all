@@ -197,9 +197,18 @@ command prompt, and in Powershell as well). But you could have followed along
 using the user interface of your operating system. For example, in Chapter 11, I
 list the contents of the `dev/` directory using the following command:
 
+::: {.content-hidden when-format="pdf"}
 ```
 owner@localhost ➤ ls dev/
 ```
+:::
+
+::: {.content-visible when-format="pdf"}
+```
+owner@localhost $ ls dev/
+```
+:::
+
 
 but you could have just opened the `dev/` folder in the file explorer of your
 operating system of choice. But now, you will need to get to know Linux and the
@@ -388,9 +397,18 @@ bit later. Now, what do you do with this Dockerfile? Remember, a Dockerfile
 defines an image. So now, we need to build this image. Open a terminal/command
 prompt in the folder where the Dockerfile is and type the following:
 
+::: {.content-hidden when-format="pdf"}
 ```
 owner@localhost ➤ docker build -t raps_hello .
 ```
+:::
+
+::: {.content-visible when-format="pdf"}
+```
+owner@localhost $ docker build -t raps_hello .
+```
+:::
+
 
 The `docker build` command builds an image from the Dockerfile that is in the 
 path `.` (a single `.` means "this current working directory"). The `-t` option
@@ -465,9 +483,18 @@ when we run the container. Remember: `RUN` commands get executed at build-time,
 Let's build the image (this will take some time, because a lot of software gets
 installed):
 
+::: {.content-hidden when-format="pdf"}
 ```
 owner@localhost ➤ docker build -t raps_ubuntu_r .
 ```
+:::
+
+::: {.content-visible when-format="pdf"}
+```
+owner@localhost $ docker build -t raps_ubuntu_r .
+```
+:::
+
 
 This builds an image called `raps_ubuntu_r`. This image is based on Ubuntu 
 22.04 Jammy Jellyfish and comes with R pre-installed. But the version of R
@@ -478,9 +505,18 @@ behind the actual release. But no matter, we will deal with that later.
 
 We can now start a container with the following command:
 
+::: {.content-hidden when-format="pdf"}
 ```
 owner@localhost ➤ docker run raps_ubuntu_r
 ```
+:::
+
+::: {.content-visible when-format="pdf"}
+```
+owner@localhost $ docker run raps_ubuntu_r
+```
+:::
+
 
 And this is the output we get:
 
@@ -503,9 +539,19 @@ can interact with this dockerized R version. First, you need to let the
 container run in the background. You can achieve this by running the following
 command:
 
+::: {.content-hidden when-format="pdf"}
 ```
 owner@localhost ➤ docker run -d -it --name ubuntu_r_1 raps_ubuntu_r
 ```
+:::
+
+
+::: {.content-visible when-format="pdf"}
+```
+owner@localhost $ docker run -d -it --name ubuntu_r_1 raps_ubuntu_r
+```
+:::
+
 
 This runs the container that we name "ubuntu_r_1" from the image "raps_ubuntu_r"
 (remember that we can run many containers from one single image definition).
@@ -515,9 +561,18 @@ the background, with an interactive shell waiting for us, instead of launching
 (and then immediately stopping) the R command. You can now "connect" to the
 interactive shell and start R in it using:
 
+::: {.content-hidden when-format="pdf"}
 ```
 owner@localhost ➤ docker exec -it ubuntu_r_1 R
 ```
+:::
+
+::: {.content-visible when-format="pdf"}
+```
+owner@localhost $ docker exec -it ubuntu_r_1 R
+```
+:::
+
 
 You should now see the familiar R prompt:
 
@@ -798,15 +853,33 @@ run`, this way the Docker container gets stopped when we log out (if not, then
 the Docker container will run in the background). Once logged in, we can move to
 the folder’s project using:
 
+::: {.content-hidden when-format="pdf"}
 ```
 user@docker ➤ cd home/housing
 ```
+:::
+
+::: {.content-visible when-format="pdf"}
+```
+user@docker $ cd home/housing
+```
+:::
+
 
 and then start the R interpreter:
 
+::: {.content-hidden when-format="pdf"}
 ```
 user@docker ➤ R
 ```
+:::
+
+::: {.content-visible when-format="pdf"}
+```
+user@docker $ R
+```
+:::
+
 
 if everything goes well, you should see the familiar R prompt with a message
 from `{renv}` at the end:
@@ -986,9 +1059,17 @@ to see if our files are there. But let me repeat again, that you are not really
 supposed to do so. You could simply run the container now and get your files.
 But let’s just take a quick look. You can log in to a bash session using:
 
+::: {.content-hidden when-format="pdf"}
 ```
 owner@localhost ➤ docker run --rm -it --name housing_container housing_image bash
 ```
+:::
+
+::: {.content-visible when-format="pdf"}
+```
+owner@localhost $ docker run --rm -it --name housing_container housing_image bash
+```
+:::
 
 If you then move to `/home/housing/pipeline_output` and run `ls` in that folder,
 you should see `analyse_data.html`. That’s our output! So how do we get it out?
@@ -998,11 +1079,22 @@ path to the shared folder on your computer, and the shared folder inside the
 Docker container. The code below shows how to do it (I’ve used the `\` to break
 this long command over two lines):
 
+::: {.content-hidden when-format="pdf"}
 ```
 owner@localhost ➤ docker run --rm --name housing_container -v \
                   /host/path/to/shared_folder:/home/housing/shared_folder:rw \
                   housing_image
 ```
+:::
+
+::: {.content-visible when-format="pdf"}
+```
+owner@localhost $ docker run --rm --name housing_container -v \
+                  /host/path/to/shared_folder:/home/housing/shared_folder:rw \
+                  housing_image
+```
+:::
+
 
 `/host/path/to/shared_folder` is the path to the shared folder on my computer.
 `/home/housing/shared_folder` is the path to the shared folder inside the Docker
@@ -1295,23 +1387,50 @@ and share that file instead (internally to your institution/company).
 
 Run `docker save` to save the image into a file:
 
+::: {.content-hidden when-format="pdf"}
 ```
 owner@localhost ➤ docker save dev_env_r > dev_env_r.tar
 ```
+:::
+
+::: {.content-visible when-format="pdf"}
+```
+owner@localhost $ docker save dev_env_r > dev_env_r.tar
+```
+:::
+
 
 This will create a `.tar` file of the image. You can then compress this file
 with an archiving tool if you want. If you're on Linux, you could do so in one
 go (this will take some time):
 
+::: {.content-hidden when-format="pdf"}
 ```
 owner@localhost ➤ docker save dev_env_r | gzip > dev_env_r.tgz
 ```
+:::
+
+::: {.content-visible when-format="pdf"}
+```
+owner@localhost $ docker save dev_env_r | gzip > dev_env_r.tgz
+```
+:::
+
 
 If you want to load this image, use `docker load`:
 
+::: {.content-hidden when-format="pdf"}
 ```
 owner@localhost ➤ docker load < dev_env_r.tar
 ```
+:::
+
+::: {.content-visible when-format="pdf"}
+```
+owner@localhost $ docker load < dev_env_r.tar
+```
+:::
+
 
 you should see an output like this:
 
@@ -1330,9 +1449,18 @@ Loaded image: dev_env_r:latest
 
 or if you compressed the file on Linux, you can also use:
 
+::: {.content-hidden when-format="pdf"}
 ```
 owner@localhost ➤ docker load -i dev_env_r.tgz
 ```
+:::
+
+::: {.content-visible when-format="pdf"}
+```
+owner@localhost $ docker load -i dev_env_r.tgz
+```
+:::
+
 
 to load the archive.
 
