@@ -268,9 +268,17 @@ which we ran `ls`, run now the following `git` command:
 git init
 ```
 
+::: {.content-hidden when-format="pdf"}
 ```
 owner@localhost ➤ git init
 ```
+::: 
+
+::: {.content-visible when-format="pdf"}
+```
+owner@localhost $ git init
+```
+::: 
 
 ```
 hint: Using 'master' as the name for the initial branch.
@@ -304,9 +312,17 @@ most important branch, it gets sometimes referred to as the "trunk". Some teams
 that use trunk based development (which I will discuss in the next chapter) even
 name this branch "trunk". Let's now run this other `git` command:
 
+::: {.content-hidden when-format="pdf"}
 ```
 owner@localhost ➤ git status
 ```
+:::
+
+::: {.content-visible when-format="pdf"}
+```
+owner@localhost $ git status
+```
+:::
 
 ```
 On branch master
@@ -326,9 +342,17 @@ not being tracked. So if we would modify them, Git would not keep track of the
 changes. So it's a good idea to just do what Git tells us to do: let's *add*
 them so that Git can track them:
 
+::: {.content-hidden when-format="pdf"}
 ```
 owner@localhost ➤ git add
 ```
+:::
+
+::: {.content-visible when-format="pdf"}
+```
+owner@localhost $ git add
+```
+:::
 
 ```
 Nothing specified, nothing added.
@@ -342,16 +366,33 @@ files we want to add. We can name them one by one, for example `git add file1.R
 file2.txt`, but if we simply want to track all the files in the folder, we
 can simply use the `.` placeholder:
 
+::: {.content-hidden when-format="pdf"}
 ```
 owner@localhost ➤ git add .
 ```
+:::
+
+::: {.content-visible when-format="pdf"}
+```
+owner@localhost $ git add .
+```
+:::
+
 
 No message this time... is that a good thing? Let's run `git status` and see
 what's going on:
 
+::: {.content-hidden when-format="pdf"}
 ```
 owner@localhost ➤ git status
 ```
+:::
+
+::: {.content-visible when-format="pdf"}
+```
+owner@localhost $ git status
+```
+:::
 
 ```
 On branch master
@@ -379,18 +420,35 @@ that this is an option.
 We are now ready to commit our files. Each commit must have a commit message,
 and we can write this message as an option to the `git commit` command:
 
+::: {.content-hidden when-format="pdf"}
 ```
 owner@localhost ➤ git commit -am "Project start"
 ```
+:::
+
+::: {.content-visible when-format="pdf"}
+```
+owner@localhost $ git commit -am "Project start"
+```
+:::
+
 
 Apparently the `-am` option stands for *apply mailbox*, which I’m sure makes
 sense to some people, but I prefer to think of `-am` as standing for *a*dd
 *m*essage. All that remains is pushing this commit to Github. But let's run `git
 status` again:
 
+::: {.content-hidden when-format="pdf"}
 ```
 owner@localhost ➤ git status
 ```
+:::
+
+::: {.content-visible when-format="pdf"}
+```
+owner@localhost $ git status
+```
+:::
 
 ```
 On branch master
@@ -403,7 +461,7 @@ up on Github.com. We can also choose to not push yet, and keep working and
 committing. For example, we could commit 5 times and just push ones: all of the
 5 commits would be pushed to Github.com.
 
-Let’s do just that by changing one file. Open `analysis.R` in any editor and
+Let's do just that by changing one file. Open `analysis.R` in any editor and
 simply change the start of the script by adding one line. So go from:
 
 ```
@@ -426,9 +484,18 @@ library(tidyr)
 
 and now run `git status` again:
 
+::: {.content-hidden when-format="pdf"}
 ```
 owner@localhost ➤ git status
 ```
+:::
+
+::: {.content-visible when-format="pdf"}
+```
+owner@localhost $ git status
+```
+:::
+
 
 ```
 On branch master
@@ -447,20 +514,36 @@ Github.com as soon as possible!
 
 Remember, first, we need to add these changes to a commit using `git add .`:
 
+::: {.content-hidden when-format="pdf"}
 ```
 owner@localhost ➤ git add .
 ```
+:::
+
+::: {.content-visible when-format="pdf"}
+```
+owner@localhost $ git add .
+```
+:::
 
 (You can run `git status` at this point to check if the file was correctly added
 to be committed.)
 
 Then, we need to commit the changes and add a nice commit message:
 
+::: {.content-hidden when-format="pdf"}
 ```
 owner@localhost ➤ git commit -am "Added a comment to analysis.R"
 ```
+:::
 
-Try to keep commit message as short and as explicit as possible. This is not
+::: {.content-visible when-format="pdf"}
+```
+owner@localhost $ git commit -am "Added a comment to analysis.R"
+```
+:::
+
+Try to keep commit messages as short and as explicit as possible. This is not
 always easy, but it really pays off to strive for short, clear messages. Also,
 ideally, you would want to keep commits as small as possible, ideally one commit
 per change. For example, if you're adding and amending comments in scripts, once
@@ -471,13 +554,21 @@ to collaborate with our teammates on a project. It is generally not a good idea
 to code all day and then only push one single big fat commit at the end of the
 day, but that is what happens very often...
 
-By the way, even if our changes are still not on Github.com, we can still now
+By the way, even if our changes are still not on Github.com, we can still
 roll back to previous commits. For example, suppose that I delete the file
 accidentally by running `rm analysis.R`:
 
+::: {.content-hidden when-format="pdf"}
 ```
 owner@localhost ➤ rm analysis.R
 ```
+:::
+
+::: {.content-visible when-format="pdf"}
+```
+owner@localhost $ rm analysis.R
+```
+:::
 
 Let’s run `git status` and look for the changes (it’s a line starting with the
 word `deleted`):
@@ -499,9 +590,18 @@ recover the files! Because we did not commit the deletion of the file, we can
 simple tell Git to ignore our changes. A simple way to achieve this is to stash
 the changes, and then *drop* (or delete) the stash:
 
+::: {.content-hidden when-format="pdf"}
 ```
 owner@localhost ➤ git stash
 ```
+:::
+
+::: {.content-visible when-format="pdf"}
+```
+owner@localhost $ git stash
+```
+:::
+
 
 ```
 Saved working directory and index state WIP on master: \
@@ -511,10 +611,17 @@ Saved working directory and index state WIP on master: \
 So the deletion was stashed away, (so in case we want it back we could get it back with `git stash pop`)
 and our project was rolled back to the previous commit. Simply take a look at the files:
 
+::: {.content-hidden when-format="pdf"}
 ```
 owner@localhost ➤ ls
 ```
+:::
 
+::: {.content-visible when-format="pdf"}
+```
+owner@localhost $ ls
+```
+:::
 
 ```
 analysis.R save_data.R
@@ -524,9 +631,17 @@ There it is! You can get rid of the stash with `git stash drop`. But what if we 
 file and committed the change? In this scenario we could not use `git stash`, but we would need to
 revert to a commit. Let's try, first let me remove the file:
 
+::: {.content-hidden when-format="pdf"}
 ```
 owner@localhost ➤ rm analysis.R
 ```
+:::
+
+::: {.content-visible when-format="pdf"}
+```
+owner@localhost $ rm analysis.R
+```
+:::
 
 and check the status with `git status`:
 
@@ -542,10 +657,20 @@ no changes added to commit (use "git add" and/or "git commit -a")
 
 Let's add these changes and commit them:
 
+::: {.content-hidden when-format="pdf"}
 ```
 owner@localhost ➤ git add .
 owner@localhost ➤ git commit -am "Removed analysis.R"
 ```
+:::
+
+::: {.content-visible when-format="pdf"}
+```
+owner@localhost $ git add .
+owner@localhost $ git commit -am "Removed analysis.R"
+```
+:::
+
 
 ```
 [master 8e51867] Removed analysis.R
@@ -555,22 +680,41 @@ owner@localhost ➤ git commit -am "Removed analysis.R"
 
 What’s the status now?
 
+
+::: {.content-hidden when-format="pdf"}
 ```
 owner@localhost ➤ git status
 ```
+:::
+
+::: {.content-visible when-format="pdf"}
+```
+owner@localhost $ git status
+```
+:::
 
 ```
 On branch master
 nothing to commit, working tree clean
 ```
 
-Now, we've done it! `git stash` won't be of any help now. So how to recover our file? For this,
-we need to know to which commit we want to roll back. Each commit not only has a message, but 
-also an unique identifier that you can access with `git log`:
+Now, we've done it! `git stash` won't be of any help now. So how to recover our
+file? For this, we need to know to which commit we want to roll back. Each
+commit not only has a message, but also an unique identifier that you can access
+with `git log`:
 
+::: {.content-hidden when-format="pdf"}
 ```
 owner@localhost ➤ git log
 ```
+:::
+
+::: {.content-visible when-format="pdf"}
+```
+owner@localhost $ git log
+```
+:::
+
 
 ```
 commit 8e51867dc5ae89e5f2ab2798be8920e703f73455 (HEAD -> master)
@@ -603,16 +747,35 @@ makes it easy to view long documents. Quit it by simply pressing `q` on your
 keyboard. We are now ready to revert to the right commit with the following
 command:
 
+::: {.content-hidden when-format="pdf"}
 ```
 owner@localhost ➤ git revert ab43b4b1069cd98768..HEAD
 ```
+:::
 
-and we're done! Check that all is right by running `ls` to see that the file magically returned,
-and `git log` to read the log of what happened:
+::: {.content-visible when-format="pdf"}
+```
+owner@localhost $ git revert ab43b4b1069cd98768..HEAD
+```
+:::
 
+
+and we're done! Check that all is right by running `ls` to see that the file
+magically returned, and `git log` to read the log of what happened:
+
+::: {.content-hidden when-format="pdf"}
 ```
 owner@localhost ➤ git log
 ```
+:::
+
+
+::: {.content-visible when-format="pdf"}
+```
+owner@localhost $ git log
+```
+:::
+
 
 ```
 commit b7f82ee119df52550e9ca1a8da2d81281e6aac58 (HEAD -> master)
@@ -782,15 +945,32 @@ need to change "main" to "master").
 
 Let's do just that:
 
+::: {.content-hidden when-format="pdf"}
 ```
 owner@localhost ➤ git remote add origin git@github.com:rap4all/housing.git
 ```
+:::
+
+::: {.content-visible when-format="pdf"}
+```
+owner@localhost $ git remote add origin git@github.com:rap4all/housing.git
+```
+:::
 
 This produces no output. We're now ready to push:
 
+::: {.content-hidden when-format="pdf"}
 ```
 owner@localhost ➤ git push -u origin master
 ```
+:::
+
+
+::: {.content-visible when-format="pdf"}
+```
+owner@localhost $ git push -u origin master
+```
+:::
 
 and it fails:
 
@@ -821,9 +1001,17 @@ do the job for us.
 Let's generate a public/private rsa key pair. Open a terminal on Linux or macOS,
 or Git Bash on Windows and run the following command:
 
+::: {.content-hidden when-format="pdf"}
 ```
 owner@localhost ➤ ssh-keygen
 ```
+:::
+
+::: {.content-visible when-format="pdf"}
+```
+owner@localhost $ ssh-keygen
+```
+:::
 
 The following lines will appear in your terminal:
 
@@ -932,9 +1120,18 @@ knitr::include_graphics("images/github_add_ssh.png")
 
 We can now go back to our terminal and try to push again:
 
+::: {.content-hidden when-format="pdf"}
 ```
 owner@localhost ➤ git push -u origin master
 ```
+:::
+
+
+::: {.content-visible when-format="pdf"}
+```
+owner@localhost $ git push -u origin master
+```
+:::
 
 The following message gets printed:
 
