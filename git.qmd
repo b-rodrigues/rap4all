@@ -238,17 +238,27 @@ look different on your machine, sometimes the full path to the current working
 directory is listed instead). So here is what happens when `owner` runs `ls` on
 the root directory of the project:
 
+
+::: {.content-hidden when-format="pdf"}
 ```
 owner@localhost ➤ ls
 analysis.R save_data.R
 ```
+:::
 
-(on Linux you could also try `ll` which is often available. It is an alias for
+::: {.content-visible when-format="pdf"}
+```
+owner@localhost $ ls
+analysis.R save_data.R
+```
+:::
+
+(On Linux you could also try `ll` which is often available. It is an alias for
 `ls -l` which provides a more detailed view. There's also `ls -la` which also
-lists hidden files).
+lists hidden files.)
 
 Make sure that you see the two scripts being listed when running `ls`. If not,
-this means that you are in the wrong directory, so make sure that to open the
+this means that you are in the wrong directory, so make sure that you open the
 terminal in the correct folder.
 
 It's now time to start tracking these files using Git. In the same window in
@@ -280,14 +290,19 @@ Initialized empty Git repository in /home/user/housing/.git/
 
 Take some time to read the hints. Many `git` commands give you hints and it's
 always a good idea to read them. This hint here tells us that the default branch
-name is "master" and that this is subject to change. For example, if you create
-a repository on Github, they suggest "main" as the name for the default branch.
-You need to pay attention to this, because when we will start interacting with
-our Github repository, we need to make sure that we have the right branch name
-in mind. Also, note that because the "master" branch is the most important
-branch, it get sometimes referred to as the "trunk". Some teams that use trunk
-based development (which I will discuss in the next chapter) even name this
-branch "trunk". Let's now run this other `git` command:
+name is "master" and that this is subject to change. Think of a branch as a
+*version* of your code. The "master" branch will hold the default version of
+your code. But you could create a branch called "dev" that would contain a
+version of the code with features that are still in development. There is
+nothing special about the default, "master" branch, and it could have been
+called anything else. For example, if you create a repository on Github first,
+instead of creating it on your computer, the default branch will be called
+"main". You need to pay attention to this, because when we will start
+interacting with our Github repository, we need to make sure that we have the
+right branch name in mind. Also, note that because the "master" branch is the
+most important branch, it gets sometimes referred to as the "trunk". Some teams
+that use trunk based development (which I will discuss in the next chapter) even
+name this branch "trunk". Let's now run this other `git` command:
 
 ```
 owner@localhost ➤ git status
@@ -308,7 +323,7 @@ nothing added to commit but untracked files present (use "git add" to track)
 
 Git tells us quite clearly that it sees two files, but that they're currently
 not being tracked. So if we would modify them, Git would not keep track of the
-changes. So it's a good idea to just do what Git tells us to do, let's *add*
+changes. So it's a good idea to just do what Git tells us to do: let's *add*
 them so that Git can track them:
 
 ```
@@ -324,7 +339,7 @@ hint: "git config advice.addEmptyPathspec false"
 
 Shoot, simply running `git add` does not do us any good. We need to specify which
 files we want to add. We can name them one by one, for example `git add file1.R
-file2.txt` etc, but if we simply want to track all the files in the folder, we
+file2.txt`, but if we simply want to track all the files in the folder, we
 can simply use the `.` placeholder:
 
 ```
@@ -349,20 +364,20 @@ Changes to be committed:
         new file:   save_data.R
 ```
 
-Nice! Our two files are being tracked now, we can commit the changes.
-*Committing* means that we are happy with our work, so we can snapshot it. These
-snapshots then get uploaded to Github by pushing them. This way, the changes
-will be available for our coworkers for them to pull. Don't worry if this is
-confusing, it won't be by the end of the chapter. Also, you should know that
-there is a special file, called `.gitignore`, that allows you to list files or
-folders that you want Git to ignore. This can be useful in cases where you are
-working with sensitive data and don’t want it to be uploaded to Github. We will
-not use the `.gitignore` file just yet, but will do so in part two of the book.
-So for now, just remember that this is an option. 
+Nice! Our two files are being tracked now, so we can commit the changes.
+*Committing* means that we are happy with our work, and we can snapshot it.
+These snapshots then get uploaded to Github by pushing them. This way, the
+changes will be available for our coworkers for them to pull. I’ll explain what
+this means later, so don't worry if this is confusing, it won't be by the end of
+the chapter. Also, you should know that there is a special file, called
+`.gitignore`, that allows you to list files or folders that you want Git to
+ignore. This can be useful in cases where you are working with sensitive data
+and don’t want it to be uploaded to Github. We will not use the `.gitignore`
+file just yet, but will do so in part two of the book. So for now, just remember
+that this is an option.
 
-So let's commit our files, but I need to tell you something else first: each
-commit must have a commit message, and we can write this message as an option to
-the `git commit` command:
+We are now ready to commit our files. Each commit must have a commit message,
+and we can write this message as an option to the `git commit` command:
 
 ```
 owner@localhost ➤ git commit -am "Project start"
@@ -384,11 +399,12 @@ nothing to commit, working tree clean
 
 This means that every change is accounted for in a commit. So if we were to push
 now, we could then set our computer on fire: every change would be safely backed
-up on Github.com.
+up on Github.com. We can also choose to not push yet, and keep working and
+committing. For example, we could commit 5 times and just push ones: all of the
+5 commits would be pushed to Github.com.
 
-Before pushing, let's see what happens if we change one file. Open "analysis.R"
-in any editor and simply change the start of the script by adding one line. So
-go from:
+Let’s do just that by changing one file. Open `analysis.R` in any editor and
+simply change the start of the script by adding one line. So go from:
 
 ```
 library(dplyr)
@@ -429,7 +445,7 @@ and that we did not commit this change. So if our computer would self-combust,
 these changes would get lost forever. Better commit them and push them to
 Github.com as soon as possible!
 
-So first, we need to add these changes to a commit using `git add .`:
+Remember, first, we need to add these changes to a commit using `git add .`:
 
 ```
 owner@localhost ➤ git add .
@@ -446,13 +462,14 @@ owner@localhost ➤ git commit -am "Added a comment to analysis.R"
 
 Try to keep commit message as short and as explicit as possible. This is not
 always easy, but it really pays off to strive for short, clear messages. Also,
-ideally, you would want to keep commits as small as possible. For example, if
-you're adding and amending comments in scripts, once you're done with that make
-this a commit. Then, maybe clean up some code. That's another, separate commit.
-This makes rolling back changes or reviewing them much easier. This will be
-crucial later on when we will use trunk based development to collaborate with
-our teammates on a project. It is generally not a good idea to code all day and
-then only push one single big fat commit at the end of the day.
+ideally, you would want to keep commits as small as possible, ideally one commit
+per change. For example, if you're adding and amending comments in scripts, once
+you're done with that make this a commit. Then, maybe clean up some code. That's
+another, separate commit. This makes rolling back changes or reviewing them much
+easier. This will be crucial later on when we will use trunk based development
+to collaborate with our teammates on a project. It is generally not a good idea
+to code all day and then only push one single big fat commit at the end of the
+day, but that is what happens very often...
 
 By the way, even if our changes are still not on Github.com, we can still now
 roll back to previous commits. For example, suppose that I delete the file
@@ -462,7 +479,8 @@ accidentally by running `rm analysis.R`:
 owner@localhost ➤ rm analysis.R
 ```
 
-Let’s run `git status` and look for the changes (it’s a line starting with the word `delete`):
+Let’s run `git status` and look for the changes (it’s a line starting with the
+word `deleted`):
 
 ```
 On branch master
@@ -476,10 +494,10 @@ no changes added to commit (use "git add" and/or "git commit -a")
 
 Yep, `analysis.R` is gone. And deleting on the console usually means that the
 file is gone forever. Well technically no, there are still ways to recover
-deleted files, but since we were using Git we can use it to recover the files!
-Because we did not commit the deletion of the file, we can simple tell Git to
-ignore our changes. A simple way to achieve this is to stash the changes, and
-then *drop* (or delete) the stash:
+deleted files using certain tools, but since we were using Git we can use it to
+recover the files! Because we did not commit the deletion of the file, we can
+simple tell Git to ignore our changes. A simple way to achieve this is to stash
+the changes, and then *drop* (or delete) the stash:
 
 ```
 owner@localhost ➤ git stash
@@ -635,11 +653,11 @@ simply walk back changes and gives you a nice timeline of your project. Maybe
 this does not impress you much, because we live in a world where cloud services
 like Dropbox made things like this very accessible. But where Git (with the help
 of a service like Github) really shines is when collaboration is needed. Git and
-code housing services like Github make it possible to collaborate at very large
+code hosting services like Github make it possible to collaborate at very large
 scale: thousands of developers contribute to the Linux kernel, arguably the most
 successful open source project ever, powering most of today’s smartphones,
 servers, supercomputers and embedded
-computer,^[https://www.zdnet.com/article/who-writes-linux-almost-10000-developers/]
+computers,^[https://www.zdnet.com/article/who-writes-linux-almost-10000-developers/]
 and you can use these tools to collaborate at a smaller scale very efficiently
 as well.
 
