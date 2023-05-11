@@ -45,12 +45,21 @@ git clone git@github.com:rap4all/housing.git
 Because Bruno was added as a collaborator, Bruno can work on the repository just like
 the author.
 
-Bruno will now create a new branch by using the `git checkout` command with the `-b`
-flag:
+Bruno will now create a new branch by using the `git checkout` command with the
+`-b` flag:
 
+::: {.content-hidden when-format="pdf"}
 ```
 bruno@computer ➤ git checkout -b "add_readme"
 ```
+:::
+
+::: {.content-visible when-format="pdf"}
+```
+bruno@computer $ git checkout -b "add_readme"
+```
+:::
+
 
 The project automatically switches to the new branch:
 
@@ -60,9 +69,17 @@ Switched to a new branch 'add_readme'
 
 We can also run `git status` to double-check:
 
+::: {.content-hidden when-format="pdf"}
 ```
 bruno@computer ➤ git status
 ```
+:::
+
+::: {.content-visible when-format="pdf"}
+```
+bruno@computer $ git status
+```
+:::
 
 ```
 On branch add_readme
@@ -84,9 +101,18 @@ tidy them up into a flat data frame.
 
 Let's save this and run `git status` to see what happened:
 
+::: {.content-hidden when-format="pdf"}
 ```
 bruno@computer ➤ git status
 ```
+:::
+
+::: {.content-visible when-format="pdf"}
+```
+bruno@computer $ git status
+```
+:::
+
 
 Git tells us that the `README.md` file is not being tracked:
 
@@ -103,21 +129,38 @@ So next we are going to track it and push the changes. Also, we are going to use
 neat trick when pushing: we are going to use the commit message to state the issue
 was fixed, which will automatically close the issue for us:
 
+::: {.content-hidden when-format="pdf"}
 ```
 bruno@computer ➤ git add .
 bruno@computer ➤ git commit -am "fixed #1"
 ```
+:::
+
+::: {.content-visible when-format="pdf"}
+```
+bruno@computer $ git add .
+bruno@computer $ git commit -am "fixed #1"
+```
+:::
 
 `#1` refers to the number of the issue. Because it's the first issue, it can
 simply be referred to as `#1`. Bruno will now push:
 
+::: {.content-hidden when-format="pdf"}
 ```
 bruno@computer ➤ git push origin add_readme
 ```
+:::
 
-As you can see from the command above, Bruno pushes to "add_readme", not "master". If
-he tried to push to "master" a message saying that "master" is up-to-date would get
-printed. Let's see the output of pushing to "add_readme":
+::: {.content-visible when-format="pdf"}
+```
+bruno@computer $ git push origin add_readme
+```
+:::
+
+As you can see from the command above, Bruno pushes to "add_readme", not
+"master". If he tried to push to "master" a message saying that "master" is
+up-to-date would get printed. Let's see the output of pushing to "add_readme":
 
 ```
 Enumerating objects: 4, done.
@@ -458,9 +501,18 @@ conflict will ensue.
 
 First, Bruno needs to switch back to the master branch on his computer:
 
+::: {.content-hidden when-format="pdf"}
 ```
 bruno@computer ➤ git checkout master
 ```
+:::
+
+::: {.content-visible when-format="pdf"}
+```
+bruno@computer $ git checkout master
+```
+:::
+
 
 ```
 Switched to branch 'master'
@@ -472,9 +524,17 @@ Git tells us to update the code on our computer by running `git pull`. We use `g
 push` to upload code to Github, and use `git pull` to download code from Github.
 Let's run it and see what happens:
 
+::: {.content-hidden when-format="pdf"}
 ```
 bruno@computer ➤ git pull
 ```
+:::
+
+::: {.content-visible when-format="pdf"}
+```
+bruno@computer $ git pull
+```
+:::
 
 ```
 Updating b7f82ee..c774ebf
@@ -487,15 +547,31 @@ Fast-forward
 The owner of the project (called `owner`, remember?) can do the same and will see the
 same. Now, Bruno creates a new branch to work on the new feature:
 
+::: {.content-hidden when-format="pdf"}
 ```
 bruno@computer ➤ git checkout -b add_cool_feature
 ```
+:::
+
+::: {.content-visible when-format="pdf"}
+```
+bruno@computer $ git checkout -b add_cool_feature
+```
+:::
 
 And the project owner also create a new branch:
 
+::: {.content-hidden when-format="pdf"}
 ```
 owner@localhost ➤ git checkout -b add_nice_feature
 ```
+:::
+
+::: {.content-visible when-format="pdf"}
+```
+owner@localhost $ git checkout -b add_nice_feature
+```
+:::
 
 They now edit the same file, `analysis.R`. Bruno added this function:
 
@@ -548,11 +624,22 @@ no function from the package was used in the script, and then also changed every
 in translation... Anyways, both now push their changes to their respective branches.
 This is Bruno:
 
+::: {.content-hidden when-format="pdf"}
 ```
 bruno@computer ➤ git add .
 bruno@computer ➤ git commit -am "make_plot() for plotting"
 bruno@computer ➤ git push origin add_cool_feature
 ```
+:::
+
+::: {.content-visible when-format="pdf"}
+```
+bruno@computer $ git add .
+bruno@computer $ git commit -am "make_plot() for plotting"
+bruno@computer $ git push origin add_cool_feature
+```
+:::
+
 
 ```
 Enumerating objects: 5, done.
@@ -572,11 +659,22 @@ To github.com:rap4all/housing.git
 
 and this is the owner:
 
+::: {.content-hidden when-format="pdf"}
 ```
 owner@localhost ➤ git add .
 owner@localhost ➤ git commit -am "cleanup"
 owner@localhost ➤ git push origin add_sweet_feature
 ```
+:::
+
+::: {.content-visible when-format="pdf"}
+```
+owner@localhost $ git add .
+owner@localhost $ git commit -am "cleanup"
+owner@localhost $ git push origin add_sweet_feature
+```
+:::
+
 
 ```
 Enumerating objects: 5, done.
@@ -707,9 +805,17 @@ essentially updates the code in his or her feature branch by merging master into
 
 So, the project owner checks that he or she is working on the feature branch:
 
+::: {.content-hidden when-format="pdf"}
 ```
 owner@localhost ➤ git status
 ```
+:::
+
+::: {.content-visible when-format="pdf"}
+```
+owner@localhost $ git status
+```
+:::
 
 ```
 On branch add_sweet_feature
@@ -718,9 +824,17 @@ nothing to commit, working tree clean
 
 Ok, so now let's get the updated code from master, by pulling from master:
 
+::: {.content-hidden when-format="pdf"}
 ```
 owner@localhost ➤ git pull origin master
 ```
+:::
+
+::: {.content-visible when-format="pdf"}
+```
+owner@localhost $ git pull origin master
+```
+:::
 
 The owner now sees this:
 
@@ -801,9 +915,17 @@ If many people contribute to a single project, it might sometimes be difficult t
 who changed what and when exactly. This is where the `git blame` command is useful. If you
 want to know who changed the file called `analysis.R` for example, simply run:
 
+::: {.content-hidden when-format="pdf"}
 ```
 owner@localhost ➤ git blame analysis.R
 ```
+:::
+
+::: {.content-visible when-format="pdf"}
+```
+owner@localhost $ git blame analysis.R
+```
+:::
 
 and you will see a detailed history, line by line, with the user name of the
 contributors and a date stamp:
@@ -931,9 +1053,17 @@ So now, Bruno can clone this repository and work on it, because he is working on
 of the repository that he owns. Anything Bruno does on this copy will not affect the original
 repository.
 
+::: {.content-hidden when-format="pdf"}
 ```
 bruno@computer ➤ git clone git@github.com:b-rodrigues/my_cool_project.git 
 ```
+:::
+
+::: {.content-visible when-format="pdf"}
+```
+bruno@computer $ git clone git@github.com:b-rodrigues/my_cool_project.git 
+```
+:::
 
 Bruno now fixes the typo in the `README.md` file, commits and pushes to his fork:
 
