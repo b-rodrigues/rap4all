@@ -210,14 +210,15 @@ we developed before in there:
 
 Open the folder that contains the two scripts in a file explorer. On most Linux
 desktop environments you should be able to right-click inside that folder
-anywhere and select an option titled something like "Open Terminal here". On
-Windows, do the same, but the option is titled "Open Git Bash here". On macOS,
-you need to first activate this option. Simply google for "open terminal at
-folder macOS" and follow the instructions. It is also possible to drag and drop
-a folder into a terminal which will then open the correct path in the terminal.
-Another option, of course, is to simply open a terminal and navigate to the
-correct folder using `cd` (**c**hange **d**irectory, this should work the same
-on Windows, macOS and Linux):
+anywhere on a blank space and select an option titled something like "Open
+Terminal here". If you're using Windows, you can pretty much do the same but
+look instead for the option titled "Open Git Bash here". On macOS, you need to
+first activate this option. Simply google for "open terminal at folder macOS"
+and follow the instructions. It is also possible to drag and drop a folder into
+a terminal which will then open the correct path in the terminal. Another
+option, of course, is to simply open a terminal and navigate to the correct
+folder using `cd` (**c**hange **d**irectory, this should work the same on
+Windows, macOS and Linux):
 
 ```
 cd /home/user/housing/
@@ -261,12 +262,8 @@ Make sure that you see the two scripts being listed when running `ls`. If not,
 this means that you are in the wrong directory, so make sure that you open the
 terminal in the correct folder.
 
-It's now time to start tracking these files using Git. In the same window in
+It's now time to start tracking these files using Git. In the same terminal in
 which we ran `ls`, run now the following `git` command:
-
-```
-git init
-```
 
 ::: {.content-hidden when-format="pdf"}
 ```
@@ -833,14 +830,14 @@ to a private repository, or makes them available to the world if you're pushing
 to a public repository.
 
 Before pushing anything to Github though, we need to create a new repository.
-This repository will contain the code for our project, as well as all the changes
-that Git has been tracking on our machine. So if, for example, a new team member
-joins, he or she will be able to clone the repository to his or her computer and
-every change, every commit message and every single bit of history of the project
-will be accessible. If it's a public repository, anyone will be able to clone
-the repository and contribute code to it. We are going to walk you true some
-examples of how to collaborate with Git using Github in the remained of this
-chapter.
+This repository will contain the code for our project, as well as all the
+changes that Git has been tracking on our machine. So if, for example, a new
+team member joins, he or she will be able to clone the repository to his or her
+computer and have access to every change, every commit message and every single
+bit of history of the project. If it's a public repository, anyone will be able
+to clone the repository and contribute code to it. We are going to walk you
+through some examples of how to collaborate with Git using Github in the
+remainder of this chapter.
 
 So, let's first go back to [https://github.com/](https://github.com/) and create
 a new repository:
@@ -878,7 +875,7 @@ knitr::include_graphics("images/git_new_repo_2.png")
 ```
 :::
 
-Name your repository, and choose whether it should be open to the word or if it
+Name your repository, and choose whether it should be open to the world or if it
 should be private and only accessible to your coworkers. We are going to make it
 a public repository, but you could make it private and follow along, this would
 change nothing to what we're going to learn.
@@ -931,17 +928,14 @@ git push -u origin main
 ```
 
 What's really important is the first command and last command. The first command
-adds a remote that we name *origin*. The link you see is the link to our
-repository. If you’re following along, you should copy the link from your
-repository here. It would look exactly the same, but the user name `rap4all`
-would be replaced by your Github username. 
-
-Adding the remote links to our folder in our machine to the Github repository
-online. So now, every time we push, our changes will get uploaded to Github. The
-second line renames the branch from "master" to "main". You are of course free
-to do so. I don’t like changing the defaults from Git, so I will keep using the
-name "master". The last command pushes our changes to the "main" branch (but we
-need to change "main" to "master").
+adds a remote (referred to as *origin*) that points to our repository. If you’re
+following along, you should copy the link from your repository here. It would
+look exactly the same, but the user name `rap4all` would be replaced by your
+Github username. So now, every time I push, my changes will get uploaded to
+Github. The second line renames the branch from "master" to "main". You are of
+course free to do so. I don’t like changing the defaults from Git, so I will
+keep using the name "master". The last command pushes our changes to the "main"
+branch (but we need to change "main" to "master").
 
 Let's do just that:
 
@@ -985,18 +979,18 @@ and the repository exists.
 The reason is quite simple: Github has absolutely no idea who we are! Remember,
 if the repository is public, anyone can clone it. But that doesn't mean that
 anyone can simply push code to the repo! This means that we need a way to tell
-Github that we are the owner of the repository. For this, we need a way to log in
-securely, and we will do so using a public/private rsa key pair. The idea is
+Github that we are the owner of the repository. For this, we need a way to log
+in securely, and we will do so using a public/private rsa key pair. The idea is
 quite simple; we are going to generate two files on our computer. These two
 files form a public/private key pair. We are going to upload the public key to
 Github; and every time we want to interact with Github, Github will check the
-public key to the private key that we keep on our machine (never, ever, send the
-private key to anyone). If they match, Github knows that we are who we claim to
-be and will let us push to the repository. This is why we switched from `https`
-to `ssh` before. `https` would allow us to log in by typing a password each time
-we push (but actually, not anymore, since password login was turned off some
-years ago). It is much easier to not have to log in manually and let our key pair
-do the job for us.
+public key against the private key that we keep on our machine (never, ever,
+send the private key to anyone). If they match, Github knows that we are who we
+claim to be and will let us push to the repository. This is why we switched from
+`https` to `ssh` before. `https` would allow us to log in by typing a password
+each time we push (but actually, not anymore, since password login was turned
+off some years ago). It is much easier to not have to log in manually and let
+our key pair do the job for us.
 
 Let's generate a public/private rsa key pair. Open a terminal on Linux or macOS,
 or Git Bash on Windows and run the following command:
@@ -1099,7 +1093,7 @@ knitr::include_graphics("images/github_gpg.png")
 :::
 
 and then click on "New SSH key". Name this key (it's a good idea to write
-something that makes recognizing the machine the key was generated easily) and
+something that makes recognizing the computer that generated the key easy) and
 paste the contents of `id_rsa.pub` in the text box and click on "add SSH key":
 
 
@@ -1184,7 +1178,7 @@ rsa key pair on that machine and add the public key to Github. If you use
 another code hosting platform, you can use the same rsa key pair, but will need
 to add the public key to this other code hosting platform. You can even use the
 same key pair as a passwordless authentication method for ssh (for example to
-log into a server, but this is outside the scope of the present book). Before
+log into a server, but this is outside the scope of this book). Before
 continuing we are going to take a little tour of Github.
 
 ::: {.content-hidden when-format="pdf"}
@@ -1227,7 +1221,7 @@ Most important for our needs is the "Issues", "Pull requests", "Actions" and
 "Settings" tab.
 
 In the next chapter we are going to learn about pull requests which are
-essential for collaborating using Git and Github.com. We will learn about the
+essential for collaborating using Git and Github.com. I will learn about the
 "Actions" tab in the second part of the book.
 
 So let's start with "Settings".
@@ -1286,7 +1280,7 @@ knitr::include_graphics("images/github_add_collab2.png")
 ```
 :::
 
-Click then on the user's profile and he or she should get an invitation per
+Then click on the user's profile and he or she should get an invitation per
 email.
 
 This is what it looks like from the perspective of Bruno's account now:
@@ -1391,7 +1385,7 @@ use some of the built-in datasets to R (`iris`, `mtcars`, etc) for your MRE.
 Does your MRE require extra packages to run? Then make this as clear as
 possible, and not only provide the package names, but also their versions (it is
 a good idea to copy and paste the output of `sessionInfo()` at the end of the
-issue.
+issue).
 
 Finally, does your example depend on some object defined in the global state? If
 yes, you also need to provide the code to create this object.
