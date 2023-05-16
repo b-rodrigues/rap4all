@@ -2,21 +2,20 @@
 
 Now that we are familiar with Git and Github, we can start with writing code. We
 will learn how to write code using the functional programming paradigm.
+Programming paradagims are ways to structure programs (or scripts).
 
 This chapter will teach you the fundamentals of functional programming.
 *Functional programming* might sound scary, but we will focus on only a handful
-of concepts that are quite accessible while providing many benefits. Using these
-functional programming concepts will make your code more reliable, easier to
-test, document, share, and ultimately rerun.
-
+of concepts that are quite accessible but still provide many benefits. Using
+these functional programming concepts will make your code more reliable, easier
+to test, document, share, and ultimately rerun.
 
 ## Introduction
 
 Remember that the philosophy of part one of this book is "don’t repeat
 yourself". In this chapter we will see how we can reduce the amount of code as
-much as possible. In the previous chapter we’ve seen how Bruno was able to 
-get rid of many lines of code (that were all the same) by writing a single
-function:
+much as possible. In the previous chapter we’ve seen how Bruno was able to get
+rid of many lines of code (that were all the same) by writing a single function:
 
 ```{r, eval = F}
 make_plot <- function(country_level_data,
@@ -48,7 +47,7 @@ You are very likely already familiar with at least two elements of functional
 programming: functions and lists. But functional programming is a complete
 programming paradigm, so using functional programming is more than simply using
 functions and lists (which you can use with other programming paradigms as
-well). Programming paradagims are ways to structure programs (or scripts).
+well).
 
 Functional programming is a paradigm that relies exclusively on the evaluation
 of functions to achieve the desired result. If you have already written your own
@@ -162,8 +161,8 @@ h <- function(name){
 ```
 
 This function uses the `<<-` operator. This operator saves definitions that are
-made inside the body of functions^[The body of a function are all the
-instructions that go between the curly braces.] in the global environment.
+made inside the body of functions (the body of a function are all the
+instructions that go between the curly braces) in the global environment.
 Before calling this function, run `ls()` again. You should see the same objects
 as before, plus the new functions we've defined:
 
@@ -206,7 +205,6 @@ h("Bruno")
 
 and let's check the contents of "food_list":
 
-
 ```{r, eval = F}
 food_list
 ```
@@ -219,12 +217,12 @@ food_list
 [1] "cassoulet"
 ```
 
-If you keep running `h()`, this list will continue growing. Let me just say that
-I hesitated to show you this; this is because if you didn't know `<<-`, you
-might find the example above useful. But while useful, it is quite dangerous as
-well. Generally, we want to avoid using functions that change the state as much
-as possible because these functions are unpredictable, especially if randomness
-is involved. It is much safer to define `h()` like this instead:
+If you keep running `h()`, this list will continue growing. Let me say that I
+hesitated to show you this; this is because if you didn't know `<<-`, you might
+find the example above useful. But while useful, it is quite dangerous as well.
+Generally, we want to avoid using functions that change the state as much as
+possible because these functions are unpredictable, especially if randomness is
+involved. It is much safer to define `h()` like this instead:
 
 ```{r, eval = F}
 h <- function(name, food_list = list()){
@@ -278,10 +276,10 @@ food_list
 [1] "feijoada"
 ```
 
-The only thing that we need now to deal with is the fact that the food item gets
-chosen randomly. I'm going to show you the simple way of dealing with this, but
-later in this chapter we are going to use the `{withr}` package for situations
-like this. Let's redefine `h()` one last time:
+The only thing that we now still need to deal with is the fact that the food
+item gets chosen randomly. I'm going to show you the simple way of dealing with
+this, but later in this chapter we are going to use the `{withr}` package for
+situations like this. Let's redefine `h()` one last time:
 
 ```{r, eval = F}
 h <- function(name, food_list = list(), seed = 123){
@@ -432,7 +430,7 @@ You can call then use `h()` as a wrapper for `f()`:
 h(4, sqrt)
 
 h(10, log10)
-``` 
+```
 
 Because `h()` takes another function as an argument, `h()` is called a
 higher-order function.
@@ -456,9 +454,9 @@ h(c(1, 2, NA, 3), mean, na.rm = FALSE)
 ```
 
 `na.rm` is an argument of `mean()`. As the developer of `h()`, I don’t
-necessarily know what `f()` might be, or maybe I know `f()` and know all its
-arguments, but don’t want to have to rewrite them all to make them arguments of
-`h()`, so I can use `...` instead. The following is also possible:
+necessarily know what `f()` might be, but even if I knew what `f()` would be and
+knew all its arguments, I might not want to list them all. So I can use `...`
+instead. The following is also possible:
 
 ```{r}
 w <- function(...){
@@ -514,10 +512,10 @@ Error in strict_sqrt(-10) : x is negative
 ```
 
 However, it can be quite tedious to redefine every function that we need in our
-pipeline, and remember, we don’t want to repeat ourselves. The other thing you
-need to remember is that functions are nothing special. Which means that we can
-define a function that takes a function as an argument, converts any warning
-thrown by that function into an error, and returns a new function. For example:
+pipeline, and remember, we don’t want to repeat ourselves. So, because functions
+are nothing special, we can define a function that takes a function as an
+argument, converts any warning thrown by that function into an error, and
+returns a new function. For example:
 
 ```{r}
 strictly <- function(f){
@@ -576,7 +574,7 @@ result
 
 Because the expression above resulted in an error, `Nothing` is returned.
 `Nothing` is a special value defined in the `{maybe}` package (check it out,
-a very interesting package!). We can then even read the log to see what went
+a very interesting package!). We can then even read a log to see what went
 wrong:
 
 ```{r}
@@ -627,7 +625,7 @@ the body of the function.
 ### Safe functions
 
 It is important that your functions are safe and predictable. You should avoid
-writing functions that behave like `nchar()`, a base R function. Let’s see why
+writing functions that behave like the `nchar()` base function. Let’s see why
 this function is not safe:
 
 ```{r}
@@ -640,7 +638,8 @@ It returns the expected result of 8. But what if I remove the quotes?
 nchar(10000000)
 ```
 
-What is going on here? I’ll give you a hint: simply type `10000000` in the console:
+What is going on here? I’ll give you a hint: simply type `10000000` in the
+console:
 
 ```{r}
 10000000
@@ -679,7 +678,7 @@ nchar2(10000000)
 ```
 
 ```
-Error in nchar2(10000000) : x should be of type 'character', but is of type 'integer' instead. 
+Error in nchar2(10000000) : x should be of type 'character', but is of type 'integer' instead.
 ```
 
 This section is in a sense an introduction to assertive programming. As
@@ -722,7 +721,7 @@ Using the `{microbenchmark}` package we can benchmark the code:
 
 ```{r, eval = FALSE}
 microbenchmark::microbenchmark(
-  fact_recur(50), 
+  fact_recur(50),
   fact_iter(50)
 )
 ```
@@ -743,7 +742,9 @@ ways to make them faster. The first is called *trampolining*. I won’t go into
 details, but if you’re interested, there is an R package that allows you to use
 trampolining with R, aptly called
 [`{trampoline}`](https://rdinnager.github.io/trampoline/). Another solution is
-using the [`{memoise}`](https://memoise.r-lib.org/) package.
+using the [`{memoise}`](https://memoise.r-lib.org/) package. Again, I won't go
+into details. So if you want to use and optimize recursive functions, take a
+look at these packages.
 
 ### Anonymous functions
 
@@ -773,11 +774,11 @@ bit.
 
 [^1]: http://www.catb.org/~esr/writings/taoup/html/ch01s06.html
 
-We can take inspiration from the Unix philosophy and rewrite it like this for our purposes:
+We can take inspiration from the Unix philosophy and rewrite it for our
+purposes:
 
-*Write functions that do one thing and do it well. Write functions that work together. Write
- functions that handle lists, because that is a universal interface.*
- 
+*Write functions that do one thing and do it well. Write functions that work together. Write functions that handle lists, because that is a universal interface.*
+
 Strive for writing simple functions that only perform one task. Don’t hesitate
 to split a big function into smaller ones. Small functions that only perform one
 task are easier to maintain, test, document and debug. These smaller functions
@@ -785,7 +786,7 @@ can then be chained using the `|>` operator. In other words, it is preferable to
 have something like:
 
 ```
-a |> f() |> g() |> h() 
+a |> f() |> g() |> h()
 ```
 
 where `a` is for example a path to a data set, and where `f()`, `g()` and `h()`
@@ -795,7 +796,7 @@ successively read, clean, and plot the data, than having something like:
 big_function(a)
 ```
 
-that does all the steps above in one go. 
+that does all the steps above in one go.
 
 This idea of splitting the problem into smaller chunks, each chunk in turn split
 into even smaller units that can be handled by functions and then the results of
@@ -848,9 +849,8 @@ my_plot <- ggplot(data = mtcars) +
 typeof(my_plot)
 ```
 
-It's lists all the way down, and it's not a coincidence. It's because, as
-stated, lists are very powerful. So it's important to know what you can do with
-lists.
+It's lists all the way down, and it's not a coincidence. It's because lists are
+very powerful. So it's important to know what you can do with lists.
 
 ### Lists can hold many things
 
@@ -858,7 +858,13 @@ If you write a function that needs to return many objects, the only solution is
 to place them inside a list. For example, consider this function:
 
 ```{r}
-sqrt_newton <- function(a, init = 1, eps = 0.01, steps = 1){
+sqrt_newton <- function(
+                 a,
+                 init = 1,
+                 eps = 0.01,
+                 steps = 1
+                 ){
+
     stopifnot(a >= 0)
     while(abs(init**2 - a) > eps){
         init <- 1/2 *(init + a/init)
@@ -881,14 +887,15 @@ result_list <- sqrt_newton(1600)
 result_list
 ```
 
-It is quite common to print the number of steps to the console instead
-of returning them. But the issue with a function that prints something to the
+It is quite common to print the number of steps to the console instead of
+returning them. But the issue with a function that prints something to the
 console instead of returning it, is that such a function is not pure, as it
-changes something outside of its scope. And if you need the information that got
-printed (for example, if you want to count all the steps it took to run the
-script from start to finish), it is lost. It gets printed, and that’s it. It is
-preferable to instead make the function pure by returning everything inside a
-neat list. It is then possible to separately save these objects if needed:
+changes something outside of its scope (it prints to the console!). And if you
+need the information that got printed (for example, if you want to count all the
+steps it took to run the script from start to finish), it is lost. It gets
+printed, and that’s it. It is preferable to instead make the function pure by
+returning everything inside a neat list. It is then possible to separately save
+these objects if needed:
 
 ```{r}
 result <- result_list$result
@@ -947,6 +954,7 @@ to compute the sum of the first 100 integers:
 
 ```{r}
 result <- 0
+
 for (i in 1:100){
   result <- result + i
 }
@@ -957,13 +965,12 @@ print(result)
 If you run `ls()` now, you should see that there's a variable `i` in your global
 environment. This could cause issues further down in your pipeline if you need
 to re-use `i`. Also, writing loops is, in my opinion, quite error prone. But how
-can we avoid using loops? For looping in a functional programming language, we
-need to use higher-order functions and lists. A reminder: a higher-order
-function is a function that takes another function as an argument. Looping is a
-task like any other, so we can write a function that does the looping for us. We
-will write a function, and call it `looping()`, which will take a function as an
-argument, as well as a list. The list will serve as the container to hold our
-numbers:
+can we avoid using loops? Looping in a functional programming language involves
+using higher-order functions and lists. A reminder: a higher-order function is a
+function that takes another function as an argument. Looping is a task like any
+other, so we can write a function that does the looping for us. We will write a
+function, and call it `looping()`, which will take a function as an argument, as
+well as a list. The list will serve as the container to hold our numbers:
 
 ```{r}
 looping <- function(a_list, a_func, init = NULL, ...){

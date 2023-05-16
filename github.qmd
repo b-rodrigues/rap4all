@@ -2,9 +2,9 @@
 
 As already mentioned several times, there are two ways of collaborating with Git
 (and Github): either as a team, or either as an external dev (external, as in,
-not part of the development team of a given project). External contributors
-can only contribute code to public repositories, and the project owners
-can either accept or refuse the pateches.
+not part of the development team of a given project). External contributors can
+only contribute code to public repositories, and the project owners can either
+accept or refuse the patches.
 
 We are going to learn about these two ways of collaborating. Let’s first focus
 on collaboration within a team.
@@ -43,13 +43,13 @@ Our aim should be to provide a functioning project to anyone cloning the master
 branch anytime (but still offer a simple way to install a point release of the
 project).
 
+So, back to our issue. First, Bruno needs to clone the repository:
+
 ::: {.content-hidden when-format="pdf"}
 ```
 bruno@computer ➤ git clone git@github.com:rap4all/housing.git
 ```
 :::
-
-So, back to our issue. First, Bruno needs to clone the repository:
 
 ::: {.content-visible when-format="pdf"}
 ```
@@ -97,7 +97,7 @@ On branch add_readme
 nothing to commit, working tree clean
 ```
 
-Bruno adds a file called `README.md` and add the following to it:
+Bruno adds a file called `README.md` and adds the following text to it:
 
 ````
 # Housing data for Luxembourg
@@ -190,9 +190,9 @@ To github.com:rap4all/housing.git
  * [new branch]      add_readme -> add_readme
 ```
 
-Git tells us that we now need to create a pull request. What is that? Well, if
-we want to merge our branch back to the trunk, we need to do so by using a pull
-request. Let's see what Bruno sees on Github:
+Git tells us that Bruno now needs to create a pull request. What is that? Well,
+if we want to merge our branch back to the trunk, we need to do so by using a
+pull request. Let's see what Bruno sees on Github:
 
 ::: {.content-hidden when-format="pdf"}
 <figure>
@@ -210,7 +210,7 @@ knitr::include_graphics("images/github_add_readme_recent_push.png")
 :::
 
 Bruno can now decide to continue working on this branch, or, since the purpose
-of this branch was only to add the readme file, decide instead to do a pull
+of this branch was only to add the Readme file, decide instead to do a pull
 request. By clicking on the "Compare & pull request" button Bruno now sees this:
 
 ::: {.content-hidden when-format="pdf"}
@@ -268,8 +268,8 @@ merged. This is because we added a file and did not touch anything else, and no
 one else worked on the project while Bruno was working. So there are no risks
 of conflicts arising.
 
-Let's see what the owner now sees. The owner should have gotten a notification
-to review the pull request:
+Let's see what the owner now sees. The project owner should have gotten a
+notification to review the pull request:
 
 ::: {.content-hidden when-format="pdf"}
 <figure>
@@ -310,7 +310,7 @@ rule that states that any pull request must be approved, and also that
 continuous integration has not been set up (we are going to see what this means
 in the second part of this book).
 
-Let's go ahead and add a rule that each pull request has to be approved. By
+Let's go ahead and add a rule forcing each pull request to be approved. By
 clicking on "Add rule", the following screen appears:
 
 ::: {.content-hidden when-format="pdf"}
@@ -328,7 +328,7 @@ knitr::include_graphics("images/github_rules.png")
 ```
 :::
 
-By clicking the first option, more options appear:
+By clicking the first option, more sub-options appear:
 
 ::: {.content-hidden when-format="pdf"}
 <figure>
@@ -345,7 +345,7 @@ knitr::include_graphics("images/github_rules_2.png")
 ```
 :::
 
-By choosing these options, the owner can basically enforces trunk-based
+By choosing these options, the owner can basically enforce trunk-based
 development (well, collaborators still have to submit pull requests frequently
 enough though, because if they don't, we can be in a situation where merging can
 be very difficult).
@@ -354,7 +354,7 @@ Let's choose one last option: by scrolling down, it's possible to select the
 option "Do not allow bypassing the above settings". This makes sure that even
 administrations (the owners of the project) must abide by the same rules.
 
-Let's go back to the pull request. We can see now that the review is required:
+Let's go back to the pull request. We can see now that a review is required:
 
 ::: {.content-hidden when-format="pdf"}
 <figure>
@@ -376,14 +376,14 @@ So now the owner actually has to go and see the files that were changed:
 ::: {.content-hidden when-format="pdf"}
 <figure>
     <img src="images/github_add_your_review.png"
-         alt="Check the code, and add comments if needed."></img>
-    <figcaption>Check the code, and add comments if needed.</figcaption>
+         alt="Check the code and add comments if needed."></img>
+    <figcaption>Check the code and add comments if needed.</figcaption>
 </figure>
 :::
 
 ::: {.content-visible when-format="pdf"}
 ```{r, echo = F}
-#| fig-cap: "Check the code, and add comments if needed."
+#| fig-cap: "Check the code and add comments if needed."
 knitr::include_graphics("images/github_add_your_review.png")
 ```
 :::
@@ -424,7 +424,6 @@ knitr::include_graphics("images/github_file_viewed.png")
 ```
 :::
 
-
 Then, by clicking on "Review changes", it's possible to either add a general
 comment, approve the pull request, or request changes that must be addressed
 before merging. Let's go ahead and approve:
@@ -461,7 +460,6 @@ knitr::include_graphics("images/github_changes_approved.png")
 ```
 :::
 
-
 The reviewer can now merge the pull request by clicking on the "Merge pull
 request" button. Github even suggests we deleted the branch, which served its
 purpose:
@@ -486,31 +484,32 @@ Let's delete it (it's always possible to restore it).
 ### Handling conflicts
 
 As mentioned in the previous chapter, Git makes it easy to handle conflicts.
-Well, let's be clear; it can be very tricky sometimes to resolve conflicts. But
-you should know that when solving a conflict with Git is difficult, this usually
-means that it would be impossible to do any other way, and would inevitably
-result in someone having to reconcile the files by hand. What makes handling
-conflicts easier with Git though, is that Git is able to tell you where you can
-find clashes on a per-line basis. So for instance, if you change the ten first
-lines of a script, and I change the ten next lines, there would be no conflict,
-and Git will automatically merge both our contributions into a single file.
-Other tools, like Dropbox, would fail in a situation like this, because these
-tools can only handle conflicts on a per file basis. The same file was changed
-by two different persons? Regardless of where these changes happened, you now
-have a conflict to deal with on your hand... and worse, you don't even know
-where! You will need to scan the two resulting copies of the file by hand. Git,
-in the case where the same lines were changed, highlights them very clearly so
-that you can quickly find them and deal with the problems.
+Well, let's be clear; even with Git, it can sometimes be very tricky to resolve
+conflicts. But you should know that when solving a conflict with Git is
+difficult, this usually means that it would be impossible to do any other way,
+and would inevitably result in someone having to reconcile the files by hand.
+What makes handling conflicts easier with Git though, is that Git is able to
+tell you where you can find clashes on a per-line basis. So for instance, if you
+change the ten first lines of a script, and I change the ten next lines, there
+would be no conflict, and Git will automatically merge both our contributions
+into a single file. Other tools, like Dropbox, would fail in a situation like
+this, because these tools can only handle conflicts on a per-file basis. The
+same file was changed by two different persons? Regardless of where these
+changes happened, you now have a conflict to deal with on your hands... and
+worse, you don't even know where the conflicts are in the file! You will need to
+scan the two resulting copies of the file by hand. Git, in the case where the
+same lines were changed, highlights them very clearly so that you can quickly
+find them and deal with the problems.
 
 We will see all of this in the coming sections.
 
-So how do conflicts happen in practice? Let's imagine the following scenario.
-Both Bruno and the project owner will create a branch, and edit the same file.
-Perhaps they talked over the phone and decided to add a feature or correct a
-bug. Perhaps they decided that it wasn't worth it to open an issue on Github and
-assign someone to do it. After all, they discussed this on the phone and decided
-that Bruno should do it. Or was it the owner who needed to solve the issue? No
-one remembers now. Either way, they both did, and changed the same file, so a
+So how do conflicts happen? Let's imagine the following scenario. Both Bruno and
+the project owner will create a branch, and edit the same file. Perhaps they
+talked over the phone and decided to add a feature or correct a bug. Perhaps
+they decided that it wasn't worth opening an issue on Github and assign someone
+to do it. After all, they discussed this on the phone and decided that Bruno
+should do it. Or was it the owner who needed to solve the issue? No one
+remembers now. Either way, they both did, and changed the same file, so a
 conflict will ensue.
 
 First, Bruno needs to switch back to the master branch on his computer:
@@ -534,9 +533,9 @@ Your branch is behind 'origin/master' by 2 commits, and can be fast-forwarded.
   (use "git pull" to update your local branch)
 ```
 
-Git tells us to update the code on our computer by running `git pull`. We use `git
-push` to upload code to Github, and use `git pull` to download code from Github.
-Let's run it and see what happens:
+Git tells us to update the code on our computer by running `git pull`. We use
+`git push` to upload code to Github, and use `git pull` to download code from
+Github. Let's run it and see what happens:
 
 ::: {.content-hidden when-format="pdf"}
 ```
@@ -558,8 +557,9 @@ Fast-forward
  create mode 100644 README.md
 ```
 
-The owner of the project (called `owner`, remember?) can do the same and will see the
-same. Now, Bruno creates a new branch to work on the new feature:
+Files on Bruno's computer have been updated. The owner of the project (called
+`owner`, remember?) can do the same and will see the same. Now, Bruno creates a
+new branch to work on the new feature:
 
 ::: {.content-hidden when-format="pdf"}
 ```
@@ -573,7 +573,7 @@ bruno@computer $ git checkout -b add_cool_feature
 ```
 :::
 
-And the project owner also create a new branch:
+And the project owner also creates a new branch:
 
 ::: {.content-hidden when-format="pdf"}
 ```
@@ -613,7 +613,6 @@ make_plot <- function(country_level_data,
 
 This way, Bruno could delete the repeating code and create plots like this:
 
-
 ```{r, eval = F}
 lux_plot <- make_plot(country_level_data,
                       commune_level_data,
@@ -629,14 +628,14 @@ esch_plot <- make_plot(country_level_data,
 # and so on...
 ```
 
-The end effect is the same, but by using this function, the code is now shorter, and
-clearer. Also, if someone wants to change, say, the theme of the plot, now this only
-needs to be changed in one place and not for each commune. Now, what did the owner
-change? The owner started by removing the line that loaded the `{purrr}` package, as
-no function from the package was used in the script, and then also changed every
-`%>%` to `|>`. It seems that much more than just who would make the changes got lost
-in translation... Anyways, both now push their changes to their respective branches.
-This is Bruno:
+The end effect is the same, but by using this function, the code is now shorter,
+and clearer. Also, if someone wants to change, say, the theme of the plot, now
+this only needs to be changed in one place and not for each commune. Now, what
+did the owner change? The owner started by removing the line that loaded the
+`{purrr}` package, as no function from the package was used in the script, and
+then also changed every `%>%` to `|>`. It seems that much more than just who
+would make the changes got lost in translation... Anyways, both now push their
+changes to their respective branches. This is Bruno:
 
 ::: {.content-hidden when-format="pdf"}
 ```
@@ -654,7 +653,6 @@ bruno@computer $ git push origin add_cool_feature
 ```
 :::
 
-
 ```
 Enumerating objects: 5, done.
 Counting objects: 100% (5/5), done.
@@ -663,10 +661,10 @@ Compressing objects: 100% (3/3), done.
 Writing objects: 100% (3/3), 647 bytes | 647.00 KiB/s, done.
 Total 3 (delta 1), reused 0 (delta 0), pack-reused 0
 remote: Resolving deltas: 100% (1/1), completed with 1 local object.
-remote: 
+remote:
 remote: Create a pull request for 'add_cool_feature' on GitHub by visiting:
 remote:      https://github.com/rap4all/housing/pull/new/add_cool_feature
-remote: 
+remote:
 To github.com:rap4all/housing.git
  * [new branch]      add_cool_feature -> add_cool_feature
 ```
@@ -689,7 +687,6 @@ owner@localhost $ git push origin add_sweet_feature
 ```
 :::
 
-
 ```
 Enumerating objects: 5, done.
 Counting objects: 100% (5/5), done.
@@ -698,17 +695,17 @@ Compressing objects: 100% (3/3), done.
 Writing objects: 100% (3/3), 449 bytes | 449.00 KiB/s, done.
 Total 3 (delta 1), reused 0 (delta 0)
 remote: Resolving deltas: 100% (1/1), completed with 1 local object.
-remote: 
+remote:
 remote: Create a pull request for 'add_sweet_feature' on GitHub by visiting:
 remote:      https://github.com/rap4all/housing/pull/new/add_sweet_feature
-remote: 
+remote:
 To github.com:rap4all/housing.git
  * [new branch]      add_sweet_feature -> add_sweet_feature
 ```
 
 So, let's think about what just happened: two developers changed the same file,
-`analysis.R` in two separate branches. They did what they had to do, and now these
-two branches need to be merged back to the trunk. So Bruno does a pull request:
+`analysis.R`, in two separate branches. These two branches need to be merged
+back to the trunk. So Bruno does a pull request:
 
 ::: {.content-hidden when-format="pdf"}
 <figure>
@@ -725,8 +722,8 @@ knitr::include_graphics("images/github_new_pull_request.png")
 ```
 :::
 
-First, Bruno selects the feature branch (1), then clicks on "Contribute" (2) and then
-"Open pull request" (3). Bruno gets taken to this screen:
+First, Bruno selects the feature branch (1), then clicks on "Contribute" (2) and
+then "Open pull request" (3). Bruno gets taken to this screen:
 
 ::: {.content-hidden when-format="pdf"}
 <figure>
@@ -746,8 +743,8 @@ knitr::include_graphics("images/github_new_pull_request_2.png")
 Now Bruno can click on "Create pull request", but remember, because reviews are
 required, automatic merging is disabled.
 
-If now we go see what happens from the project owner's side of things, first of all,
-there's now a notification for a pending review:
+If now we go see what happens from the project owner's side of things, first of
+all, there's now a notification for a pending review:
 
 ::: {.content-hidden when-format="pdf"}
 <figure>
@@ -765,20 +762,20 @@ knitr::include_graphics("images/github_new_pull_request_review_pending.png")
 :::
 
 
-By clicking on it, the project owner can review the pull request and decide what to
-do with it. So at this point, the owner did not open a pull request for the feature
-he or she worked on yet. And maybe that's a good thing, because now the project owner
-can see that the changes that Bruno made on the file will conflict with the project
-owner's changes.
+By clicking on it, the project owner can review the pull request and decide what
+to do with it. So at this point, the owner did not open a pull request for the
+feature he or she worked on yet. And maybe that's a good thing, because now the
+project owner can see that the changes that Bruno made on the file will conflict
+with the project owner's changes.
 
 So how to move forward? Simple: the project owner can decide to approve the pull
 request, which will merge Bruno's changes into the master branch (or the trunk).
-Then, instead of opening a pull request for merging his or her changes into trunk,
-which will cause a conflict, the project owner can instead merge the changes from the
-trunk into his or her feature branch. This will also create a conflict, but now the
-project owner can easily deal with it on his or her machine, and then push a new
-commit with both changes integrated gracefully. The image below illustrates this
-workflow:
+Then, instead of opening a pull request for merging his or her changes into
+trunk, which will cause a conflict, the project owner can instead merge the
+changes from the trunk into his or her feature branch. This will also create a
+conflict, but now the project owner can easily deal with it on his or her
+machine, and then push a new commit with both changes integrated gracefully. The
+image below illustrates this workflow:
 
 ::: {.content-hidden when-format="pdf"}
 <figure>
@@ -812,10 +809,11 @@ knitr::include_graphics("images/github_pull_request_approved.png")
 ```
 :::
 
-The pull request can get merged and Bruno's feature branch deleted. Now, it wouldn't make
-sense for the project owner to create a pull request to merge his or her changes. They would
-conflict with what Bruno did. So the project owner goes back to the computer and 
-essentially updates the code in his or her feature branch by merging master into it.
+The pull request can get merged and Bruno's feature branch deleted. Now, it
+wouldn't make sense for the project owner to create a pull request to merge his
+or her changes. They would conflict with what Bruno did. So the project owner
+goes back to his or her computer and essentially updates the code in his or her
+feature branch by merging master into it.
 
 So, the project owner checks that he or she is working on the feature branch:
 
@@ -866,19 +864,20 @@ CONFLICT (content): Merge conflict in analysis.R
 Automatic merge failed; fix conflicts and then commit the result.
 ```
 
-Git detect that there's some conflicts and tells the owner to fix them, and then
+Git detects that there's some conflicts and tells the owner to fix them, and then
 commit the results. So let's open `analysis.R` and see how it looks like (you can
 view the file online on this
 [link](https://gist.github.com/b-rodrigues/f713702268c99328ad16af56f7d32892)^[https://is.gd/ktWtjr].
-First of all, you will see Git deals with conflicts on a per line basis. So each line
-that the owner changed that does not conflict with Bruno's change gets immediately
-updated to reflect the owner's changes. For example, remember that the owner removed
-the line that loaded the `{purrr}` package? This line was also removed by pulling the
-changes from master into the feature branch. Also, you should notice that every
-`%>%` was changed into `|>` as well. 
+First of all, you will see Git deals with conflicts on a per-line basis. So each
+line that the owner changed that does not conflict with Bruno's change gets
+immediately updated to reflect the owner's changes. For example, remember that
+the owner removed the line that loaded the `{purrr}` package? This line was also
+removed by pulling the changes from master into the feature branch. Also, you
+should notice that every `%>%` was changed into `|>` as well. This two changes
+happened without any issues.
 
-Then, you should understand what happens when a conflict gets detected on some lines. For
-example, this is the first conflict you should see:
+Then, you should understand what happens when a conflict gets detected on some
+lines. For example, this is the first conflict you should see:
 
 ```
 <<<<<<< HEAD
@@ -890,18 +889,19 @@ filtered_data <- commune_level_data |>
 >>>>>>> a43c68f5596563ffca33b3729451bffc762782c3
 ```
 
-We both see how the lines look on the owner's computer and how they look in the
-master branch (or trunk). These are the lines between `<<<<<<< HEAD` and `=======`.
-The lines between `=======` and `>>>>>>> a43c68f5596563ffca33b3729451bffc762782c3` are
-how they look in the master branch (or trunk). This very long chain of characters that
-starts with `a43c68f` is the hash of the commit from which these lines come from.
+We see how the lines look on the owner's computer and how they look in the
+master branch (or trunk). The lines between `<<<<<<< HEAD` and `=======` are the
+lines in the owner's feature branch. The lines between `=======` and `>>>>>>>
+a43c68f5596563ffca33b3729451bffc762782c3` are how they look in the master branch
+(or trunk). This very long chain of characters that starts with `a43c68f` is the
+hash of the commit from which these lines come from.
 
-So this makes things quite easy; one simply needs to remove the outdated code, and
-then commit and push the fixed file! The project owner only needs to remove `<<<<<<<
-HEAD` and `=======` and what's between these lines, as well as the lines that show
-the hash commit. The project owner can now commit and push the changes, open a pull
-request, ask Bruno to review the changes one last time and merge everything back to
-master.
+So this makes things quite easy; one simply needs to remove the outdated code,
+and then commit and push the fixed file! The project owner only needs to remove
+`<<<<<<< HEAD` and `=======` and what's between these lines, as well as the
+lines that show the hash commit. The project owner can now commit and pushes the
+changes, opens a pull request, asks Bruno to review the changes one last time and
+merges everything back to master.
 
 ::: {.content-hidden when-format="pdf"}
 <figure>
@@ -918,16 +918,16 @@ knitr::include_graphics("images/github_conflict_solved.png")
 ```
 :::
 
-
 In (1) we see the commit that deals with the conflict, in (2) the owner asks Bruno
 for a review and then in (3) we see that Bruno reviewed and approved. Finally, the
 pull request can be merged (4) and the feature branch deleted.
 
 ### Make sure you blame the right person
 
-If many people contribute to a single project, it might sometimes be difficult to know
-who changed what and when exactly. This is where the `git blame` command is useful. If you
-want to know who changed the file called `analysis.R` for example, simply run:
+If many people contribute to a single project, it might sometimes be difficult
+to know who changed what and when exactly. This is where the `git blame` command
+is useful. If you want to know who changed the file called `analysis.R` for
+example, simply run:
 
 ::: {.content-hidden when-format="pdf"}
 ```
@@ -960,19 +960,20 @@ Take advantage of `git blame` to have a clear overview of each file's changes.
 
 ### Simplified trunk-based development
 
-The workflow that we showed here may seem a bit too rigid for smaller teams (below 4
-or 5 contributors). It is possible to adopt a simplified version of trunk-based
-development, where contributors don't have to open pull requests to merge their
-feature branches into the trunk, and no reviewer is needed. In cases like this, Git
-forces you to pull changes if someone already merged his or her feature branch into
-the trunk before you could. This way, when pulling, conflicts (if any) arise at that
-point. It is then your responsibility to solve the conflicts (and this works just
-like in the previous section) and then commit and push the commits with the conflicts
-resolved. Another contributor who then wishes to merged his or fear feature branch
-into to the trunk will have to pull again, ensuring that conflicts get resolved
-before he or she can merge. If no conflicts arise (for example, you both worked on
-different files, or on different lines of the same files), then no resolution is
-needed and the feature branch can be merged into master.
+The workflow that we showed here may seem a bit too rigid for smaller teams
+(below 4 or 5 contributors). It is possible to adopt a simplified version of
+trunk-based development, where contributors don't have to open pull requests to
+merge their feature branches into the trunk, and no reviewer is needed. In cases
+like this, Git forces you to pull changes if someone already merged his or her
+feature branch into the trunk before you could. This way, when pulling,
+conflicts (if any) arise at that point. It is then your responsibility to solve
+the conflicts (and this works just like in the previous section) and then commit
+and push the commits with the conflicts resolved. Another contributor who then
+wishes to merged his or fear feature branch into to the trunk will have to pull
+again, ensuring that conflicts get resolved before he or she can merge. If no
+conflicts arise (for example, you both worked on different files, or on
+different lines of the same files), then no resolution is needed and the feature
+branch can be merged into master.
 
 ### Conclusion
 
@@ -987,11 +988,12 @@ The main ideas of trunk-based development are:
 
 ## Contributing to public repositories
 
-In this last section, we are going to briefly discuss how to contribute to a project when we
-are not a team member of that project. For example, maybe we use an R package and notice a bug,
-and want to propose a fix. Or maybe we simply spotted a typo in the README of said package, and
-want to propose a correction. Whatever it may be, if the repository is public, anyone can 
-propose a fix. For example, consider this repository:
+In this last section, we are going to briefly discuss how to contribute to a
+project when we are not a team member of that project. For example, maybe we use
+an R package and notice a bug, and want to propose a fix. Or maybe we simply
+spotted a typo in the README of said package, and want to propose a correction.
+Whatever it may be, if the repository is public, anyone can propose a fix. For
+example, consider this repository:
 
 ::: {.content-hidden when-format="pdf"}
 <figure>
@@ -1008,11 +1010,12 @@ knitr::include_graphics("images/github_public_repo.png")
 ```
 :::
 
-This repository contains code written by a fellow called "rap4all", and Bruno uses this code
-daily. However, Bruno notices a typo in the readme, and wants to propose a fix.
+This repository contains code written by a fellow called "rap4all", and Bruno
+uses this code daily. However, Bruno notices a typo in the readme, and wants to
+propose a fix.
 
-First, Bruno visits the repository on Github (since it's a public repository, anyone can view
-it online) and creates a fork:
+First, Bruno visits the repository on Github (since it's a public repository,
+anyone can view it online) and creates a fork:
 
 ::: {.content-hidden when-format="pdf"}
 <figure>
@@ -1063,9 +1066,9 @@ knitr::include_graphics("images/github_my_fork.png")
 ```
 :::
 
-So now, Bruno can clone this repository and work on it, because he is working on a copy
-of the repository that he owns. Anything Bruno does on this copy will not affect the original
-repository.
+So now, Bruno can clone this repository and work on it, because he is working on
+a copy of the repository that he owns. Anything Bruno does on this copy will not
+affect the original repository.
 
 ::: {.content-hidden when-format="pdf"}
 ```
@@ -1096,9 +1099,10 @@ knitr::include_graphics("images/github_typo_fixed.png")
 ```
 :::
 
-As you can see, Bruno's fork is now ahead of the original repo by one commit. 
-By clicking on "Contribute", Bruno can open a pull request to propose his fix to the original
-repository. This pull request will be opened over at the original repository:
+As you can see, Bruno's fork is now ahead of the original repo by one commit. By
+clicking on "Contribute", Bruno can open a pull request to propose his fix to
+the original repository. This pull request will be opened over at the original
+repository:
 
 ::: {.content-hidden when-format="pdf"}
 <figure>
@@ -1115,11 +1119,12 @@ knitr::include_graphics("images/github_pull_request_typo.png")
 ```
 :::
 
-What does the owner of the original repository, "rap4all" see? The pull request Bruno
-opened is now in the original repository's "Pull request" menu, and the owner can
-check what the contribution is, if it breaks code or not, etc. This is essentially the same
-workflow as the one presented before in trunk-based development with pull requests and
-reviews before merging (minus the forking of the repository).
+What does the owner of the original repository, "rap4all" see? The pull request
+Bruno opened is now in the original repository's "Pull request" menu, and the
+owner can check what the contribution is, if it breaks code or not, etc. This is
+essentially the same workflow as the one presented before in trunk-based
+development with pull requests and reviews before merging (minus the forking of
+the repository).
 
 ::: {.content-hidden when-format="pdf"}
 <figure>
