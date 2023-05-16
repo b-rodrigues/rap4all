@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.60">
+<meta name="generator" content="quarto-1.4.67">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -346,7 +346,7 @@ div.csl-indent {
 
 </header>
 
-<p>As already mentioned several times, there are two ways of collaborating with Git (and Github): either as a team, or either as an external dev (external, as in, not part of the development team of a given project). External contributors can only contribute code to public repositories, and the project owners can either accept or refuse the pateches.</p>
+<p>As already mentioned several times, there are two ways of collaborating with Git (and Github): either as a team, or either as an external dev (external, as in, not part of the development team of a given project). External contributors can only contribute code to public repositories, and the project owners can either accept or refuse the patches.</p>
 <p>We are going to learn about these two ways of collaborating. Let’s first focus on collaboration within a team.</p>
 <section id="collaborating-as-a-team" class="level2" data-number="5.1">
 <h2 data-number="5.1" class="anchored" data-anchor-id="collaborating-as-a-team"><span class="header-section-number">5.1</span> Collaborating as a team</h2>
@@ -355,8 +355,8 @@ div.csl-indent {
 <p>Remember the issue we opened and assigned to Bruno? Bruno will now take care of this issue by adding a Readme file. This will be also the opportunity to introduce trunk-based development. The idea of trunk-based development is simple; team members should work on separate branches to add features or fix bugs, and then merge their branch to the “trunk” (in our case the <em>master</em> branch) to add their changes back to the main code-base. And this process should happen quickly, ideally every day, or as soon as some code is ready. When a lot of work accumulates in a branch for several days or weeks, merging it back to the master branch can be very painful. So by working in short-lived branches, if conflicts arise, they can be dealt with quickly. This also makes code review much easier, because the reviewer only needs to review little bits of code at a time. If instead long-lived branches with a lot of code changes get merged, reviewing all the changes and solving the conflicts that could arise would be a lot of work. To avoid this, it is best to merge every day or each time a piece of code is added, and, <strong>very importantly</strong>, this code does not break the whole project (we will be using unit tests for this later).</p>
 <p>So in summary: to avoid a lot of pain by merging branches that moved away too much from the trunk, we will create branches, add our code, and merge them to the trunk as soon as possible. <em>As soon as possible</em> can mean several things, but usually this means as soon as a feature was added, a bug was fixed, or as soon as we added some code that does not break the whole project, even if the feature we wanted to add is not done yet. The philosophy is that if merging fails, it should fail as early as possible. Early failures are easy to deal with.</p>
 <p>Our aim should be to provide a functioning project to anyone cloning the master branch anytime (but still offer a simple way to install a point release of the project).</p>
-<pre><code>bruno@computer ➤ git clone git@github.com:rap4all/housing.git</code></pre>
 <p>So, back to our issue. First, Bruno needs to clone the repository:</p>
+<pre><code>bruno@computer ➤ git clone git@github.com:rap4all/housing.git</code></pre>
 <p>To add the feature, Bruno will now create a new branch by using the <code>git checkout</code> command with the <code>-b</code> flag:</p>
 <pre><code>bruno@computer ➤ git checkout -b "add_readme"</code></pre>
 <p>The project automatically switches to the new branch:</p>
@@ -365,7 +365,7 @@ div.csl-indent {
 <pre><code>bruno@computer ➤ git status</code></pre>
 <pre><code>On branch add_readme
 nothing to commit, working tree clean</code></pre>
-<p>Bruno adds a file called <code>README.md</code> and add the following to it:</p>
+<p>Bruno adds a file called <code>README.md</code> and adds the following text to it:</p>
 <pre><code># Housing data for Luxembourg
 
 These scripts for the R programming language download nominal
@@ -401,14 +401,14 @@ remote:      https://github.com/rap4all/housing/pull/new/add_readme
 remote:
 To github.com:rap4all/housing.git
  * [new branch]      add_readme -&gt; add_readme</code></pre>
-<p>Git tells us that we now need to create a pull request. What is that? Well, if we want to merge our branch back to the trunk, we need to do so by using a pull request. Let’s see what Bruno sees on Github:</p>
+<p>Git tells us that Bruno now needs to create a pull request. What is that? Well, if we want to merge our branch back to the trunk, we need to do so by using a pull request. Let’s see what Bruno sees on Github:</p>
 <figure class="figure">
 <img src="images/github_add_readme_recent_push.png" alt="Bruno sees that the 'add_readme' branch has been recently updated." class="figure-img">
 <figcaption class="figure-caption">
 Bruno sees that the ‘add_readme’ branch has been recently updated.
 </figcaption>
 </figure>
-<p>Bruno can now decide to continue working on this branch, or, since the purpose of this branch was only to add the readme file, decide instead to do a pull request. By clicking on the “Compare &amp; pull request” button Bruno now sees this:</p>
+<p>Bruno can now decide to continue working on this branch, or, since the purpose of this branch was only to add the Readme file, decide instead to do a pull request. By clicking on the “Compare &amp; pull request” button Bruno now sees this:</p>
 <figure class="figure">
 <img src="images/github_pull_request.png" alt="This screen makes it easy to see what changed." class="figure-img">
 <figcaption class="figure-caption">
@@ -430,7 +430,7 @@ Github tells us that this branch can safely be merged.
 </figcaption>
 </figure>
 <p>Bruno requested the review, but Github tells us that the branch can safely be merged. This is because we added a file and did not touch anything else, and no one else worked on the project while Bruno was working. So there are no risks of conflicts arising.</p>
-<p>Let’s see what the owner now sees. The owner should have gotten a notification to review the pull request:</p>
+<p>Let’s see what the owner now sees. The project owner should have gotten a notification to review the pull request:</p>
 <figure class="figure">
 <img src="images/github_reviewer_notified.png" alt="The owner was notified to review the pull request." class="figure-img">
 <figcaption class="figure-caption">
@@ -445,23 +445,23 @@ Time to review the pull request.
 </figcaption>
 </figure>
 <p>Here, the reviewer can check the commit, the files that were changed, and see if there are any conflicts between this code and the code base on the master (or trunk) branch. Github also tells us two interesting things: the owner can add a rule that states that any pull request must be approved, and also that continuous integration has not been set up (we are going to see what this means in the second part of this book).</p>
-<p>Let’s go ahead and add a rule that each pull request has to be approved. By clicking on “Add rule”, the following screen appears:</p>
+<p>Let’s go ahead and add a rule forcing each pull request to be approved. By clicking on “Add rule”, the following screen appears:</p>
 <figure class="figure">
 <img src="images/github_rules.png" alt="Choose how to protect the master branch." class="figure-img">
 <figcaption class="figure-caption">
 Choose how to protect the master branch.
 </figcaption>
 </figure>
-<p>By clicking the first option, more options appear:</p>
+<p>By clicking the first option, more sub-options appear:</p>
 <figure class="figure">
 <img src="images/github_rules_2.png" alt="Reviews are now required." class="figure-img">
 <figcaption class="figure-caption">
 Reviews are now required.
 </figcaption>
 </figure>
-<p>By choosing these options, the owner can basically enforces trunk-based development (well, collaborators still have to submit pull requests frequently enough though, because if they don’t, we can be in a situation where merging can be very difficult).</p>
+<p>By choosing these options, the owner can basically enforce trunk-based development (well, collaborators still have to submit pull requests frequently enough though, because if they don’t, we can be in a situation where merging can be very difficult).</p>
 <p>Let’s choose one last option: by scrolling down, it’s possible to select the option “Do not allow bypassing the above settings”. This makes sure that even administrations (the owners of the project) must abide by the same rules.</p>
-<p>Let’s go back to the pull request. We can see now that the review is required:</p>
+<p>Let’s go back to the pull request. We can see now that a review is required:</p>
 <figure class="figure">
 <img src="images/github_review_required.png" alt="Time to review." class="figure-img">
 <figcaption class="figure-caption">
@@ -470,9 +470,9 @@ Time to review.
 </figure>
 <p>So now the owner actually has to go and see the files that were changed:</p>
 <figure class="figure">
-<img src="images/github_add_your_review.png" alt="Check the code, and add comments if needed." class="figure-img">
+<img src="images/github_add_your_review.png" alt="Check the code and add comments if needed." class="figure-img">
 <figcaption class="figure-caption">
-Check the code, and add comments if needed.
+Check the code and add comments if needed.
 </figcaption>
 </figure>
 <p>It’s possible to add comments to single lines if needed:</p>
@@ -514,9 +514,9 @@ Let’s get rid of this branch.
 </section>
 <section id="handling-conflicts" class="level3" data-number="5.1.2">
 <h3 data-number="5.1.2" class="anchored" data-anchor-id="handling-conflicts"><span class="header-section-number">5.1.2</span> Handling conflicts</h3>
-<p>As mentioned in the previous chapter, Git makes it easy to handle conflicts. Well, let’s be clear; it can be very tricky sometimes to resolve conflicts. But you should know that when solving a conflict with Git is difficult, this usually means that it would be impossible to do any other way, and would inevitably result in someone having to reconcile the files by hand. What makes handling conflicts easier with Git though, is that Git is able to tell you where you can find clashes on a per-line basis. So for instance, if you change the ten first lines of a script, and I change the ten next lines, there would be no conflict, and Git will automatically merge both our contributions into a single file. Other tools, like Dropbox, would fail in a situation like this, because these tools can only handle conflicts on a per file basis. The same file was changed by two different persons? Regardless of where these changes happened, you now have a conflict to deal with on your hand… and worse, you don’t even know where! You will need to scan the two resulting copies of the file by hand. Git, in the case where the same lines were changed, highlights them very clearly so that you can quickly find them and deal with the problems.</p>
+<p>As mentioned in the previous chapter, Git makes it easy to handle conflicts. Well, let’s be clear; even with Git, it can sometimes be very tricky to resolve conflicts. But you should know that when solving a conflict with Git is difficult, this usually means that it would be impossible to do any other way, and would inevitably result in someone having to reconcile the files by hand. What makes handling conflicts easier with Git though, is that Git is able to tell you where you can find clashes on a per-line basis. So for instance, if you change the ten first lines of a script, and I change the ten next lines, there would be no conflict, and Git will automatically merge both our contributions into a single file. Other tools, like Dropbox, would fail in a situation like this, because these tools can only handle conflicts on a per-file basis. The same file was changed by two different persons? Regardless of where these changes happened, you now have a conflict to deal with on your hands… and worse, you don’t even know where the conflicts are in the file! You will need to scan the two resulting copies of the file by hand. Git, in the case where the same lines were changed, highlights them very clearly so that you can quickly find them and deal with the problems.</p>
 <p>We will see all of this in the coming sections.</p>
-<p>So how do conflicts happen in practice? Let’s imagine the following scenario. Both Bruno and the project owner will create a branch, and edit the same file. Perhaps they talked over the phone and decided to add a feature or correct a bug. Perhaps they decided that it wasn’t worth it to open an issue on Github and assign someone to do it. After all, they discussed this on the phone and decided that Bruno should do it. Or was it the owner who needed to solve the issue? No one remembers now. Either way, they both did, and changed the same file, so a conflict will ensue.</p>
+<p>So how do conflicts happen? Let’s imagine the following scenario. Both Bruno and the project owner will create a branch, and edit the same file. Perhaps they talked over the phone and decided to add a feature or correct a bug. Perhaps they decided that it wasn’t worth opening an issue on Github and assign someone to do it. After all, they discussed this on the phone and decided that Bruno should do it. Or was it the owner who needed to solve the issue? No one remembers now. Either way, they both did, and changed the same file, so a conflict will ensue.</p>
 <p>First, Bruno needs to switch back to the master branch on his computer:</p>
 <pre><code>bruno@computer ➤ git checkout master</code></pre>
 <pre><code>Switched to branch 'master'
@@ -529,9 +529,9 @@ Fast-forward
  README.md | 7 +++++++
  1 file changed, 7 insertions(+)
  create mode 100644 README.md</code></pre>
-<p>The owner of the project (called <code>owner</code>, remember?) can do the same and will see the same. Now, Bruno creates a new branch to work on the new feature:</p>
+<p>Files on Bruno’s computer have been updated. The owner of the project (called <code>owner</code>, remember?) can do the same and will see the same. Now, Bruno creates a new branch to work on the new feature:</p>
 <pre><code>bruno@computer ➤ git checkout -b add_cool_feature</code></pre>
-<p>And the project owner also create a new branch:</p>
+<p>And the project owner also creates a new branch:</p>
 <pre><code>owner@localhost ➤ git checkout -b add_nice_feature</code></pre>
 <p>They now edit the same file, <code>analysis.R</code>. Bruno added this function:</p>
 <div class="cell">
@@ -580,10 +580,10 @@ Compressing objects: 100% (3/3), done.
 Writing objects: 100% (3/3), 647 bytes | 647.00 KiB/s, done.
 Total 3 (delta 1), reused 0 (delta 0), pack-reused 0
 remote: Resolving deltas: 100% (1/1), completed with 1 local object.
-remote: 
+remote:
 remote: Create a pull request for 'add_cool_feature' on GitHub by visiting:
 remote:      https://github.com/rap4all/housing/pull/new/add_cool_feature
-remote: 
+remote:
 To github.com:rap4all/housing.git
  * [new branch]      add_cool_feature -&gt; add_cool_feature</code></pre>
 <p>and this is the owner:</p>
@@ -597,13 +597,13 @@ Compressing objects: 100% (3/3), done.
 Writing objects: 100% (3/3), 449 bytes | 449.00 KiB/s, done.
 Total 3 (delta 1), reused 0 (delta 0)
 remote: Resolving deltas: 100% (1/1), completed with 1 local object.
-remote: 
+remote:
 remote: Create a pull request for 'add_sweet_feature' on GitHub by visiting:
 remote:      https://github.com/rap4all/housing/pull/new/add_sweet_feature
-remote: 
+remote:
 To github.com:rap4all/housing.git
  * [new branch]      add_sweet_feature -&gt; add_sweet_feature</code></pre>
-<p>So, let’s think about what just happened: two developers changed the same file, <code>analysis.R</code> in two separate branches. They did what they had to do, and now these two branches need to be merged back to the trunk. So Bruno does a pull request:</p>
+<p>So, let’s think about what just happened: two developers changed the same file, <code>analysis.R</code>, in two separate branches. These two branches need to be merged back to the trunk. So Bruno does a pull request:</p>
 <figure class="figure">
 <img src="images/github_new_pull_request.png" alt="Bruno opens a pull request after finishing his changes." class="figure-img">
 <figcaption class="figure-caption">
@@ -640,7 +640,7 @@ Conflict solving with trunk-based development.
 First, let’s approve the changes.
 </figcaption>
 </figure>
-<p>The pull request can get merged and Bruno’s feature branch deleted. Now, it wouldn’t make sense for the project owner to create a pull request to merge his or her changes. They would conflict with what Bruno did. So the project owner goes back to the computer and essentially updates the code in his or her feature branch by merging master into it.</p>
+<p>The pull request can get merged and Bruno’s feature branch deleted. Now, it wouldn’t make sense for the project owner to create a pull request to merge his or her changes. They would conflict with what Bruno did. So the project owner goes back to his or her computer and essentially updates the code in his or her feature branch by merging master into it.</p>
 <p>So, the project owner checks that he or she is working on the feature branch:</p>
 <pre><code>owner@localhost ➤ git status</code></pre>
 <pre><code>On branch add_sweet_feature
@@ -659,7 +659,7 @@ From github.com:rap4all/housing
 Auto-merging analysis.R
 CONFLICT (content): Merge conflict in analysis.R
 Automatic merge failed; fix conflicts and then commit the result.</code></pre>
-<p>Git detect that there’s some conflicts and tells the owner to fix them, and then commit the results. So let’s open <code>analysis.R</code> and see how it looks like (you can view the file online on this <a href="https://gist.github.com/b-rodrigues/f713702268c99328ad16af56f7d32892">link</a><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>. First of all, you will see Git deals with conflicts on a per line basis. So each line that the owner changed that does not conflict with Bruno’s change gets immediately updated to reflect the owner’s changes. For example, remember that the owner removed the line that loaded the <code>{purrr}</code> package? This line was also removed by pulling the changes from master into the feature branch. Also, you should notice that every <code>%&gt;%</code> was changed into <code>|&gt;</code> as well.</p>
+<p>Git detects that there’s some conflicts and tells the owner to fix them, and then commit the results. So let’s open <code>analysis.R</code> and see how it looks like (you can view the file online on this <a href="https://gist.github.com/b-rodrigues/f713702268c99328ad16af56f7d32892">link</a><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>. First of all, you will see Git deals with conflicts on a per-line basis. So each line that the owner changed that does not conflict with Bruno’s change gets immediately updated to reflect the owner’s changes. For example, remember that the owner removed the line that loaded the <code>{purrr}</code> package? This line was also removed by pulling the changes from master into the feature branch. Also, you should notice that every <code>%&gt;%</code> was changed into <code>|&gt;</code> as well. This two changes happened without any issues.</p>
 <p>Then, you should understand what happens when a conflict gets detected on some lines. For example, this is the first conflict you should see:</p>
 <pre><code>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
 filtered_data &lt;- commune_level_data |&gt;
@@ -668,8 +668,8 @@ filtered_data &lt;- commune_level_data |&gt;
   filtered_data &lt;- commune_level_data %&gt;%
     filter(locality == commune)
 &gt;&gt;&gt;&gt;&gt;&gt;&gt; a43c68f5596563ffca33b3729451bffc762782c3</code></pre>
-<p>We both see how the lines look on the owner’s computer and how they look in the master branch (or trunk). These are the lines between <code>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</code> and <code>=======</code>. The lines between <code>=======</code> and <code>&gt;&gt;&gt;&gt;&gt;&gt;&gt; a43c68f5596563ffca33b3729451bffc762782c3</code> are how they look in the master branch (or trunk). This very long chain of characters that starts with <code>a43c68f</code> is the hash of the commit from which these lines come from.</p>
-<p>So this makes things quite easy; one simply needs to remove the outdated code, and then commit and push the fixed file! The project owner only needs to remove <code>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</code> and <code>=======</code> and what’s between these lines, as well as the lines that show the hash commit. The project owner can now commit and push the changes, open a pull request, ask Bruno to review the changes one last time and merge everything back to master.</p>
+<p>We see how the lines look on the owner’s computer and how they look in the master branch (or trunk). The lines between <code>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</code> and <code>=======</code> are the lines in the owner’s feature branch. The lines between <code>=======</code> and <code>&gt;&gt;&gt;&gt;&gt;&gt;&gt; a43c68f5596563ffca33b3729451bffc762782c3</code> are how they look in the master branch (or trunk). This very long chain of characters that starts with <code>a43c68f</code> is the hash of the commit from which these lines come from.</p>
+<p>So this makes things quite easy; one simply needs to remove the outdated code, and then commit and push the fixed file! The project owner only needs to remove <code>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</code> and <code>=======</code> and what’s between these lines, as well as the lines that show the hash commit. The project owner can now commit and pushes the changes, opens a pull request, asks Bruno to review the changes one last time and merges everything back to master.</p>
 <figure class="figure">
 <img src="images/github_conflict_solved.png" alt="The conflict has been gracefully solved." class="figure-img">
 <figcaption class="figure-caption">

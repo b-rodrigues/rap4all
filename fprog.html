@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.60">
+<meta name="generator" content="quarto-1.4.67">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -365,8 +365,8 @@ div.csl-indent {
 
 </header>
 
-<p>Now that we are familiar with Git and Github, we can start with writing code. We will learn how to write code using the functional programming paradigm.</p>
-<p>This chapter will teach you the fundamentals of functional programming. <em>Functional programming</em> might sound scary, but we will focus on only a handful of concepts that are quite accessible while providing many benefits. Using these functional programming concepts will make your code more reliable, easier to test, document, share, and ultimately rerun.</p>
+<p>Now that we are familiar with Git and Github, we can start with writing code. We will learn how to write code using the functional programming paradigm. Programming paradagims are ways to structure programs (or scripts).</p>
+<p>This chapter will teach you the fundamentals of functional programming. <em>Functional programming</em> might sound scary, but we will focus on only a handful of concepts that are quite accessible but still provide many benefits. Using these functional programming concepts will make your code more reliable, easier to test, document, share, and ultimately rerun.</p>
 <section id="introduction" class="level2" data-number="6.1">
 <h2 data-number="6.1" class="anchored" data-anchor-id="introduction"><span class="header-section-number">6.1</span> Introduction</h2>
 <p>Remember that the philosophy of part one of this book is “don’t repeat yourself”. In this chapter we will see how we can reduce the amount of code as much as possible. In the previous chapter we’ve seen how Bruno was able to get rid of many lines of code (that were all the same) by writing a single function:</p>
@@ -391,7 +391,7 @@ div.csl-indent {
 <span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Now we are going to go one step further and not only learn how to write good functions, but also how we can push the concept of “not repeating oneself” to the extreme by using higher-order fuctions and function factories.</p>
-<p>You are very likely already familiar with at least two elements of functional programming: functions and lists. But functional programming is a complete programming paradigm, so using functional programming is more than simply using functions and lists (which you can use with other programming paradigms as well). Programming paradagims are ways to structure programs (or scripts).</p>
+<p>You are very likely already familiar with at least two elements of functional programming: functions and lists. But functional programming is a complete programming paradigm, so using functional programming is more than simply using functions and lists (which you can use with other programming paradigms as well).</p>
 <p>Functional programming is a paradigm that relies exclusively on the evaluation of functions to achieve the desired result. If you have already written your own functions in the past, what follows will not be very new. But in order to write a good functional program, the functions that you write and evaluate have to have certain properties. Before discussing these properties, let’s start with <em>state</em>.</p>
 <section id="the-state-of-your-program" class="level3" data-number="6.1.1">
 <h3 data-number="6.1.1" class="anchored" data-anchor-id="the-state-of-your-program"><span class="header-section-number">6.1.1</span> The state of your program</h3>
@@ -469,7 +469,7 @@ div.csl-indent {
 <span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="fu">paste0</span>(name, <span class="st">" likes "</span>, food))</span>
 <span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>This function uses the <code>&lt;&lt;-</code> operator. This operator saves definitions that are made inside the body of functions<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> in the global environment. Before calling this function, run <code>ls()</code> again. You should see the same objects as before, plus the new functions we’ve defined:</p>
+<p>This function uses the <code>&lt;&lt;-</code> operator. This operator saves definitions that are made inside the body of functions (the body of a function are all the instructions that go between the curly braces) in the global environment. Before calling this function, run <code>ls()</code> again. You should see the same objects as before, plus the new functions we’ve defined:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"a"</span>       <span class="st">"f"</span>        <span class="st">"g"</span>         <span class="st">"h"</span>         <span class="st">"mtcars"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -506,7 +506,7 @@ div.csl-indent {
 <span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>[[<span class="dv">2</span>]]</span>
 <span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"cassoulet"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>If you keep running <code>h()</code>, this list will continue growing. Let me just say that I hesitated to show you this; this is because if you didn’t know <code>&lt;&lt;-</code>, you might find the example above useful. But while useful, it is quite dangerous as well. Generally, we want to avoid using functions that change the state as much as possible because these functions are unpredictable, especially if randomness is involved. It is much safer to define <code>h()</code> like this instead:</p>
+<p>If you keep running <code>h()</code>, this list will continue growing. Let me say that I hesitated to show you this; this is because if you didn’t know <code>&lt;&lt;-</code>, you might find the example above useful. But while useful, it is quite dangerous as well. Generally, we want to avoid using functions that change the state as much as possible because these functions are unpredictable, especially if randomness is involved. It is much safer to define <code>h()</code> like this instead:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>h <span class="ot">&lt;-</span> <span class="cf">function</span>(name, <span class="at">food_list =</span> <span class="fu">list</span>()){</span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -547,7 +547,7 @@ div.csl-indent {
 <span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>[[<span class="dv">3</span>]]</span>
 <span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"feijoada"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>The only thing that we need now to deal with is the fact that the food item gets chosen randomly. I’m going to show you the simple way of dealing with this, but later in this chapter we are going to use the <code>{withr}</code> package for situations like this. Let’s redefine <code>h()</code> one last time:</p>
+<p>The only thing that we now still need to deal with is the fact that the food item gets chosen randomly. I’m going to show you the simple way of dealing with this, but later in this chapter we are going to use the <code>{withr}</code> package for situations like this. Let’s redefine <code>h()</code> one last time:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>h <span class="ot">&lt;-</span> <span class="cf">function</span>(name, <span class="at">food_list =</span> <span class="fu">list</span>(), <span class="at">seed =</span> <span class="dv">123</span>){</span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -678,7 +678,7 @@ div.csl-indent {
 <pre><code>[1] NA</code></pre>
 </div>
 </div>
-<p><code>na.rm</code> is an argument of <code>mean()</code>. As the developer of <code>h()</code>, I don’t necessarily know what <code>f()</code> might be, or maybe I know <code>f()</code> and know all its arguments, but don’t want to have to rewrite them all to make them arguments of <code>h()</code>, so I can use <code>...</code> instead. The following is also possible:</p>
+<p><code>na.rm</code> is an argument of <code>mean()</code>. As the developer of <code>h()</code>, I don’t necessarily know what <code>f()</code> might be, but even if I knew what <code>f()</code> would be and knew all its arguments, I might not want to list them all. So I can use <code>...</code> instead. The following is also possible:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>w <span class="ot">&lt;-</span> <span class="cf">function</span>(...){</span>
 <span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">paste0</span>(<span class="st">"First argument: "</span>, ..<span class="dv">1</span>,</span>
@@ -727,7 +727,7 @@ div.csl-indent {
 <div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="fu">strict_sqrt</span>(<span class="sc">-</span><span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <pre><code>Error in strict_sqrt(-10) : x is negative</code></pre>
-<p>However, it can be quite tedious to redefine every function that we need in our pipeline, and remember, we don’t want to repeat ourselves. The other thing you need to remember is that functions are nothing special. Which means that we can define a function that takes a function as an argument, converts any warning thrown by that function into an error, and returns a new function. For example:</p>
+<p>However, it can be quite tedious to redefine every function that we need in our pipeline, and remember, we don’t want to repeat ourselves. So, because functions are nothing special, we can define a function that takes a function as an argument, converts any warning thrown by that function into an error, and returns a new function. For example:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a>strictly <span class="ot">&lt;-</span> <span class="cf">function</span>(f){</span>
 <span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">function</span>(...){</span>
@@ -772,13 +772,13 @@ Retrieve the value of this object with pick(.c, "value").
 To read the log of this object, call read_log(.c).</code></pre>
 </div>
 </div>
-<p>Because the expression above resulted in an error, <code>Nothing</code> is returned. <code>Nothing</code> is a special value defined in the <code>{maybe}</code> package (check it out, a very interesting package!). We can then even read the log to see what went wrong:</p>
+<p>Because the expression above resulted in an error, <code>Nothing</code> is returned. <code>Nothing</code> is a special value defined in the <code>{maybe}</code> package (check it out, a very interesting package!). We can then even read a log to see what went wrong:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb74"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a>chronicler<span class="sc">::</span><span class="fu">read_log</span>(result)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "Complete log:"                                                                                
-[2] "NOK! sqrt() ran unsuccessfully with following exception: NaNs produced at 2023-05-14 16:52:04"
-[3] "Total running time: 0.00133967399597168 secs"                                                 </code></pre>
+[2] "NOK! sqrt() ran unsuccessfully with following exception: NaNs produced at 2023-05-16 16:36:00"
+[3] "Total running time: 0.00111031532287598 secs"                                                 </code></pre>
 </div>
 </div>
 <p>The <code>{purrr}</code> package also comes with function factories that you might find useful (<code>{possibly}</code>, <code>{safely}</code> and <code>{quietly}</code>).</p>
@@ -812,7 +812,7 @@ To read the log of this object, call read_log(.c).</code></pre>
 </section>
 <section id="safe-functions" class="level3" data-number="6.2.3">
 <h3 data-number="6.2.3" class="anchored" data-anchor-id="safe-functions"><span class="header-section-number">6.2.3</span> Safe functions</h3>
-<p>It is important that your functions are safe and predictable. You should avoid writing functions that behave like <code>nchar()</code>, a base R function. Let’s see why this function is not safe:</p>
+<p>It is important that your functions are safe and predictable. You should avoid writing functions that behave like the <code>nchar()</code> base function. Let’s see why this function is not safe:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb78"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nchar</span>(<span class="st">"10000000"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -854,7 +854,7 @@ To read the log of this object, call read_log(.c).</code></pre>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb85"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb85-1"><a href="#cb85-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nchar2</span>(<span class="dv">10000000</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<pre><code>Error in nchar2(10000000) : x should be of type 'character', but is of type 'integer' instead. </code></pre>
+<pre><code>Error in nchar2(10000000) : x should be of type 'character', but is of type 'integer' instead.</code></pre>
 <p>This section is in a sense an introduction to assertive programming. As mentioned in the section on function factories, we will be learning about assertive programming in greater detail in part 2 of the book.</p>
 </section>
 <section id="recursive-functions" class="level3" data-number="6.2.4">
@@ -881,7 +881,7 @@ To read the log of this object, call read_log(.c).</code></pre>
 <p>Using the <code>{microbenchmark}</code> package we can benchmark the code:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb88"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb88-1"><a href="#cb88-1" aria-hidden="true" tabindex="-1"></a>microbenchmark<span class="sc">::</span><span class="fu">microbenchmark</span>(</span>
-<span id="cb88-2"><a href="#cb88-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fact_recur</span>(<span class="dv">50</span>), </span>
+<span id="cb88-2"><a href="#cb88-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fact_recur</span>(<span class="dv">50</span>),</span>
 <span id="cb88-3"><a href="#cb88-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fact_iter</span>(<span class="dv">50</span>)</span>
 <span id="cb88-4"><a href="#cb88-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -889,7 +889,7 @@ To read the log of this object, call read_log(.c).</code></pre>
            expr    min     lq     mean median      uq    max neval
  fact_recur(50) 21.501 21.701 23.82701 21.901 22.0515 68.902   100
   fact_iter(50)  2.000  2.101  2.74599  2.201  2.3510 21.000   100</code></pre>
-<p>We see that the recursive factorial function is 10 times slower than the iterative version. In this particular example it doesn’t make much of a difference, because the functions only take microseconds to run. But if you’re working with more complex functions, this is a problem. If you want to keep using the recursive function and not switch to an iterative algorithm, there are ways to make them faster. The first is called <em>trampolining</em>. I won’t go into details, but if you’re interested, there is an R package that allows you to use trampolining with R, aptly called <a href="https://rdinnager.github.io/trampoline/"><code>{trampoline}</code></a>. Another solution is using the <a href="https://memoise.r-lib.org/"><code>{memoise}</code></a> package.</p>
+<p>We see that the recursive factorial function is 10 times slower than the iterative version. In this particular example it doesn’t make much of a difference, because the functions only take microseconds to run. But if you’re working with more complex functions, this is a problem. If you want to keep using the recursive function and not switch to an iterative algorithm, there are ways to make them faster. The first is called <em>trampolining</em>. I won’t go into details, but if you’re interested, there is an R package that allows you to use trampolining with R, aptly called <a href="https://rdinnager.github.io/trampoline/"><code>{trampoline}</code></a>. Another solution is using the <a href="https://memoise.r-lib.org/"><code>{memoise}</code></a> package. Again, I won’t go into details. So if you want to use and optimize recursive functions, take a look at these packages.</p>
 </section>
 <section id="anonymous-functions" class="level3" data-number="6.2.5">
 <h3 data-number="6.2.5" class="anchored" data-anchor-id="anonymous-functions"><span class="header-section-number">6.2.5</span> Anonymous functions</h3>
@@ -908,11 +908,11 @@ To read the log of this object, call read_log(.c).</code></pre>
 <blockquote class="blockquote">
 <p>This is the Unix philosophy: Write programs that do one thing and do it well. Write programs to work together. Write programs to handle text streams, because that is a universal interface.</p>
 </blockquote>
-<p><em>Doug McIlroy, in A Quarter Century of Unix</em><a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
-<p>We can take inspiration from the Unix philosophy and rewrite it like this for our purposes:</p>
+<p><em>Doug McIlroy, in A Quarter Century of Unix</em><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+<p>We can take inspiration from the Unix philosophy and rewrite it for our purposes:</p>
 <p><em>Write functions that do one thing and do it well. Write functions that work together. Write functions that handle lists, because that is a universal interface.</em></p>
 <p>Strive for writing simple functions that only perform one task. Don’t hesitate to split a big function into smaller ones. Small functions that only perform one task are easier to maintain, test, document and debug. These smaller functions can then be chained using the <code>|&gt;</code> operator. In other words, it is preferable to have something like:</p>
-<pre><code>a |&gt; f() |&gt; g() |&gt; h() </code></pre>
+<pre><code>a |&gt; f() |&gt; g() |&gt; h()</code></pre>
 <p>where <code>a</code> is for example a path to a data set, and where <code>f()</code>, <code>g()</code> and <code>h()</code> successively read, clean, and plot the data, than having something like:</p>
 <pre><code>big_function(a)</code></pre>
 <p>that does all the steps above in one go.</p>
@@ -955,23 +955,29 @@ To read the log of this object, call read_log(.c).</code></pre>
 <pre><code>[1] "list"</code></pre>
 </div>
 </div>
-<p>It’s lists all the way down, and it’s not a coincidence. It’s because, as stated, lists are very powerful. So it’s important to know what you can do with lists.</p>
+<p>It’s lists all the way down, and it’s not a coincidence. It’s because lists are very powerful. So it’s important to know what you can do with lists.</p>
 </section>
 <section id="lists-can-hold-many-things" class="level3" data-number="6.3.2">
 <h3 data-number="6.3.2" class="anchored" data-anchor-id="lists-can-hold-many-things"><span class="header-section-number">6.3.2</span> Lists can hold many things</h3>
 <p>If you write a function that needs to return many objects, the only solution is to place them inside a list. For example, consider this function:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb100"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb100-1"><a href="#cb100-1" aria-hidden="true" tabindex="-1"></a>sqrt_newton <span class="ot">&lt;-</span> <span class="cf">function</span>(a, <span class="at">init =</span> <span class="dv">1</span>, <span class="at">eps =</span> <span class="fl">0.01</span>, <span class="at">steps =</span> <span class="dv">1</span>){</span>
-<span id="cb100-2"><a href="#cb100-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stopifnot</span>(a <span class="sc">&gt;=</span> <span class="dv">0</span>)</span>
-<span id="cb100-3"><a href="#cb100-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span>(<span class="fu">abs</span>(init<span class="sc">**</span><span class="dv">2</span> <span class="sc">-</span> a) <span class="sc">&gt;</span> eps){</span>
-<span id="cb100-4"><a href="#cb100-4" aria-hidden="true" tabindex="-1"></a>        init <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">/</span><span class="dv">2</span> <span class="sc">*</span>(init <span class="sc">+</span> a<span class="sc">/</span>init)</span>
-<span id="cb100-5"><a href="#cb100-5" aria-hidden="true" tabindex="-1"></a>        steps <span class="ot">&lt;-</span> steps <span class="sc">+</span> <span class="dv">1</span></span>
-<span id="cb100-6"><a href="#cb100-6" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb100-7"><a href="#cb100-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">list</span>(</span>
-<span id="cb100-8"><a href="#cb100-8" aria-hidden="true" tabindex="-1"></a>      <span class="st">"result"</span> <span class="ot">=</span> init,</span>
-<span id="cb100-9"><a href="#cb100-9" aria-hidden="true" tabindex="-1"></a>      <span class="st">"steps"</span> <span class="ot">=</span> steps</span>
-<span id="cb100-10"><a href="#cb100-10" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb100-11"><a href="#cb100-11" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb100"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb100-1"><a href="#cb100-1" aria-hidden="true" tabindex="-1"></a>sqrt_newton <span class="ot">&lt;-</span> <span class="cf">function</span>(</span>
+<span id="cb100-2"><a href="#cb100-2" aria-hidden="true" tabindex="-1"></a>                 a,</span>
+<span id="cb100-3"><a href="#cb100-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">init =</span> <span class="dv">1</span>,</span>
+<span id="cb100-4"><a href="#cb100-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">eps =</span> <span class="fl">0.01</span>,</span>
+<span id="cb100-5"><a href="#cb100-5" aria-hidden="true" tabindex="-1"></a>                 <span class="at">steps =</span> <span class="dv">1</span></span>
+<span id="cb100-6"><a href="#cb100-6" aria-hidden="true" tabindex="-1"></a>                 ){</span>
+<span id="cb100-7"><a href="#cb100-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb100-8"><a href="#cb100-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stopifnot</span>(a <span class="sc">&gt;=</span> <span class="dv">0</span>)</span>
+<span id="cb100-9"><a href="#cb100-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span>(<span class="fu">abs</span>(init<span class="sc">**</span><span class="dv">2</span> <span class="sc">-</span> a) <span class="sc">&gt;</span> eps){</span>
+<span id="cb100-10"><a href="#cb100-10" aria-hidden="true" tabindex="-1"></a>        init <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">/</span><span class="dv">2</span> <span class="sc">*</span>(init <span class="sc">+</span> a<span class="sc">/</span>init)</span>
+<span id="cb100-11"><a href="#cb100-11" aria-hidden="true" tabindex="-1"></a>        steps <span class="ot">&lt;-</span> steps <span class="sc">+</span> <span class="dv">1</span></span>
+<span id="cb100-12"><a href="#cb100-12" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb100-13"><a href="#cb100-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">list</span>(</span>
+<span id="cb100-14"><a href="#cb100-14" aria-hidden="true" tabindex="-1"></a>      <span class="st">"result"</span> <span class="ot">=</span> init,</span>
+<span id="cb100-15"><a href="#cb100-15" aria-hidden="true" tabindex="-1"></a>      <span class="st">"steps"</span> <span class="ot">=</span> steps</span>
+<span id="cb100-16"><a href="#cb100-16" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb100-17"><a href="#cb100-17" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>This function returns the square root of a number using Newton’s algorithm, as well as the number of steps, or iterations, it took to reach the solution:</p>
 <div class="cell">
@@ -986,7 +992,7 @@ $steps
 [1] 10</code></pre>
 </div>
 </div>
-<p>It is quite common to print the number of steps to the console instead of returning them. But the issue with a function that prints something to the console instead of returning it, is that such a function is not pure, as it changes something outside of its scope. And if you need the information that got printed (for example, if you want to count all the steps it took to run the script from start to finish), it is lost. It gets printed, and that’s it. It is preferable to instead make the function pure by returning everything inside a neat list. It is then possible to separately save these objects if needed:</p>
+<p>It is quite common to print the number of steps to the console instead of returning them. But the issue with a function that prints something to the console instead of returning it, is that such a function is not pure, as it changes something outside of its scope (it prints to the console!). And if you need the information that got printed (for example, if you want to count all the steps it took to run the script from start to finish), it is lost. It gets printed, and that’s it. It is preferable to instead make the function pure by returning everything inside a neat list. It is then possible to separately save these objects if needed:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb103"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb103-1"><a href="#cb103-1" aria-hidden="true" tabindex="-1"></a>result <span class="ot">&lt;-</span> result_list<span class="sc">$</span>result</span>
 <span id="cb103-2"><a href="#cb103-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -1067,16 +1073,17 @@ $b$d</code></pre>
 <p>Loops are incredibly useful, and you are likely familiar with them. The problem with loops is that they are a concept from iterative programming, not functional programming, and this is a problem because loops rely on changing the state of your program to run. For example, let’s suppose that you wish to use a for-loop to compute the sum of the first 100 integers:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb110"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb110-1"><a href="#cb110-1" aria-hidden="true" tabindex="-1"></a>result <span class="ot">&lt;-</span> <span class="dv">0</span></span>
-<span id="cb110-2"><a href="#cb110-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>){</span>
-<span id="cb110-3"><a href="#cb110-3" aria-hidden="true" tabindex="-1"></a>  result <span class="ot">&lt;-</span> result <span class="sc">+</span> i</span>
-<span id="cb110-4"><a href="#cb110-4" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb110-5"><a href="#cb110-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb110-6"><a href="#cb110-6" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(result)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb110-2"><a href="#cb110-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb110-3"><a href="#cb110-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>){</span>
+<span id="cb110-4"><a href="#cb110-4" aria-hidden="true" tabindex="-1"></a>  result <span class="ot">&lt;-</span> result <span class="sc">+</span> i</span>
+<span id="cb110-5"><a href="#cb110-5" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb110-6"><a href="#cb110-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb110-7"><a href="#cb110-7" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(result)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 5050</code></pre>
 </div>
 </div>
-<p>If you run <code>ls()</code> now, you should see that there’s a variable <code>i</code> in your global environment. This could cause issues further down in your pipeline if you need to re-use <code>i</code>. Also, writing loops is, in my opinion, quite error prone. But how can we avoid using loops? For looping in a functional programming language, we need to use higher-order functions and lists. A reminder: a higher-order function is a function that takes another function as an argument. Looping is a task like any other, so we can write a function that does the looping for us. We will write a function, and call it <code>looping()</code>, which will take a function as an argument, as well as a list. The list will serve as the container to hold our numbers:</p>
+<p>If you run <code>ls()</code> now, you should see that there’s a variable <code>i</code> in your global environment. This could cause issues further down in your pipeline if you need to re-use <code>i</code>. Also, writing loops is, in my opinion, quite error prone. But how can we avoid using loops? Looping in a functional programming language involves using higher-order functions and lists. A reminder: a higher-order function is a function that takes another function as an argument. Looping is a task like any other, so we can write a function that does the looping for us. We will write a function, and call it <code>looping()</code>, which will take a function as an argument, as well as a list. The list will serve as the container to hold our numbers:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb112"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb112-1"><a href="#cb112-1" aria-hidden="true" tabindex="-1"></a>looping <span class="ot">&lt;-</span> <span class="cf">function</span>(a_list, a_func, <span class="at">init =</span> <span class="cn">NULL</span>, ...){</span>
 <span id="cb112-2"><a href="#cb112-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -1590,7 +1597,7 @@ NULL</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>function (x, ...) 
 UseMethod("print")
-&lt;bytecode: 0x56397e745660&gt;
+&lt;bytecode: 0x5587330d7bc0&gt;
 &lt;environment: namespace:base&gt;</code></pre>
 </div>
 </div>
@@ -1634,7 +1641,7 @@ UseMethod("print")
     }
     invisible(x)
 }
-&lt;bytecode: 0x56397d40aef8&gt;
+&lt;bytecode: 0x558731da0f18&gt;
 &lt;environment: namespace:base&gt;</code></pre>
 </div>
 </div>
@@ -1783,8 +1790,7 @@ Wickham, Hadley. 2019. <em>Advanced r</em>. CRC press.
 <aside id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr>
 <ol>
-<li id="fn1"><p>The body of a function are all the instructions that go between the curly braces.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2"><p>http://www.catb.org/~esr/writings/taoup/html/ch01s06.html<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn1"><p>http://www.catb.org/~esr/writings/taoup/html/ch01s06.html<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </aside>
 
