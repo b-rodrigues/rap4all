@@ -86,19 +86,30 @@ argued in the chapter on literate programming, a document that mixes prose and
 code is easier to read and share than a script. Next, since this Rmd file can
 get knitted into any type of document (PDF, Word, etc...), it also makes it
 easier to arrive at what interests us, the output. A script is simply a means,
-it’s not an end. The end is a document, (in most cases) so we might as well use
-literate programming to avoid the cursed loop mentioned in the chapter on
-literate programming, of changing the script, editing the document, going back
-to the script, etc.
+it’s not an end. The end is (in most cases) a document so we might as well use
+literate programming to avoid the cursed loop of changing the script, editing
+the document, going back to the script, etc.
 
 But there is yet another benefit; even if the Rmd file is not supposed to get
 shared with anyone else, we will, later on, use it as our starting point for the
 *Rmd first* method of package development as promoted by Sébastien Rochette, the
-author of `{fusen}`. This means that from a single Rmd file, we can
-have a document that is easier to read, easier to compile into our final output
-and, if needed, converted quite easily into a package. If you’re still not
-convinced, just push on, and all the pieces of the puzzle will elegantly fit in
-a couple of chapters.
+author of `{fusen}`. This Rmd first method involves making use of a
+*development* Rmd file that contains all the usual steps that we would take to
+create a package. This is in contrast with the usual package development
+process, in which we would type the required commands to build the package in
+the terminal. The functions, tests, and documentation that we want to add to the
+package get defined using Rmd files as well. This makes them much easier to read
+and also share with a non-technical audience. All these Rmd files can then be
+converted (or *inflated* in `{fusen}` jargon) to create a fully working package.
+If this sounds complicated or confusing, don’t worry. Trust the process,
+push on, and all the pieces of the puzzle will elegantly fit together in a
+couple of chapters.
+
+In the following sections I will rewrite the scripts by using functional and
+literate programming: if you don’t want to rewrite everything, don’t worry, I
+link the final Rmd files at the end of each seciton. But I would advise that you
+follow along by writing everything as it will make absorbing the contents much
+simpler.
 
 ## An Rmd for cleaning the data
 
@@ -128,11 +139,10 @@ library(stringr)
 ````
 
 So we start by writing a header to define the title of the document, the name of
-the author and the current date (yes, we can use inline R code to always get
-current date), or you can hardcode the date as a string if you prefer.
-
-We then load packages in a chunk with options `warning=FALSE` and `message=FALSE`
-which will avoid showing packages’ startup messages in the knitted document.
+the author and the current date using inline R code (you can also hardcode the
+date as a string if you prefer). We then load packages in a chunk with options
+`warning=FALSE` and `message=FALSE` which will avoid showing packages’ startup
+messages in the knitted document.
 
 Then we start with a new section called `## Downloading the data`. We then add
 a paragraph explaining from where and how we are going to download the data:
@@ -152,10 +162,11 @@ and use my link to download the data (for archival purposes):
 
 ````
 
-This is much more detailed than using comments. Then comes a function to
-download and get the data. This function simply wraps the lines from our
-original script that did the downloading and the cleaning. As a reminder, here
-are the lines from the original script:
+This is much more detailed than using comments in a script: one of the benefits
+of literate programming. Then comes a function to download and get the data.
+This function simply wraps the lines from our original script that did the
+downloading and the cleaning. As a reminder, here are the lines from the
+original script, which I will then rewrite as a function:
 
 ```{r, eval = FALSE}
 
@@ -181,13 +192,13 @@ read_clean <- function(..., sheet){
     clean_names()
 
   raw_data <- raw_data |>
-    rename(
-      locality = commune,
-      n_offers = nombre_doffres,
-      average_price_nominal_euros = prix_moyen_annonce_en_courant,
-      average_price_m2_nominal_euros = prix_moyen_annonce_au_m2_en_courant,
-      average_price_m2_nominal_euros = prix_moyen_annonce_au_m2_en_courant
-    ) |>
+   rename(
+     locality = commune,
+     n_offers = nombre_doffres,
+     average_price_nominal_euros = prix_moyen_annonce_en_courant,
+     average_price_m2_nominal_euros = prix_moyen_annonce_au_m2_en_courant,
+     average_price_m2_nominal_euros = prix_moyen_annonce_au_m2_en_courant
+   ) |>
     mutate(locality = str_trim(locality)) |>
     select(year, locality, n_offers, starts_with("average"))
 
@@ -198,13 +209,13 @@ and here is the same code, but as a function:
 
 ````{verbatim}
 ```{r, eval = F}
-get_raw_data <- function(url = "https://data.public.lu/fr/datasets/r/14b0156e-ff87-4a36-a867-933fc9a6f903"){
+get_raw_data <- function(url = "https://is.gd/1vvBAc"){
 
   raw_data <- tempfile(fileext = ".xlsx")
 
   download.file(url,
                 raw_data,
-                mode = "wb") # for compatibility with Windows
+                mode = "wb")
 
   sheets <- excel_sheets(raw_data)
 
@@ -213,18 +224,20 @@ get_raw_data <- function(url = "https://data.public.lu/fr/datasets/r/14b0156e-ff
       mutate(year = sheet)
   }
 
-  raw_data <- map_dfr(sheets,
-                      ~read_clean(raw_data,
-                                  skip = 10,
-                                  sheet = .)) %>%
+  raw_data <- map_dfr(
+    sheets,
+    ~read_clean(raw_data,
+                skip = 10,
+                sheet = .)) %>%
     clean_names()
 
   raw_data %>%
-    rename(locality = commune,
-           n_offers = nombre_doffres,
-           average_price_nominal_euros = prix_moyen_annonce_en_courant,
-           average_price_m2_nominal_euros = prix_moyen_annonce_au_m2_en_courant,
-           average_price_m2_nominal_euros = prix_moyen_annonce_au_m2_en_courant
+    rename(
+      locality = commune,
+      n_offers = nombre_doffres,
+      average_price_nominal_euros = prix_moyen_annonce_en_courant,
+      average_price_m2_nominal_euros = prix_moyen_annonce_au_m2_en_courant,
+      average_price_m2_nominal_euros = prix_moyen_annonce_au_m2_en_courant
            ) %>%
     mutate(locality = str_trim(locality)) %>%
     select(year, locality, n_offers, starts_with("average"))
@@ -234,21 +247,22 @@ get_raw_data <- function(url = "https://data.public.lu/fr/datasets/r/14b0156e-ff
 ````
 
 As you see, it’s almost exactly the same code. So why use a function? Our
-function has the advantage that it uses the url of the data as an argument. Which
-means that we can use it on other datasets (let’s remember that we are here
-focusing on prices of houses, but there’s another dataset of prices of
-apartments) or the same, but updated dataset (let’s also remember that this is a
-dataset that gets updated yearly). We can now more easily re-use this function
-later on (especially once we’ve turned this Rmd into a package in the next
-chapter). You can decide to show the source code of the function or hide it with
-the chunk option `include=FALSE` or `echo=FALSE` (the difference between
-`include` and `echo` is that `include` hides both the source code chunk and the
-output of that chunk). The next part of the Rmd file is simply using the
-function we just wrote:
+function has the advantage that it uses the url of the data as an argument.
+Which means that we can use it on other datasets (let’s remember that we are
+here focusing on prices of houses, but there’s another dataset of prices of
+apartments) or use it on an updated version of this dataset (which gets updated
+yearly). We can now more easily re-use this function later on (especially once
+we’ve turned this Rmd into a package in the next chapter). You can decide to
+show the source code of the function or hide it with the chunk option
+`include=FALSE` or `echo=FALSE` (the difference between `include` and `echo` is
+that `include` hides both the source code chunk and the output of that chunk).
+Showing the source code in the output of your Rmd file can be useful if you want
+to share it with other developers. The next part of the Rmd file is simply using
+the function we just wrote:
 
 ````{verbatim}
 ```{r}
-raw_data <- get_raw_data(url = "https://github.com/b-rodrigues/rap4all/raw/master/datasets/vente-maison-2010-2021.xlsx")
+raw_data <- get_raw_data(url = "https://is.gd/1vvBAc")
 ```
 ````
 
@@ -288,15 +302,19 @@ having this as a function will make it easier to run on updated data.
 We now continue with establishing a list of communes:
 
 ````{verbatim}
-We now need to make sure that we got all the communes/localities in there. There
-were mergers in 2011, 2015 and 2018. So we need to account for these localities.
+We now need to make sure that we got all the communes/localities 
+in there. There were mergers in 2011, 2015 and 2018. So we need 
+to account for these localities.
 
-We’re now scraping data from wikipedia of former Luxembourguish communes:
+We’re now scraping data from Wikipedia of former Luxembourguish communes:
 
 ```{r}
-get_former_communes <- function(url = "https://en.wikipedia.org/wiki/Communes_of_Luxembourg#Former_communes",
-                                min_year = 2009,
-                                table_position = 3){
+get_former_communes <- function(
+            url = "https://en.wikipedia.org/wiki/Communes_of_Luxembourg#Former_communes",
+            min_year = 2009,
+            table_position = 3
+            ){
+
   read_html(url) %>%
     html_table() %>%
     pluck(table_position) %>%
@@ -313,8 +331,11 @@ former_communes <- get_former_communes()
 We can scrape current communes:
 
 ```{r}
-get_current_communes <- function(url = "https://en.wikipedia.org/wiki/List_of_communes_of_Luxembourg",
-                                 table_position = 1){
+get_current_communes <- function(
+                 url = "https://en.wikipedia.org/wiki/List_of_communes_of_Luxembourg",
+                 table_position = 1
+                 ){
+
   read_html(url) %>%
     html_table() %>%
     pluck(table_position) %>%
@@ -329,10 +350,10 @@ current_communes <- get_current_communes()
 ````
 
 This is quite a long chunk, but there is nothing new in here, so I won’t explain
-it line by line. What’s important is to notice that the code doing the actual
-work is all being wrapped inside functions. I reiterate: this will make reusing,
-testing and documenting much easier later on. Using the object `former_communes`
-and `current_communes` we can now build the complete list:
+it line by line. What’s important is that the code doing the actual work is all
+being wrapped inside functions. I reiterate: this will make reusing, testing and
+documenting much easier later on. Using the object `former_communes` and
+`current_communes` we can now build the complete list:
 
 ````{verbatim}
 Let’s now create a list of all communes:
