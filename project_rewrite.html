@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.70">
+<meta name="generator" content="quarto-1.3.353">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -320,7 +320,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
-<p>In this chapter, we will use what we’ve learned until now to rewrite our project. As a reminder, here is the <a href="https://raw.githubusercontent.com/rap4all/housing/77a181c19f0f7a7646453b2f74408814d02c3570/save_data.R">save_data.R</a><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> and the <a href="https://raw.githubusercontent.com/rap4all/housing/77a181c19f0f7a7646453b2f74408814d02c3570/analysis.R">analysis.R</a><a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> files from our project. The <code>analysis.R</code> file already includes one change: the one from the chapter on collaborating with Github, where Bruno wrote a function to make the plots for each commune.</p>
+<p>In this chapter, we will use what we’ve learned until now to rewrite our project. As a reminder, here are the files:</p>
+<ul>
+<li>save_data.R: <a href="https://is.gd/7PhUjd">https://is.gd/7PhUjd</a></li>
+<li>analysis.R: <a href="https://is.gd/X7XXJg">https://is.gd/X7XXJg</a></li>
+</ul>
+<p>from our project. The <code>analysis.R</code> file already includes one change: the one from the chapter on collaborating with Github, where Bruno wrote a function to make the plots for each commune.</p>
 <p>If you skipped part one of the book, or for any other reason do not have a Github repository with these two files yet, then now is the time to do so. Create a repository and name it <em>housing_lux</em> or anything you’d like, and put these two files there. I will assume that you have these files safely versioned, and will not be telling you systematically when to commit and push. Simply do so as often as you’d like! You should have a repository with a <em>master</em> or <em>main</em> branch containing these two scripts. On your computer, calling <code>git status</code> in Git Bash (on Windows) or in a terminal (for Linux and macOS) should result in this:</p>
 <pre><code>owner@localhost ➤ git status</code></pre>
 <pre><code>On branch master
@@ -333,8 +338,9 @@ nothing to commit, working tree clean</code></pre>
 owner@localhost ➤ git commit -am "some changes"
 owner@localhost ➤ git push origin rmd</code></pre>
 <p>This will push whatever change to the <code>rmd</code> branch. By doing this, you keep the original <code>.R</code> scripts in the main branch, and the will end up with the <code>.Rmd</code> files in the <code>rmd</code> branch.</p>
-<p>Before moving forward now is the right moment to actually discuss why you would want to convert the script into an Rmd. There are several reasons. First, as argued in the chapter on literate programming, a document that mixes prose and code is easier to read and share than a script. Next, since this Rmd file can get knitted into any type of document (PDF, Word, etc…), it also makes it easier to arrive at what interests us, the output. A script is simply a means, it’s not an end. The end is a document, (in most cases) so we might as well use literate programming to avoid the cursed loop mentioned in the chapter on literate programming, of changing the script, editing the document, going back to the script, etc.</p>
-<p>But there is yet another benefit; even if the Rmd file is not supposed to get shared with anyone else, we will, later on, use it as our starting point for the <em>Rmd first</em> method of package development as promoted by Sébastien Rochette, the author of <code>{fusen}</code>. This means that from a single Rmd file, we can have a document that is easier to read, easier to compile into our final output and, if needed, converted quite easily into a package. If you’re still not convinced, just push on, and all the pieces of the puzzle will elegantly fit in a couple of chapters.</p>
+<p>Before moving forward now is the right moment to actually discuss why you would want to convert the script into an Rmd. There are several reasons. First, as argued in the chapter on literate programming, a document that mixes prose and code is easier to read and share than a script. Next, since this Rmd file can get knitted into any type of document (PDF, Word, etc…), it also makes it easier to arrive at what interests us, the output. A script is simply a means, it’s not an end. The end is (in most cases) a document so we might as well use literate programming to avoid the cursed loop of changing the script, editing the document, going back to the script, etc.</p>
+<p>But there is yet another benefit; even if the Rmd file is not supposed to get shared with anyone else, we will, later on, use it as our starting point for the <em>Rmd first</em> method of package development as promoted by Sébastien Rochette, the author of <code>{fusen}</code>. This Rmd first method involves making use of a <em>development</em> Rmd file that contains all the usual steps that we would take to create a package. This is in contrast with the usual package development process, in which we would type the required commands to build the package in the terminal. The functions, tests, and documentation that we want to add to the package get defined using Rmd files as well. This makes them much easier to read and also share with a non-technical audience. All these Rmd files can then be converted (or <em>inflated</em> in <code>{fusen}</code> jargon) to create a fully working package. If this sounds complicated or confusing, don’t worry. Trust the process, push on, and all the pieces of the puzzle will elegantly fit together in a couple of chapters.</p>
+<p>In the following sections I will rewrite the scripts by using functional and literate programming: if you don’t want to rewrite everything, don’t worry, I link the final Rmd files at the end of each seciton. But I would advise that you follow along by writing everything as it will make absorbing the contents much simpler.</p>
 <section id="an-rmd-for-cleaning-the-data" class="level2" data-number="9.1">
 <h2 data-number="9.1" class="anchored" data-anchor-id="an-rmd-for-cleaning-the-data"><span class="header-section-number">9.1</span> An Rmd for cleaning the data</h2>
 <p>So, let’s start with the <code>save_data.R</code> script. Since we are going to use functional programming and literate programming, we are going to start from an empty <code>.Rmd</code> file. So open an empty <code>.Rmd</code> file and start with the following lines:</p>
@@ -356,26 +362,26 @@ owner@localhost ➤ git push origin rmd</code></pre>
 <span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>## Downloading the data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>So we start by writing a header to define the title of the document, the name of the author and the current date (yes, we can use inline R code to always get current date), or you can hardcode the date as a string if you prefer.</p>
-<p>We then load packages in a chunk with options <code>warning=FALSE</code> and <code>message=FALSE</code> which will avoid showing packages’ startup messages in the knitted document.</p>
+<p>So we start by writing a header to define the title of the document, the name of the author and the current date using inline R code (you can also hardcode the date as a string if you prefer). We then load packages in a chunk with options <code>warning=FALSE</code> and <code>message=FALSE</code> which will avoid showing packages’ startup messages in the knitted document.</p>
 <p>Then we start with a new section called <code>## Downloading the data</code>. We then add a paragraph explaining from where and how we are going to download the data:</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>This data is downloaded from the luxembourguish [Open Data</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>Portal](https://data.public.lu/fr/datasets/prix-annonces-des-logements-par-commune/)</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>(the data set called *Série rétrospective des prix annoncés des maisons par</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>commune, de 2010 à 2021*), and the original data is from the "Observatoire de</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>l'habitat". This data contains prices for houses sold since 2010 for each</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>luxembourguish commune. </span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>The function below uses the permanent URL from the Open Data Portal to access</span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>the data, but I have also rehosted the data, and use my link to download the</span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>data (for archival purposes):</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>This is much more detailed than using comments. Then comes a function to download and get the data. This function simply wraps the lines from our original script that did the downloading and the cleaning. As a reminder, here are the lines from the original script:</p>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>(the data set called *Série rétrospective des prix</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>annoncés des maisons par commune, de 2010 à 2021*), </span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>and the original data is from the "Observatoire de</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>l'habitat". This data contains prices for houses sold </span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>since 2010 for each luxembourguish commune. </span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>The function below uses the permanent URL from the Open Data </span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>Portal to access the data, but I have also rehosted the data, </span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>and use my link to download the data (for archival purposes):</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This is much more detailed than using comments in a script: one of the benefits of literate programming. Then comes a function to download and get the data. This function simply wraps the lines from our original script that did the downloading and the cleaning. As a reminder, here are the lines from the original script, which I will then rewrite as a function:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>url <span class="ot">&lt;-</span> <span class="st">"https://github.com/b-rodrigues/rap4all/raw/master/datasets/vente-maison-2010-2021.xlsx"</span></span>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>url <span class="ot">&lt;-</span> <span class="st">"https://is.gd/1vvBAc"</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>raw_data <span class="ot">&lt;-</span> <span class="fu">tempfile</span>(<span class="at">fileext =</span> <span class="st">".xlsx"</span>)</span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="fu">download.file</span>(url, raw_data)</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="fu">download.file</span>(url, raw_data, <span class="at">method =</span> <span class="st">"auto"</span>, <span class="at">mode =</span> <span class="st">"wb"</span>)</span>
 <span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>sheets <span class="ot">&lt;-</span> <span class="fu">excel_sheets</span>(raw_data)</span>
 <span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a></span>
@@ -393,25 +399,25 @@ owner@localhost ➤ git push origin rmd</code></pre>
 <span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>    <span class="fu">clean_names</span>()</span>
 <span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>  raw_data <span class="ot">&lt;-</span> raw_data <span class="sc">|&gt;</span></span>
-<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rename</span>(</span>
-<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>      <span class="at">locality =</span> commune,</span>
-<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>      <span class="at">n_offers =</span> nombre_doffres,</span>
-<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a>      <span class="at">average_price_nominal_euros =</span> prix_moyen_annonce_en_courant,</span>
-<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a>      <span class="at">average_price_m2_nominal_euros =</span> prix_moyen_annonce_au_m2_en_courant,</span>
-<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a>      <span class="at">average_price_m2_nominal_euros =</span> prix_moyen_annonce_au_m2_en_courant</span>
-<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>   <span class="fu">rename</span>(</span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>     <span class="at">locality =</span> commune,</span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>     <span class="at">n_offers =</span> nombre_doffres,</span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a>     <span class="at">average_price_nominal_euros =</span> prix_moyen_annonce_en_courant,</span>
+<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a>     <span class="at">average_price_m2_nominal_euros =</span> prix_moyen_annonce_au_m2_en_courant,</span>
+<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a>     <span class="at">average_price_m2_nominal_euros =</span> prix_moyen_annonce_au_m2_en_courant</span>
+<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a>   ) <span class="sc">|&gt;</span></span>
 <span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">locality =</span> <span class="fu">str_trim</span>(locality)) <span class="sc">|&gt;</span></span>
 <span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(year, locality, n_offers, <span class="fu">starts_with</span>(<span class="st">"average"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>and here is the same code, but as a function:</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>```{r, eval = F}</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>get_raw_data &lt;- function(url = "https://data.public.lu/fr/datasets/r/14b0156e-ff87-4a36-a867-933fc9a6f903"){</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>get_raw_data &lt;- function(url = "https://is.gd/1vvBAc"){</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  raw_data &lt;- tempfile(fileext = ".xlsx")</span>
 <span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  download.file(url,</span>
 <span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>                raw_data,</span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>                mode = "wb") # for compatibility with Windows</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>                mode = "wb")</span>
 <span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>  sheets &lt;- excel_sheets(raw_data)</span>
 <span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a></span>
@@ -420,27 +426,29 @@ owner@localhost ➤ git push origin rmd</code></pre>
 <span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>      mutate(year = sheet)</span>
 <span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>  }</span>
 <span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>  raw_data &lt;- map_dfr(sheets,</span>
-<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>                      ~read_clean(raw_data,</span>
-<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>                                  skip = 10,</span>
-<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>                                  sheet = .)) %&gt;%</span>
-<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>    clean_names()</span>
-<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a>  raw_data %&gt;%</span>
-<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a>    rename(locality = commune,</span>
-<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a>           n_offers = nombre_doffres,</span>
-<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a>           average_price_nominal_euros = prix_moyen_annonce_en_courant,</span>
-<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a>           average_price_m2_nominal_euros = prix_moyen_annonce_au_m2_en_courant,</span>
-<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a>           average_price_m2_nominal_euros = prix_moyen_annonce_au_m2_en_courant</span>
-<span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a>           ) %&gt;%</span>
-<span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a>    mutate(locality = str_trim(locality)) %&gt;%</span>
-<span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a>    select(year, locality, n_offers, starts_with("average"))</span>
-<span id="cb9-32"><a href="#cb9-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-33"><a href="#cb9-33" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb9-34"><a href="#cb9-34" aria-hidden="true" tabindex="-1"></a>```</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>As you see, it’s almost exactly the same code. So why use a function? Our function has the advantage that it uses the url of the data as an argument. Which means that we can use it on other datasets (let’s remember that we are here focusing on prices of houses, but there’s another dataset of prices of apartments) or the same, but updated dataset (let’s also remember that this is a dataset that gets updated yearly). We can now more easily re-use this function later on (especially once we’ve turned this Rmd into a package in the next chapter). You can decide to show the source code of the function or hide it with the chunk option <code>include=FALSE</code> or <code>echo=FALSE</code> (the difference between <code>include</code> and <code>echo</code> is that <code>include</code> hides both the source code chunk and the output of that chunk). The next part of the Rmd file is simply using the function we just wrote:</p>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>  raw_data &lt;- map_dfr(</span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>    sheets,</span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>    ~read_clean(raw_data,</span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>                skip = 10,</span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>                sheet = .)) %&gt;%</span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>    clean_names()</span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a>  raw_data %&gt;%</span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a>    rename(</span>
+<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a>      locality = commune,</span>
+<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a>      n_offers = nombre_doffres,</span>
+<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a>      average_price_nominal_euros = prix_moyen_annonce_en_courant,</span>
+<span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a>      average_price_m2_nominal_euros = prix_moyen_annonce_au_m2_en_courant,</span>
+<span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a>      average_price_m2_nominal_euros = prix_moyen_annonce_au_m2_en_courant</span>
+<span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a>           ) %&gt;%</span>
+<span id="cb9-32"><a href="#cb9-32" aria-hidden="true" tabindex="-1"></a>    mutate(locality = str_trim(locality)) %&gt;%</span>
+<span id="cb9-33"><a href="#cb9-33" aria-hidden="true" tabindex="-1"></a>    select(year, locality, n_offers, starts_with("average"))</span>
+<span id="cb9-34"><a href="#cb9-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-35"><a href="#cb9-35" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb9-36"><a href="#cb9-36" aria-hidden="true" tabindex="-1"></a>```</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>As you see, it’s almost exactly the same code. So why use a function? Our function has the advantage that it uses the url of the data as an argument. Which means that we can use it on other datasets (let’s remember that we are here focusing on prices of houses, but there’s another dataset of prices of apartments) or use it on an updated version of this dataset (which gets updated yearly). We can now more easily re-use this function later on (especially once we’ve turned this Rmd into a package in the next chapter). You can decide to show the source code of the function or hide it with the chunk option <code>include=FALSE</code> or <code>echo=FALSE</code> (the difference between <code>include</code> and <code>echo</code> is that <code>include</code> hides both the source code chunk and the output of that chunk). Showing the source code in the output of your Rmd file can be useful if you want to share it with other developers. The next part of the Rmd file is simply using the function we just wrote:</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>```{r}</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>raw_data &lt;- get_raw_data(url = "https://github.com/b-rodrigues/rap4all/raw/master/datasets/vente-maison-2010-2021.xlsx")</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>raw_data &lt;- get_raw_data(url = "https://is.gd/1vvBAc")</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>```</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>We can now continue by explaining what’s wrong with the data and what cleaning steps need to be taken:</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>We need clean the data: "Luxembourg" is "Luxembourg-ville" in 2010 and 2011,</span>
@@ -468,45 +476,52 @@ owner@localhost ➤ git push origin rmd</code></pre>
 <span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a>```</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>The chunk above explains what we’re doing and why we’re doing it, and so we write a function (based on what we already wrote). Here again, the advantage of having this as a function will make it easier to run on updated data.</p>
 <p>We now continue with establishing a list of communes:</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>We now need to make sure that we got all the communes/localities in there. There</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>were mergers in 2011, 2015 and 2018. So we need to account for these localities.</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>We’re now scraping data from wikipedia of former Luxembourguish communes:</span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>```{r}</span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>get_former_communes &lt;- function(url = "https://en.wikipedia.org/wiki/Communes_of_Luxembourg#Former_communes",</span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>                                min_year = 2009,</span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>                                table_position = 3){</span>
-<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>  read_html(url) %&gt;%</span>
-<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>    html_table() %&gt;%</span>
-<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>    pluck(table_position) %&gt;%</span>
-<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>    clean_names() %&gt;%</span>
-<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>    filter(year_dissolved &gt; min_year)</span>
-<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>```</span>
-<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a>```{r}</span>
-<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a>former_communes &lt;- get_former_communes()</span>
+<div class="sourceCode" id="cb12"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>We now need to make sure that we got all the communes/localities </span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>in there. There were mergers in 2011, 2015 and 2018. So we need </span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>to account for these localities.</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>We’re now scraping data from Wikipedia of former Luxembourguish communes:</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>```{r}</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>get_former_communes &lt;- function(</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>            url = "https://en.wikipedia.org/wiki/Communes_of_Luxembourg#Former_communes",</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>            min_year = 2009,</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>            table_position = 3</span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>            ){</span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>  read_html(url) %&gt;%</span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>    html_table() %&gt;%</span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>    pluck(table_position) %&gt;%</span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>    clean_names() %&gt;%</span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>    filter(year_dissolved &gt; min_year)</span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a>```</span>
 <span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a>We can scrape current communes:</span>
-<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a>```{r}</span>
-<span id="cb12-26"><a href="#cb12-26" aria-hidden="true" tabindex="-1"></a>get_current_communes &lt;- function(url = "https://en.wikipedia.org/wiki/List_of_communes_of_Luxembourg",</span>
-<span id="cb12-27"><a href="#cb12-27" aria-hidden="true" tabindex="-1"></a>                                 table_position = 1){</span>
-<span id="cb12-28"><a href="#cb12-28" aria-hidden="true" tabindex="-1"></a>  read_html(url) %&gt;%</span>
-<span id="cb12-29"><a href="#cb12-29" aria-hidden="true" tabindex="-1"></a>    html_table() %&gt;%</span>
-<span id="cb12-30"><a href="#cb12-30" aria-hidden="true" tabindex="-1"></a>    pluck(table_position) %&gt;%</span>
-<span id="cb12-31"><a href="#cb12-31" aria-hidden="true" tabindex="-1"></a>    clean_names()</span>
-<span id="cb12-32"><a href="#cb12-32" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb12-33"><a href="#cb12-33" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-34"><a href="#cb12-34" aria-hidden="true" tabindex="-1"></a>```</span>
-<span id="cb12-35"><a href="#cb12-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-36"><a href="#cb12-36" aria-hidden="true" tabindex="-1"></a>```{r}</span>
-<span id="cb12-37"><a href="#cb12-37" aria-hidden="true" tabindex="-1"></a>current_communes &lt;- get_current_communes()</span>
-<span id="cb12-38"><a href="#cb12-38" aria-hidden="true" tabindex="-1"></a>```</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>This is quite a long chunk, but there is nothing new in here, so I won’t explain it line by line. What’s important is to notice that the code doing the actual work is all being wrapped inside functions. I reiterate: this will make reusing, testing and documenting much easier later on. Using the object <code>former_communes</code> and <code>current_communes</code> we can now build the complete list:</p>
+<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a>```{r}</span>
+<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a>former_communes &lt;- get_former_communes()</span>
+<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a>```</span>
+<span id="cb12-26"><a href="#cb12-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-27"><a href="#cb12-27" aria-hidden="true" tabindex="-1"></a>We can scrape current communes:</span>
+<span id="cb12-28"><a href="#cb12-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-29"><a href="#cb12-29" aria-hidden="true" tabindex="-1"></a>```{r}</span>
+<span id="cb12-30"><a href="#cb12-30" aria-hidden="true" tabindex="-1"></a>get_current_communes &lt;- function(</span>
+<span id="cb12-31"><a href="#cb12-31" aria-hidden="true" tabindex="-1"></a>                 url = "https://en.wikipedia.org/wiki/List_of_communes_of_Luxembourg",</span>
+<span id="cb12-32"><a href="#cb12-32" aria-hidden="true" tabindex="-1"></a>                 table_position = 1</span>
+<span id="cb12-33"><a href="#cb12-33" aria-hidden="true" tabindex="-1"></a>                 ){</span>
+<span id="cb12-34"><a href="#cb12-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-35"><a href="#cb12-35" aria-hidden="true" tabindex="-1"></a>  read_html(url) %&gt;%</span>
+<span id="cb12-36"><a href="#cb12-36" aria-hidden="true" tabindex="-1"></a>    html_table() %&gt;%</span>
+<span id="cb12-37"><a href="#cb12-37" aria-hidden="true" tabindex="-1"></a>    pluck(table_position) %&gt;%</span>
+<span id="cb12-38"><a href="#cb12-38" aria-hidden="true" tabindex="-1"></a>    clean_names()</span>
+<span id="cb12-39"><a href="#cb12-39" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb12-40"><a href="#cb12-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-41"><a href="#cb12-41" aria-hidden="true" tabindex="-1"></a>```</span>
+<span id="cb12-42"><a href="#cb12-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-43"><a href="#cb12-43" aria-hidden="true" tabindex="-1"></a>```{r}</span>
+<span id="cb12-44"><a href="#cb12-44" aria-hidden="true" tabindex="-1"></a>current_communes &lt;- get_current_communes()</span>
+<span id="cb12-45"><a href="#cb12-45" aria-hidden="true" tabindex="-1"></a>```</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This is quite a long chunk, but there is nothing new in here, so I won’t explain it line by line. What’s important is that the code doing the actual work is all being wrapped inside functions. I reiterate: this will make reusing, testing and documenting much easier later on. Using the object <code>former_communes</code> and <code>current_communes</code> we can now build the complete list:</p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>Let’s now create a list of all communes:</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>```{r}</span>
@@ -599,7 +614,7 @@ owner@localhost ➤ git push origin rmd</code></pre>
 <span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>          row.names = FALSE)</span>
 <span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>```</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>This last chunk is something I like to add to my Rmd files, but instead of showing it in the final document but not evaluating its contents using the chunk option <code>eval = F</code> you could hide it completely as well, so it doesn’t appear in the compiled document. The first time you compile this document, you could change the option to <code>eval = T</code>, so that the data gets written to disk, and then change it to <code>eval = F</code> to avoid overwriting the data on subsequent knittings. This is up to you, and also who the audience of the knitted output is (do they want to see this chunk at all?).</p>
-<p>Ok, and that’s it. You can take a look at the finalised file <a href="https://raw.githubusercontent.com/b-rodrigues/rap4all/master/rmds/save_data.Rmd">here</a><a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>. You can now remove the <code>save_data.R</code> script, as you have successfully ported the code over to a <code>Rmd</code>.</p>
+<p>Ok, and that’s it. You can take a look at the finalised file <a href="https://raw.githubusercontent.com/b-rodrigues/rap4all/master/rmds/save_data.Rmd">here</a><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>. You can now remove the <code>save_data.R</code> script, as you have successfully ported the code over to a <code>Rmd</code>.</p>
 <p>If you have not done it yet, you can commit these changes and push.</p>
 <p>Let’s now do the same thing for the analysis script.</p>
 </section>
@@ -676,7 +691,7 @@ owner@localhost ➤ git push origin rmd</code></pre>
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">group_by</span>(<span class="sc">!!</span>group_var)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>So if we are calling the function on <code>commune_level_dataset</code>, then <code>group_var</code> is equal to <code>locality</code>, if not it’s <code>NULL</code>. <code>!!group_var</code> means that now it’s time to evaluate <code>group_var</code> (or rather, <code>locality</code>). Because <code>!!group_var</code> gets replaced by <code>quo(locality)</code>, and because <code>group_by()</code> is a <code>{dplyr}</code> function that knows how to deal with quoted variables, <code>locality</code> gets looked up among the columns of the data frame. If it’s <code>NULL</code> nothing happens, so the data doesn’t get grouped.</p>
-<p>This is a big topic unto itself, so if you want to know more you can start by reading the famous <code>{dplyr}</code> vignette called <em>Programming with dplyr</em> <a href="https://dplyr.tidyverse.org/articles/programming.html">here</a><a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>. In case you use <code>{dplyr}</code> a lot, I recommend you do because mastering <em>tidy evaluation</em> (the name of this framework) is key to become comfortable with programming using <code>{dplyr}</code> (and other <em>tidyverse</em> packages). You can also read the chapter I wrote on this in my other <a href="http://modern-rstats.eu/defining-your-own-functions.html#functions-that-take-columns-of-data-as-arguments">free ebook</a>.</p>
+<p>This is a big topic unto itself, so if you want to know more you can start by reading the famous <code>{dplyr}</code> vignette called <em>Programming with dplyr</em> <a href="https://dplyr.tidyverse.org/articles/programming.html">here</a><a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>. In case you use <code>{dplyr}</code> a lot, I recommend you do because mastering <em>tidy evaluation</em> (the name of this framework) is key to become comfortable with programming using <code>{dplyr}</code> (and other <em>tidyverse</em> packages). You can also read the chapter I wrote on this in my other <a href="http://modern-rstats.eu/defining-your-own-functions.html#functions-that-take-columns-of-data-as-arguments">free ebook</a>.</p>
 <p>The next lines of the script that we need to port over to the Rmd are quite standard, we write code to create some plots (which were already refactored into a function in the chapter on collaborating on Github). But remember, we want to have an Rmd file that can be compiled into a document that can be read by humans. This means that to make the document clear, I suggest that we create one subsection by commune that we plot. Thankfully, we have learned all about child documents in the literate programming chapter, and this is what we will be using to avoid having to repeat ourselves. The first part is simply the function that we’ve already written:</p>
 <div class="sourceCode" id="cb22"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>```{r}</span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>make_plot &lt;- function(commune){</span>
@@ -719,7 +734,7 @@ owner@localhost ➤ git push origin rmd</code></pre>
 <span id="cb23-19"><a href="#cb23-19" aria-hidden="true" tabindex="-1"></a>cat(unlist(res), sep = "\n")</span>
 <span id="cb23-20"><a href="#cb23-20" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb23-21"><a href="#cb23-21" aria-hidden="true" tabindex="-1"></a>```</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>I won’t explain this now in great detail, since that was already done in the chapter on literate programming. Before continuing, really make sure that you understand what is going on here. Take a look at the finalised file <a href="https://raw.githubusercontent.com/b-rodrigues/rap4all/master/rmds/analyse_data.Rmd">here</a><a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a>.</p>
+<p>I won’t explain this now in great detail, since that was already done in the chapter on literate programming. Before continuing, really make sure that you understand what is going on here. Take a look at the finalised file <a href="https://raw.githubusercontent.com/b-rodrigues/rap4all/master/rmds/analyse_data.Rmd">here</a><a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>.</p>
 </section>
 <section id="conclusion" class="level2" data-number="9.3">
 <h2 data-number="9.3" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">9.3</span> Conclusion</h2>
@@ -729,16 +744,14 @@ owner@localhost ➤ git push origin rmd</code></pre>
 
 
 </section>
-<aside id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr>
 <ol>
-<li id="fn1"><p>https://is.gd/LyvwHb<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2"><p>https://is.gd/X7XXJg<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn3"><p>https://is.gd/eBbcsR<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn4"><p>https://dplyr.tidyverse.org/articles/programming.html<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn5"><p>https://is.gd/L2GICG<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn1"><p>https://is.gd/eBbcsR<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>https://dplyr.tidyverse.org/articles/programming.html<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>https://is.gd/L2GICG<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
-</aside>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -782,33 +795,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       } else {
         el.classList.add('notransition');
       }
-    }
-  }
-  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
-    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
-    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
-    let newTheme = '';
-    if(darkModeDefault) {
-      newTheme = isAlternate ? baseTheme : alternateTheme;
-    } else {
-      newTheme = isAlternate ? alternateTheme : baseTheme;
-    }
-    const changeGiscusTheme = () => {
-      // From: https://github.com/giscus/giscus/issues/336
-      const sendMessage = (message) => {
-        const iframe = document.querySelector('iframe.giscus-frame');
-        if (!iframe) return;
-        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
-      }
-      sendMessage({
-        setConfig: {
-          theme: newTheme
-        }
-      });
-    }
-    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
-    if (isGiscussLoaded) {
-      changeGiscusTheme();
     }
   }
   const toggleColorMode = (alternate) => {
@@ -877,15 +863,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return localAlternateSentinel;
     }
   }
-  const darkModeDefault = false;
-  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+  let localAlternateSentinel = 'default';
   // Dark / light mode switch
   window.quartoToggleColorScheme = () => {
     // Read the current dark / light value 
     let toAlternate = !hasAlternateSentinel();
     toggleColorMode(toAlternate);
     setStyleSentinel(toAlternate);
-    toggleGiscusIfUsed(toAlternate, darkModeDefault);
   };
   // Ensure there is a toggle, if there isn't float one in the top right
   if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.70">
+<meta name="generator" content="quarto-1.3.353">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -349,16 +349,16 @@ div.csl-indent {
 
 </header>
 
-<p>We now know about version control, how to collaborate using Github.com and functional programming. By only learning about this, we have actually already made some massive steps towards making our projects reproducible. Especially by using Git and Github. Even if you’re using private repos and work in the private sector, by using version control, you ensure that reusing this code for future projects is much easier. Auditing is greatly simplified as well.</p>
-<p>But this book is still far from over. Let’s think about our project up until now. We have downloaded some data, and wrote code to analyse it. Fair enough. But usually, we don’t really stop there. We now need to write a report, or maybe a Powerpoint presentation. If you’re a researcher, you still need to write a paper, just getting the results is not enough!</p>
+<p>You now know about version control, how to collaborate using Github.com and functional programming. By only learning about this, you have already made some massive steps towards making your projects reproducible. Especially by using Git and Github. Even if you’re using private repos and work in the private sector, by using version control, you ensure that reusing this code for future projects is much easier. Auditing is greatly simplified as well.</p>
+<p>But this book is still far from over. Let’s think about our project up until now. We have downloaded some data, and wrote code to analyse it. Fair enough. But usually, we don’t really stop there. We now need to write a report, or maybe a Powerpoint presentation. If you’re a researcher, you still need to write a paper, just getting the results is not enough, and if you work in the private sector, you also need to present the results of your analysis to management.</p>
 <figure class="figure">
 <img src="images/report_draft_loop.png" alt="The cursed report drafting loop." class="figure-img">
 <figcaption class="figure-caption">
 The cursed report drafting loop.
 </figcaption>
 </figure>
-<p>The problem is that this workflow is very often quite horrible. The picture above illustrates this cursed report drafting loop. Get some results, copy and paste images into Word or Powerpoint, get a change request, or notice a mistake, and start from scratch again. If you’re using LaTeX it’ll be easier for pictures, but you’ll still need to update tables by hand each time you need to touch your analysis code.</p>
-<p>Worse, what if you start with a Word or LaTeX document, but then get asked to make a Powerpoint presentation as well? Then you need to copy and paste everything into Powerpoint as well… and if you get a change request after you’re done and need to start over, you might seriously consider raising goats instead of dealing with this again.</p>
+<p>The problem is that writing code, getting some results, and putting this results into a document (it doesn’t matter what kind) is often very tedious. The picture above illustrates this cursed report drafting loop. Get some results, copy and paste images into Word or Powerpoint, get a change request, or notice a mistake, and start from scratch again. If you’re using LaTeX it’ll be easier for pictures, but you’ll still need to update tables by hand each time you need to touch your analysis code.</p>
+<p>Worse, what if you start with a Word or LaTeX document, but then get asked to make a Powerpoint presentation as well? Then you need to copy and paste everything again, but this time into Powerpoint… and if you get a change request after you’re done and need to start over, you might seriously consider raising goats instead of dealing with this again.</p>
 <p>But if we can make the loop look like this instead:</p>
 <figure class="figure">
 <img src="images/md_draft_loop.png" alt="The holy report drafting loop." class="figure-img">
@@ -369,9 +369,9 @@ The holy report drafting loop.
 <p>Basically, everything from cleaning, analysing and drafting is done in one single step? Well, this is what literate programming enables you to do. And even if you get asked to make a Powerpoint presentation, you can start from the same source code as the original report, and remove everything that you don’t need and compile to a Powerpoint (or Beamer) presentation.</p>
 <section id="a-quick-history-of-literate-programming" class="level2" data-number="7.1">
 <h2 data-number="7.1" class="anchored" data-anchor-id="a-quick-history-of-literate-programming"><span class="header-section-number">7.1</span> A quick history of literate programming</h2>
-<p>In literate programming, we mix code and prose together, which makes the output of our programs not just a series of tables, or graphs or predictions, but a complete report that contains the results of our analysis directly. Scripts written using literate programming are also very easy to compile, or render, into a variety of document formats like <code>html</code>, <code>docx</code>, <code>pdf</code> or even <code>pptx</code>. R supports several frameworks for literate programming: Sweave, knitr and Quarto.</p>
+<p>In literate programming, authors mix code and prose, which makes the output of their programs not just a series of tables, or graphs or predictions, but a complete report that contains the results of the analysis directly embedded into it. Scripts written using literate programming are also very easy to compile, or render, into a variety of document formats like <code>html</code>, <code>docx</code>, <code>pdf</code> or even <code>pptx</code>. R supports several frameworks for literate programming: Sweave, knitr and Quarto.</p>
 <p>Sweave was the first tool available to R (and S) users, and allowed the mixing of R and LaTeX code to create a document. Friedrich Leisch developed Sweave in 2002 and described it in his 2002 paper (<span class="citation" data-cites="leisch2002">Leisch (<a href="references.html#ref-leisch2002" role="doc-biblioref">2002</a>)</span>). As Leisch argues, <em>the traditional way of writing a report as part of a statistical data analysis project uses two separate steps</em>: running the analysis using some software, and then copy and pasting the results into a word processing tool (as illustrated above). To really drive that point home: the problem with this approach is that much time is wasted copy and pasting things, so experimenting with different layouts or data analysis techniques is very time consuming. Copy and paste mistakes will also happen (it’s not a question of if, but when) and updating reports (for example, when new data comes in) means that someone will have, again, to copy and paste the updated results into a new document.</p>
-<p>Sweave provided (and still provides, as it is still well functioning!) a way to embed the analysis in the document itself, in this case a LaTeX source file, and R code was executed whenever the document was compiled. This gave researchers considerable time savings when it was time to update a report or drafting a research paper.</p>
+<p>Sweave makes it possible to embed the analysis in the final document itself, by providing a way to mix LaTeX and R code which gets executed whenever the final, output document gets compiled. This gives practiotioners considerable time savings because it eliminates the copy and pasting of results from R outputs into a document.</p>
 <p>The snippet below shows the example from Leisch’s paper:</p>
 <pre><code>\documentclass[a4paper]{article}
 
@@ -403,7 +403,7 @@ boxplot(Ozone ~ Month, data = airquality)
 More than 20 years later, the output is still the same.
 </figcaption>
 </figure>
-<p>Let us just state that the fact that it is still possible to compile this example more than 20 years later is an incredible testament to how mature and stable this software is (both R, Sweave, and LaTeX). But as impressive as this is, LaTeX has a steep learning curve, and Leisch even advocated the use of the Emacs text editor to edit Sweave files, which also has a very steep learning curve (but this is entirely optional; for example we edited and compiled the example on the Rstudio IDE).</p>
+<p>Let me just state that the fact that it is still possible to compile this example more than 20 years later is an incredible testament to how mature and stable this software is (both R, Sweave, and LaTeX). But as impressive as this is, LaTeX has a steep learning curve, and Leisch even advocated the use of the Emacs text editor to edit Sweave files, which also has a very steep learning curve (but this is entirely optional; for example I’ve edited and compiled the example on the RStudio IDE).</p>
 <p>The next generation of literate programming tools was provided by a package called <code>{knitr}</code> in 2012. From the perspective of the user, the biggest change from Sweave is that <code>{knitr}</code> is able to use many different formats as source files. The one that became very likely the most widely used format is a flavour of the Markdown markup language, R Markdown (Rmd). But this is not the only difference with Sweave:<code>{knitr}</code> can also run code chunks for other languages, such as Python, Perl, Awk, Haskell, bash and more (<span class="citation" data-cites="xie2014">Xie (<a href="references.html#ref-xie2014" role="doc-biblioref">2014</a>)</span>). Since version 1.18, <code>{knitr}</code> uses the <code>{reticulate}</code> package to provide a Python engine for the Rmd format. To illustrate the Rmd format, let’s rewrite the example from Leisch’s Sweave paper into it:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>---</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>output: pdf_document</span>
@@ -432,7 +432,7 @@ More than 20 years later, the output is still the same.
 It’s very close to the Sweave output.
 </figcaption>
 </figure>
-<p>Just like in a Sweave document, an Rmd source file also has a header in which authors can define a number of options. Here we only specified that we wanted a pdf document as an output file. We then copy and pasted the contents from the Sweave source, but changed the chunk delimiters from <code>&lt;&lt;&gt;&gt;=</code> and <code>@</code> to <code>```dnq</code> to start an R chunk and <code>```</code> to end it. Remember; we need to specify the engine in the chunk because <code>{knitr}</code> supports many engines. For example, it is possible to run a bash command by adding this chunk to the source:</p>
+<p>Just like in a Sweave document, an Rmd source file also has a header in which authors can define a number of general options. Here I’ve only specified that I wanted a pdf document as an output file. I then copy and pasted the contents from the Sweave source, but changed the chunk delimiters from <code>&lt;&lt;&gt;&gt;=</code> and <code>@</code> to <code>```zzd</code> to start an R chunk and <code>```</code> to end it. Remember; we need to specify the engine in the chunk because <code>{knitr}</code> supports many engines. For example, it is possible to run a bash command by adding this chunk to the source:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>---</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>output: pdf_document</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>---</span>
@@ -458,16 +458,16 @@ It’s very close to the Sweave output.
 <span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>pwd</span>
 <span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>```</span>
 <span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>(bash’s <code>pwd</code> command shows the current working directory). You may have noticed that we also keep two LaTeX commands in the source Rmd, <code>\texttt{}</code> and <code>LaTeX</code>. This is because Rmd files get first converted into <code>LaTeX</code> files and then into a PDF. If you’re using RStudio, this document can be compiled by clicking a button or using a keyboard shortcut, but you can also use the <code>rmarkdown::render()</code> function. This function does two things transparently: it first converts the Rmd file into a source LaTeX file, and then converts it into a PDF. It is of course possible to convert the document to a Word document as well, but in this case, LaTeX commands will be ignored. Html is another widely used output format.</p>
-<p>If you’re a researcher and prefer working with LaTeX directly instead of having to switch to Markdown, you can either use Sweave, or use <code>{knitr}</code> but instead of writing your documents using the R Markdown format, you can use the <code>Rnw</code> format which is basically the same as Sweave, but uses <code>{knitr}</code> for compilation. Take a look at <a href="https://github.com/yihui/knitr/blob/master/inst/examples/knitr-minimal.Rnw">this example</a> from the <code>{knitr}</code> github repository for example.</p>
-<p>You should know that <code>{knitr}</code> makes it possible to author many, many different types of documents. It is possible to write books, blogs, package documentation (and even entire packages, as we shall see later in this book), Powerpoint slides… It is extremely powerful because we can use the same general R Markdown knowledge to build many different outputs:</p>
+<p>(bash’s <code>pwd</code> command shows the current working directory). You may have noticed that I’ve also keep two LaTeX commands in the source Rmd, <code>\texttt{}</code> and <code>LaTeX</code>. This is because Rmd files get first converted into <code>LaTeX</code> files and then into a PDF. If you’re using RStudio, this document can be compiled by clicking a button or using a keyboard shortcut, but you can also use the <code>rmarkdown::render()</code> function. This function does two things transparently: it first converts the Rmd file into a source LaTeX file, and then converts it into a PDF. It is of course possible to convert the document to a Word document as well, but in this case, LaTeX commands will be ignored. Html is another widely used output format.</p>
+<p>If you’re a researcher and prefer working with LaTeX directly instead of having to switch to Markdown, you can either use Sweave, or use <code>{knitr}</code> but instead of writing your documents using the R Markdown format, you can use the <code>Rnw</code> format which is basically the same as Sweave, but uses <code>{knitr}</code> for compilation. Take a look at <a href="https://github.com/yihui/knitr/blob/master/inst/examples/knitr-minimal.Rnw">this example</a><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> from the <code>{knitr}</code> Github repository for example.</p>
+<p>You should know that <code>{knitr}</code> makes it possible to author many, many different types of documents. It is possible to write books, blogs, package documentation (and even entire packages, as we shall see later in this book), Powerpoint slides… It is extremely powerful because we can use the same general R Markdown knowledge to build many different outputs.</p>
 <figure class="figure">
 <img src="images/rmd_to_many.PNG" alt="One format to rule them all." class="figure-img">
 <figcaption class="figure-caption">
 One format to rule them all.
 </figcaption>
 </figure>
-<p>Finally, the latest in literate programming for R is a new tool developed by Posit, called Quarto. If you’re an R user and already know <code>{knitr}</code> and the Rmd format, you should be able to immediately use Quarto. So what’s the difference? In practice and for R users not much but there are some things that Quarto is able to do out of the box for which you’d need extensions with <code>{knitr}</code>. Quarto has some nice defaults; in fact this book is written in Quarto’s Markdown flavour and compiled with Quarto instead of <code>{knitr}</code> because the default Quarto output looks nicer than the default <code>{knitr}</code> output. However, there may even be things that Quarto can’t do at all (at least for now) when compared to <code>{knitr}</code>. So why bother switching? Well, Quarto provides sane defaults and some nice features out of the box, and the cost of switching from the Rmd format to Quarto’s Qmd format is basically 0. Also, and this is probably the biggest reason to use Quarto, Quarto is not tied to R. Quarto is actually a standalone tool that needs to be installed alongside your R installation, and works completely independently. In fact, you can use Quarto without having R installed at all, as Quarto, just like <code>{knitr}</code> supports many engines. This means that if you’re primarily using Python, you can author documents with Quarto. Quarto also supports the Julia programming language and Observable JS, making it possible to include interactive visualisations into an Html document. Let’s take a look at how the example from Leisch’s paper looks as a Qmd file:</p>
+<p>Finally, the latest in literate programming for R is a new tool developed by Posit, called Quarto. If you’re an R user and already know <code>{knitr}</code> and the Rmd format, you should be able to immediately use Quarto. So what’s the difference? In practice and for R users not much but there are some things that Quarto is able to do out of the box for which you’d need extensions with <code>{knitr}</code>. Quarto has some nice defaults; in fact this book is written in Quarto’s Markdown flavour and compiled with Quarto instead of <code>{knitr}</code> because the default Quarto output looks nicer than the default <code>{knitr}</code> output. However, there may even be things that Quarto can’t do at all (at least for now) when compared to <code>{knitr}</code>. So why bother switching? Well, Quarto provides sane defaults and some nice features out of the box, and the cost of switching from the Rmd format to Quarto’s Qmd format is basically 0. Also, and this is probably the biggest reason to use Quarto, Quarto is not tied to R. Quarto is actually a standalone tool that needs to be installed alongside your R installation, and works completely independently. In fact, you can use Quarto without having R installed at all, as Quarto, just like <code>{knitr}</code> supports many engines. This means that if you’re primarily using Python, you can author documents with Quarto that executed Python chunks. Quarto also supports the Julia programming language and Observable JS, making it possible to include interactive visualisations into an Html document. Let’s take a look at how the example from Leisch’s paper looks as a Qmd (Quarto’s flavour of Markdown) file:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>---</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>output: pdf</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>---</span>
@@ -489,7 +489,7 @@ One format to rule them all.
 <span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>boxplot(Ozone ~ Month, data = airquality)</span>
 <span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>```</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>(I’ve omitted the bash chunk from before, not because Quarto does not support it, but to keep close to the original example from the paper.)</p>
-<p>As you can see, it’s exactly the same as the Rmd file from before. The only difference is in the header. In the Rmd file we specified the output format as:</p>
+<p>As you can see, it’s exactly the same as the Rmd file from before. The only difference is in the header. In the Rmd file I specified the output format as:</p>
 <pre><code>
 ---
 output: pdf_document
@@ -501,24 +501,24 @@ output: pdf_document
 output: pdf
 ---
 </code></pre>
-<p>While Quarto is the latest option in literate programming, it is quite recent, and as such, I feel it might be better to stick with <code>{knitr}</code> and the Rmd format for now, so that’s what we’re going to use going forward. Also, the <code>{knitr}</code> and the Rmd format are here to stay, so there’s little risk in keeping using it, and anyways, as already stated, if switching to Quarto becomes a necessity, the cost of switch would be very, very low. In what follows, I won’t be focused on anything really <code>{knitr}</code> or Rmd specific, so should you want to use Quarto instead, you should be able to follow along without any problems at all, since the Rmd and Qmd formats have so much overlap.</p>
-<p>In the next two sections, we will discuss how to set up and use <code>{knitr}</code> as well as give you a quick overview of the R Markdown syntax. However, we will very quickly focus on the templating capabilities of <code>{knitr}</code>: expanding text, using child documents, and parameterised reports. These are advanced topics and not easy to tackle if you’re not comfortable with R already. Just as functions and higher-order functions like <code>lapply()</code> avoid having to repeat yourself, so does templating, but for literate programming. The goal is to write functions that return literal R Markdown code, so that you can loop over these functions to build entire sections of your documents. However, the learning curve for these features is quite steep, but by now, you should have noticed that this book expects a lot from you. Keep going, and you shall be handsomely rewarded.</p>
+<p>While Quarto is the latest option in literate programming, it is quite recent, and as such, I feel it might be better to stick with <code>{knitr}</code> and the Rmd format for now, so that’s what we’re going to use going forward. Also, the <code>{knitr}</code> and the Rmd format are here to stay, so there’s little risk in keeping using it, and anyways, as already stated, if switching to Quarto becomes a necessity, the cost of switching would be very, very low. In what follows, I won’t be focused on anything really <code>{knitr}</code> or Rmd specific, so should you want to use Quarto instead, you should be able to follow along without any problems at all, since the Rmd and Qmd formats have so much overlap. Also, Quarto needs to be installed separately, but to use <code>{knitr}</code> and RMarkdown, no specific tools are necessary.</p>
+<p>In the next two sections, I will show how to set up and use <code>{knitr}</code> as well as give you a quick overview of the R Markdown syntax. However, we will very quickly focus on the templating capabilities of <code>{knitr}</code>: expanding text, using child documents, and parameterised reports. These are advanced topics and not easy to tackle if you’re not comfortable with R already. Just as functions and higher-order functions like <code>lapply()</code> avoid having to repeat yourself, so does templating, but for literate programming. The goal is to write functions that return literal R Markdown code, so that you can loop over these functions to build entire sections of your documents. However, the learning curve for these features is quite steep, but by now, you should have noticed that this book expects a lot from you. Keep going, and you shall be handsomely rewarded.</p>
 </section>
 <section id="knitr-basics" class="level2" data-number="7.2">
 <h2 data-number="7.2" class="anchored" data-anchor-id="knitr-basics"><span class="header-section-number">7.2</span> <code>{knitr}</code> basics</h2>
-<p>This section will be a very small intro to <code>{knitr}</code>. We are going to teach you just enough to get started, and we are going to focus on the Rmd format. There are many resources out there that you can use if you want to dig deeper, for instance the <a href="https://rmarkdown.rstudio.com/lesson-1.html">R Markdown website</a> from Posit, or the <a href="https://bookdown.org/yihui/rmarkdown/">R Markdown: The Definitive Guide</a> and <a href="https://bookdown.org/yihui/rmarkdown-cookbook/">R Markdown Cookbook</a> eBooks. We will also not assume that you are using the RStudio IDE and give you instead the lower level commands to render documents. If you use RStudio and want to know how to use it effectively to author Rmd documents, you should take a look at <a href="https://rmarkdown.rstudio.com/authoring_quick_tour.html">Quick Tour</a> page. In fact, this section will basically focus on the same topics, but without focusing on how to use RStudio.</p>
+<p>This section will be a very small intro to <code>{knitr}</code>. I’m going to teach you just enough to get started writing Rmd files. Most, if not all, of what I’ll be explaining here is also applicable to the Qmd format. There are many resources out there that you can use if you want to dig deeper, for instance the <a href="https://rmarkdown.rstudio.com/lesson-1.html">R Markdown website</a><a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> from Posit, or the <a href="https://bookdown.org/yihui/rmarkdown/">R Markdown: The Definitive Guide</a><a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> and <a href="https://bookdown.org/yihui/rmarkdown-cookbook/">R Markdown Cookbook</a><a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> eBooks. I will also not assume that you are using the RStudio IDE and give you instead the lower level commands to render documents. If you use RStudio and want to know how to use it effectively to author Rmd documents, you should take a look at <a href="https://rmarkdown.rstudio.com/authoring_quick_tour.html">this</a><a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a> page. In fact, this section will basically focus on the same topics, but without RStudio.</p>
 <section id="set-up" class="level3" data-number="7.2.1">
 <h3 data-number="7.2.1" class="anchored" data-anchor-id="set-up"><span class="header-section-number">7.2.1</span> Set up</h3>
 <p>The first step is to install the <code>{knitr}</code> and the <code>{rmarkdown}</code> packages. That’s easy, just type:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"rmarkdown"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>in an R console. Since <code>{knitr}</code> is required to install <code>{rmarkdown}</code>, it gets installed automatically. If you want to compile PDF documents, you should also have a working LaTeX distribution. You can skip this next part if you’re only interested in generating PDF and Word files. For what follows, we will only be rendering Html documents, so no need to install LaTeX (by the way, you don’t even need a working Word installation to compile documents to the <code>docx</code> format). However, if you already have a working LaTeX installation, you shouldn’t have to do anything else to generate PDF documents. If you don’t have a working LaTeX distribution, then Yihui Xie, the creator of <code>{knitr}</code> created an R package called <code>{tinytex}</code> that makes it extremely easy to install a LaTeX distribution. In fact, this is the way I recommend installing LaTeX even if you’re not an R user (it is possible to use the tinytex distribution without R; it’s just that the <code>{tinytex}</code> R package provides many functions that makes installing and maintaining it very easy). Simply run these commands in an R console to get started:</p>
+<p>in an R console. Since <code>{knitr}</code> is required to install <code>{rmarkdown}</code>, it gets installed automatically. If you want to compile PDF documents, you should also have a working LaTeX distribution. You can skip this next part if you’re only interested in generating Html and Word files. For what follows in the book, we will only be rendering Html documents, so no need to install LaTeX (by the way, you don’t even need a working Word installation to compile documents to the <code>docx</code> format). However, if you already have a working LaTeX installation, you shouldn’t have to do anything else to generate PDF documents. If you don’t have a working LaTeX distribution, then Yihui Xie, the creator of <code>{knitr}</code> created an R package called <code>{tinytex}</code> that makes it extremely easy to install. In fact, this is the way I recommend installing LaTeX even if you’re not an R user (it is possible to use the tinytex distribution without R; it’s just that the <code>{tinytex}</code> R package provides many functions that makes installing and maintaining it very easy). Simply run these commands in an R console to get started:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"tinytex"</span>)</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>tinytex<span class="sc">::</span><span class="fu">install_tinytex</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>and that’s it! If you need to install specific LaTeX packages, then refer to the <strong>Maintenance</strong> section on <a href="https://yihui.org/tinytex/#maintenance">tinytex’s</a> website. For example, to compile the example from Leisch’s article on Sweave discussed previously, we had to install the <code>grfext</code> LaTeX package (as explained by the error output in the console when we tried compiling). So, we simply needed to run the following command to get it:</p>
+<p>and that’s it! If you need to install specific LaTeX packages, then refer to the <strong>Maintenance</strong> section on <a href="https://yihui.org/tinytex/#maintenance">tinytex’s</a> website. For example, to compile the example from Leisch’s article on Sweave discussed previously, the <code>grfext</code> LaTeX package needs to be installed (as explained by the error output in the console when I tried compiling). To install this package, you can use the <code>tlmgr_install()</code> function from <code>{tinytex}</code>:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tlmgr_install</span>(<span class="st">"grfext"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -542,19 +542,19 @@ output: pdf
 </div>
 <p>This should create a file called <code>rmd_test.html</code>; open it with your web browser and you should see the following:</p>
 <figure class="figure">
-<img src="images/rmd_test.PNG" alt="It’s very close to the Sweave output." class="figure-img">
+<img src="images/rmd_test.PNG" alt="This is how formatting looks like, once the document is compiled." class="figure-img">
 <figcaption class="figure-caption">
-It’s very close to the Sweave output.
+This is how formatting looks like, once the document is compiled.
 </figcaption>
 </figure>
 <p>Congratulations, you just <em>knitted</em> your first Rmd document!</p>
 </section>
 <section id="markdown-ultrabasics" class="level3" data-number="7.2.2">
 <h3 data-number="7.2.2" class="anchored" data-anchor-id="markdown-ultrabasics"><span class="header-section-number">7.2.2</span> Markdown ultrabasics</h3>
-<p>R Markdown is a flavour of Markdown, which means that you should know some Markdown to really take full advantage of R Markdown. The example document from before should have already shown you some basics: titles, sections and subsections all start with a <code>#</code> and the depth level is determined by the number of <code>#</code>s. For bold text, simply put the words in between <code>**</code> and for italics use only one <code>*</code>. If you want <strong><em>bold and italics</em></strong>, use <code>***</code>. The original designer of Markdown did not think that underlining text was important, so there is no <em>easy</em> way of doing it unfortunately. For this, you need to use a somewhat hidden feature; without going into too much technical details, the program that converts Rmd files to the final output format is called Pandoc, and it’s possible to use some of Pandoc’s features to format text. For example, for underlining:</p>
+<p>R Markdown is a flavour of Markdown, which means that you should know some Markdown to really take full advantage of R Markdown. The example document from before should have already shown you some basics: titles, sections and subsections all start with a <code>#</code> and the depth level is determined by the number of <code>#</code>s. For bold text, simply put the words in between <code>**</code> and for italics use only one <code>*</code>. If you want <strong><em>bold and italics</em></strong>, use <code>***</code>. The original designer of Markdown did not think that underlining text was important, so there is no <em>easy</em> way of doing it, unfortunately. For this, you need to use a somewhat hidden feature; without going into too many technical details, the program that converts Rmd files to the final output format is called Pandoc, and it’s possible to use some of Pandoc’s features to format text. For example, for underlining:</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>[This is some underlined text in a R Markdown document]{.underline}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>This will underline the text between square brackets.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
-<p>The next step is actually to mix code and prose. As you’ve seen from Leisch’s canonical example, this is quite easily achieved by using R code chunks. The R Markdown example below shows various code chunks alongside some options. For example, a code chunk that uses the <code>echo = FALSE</code> option will not appear (but the output of the computation will):</p>
+<p>This will underline the text between square brackets.<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a></p>
+<p>The next step is to mix code and prose. As you’ve seen from Leisch’s canonical example, this is quite easily achieved by using R code chunks. The R Markdown example below shows various code chunks alongside some options. For example, a code chunk that uses the <code>echo = FALSE</code> option will not appear (but the output of the computation will):</p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>---</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>title: "Document title"</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>output: html_document</span>
@@ -572,42 +572,44 @@ It’s very close to the Sweave output.
 <span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>```</span>
 <span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>The code chunk above will appear in the final output. The code chunk below will be hidden:</span>
-<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>```{r, echo = FALSE}</span>
-<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>data(iris)</span>
-<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a>plot(iris)</span>
-<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a>```</span>
-<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>The code chunk above will appear in the final output. </span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>The code chunk below will be hidden:</span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>```{r, echo = FALSE}</span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a>data(iris)</span>
+<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a>plot(iris)</span>
+<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a>```</span>
 <span id="cb13-26"><a href="#cb13-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-27"><a href="#cb13-27" aria-hidden="true" tabindex="-1"></a>This next code chunk will not be evaluated:</span>
-<span id="cb13-28"><a href="#cb13-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-29"><a href="#cb13-29" aria-hidden="true" tabindex="-1"></a>```{r, eval = FALSE}</span>
-<span id="cb13-30"><a href="#cb13-30" aria-hidden="true" tabindex="-1"></a>data(titanic)</span>
-<span id="cb13-31"><a href="#cb13-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-32"><a href="#cb13-32" aria-hidden="true" tabindex="-1"></a>str(titanic)</span>
-<span id="cb13-33"><a href="#cb13-33" aria-hidden="true" tabindex="-1"></a>```</span>
-<span id="cb13-34"><a href="#cb13-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-27"><a href="#cb13-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-28"><a href="#cb13-28" aria-hidden="true" tabindex="-1"></a>This next code chunk will not be evaluated:</span>
+<span id="cb13-29"><a href="#cb13-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-30"><a href="#cb13-30" aria-hidden="true" tabindex="-1"></a>```{r, eval = FALSE}</span>
+<span id="cb13-31"><a href="#cb13-31" aria-hidden="true" tabindex="-1"></a>data(titanic)</span>
+<span id="cb13-32"><a href="#cb13-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-33"><a href="#cb13-33" aria-hidden="true" tabindex="-1"></a>str(titanic)</span>
+<span id="cb13-34"><a href="#cb13-34" aria-hidden="true" tabindex="-1"></a>```</span>
 <span id="cb13-35"><a href="#cb13-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-36"><a href="#cb13-36" aria-hidden="true" tabindex="-1"></a>The last one runs, but code and output from the code is not shown in the final</span>
-<span id="cb13-37"><a href="#cb13-37" aria-hidden="true" tabindex="-1"></a>document. This is useful for loading libraries and hiding startup messages:</span>
-<span id="cb13-38"><a href="#cb13-38" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-39"><a href="#cb13-39" aria-hidden="true" tabindex="-1"></a>```{r, include = FALSE}</span>
-<span id="cb13-40"><a href="#cb13-40" aria-hidden="true" tabindex="-1"></a>library(dplyr)</span>
-<span id="cb13-41"><a href="#cb13-41" aria-hidden="true" tabindex="-1"></a>```</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>If you use RStudio and create a new R Markdown file from the menu, a new R Markdown file is generated for you to fill out. The first R chunk is this one:</p>
+<span id="cb13-36"><a href="#cb13-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-37"><a href="#cb13-37" aria-hidden="true" tabindex="-1"></a>The last one below runs, but code and output from the code is </span>
+<span id="cb13-38"><a href="#cb13-38" aria-hidden="true" tabindex="-1"></a>not shown in the final document. This is useful for loading </span>
+<span id="cb13-39"><a href="#cb13-39" aria-hidden="true" tabindex="-1"></a>libraries and hiding startup messages:</span>
+<span id="cb13-40"><a href="#cb13-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-41"><a href="#cb13-41" aria-hidden="true" tabindex="-1"></a>```{r, include = FALSE}</span>
+<span id="cb13-42"><a href="#cb13-42" aria-hidden="true" tabindex="-1"></a>library(dplyr)</span>
+<span id="cb13-43"><a href="#cb13-43" aria-hidden="true" tabindex="-1"></a>```</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>If you use RStudio and create a new R Markdown file from the menu, a template R Markdown file is generated for you to fill out. The first R chunk is this one:</p>
 <div class="sourceCode" id="cb14"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>```{r setup, include=FALSE}</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>knitr::opts_chunk$set(echo = TRUE)</span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>```</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>This is an R chunk named <code>setup</code> and with the option <code>include = FALSE</code>. Naming chunks is optional, but we are going to make use of this later on. What this chunk runs is one line of code that defines a global option to show all chunks by default (which is the default behaviour). You can change <code>TRUE</code> to <code>FALSE</code> if you want to hide every code chunk instead (if you’re using Quarto, global options are set <a href="https://quarto.org/docs/computations/execution-options.html">differently</a>).</p>
+<p>This is an R chunk named <code>setup</code> and with the option <code>include = FALSE</code>. Naming chunks is optional, but we are going to make use of this later on. The code that runs in this chunk defines a global option to show the source code from all the chunks by default (which is the default behaviour). You can change <code>TRUE</code> to <code>FALSE</code> if you want to hide every code chunk instead (if you’re using Quarto, global options are set <a href="https://quarto.org/docs/computations/execution-options.html">differently</a>).</p>
 <p>Something else you might have noticed in the previous example, is that we’ve added some more content in the header:</p>
 <div class="sourceCode" id="cb15"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>---</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>title: "Document title"</span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>output: html_document</span>
 <span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>date: "2023-01-28"</span>
 <span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>---</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>There are several other options available that you can define in the header. Later on, when we’ll be building our project together, we will provide some more options (like having a table of contents).</p>
+<p>There are several other options available that you can define in the header. Later on I will show you some more options, for example how to define a table of contents.</p>
 <p>To finish this part on code chunks, you should know about inline code chunks. Take a look at the following example:</p>
 <div class="sourceCode" id="cb16"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>---</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>title: "Document title"</span>
@@ -628,12 +630,14 @@ It’s very close to the Sweave output.
 <div class="sourceCode" id="cb17"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>This sentence has a footnote.[^1]</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>[^1]: This is the footnote.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>and that you can write LaTeX formulas as well. For example, add the following into the example from before and render either a PDF or a html document (don’t put the LaTeX formula below inside a chunk, simply paste it as if it were normal text. This doesn’t work for Word output because Word does not support LaTeX equations):</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>\begin{align*}</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>S(\omega) </span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>&amp;= \frac{\alpha g^2}{\omega^5} e^{[ -0.74\bigl\{\frac{\omega U_\omega 19.5}{g}\bigr\}^{\!-4}\,]} \\</span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>&amp;= \frac{\alpha g^2}{\omega^5} \exp\Bigl[ -0.74\Bigl\{\frac{\omega U_\omega 19.5}{g}\Bigr\}^{\!-4}\,\Bigr] </span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>\end{align*}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>or the following (which I prefer):</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>This sentence has a footnote.^[This is the footnote]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>and that you can write LaTeX formulas as well. For example, add the lines below into the example from before and render either a PDF or a Html document (don’t put the LaTeX formula below inside a chunk, simply paste it as if it were normal text. This doesn’t work for Word output because Word does not support LaTeX equations):</p>
+<pre><code>\begin{align*}
+S(\omega) 
+&amp;= \frac{\alpha g^2}{\omega^5} e^{[ -0.74\bigl\{\frac{\omega U_\omega 19.5}{g}\bigr\}^{\!-4}\,]} \\
+&amp;= \frac{\alpha g^2}{\omega^5} \exp\Bigl[ -0.74\Bigl\{\frac{\omega U_\omega 19.5}{g}\Bigr\}^{\!-4}\,\Bigr] 
+\end{align*}</code></pre>
 <p>The LaTeX code above results in this equation:</p>
 <figure class="figure">
 <img src="images/latex_equation.png" alt="A rendered LaTeX equation." class="figure-img">
@@ -641,23 +645,12 @@ It’s very close to the Sweave output.
 A rendered LaTeX equation.
 </figcaption>
 </figure>
-<p>::: {.content-visible when-format=“pdf”}</p>
-<div class="cell">
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="images/latex_equation.png" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption">A rendered LaTeX equation.</figcaption>
-</figure>
-</div>
-</div>
-</div>
 </section>
 </section>
 <section id="keeping-it-dry" class="level2" data-number="7.3">
 <h2 data-number="7.3" class="anchored" data-anchor-id="keeping-it-dry"><span class="header-section-number">7.3</span> Keeping it DRY</h2>
-<p>Remember; we never, ever, want to have to repeat ourselves. Copy and pasting is forbidden. Striving for this 0 copy and pasting will make our code much more robust and likely to be correct.</p>
-<p>We started by using functions, as discussed in the previous chapter, but we can go much farther than that. For example, suppose that we need to write a document that has the following structure:</p>
+<p>Remember; we never, ever, want to have to repeat ourselves. Copy and pasting is forbidden. Striving for 0 copy and pasting will make our code much more robust and likely to be correct.</p>
+<p>To keep DRY, we started by using functions, as discussed in the previous chapter, but we can go much farther than that. For example, suppose that we need to write a document that has the following structure:</p>
 <ul>
 <li>A title</li>
 <li>A section</li>
@@ -671,75 +664,79 @@ A rendered LaTeX equation.
 <section id="generating-r-markdown-code-from-code" class="level3" data-number="7.3.1">
 <h3 data-number="7.3.1" class="anchored" data-anchor-id="generating-r-markdown-code-from-code"><span class="header-section-number">7.3.1</span> Generating R Markdown code from code</h3>
 <p>The example below is a fully working minimal example of this. Copy it inside a document titled something like <code>rmd_templating.Rmd</code> and render it. You will see that the output contains more sections than defined in the source. This is because we use templating at the end. Take some time to read the document, as the text inside explains what is going on:</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>---</span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>title: "Templating"</span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>output: html_document</span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>date: "2023-01-27"</span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>---</span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>```{r setup, include=FALSE}</span>
-<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>knitr::opts_chunk$set(echo = TRUE)</span>
-<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>```</span>
-<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>## A function that creates tables</span>
-<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>```{r}</span>
-<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a>create_table &lt;- function(dataset, var){</span>
-<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a>  table(dataset[var]) |&gt;</span>
-<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a>    knitr::kable()</span>
-<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a>```</span>
-<span id="cb19-20"><a href="#cb19-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-21"><a href="#cb19-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-22"><a href="#cb19-22" aria-hidden="true" tabindex="-1"></a>The function above uses the `table()` function to create frequency tables, </span>
-<span id="cb19-23"><a href="#cb19-23" aria-hidden="true" tabindex="-1"></a>and then this gets passed to the `knitr::kable()` function that produces a </span>
-<span id="cb19-24"><a href="#cb19-24" aria-hidden="true" tabindex="-1"></a>good looking table for our rendered document:</span>
-<span id="cb19-25"><a href="#cb19-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-26"><a href="#cb19-26" aria-hidden="true" tabindex="-1"></a>```{r}</span>
-<span id="cb19-27"><a href="#cb19-27" aria-hidden="true" tabindex="-1"></a>create_table(mtcars, "am")</span>
-<span id="cb19-28"><a href="#cb19-28" aria-hidden="true" tabindex="-1"></a>```</span>
-<span id="cb19-29"><a href="#cb19-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-30"><a href="#cb19-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-31"><a href="#cb19-31" aria-hidden="true" tabindex="-1"></a>Let’s suppose that we want to generate a document that would look like this:</span>
-<span id="cb19-32"><a href="#cb19-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-33"><a href="#cb19-33" aria-hidden="true" tabindex="-1"></a>- first a section title, with the name of the variable of interest</span>
-<span id="cb19-34"><a href="#cb19-34" aria-hidden="true" tabindex="-1"></a>- then the table</span>
-<span id="cb19-35"><a href="#cb19-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-36"><a href="#cb19-36" aria-hidden="true" tabindex="-1"></a>So it would look like this:</span>
-<span id="cb19-37"><a href="#cb19-37" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-38"><a href="#cb19-38" aria-hidden="true" tabindex="-1"></a>## Frequency table for variable: "am"</span>
-<span id="cb19-39"><a href="#cb19-39" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-40"><a href="#cb19-40" aria-hidden="true" tabindex="-1"></a>```{r}</span>
-<span id="cb19-41"><a href="#cb19-41" aria-hidden="true" tabindex="-1"></a>create_table(mtcars, "am")</span>
-<span id="cb19-42"><a href="#cb19-42" aria-hidden="true" tabindex="-1"></a>```</span>
-<span id="cb19-43"><a href="#cb19-43" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-44"><a href="#cb19-44" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-45"><a href="#cb19-45" aria-hidden="true" tabindex="-1"></a>We don’t want to create these sections for every variable by hand.</span>
-<span id="cb19-46"><a href="#cb19-46" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-47"><a href="#cb19-47" aria-hidden="true" tabindex="-1"></a>Instead, we can define a function that returns the R markdown code required</span>
-<span id="cb19-48"><a href="#cb19-48" aria-hidden="true" tabindex="-1"></a>to create this. This is this function:</span>
-<span id="cb19-49"><a href="#cb19-49" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-50"><a href="#cb19-50" aria-hidden="true" tabindex="-1"></a>```{r}</span>
-<span id="cb19-51"><a href="#cb19-51" aria-hidden="true" tabindex="-1"></a>return_section &lt;- function(dataset, var){</span>
-<span id="cb19-52"><a href="#cb19-52" aria-hidden="true" tabindex="-1"></a>  a &lt;- knitr::knit_expand(text = c("## Frequency table for variable: {{variable}}",   </span>
-<span id="cb19-53"><a href="#cb19-53" aria-hidden="true" tabindex="-1"></a>                                   create_table(dataset, var)),</span>
-<span id="cb19-54"><a href="#cb19-54" aria-hidden="true" tabindex="-1"></a>                          variable = var)</span>
-<span id="cb19-55"><a href="#cb19-55" aria-hidden="true" tabindex="-1"></a>  cat(a, sep = "\n")</span>
-<span id="cb19-56"><a href="#cb19-56" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb19-57"><a href="#cb19-57" aria-hidden="true" tabindex="-1"></a>```</span>
-<span id="cb19-58"><a href="#cb19-58" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-59"><a href="#cb19-59" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-60"><a href="#cb19-60" aria-hidden="true" tabindex="-1"></a>This new function, `return_section()` uses `knitr::knit_expand()` to generate R</span>
-<span id="cb19-61"><a href="#cb19-61" aria-hidden="true" tabindex="-1"></a>Markdown code. Words between `{{}}` get replaced by the provided `var` argument</span>
-<span id="cb19-62"><a href="#cb19-62" aria-hidden="true" tabindex="-1"></a>to the function. So when we call `return_section("am")`, `{{variable}}` is</span>
-<span id="cb19-63"><a href="#cb19-63" aria-hidden="true" tabindex="-1"></a>replaced by `"am"`. `"am"` then gets passed down to `create_table()` and the</span>
-<span id="cb19-64"><a href="#cb19-64" aria-hidden="true" tabindex="-1"></a>frequency table gets generated. We can now generate all the section by simply</span>
-<span id="cb19-65"><a href="#cb19-65" aria-hidden="true" tabindex="-1"></a>applying our function to a list of column names:</span>
-<span id="cb19-66"><a href="#cb19-66" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-67"><a href="#cb19-67" aria-hidden="true" tabindex="-1"></a>```{r, results = "asis"}</span>
-<span id="cb19-68"><a href="#cb19-68" aria-hidden="true" tabindex="-1"></a>invisible(lapply(colnames(mtcars), return_section, dataset = mtcars))</span>
-<span id="cb19-69"><a href="#cb19-69" aria-hidden="true" tabindex="-1"></a>```</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>title: "Templating"</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>output: html_document</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>date: "2023-01-27"</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>```{r setup, include=FALSE}</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>knitr::opts_chunk$set(echo = TRUE)</span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>```</span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>## A function that creates tables</span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>```{r}</span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a>create_table &lt;- function(dataset, var){</span>
+<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a>  table(dataset[var]) |&gt;</span>
+<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a>    knitr::kable()</span>
+<span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb20-19"><a href="#cb20-19" aria-hidden="true" tabindex="-1"></a>```</span>
+<span id="cb20-20"><a href="#cb20-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-21"><a href="#cb20-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-22"><a href="#cb20-22" aria-hidden="true" tabindex="-1"></a>The function above uses the `table()` function to create </span>
+<span id="cb20-23"><a href="#cb20-23" aria-hidden="true" tabindex="-1"></a>frequency tables, and then this gets passed to the </span>
+<span id="cb20-24"><a href="#cb20-24" aria-hidden="true" tabindex="-1"></a>`knitr::kable()` function that produces a good looking table </span>
+<span id="cb20-25"><a href="#cb20-25" aria-hidden="true" tabindex="-1"></a>for our rendered document:</span>
+<span id="cb20-26"><a href="#cb20-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-27"><a href="#cb20-27" aria-hidden="true" tabindex="-1"></a>```{r}</span>
+<span id="cb20-28"><a href="#cb20-28" aria-hidden="true" tabindex="-1"></a>create_table(mtcars, "am")</span>
+<span id="cb20-29"><a href="#cb20-29" aria-hidden="true" tabindex="-1"></a>```</span>
+<span id="cb20-30"><a href="#cb20-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-31"><a href="#cb20-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-32"><a href="#cb20-32" aria-hidden="true" tabindex="-1"></a>Let’s suppose that we want to generate a document that would</span>
+<span id="cb20-33"><a href="#cb20-33" aria-hidden="true" tabindex="-1"></a>look like this:</span>
+<span id="cb20-34"><a href="#cb20-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-35"><a href="#cb20-35" aria-hidden="true" tabindex="-1"></a>- first a section title, with the name of the variable of interest</span>
+<span id="cb20-36"><a href="#cb20-36" aria-hidden="true" tabindex="-1"></a>- then the table</span>
+<span id="cb20-37"><a href="#cb20-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-38"><a href="#cb20-38" aria-hidden="true" tabindex="-1"></a>So it would look like this:</span>
+<span id="cb20-39"><a href="#cb20-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-40"><a href="#cb20-40" aria-hidden="true" tabindex="-1"></a>## Frequency table for variable: "am"</span>
+<span id="cb20-41"><a href="#cb20-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-42"><a href="#cb20-42" aria-hidden="true" tabindex="-1"></a>```{r}</span>
+<span id="cb20-43"><a href="#cb20-43" aria-hidden="true" tabindex="-1"></a>create_table(mtcars, "am")</span>
+<span id="cb20-44"><a href="#cb20-44" aria-hidden="true" tabindex="-1"></a>```</span>
+<span id="cb20-45"><a href="#cb20-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-46"><a href="#cb20-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-47"><a href="#cb20-47" aria-hidden="true" tabindex="-1"></a>We don’t want to create these sections for every variable by hand.</span>
+<span id="cb20-48"><a href="#cb20-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-49"><a href="#cb20-49" aria-hidden="true" tabindex="-1"></a>Instead, we can define a function that returns the R markdown </span>
+<span id="cb20-50"><a href="#cb20-50" aria-hidden="true" tabindex="-1"></a>code required to create this. This is this function:</span>
+<span id="cb20-51"><a href="#cb20-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-52"><a href="#cb20-52" aria-hidden="true" tabindex="-1"></a>```{r}</span>
+<span id="cb20-53"><a href="#cb20-53" aria-hidden="true" tabindex="-1"></a>return_section &lt;- function(dataset, var){</span>
+<span id="cb20-54"><a href="#cb20-54" aria-hidden="true" tabindex="-1"></a>  a &lt;- knitr::knit_expand(text = c(</span>
+<span id="cb20-55"><a href="#cb20-55" aria-hidden="true" tabindex="-1"></a>                       "## Frequency table for variable: {{variable}}",</span>
+<span id="cb20-56"><a href="#cb20-56" aria-hidden="true" tabindex="-1"></a>                       create_table(dataset, var)),</span>
+<span id="cb20-57"><a href="#cb20-57" aria-hidden="true" tabindex="-1"></a>                     variable = var)</span>
+<span id="cb20-58"><a href="#cb20-58" aria-hidden="true" tabindex="-1"></a>  cat(a, sep = "\n")</span>
+<span id="cb20-59"><a href="#cb20-59" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb20-60"><a href="#cb20-60" aria-hidden="true" tabindex="-1"></a>```</span>
+<span id="cb20-61"><a href="#cb20-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-62"><a href="#cb20-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-63"><a href="#cb20-63" aria-hidden="true" tabindex="-1"></a>This new function, `return_section()` uses `knitr::knit_expand()` </span>
+<span id="cb20-64"><a href="#cb20-64" aria-hidden="true" tabindex="-1"></a>to generate R Markdown code. Words between `{{}}` get replaced by </span>
+<span id="cb20-65"><a href="#cb20-65" aria-hidden="true" tabindex="-1"></a>the provided `var` argument to the function. So when we call </span>
+<span id="cb20-66"><a href="#cb20-66" aria-hidden="true" tabindex="-1"></a>`return_section("am")`, `{{variable}}` is replaced by `"am"`.</span>
+<span id="cb20-67"><a href="#cb20-67" aria-hidden="true" tabindex="-1"></a>`"am"` then gets passed down to `create_table()` and the</span>
+<span id="cb20-68"><a href="#cb20-68" aria-hidden="true" tabindex="-1"></a>frequency table gets generated. We can now generate all the </span>
+<span id="cb20-69"><a href="#cb20-69" aria-hidden="true" tabindex="-1"></a>section by simply applying our function to a list of column names:</span>
+<span id="cb20-70"><a href="#cb20-70" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-71"><a href="#cb20-71" aria-hidden="true" tabindex="-1"></a>```{r, results = "asis"}</span>
+<span id="cb20-72"><a href="#cb20-72" aria-hidden="true" tabindex="-1"></a>invisible(lapply(colnames(mtcars), return_section, dataset = mtcars))</span>
+<span id="cb20-73"><a href="#cb20-73" aria-hidden="true" tabindex="-1"></a>```</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>The last function, named <code>return_section()</code> uses <code>knitr::knit_expand()</code>, which is the function that does the heavy lifting. This function returns literal R Markdown code. It returns <code>## Frequency table for variable: {{variable}}</code> which creates a level 2 section title with the text <em>Frequency table for variable: xxx</em> where the <code>xxx</code> will get replaced by the variable passed to <code>return_section()</code>. So calling <code>return_section(mtcars, "am")</code> will print the following in your console:</p>
 <pre><code>## Frequency table for variable: am
 |am | Freq|
@@ -748,129 +745,137 @@ A rendered LaTeX equation.
 |1  |   13|</code></pre>
 <p>We now simply need to find a clever way to apply this function to each variable in the <code>mtcars</code> dataset. For this, we are going to use <code>lapply()</code> which implements a for loop (you could use <code>purrr::map()</code> just as well for this):</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">invisible</span>(<span class="fu">lapply</span>(<span class="fu">colnames</span>(mtcars),</span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>                 return_section,</span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">dataset =</span> mtcars))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">invisible</span>(<span class="fu">lapply</span>(<span class="fu">colnames</span>(mtcars),</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>                 return_section,</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">dataset =</span> mtcars))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>This will create, for each variable in <code>mtcars</code>, the same R Markdown code as above. Notice that the R Markdown chunk where the call to <code>lapply()</code> is has the option <code>results = "asis"</code>. This is because the function returns literal Markdown code, and we don’t want the parser to have to parse it again. We tell the parser “don’t worry about this bit of code, it’s already good”. As you see, the call to <code>lapply()</code> is wrapped inside <code>invisible()</code>. This is because <code>return_section()</code> does not return anything, it just prints something to the console. No object is returned. <code>return_section()</code> is a function with only a side-effect: it changes something outside its scope. So if you don’t wrap the call to <code>lapply()</code> inside <code>invisible()</code>, then a bunch of <code>NULL</code>s will also get printed (<code>NULL</code>s get returned by functions that don’t return anything). To avoid this, use <code>invisible()</code> (and use <code>purrr::walk()</code> rather than <code>purrr::map()</code> if you want to use tidyverse packages and functions).</p>
 <p>Click <a href="https://jolly-arithmetic-ce29cf.netlify.app/">here</a> to see the output.</p>
 <p>This is not an easy topic, so take the time to play around with the example above. Try to print another table, try to generate more complex Markdown code, remove the call to <code>invisible()</code> and knit the document and see what happens with the output, replace the call to <code>lapply()</code> with <code>purrr::walk()</code> or <code>purrr::map()</code>. Really take the time to understand what is going on.</p>
 <p>While extremely powerful, this approach using <code>knitr::knit_expand()</code> only works if your template only contains text. If you need to print something more complicated in the document, you need to use child documents instead. For example, suppose that instead of a table we wanted to show a plot made using <code>{ggplot2}</code>. This would not work, because a ggplot object is not made of text, but is a list with many elements. The <code>print()</code> method for ggplot objects then does some magic and prints a plot. But if you want to show plots using <code>knitr::knit_expand()</code>, then the contents of the list will be shown, not the plot itself. This is where child documents come in. Child documents are exactly what you think they are: they’re smaller documents that get knitted and then embedded into the parent document. You can define anything within these child documents, and as such you can even use them to print more complex objects, like a ggplot object. Let’s go back to the example from before and make use of a child document (for ease of presentation, we will not use a separate Rmd file, but will inline the child document into the main document). Read the Rmd example below carefully, as all the steps are explained:</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>---</span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>title: "Templating with child documents"</span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>output: html_document</span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>date: "2023-01-27"</span>
-<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>---</span>
-<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>```{r setup, include=FALSE}</span>
-<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>knitr::opts_chunk$set(echo = TRUE)</span>
-<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>library(ggplot2)</span>
-<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>```</span>
-<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>## A function that creates ggplots</span>
-<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a>```{r}</span>
-<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a>create_plot &lt;- function(dataset, aesthetic){</span>
-<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a>  ggplot(dataset) +</span>
-<span id="cb22-18"><a href="#cb22-18" aria-hidden="true" tabindex="-1"></a>    geom_point(aesthetic)</span>
-<span id="cb22-19"><a href="#cb22-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-20"><a href="#cb22-20" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb22-21"><a href="#cb22-21" aria-hidden="true" tabindex="-1"></a>```</span>
-<span id="cb22-22"><a href="#cb22-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-23"><a href="#cb22-23" aria-hidden="true" tabindex="-1"></a>The function above takes a dataset and an aesthetic made using `ggplot2::aes()` to</span>
-<span id="cb22-24"><a href="#cb22-24" aria-hidden="true" tabindex="-1"></a>create a plot:</span>
-<span id="cb22-25"><a href="#cb22-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-26"><a href="#cb22-26" aria-hidden="true" tabindex="-1"></a>```{r}</span>
-<span id="cb22-27"><a href="#cb22-27" aria-hidden="true" tabindex="-1"></a>create_plot(mtcars, aes(y = mpg, x = hp))</span>
-<span id="cb22-28"><a href="#cb22-28" aria-hidden="true" tabindex="-1"></a>```</span>
-<span id="cb22-29"><a href="#cb22-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-30"><a href="#cb22-30" aria-hidden="true" tabindex="-1"></a>Let’s suppose that we want to generate a document that would look like this:</span>
-<span id="cb22-31"><a href="#cb22-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-32"><a href="#cb22-32" aria-hidden="true" tabindex="-1"></a>- first a section title, with the dataset used;</span>
-<span id="cb22-33"><a href="#cb22-33" aria-hidden="true" tabindex="-1"></a>- then a plot</span>
-<span id="cb22-34"><a href="#cb22-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-35"><a href="#cb22-35" aria-hidden="true" tabindex="-1"></a>So it would look like this:</span>
-<span id="cb22-36"><a href="#cb22-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-37"><a href="#cb22-37" aria-hidden="true" tabindex="-1"></a>## Dataset used: "mtcars"</span>
-<span id="cb22-38"><a href="#cb22-38" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-39"><a href="#cb22-39" aria-hidden="true" tabindex="-1"></a>```{r}</span>
-<span id="cb22-40"><a href="#cb22-40" aria-hidden="true" tabindex="-1"></a>create_plot(mtcars, aes(y = mpg, x = hp))</span>
-<span id="cb22-41"><a href="#cb22-41" aria-hidden="true" tabindex="-1"></a>```</span>
-<span id="cb22-42"><a href="#cb22-42" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-43"><a href="#cb22-43" aria-hidden="true" tabindex="-1"></a>We don’t want to create these sections for every aesthetic by hand.</span>
-<span id="cb22-44"><a href="#cb22-44" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-45"><a href="#cb22-45" aria-hidden="true" tabindex="-1"></a>Instead, we can make use of a child document that gets knitted separately</span>
-<span id="cb22-46"><a href="#cb22-46" aria-hidden="true" tabindex="-1"></a>and then embedded in the parent document. The chunk below makes use of this trick:</span>
-<span id="cb22-47"><a href="#cb22-47" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-48"><a href="#cb22-48" aria-hidden="true" tabindex="-1"></a>```{r, results = "asis"}</span>
-<span id="cb22-49"><a href="#cb22-49" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-50"><a href="#cb22-50" aria-hidden="true" tabindex="-1"></a>x &lt;- list(aes(y = mpg, x = hp),</span>
-<span id="cb22-51"><a href="#cb22-51" aria-hidden="true" tabindex="-1"></a>          aes(y = mpg, x = hp, size = am))</span>
-<span id="cb22-52"><a href="#cb22-52" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-53"><a href="#cb22-53" aria-hidden="true" tabindex="-1"></a>res &lt;- lapply(x,</span>
-<span id="cb22-54"><a href="#cb22-54" aria-hidden="true" tabindex="-1"></a>              function(dataset, x){</span>
-<span id="cb22-55"><a href="#cb22-55" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-56"><a href="#cb22-56" aria-hidden="true" tabindex="-1"></a>  knitr::knit_child(text = c(</span>
-<span id="cb22-57"><a href="#cb22-57" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-58"><a href="#cb22-58" aria-hidden="true" tabindex="-1"></a>    '\n',</span>
-<span id="cb22-59"><a href="#cb22-59" aria-hidden="true" tabindex="-1"></a>    '## Dataset used: `r deparse(substitute(dataset))`',</span>
-<span id="cb22-60"><a href="#cb22-60" aria-hidden="true" tabindex="-1"></a>    '\n',</span>
-<span id="cb22-61"><a href="#cb22-61" aria-hidden="true" tabindex="-1"></a>    '```{r, echo = F}',</span>
-<span id="cb22-62"><a href="#cb22-62" aria-hidden="true" tabindex="-1"></a>    'print(create_plot(dataset, x))',</span>
-<span id="cb22-63"><a href="#cb22-63" aria-hidden="true" tabindex="-1"></a>    '```'</span>
-<span id="cb22-64"><a href="#cb22-64" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-65"><a href="#cb22-65" aria-hidden="true" tabindex="-1"></a>     ),</span>
-<span id="cb22-66"><a href="#cb22-66" aria-hidden="true" tabindex="-1"></a>     envir = environment(),</span>
-<span id="cb22-67"><a href="#cb22-67" aria-hidden="true" tabindex="-1"></a>     quiet = TRUE)</span>
-<span id="cb22-68"><a href="#cb22-68" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-69"><a href="#cb22-69" aria-hidden="true" tabindex="-1"></a>}, dataset = mtcars)</span>
-<span id="cb22-70"><a href="#cb22-70" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-71"><a href="#cb22-71" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-72"><a href="#cb22-72" aria-hidden="true" tabindex="-1"></a>cat(unlist(res), sep = "\n")</span>
-<span id="cb22-73"><a href="#cb22-73" aria-hidden="true" tabindex="-1"></a>```</span>
-<span id="cb22-74"><a href="#cb22-74" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-75"><a href="#cb22-75" aria-hidden="true" tabindex="-1"></a>The child document is the `text` argument to the `knit_child()` function. `text`</span>
-<span id="cb22-76"><a href="#cb22-76" aria-hidden="true" tabindex="-1"></a>is literal R Markdown code: we define a level 2 header, and then an R chunk.</span>
-<span id="cb22-77"><a href="#cb22-77" aria-hidden="true" tabindex="-1"></a>This child document gets knitted, so we need to specify the environment in which</span>
-<span id="cb22-78"><a href="#cb22-78" aria-hidden="true" tabindex="-1"></a>it should get knitted. This means that the child document will get knitted in</span>
-<span id="cb22-79"><a href="#cb22-79" aria-hidden="true" tabindex="-1"></a>the same environment as the parent document (our current global environment).</span>
-<span id="cb22-80"><a href="#cb22-80" aria-hidden="true" tabindex="-1"></a>This way, every package that gets loaded and every function or variable that got</span>
-<span id="cb22-81"><a href="#cb22-81" aria-hidden="true" tabindex="-1"></a>defined in the parent document will also be available to the child document.</span>
-<span id="cb22-82"><a href="#cb22-82" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-83"><a href="#cb22-83" aria-hidden="true" tabindex="-1"></a>To get the dataset name as a string, we use the `deparse(substitute(dataset))`</span>
-<span id="cb22-84"><a href="#cb22-84" aria-hidden="true" tabindex="-1"></a>trick; this substitutes "dataset" by its bound value, so `mtcars`. But `mtcars`</span>
-<span id="cb22-85"><a href="#cb22-85" aria-hidden="true" tabindex="-1"></a>is an expression and we don’t want it to get evaluated, or the contents of the</span>
-<span id="cb22-86"><a href="#cb22-86" aria-hidden="true" tabindex="-1"></a>entire dataset would be used in the title of the section. So we use `deparse()`</span>
-<span id="cb22-87"><a href="#cb22-87" aria-hidden="true" tabindex="-1"></a>which turns unevaluated expressions into strings.</span>
-<span id="cb22-88"><a href="#cb22-88" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-89"><a href="#cb22-89" aria-hidden="true" tabindex="-1"></a>We then use `lapply()` to loop over two aesthetics with an anonymous function</span>
-<span id="cb22-90"><a href="#cb22-90" aria-hidden="true" tabindex="-1"></a>that encapsulates the child document. So we get two child documents that get</span>
-<span id="cb22-91"><a href="#cb22-91" aria-hidden="true" tabindex="-1"></a>knitted, one per aesthetic. This gets saved into variable `res`. This is thus a</span>
-<span id="cb22-92"><a href="#cb22-92" aria-hidden="true" tabindex="-1"></a>list of knitted Markdown.</span>
-<span id="cb22-93"><a href="#cb22-93" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-94"><a href="#cb22-94" aria-hidden="true" tabindex="-1"></a>Finally, we need unlist `res` to actually merge the Markdown code from the child</span>
-<span id="cb22-95"><a href="#cb22-95" aria-hidden="true" tabindex="-1"></a>documents into the parent document.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Click <a href="https://fastidious-bavarois-3b17b9.netlify.app/">here</a> to take a look at the output.</p>
-<p>Here again, take some time to play with the above example. Change the child document, try to print other types of output, really take your time to understand this. To know more about child documents, take a look at <a href="https://bookdown.org/yihui/rmarkdown-cookbook/child-document.html#child-document">this section</a> of the R Markdown Cookbook (<span class="citation" data-cites="xie2020r">Xie, Dervieux, and Riederer (<a href="references.html#ref-xie2020r" role="doc-biblioref">2020</a>)</span>).</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>title: "Templating with child documents"</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>output: html_document</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>date: "2023-01-27"</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>```{r setup, include=FALSE}</span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>knitr::opts_chunk$set(echo = TRUE)</span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>library(ggplot2)</span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>```</span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>## A function that creates ggplots</span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a>```{r}</span>
+<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a>create_plot &lt;- function(dataset, aesthetic){</span>
+<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a>  ggplot(dataset) +</span>
+<span id="cb23-18"><a href="#cb23-18" aria-hidden="true" tabindex="-1"></a>    geom_point(aesthetic)</span>
+<span id="cb23-19"><a href="#cb23-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-20"><a href="#cb23-20" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb23-21"><a href="#cb23-21" aria-hidden="true" tabindex="-1"></a>```</span>
+<span id="cb23-22"><a href="#cb23-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-23"><a href="#cb23-23" aria-hidden="true" tabindex="-1"></a>The function above takes a dataset and an aesthetic </span>
+<span id="cb23-24"><a href="#cb23-24" aria-hidden="true" tabindex="-1"></a>made using `ggplot2::aes()` to create a plot:</span>
+<span id="cb23-25"><a href="#cb23-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-26"><a href="#cb23-26" aria-hidden="true" tabindex="-1"></a>```{r}</span>
+<span id="cb23-27"><a href="#cb23-27" aria-hidden="true" tabindex="-1"></a>create_plot(mtcars, aes(y = mpg, x = hp))</span>
+<span id="cb23-28"><a href="#cb23-28" aria-hidden="true" tabindex="-1"></a>```</span>
+<span id="cb23-29"><a href="#cb23-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-30"><a href="#cb23-30" aria-hidden="true" tabindex="-1"></a>Let’s suppose that we want to generate a document </span>
+<span id="cb23-31"><a href="#cb23-31" aria-hidden="true" tabindex="-1"></a>that would look like this:</span>
+<span id="cb23-32"><a href="#cb23-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-33"><a href="#cb23-33" aria-hidden="true" tabindex="-1"></a>- first a section title, with the dataset used;</span>
+<span id="cb23-34"><a href="#cb23-34" aria-hidden="true" tabindex="-1"></a>- then a plot</span>
+<span id="cb23-35"><a href="#cb23-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-36"><a href="#cb23-36" aria-hidden="true" tabindex="-1"></a>So it would look like this:</span>
+<span id="cb23-37"><a href="#cb23-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-38"><a href="#cb23-38" aria-hidden="true" tabindex="-1"></a>## Dataset used: "mtcars"</span>
+<span id="cb23-39"><a href="#cb23-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-40"><a href="#cb23-40" aria-hidden="true" tabindex="-1"></a>```{r}</span>
+<span id="cb23-41"><a href="#cb23-41" aria-hidden="true" tabindex="-1"></a>create_plot(mtcars, aes(y = mpg, x = hp))</span>
+<span id="cb23-42"><a href="#cb23-42" aria-hidden="true" tabindex="-1"></a>```</span>
+<span id="cb23-43"><a href="#cb23-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-44"><a href="#cb23-44" aria-hidden="true" tabindex="-1"></a>We don’t want to create these sections for every </span>
+<span id="cb23-45"><a href="#cb23-45" aria-hidden="true" tabindex="-1"></a>aesthetic by hand.</span>
+<span id="cb23-46"><a href="#cb23-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-47"><a href="#cb23-47" aria-hidden="true" tabindex="-1"></a>Instead, we can make use of a child document that </span>
+<span id="cb23-48"><a href="#cb23-48" aria-hidden="true" tabindex="-1"></a>gets knitted separately and then embedded in the </span>
+<span id="cb23-49"><a href="#cb23-49" aria-hidden="true" tabindex="-1"></a>parent document. The chunk below makes use of this trick:</span>
+<span id="cb23-50"><a href="#cb23-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-51"><a href="#cb23-51" aria-hidden="true" tabindex="-1"></a>```{r, results = "asis"}</span>
+<span id="cb23-52"><a href="#cb23-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-53"><a href="#cb23-53" aria-hidden="true" tabindex="-1"></a>x &lt;- list(aes(y = mpg, x = hp),</span>
+<span id="cb23-54"><a href="#cb23-54" aria-hidden="true" tabindex="-1"></a>          aes(y = mpg, x = hp, size = am))</span>
+<span id="cb23-55"><a href="#cb23-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-56"><a href="#cb23-56" aria-hidden="true" tabindex="-1"></a>res &lt;- lapply(x,</span>
+<span id="cb23-57"><a href="#cb23-57" aria-hidden="true" tabindex="-1"></a>              function(dataset, x){</span>
+<span id="cb23-58"><a href="#cb23-58" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-59"><a href="#cb23-59" aria-hidden="true" tabindex="-1"></a>  knitr::knit_child(text = c(</span>
+<span id="cb23-60"><a href="#cb23-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-61"><a href="#cb23-61" aria-hidden="true" tabindex="-1"></a>    '\n',</span>
+<span id="cb23-62"><a href="#cb23-62" aria-hidden="true" tabindex="-1"></a>    '## Dataset used: `r deparse(substitute(dataset))`',</span>
+<span id="cb23-63"><a href="#cb23-63" aria-hidden="true" tabindex="-1"></a>    '\n',</span>
+<span id="cb23-64"><a href="#cb23-64" aria-hidden="true" tabindex="-1"></a>    '```{r, echo = F}',</span>
+<span id="cb23-65"><a href="#cb23-65" aria-hidden="true" tabindex="-1"></a>    'print(create_plot(dataset, x))',</span>
+<span id="cb23-66"><a href="#cb23-66" aria-hidden="true" tabindex="-1"></a>    '```'</span>
+<span id="cb23-67"><a href="#cb23-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-68"><a href="#cb23-68" aria-hidden="true" tabindex="-1"></a>     ),</span>
+<span id="cb23-69"><a href="#cb23-69" aria-hidden="true" tabindex="-1"></a>     envir = environment(),</span>
+<span id="cb23-70"><a href="#cb23-70" aria-hidden="true" tabindex="-1"></a>     quiet = TRUE)</span>
+<span id="cb23-71"><a href="#cb23-71" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-72"><a href="#cb23-72" aria-hidden="true" tabindex="-1"></a>}, dataset = mtcars)</span>
+<span id="cb23-73"><a href="#cb23-73" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-74"><a href="#cb23-74" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-75"><a href="#cb23-75" aria-hidden="true" tabindex="-1"></a>cat(unlist(res), sep = "\n")</span>
+<span id="cb23-76"><a href="#cb23-76" aria-hidden="true" tabindex="-1"></a>```</span>
+<span id="cb23-77"><a href="#cb23-77" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-78"><a href="#cb23-78" aria-hidden="true" tabindex="-1"></a>The child document is the `text` argument to the </span>
+<span id="cb23-79"><a href="#cb23-79" aria-hidden="true" tabindex="-1"></a>`knit_child()` function. `text` is literal R Markdown </span>
+<span id="cb23-80"><a href="#cb23-80" aria-hidden="true" tabindex="-1"></a>code: we define a level 2 header, and then an R chunk. </span>
+<span id="cb23-81"><a href="#cb23-81" aria-hidden="true" tabindex="-1"></a>This child document gets knitted, so we need to specify </span>
+<span id="cb23-82"><a href="#cb23-82" aria-hidden="true" tabindex="-1"></a>the environment in which it should get knitted. This means</span>
+<span id="cb23-83"><a href="#cb23-83" aria-hidden="true" tabindex="-1"></a>that the child document will get knitted in the same </span>
+<span id="cb23-84"><a href="#cb23-84" aria-hidden="true" tabindex="-1"></a>environment as the parent document (our current global</span>
+<span id="cb23-85"><a href="#cb23-85" aria-hidden="true" tabindex="-1"></a>environment). This way, every package that gets loaded </span>
+<span id="cb23-86"><a href="#cb23-86" aria-hidden="true" tabindex="-1"></a>and every function or variable that got defined in the </span>
+<span id="cb23-87"><a href="#cb23-87" aria-hidden="true" tabindex="-1"></a>parent document will also be available to the child document.</span>
+<span id="cb23-88"><a href="#cb23-88" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-89"><a href="#cb23-89" aria-hidden="true" tabindex="-1"></a>To get the dataset name as a string, we use the </span>
+<span id="cb23-90"><a href="#cb23-90" aria-hidden="true" tabindex="-1"></a>`deparse(substitute(dataset))` trick; this substitutes </span>
+<span id="cb23-91"><a href="#cb23-91" aria-hidden="true" tabindex="-1"></a>"dataset" by its bound value, so `mtcars`. But `mtcars` is </span>
+<span id="cb23-92"><a href="#cb23-92" aria-hidden="true" tabindex="-1"></a>an expression and we don’t want it to get evaluated, or the </span>
+<span id="cb23-93"><a href="#cb23-93" aria-hidden="true" tabindex="-1"></a>contents of the entire dataset would be used in the title </span>
+<span id="cb23-94"><a href="#cb23-94" aria-hidden="true" tabindex="-1"></a>of the section. So we use `deparse()` which turns unevaluated </span>
+<span id="cb23-95"><a href="#cb23-95" aria-hidden="true" tabindex="-1"></a>expressions into strings.</span>
+<span id="cb23-96"><a href="#cb23-96" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-97"><a href="#cb23-97" aria-hidden="true" tabindex="-1"></a>We then use `lapply()` to loop over two aesthetics with an </span>
+<span id="cb23-98"><a href="#cb23-98" aria-hidden="true" tabindex="-1"></a>anonymous function that encapsulates the child document. So we </span>
+<span id="cb23-99"><a href="#cb23-99" aria-hidden="true" tabindex="-1"></a>get two child documents that get knitted, one per aesthetic. </span>
+<span id="cb23-100"><a href="#cb23-100" aria-hidden="true" tabindex="-1"></a>This gets saved into variable `res`. This is thus a list of </span>
+<span id="cb23-101"><a href="#cb23-101" aria-hidden="true" tabindex="-1"></a>knitted Markdown.</span>
+<span id="cb23-102"><a href="#cb23-102" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-103"><a href="#cb23-103" aria-hidden="true" tabindex="-1"></a>Finally, we need unlist `res` to actually merge the Markdown </span>
+<span id="cb23-104"><a href="#cb23-104" aria-hidden="true" tabindex="-1"></a>code from the child documents into the parent document.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Click <a href="https://fastidious-bavarois-3b17b9.netlify.app/">here</a><a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a> to take a look at the output.</p>
+<p>Here again, take some time to play with the above example. Change the child document, try to print other types of output, really take your time to understand this. To know more about child documents, take a look at <a href="https://bookdown.org/yihui/rmarkdown-cookbook/child-document.html#child-document">this section</a><a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a> of the R Markdown Cookbook (<span class="citation" data-cites="xie2020r">Xie, Dervieux, and Riederer (<a href="references.html#ref-xie2020r" role="doc-biblioref">2020</a>)</span>).</p>
 </section>
 <section id="tables-in-r-markdown-documents" class="level3" data-number="7.3.2">
 <h3 data-number="7.3.2" class="anchored" data-anchor-id="tables-in-r-markdown-documents"><span class="header-section-number">7.3.2</span> Tables in R Markdown documents</h3>
-<p>Getting tables right in Rmd documents is not always an easy task. There are several packages specifically made just for this task.</p>
-<p>In this short section, we want to point you towards two packages that check the following boxes:</p>
+<p>Getting tables right in Rmd documents is not always an easy task. There are several packages specifically made just for this task, and the package that I recommend tick the following two important boxes:</p>
 <ul>
-<li>Work the same way regardless of output format we want to knit our document into:</li>
+<li>Work the same way regardless of output format (Word, PDF or Html);</li>
 <li>Work for any type of table: summary tables, regression tables, two-way tables, etc.</li>
 </ul>
-<p>Let’s start with the simplest type of table, which would be showing the head of a dataset for example. <code>{knitr}</code> comes with the <code>kable()</code> function, but this function generates a very plain looking output. For something publication-worthy, we recommend the <code>{flextable}</code> package, developed by <span class="citation" data-cites="gohel23">Gohel and Skintzos (<a href="references.html#ref-gohel23" role="doc-biblioref">2023</a>)</span>:</p>
+<p>Let’s start with the simplest type of table, which would is a table that simply shows some rows of data. <code>{knitr}</code> comes with the <code>kable()</code> function, but this function generates a very plain looking output. For something publication-worthy, we recommend the <code>{flextable}</code> package, developed by <span class="citation" data-cites="gohel23">Gohel and Skintzos (<a href="references.html#ref-gohel23" role="doc-biblioref">2023</a>)</span>:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(flextable)</span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>my_table <span class="ot">&lt;-</span> <span class="fu">head</span>(mtcars)</span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="fu">flextable</span>(my_table) <span class="sc">|&gt;</span></span>
-<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_caption</span>(<span class="at">caption =</span> <span class="st">"Head of the mtcars dataset"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_booktabs</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(flextable)</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>my_table <span class="ot">&lt;-</span> <span class="fu">head</span>(mtcars)</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a><span class="fu">flextable</span>(my_table) <span class="sc">|&gt;</span></span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_caption</span>(<span class="at">caption =</span> <span class="st">"Head of the mtcars dataset"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_booktabs</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <figure class="figure">
 <img src="images/flextable.png" alt="The output of the code above." class="figure-img">
@@ -878,29 +883,18 @@ A rendered LaTeX equation.
 The output of the code above.
 </figcaption>
 </figure>
-<p>::: {.content-visible when-format=“pdf”}</p>
-<div class="cell">
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="images/flextable.png" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption">The output of the code above.</figcaption>
-</figure>
-</div>
-</div>
-</div>
-<p>We won’t go into much detail on how <code>{flextable}</code> works, but it is very powerful, and the fact that it works for PDF, Html, Word and Powerpoint outputs is really a massive plus. If you want to learn more about <code>{flextable}</code>, there’s a <a href="https://ardata-fr.github.io/flextable-book/index.html">whole, free, ebook on it</a>. <code>{flextable}</code> can create very complicated tables, so really take the time to dig in!</p>
+<p>Note that the example above will work pretty much the same way for any table that you can coerce into a data frame! We won’t go into much detail on how <code>{flextable}</code> works, but it is very powerful, and the fact that it works for PDF, Html, Word and Powerpoint outputs is really a massive plus. If you want to learn more about <code>{flextable}</code>, there’s a <a href="https://ardata-fr.github.io/flextable-book/index.html">whole, free, ebook on it</a><a href="#fn9" class="footnote-ref" id="fnref9" role="doc-noteref"><sup>9</sup></a>. <code>{flextable}</code> can create very complicated tables, so really take the time to dig in!</p>
 <p>The next package is <code>{modelsummary}</code>, by <span class="citation" data-cites="arel22">Arel-Bundock (<a href="references.html#ref-arel22" role="doc-biblioref">2022</a>)</span>, and this one focuses on regression and summary tables. It is extremely powerful as well, and just like <code>{flextable}</code>, works for any type of output. It is very simple to get started:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(modelsummary)</span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>model_1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg <span class="sc">~</span> hp <span class="sc">+</span> am, <span class="at">data =</span> mtcars)</span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>model_2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg <span class="sc">~</span> hp, <span class="at">data =</span> mtcars)</span>
-<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>models <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="st">"Model 1"</span> <span class="ot">=</span> model_1,</span>
-<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>               <span class="st">"Model 2"</span> <span class="ot">=</span> model_2)</span>
-<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a><span class="fu">modelsummary</span>(models)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(modelsummary)</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>model_1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg <span class="sc">~</span> hp <span class="sc">+</span> am, <span class="at">data =</span> mtcars)</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>model_2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg <span class="sc">~</span> hp, <span class="at">data =</span> mtcars)</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>models <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="st">"Model 1"</span> <span class="ot">=</span> model_1,</span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>               <span class="st">"Model 2"</span> <span class="ot">=</span> model_2)</span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a><span class="fu">modelsummary</span>(models)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <figure class="figure">
 <img src="images/modelsummary.png" alt="The output of the code above." class="figure-img">
@@ -908,114 +902,106 @@ The output of the code above.
 The output of the code above.
 </figcaption>
 </figure>
-<p>::: {.content-visible when-format=“pdf”}</p>
-<div class="cell">
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="images/modelsummary.png" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption">The output of the code above.</figcaption>
-</figure>
-</div>
-</div>
-</div>
-<p>Here again, we won’t got into much detail, but recommend instead that you read the package’s <a href="https://vincentarelbundock.github.io/modelsummary/articles/modelsummary.html">website</a> which has very detailed documentation.</p>
+<p>Here again, I won’t got into much detail, but recommend instead that you read the package’s <a href="https://vincentarelbundock.github.io/modelsummary/articles/modelsummary.html">website</a><a href="#fn10" class="footnote-ref" id="fnref10" role="doc-noteref"><sup>10</sup></a> which has very detailed documentation.</p>
 <p>These packages can help you keeping it DRY, so take some time to learn them.</p>
-<p>And one last thing: if you’re a researcher, take a look at the <a href="https://pkgs.rstudio.com/rticles/articles/examples.html"><code>{rticles}</code></a> package, which provides Rmd templates to write articles for many scientific journals.</p>
+<p>And one last thing: if you’re a researcher, take a look at the <a href="https://pkgs.rstudio.com/rticles/articles/examples.html"><code>{rticles}</code></a><a href="#fn11" class="footnote-ref" id="fnref11" role="doc-noteref"><sup>11</sup></a> package, which provides Rmd templates to write articles for many scientific journals.</p>
 </section>
 <section id="parametrized-reports" class="level3" data-number="7.3.3">
 <h3 data-number="7.3.3" class="anchored" data-anchor-id="parametrized-reports"><span class="header-section-number">7.3.3</span> Parametrized reports</h3>
 <p>Templating and child documents are very powerful, but sometimes you don’t want to have one section dedicated to each unit of analysis within the same report, but rather, you want a complete separate report by unit of analysis. This is also possible thanks to parameterised reports.</p>
 <p>Let’s modify the example from before, which consisted of creating one section per column of the <code>mtcars</code> dataset and a frequency table, and make it now one separate report for each column. The R Markdown file will look like this:</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>---</span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>title: "Report for column `r params$var` of dataset `r params$dataset`"</span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>output: html_document</span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>date: "2023-01-27"</span>
-<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>params:</span>
-<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>  dataset: mtcars</span>
-<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>  var: "am"</span>
-<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>---</span>
-<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>```{r setup, include=FALSE}</span>
-<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>knitr::opts_chunk$set(echo = TRUE)</span>
-<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>```</span>
-<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a>## Frequency table for `r params$var`</span>
-<span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-17"><a href="#cb25-17" aria-hidden="true" tabindex="-1"></a>```{r, echo = F}</span>
-<span id="cb25-18"><a href="#cb25-18" aria-hidden="true" tabindex="-1"></a>create_table &lt;- function(dataset, var){</span>
-<span id="cb25-19"><a href="#cb25-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-20"><a href="#cb25-20" aria-hidden="true" tabindex="-1"></a>  dataset &lt;- get(dataset)</span>
-<span id="cb25-21"><a href="#cb25-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-22"><a href="#cb25-22" aria-hidden="true" tabindex="-1"></a>  table(dataset[var]) |&gt;</span>
-<span id="cb25-23"><a href="#cb25-23" aria-hidden="true" tabindex="-1"></a>    knitr::kable()</span>
-<span id="cb25-24"><a href="#cb25-24" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb25-25"><a href="#cb25-25" aria-hidden="true" tabindex="-1"></a>```</span>
-<span id="cb25-26"><a href="#cb25-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-27"><a href="#cb25-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-28"><a href="#cb25-28" aria-hidden="true" tabindex="-1"></a>The table below is for variable `r params$var` of dataset `r params$dataset`.</span>
-<span id="cb25-29"><a href="#cb25-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-30"><a href="#cb25-30" aria-hidden="true" tabindex="-1"></a>```{r}</span>
-<span id="cb25-31"><a href="#cb25-31" aria-hidden="true" tabindex="-1"></a>create_table(params$dataset, params$var)</span>
-<span id="cb25-32"><a href="#cb25-32" aria-hidden="true" tabindex="-1"></a>```</span>
-<span id="cb25-33"><a href="#cb25-33" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-34"><a href="#cb25-34" aria-hidden="true" tabindex="-1"></a>```{r, eval = FALSE, echo = FALSE}</span>
-<span id="cb25-35"><a href="#cb25-35" aria-hidden="true" tabindex="-1"></a># Run these lines to compile the document</span>
-<span id="cb25-36"><a href="#cb25-36" aria-hidden="true" tabindex="-1"></a># Set eval and echo to FALSE, so that this does not appear</span>
-<span id="cb25-37"><a href="#cb25-37" aria-hidden="true" tabindex="-1"></a># in the output, and does not get evaluated when knitting</span>
-<span id="cb25-38"><a href="#cb25-38" aria-hidden="true" tabindex="-1"></a>rmarkdown::render(</span>
-<span id="cb25-39"><a href="#cb25-39" aria-hidden="true" tabindex="-1"></a>             input = "param_report_example.Rmd",</span>
-<span id="cb25-40"><a href="#cb25-40" aria-hidden="true" tabindex="-1"></a>             params = list(</span>
-<span id="cb25-41"><a href="#cb25-41" aria-hidden="true" tabindex="-1"></a>               dataset = "mtcars",</span>
-<span id="cb25-42"><a href="#cb25-42" aria-hidden="true" tabindex="-1"></a>               var = "cyl"</span>
-<span id="cb25-43"><a href="#cb25-43" aria-hidden="true" tabindex="-1"></a>             )</span>
-<span id="cb25-44"><a href="#cb25-44" aria-hidden="true" tabindex="-1"></a>           )</span>
-<span id="cb25-45"><a href="#cb25-45" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-46"><a href="#cb25-46" aria-hidden="true" tabindex="-1"></a>```</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Save the code above into an Rmd file titled something like <code>param_report_example.Rmd</code> (preferably inside its own folder). At the end of the document, we wrote the lines to render this document inside a chunk that does not get shown to the reader, nor gets evaluated:</p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>```{r, eval = F, echo = FALSE}</span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>rmarkdown::render(</span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>             input = "param_report_example.Rmd",</span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>             params = list(</span>
-<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>               dataset = "mtcars",</span>
-<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>               var = "cyl"</span>
-<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>             )</span>
-<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>           )</span>
-<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>```</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>title: "Report for column `r params$var` of dataset `r params$dataset`"</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>output: html_document</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>date: "2023-01-27"</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>params:</span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>  dataset: mtcars</span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>  var: "am"</span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>```{r setup, include=FALSE}</span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>knitr::opts_chunk$set(echo = TRUE)</span>
+<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a>```</span>
+<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a>## Frequency table for `r params$var`</span>
+<span id="cb26-16"><a href="#cb26-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-17"><a href="#cb26-17" aria-hidden="true" tabindex="-1"></a>```{r, echo = F}</span>
+<span id="cb26-18"><a href="#cb26-18" aria-hidden="true" tabindex="-1"></a>create_table &lt;- function(dataset, var){</span>
+<span id="cb26-19"><a href="#cb26-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-20"><a href="#cb26-20" aria-hidden="true" tabindex="-1"></a>  dataset &lt;- get(dataset)</span>
+<span id="cb26-21"><a href="#cb26-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-22"><a href="#cb26-22" aria-hidden="true" tabindex="-1"></a>  table(dataset[var]) |&gt;</span>
+<span id="cb26-23"><a href="#cb26-23" aria-hidden="true" tabindex="-1"></a>    knitr::kable()</span>
+<span id="cb26-24"><a href="#cb26-24" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb26-25"><a href="#cb26-25" aria-hidden="true" tabindex="-1"></a>```</span>
+<span id="cb26-26"><a href="#cb26-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-27"><a href="#cb26-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-28"><a href="#cb26-28" aria-hidden="true" tabindex="-1"></a>The table below is for variable `r params$var` of </span>
+<span id="cb26-29"><a href="#cb26-29" aria-hidden="true" tabindex="-1"></a>dataset `r params$dataset`.</span>
+<span id="cb26-30"><a href="#cb26-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-31"><a href="#cb26-31" aria-hidden="true" tabindex="-1"></a>```{r}</span>
+<span id="cb26-32"><a href="#cb26-32" aria-hidden="true" tabindex="-1"></a>create_table(params$dataset, params$var)</span>
+<span id="cb26-33"><a href="#cb26-33" aria-hidden="true" tabindex="-1"></a>```</span>
+<span id="cb26-34"><a href="#cb26-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-35"><a href="#cb26-35" aria-hidden="true" tabindex="-1"></a>```{r, eval = FALSE, echo = FALSE}</span>
+<span id="cb26-36"><a href="#cb26-36" aria-hidden="true" tabindex="-1"></a># Run these lines to compile the document</span>
+<span id="cb26-37"><a href="#cb26-37" aria-hidden="true" tabindex="-1"></a># Set eval and echo to FALSE, so that this does not appear</span>
+<span id="cb26-38"><a href="#cb26-38" aria-hidden="true" tabindex="-1"></a># in the output, and does not get evaluated when knitting</span>
+<span id="cb26-39"><a href="#cb26-39" aria-hidden="true" tabindex="-1"></a>rmarkdown::render(</span>
+<span id="cb26-40"><a href="#cb26-40" aria-hidden="true" tabindex="-1"></a>             input = "param_report_example.Rmd",</span>
+<span id="cb26-41"><a href="#cb26-41" aria-hidden="true" tabindex="-1"></a>             params = list(</span>
+<span id="cb26-42"><a href="#cb26-42" aria-hidden="true" tabindex="-1"></a>               dataset = "mtcars",</span>
+<span id="cb26-43"><a href="#cb26-43" aria-hidden="true" tabindex="-1"></a>               var = "cyl"</span>
+<span id="cb26-44"><a href="#cb26-44" aria-hidden="true" tabindex="-1"></a>             )</span>
+<span id="cb26-45"><a href="#cb26-45" aria-hidden="true" tabindex="-1"></a>           )</span>
+<span id="cb26-46"><a href="#cb26-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-47"><a href="#cb26-47" aria-hidden="true" tabindex="-1"></a>```</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Save the code above into an Rmd file titled something like <code>param_report_example.Rmd</code> (preferably inside its own folder). Note that at the end of the document, I wrote the lines to render this document inside a chunk that does not get shown to the reader, nor gets evaluated:</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>```{r, eval = F, echo = FALSE}</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>rmarkdown::render(</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>             input = "param_report_example.Rmd",</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>             params = list(</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>               dataset = "mtcars",</span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>               var = "cyl"</span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>             )</span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>           )</span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>```</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>You need to run these lines yourself to knit the document.</p>
-<p>This will pass the list <code>params</code> with elements “mtcars” and “cyl” down to the report. Every <code>params$dataset</code> and <code>params$var</code> in the report gets replaced by “mtcars” and “cyl” respectively. Also, notice that in the header of the document, we defined default values for the params. Something else you need to be aware of, is that the function <code>create_table()</code> inside the report is slightly different than before. It now starts with the following line:</p>
+<p>This will pass the list <code>params</code> with elements “mtcars” and “cyl” down to the report. Every <code>params$dataset</code> and <code>params$var</code> in the report gets replaced by “mtcars” and “cyl” respectively. Also, notice that in the header of the document, I defined default values for the params. Something else you need to be aware of, is that the function <code>create_table()</code> inside the report is slightly different than before. It now starts with the following line:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>dataset <span class="ot">&lt;-</span> <span class="fu">get</span>(dataset)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>dataset <span class="ot">&lt;-</span> <span class="fu">get</span>(dataset)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Let’s break this down. <code>params$dataset</code> contains the string “mtcars”. I made the decision to pass the dataset as a string, so that I could use it in the title of the document. But then, inside the <code>create_table()</code> function, I have the following code:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>dataset[var]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>dataset[var]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p><code>dataset</code> can’t be a string here, but needs to be a variable name, so <code>mtcars</code> and not “mtcars”. This means that I need to <em>convert</em> that string into a name. <code>get()</code> searches an object by name, and then makes it possible to save it to a new variable called <code>dataset</code>. The rest of the function is then the same as before. This little difficulty can be avoided by hard-coding the dataset inside the R Markdown file, or by passing the dataset as the <code>params$dataset</code> and not the string, in the render function. However, if you pass down the name of the dataset as a variable instead of the dataset name as a string, then you need to covert it to a string if you want to use it in the text (so <code>mtcars</code> to “mtcars”, using <code>deparse(substitute(dataset))</code> as in child documents example).</p>
+<p><code>dataset</code> can’t be a string here, but needs to be a variable name, so <code>mtcars</code> and not <code>"mtcars"</code>. This means that I need to <em>convert</em> that string into a name. <code>get()</code> searches an object by name, and then makes it possible to save it to a new variable called <code>dataset</code>. The rest of the function is then the same as before. This little difficulty can be avoided by hard-coding the dataset inside the R Markdown file, or by passing the dataset as the <code>params$dataset</code> and not the string, in the render function. However, if you pass down the name of the dataset as a variable instead of the dataset name as a string, then you need to covert it to a string if you want to use it in the text (so <code>mtcars</code> to <code>"mtcars"</code>, using <code>deparse(substitute(dataset))</code> as in child documents example).</p>
 <p>If you instead want to create one report per variable, you could compile all the documents at once with:</p>
-<div class="sourceCode" id="cb29"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>```{r, eval = F, echo = F}</span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>columns &lt;- colnames(mtcars)</span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>lapply(columns,</span>
-<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>  (\(x)rmarkdown::render(</span>
-<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>                    input = "param_report_example.Rmd",</span>
-<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>                    output_file = paste0("param_report_example_", x, ".html"),</span>
-<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>                    params = list(</span>
-<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>                      dataset = "mtcars",</span>
-<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>                      var = x</span>
-<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a>                    )</span>
-<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a>                  )</span>
-<span id="cb29-13"><a href="#cb29-13" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb29-14"><a href="#cb29-14" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb29-15"><a href="#cb29-15" aria-hidden="true" tabindex="-1"></a>```</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>By now, this should not intimidate you anymore; we use <code>lapply()</code> to loop over a list of column names (that we get using <code>colnames()</code>). Because we don’t want to overwrite the report we need to change the name of the output file. We do so by using <code>paste0()</code> which creates a new string that contains the variable name, so each report gets its own name. <code>x</code> inside the <code>paste0()</code> function is each element, one after the other, of the <code>columns</code> variable we defined first. Think of it as the <code>i</code> in a for loop. We then must also pass this to the <code>params</code> list, hence the <code>var = x</code>. The complete call to <code>rmarkdown::render()</code> is wrapped inside an anonymous function, because we need to use the argument <code>x</code> (which is each column defined in the columns list) in different places.</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>```{r, eval = F, echo = F}</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>columns &lt;- colnames(mtcars)</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>lapply(columns,</span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>  (\(x)rmarkdown::render(</span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>                    input = "param_report_example.Rmd",</span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>                    output_file = paste0(</span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>                      "param_report_example_", x, ".html"</span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a>                    ),</span>
+<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a>                    params = list(</span>
+<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a>                      dataset = "mtcars",</span>
+<span id="cb30-12"><a href="#cb30-12" aria-hidden="true" tabindex="-1"></a>                      var = x</span>
+<span id="cb30-13"><a href="#cb30-13" aria-hidden="true" tabindex="-1"></a>                    )</span>
+<span id="cb30-14"><a href="#cb30-14" aria-hidden="true" tabindex="-1"></a>                  )</span>
+<span id="cb30-15"><a href="#cb30-15" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb30-16"><a href="#cb30-16" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb30-17"><a href="#cb30-17" aria-hidden="true" tabindex="-1"></a>```</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>By now, this should not intimidate you anymore; I use <code>lapply()</code> to loop over a list of column names (that I get using <code>colnames()</code>). Because I don’t want to overwrite the report I need to change the name of the output file. I do so by using <code>paste0()</code> which creates a new string that contains the variable name, so each report gets its own name. <code>x</code> inside the <code>paste0()</code> function is each element, one after the other, of the <code>columns</code> variable I defined first. Think of it as the <code>i</code> in a for loop. I then must also pass this to the <code>params</code> list, hence the <code>var = x</code>. The complete call to <code>rmarkdown::render()</code> is wrapped inside an anonymous function, because I need to use the argument <code>x</code> (which is each column defined in the columns list) in different places.</p>
 </section>
 </section>
 <section id="conclusion" class="level2" data-number="7.4">
 <h2 data-number="7.4" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">7.4</span> Conclusion</h2>
 <p>Before continuing, I highly recommend that you try running this yourself, and also that you try to build your own little parameterised reports. Maybe start by replacing “mtcars” by “iris” in the code to compile the reports and see what happens, and then when you’re comfortable with parameterised reports, try templating inside a parameterised report!</p>
-<p>It is important not to fall to the temptation of copy and pasting sections of your report, or parts of your script, instead of using these more advanced features provided by the language. It is tempting, especially under time pressure, to just copy and paste bits of code and get things done instead of writing what seems to be unnecessary code to finally achieve the same thing. The problem however, is that in practice copy and pasting code to simply get things done will come bite you sooner rather than later. Especially when you’re still in the exploration/drafting phase of the project. It may take more time to set up, but once you’re done, it is much easier to experiment with different parameters, test the code or even re-use the code for other projects. Not only that, but forcing you to actually think about how to set up your code in a way that avoids repeating yourself also helps with truly understanding the problem at hand. What part of the problem is constant and does not change? What does change? How often, and why? Can you also fix these parts or not? What if instead of five sections that I need to copy and paste, I had 50 sections? How could I scale that up?</p>
+<p>It is important not to succumb to the temptation of copy and pasting sections of your report, or parts of your script, instead of using these more advanced features provided by the language. It is tempting, especially under time pressure, to just copy and paste bits of code and get things done instead of writing what seems to be unnecessary code to finally achieve the same thing. The problem however, is that in practice copy and pasting code to simply get things done will come bite you sooner rather than later. Especially when you’re still in the exploration/drafting phase of the project. It may take more time to set up, but once you’re done, it is much easier to experiment with different parameters, test the code or even re-use the code for other projects. Not only that, but forcing you to actually think about how to set up your code in a way that avoids repeating yourself also helps with truly understanding the problem at hand. What part of the problem is constant and does not change? What does change? How often, and why? Can you also fix these parts or not? What if instead of five sections that I need to copy and paste, I had 50 sections? How would I handle this?</p>
 <p>Asking yourself these questions, and solving them, will ultimately make you a better programmer.</p>
 <p>Remember: don’t repeat yourself!</p>
 
@@ -1038,12 +1024,22 @@ Xie, Yihui, Christophe Dervieux, and Emily Riederer. 2020. <em>R Markdown Cookbo
 </div>
 </div>
 </section>
-<aside id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr>
 <ol>
-<li id="fn1"><p>https://stackoverflow.com/a/68690065/1298051<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn1"><p>https://is.gd/Z7VS09<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>https://rmarkdown.rstudio.com/lesson-1.html<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>https://bookdown.org/yihui/rmarkdown/<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>https://bookdown.org/yihui/rmarkdown-cookbook/<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p>https://rmarkdown.rstudio.com/authoring_quick_tour.html<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn6"><p>https://stackoverflow.com/a/68690065/1298051<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn7"><p>https://is.gd/aR2hyz<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn8"><p>https://is.gd/gAqzf9<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn9"><p>https://ardata-fr.github.io/flextable-book/index.html<a href="#fnref9" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn10"><p>https://is.gd/pjIKmV<a href="#fnref10" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn11"><p>https://pkgs.rstudio.com/rticles/articles/examples.html<a href="#fnref11" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
-</aside>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -1087,33 +1083,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       } else {
         el.classList.add('notransition');
       }
-    }
-  }
-  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
-    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
-    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
-    let newTheme = '';
-    if(darkModeDefault) {
-      newTheme = isAlternate ? baseTheme : alternateTheme;
-    } else {
-      newTheme = isAlternate ? alternateTheme : baseTheme;
-    }
-    const changeGiscusTheme = () => {
-      // From: https://github.com/giscus/giscus/issues/336
-      const sendMessage = (message) => {
-        const iframe = document.querySelector('iframe.giscus-frame');
-        if (!iframe) return;
-        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
-      }
-      sendMessage({
-        setConfig: {
-          theme: newTheme
-        }
-      });
-    }
-    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
-    if (isGiscussLoaded) {
-      changeGiscusTheme();
     }
   }
   const toggleColorMode = (alternate) => {
@@ -1182,15 +1151,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return localAlternateSentinel;
     }
   }
-  const darkModeDefault = false;
-  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+  let localAlternateSentinel = 'default';
   // Dark / light mode switch
   window.quartoToggleColorScheme = () => {
     // Read the current dark / light value 
     let toAlternate = !hasAlternateSentinel();
     toggleColorMode(toAlternate);
     setStyleSentinel(toAlternate);
-    toggleGiscusIfUsed(toAlternate, darkModeDefault);
   };
   // Ensure there is a toggle, if there isn't float one in the top right
   if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
