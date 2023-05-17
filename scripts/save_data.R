@@ -2,9 +2,12 @@
 
 url <- "https://github.com/b-rodrigues/rap4all/raw/master/datasets/vente-maison-2010-2021.xlsx"
 
+# Shortened url
+#url <- "https://is.gd/1vvBAc"
+
 raw_data <- tempfile(fileext = ".xlsx")
 
-download.file(url, raw_data)
+download.file(url, raw_data, method = "auto", mode = "wb")
 
 sheets <- excel_sheets(raw_data)
 
