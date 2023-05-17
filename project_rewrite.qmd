@@ -1,13 +1,14 @@
 # Rewriting our project
 
 In this chapter, we will use what we’ve learned until now to rewrite our
-project. As a reminder, here is the
-[save_data.R](https://raw.githubusercontent.com/rap4all/housing/77a181c19f0f7a7646453b2f74408814d02c3570/save_data.R)^[https://is.gd/LyvwHb]
-and the
-[analysis.R](https://raw.githubusercontent.com/rap4all/housing/77a181c19f0f7a7646453b2f74408814d02c3570/analysis.R)^[https://is.gd/X7XXJg]
-files from our project. The `analysis.R` file already includes one change: the
-one from the chapter on collaborating with Github, where Bruno wrote a function
-to make the plots for each commune.
+project. As a reminder, here are the files:
+
+- save_data.R: [https://is.gd/7PhUjd](https://is.gd/7PhUjd)
+- analysis.R: [https://is.gd/X7XXJg](https://is.gd/X7XXJg)
+
+from our project. The `analysis.R` file already includes one change: the one
+from the chapter on collaborating with Github, where Bruno wrote a function to
+make the plots for each commune.
 
 If you skipped part one of the book, or for any other reason do not have a
 Github repository with these two files yet, then now is the time to do so.
@@ -19,21 +20,38 @@ branch containing these two scripts. On your computer, calling `git status` in
 Git Bash (on Windows) or in a terminal (for Linux and macOS) should result in
 this:
 
+::: {.content-hidden when-format="pdf"}
 ```
 owner@localhost ➤ git status
 ```
+:::
+
+::: {.content-visible when-format="pdf"}
+```
+owner@localhost $ git status
+```
+:::
 
 ```
 On branch master
 nothing to commit, working tree clean
 ```
 
+
 If that’s the case, congrats, we can start working. Start by creating a new branch,
 and call it `rmd` for example:
 
+::: {.content-hidden when-format="pdf"}
 ```
 owner@localhost ➤ git checkout -b rmd
 ```
+:::
+
+::: {.content-visible when-format="pdf"}
+```
+owner@localhost $ git checkout -b rmd
+```
+:::
 
 ```
 Switched to a new branch 'rmd'
@@ -42,11 +60,21 @@ Switched to a new branch 'rmd'
 We will now be working on this branch. Simply work as usual, but when pushing, make
 sure to push to the `rmd` branch:
 
+::: {.content-hidden when-format="pdf"}
 ```
 owner@localhost ➤ git add .
 owner@localhost ➤ git commit -am "some changes"
 owner@localhost ➤ git push origin rmd
 ```
+:::
+
+::: {.content-visible when-format="pdf"}
+```
+owner@localhost $ git add .
+owner@localhost $ git commit -am "some changes"
+owner@localhost $ git push origin rmd
+```
+:::
 
 This will push whatever change to the `rmd` branch. By doing this, you keep the
 original `.R` scripts in the main branch, and the will end up with the `.Rmd`
@@ -112,29 +140,30 @@ a paragraph explaining from where and how we are going to download the data:
 ````{verbatim} 
 This data is downloaded from the luxembourguish [Open Data
 Portal](https://data.public.lu/fr/datasets/prix-annonces-des-logements-par-commune/)
-(the data set called *Série rétrospective des prix annoncés des maisons par
-commune, de 2010 à 2021*), and the original data is from the "Observatoire de
-l'habitat". This data contains prices for houses sold since 2010 for each
-luxembourguish commune. 
+(the data set called *Série rétrospective des prix
+annoncés des maisons par commune, de 2010 à 2021*), 
+and the original data is from the "Observatoire de
+l'habitat". This data contains prices for houses sold 
+since 2010 for each luxembourguish commune. 
 
-The function below uses the permanent URL from the Open Data Portal to access
-the data, but I have also rehosted the data, and use my link to download the
-data (for archival purposes):
+The function below uses the permanent URL from the Open Data 
+Portal to access the data, but I have also rehosted the data, 
+and use my link to download the data (for archival purposes):
 
 ````
 
-This is much more detailed than using comments. Then comes a function to download
-and get the data. This function simply wraps the lines from our original script that
-did the downloading and the cleaning. As a reminder, here are the lines from the 
-original script:
+This is much more detailed than using comments. Then comes a function to
+download and get the data. This function simply wraps the lines from our
+original script that did the downloading and the cleaning. As a reminder, here
+are the lines from the original script:
 
 ```{r, eval = FALSE}
 
-url <- "https://github.com/b-rodrigues/rap4all/raw/master/datasets/vente-maison-2010-2021.xlsx"
+url <- "https://is.gd/1vvBAc"
 
 raw_data <- tempfile(fileext = ".xlsx")
 
-download.file(url, raw_data)
+download.file(url, raw_data, method = "auto", mode = "wb")
 
 sheets <- excel_sheets(raw_data)
 

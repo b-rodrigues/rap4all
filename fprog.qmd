@@ -2,7 +2,7 @@
 
 Now that we are familiar with Git and Github, we can start with writing code. We
 will learn how to write code using the functional programming paradigm.
-Programming paradagims are ways to structure programs (or scripts).
+Programming paradigms are ways to structure programs (or scripts).
 
 This chapter will teach you the fundamentals of functional programming.
 *Functional programming* might sound scary, but we will focus on only a handful
@@ -41,7 +41,7 @@ make_plot <- function(country_level_data,
 
 Now we are going to go one step further and not only learn how to write good
 functions, but also how we can push the concept of "not repeating oneself" to
-the extreme by using higher-order fuctions and function factories.
+the extreme by using higher-order functions and function factories.
 
 You are very likely already familiar with at least two elements of functional
 programming: functions and lists. But functional programming is a complete
@@ -687,14 +687,14 @@ assertive programming in greater detail in part 2 of the book.
 
 ### Recursive functions
 
-You may have noticed in the last lines of `nchar2()` defined above, that
+You may have noticed in the last lines of `nchar2()` (defined above) that
 `nchar2()` calls itself. A function that calls itself in its own body is called
 a recursive function. It is sometimes easier to define a function in its
 recursive form than in an iterative form. The most common example is the
 factorial function. However, there is an issue with recursive functions (in the
 R programming language, other programming languages may not have the same
-problem, like Haskell): while it is sometimes easier to write a function
-using a recursive algorithm than an iterative algorithm, like for the factorial
+problem, like Haskell): while it is sometimes easier to write a function using a
+recursive algorithm than an iterative algorithm, like for the factorial
 function, recursive functions in R are quite slow. Let’s take a look at two
 definitions of the factorial function, one recursive, the other iterative:
 
@@ -849,7 +849,7 @@ my_plot <- ggplot(data = mtcars) +
 typeof(my_plot)
 ```
 
-It's lists all the way down, and it's not a coincidence. It's because lists are
+It's lists all the way down, and it's not a coincidence; it’s because lists are
 very powerful. So it's important to know what you can do with lists.
 
 ### Lists can hold many things
@@ -858,12 +858,10 @@ If you write a function that needs to return many objects, the only solution is
 to place them inside a list. For example, consider this function:
 
 ```{r}
-sqrt_newton <- function(
-                 a,
-                 init = 1,
-                 eps = 0.01,
-                 steps = 1
-                 ){
+sqrt_newton <- function(a,
+                        init = 1,
+                        eps = 0.01,
+                        steps = 1){
 
     stopifnot(a >= 0)
     while(abs(init**2 - a) > eps){
@@ -968,9 +966,9 @@ to re-use `i`. Also, writing loops is, in my opinion, quite error prone. But how
 can we avoid using loops? Looping in a functional programming language involves
 using higher-order functions and lists. A reminder: a higher-order function is a
 function that takes another function as an argument. Looping is a task like any
-other, so we can write a function that does the looping for us. We will write a
-function, and call it `looping()`, which will take a function as an argument, as
-well as a list. The list will serve as the container to hold our numbers:
+other, so I can write a function that does the looping. This function, which
+I’ll call `looping()`, will take a function as an argument, as well as a
+list. The list will serve as the container to hold our numbers:
 
 ```{r}
 looping <- function(a_list, a_func, init = NULL, ...){
@@ -1005,14 +1003,14 @@ have abstracted the loop away inside a function, we can keep reusing this
 function:
 
 ```{r}
-looping(as.list(seq(1:100)), `+`)
+looping(as.list(seq(1, 100)), `+`)
 ```
 
 Of course, because this is so useful, `looping()` actually ships with R, and is
 called `Reduce()`:
 
 ```{r}
-Reduce(`+`, seq(1:100)) # the order of the arguments is `function` then `list` for `Reduce()`
+Reduce(`+`, seq(1, 100)) # the order of the arguments is `function` then `list` for `Reduce()`
 ```
 
 But this is not the only way that we can loop. We can also write a loop that
@@ -1020,7 +1018,7 @@ applies a function to each element of a list, instead of operating on the whole
 list:
 
 ```{r}
-result <- as.list(seq(1:5))
+result <- as.list(seq(1, 5))
 for (i in seq_along(result)){
   result[[i]] <- sqrt(result[[i]])
 }
@@ -1054,14 +1052,14 @@ complex. But once we have it, we can focus on the task at hand, instead of
 having to always tell the computer what we want:
 
 ```{r}
-applying(as.list(seq(1:5)), sqrt)
+applying(as.list(seq(1, 5)), sqrt)
 ```
 
 Of course, R ships with its own, much more efficient, implementation of this
 function:
 
 ```{r}
-lapply(list(seq(1:5)), sqrt)
+lapply(list(seq(1, 5)), sqrt)
 ```
 
 In other programming languages, `lapply()` is often called `map()`. The
@@ -1074,21 +1072,45 @@ two at a time:
 library(purrr)
 
 map2(
-  .x = seq(1:5),
-  .y = seq(1:5),
+  .x = seq(1, 5),
+  .y = seq(1, 5),
   .f = `+`
   )
 ```
 
 If you have more than two lists, you can use `pmap()` instead.
 
+Another important, idiomatic, way to deal with loops in R is to use matrix algebra
+instead. For example, to compute the sum of the first 100 integers, the following
+approach is possible:
+
+```{r}
+rep(1, 100) %*% seq(1, 100)
+```
+
+Also, don’t forget that many functions are vectorized by default, so no loop is required:
+
+```{r}
+sqrt(seq(1, 5))
+```
+
+or:
+
+```{r}
+seq(1, 5) + seq(1, 5)
+```
+
+Before diving directly into loops, check if the functions you’re using are
+vectorized, or if there is a simple way to express the computation you want to
+run in terms of matrix multiplication.
+
 ### Data frames
 
 As mentioned in the introduction of this section, data frames are a special type
 of list of atomic vectors. This means that just as I can use `lapply()` to
-compute the square root of the elements of an atomic vector, as in the previous
-example, I can also operate on all the columns of a data frame. For example, it
-is possible to determine the class of every column of a data frame like this:
+compute the square root of the elements of an atomic vector, as shown
+previously, I can also operate on all the columns of a data frame. For example,
+it is possible to determine the class of every column of a data frame like this:
 
 ```{r}
 lapply(iris, class)
@@ -1104,7 +1126,7 @@ want to generate several plots, per subnational division and per year.
 Typically, we would use a loop for this, but we can use what we’ve learned here,
 as well as some functions from the `{dplyr}`, `{purrr}`, `{ggplot2}` and
 `{tidyr}` packages. I will be downloading data that I made available inside a
-package, but instead of installing the package, we will download the `.rda` file
+package, but instead of installing the package, I will download the `.rda` file
 directly (which is the file format of packaged data) and then load that data
 into our R session:
 
@@ -1113,13 +1135,14 @@ into our R session:
 unemp_path <- tempfile(fileext = ".rda")
 
 # Download the data and save it to the path of the temporary file
+# avoids having to install the package from Github
 download.file("https://github.com/b-rodrigues/myPackage/raw/main/data/unemp.rda",
               destfile = unemp_path)
 
 # Load the data. The data is now available as 'unemp'
 load(unemp_path)
 
-``` 
+```
 
 Let’s load the required packages and take a look at the data:
 
@@ -1131,10 +1154,10 @@ library(tidyr)
 
 glimpse(unemp)
 
-``` 
+```
 
 Column names are self-descriptive, but the `level` column needs some
-explanations. `level` contains the adiministrative divisions of the country, so
+explanations. `level` contains the administrative divisions of the country, so
 the country of Luxembourg, then the Cantons and then the Communes.
 
 Remember that Luxembourg can refer to the country, the canton or the commune of
@@ -1173,7 +1196,7 @@ try it and see what happens:
 
 ```{r}
 nested_unemp <- filtered_unemp %>%
-  group_nest(place_name) 
+  group_nest(place_name)
 ```
 
 Let’s see what this looks like:
@@ -1195,14 +1218,16 @@ of data frames, it should be possible to use a function like `map()` or
 `map()` or `lapply()` require a list of elements of whatever type and a function
 that accepts objects of this type as input. So this means that we could apply a
 function that plots the data to each element of the column titled `data`. Since
-each element of this column is a data frame, this functions needs a data frame
-as an input. As a first, simple, example to illustrate this, let’s suppose that
-we want to determine the number of rows of each data frame. This is how we would
-do it:
+each element of this column is a data frame, this function needs a data frame as
+an input. As a first and simple example to illustrate this, let’s suppose that we
+want to determine the number of rows of each data frame. This is how we would do
+it:
 
 ```{r}
 nested_unemp %>%
-  mutate(nrows = map(data, nrow))
+  mutate(nrows = map(data, nrow)) # ’data’ is the name of
+                                  # the list-column that contains
+                                  # the smaller data frames
 ```
 
 The new column, titled `nrows` is a list of integers. We can simplify it by
@@ -1214,20 +1239,20 @@ nested_unemp %>%
   mutate(nrows = map_int(data, nrow))
 ```
 
-Let’s try for a more complex example now. What if we want to filter rows? (The
-simplest way would of course to filter the rows we need before nesting the data
-frame). We need to apply the function `filter()` where its first argument is a
-data frame and the second argument is a predicate:
+Let’s try a more complex example now. What if we want to filter rows (of course,
+the simplest way would be to filter the rows we need before nesting the
+data frame)? We need to apply the function `filter()` where its first argument
+is a data frame and the second argument is a predicate:
 
 ```{r}
 nested_unemp %>%
   mutate(nrows = map(data, \(x)filter(x, year == 2015)))
 ```
 
-In this case, we need to use an anonymous function. This is because
-`filter()` has two arguments and we need to make clear what it is we are mapping
-over and what argument stays fixed; we are mapping over, or iterating if you
-will, data frames, but the predicate `year == 2015` stays fixed.
+In this case, we need to use an anonymous function. This is because `filter()`
+has two arguments and we need to make clear what it is we are mapping over and
+what argument stays fixed; we are mapping over (iterating) the data frames but
+the predicate `year == 2015` stays fixed.
 
 We are now ready to plot our data. The best way to continue is to first get the
 function right by creating one plot for one single commune. Let’s select the
@@ -1256,8 +1281,8 @@ many arguments that function would have. There is an obvious one, the data
 itself (in the snippet above, the data is the `lux_data` object). Another one
 that is less obvious is in the title:
 
-```{r}
-  labs(title = "Unemployment in Luxembourg")
+```
+labs(title = "Unemployment in Luxembourg")
 ```
 
 Ideally, we would want that title to change depending on the data set. So we
@@ -1286,8 +1311,8 @@ Ok, so now, we simply need to apply this function to our nested data frame:
 ```{r}
 nested_unemp <- nested_unemp %>%
   mutate(plots = map2(
-    .x = data,
-    .y = place_name,
+    .x = data, # column of data frames
+    .y = place_name, # column of commune names
     .f = make_plot
   ))
 
@@ -1301,7 +1326,8 @@ these are our plots. Let’s take a look at them:
 nested_unemp$plots
 ```
 
-We could also have used an anonymous function:
+We could also have used an anonymous function (but it is more difficult to get
+right):
 
 ```{r}
 nested_unemp %>%
@@ -1324,14 +1350,15 @@ nested_unemp %>%
 
 This list-column based workflow is extremely powerful and I highly advise you to
 take the required time to master it. Remember, we never want to have to repeat
-ourselves. This might seem more complicated than repeating yourself, but imagine
-that you need to do this for various countries, various variables, etc... What
-are you going to do, copy and paste code everywhere? This gets very tedious and
-more importantly, very error-prone, because you will forget to update the code
-in some places. You could of course use a loop instead of this list-column based
-workflow. But as mentioned, the issue with loops is that you have to interact
-with the global environment, which can lead to other issues. But whatever you
-end up using, you need to avoid copy and pasting at all costs.
+ourselves. This approach might seem more complicated than calling `make_plot()`
+three times, but imagine that you need to do this for several countries, several
+variables, etc... What are you going to do, copy and paste code everywhere? This
+gets very tedious and more importantly, very error-prone, because now you’ve
+just introduced many points of failure by having so much copy-pasted code. You
+could of course use a loop instead of this list-column based workflow. But as
+mentioned, the issue with loops is that you have to interact with the global
+environment, which can lead to other issues. But whatever you end up using, you
+need to avoid copy and pasting at all costs.
 
 ## Functional programming in R
 
@@ -1342,7 +1369,7 @@ programming.
 
 ### Base capabilities
 
-R is a functional programming language, (but not only), and as such it comes
+R is a functional programming language (but not only), and as such it comes
 with many functions out of the box to write functional code. We have already
 discussed `lapply()` and `Reduce()`. You should know that depending on what you
 want to achieve, there are other functions that are similar to `lapply()`:
@@ -1362,7 +1389,7 @@ data frame where the elements of one particular column satisfy a predicate.
 ```{r}
 Filter(is.character,
        list(
-         seq(1:5),
+         seq(1, 5),
          "Hey")
        )
 ```
@@ -1378,7 +1405,7 @@ illustration, suppose that in the example above we wanted to get everything
 ```{r}
 Filter(Negate(is.character),
        list(
-         seq(1:5),
+         seq(1, 5),
          "Hey")
        )
 ```
@@ -1410,7 +1437,7 @@ We will be using this technique later in the book to keep our scripts pure.
 Before continuing with R packages that extend R’s functional programming
 capabilities it’s also important to stress that just as R is a functional
 programming language, it is also an object oriented language. In fact, R is what
-John Chambers called a *functional OOP* language (@chambers2014). We won’t delve
+John Chambers called a *functional OOP* language (@chambers2014). I won’t delve
 too much into what this means (read @wickham2019 for this), but as a short
 discussion, consider the `print()` function. Depending on what type of object
 the user gives it, it seems as if somehow `print()` knows what to do with it:
@@ -1431,17 +1458,18 @@ print
 
 Quite unexpectedly, the source code of `print()` is one line long and is just
 `UseMethod("print")`. So all `print()` does is use a generic method called
-"print". If your text editor has autocompletion enabled, you might see that
-there are actually quite a lot of `print()` functions. For example, type
+"print". If your text editor has auto-completion enabled, you might see that
+there are actually many `print()` functions. For example, type
 `print.data.frame` into a console:
 
 ```{r}
 print.data.frame
 ```
 
-This is the `print` function for `data.frame` objects. So what `print()` does is
-look at the class of its argument `x`, and then look for the right `print`
-function. In more traditional OOP languages, users would type something like:
+This is the `print` function for `data.frame` objects. So what `print()` does,
+is look at the class of its argument `x`, and then look for the right `print`
+function to call. In more traditional OOP languages, users would type something
+like:
 
 ```{r, eval = F}
 mtcars.print()
@@ -1457,35 +1485,35 @@ developer also must implement the required methods. For example in the
 
 All of this to say that if you want to extend R by writing packages, learning
 some OOP essentials is also important. But for data analysis, functional
-programming does the job perfectly. To learn more about R’s different OOP
+programming does the job perfectly well. To learn more about R’s different OOP
 systems (yes, R can do OOP in different ways and the one I sketched here is the
 simplest, but probably the most used as well), take a look at @wickham2019.
 
 ### purrr
 
 The `{purrr}` package, developed by Posit (formerly RStudio), contains many
-functions to make functional programming with R go more smoothly. In the
-previous section, we discussed the `apply()` family of function; they all do a
-very similar thing, which is looping over a list and applying a function to the
+functions to make functional programming with R more smooth. In the previous
+section, we discussed the `apply()` family of function; they all do a very
+similar thing, which is looping over a list and applying a function to the
 elements of the list, but it is not quite easy to remember which one does what.
-Also, for some of these functions like `apply()`, the list comes first, and then
-the function, but in the case of `mapply()`, the function comes first. This type
-of inconsistencies can be frustrating. Another issue with these functions is
-that it is not always easy to know what type the output is going to be. List?
-Atomic vector? Something else?
+Also, for some of these functions like `apply()`, the list argument comes first,
+and then the function, but in the case of `mapply()`, the function comes first.
+This type of inconsistencies can be frustrating. Another issue with these
+functions is that it is not always easy to know what type the output is going to
+be. List? Atomic vector? Something else?
 
 `{purrr}` solves this issue by offering the `map()` family of functions, which
 behave in a very consistent way. The basic function is called `map()` and we’ve
 already used it:
 
 ```{r}
-map(seq(1:5), sqrt)
+map(seq(1, 5), sqrt)
 ```
 
 But there are many interesting variants:
 
 ```{r}
-map_dbl(seq(1:5), sqrt)
+map_dbl(seq(1, 5), sqrt)
 ```
 
 `map_dbl()` coerces the output to an atomic vector of doubles instead of a list
@@ -1497,22 +1525,22 @@ map_chr(letters, toupper)
 
 for when the output needs to be an atomic vector of characters.
 
-There are many others, so take a look at the document with `?map`. There’s also
-`walk()` which is used if you’re only interested in the side-effect of the
+There are many others, so take a look at the documentation with `?map`. There’s
+also `walk()` which is used if you’re only interested in the side-effect of the
 function (for example if the function takes paths as input and saves something
 to disk).
 
 `{purrr}` also has functions to replace `Reduce()`, simply called `reduce()` and
 `accumulate()`, and there are many, many other useful functions. Read through
 the [documentation of the
-package](https://purrr.tidyverse.org/reference/index.html) and take the time to
-learn about all it has to offer.
+package](https://purrr.tidyverse.org/reference/index.html)^[https://purrr.tidyverse.org/reference/index.html]
+and take the time to learn about all it has to offer.
 
 ### withr
 
 `{withr}` is a powerful package that makes it easy to "purify" functions that
 behave in a way that can cause problems. Remember the function from the
-introduction that randomly gave out a recipe Bruno liked? Here it is again:
+introduction that randomly gave out a dish Bruno liked? Here it is again:
 
 ```{r}
 h <- function(name, food_list = list()){
@@ -1527,9 +1555,9 @@ h <- function(name, food_list = list()){
 }
 ```
 
-Because this function returns results that are not consistent for a fixed input,
-this function is not referentially transparent. So we improved the function by
-adding calls to `set.seed()` like this:
+For the same input, this function may return different outputs so this function
+is not referentially transparent. So we improved the function by adding calls to
+`set.seed()` like this:
 
 ```{r}
 h2 <- function(name, food_list = list(), seed = 123){
@@ -1600,7 +1628,7 @@ with](https://withr.r-lib.org/reference/index.html).
 
 If there is only one thing that you should remember from this chapter, it would
 be pure functions. Writing pure functions is in my opinion not very difficult to
-do and comes with many benefits. But, avoiding loops and replacing them with
+do and comes with many benefits. But avoiding loops and replacing them with
 higher-order functions (`lapply()`, `Reduce()`, `purrr::map()` -- and its
 variants --) also pays off. While this chapter stresses the advantages of
 functional programming, you should not forget that R is not a pure, and solely,

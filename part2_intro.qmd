@@ -5,15 +5,15 @@ this book: Write IT down. We now need to acknowledge that our brains are
 fallible (and ageing) and thus we need to write down many safeguards to ensure
 that our analyses can be of high quality.
 
-We cannot leave code quality, documentation and finally its reproducibility be
+We cannot leave code quality, documentation and finally its reproducibility 
 to chance. We need to write down everything we need to ensure the long-term
 reproducibility of our pipelines.
 
 ## The reproducibility iceberg
 
-I think it is time to reflect on why we bothered with the first part of the book
-at all, because for now, we didn’t really learn anything about reproducibility.
-Why not just go straight to the reproducibility part?
+I think it is time to reflect on why I bothered with the first part of the book
+at all, because for now, I didn’t really learn teach you anything directly related
+to reproducibility, so didn’t I just jump straight to the reproducibility part?
 
 Remember the introduction, where I talked about the reproducibility continuum or
 spectrum? It is now time to discuss this in greater detail. I propose a new
@@ -33,7 +33,6 @@ analogy, *the reproducibility iceberg*:
 knitr::include_graphics("images/repro_iceberg.png")
 ```
 :::
-
 
 Why an iceberg? Because the parts of the iceberg that you see, those that are
 obvious, are like running your analyses in a click-based environment like Excel.
@@ -56,7 +55,7 @@ Another issue is collaborating when writing this script. Without any version
 control tools nor code hosting platform, collaborating on this script can very
 quickly turn into a nightmare.
 
-This is where Git and Github came into play, one more level deeper. The
+This is where Git and Github.com came into play, one level deeper. The
 advantage now is that collaboration was streamlined. The commit history is
 available to all the teammates and it is possible to revert changes, experiment
 with new features using branches and overall manage the project. In this layer
@@ -78,10 +77,10 @@ packages means that the exact same versions of the packages that were used
 originally will get used regardless of *when* in the future we rerun the
 analysis.
 
-But if budget and time allows we can still go deeper, and definitely should. We
+But if budget and time allow we can still go deeper, and definitely should. We
 also want to make running the script as easy as possible, and ideally, *as
 non-interactively as possible*. Any human interaction with the analysis is a
-source of errors, so that’s why we also need to thouroughly and systematically
+source of errors, so that’s why we also need to thoroughly and systematically
 test our code. These tests also need to run non-interactively. Also, using the
 tools described in part two of this book, we can actually set up the project,
 right from the very beginning, in a way that it will be reproducible quite
@@ -90,7 +89,7 @@ need to invest more time to make things reproducible. The project will simply be
 reproducible because it was engineered that way. And I insist, at practically
 no additional cost!
 
-The other problem with only recording packages’s version is that in practice, it
+Another problem with only recording packages’s version is that in practice, it
 is very often not enough. This is because installing older versions of packages
 can be a challenge. This can be the case for two reasons:
 
@@ -114,14 +113,14 @@ stakeholders.
 
 Then, we are going to turn these two Rmds files into a package. This will be
 done by using [Sébastien Rochette’s package
-{fusen}](https://thinkr-open.github.io/fusen/). `{fusen}` makes it very easy to
-go from our Rmd files to a package, by using what Sébastien named the *Rmarkdown
-first* method. If at this stage it’s not clear why you would want to turn your
-analysis into a package, don’t worry, it’ll be once we’re done with this
-chapter. 
+{fusen}](https://thinkr-open.github.io/fusen/)^[https://thinkr-open.github.io/fusen/].
+`{fusen}` makes it very easy to go from our Rmd files to a package, by using
+what Sébastien named the *Rmarkdown first* method. If at this stage it’s not
+clear why you would want to turn your analysis into a package, don’t worry,
+it’ll be once we’re done with this chapter.
 
-Once we have a package, we can then use `{testthat}` for unit testing, and base
-R functions for assertive programming. At this stage, our code should be
+Once we have a package, we can use `{testthat}` for unit testing, and base R
+functions for assertive programming. At this stage, our code should be
 well-documented, easy to share, and thoroughly tested.
 
 Once this is achieved, we can build a true pipeline using `{targets}`, an

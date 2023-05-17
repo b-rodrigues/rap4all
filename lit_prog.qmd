@@ -1,17 +1,18 @@
 # Literate programming
 
-We now know about version control, how to collaborate using Github.com and
-functional programming. By only learning about this, we have actually already
-made some massive steps towards making our projects reproducible. Especially by
-using Git and Github. Even if you're using private repos and work in the private
-sector, by using version control, you ensure that reusing this code for future
-projects is much easier. Auditing is greatly simplified as well.
+You now know about version control, how to collaborate using Github.com and
+functional programming. By only learning about this, you have already made some
+massive steps towards making your projects reproducible. Especially by using Git
+and Github. Even if you're using private repos and work in the private sector,
+by using version control, you ensure that reusing this code for future projects
+is much easier. Auditing is greatly simplified as well.
 
 But this book is still far from over. Let's think about our project up until
 now. We have downloaded some data, and wrote code to analyse it. Fair enough.
 But usually, we don't really stop there. We now need to write a report, or maybe
 a Powerpoint presentation. If you're a researcher, you still need to write a
-paper, just getting the results is not enough!
+paper, just getting the results is not enough, and if you work in the private
+sector, you also need to present the results of your analysis to management.
 
 ::: {.content-hidden when-format="pdf"}
 <figure>
@@ -28,7 +29,8 @@ knitr::include_graphics("images/report_draft_loop.png")
 ```
 :::
 
-The problem is that this workflow is very often quite horrible. The picture
+The problem is that writing code, getting some results, and putting this results
+into a document (it doesn’t matter what kind) is often very tedious. The picture
 above illustrates this cursed report drafting loop. Get some results, copy and
 paste images into Word or Powerpoint, get a change request, or notice a mistake,
 and start from scratch again. If you're using LaTeX it'll be easier for
@@ -37,9 +39,9 @@ touch your analysis code.
 
 Worse, what if you start with a Word or LaTeX document, but then get asked to
 make a Powerpoint presentation as well? Then you need to copy and paste
-everything into Powerpoint as well... and if you get a change request after
-you're done and need to start over, you might seriously consider raising goats
-instead of dealing with this again.
+everything again, but this time into Powerpoint... and if you get a change
+request after you're done and need to start over, you might seriously consider
+raising goats instead of dealing with this again.
 
 But if we can make the loop look like this instead:
 
@@ -66,12 +68,13 @@ and compile to a Powerpoint (or Beamer) presentation.
 
 ## A quick history of literate programming
 
-In literate programming, we mix code and prose together, which makes the output
-of our programs not just a series of tables, or graphs or predictions, but a
-complete report that contains the results of our analysis directly. Scripts
-written using literate programming are also very easy to compile, or render,
-into a variety of document formats like `html`, `docx`, `pdf` or even `pptx`. R
-supports several frameworks for literate programming: Sweave, knitr and Quarto.
+In literate programming, authors mix code and prose, which makes the output of
+their programs not just a series of tables, or graphs or predictions, but a
+complete report that contains the results of the analysis directly embedded into
+it. Scripts written using literate programming are also very easy to compile, or
+render, into a variety of document formats like `html`, `docx`, `pdf` or even
+`pptx`. R supports several frameworks for literate programming: Sweave, knitr
+and Quarto.
 
 Sweave was the first tool available to R (and S) users, and allowed the mixing
 of R and LaTeX code to create a document. Friedrich Leisch developed Sweave in
@@ -86,11 +89,11 @@ mistakes will also happen (it’s not a question of if, but when) and updating
 reports (for example, when new data comes in) means that someone will have,
 again, to copy and paste the updated results into a new document.
 
-Sweave provided (and still provides, as it is still well functioning!) a way to
-embed the analysis in the document itself, in this case a LaTeX source file, and
-R code was executed whenever the document was compiled. This gave researchers
-considerable time savings when it was time to update a report or drafting a
-research paper.
+Sweave makes it possible to embed the analysis in the final document itself, by
+providing a way to mix LaTeX and R code which gets executed whenever the final,
+output document gets compiled. This gives practiotioners considerable time
+savings because it eliminates the copy and pasting of results from R outputs
+into a document.
 
 The snippet below shows the example from Leisch’s paper:
 
@@ -147,14 +150,13 @@ knitr::include_graphics("images/hello_sweave.PNG")
 ```
 :::
 
-
-Let us just state that the fact that it is still possible to compile this
+Let me just state that the fact that it is still possible to compile this
 example more than 20 years later is an incredible testament to how mature and
 stable this software is (both R, Sweave, and LaTeX). But as impressive as this
 is, LaTeX has a steep learning curve, and Leisch even advocated the use of the
 Emacs text editor to edit Sweave files, which also has a very steep learning
-curve (but this is entirely optional; for example we edited and compiled the
-example on the Rstudio IDE).
+curve (but this is entirely optional; for example I’ve edited and compiled the
+example on the RStudio IDE).
 
 The next generation of literate programming tools was provided by a package
 called `{knitr}` in 2012. From the perspective of the user, the biggest change
@@ -207,10 +209,9 @@ knitr::include_graphics("images/hello_rmd.PNG")
 ```
 :::
 
-
 Just like in a Sweave document, an Rmd source file also has a header in which
-authors can define a number of options. Here we only specified that we wanted a
-pdf document as an output file. We then copy and pasted the contents from the
+authors can define a number of general options. Here I’ve only specified that I wanted a
+pdf document as an output file. I then copy and pasted the contents from the
 Sweave source, but changed the chunk delimiters from `<<>>=` and `@` to ````
 ```{r} ```` to start an R chunk and ```` ``` ```` to end it. Remember; we need
 to specify the engine in the chunk because `{knitr}` supports many engines. For
@@ -245,7 +246,7 @@ pwd
 ````
 
 (bash’s `pwd` command shows the current working directory). You may have noticed
-that we also keep two LaTeX commands in the source Rmd, `\texttt{}` and `LaTeX`.
+that I’ve also keep two LaTeX commands in the source Rmd, `\texttt{}` and `LaTeX`.
 This is because Rmd files get first converted into `LaTeX` files and then into a
 PDF. If you’re using RStudio, this document can be compiled by clicking a button
 or using a keyboard shortcut, but you can also use the `rmarkdown::render()`
@@ -259,14 +260,14 @@ to switch to Markdown, you can either use Sweave, or use `{knitr}` but instead
 of writing your documents using the R Markdown format, you can use the `Rnw`
 format which is basically the same as Sweave, but uses `{knitr}` for
 compilation. Take a look at [this
-example](https://github.com/yihui/knitr/blob/master/inst/examples/knitr-minimal.Rnw)
-from the `{knitr}` github repository for example.
+example](https://github.com/yihui/knitr/blob/master/inst/examples/knitr-minimal.Rnw)^[https://is.gd/Z7VS09]
+from the `{knitr}` Github repository for example.
 
 You should know that `{knitr}` makes it possible to author many, many different
 types of documents. It is possible to write books, blogs, package documentation
 (and even entire packages, as we shall see later in this book), Powerpoint
 slides... It is extremely powerful because we can use the same general R
-Markdown knowledge to build many different outputs:
+Markdown knowledge to build many different outputs.
 
 ::: {.content-hidden when-format="pdf"}
 <figure>
@@ -299,10 +300,11 @@ reason to use Quarto, Quarto is not tied to R. Quarto is actually a standalone
 tool that needs to be installed alongside your R installation, and works
 completely independently. In fact, you can use Quarto without having R installed
 at all, as Quarto, just like `{knitr}` supports many engines. This means that if
-you’re primarily using Python, you can author documents with Quarto. Quarto also
-supports the Julia programming language and Observable JS, making it possible to
-include interactive visualisations into an Html document. Let’s take a look at
-how the example from Leisch’s paper looks as a Qmd file:
+you’re primarily using Python, you can author documents with Quarto that
+executed Python chunks. Quarto also supports the Julia programming language and
+Observable JS, making it possible to include interactive visualisations into an
+Html document. Let’s take a look at how the example from Leisch’s paper looks as
+a Qmd (Quarto’s flavour of Markdown) file:
 
 ````{verbatim}
 ---
@@ -331,7 +333,7 @@ boxplot(Ozone ~ Month, data = airquality)
 it, but to keep close to the original example from the paper.)
 
 As you can see, it’s exactly the same as the Rmd file from before. The only
-difference is in the header. In the Rmd file we specified the output format as:
+difference is in the header. In the Rmd file I specified the output format as:
 
 ````
 ---
@@ -352,12 +354,14 @@ and as such, I feel it might be better to stick with `{knitr}` and the Rmd
 format for now, so that’s what we’re going to use going forward. Also, the
 `{knitr}` and the Rmd format are here to stay, so there's little risk in keeping
 using it, and anyways, as already stated, if switching to Quarto becomes a
-necessity, the cost of switch would be very, very low. In what follows, I won’t
-be focused on anything really `{knitr}` or Rmd specific, so should you want to
-use Quarto instead, you should be able to follow along without any problems at
-all, since the Rmd and Qmd formats have so much overlap.
+necessity, the cost of switching would be very, very low. In what follows, I
+won’t be focused on anything really `{knitr}` or Rmd specific, so should you
+want to use Quarto instead, you should be able to follow along without any
+problems at all, since the Rmd and Qmd formats have so much overlap. Also,
+Quarto needs to be installed separately, but to use `{knitr}` and RMarkdown,
+no specific tools are necessary.
 
-In the next two sections, we will discuss how to set up and use `{knitr}` as
+In the next two sections, I will show how to set up and use `{knitr}` as
 well as give you a quick overview of the R Markdown syntax. However, we will
 very quickly focus on the templating capabilities of `{knitr}`: expanding text,
 using child documents, and parameterised reports. These are advanced topics and
@@ -371,19 +375,23 @@ book expects a lot from you. Keep going, and you shall be handsomely rewarded.
 
 ## `{knitr}` basics
 
-This section will be a very small intro to `{knitr}`. We are going to teach you
-just enough to get started, and we are going to focus on the Rmd format. There
-are many resources out there that you can use if you want to dig deeper, for
-instance the [R Markdown website](https://rmarkdown.rstudio.com/lesson-1.html)
+This section will be a very small intro to `{knitr}`. I’m going to teach you
+just enough to get started writing Rmd files. Most, if not all, of what I’ll be
+explaining here is also applicable to the Qmd format. There are many resources
+out there that you can use if you want to dig deeper, for instance the [R
+Markdown
+website](https://rmarkdown.rstudio.com/lesson-1.html)^[https://rmarkdown.rstudio.com/lesson-1.html]
 from Posit, or the [R Markdown: The Definitive
-Guide](https://bookdown.org/yihui/rmarkdown/) and [R Markdown
-Cookbook](https://bookdown.org/yihui/rmarkdown-cookbook/) eBooks. We will also
-not assume that you are using the RStudio IDE and give you instead the lower
-level commands to render documents. If you use RStudio and want to know how to
-use it effectively to author Rmd documents, you should take a look at [Quick
-Tour](https://rmarkdown.rstudio.com/authoring_quick_tour.html) page. In fact,
-this section will basically focus on the same topics, but without focusing on
-how to use RStudio.
+Guide](https://bookdown.org/yihui/rmarkdown/)^[https://bookdown.org/yihui/rmarkdown/]
+and [R Markdown
+Cookbook](https://bookdown.org/yihui/rmarkdown-cookbook/)^[https://bookdown.org/yihui/rmarkdown-cookbook/]
+eBooks. I will also not assume that you are using the RStudio IDE and give you
+instead the lower level commands to render documents. If you use RStudio and
+want to know how to use it effectively to author Rmd documents, you should take
+a look at
+[this](https://rmarkdown.rstudio.com/authoring_quick_tour.html)^[https://rmarkdown.rstudio.com/authoring_quick_tour.html]
+page. In fact, this section will basically focus on the same topics, but without
+RStudio.
 
 ### Set up
 
@@ -397,16 +405,16 @@ install.packages("rmarkdown")
 in an R console. Since `{knitr}` is required to install `{rmarkdown}`, it gets
 installed automatically. If you want to compile PDF documents, you should also
 have a working LaTeX distribution. You can skip this next part if you’re only
-interested in generating PDF and Word files. For what follows, we will only be
-rendering Html documents, so no need to install LaTeX (by the way, you don't
-even need a working Word installation to compile documents to the `docx` format).
-However, if you already have a working LaTeX installation, you shouldn’t have to
-do anything else to generate PDF documents. If you don’t have a working LaTeX
-distribution, then Yihui Xie, the creator of `{knitr}` created an R package
-called `{tinytex}` that makes it extremely easy to install a LaTeX distribution.
-In fact, this is the way I recommend installing LaTeX even if you’re not an R
-user (it is possible to use the tinytex distribution without R; it’s just that
-the `{tinytex}` R package provides many functions that makes installing and
+interested in generating Html and Word files. For what follows in the book, we
+will only be rendering Html documents, so no need to install LaTeX (by the way,
+you don't even need a working Word installation to compile documents to the
+`docx` format). However, if you already have a working LaTeX installation, you
+shouldn’t have to do anything else to generate PDF documents. If you don’t have
+a working LaTeX distribution, then Yihui Xie, the creator of `{knitr}` created
+an R package called `{tinytex}` that makes it extremely easy to install. In
+fact, this is the way I recommend installing LaTeX even if you’re not an R user
+(it is possible to use the tinytex distribution without R; it’s just that the
+`{tinytex}` R package provides many functions that makes installing and
 maintaining it very easy). Simply run these commands in an R console to get
 started:
 
@@ -418,9 +426,9 @@ tinytex::install_tinytex()
 and that’s it! If you need to install specific LaTeX packages, then refer to the
 **Maintenance** section on [tinytex’s](https://yihui.org/tinytex/#maintenance)
 website. For example, to compile the example from Leisch’s article on Sweave
-discussed previously, we had to install the `grfext` LaTeX package (as explained
-by the error output in the console when we tried compiling). So, we simply
-needed to run the following command to get it:
+discussed previously, the `grfext` LaTeX package needs to be installed (as
+explained by the error output in the console when I tried compiling). To install
+this package, you can use the `tlmgr_install()` function from `{tinytex}`:
 
 ```{r, eval = F}
 tlmgr_install("grfext")
@@ -460,14 +468,14 @@ and you should see the following:
 ::: {.content-hidden when-format="pdf"}
 <figure>
     <img src="images/rmd_test.PNG"
-         alt="It’s very close to the Sweave output."></img>
-    <figcaption>It’s very close to the Sweave output.</figcaption>
+         alt="This is how formatting looks like, once the document is compiled."></img>
+    <figcaption>This is how formatting looks like, once the document is compiled.</figcaption>
 </figure>
 :::
 
 ::: {.content-visible when-format="pdf"}
 ```{r, echo = F}
-#| fig-cap: "It’s very close to the Sweave output."
+#| fig-cap: "This is how formatting looks like, once the document is compiled."
 knitr::include_graphics("images/rmd_test.PNG")
 ```
 :::
@@ -483,10 +491,10 @@ subsections all start with a `#` and the depth level is determined by the number
 of `#`s. For bold text, simply put the words in between `**` and for italics use
 only one `*`. If you want ***bold and italics***, use `***`. The original
 designer of Markdown did not think that underlining text was important, so there
-is no *easy* way of doing it unfortunately. For this, you need to use a somewhat
-hidden feature; without going into too much technical details, the program that
-converts Rmd files to the final output format is called Pandoc, and it’s
-possible to use some of Pandoc's features to format text. For example, for
+is no *easy* way of doing it, unfortunately. For this, you need to use a
+somewhat hidden feature; without going into too many technical details, the
+program that converts Rmd files to the final output format is called Pandoc, and
+it’s possible to use some of Pandoc's features to format text. For example, for
 underlining:
 
 ````{verbatim}
@@ -497,11 +505,11 @@ This will underline the text between square brackets.[^1]
 
 [^1]: https://stackoverflow.com/a/68690065/1298051
 
-The next step is actually to mix code and prose. As you’ve seen from Leisch’s
-canonical example, this is quite easily achieved by using R code chunks. The R
-Markdown example below shows various code chunks alongside some options. For
-example, a code chunk that uses the `echo = FALSE` option will not appear (but
-the output of the computation will):
+The next step is to mix code and prose. As you’ve seen from Leisch’s canonical
+example, this is quite easily achieved by using R code chunks. The R Markdown
+example below shows various code chunks alongside some options. For example, a
+code chunk that uses the `echo = FALSE` option will not appear (but the output
+of the computation will):
 
 ````{verbatim}
 ---
@@ -521,7 +529,8 @@ data(mtcars)
 plot(mtcars)
 ```
 
-The code chunk above will appear in the final output. The code chunk below will be hidden:
+The code chunk above will appear in the final output. 
+The code chunk below will be hidden:
 
 ```{r, echo = FALSE}
 data(iris)
@@ -537,8 +546,9 @@ data(titanic)
 str(titanic)
 ```
 
-The last one runs, but code and output from the code is not shown in the final
-document. This is useful for loading libraries and hiding startup messages:
+The last one below runs, but code and output from the code is 
+not shown in the final document. This is useful for loading 
+libraries and hiding startup messages:
 
 ```{r, include = FALSE}
 library(dplyr)
@@ -546,7 +556,7 @@ library(dplyr)
 
 ````
 
-If you use RStudio and create a new R Markdown file from the menu, a new R
+If you use RStudio and create a new R Markdown file from the menu, a template R
 Markdown file is generated for you to fill out. The first R chunk is this one:
 
 ````{verbatim}
@@ -556,11 +566,11 @@ knitr::opts_chunk$set(echo = TRUE)
 ````
 
 This is an R chunk named `setup` and with the option `include = FALSE`. Naming
-chunks is optional, but we are going to make use of this later on. What this
-chunk runs is one line of code that defines a global option to show all chunks
-by default (which is the default behaviour). You can change `TRUE` to `FALSE` if
-you want to hide every code chunk instead (if you’re using Quarto, global
-options are set
+chunks is optional, but we are going to make use of this later on. The code that
+runs in this chunk defines a global option to show the source code from all the
+chunks by default (which is the default behaviour). You can change `TRUE` to
+`FALSE` if you want to hide every code chunk instead (if you’re using Quarto,
+global options are set
 [differently](https://quarto.org/docs/computations/execution-options.html)).
 
 Something else you might have noticed in the previous example, is that we’ve
@@ -575,8 +585,8 @@ date: "2023-01-28"
 ````
 
 There are several other options available that you can define in the header.
-Later on, when we’ll be building our project together, we will provide some more
-options (like having a table of contents).
+Later on I will show you some more options, for example how to define a table of
+contents.
 
 To finish this part on code chunks, you should know about inline code chunks.
 Take a look at the following example:
@@ -598,10 +608,10 @@ data(iris)
 The iris dataset has `r nrow(iris)` rows.
 ````
 
-The last sentence from this example has an inline code chunk. This is quite useful,
-as it allows to parameterise sentences and paragraphs, and thus avoids needing
-to copy and paste (and we will go quite far into how to avoid copy and pasting,
-thanks to more advanced features we will shortly discuss).
+The last sentence from this example has an inline code chunk. This is quite
+useful, as it allows to parameterise sentences and paragraphs, and thus avoids
+needing to copy and paste (and we will go quite far into how to avoid copy and
+pasting, thanks to more advanced features we will shortly discuss).
 
 To finish this crash course, you should know that to use footnotes you need to
 write the following:
@@ -612,19 +622,25 @@ This sentence has a footnote.[^1]
 [^1]: This is the footnote.
 ````
 
-and that you can write LaTeX formulas as well. For example, add the following
-into the example from before and render either a PDF or a html document
-(don’t put the LaTeX formula below inside a chunk, simply paste it as if it were
-normal text. This doesn’t work for Word output because Word does not support
-LaTeX equations):
+or the following (which I prefer):
 
 ````{verbatim}
+This sentence has a footnote.^[This is the footnote]
+````
+
+and that you can write LaTeX formulas as well. For example, add the lines below
+into the example from before and render either a PDF or a Html document (don’t
+put the LaTeX formula below inside a chunk, simply paste it as if it were normal
+text. This doesn’t work for Word output because Word does not support LaTeX
+equations):
+
+```
 \begin{align*}
 S(\omega) 
 &= \frac{\alpha g^2}{\omega^5} e^{[ -0.74\bigl\{\frac{\omega U_\omega 19.5}{g}\bigr\}^{\!-4}\,]} \\
 &= \frac{\alpha g^2}{\omega^5} \exp\Bigl[ -0.74\Bigl\{\frac{\omega U_\omega 19.5}{g}\Bigr\}^{\!-4}\,\Bigr] 
 \end{align*}
-````
+```
 
 The LaTeX code above results in this equation:
 
@@ -641,16 +657,17 @@ The LaTeX code above results in this equation:
 #| fig-cap: "A rendered LaTeX equation."
 knitr::include_graphics("images/latex_equation.png")
 ```
+:::
 
 ## Keeping it DRY
 
-Remember; we never, ever, want to have to repeat ourselves. Copy and pasting
-is forbidden. Striving for this 0 copy and pasting will make our code much
-more robust and likely to be correct.
+Remember; we never, ever, want to have to repeat ourselves. Copy and pasting is
+forbidden. Striving for 0 copy and pasting will make our code much more robust
+and likely to be correct.
 
-We started by using functions, as discussed in the previous chapter, but we can
-go much farther than that. For example, suppose that we need to write a document
-that has the following structure:
+To keep DRY, we started by using functions, as discussed in the previous
+chapter, but we can go much farther than that. For example, suppose that we need
+to write a document that has the following structure:
 
 - A title
 - A section
@@ -692,15 +709,17 @@ create_table <- function(dataset, var){
 }
 ```
 
-The function above uses the `table()` function to create frequency tables, 
-and then this gets passed to the `knitr::kable()` function that produces a 
-good looking table for our rendered document:
+The function above uses the `table()` function to create 
+frequency tables, and then this gets passed to the 
+`knitr::kable()` function that produces a good looking table 
+for our rendered document:
 
 ```{r}
 create_table(mtcars, "am")
 ```
 
-Let’s suppose that we want to generate a document that would look like this:
+Let’s suppose that we want to generate a document that would
+look like this:
 
 - first a section title, with the name of the variable of interest
 - then the table
@@ -715,24 +734,26 @@ create_table(mtcars, "am")
 
 We don’t want to create these sections for every variable by hand.
 
-Instead, we can define a function that returns the R markdown code required
-to create this. This is this function:
+Instead, we can define a function that returns the R markdown 
+code required to create this. This is this function:
 
 ```{r}
 return_section <- function(dataset, var){
-  a <- knitr::knit_expand(text = c("## Frequency table for variable: {{variable}}",   
-                                   create_table(dataset, var)),
-                          variable = var)
+  a <- knitr::knit_expand(text = c(
+                       "## Frequency table for variable: {{variable}}",
+                       create_table(dataset, var)),
+                     variable = var)
   cat(a, sep = "\n")
 }
 ```
 
-This new function, `return_section()` uses `knitr::knit_expand()` to generate R
-Markdown code. Words between `{{}}` get replaced by the provided `var` argument
-to the function. So when we call `return_section("am")`, `{{variable}}` is
-replaced by `"am"`. `"am"` then gets passed down to `create_table()` and the
-frequency table gets generated. We can now generate all the section by simply
-applying our function to a list of column names:
+This new function, `return_section()` uses `knitr::knit_expand()` 
+to generate R Markdown code. Words between `{{}}` get replaced by 
+the provided `var` argument to the function. So when we call 
+`return_section("am")`, `{{variable}}` is replaced by `"am"`.
+`"am"` then gets passed down to `create_table()` and the
+frequency table gets generated. We can now generate all the 
+section by simply applying our function to a list of column names:
 
 ```{r, results = "asis"}
 invisible(lapply(colnames(mtcars), return_section, dataset = mtcars))
@@ -828,14 +849,15 @@ create_plot <- function(dataset, aesthetic){
 }
 ```
 
-The function above takes a dataset and an aesthetic made using `ggplot2::aes()` to
-create a plot:
+The function above takes a dataset and an aesthetic 
+made using `ggplot2::aes()` to create a plot:
 
 ```{r}
 create_plot(mtcars, aes(y = mpg, x = hp))
 ```
 
-Let’s suppose that we want to generate a document that would look like this:
+Let’s suppose that we want to generate a document 
+that would look like this:
 
 - first a section title, with the dataset used;
 - then a plot
@@ -848,10 +870,12 @@ So it would look like this:
 create_plot(mtcars, aes(y = mpg, x = hp))
 ```
 
-We don’t want to create these sections for every aesthetic by hand.
+We don’t want to create these sections for every 
+aesthetic by hand.
 
-Instead, we can make use of a child document that gets knitted separately
-and then embedded in the parent document. The chunk below makes use of this trick:
+Instead, we can make use of a child document that 
+gets knitted separately and then embedded in the 
+parent document. The chunk below makes use of this trick:
 
 ```{r, results = "asis"}
 
@@ -880,52 +904,57 @@ res <- lapply(x,
 cat(unlist(res), sep = "\n")
 ```
 
-The child document is the `text` argument to the `knit_child()` function. `text`
-is literal R Markdown code: we define a level 2 header, and then an R chunk.
-This child document gets knitted, so we need to specify the environment in which
-it should get knitted. This means that the child document will get knitted in
-the same environment as the parent document (our current global environment).
-This way, every package that gets loaded and every function or variable that got
-defined in the parent document will also be available to the child document.
+The child document is the `text` argument to the 
+`knit_child()` function. `text` is literal R Markdown 
+code: we define a level 2 header, and then an R chunk. 
+This child document gets knitted, so we need to specify 
+the environment in which it should get knitted. This means
+that the child document will get knitted in the same 
+environment as the parent document (our current global
+environment). This way, every package that gets loaded 
+and every function or variable that got defined in the 
+parent document will also be available to the child document.
 
-To get the dataset name as a string, we use the `deparse(substitute(dataset))`
-trick; this substitutes "dataset" by its bound value, so `mtcars`. But `mtcars`
-is an expression and we don’t want it to get evaluated, or the contents of the
-entire dataset would be used in the title of the section. So we use `deparse()`
-which turns unevaluated expressions into strings.
+To get the dataset name as a string, we use the 
+`deparse(substitute(dataset))` trick; this substitutes 
+"dataset" by its bound value, so `mtcars`. But `mtcars` is 
+an expression and we don’t want it to get evaluated, or the 
+contents of the entire dataset would be used in the title 
+of the section. So we use `deparse()` which turns unevaluated 
+expressions into strings.
 
-We then use `lapply()` to loop over two aesthetics with an anonymous function
-that encapsulates the child document. So we get two child documents that get
-knitted, one per aesthetic. This gets saved into variable `res`. This is thus a
-list of knitted Markdown.
+We then use `lapply()` to loop over two aesthetics with an 
+anonymous function that encapsulates the child document. So we 
+get two child documents that get knitted, one per aesthetic. 
+This gets saved into variable `res`. This is thus a list of 
+knitted Markdown.
 
-Finally, we need unlist `res` to actually merge the Markdown code from the child
-documents into the parent document.
+Finally, we need unlist `res` to actually merge the Markdown 
+code from the child documents into the parent document.
 
 ````
 
-Click [here](https://fastidious-bavarois-3b17b9.netlify.app/) to take a look at
-the output.
+Click
+[here](https://fastidious-bavarois-3b17b9.netlify.app/)^[https://is.gd/aR2hyz]
+to take a look at the output.
 
 Here again, take some time to play with the above example. Change the child
 document, try to print other types of output, really take your time to
 understand this. To know more about child documents, take a look at [this
-section](https://bookdown.org/yihui/rmarkdown-cookbook/child-document.html#child-document)
+section](https://bookdown.org/yihui/rmarkdown-cookbook/child-document.html#child-document)^[https://is.gd/gAqzf9]
 of the R Markdown Cookbook (@xie2020r).
 
 ### Tables in R Markdown documents
 
 Getting tables right in Rmd documents is not always an easy task. There are
-several packages specifically made just for this task.
+several packages specifically made just for this task, and the package
+that I recommend tick the following two important boxes:
 
-In this short section, we want to point you towards two packages that check the
-following boxes:
-
-- Work the same way regardless of output format we want to knit our document into:
+- Work the same way regardless of output format (Word, PDF or Html);
 - Work for any type of table: summary tables, regression tables, two-way tables, etc.
 
-Let's start with the simplest type of table, which would be showing the head of
-a dataset for example. `{knitr}` comes with the `kable()` function, but this
+Let's start with the simplest type of table, which would is a table that simply
+shows some rows of data. `{knitr}` comes with the `kable()` function, but this
 function generates a very plain looking output. For something
 publication-worthy, we recommend the `{flextable}` package, developed by
 @gohel23:
@@ -954,14 +983,16 @@ flextable(my_table) |>
 #| fig-cap: "The output of the code above."
 knitr::include_graphics("images/flextable.png")
 ```
+:::
 
-
-We won't go into much detail on how `{flextable}` works, but it is very
-powerful, and the fact that it works for PDF, Html, Word and Powerpoint outputs
-is really a massive plus. If you want to learn more about `{flextable}`, there's
-a [whole, free, ebook on
-it](https://ardata-fr.github.io/flextable-book/index.html). `{flextable}` can
-create very complicated tables, so really take the time to dig in!
+Note that the example above will work pretty much the same way for any table
+that you can coerce into a data frame! We won't go into much detail on how
+`{flextable}` works, but it is very powerful, and the fact that it works for
+PDF, Html, Word and Powerpoint outputs is really a massive plus. If you want to
+learn more about `{flextable}`, there's a [whole, free, ebook on
+it](https://ardata-fr.github.io/flextable-book/index.html)^[https://ardata-fr.github.io/flextable-book/index.html].
+`{flextable}` can create very complicated tables, so really take the time to dig
+in!
 
 The next package is `{modelsummary}`, by @arel22, and this one focuses on
 regression and summary tables. It is extremely powerful as well, and just like
@@ -991,19 +1022,21 @@ modelsummary(models)
 ::: {.content-visible when-format="pdf"}
 ```{r, echo = F}
 #| fig-cap: "The output of the code above."
-knitr::include_graphics("images/modelsummary.png")
+knitr::include_graphics("images/modelsummary.png", out.width="400px")
 ```
+:::
 
-Here again, we won't got into much detail, but recommend instead that you read
+Here again, I won't got into much detail, but recommend instead that you read
 the package's
-[website](https://vincentarelbundock.github.io/modelsummary/articles/modelsummary.html)
+[website](https://vincentarelbundock.github.io/modelsummary/articles/modelsummary.html)^[https://is.gd/pjIKmV]
 which has very detailed documentation.
 
 These packages can help you keeping it DRY, so take some time to learn them.
 
 And one last thing: if you’re a researcher, take a look at the
-[`{rticles}`](https://pkgs.rstudio.com/rticles/articles/examples.html) package,
-which provides Rmd templates to write articles for many scientific journals.
+[`{rticles}`](https://pkgs.rstudio.com/rticles/articles/examples.html)^[https://pkgs.rstudio.com/rticles/articles/examples.html]
+package, which provides Rmd templates to write articles for many scientific
+journals.
 
 ### Parametrized reports
 
@@ -1042,7 +1075,8 @@ create_table <- function(dataset, var){
 }
 ```
 
-The table below is for variable `r params$var` of dataset `r params$dataset`.
+The table below is for variable `r params$var` of 
+dataset `r params$dataset`.
 
 ```{r}
 create_table(params$dataset, params$var)
@@ -1065,9 +1099,9 @@ rmarkdown::render(
 ````
 
 Save the code above into an Rmd file titled something like
-`param_report_example.Rmd` (preferably inside its own folder). At the end of the
-document, we wrote the lines to render this document inside a chunk that does
-not get shown to the reader, nor gets evaluated:
+`param_report_example.Rmd` (preferably inside its own folder). Note that at the
+end of the document, I wrote the lines to render this document inside a chunk
+that does not get shown to the reader, nor gets evaluated:
 
 ````{verbatim}
 ```{r, eval = F, echo = FALSE}
@@ -1086,7 +1120,7 @@ You need to run these lines yourself to knit the document.
 This will pass the list `params` with elements "mtcars" and "cyl" down to the
 report. Every `params$dataset` and `params$var` in the report gets replaced by
 "mtcars" and "cyl" respectively. Also, notice that in the header of the
-document, we defined default values for the params. Something else you need to
+document, I defined default values for the params. Something else you need to
 be aware of, is that the function `create_table()` inside the report is slightly
 different than before. It now starts with the following line:
 
@@ -1104,7 +1138,7 @@ dataset[var]
 ```
 
 `dataset` can't be a string here, but needs to be a variable name, so `mtcars`
-and not "mtcars". This means that I need to *convert* that string into a name.
+and not `"mtcars"`. This means that I need to *convert* that string into a name.
 `get()` searches an object by name, and then makes it possible to save it to a
 new variable called `dataset`. The rest of the function is then the same as
 before. This little difficulty can be avoided by hard-coding the dataset inside
@@ -1112,7 +1146,7 @@ the R Markdown file, or by passing the dataset as the `params$dataset` and not
 the string, in the render function. However, if you pass down the name of the
 dataset as a variable instead of the dataset name as a string, then you need to
 covert it to a string if you want to use it in the text (so `mtcars` to
-"mtcars", using `deparse(substitute(dataset))` as in child documents example).
+`"mtcars"`, using `deparse(substitute(dataset))` as in child documents example).
 
 If you instead want to create one report per variable, you could compile all the
 documents at once with:
@@ -1124,7 +1158,9 @@ columns <- colnames(mtcars)
 lapply(columns,
   (\(x)rmarkdown::render(
                     input = "param_report_example.Rmd",
-                    output_file = paste0("param_report_example_", x, ".html"),
+                    output_file = paste0(
+                      "param_report_example_", x, ".html"
+                    ),
                     params = list(
                       dataset = "mtcars",
                       var = x
@@ -1135,15 +1171,15 @@ lapply(columns,
 ```
 ````
 
-By now, this should not intimidate you anymore; we use `lapply()` to loop over a
-list of column names (that we get using `colnames()`). Because we don't want to
-overwrite the report we need to change the name of the output file. We do so by
+By now, this should not intimidate you anymore; I use `lapply()` to loop over a
+list of column names (that I get using `colnames()`). Because I don't want to
+overwrite the report I need to change the name of the output file. I do so by
 using `paste0()` which creates a new string that contains the variable name, so
 each report gets its own name. `x` inside the `paste0()` function is each
-element, one after the other, of the `columns` variable we defined first. Think
-of it as the `i` in a for loop. We then must also pass this to the `params`
+element, one after the other, of the `columns` variable I defined first. Think
+of it as the `i` in a for loop. I then must also pass this to the `params`
 list, hence the `var = x`. The complete call to `rmarkdown::render()` is wrapped
-inside an anonymous function, because we need to use the argument `x` (which is
+inside an anonymous function, because I need to use the argument `x` (which is
 each column defined in the columns list) in different places.
 
 ## Conclusion
@@ -1154,7 +1190,7 @@ replacing "mtcars" by "iris" in the code to compile the reports and see what
 happens, and then when you're comfortable with parameterised reports, try
 templating inside a parameterised report!
 
-It is important not to fall to the temptation of copy and pasting sections of
+It is important not to succumb to the temptation of copy and pasting sections of
 your report, or parts of your script, instead of using these more advanced
 features provided by the language. It is tempting, especially under time
 pressure, to just copy and paste bits of code and get things done instead of
@@ -1168,8 +1204,8 @@ that, but forcing you to actually think about how to set up your code in a way
 that avoids repeating yourself also helps with truly understanding the problem
 at hand. What part of the problem is constant and does not change? What does
 change? How often, and why? Can you also fix these parts or not? What if instead
-of five sections that I need to copy and paste, I had 50 sections? How could I
-scale that up?
+of five sections that I need to copy and paste, I had 50 sections? How would I 
+handle this?
 
 Asking yourself these questions, and solving them, will ultimately make you a
 better programmer.
