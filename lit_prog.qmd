@@ -571,7 +571,8 @@ runs in this chunk defines a global option to show the source code from all the
 chunks by default (which is the default behaviour). You can change `TRUE` to
 `FALSE` if you want to hide every code chunk instead (if you’re using Quarto,
 global options are set
-[differently](https://quarto.org/docs/computations/execution-options.html)).
+[differently](https://quarto.org/docs/computations/execution-options.html
+)^[https://quarto.org/docs/computations/execution-options.html]).
 
 Something else you might have noticed in the previous example, is that we’ve
 added some more content in the header:
@@ -637,8 +638,12 @@ equations):
 ```
 \begin{align*}
 S(\omega) 
-&= \frac{\alpha g^2}{\omega^5} e^{[ -0.74\bigl\{\frac{\omega U_\omega 19.5}{g}\bigr\}^{\!-4}\,]} \\
-&= \frac{\alpha g^2}{\omega^5} \exp\Bigl[ -0.74\Bigl\{\frac{\omega U_\omega 19.5}{g}\Bigr\}^{\!-4}\,\Bigr] 
+&= \frac{\alpha g^2}{\omega^5} 
+  e^{[ -0.74\bigl\{\frac{\omega U_\omega 19.5}{g}\bigr\}
+   ^{\!-4}\,]} \\
+&= \frac{\alpha g^2}{\omega^5} 
+\exp\Bigl[ -0.74\Bigl\{\frac{\omega U_\omega 19.5}{g}\Bigr\}
+  ^{\!-4}\,\Bigr] 
 \end{align*}
 ```
 
@@ -801,7 +806,7 @@ returned by functions that don't return anything). To avoid this, use
 `invisible()` (and use `purrr::walk()` rather than `purrr::map()` if you want to
 use tidyverse packages and functions).
 
-Click [here](https://jolly-arithmetic-ce29cf.netlify.app/) to see the output.
+See the output [here](https://jolly-arithmetic-ce29cf.netlify.app/)^[https://is.gd/EzdUtt].
 
 This is not an easy topic, so take the time to play around with the example
 above. Try to print another table, try to generate more complex Markdown code,
@@ -934,9 +939,9 @@ code from the child documents into the parent document.
 
 ````
 
-Click
-[here](https://fastidious-bavarois-3b17b9.netlify.app/)^[https://is.gd/aR2hyz]
-to take a look at the output.
+See the output 
+[here](https://fastidious-bavarois-3b17b9.netlify.app/)^[https://is.gd/aR2hyz].
+
 
 Here again, take some time to play with the above example. Change the child
 document, try to print other types of output, really take your time to
@@ -1043,9 +1048,9 @@ journals.
 Templating and child documents are very powerful, but sometimes you don't want
 to have one section dedicated to each unit of analysis within the same report,
 but rather, you want a complete separate report by unit of analysis. This is
-also possible thanks to parameterised reports.
+possible thanks to parameterised reports.
 
-Let's modify the example from before, which consisted of creating one section
+Let's change the example from before, which consisted of creating one section
 per column of the `mtcars` dataset and a frequency table, and make it now one
 separate report for each column. The R Markdown file will look like this:
 
