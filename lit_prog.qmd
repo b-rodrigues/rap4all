@@ -278,7 +278,7 @@ Markdown knowledge to build many different outputs.
 :::
 
 ::: {.content-visible when-format="pdf"}
-```{r, echo = F}
+```{r, echo = F, fig.width="400px"}
 #| fig-cap: "One format to rule them all."
 knitr::include_graphics("images/rmd_to_many.PNG")
 ```
@@ -653,7 +653,7 @@ The LaTeX code above results in this equation:
 :::
 
 ::: {.content-visible when-format="pdf"}
-```{r, echo = F}
+```{r, echo = F, fig.width="200px"}
 #| fig-cap: "A rendered LaTeX equation."
 knitr::include_graphics("images/latex_equation.png")
 ```
