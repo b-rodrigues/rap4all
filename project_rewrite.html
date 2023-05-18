@@ -320,25 +320,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
-<p>In this chapter, we will use what we’ve learned until now to rewrite our project. As a reminder, here are the files:</p>
+<p>In this chapter, we will use what we’ve learned until now to rewrite our project. As a reminder, here are the scripts we wrote together:</p>
 <ul>
 <li>save_data.R: <a href="https://is.gd/7PhUjd">https://is.gd/7PhUjd</a></li>
 <li>analysis.R: <a href="https://is.gd/X7XXJg">https://is.gd/X7XXJg</a></li>
 </ul>
-<p>from our project. The <code>analysis.R</code> file already includes one change: the one from the chapter on collaborating with Github, where Bruno wrote a function to make the plots for each commune.</p>
+<p>The <code>analysis.R</code> file already includes one change: the one from the chapter on collaborating with Github, where Bruno wrote a function to make the plots for each commune.</p>
 <p>If you skipped part one of the book, or for any other reason do not have a Github repository with these two files yet, then now is the time to do so. Create a repository and name it <em>housing_lux</em> or anything you’d like, and put these two files there. I will assume that you have these files safely versioned, and will not be telling you systematically when to commit and push. Simply do so as often as you’d like! You should have a repository with a <em>master</em> or <em>main</em> branch containing these two scripts. On your computer, calling <code>git status</code> in Git Bash (on Windows) or in a terminal (for Linux and macOS) should result in this:</p>
 <pre><code>owner@localhost ➤ git status</code></pre>
 <pre><code>On branch master
 nothing to commit, working tree clean</code></pre>
-<p>If that’s the case, congrats, we can start working. Start by creating a new branch, and call it <code>rmd</code> for example:</p>
+<p>If that’s the case, congrats, we can start working. Start by creating a new branch, and call it <code>rmd</code>:</p>
 <pre><code>owner@localhost ➤ git checkout -b rmd</code></pre>
 <pre><code>Switched to a new branch 'rmd'</code></pre>
-<p>We will now be working on this branch. Simply work as usual, but when pushing, make sure to push to the <code>rmd</code> branch:</p>
+<p>We will now be working on this branch, simply work as usual, but when pushing, make sure to push to the <code>rmd</code> branch:</p>
 <pre><code>owner@localhost ➤ git add .
 owner@localhost ➤ git commit -am "some changes"
 owner@localhost ➤ git push origin rmd</code></pre>
-<p>This will push whatever change to the <code>rmd</code> branch. By doing this, you keep the original <code>.R</code> scripts in the main branch, and the will end up with the <code>.Rmd</code> files in the <code>rmd</code> branch.</p>
-<p>Before moving forward now is the right moment to actually discuss why you would want to convert the script into an Rmd. There are several reasons. First, as argued in the chapter on literate programming, a document that mixes prose and code is easier to read and share than a script. Next, since this Rmd file can get knitted into any type of document (PDF, Word, etc…), it also makes it easier to arrive at what interests us, the output. A script is simply a means, it’s not an end. The end is (in most cases) a document so we might as well use literate programming to avoid the cursed loop of changing the script, editing the document, going back to the script, etc.</p>
+<p>This will push whatever changes you’ve made to files to the <code>rmd</code> branch. By using two branches like this, you keep the original <code>.R</code> scripts in the main branch, and then will end up with the <code>.Rmd</code> files in the <code>rmd</code> branch.</p>
+<p>Before moving forward now is the right moment to actually discuss why you would want to convert the script into Rmds. There are several reasons. First, as argued in the chapter on literate programming, a document that mixes prose and code is easier to read and share than a script. Next, since this Rmd file can get knitted into any type of document (PDF, Word, etc…), it also makes it easier to arrive at what interests us, the output. A script is simply a means, it’s not an end. The end is (in most cases) a document so we might as well use literate programming to avoid the cursed loop of changing the script, editing the document, going back to the script, etc.</p>
 <p>But there is yet another benefit; even if the Rmd file is not supposed to get shared with anyone else, we will, later on, use it as our starting point for the <em>Rmd first</em> method of package development as promoted by Sébastien Rochette, the author of <code>{fusen}</code>. This Rmd first method involves making use of a <em>development</em> Rmd file that contains all the usual steps that we would take to create a package. This is in contrast with the usual package development process, in which we would type the required commands to build the package in the terminal. The functions, tests, and documentation that we want to add to the package get defined using Rmd files as well. This makes them much easier to read and also share with a non-technical audience. All these Rmd files can then be converted (or <em>inflated</em> in <code>{fusen}</code> jargon) to create a fully working package. If this sounds complicated or confusing, don’t worry. Trust the process, push on, and all the pieces of the puzzle will elegantly fit together in a couple of chapters.</p>
 <p>In the following sections I will rewrite the scripts by using functional and literate programming: if you don’t want to rewrite everything, don’t worry, I link the final Rmd files at the end of each seciton. But I would advise that you follow along by writing everything as it will make absorbing the contents much simpler.</p>
 <section id="an-rmd-for-cleaning-the-data" class="level2" data-number="9.1">
@@ -362,7 +362,7 @@ owner@localhost ➤ git push origin rmd</code></pre>
 <span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>## Downloading the data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>So we start by writing a header to define the title of the document, the name of the author and the current date using inline R code (you can also hardcode the date as a string if you prefer). We then load packages in a chunk with options <code>warning=FALSE</code> and <code>message=FALSE</code> which will avoid showing packages’ startup messages in the knitted document.</p>
+<p>We start by writing a header to define the title of the document, the name of the author and the current date using inline R code (you can also hardcode the date as a string if you prefer). We then load packages in a chunk with options <code>warning=FALSE</code> and <code>message=FALSE</code> which will avoid showing packages’ startup messages in the knitted document.</p>
 <p>Then we start with a new section called <code>## Downloading the data</code>. We then add a paragraph explaining from where and how we are going to download the data:</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>This data is downloaded from the luxembourguish [Open Data</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>Portal](https://data.public.lu/fr/datasets/prix-annonces-des-logements-par-commune/)</span>
@@ -375,7 +375,7 @@ owner@localhost ➤ git push origin rmd</code></pre>
 <span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>The function below uses the permanent URL from the Open Data </span>
 <span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>Portal to access the data, but I have also rehosted the data, </span>
 <span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>and use my link to download the data (for archival purposes):</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>This is much more detailed than using comments in a script: one of the benefits of literate programming. Then comes a function to download and get the data. This function simply wraps the lines from our original script that did the downloading and the cleaning. As a reminder, here are the lines from the original script, which I will then rewrite as a function:</p>
+<p>This is much more detailed than using comments in a script, one of the benefits of literate programming. Then comes a function to download and get the data. This function simply wraps the lines from our original script that did the downloading and the cleaning. As a reminder, here are the lines from the original script, which I will then rewrite as a function:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>url <span class="ot">&lt;-</span> <span class="st">"https://is.gd/1vvBAc"</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -613,7 +613,8 @@ owner@localhost ➤ git push origin rmd</code></pre>
 <span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>          "datasets/house_prices_country_level_data.csv",</span>
 <span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>          row.names = FALSE)</span>
 <span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>```</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>This last chunk is something I like to add to my Rmd files, but instead of showing it in the final document but not evaluating its contents using the chunk option <code>eval = F</code> you could hide it completely as well, so it doesn’t appear in the compiled document. The first time you compile this document, you could change the option to <code>eval = T</code>, so that the data gets written to disk, and then change it to <code>eval = F</code> to avoid overwriting the data on subsequent knittings. This is up to you, and also who the audience of the knitted output is (do they want to see this chunk at all?).</p>
+<p>This last chunk is something I like to add to my Rmd files.</p>
+<p>Instead of showing it in the final document but not evaluating its contents using the chunk option <code>eval = F</code>, like I did, you could use <code>include = F</code>, so it doesn’t appear in the compiled document at all. The first time you compile this document, you could change the option to <code>eval = T</code>, so that the data gets written to disk, and then change it to <code>eval = F</code> to avoid overwriting the data on subsequent knittings. This is up to you, and it also depends on who the audience of the knitted output is (do they want to see this chunk at all?).</p>
 <p>Ok, and that’s it. You can take a look at the finalised file <a href="https://raw.githubusercontent.com/b-rodrigues/rap4all/master/rmds/save_data.Rmd">here</a><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>. You can now remove the <code>save_data.R</code> script, as you have successfully ported the code over to a <code>Rmd</code>.</p>
 <p>If you have not done it yet, you can commit these changes and push.</p>
 <p>Let’s now do the same thing for the analysis script.</p>
