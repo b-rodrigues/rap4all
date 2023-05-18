@@ -1,12 +1,12 @@
 # Rewriting our project
 
 In this chapter, we will use what we’ve learned until now to rewrite our
-project. As a reminder, here are the files:
+project. As a reminder, here are the scripts we wrote together:
 
 - save_data.R: [https://is.gd/7PhUjd](https://is.gd/7PhUjd)
 - analysis.R: [https://is.gd/X7XXJg](https://is.gd/X7XXJg)
 
-from our project. The `analysis.R` file already includes one change: the one
+The `analysis.R` file already includes one change: the one
 from the chapter on collaborating with Github, where Bruno wrote a function to
 make the plots for each commune.
 
@@ -39,7 +39,7 @@ nothing to commit, working tree clean
 
 
 If that’s the case, congrats, we can start working. Start by creating a new branch,
-and call it `rmd` for example:
+and call it `rmd`:
 
 ::: {.content-hidden when-format="pdf"}
 ```
@@ -57,7 +57,7 @@ owner@localhost $ git checkout -b rmd
 Switched to a new branch 'rmd'
 ```
 
-We will now be working on this branch. Simply work as usual, but when pushing, make
+We will now be working on this branch, simply work as usual, but when pushing, make
 sure to push to the `rmd` branch:
 
 ::: {.content-hidden when-format="pdf"}
@@ -76,12 +76,12 @@ owner@localhost $ git push origin rmd
 ```
 :::
 
-This will push whatever change to the `rmd` branch. By doing this, you keep the
-original `.R` scripts in the main branch, and the will end up with the `.Rmd`
+This will push whatever changes you've made to files to the `rmd` branch. By using two branches like this, you keep the
+original `.R` scripts in the main branch, and then will end up with the `.Rmd`
 files in the `rmd` branch.
 
 Before moving forward now is the right moment to actually discuss why you would
-want to convert the script into an Rmd. There are several reasons. First, as
+want to convert the script into Rmds. There are several reasons. First, as
 argued in the chapter on literate programming, a document that mixes prose and
 code is easier to read and share than a script. Next, since this Rmd file can
 get knitted into any type of document (PDF, Word, etc...), it also makes it
@@ -138,7 +138,7 @@ library(stringr)
 ## Downloading the data
 ````
 
-So we start by writing a header to define the title of the document, the name of
+We start by writing a header to define the title of the document, the name of
 the author and the current date using inline R code (you can also hardcode the
 date as a string if you prefer). We then load packages in a chunk with options
 `warning=FALSE` and `message=FALSE` which will avoid showing packages’ startup
@@ -162,7 +162,7 @@ and use my link to download the data (for archival purposes):
 
 ````
 
-This is much more detailed than using comments in a script: one of the benefits
+This is much more detailed than using comments in a script, one of the benefits
 of literate programming. Then comes a function to download and get the data.
 This function simply wraps the lines from our original script that did the
 downloading and the cleaning. As a reminder, here are the lines from the
@@ -472,13 +472,15 @@ write.csv(country_level_data,
 ```
 ````
 
-This last chunk is something I like to add to my Rmd files, but instead of
+This last chunk is something I like to add to my Rmd files.
+
+Instead of
 showing it in the final document but not evaluating its contents using the chunk
-option `eval = F` you could hide it completely as well, so it doesn’t appear in
-the compiled document. The first time you compile this document, you could
+option `eval = F`, like I did, you could use `include = F`, so it doesn’t appear in
+the compiled document at all. The first time you compile this document, you could
 change the option to `eval = T`, so that the data gets written to disk, and then
 change it to `eval = F` to avoid overwriting the data on subsequent knittings.
-This is up to you, and also who the audience of the knitted output is (do they
+This is up to you, and it also depends on who the audience of the knitted output is (do they
 want to see this chunk at all?).
 
 Ok, and that’s it. You can take a look at the finalised file
