@@ -474,14 +474,13 @@ write.csv(country_level_data,
 
 This last chunk is something I like to add to my Rmd files.
 
-Instead of
-showing it in the final document but not evaluating its contents using the chunk
-option `eval = F`, like I did, you could use `include = F`, so it doesn’t appear in
-the compiled document at all. The first time you compile this document, you could
-change the option to `eval = T`, so that the data gets written to disk, and then
-change it to `eval = F` to avoid overwriting the data on subsequent knittings.
-This is up to you, and it also depends on who the audience of the knitted output is (do they
-want to see this chunk at all?).
+Instead of showing it in the final document but not evaluating its contents
+using the chunk option `eval = F`, like I did, you could use `include = F`, so
+it doesn’t appear in the compiled document at all. The first time you compile
+this document, you could change the option to `eval = T`, so that the data gets
+written to disk, and then change it to `eval = F` to avoid overwriting the data
+on subsequent knittings. This is up to you, and it also depends on who the
+audience of the knitted output is (do they want to see this chunk at all?).
 
 Ok, and that’s it. You can take a look at the finalised file
 [here](https://raw.githubusercontent.com/b-rodrigues/rap4all/master/rmds/save_data.Rmd)^[https://is.gd/eBbcsR].
@@ -494,9 +493,9 @@ Let’s now do the same thing for the analysis script.
 
 ## An Rmd for analysing the data
 
-We will follow the same steps as before to convert the analysis script into an 
-analysis markdown. Instead of showing the whole file here, I will instead show
-you two important points. 
+We will follow the same steps as before to convert the analysis script into an
+analysis RMarkdown file. Instead of showing the whole file here, I will show you
+two important points.
 
 The first point is removing redundancy. In the original script, we had the
 following lines:
@@ -506,9 +505,13 @@ following lines:
 
 commune_level_data <- commune_level_data %>%
   group_by(locality) %>%
-  mutate(p0 = ifelse(year == "2010", average_price_nominal_euros, NA)) %>%
+  mutate(p0 = ifelse(year == "2010",
+                     average_price_nominal_euros,
+                     NA)) %>%
   fill(p0, .direction = "down") %>%
-  mutate(p0_m2 = ifelse(year == "2010", average_price_m2_nominal_euros, NA)) %>%
+  mutate(p0_m2 = ifelse(year == "2010",
+                        average_price_m2_nominal_euros,
+                        NA)) %>%
   fill(p0_m2, .direction = "down") %>%
   ungroup() %>%
   mutate(pl = average_price_nominal_euros/p0*100,
@@ -518,21 +521,25 @@ commune_level_data <- commune_level_data %>%
 #Let’s also compute it for the whole country:
 
 country_level_data <- country_level_data %>%
-  mutate(p0 = ifelse(year == "2010", average_price_nominal_euros, NA)) %>%
+  mutate(p0 = ifelse(year == "2010",
+                     average_price_nominal_euros,
+                     NA)) %>%
   fill(p0, .direction = "down") %>%
-  mutate(p0_m2 = ifelse(year == "2010", average_price_m2_nominal_euros, NA)) %>%
+  mutate(p0_m2 = ifelse(year == "2010",
+                        average_price_m2_nominal_euros,
+                        NA)) %>%
   fill(p0_m2, .direction = "down") %>%
   mutate(pl = average_price_nominal_euros/p0*100,
          pl_m2 = average_price_m2_nominal_euros/p0_m2*100)
 
 ```
  
-As you can see, this is almost exactly twice the same code. The only difference
-is that we need to group by commune when computing the Laspeyeres index for the
-communes (remember, this index will make it easy to make comparisons). Instead
-of repeating 99% of the lines, we can create a function that will group the data
-if the data is the commune level data, and not group the data if it’s the
-national data. Here is this function:
+As you can see, this is almost exactly the same code twice. The only difference
+between the two code snippets, is that we need to group by commune when
+computing the Laspeyeres index for the communes (remember, this index will make
+it easy to make comparisons). Instead of repeating 99% of the lines, we should
+create a function that will group the data if the data is the commune level
+data, and not group the data if it’s the national data. Here is this function:
 
 ```{r, eval = F}
 
@@ -566,8 +573,8 @@ get_laspeyeres <- function(dataset, start_year = "2010"){
 So, the first step is naming the function. We’ll call it `get_laspeyeres()`, and
 it’ll be a function of two arguments. The first is the data (commune or national
 level data) and the second is the starting date of the data. This second
-argument is has a default value of "2010". This is the year the data starts, and
-thus the year the Laspeyeres index will have a value of 100.
+argument has a default value of "2010". This is the year the data starts, and
+so this the year the Laspeyeres index will have a value of 100.
 
 The following lines are probably the most complicated:
 
@@ -588,39 +595,42 @@ variable name into a string (using `deparse()`). So when the user provides
 `"commune_level_data"`. We then use this string to detect whether the data needs
 to be grouped or not. So if we detect the word "commune" in the `which_dataset`
 variable, we set the grouping variable to `locality`, if not to `NULL`. But you
-might have a question: why is `locality` given as an input to `quo()`, and what
-is `quo()`.
+might have the following questions: why is `locality` given as an input to
+`quo()`, and what is `quo()`?
 
 A simple explanation: `locality` is a variable in the `commune_level_dataset`.
-If we don’t *quote* it using `quo()`, our function will look for a variable called
-`locality` in body of the function, but since there is no variable defined
-that is called `locality` in there, the function will look for this variable in the
-global environment. But this is not a variable defined in the global environment, it
-is a column in our dataset. So we need a way to tell this to the column: *don’t
-worry about evaluating this just yet, I’ll tell you when it’s time*.
+If we don’t *quote* it using `quo()`, our function will look for a variable
+called `locality` in body of the function, but since there is no variable
+defined that is called `locality` in there, the function will look for this
+variable in the global environment. But this is not a variable defined in the
+global environment either, it is a column in our dataset. So we need a way to
+tell this to our function: *don’t worry about evaluating this just yet, I’ll tell
+you when it’s time*.
 
 So by using `quo()`, we can delay evaluation. So how can we tell the function
-that it’s time to evaluate `locality`? This is where we need `!!`. If you take a
-look at the line where we group the data in the function:
+that it’s time to evaluate `locality`? This is where we need `!!` (pronounced
+*bang-bang*). You’ll see that `!!` gets used on `group_var` inside `locality`:
 
 ```{r, eval = F}
 group_by(!!group_var)
 ```
 
-So if we are calling the function on `commune_level_dataset`, then `group_var` is equal to
-`locality`, if not it’s `NULL`. `!!group_var` means that now it’s time to evaluate `group_var`
-(or rather, `locality`). Because `!!group_var` gets replaced by `quo(locality)`, and because
-`group_by()` is a `{dplyr}` function that knows how to deal with quoted variables, `locality`
-gets looked up among the columns of the data frame. If it’s `NULL` nothing happens, so the
-data doesn’t get grouped.
+So if we are calling the function on `commune_level_dataset`, then `group_var`
+is equal to `locality`, if not it’s `NULL`. `!!group_var` means that now it’s
+time to evaluate `group_var` (or rather, `locality`). Because `!!group_var` gets
+replaced by `quo(locality)`, and because `group_by()` is a `{dplyr}` function
+that knows how to deal with quoted variables, `locality` gets looked up among
+the columns of the data frame. If it’s `NULL` nothing happens, so the data
+doesn’t get grouped.
 
-This is a big topic unto itself, so if you want to know more you can start by reading the 
-famous `{dplyr}` vignette called *Programming with dplyr* 
+This is a big topic unto itself, so if you want to know more you can start by
+reading the famous `{dplyr}` vignette called *Programming with dplyr*
 [here](https://dplyr.tidyverse.org/articles/programming.html)^[https://dplyr.tidyverse.org/articles/programming.html].
-In case you use `{dplyr}` a lot, I recommend you do because mastering *tidy evaluation* (the name
-of this framework) is key to become comfortable with programming using `{dplyr}` (and other
-*tidyverse* packages). You can also read the chapter I wrote on this in my other 
-[free ebook](http://modern-rstats.eu/defining-your-own-functions.html#functions-that-take-columns-of-data-as-arguments).
+In case you use `{dplyr}` a lot, I recommend you study this vignette because
+mastering *tidy evaluation* (the name of this framework) is key to becoming
+comfortable with programming using `{dplyr}` (and other *tidyverse* packages).
+You can also read the chapter I wrote on this in my other [free
+ebook](http://modern-rstats.eu/defining-your-own-functions.html#functions-that-take-columns-of-data-as-arguments)^[https://is.gd/f11De1].
 
 The next lines of the script that we need to port over to the Rmd are quite
 standard, we write code to create some plots (which were already refactored into
@@ -685,6 +695,8 @@ I won’t explain this now in great detail, since that was already done in the
 chapter on literate programming. Before continuing, really make sure that you
 understand what is going on here. Take a look at the finalised file
 [here](https://raw.githubusercontent.com/b-rodrigues/rap4all/master/rmds/analyse_data.Rmd)^[https://is.gd/L2GICG].
+You’ll notice that at the start of the RMarkdown file, I also load some package
+and the data saved by the `save_data.Rmd` RMarkdown file.
 
 ## Conclusion
 
@@ -695,19 +707,19 @@ I wanted to discuss in this book, because it doesn’t have anything to do with
 the main topic at hand. However, part of building a robust, reproducible
 pipeline is to avoid repetition. In this sense, programming with `{dplyr}` and
 tidy evaluation are quite important. As suggested before, take a look at the
-linked vignette above, and then the chapter from my other (free) ebook. This
+linked vignette above, and then the chapter from my other free ebook. This
 should help get you started.
 
 The end of this chapter marks an important step: many analyses stop here, and
 this can be due to a variety of reasons. Maybe there’s no time left to go
-further, and, after all, we got the results we wanted. Maybe this analysis is
-useful, but we don’t necessarily need it to be reproducible in 5, 10 years, so
-all we want is to make sure that we can at least rerun it in some months or a
-couple of years (but be careful with this assessment, sometimes an analysis that
-wasn’t supposed to be reproducible turns out it needs to be reproducible for way
-longer than expected...)
+further, and, after all, you’ve got the results you wanted. Maybe this analysis
+is useful, but you don’t necessarily need it to be reproducible in 5, 10 years,
+so all you want is to make sure that you can at least rerun it in some months or
+a couple of years (but be careful with this assessment, sometimes an analysis
+that wasn’t supposed to be reproducible turns out to be reproducible for way
+longer than expected...).
 
-Because I want this book to be a pragmatic guide, we will now talk about
-putting the least amount of effort to make your current analysis reproducible,
-and this is by freezing package versions, which we will do in the next chapter.
+Because I want this book to be a pragmatic guide, I will now talk about putting
+the least amount of effort to make your current analysis reproducible, and this
+is by freezing package versions, which I will show you in the next chapter.
 
