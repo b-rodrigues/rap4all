@@ -5,20 +5,23 @@ was quite easy to justify because writing the Rmds is also writing the report
 that we need to send to our boss (or our research paper, etc). But it might be
 harder to justify writing further documentation or package the functions we’ve
 had to write for reuse later and otherwise ensure that the analysis is and stays
-reproducible. So we are going to start with the least good solution to the
-reproducibility issue, which is recording the versions of the packages that were
-used. This is quite easy and quick to do and provides at least some hope that
-the analysis will stay reproducible. But this will not do anything to make the
-analysis more easily re-usable, will not improve the documentation, nor ensure
-that what we wrote is indeed correct. For this, we would need to write tests,
-which are missing from our current analysis. We only wrote one test, making sure
-that all the communes were accounted for. This is why going with a package (and
-I need to stress here that the goal of making this package is not to have it on
-CRAN) is so useful: packages offer us a great framework for documenting, testing
-and sharing our code (even if only sharing internally in your company/team, or
-even just future you). Also, at this stage, your analysis is much closer to
-being a package than you think. As you shall see in the next chapter, going from
-our Rmds to a fully functioning package is much easier than you expect, even if
+reproducible. So we are going to start with the simplest and cost-effective
+solution to the reproducibility issue, which is recording the versions of the
+packages that were used. This is quite easy and quick to do and provides at
+least some hope that the analysis will stay reproducible. But this will not do
+anything to make the analysis more easily re-usable, will not improve the
+documentation, nor ensure that what we wrote is indeed correct. For this, we
+would need to write tests, which are missing from our current analysis. We only
+wrote one test, which made sure that all the communes were accounted for. This
+is why going with a package is so useful (and I need to stress here that the aim
+is of writing a package is NOT to upload it to CRAN): packages offer us a great
+framework for documenting, testing and sharing our code (even if only sharing
+internally in your company/team, or even just future you). So in order to take
+advantage of what packaging our code has to offer, we well learn about the
+`{fusen}` package in the next chapter. `{fusen}` will enable us to convert our
+Rmd files into a package quite quickly; your analysis is much closer to being a
+package than you think. As you shall see in the next chapter, going from our
+Rmds to a fully functioning package is much easier than you expect, even if
 you’ve never written a package in your life.
 
 So I hope that I made my point clear: it is not recommended to stop at this
@@ -33,7 +36,7 @@ then be used to restore this project’s library in the future, and without
 interfering with the other packages that you already have installed on your
 machine. You see, `{renv}` creates a per-project library (a library is the set
 of packages installed on your machine) which means that you can have as many
-versions of, say, `{dplyr}` as needed (one per project). The right version of
+versions of, `{dplyr}` as needed (one per project). The right version of
 `{dplyr}` will be installed and used for the right project only, and without
 interfering with other installed versions.
 
@@ -42,8 +45,9 @@ project.
 
 ## Recording packages’ version with `{renv}`
 
-So now that you’ve used functional and literate programming, we need to start thinking
-about the infrastructure surrounding our code. By infrastructure I mean:
+So now that you’ve used functional and literate programming, we need to start
+thinking about the infrastructure surrounding our code. By infrastructure I
+mean:
 
 - the R version;
 - the packages used for the analysis;
@@ -52,12 +56,12 @@ about the infrastructure surrounding our code. By infrastructure I mean:
 `{renv}` is a package that takes care of point number 2: it allows you to easily
 record the packages that were used for a specific project. This record is a file
 called `renv.lock` which will appear at the root of your project once you’ve set
-up `{renv}` and executed it. You can use `{renv}` once you’re done with an
-analysis like in our case, or better yet, immediately at the start, as soon as
-you start writing `library(somePackage)`. You can keep updating the `renv.lock`
-file as you add or remove packages from your analysis. The `renv.lock` file can
-then be used to restore the exact same package library that was used for your
-analysis on another computer, or on the same computer but in the future.
+up `{renv}` and run it. You can use `{renv}` once you’re done with an analysis
+like in our case, or better yet, immediately at the start of the project. You
+can keep updating the `renv.lock` file as you add or remove packages from your
+analysis. The `renv.lock` file can then be used to restore the exact same
+package library that was used for your analysis on another computer, or on the
+same computer but in the future.
 
 This works because `{renv}` does more than simply create a list of the used
 packages and recording their versions inside the `renv.lock` file: it actually
@@ -70,7 +74,8 @@ library, packages simply get copied over from your main library instead of being
 re-downloaded and re-installed (if the required packages are already installed
 in your default library).
 
-To get started, install the `{renv}` package (make sure to start a fresh R session):
+To get started, install the `{renv}` package (make sure to start a fresh R
+session):
 
 ```{r, eval = F}
 install.packages("renv")
@@ -83,26 +88,45 @@ chapter. Make sure that you have the two following files in that folder:
 - `analyse_data.Rmd`, the script that analyses the data.
 
 Also, make sure that the changes are correctly backed up on Github.com, so if
-you haven’t already, commit and push any change to the `rmd` branch. Because we will
-be experimenting with a new feature, create a new branch called `renv`. You should
-know the drill by now, but if not simply follow along:
+you haven’t already, commit and push any change to the `rmd` branch. Because we
+will be experimenting with a new feature, create a new branch called `renv`. You
+should know the drill by now, but if not simply follow along:
 
+::: {.content-hidden when-format="pdf"}
 ```
 owner@localhost ➤ git checkout -b renv
 ```
+:::
+
+::: {.content-visible when-format="pdf"}
+```
+owner@localhost $ git checkout -b renv
+```
+:::
 
 ```
 Switched to a new branch 'renv'
 ```
 
-We will now be working on this branch. Simply work as usual, but when pushing, make
-sure to push to the `renv` branch:
+We will now be working on this branch. Simply work as usual, but when pushing,
+make sure to push to the `renv` branch:
 
+
+::: {.content-hidden when-format="pdf"}
 ```
 owner@localhost ➤ git add .
 owner@localhost ➤ git commit -am "some changes"
 owner@localhost ➤ git push origin renv
 ```
+:::
+
+::: {.content-visible when-format="pdf"}
+```
+owner@localhost $ git add .
+owner@localhost $ git commit -am "some changes"
+owner@localhost $ git push origin renv
+```
+:::
 
 Once this is done, start an R session, and simply type the following in a console:
 
@@ -132,25 +156,33 @@ The version of R recorded in the lockfile will be updated:
 Let’s take a look at the files that were created (if you prefer using your file
 browser, feel free to do so, but I prefer the command line):
 
+::: {.content-hidden when-format="pdf"}
 ```
 owner@localhost ➤ ls -la
 ```
+:::
+
+::: {.content-visible when-format="pdf"}
+```
+owner@localhost $ ls -la
+```
+:::
 
 ```
 total 1070
-drwxr-xr-x 1 LLP685 Domain Users     0 Feb 27 12:44 .
-drwxr-xr-x 1 LLP685 Domain Users     0 Feb 27 12:35 ..
--rw-r--r-- 1 LLP685 Domain Users    27 Feb 27 12:44 .Rprofile
-drwxr-xr-x 1 LLP685 Domain Users     0 Feb 27 12:40 .git
--rw-r--r-- 1 LLP685 Domain Users   306 Feb 27 12:35 README.md
--rw-r--r-- 1 LLP685 Domain Users  2398 Feb 27 12:38 analyse_data.Rmd
-drwxr-xr-x 1 LLP685 Domain Users     0 Feb 27 12:44 renv
--rw-r--r-- 1 LLP685 Domain Users 20502 Feb 27 12:44 renv.lock
--rw-r--r-- 1 LLP685 Domain Users  6378 Feb 27 12:38 save_data.Rmd
+drwxr-xr-x 1 owner Domain Users     0 Feb 27 12:44 .
+drwxr-xr-x 1 owner Domain Users     0 Feb 27 12:35 ..
+-rw-r--r-- 1 owner Domain Users    27 Feb 27 12:44 .Rprofile
+drwxr-xr-x 1 owner Domain Users     0 Feb 27 12:40 .git
+-rw-r--r-- 1 owner Domain Users   306 Feb 27 12:35 README.md
+-rw-r--r-- 1 owner Domain Users  2398 Feb 27 12:38 analyse_data.Rmd
+drwxr-xr-x 1 owner Domain Users     0 Feb 27 12:44 renv
+-rw-r--r-- 1 owner Domain Users 20502 Feb 27 12:44 renv.lock
+-rw-r--r-- 1 owner Domain Users  6378 Feb 27 12:38 save_data.Rmd
 ```
 
-As you can see, there are two new files and one folder. The files are the
-`renv.lock` file that I mentioned before and a file called `.Rprofile`. The
+As you can see, there are two new files and one folder. The new files are the
+`renv.lock` file that I mentioned before and a file called `.Rprofile`. The new
 folder is simply called `renv`. The `renv.lock` is the file that lists all the
 packages used for the analysis. `.Rprofile` files are files that get read by R
 automatically at startup (as discussed at the very beginning of part one of this
@@ -160,23 +192,47 @@ gets read instead. Let’s see the contents of this file (you can open this file
 in any text editor, like Notepad on Windows, but then again I prefer the command
 line):
 
+::: {.content-hidden when-format="pdf"}
 ```
-cat .Rprofile
+owner@localhost ➤ cat.Rprofile
 ```
+:::
+
+::: {.content-visible when-format="pdf"}
+```
+owner@localhost $ cat.Rprofile
+```
+:::
+
+The files contains the single line:
 
 ```
 source("renv/activate.R")
 ```
 
-This file runs a script on startup called `activate.R`, which you can find in
-the `renv` folder. Let’s take a look at the contents of this folder:
+`activate.R` is an R script that was also create by `renv::init()`, which you
+can find in the `renv` folder. Let’s take a look at the contents of this folder:
+
+::: {.content-hidden when-format="pdf"}
+```
+owner@localhost ➤ ls renv
+```
+:::
+
+::: {.content-visible when-format="pdf"}
+```
+owner@localhost $ ls renv
+```
+:::
 
 ```
-ls renv
-```
-
-```
-activate.R  library  settings.dcf
+total 107
+drwxr-xr-x 1 owner Domain Users     0 Feb 27 12:44 .
+drwxr-xr-x 1 owner Domain Users     0 Feb 27 12:35 ..
+-rw-r--r-- 1 owner Domain Users    27 Feb 27 12:44 activate.R
+drwxr-xr-x 1 owner Domain Users     0 Feb 27 12:40 .gitignore
+drwxr-xr-x 1 owner Domain Users     0 Feb 27 12:40 library
+-rw-r--r-- 1 owner Domain Users  6378 Feb 27 12:38 settings.dcf
 ```
 
 So inside the `renv` folder, there is another folder called `library`: this is
@@ -184,11 +240,10 @@ the folder that contains our isolated library for just this project. That’s
 something that we would not want to back up on Github as it grows quite large.
 So here is the right moment to introduce the `.gitignore` file (notice the `.`
 at the start of the name). This is a file that contains the paths to other files
-and folders that should be ignored. You will notice that there is a `.gitignore`
-file in the `renv/` file. If you open it, you will see that the `library/` is
-listed there (among others) so it will be ignored. This is because it’s the
-folder that contains all the packages for the project and it might grow very
-large, so this is something that we don’t want to track.
+and folders that should be ignored. If you open it, you will see that the
+`library/` is listed there (among others) so it will be ignored. This is because
+it’s the folder that contains all the packages for the project and it might grow
+very large, so this is something that we don’t want to track.
 
 If you are working with sensitive data, you could also add a `.gitignore` file
 in the root of the project’s directory, and simply list files and folders that
@@ -199,21 +254,29 @@ simply add, for example if you’re working with sensitive data, the following:
 datasets/
 ```
 
-This will prevent the `datasets/` folder from being tracked and backed up. 
+This will prevent the `datasets/` folder from being tracked and backed up.
 
-Let’s start a fresh R session in our project’s directory; you should see the
+Let’s restart a fresh R session in our project’s directory; you should see the
 following startup message:
 
 ```{r, eval = F}
 * Project 'path/to/housing' loaded. [renv 0.16.0]
 ```
 
-This means that this R session will use the packages installed in the isolated library
-we’ve just created. Let’s now take a look at the `renv.lock` file:
+This means that this R session will use the packages installed in the isolated
+library we’ve just created. Let’s now take a look at the `renv.lock` file:
 
+::: {.content-hidden when-format="pdf"}
 ```
-cat renv.lock
+owner@localhost ➤ cat renv.lock
 ```
+:::
+
+::: {.content-visible when-format="pdf"}
+```
+owner@localhost $ cat renv.lock
+```
+:::
 
 ```
 {
@@ -249,9 +312,9 @@ cat renv.lock
 ```
 
 The `renv.lock` file is a json file listing all the packages, as well as their
-dependencies that are used for the project, but it started by stating the R
-version that was used when it was generated. It is important to remember that
-when you’ll use `{renv}` to restore a project’s library on a new machine, the R
+dependencies, that are used for the project, and it states the R version that
+was used when it was generated as well. It is important to remember that when
+you’ll use `{renv}` to restore a project’s library on a new machine, the R
 version will not be restored: so you will be running these old packages on a
 newer version of R, which may sometimes be a problem (but we’re going to discuss
 this later).
@@ -266,9 +329,17 @@ this
 (forked from this one
 [here](https://github.com/wlandau/targets-minimal)^[https://is.gd/AAnByB]):
 
+::: {.content-hidden when-format="pdf"}
 ```
-git clone git@github.com:b-rodrigues/targets-minimal.git
+owner@localhost ➤ git clone git@github.com:b-rodrigues/targets-minimal.git
 ```
+:::
+
+::: {.content-visible when-format="pdf"}
+```
+owner@localhost $ git clone git@github.com:b-rodrigues/targets-minimal.git
+```
+:::
 
 You should see a `targets-minimal` folder on your computer now. Start an R session
 in that folder and type the following command:
@@ -294,15 +365,15 @@ get installed. If you pay attention to the links, you should see that many of
 them get pulled from the CRAN archive, for example:
 
 ```
-Retrieving 
+Retrieving
   'https://cloud.r-project.org/src/contrib/Archive/vroom/vroom_1.5.5.tar.gz' ...
 ```
 
 Notice the word "Archive" in the url? That’s because this project uses `{vroom}`
 1.5.5, but as of writing (early 2023), `{vroom}` is at version 1.6.1.
 
-Now, maybe you’ve run `renv::restore()`, but the installation of the packages failed.
-If that’s the case, let me explain what likely happened.
+Now, maybe you’ve run `renv::restore()`, but the installation of the packages
+failed. If that’s the case, let me explain what likely happened.
 
 I tried restoring the project’s library on two different machines: a Windows
 laptop and a Linux workstation. `renv::restore()` failed on the Windows laptop,
@@ -312,9 +383,9 @@ Why does that happen? Well in the case of the Windows laptop, compilation of the
 `{dplyr}` package failed. This is likely because my Windows laptop does not have
 the right version of Rtools installed. If you look inside the `renv.lock` file
 that came with the `targets-minimal` project, you should notice that the
-recorded R version is 4.1.0, but I’m running R 4.2.2 on my laptop. So libraries
-get compiled using Rtools 4.2 and not Rtools 4.0 (which includes the libraries
-for R 4.1 as well).
+recorded R version is 4.1.0, but I’m running R 4.2.2 on my computers. So
+libraries get compiled using Rtools 4.2 and not Rtools 4.0 (which includes the
+libraries for R 4.1 as well).
 
 So in order to run this project successfully, I should install the right version
 of R and Rtools, and this is usually not so difficult, especially on Windows.
@@ -329,11 +400,9 @@ happens is that you update your packages to use that sweet new feature from some
 package but when you go back to your long-term project and try to run, it, lo
 and behold it doesn’t work anymore. This is because another function coming from
 some other package that also got updated and that you use in your long-term
-project got removed, or renamed, or simply works differently now. In this
-scenario, you wouldn’t be troubled by trying to restore the project, since
-you’re simply using `{renv}` to isolate the project’s library (but even if you
-had to restore the library, that would work since you’re using the same R
-version).
+project got removed, or renamed, or simply works differently now. This types
+of issues can be avoided by using a per-project library, which is exactly
+what `{renv}` does.
 
 But also, apart from that already quite useful feature, `renv.lock` files
 provide a very useful blueprint for Docker, which we are going to explore in a
@@ -353,8 +422,9 @@ In the next section, we’ll quickly review how to use `{renv}` on a "daily basi
 
 ### Daily `{renv}` usage
 
-So let’s say that you start a new project and want to use `{renv}` right from the start. You start with an empty directory, and
-add a template `.Rmd` file, and let’s say it looks like this:
+So let’s say that you start a new project and want to use `{renv}` right from
+the start. You start with an empty directory, and add a template `.Rmd` file,
+and let’s say it looks like this:
 
 ````{verbatim}
 ---
@@ -379,14 +449,14 @@ and start a fresh session in the same directory and run `renv::init()`. You
 should see the familiar prompts described above, as well as the `renv.lock` file
 (which will only contain `{dplyr}` and its dependencies).
 
-Now, after the `library(dplyr)` line, add the following `library(ggplot2)` (or any other 
-package that you use on a daily basis). Make sure to save the `.Rmd` file and try
-to render it again by using `rmarkdown::render("test.Rmd")` (or if you’re using
-RStudio, by clicking the right button), but, spoiler alert, it won’t work. Instead
-you should see this:
+Now, after the `library(dplyr)` line, add the following `library(ggplot2)` (or
+any other package that you use on a daily basis). Make sure to save the `.Rmd`
+file and try to render it again by using `rmarkdown::render("test.Rmd")` (or if
+you’re using RStudio, by clicking the right button), but, spoiler alert, it
+won’t work. Instead you should see this:
 
 ```
-Quitting from lines 7-9 (my_new_project.Rmd) 
+Quitting from lines 7-9 (my_new_project.Rmd)
 Error in library(ggplot2) : there is no package called 'ggplot2'
 ```
 
@@ -409,12 +479,12 @@ Do you want to proceed? [y/N]:
 * Lockfile written to 'path/to/my_new_project/renv.lock'.
 ```
 
-If you now open the `renv.lock` file, and look for the string `"ggplot2"` you should
-see it listed there alongside its dependencies. Let me reiterate: this version of 
-`{ggplot2}` is now unique to this project. You can work on other projects with other
-versions of `{ggplot2}` without interfering with this one. You can even install
-arbitrary versions of packages using `renv::install()`. For example, to install
-an older version of `{data.table}`:
+If you now open the `renv.lock` file, and look for the string `"ggplot2"` you
+should see it listed there alongside its dependencies. Let me reiterate: this
+version of `{ggplot2}` is now unique to this project. You can work on other
+projects with other versions of `{ggplot2}` without interfering with this one.
+You can even install arbitrary versions of packages using `renv::install()`. For
+example, to install an older version of `{AER}`:
 
 ```{r, eval = F}
 renv::install("AER@1.0-0") # this is a version from August 2008
@@ -423,38 +493,32 @@ renv::install("AER@1.0-0") # this is a version from August 2008
 But just like in the previous section, where we wanted to restore an old project
 that used `{renv}`, installation of older packages may fail. If you need to use
 old packages, there are approaches that work better, which we are also going to
-going to explore in this chapter.
+explore in this chapter.
 
 Back to daily usage of `{renv}`: keep installing the required packages for your
 project and calling `renv::snapshot()` to keep a record of the library for
-reproducibility purposes. Once you’re done with your project, you have two possibilities:
-
-- You can `renv::snapshot()` one last time to make sure that every dependency is correctly accounted for;
-- You update every package in the library and in the lockfile and make sure your project runs with the latest versions of every package. You then provide this updated `renv.lock` file for future use. 
-
-The second option can be interesting if your project took some time to be
-developed, and you want to deliver something that depends on current packages.
-However, only do so if you have written enough tests to detect if a package
-update could break your project, or else you run the risk of providing a lock
-file that will install packages with which your project can’t actually run!
-If you want to play it safe, simply go for the first option.
+reproducibility purposes. Once you’re done with your project, call
+`renv::snapshot()` one last time to make sure that every dependency is correctly
+accounted for. Don't forget to version the `renv.lock` file using Git!
 
 ### Collaborating with `{renv}`
 
 `{renv}` is also quite useful when collaborating. You can start the project and
 generate the lock file, and when your team-mates clone the repository from
-Github, they can get the exact same package versions as you. You all only need
-to make sure that everyone is running the same R version to avoid any issues.
+Github, they can get the exact same package versions as you. All of you only
+need to make sure that everyone is running the same R version to avoid any
+issues.
 
 There is a vignette on just this that I invite you to read for more details,
 see [here](https://rstudio.github.io/renv/articles/collaborating.html)^[https://is.gd/sXpWVp].
 
 ### {renv}’s shortcomings
 
-In the next section, I’m going to go over two packages that make it easy to install old
-packages, which can be useful for reproducibility as well. But before that, let’s discuss
-`{renv}`’s shortcomings (which we already alluded to before). It is quite important to
-understand what `{renv}` does and what it doesn’t do, and why `{renv}` alone is not enough.
+In the next section, I’m going to go over two packages that make it easy to
+install old packages, which can be useful for reproducibility as well. But
+before that, let’s discuss `{renv}`’s shortcomings (which we already alluded to
+before). It is quite important to understand what `{renv}` does and what it
+doesn’t do, and why `{renv}` alone is not enough.
 
 The first problem, and I’m repeating myself here, is that `{renv}` only records
 the R version used for the project, but does not restore it when calling
@@ -490,28 +554,30 @@ library doesn’t interfere with another project’s library* and this is in its
 already quite useful.
 
 Let’s now quickly disuss two other packages before finishing this chapter, which
-provide an answer to the question: *how to rerun an old analysis if no renv.lock file
-is available?*
+provide an answer to the question: *how to rerun an old analysis if no renv.lock
+file is available?*
 
 ## Becoming an R-cheologist
 
 So let’s say that you need to run an old script, and there’s no `renv.lock` file
-around for you to restore the packages as they were. There might still be a
+around for you to restore the right package library. There might still be a
 solution (apart from running the script on the current version on R and
 packages, and hope that everything goes well), but for this you need to at least
-know roughly *when* that script was written. Let’s say that you know that this
-script was written back in 2017, somewhere around October.
-If you know that, you can use the `{rang}` and `{groundhog}` packages to download
-the packages as of October 2018 in a separate library and then run your script.
+to know roughly *when* that script was written. Let’s say that you know that
+this script was written back in 2017, somewhere around October. If you know
+that, you can use the `{rang}` or `{groundhog}` packages to download the
+packages as of October 2018 in a separate library and then run your script.
 
-`{rang}` is fairly recent as of writing (February 2023) so I won’t go into too much
-detail now, as it is likely that the package will keep evolving rapidly in the coming
-weeks. So if you want to use it already and follow its development, take a look at 
-its Github repository [here](https://github.com/chainsawriot/rang)^[https://is.gd/sQu7NV]
-and read the [prepint](https://arxiv.org/abs/2303.04758) (@schoch2023).
+`{rang}` is fairly recent as of writing (February 2023) so I won’t go into too
+much detail now, as it is likely that the package will keep evolving rapidly in
+the coming weeks. So if you want to use it and follow its development, take a
+look at its Github repository
+[here](https://github.com/chainsawriot/rang)^[https://is.gd/sQu7NV] and read the
+[prepint](https://arxiv.org/abs/2303.04758) (@schoch2023).
 
-`{groundhog}` is another option that has been around for more time and is fairly easy
-to use. Suppose that you have a script from October 2018 that looks like this:
+`{groundhog}` is another option that has been around for more time and is fairly
+easy to use. Suppose that you have a script from October 2018 that looks like
+this:
 
 ```{r, eval = F}
 library(purrr)
@@ -525,9 +591,9 @@ myplot <- ggplot(mtcars) +
 ggsave("/home/project/output/myplot.pdf", myplot)
 ```
 
-If you want to run this script with the versions that were current in October 2017
-for the `{purrr}` and `{ggplot2}` packages, you can achieve this by simply
-changing the `library()` calls:
+If you want to run this script with the versions of `{purrr}` and `{ggplot2}`
+that were current in October 2017, you can achieve this by simply changing the
+`library()` calls:
 
 ```{r, eval = F}
 groundhog::groundhog.library("
@@ -549,21 +615,21 @@ but you will get the following message:
 ```
 ---------------------------------------------------------------------------
 |IMPORTANT.
-|    Groundhog says: you are using R-4.2.2, but the version of R current 
-|    for the entered date, '2017-10-04', is R-3.4.x. It is recommended 
-|    that you either keep this date and switch to that version of R, or 
-|    you keep the version of R you are using but switch the date to 
-|    between '2022-04-22' and '2023-01-08'. 
+|    Groundhog says: you are using R-4.2.2, but the version of R current
+|    for the entered date, '2017-10-04', is R-3.4.x. It is recommended
+|    that you either keep this date and switch to that version of R, or
+|    you keep the version of R you are using but switch the date to
+|    between '2022-04-22' and '2023-01-08'.
 |
-|    You may bypass this R-version check by adding: 
-|    `tolerate.R.version='4.2.2'`as an option in your groundhog.library() 
-|    call. Please type 'OK' to confirm you have read this message. 
+|    You may bypass this R-version check by adding:
+|    `tolerate.R.version='4.2.2'`as an option in your groundhog.library()
+|    call. Please type 'OK' to confirm you have read this message.
 |   >ok
 ```
 
-So here again, we are advised to switch to the version of R that was current at that
-time. If we follow the message’s advice, and add `tolerate.R.version = '4.2.2'`, we 
-may get the script to run:
+So here again, we are advised to switch to the version of R that was current at
+that time. If we follow the message’s advice, and add `tolerate.R.version =
+'4.2.2'`, we may get the script to run:
 
 ```{r, eval = F}
 groundhog.library("
