@@ -156,7 +156,7 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./github.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Collaborating using Trunk-based development with Github</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Collaborating using Trunk-based development</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -311,7 +311,8 @@ The reproducibility iceberg.
 <p>We will travel down the iceberg in the coming chapters. First, we will use what we’ve learned up until now to rewrite our project using functional and literate programming. Our project will not be two scripts anymore, but two Rmd files that we can knit and that we can then read and also send to non-technical stakeholders.</p>
 <p>Then, we are going to turn these two Rmds files into a package. This will be done by using <a href="https://thinkr-open.github.io/fusen/">Sébastien Rochette’s package {fusen}</a><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>. <code>{fusen}</code> makes it very easy to go from our Rmd files to a package, by using what Sébastien named the <em>Rmarkdown first</em> method. If at this stage it’s not clear why you would want to turn your analysis into a package, don’t worry, it’ll be once we’re done with this chapter.</p>
 <p>Once we have a package, we can use <code>{testthat}</code> for unit testing, and base R functions for assertive programming. At this stage, our code should be well-documented, easy to share, and thoroughly tested.</p>
-<p>Once this is achieved, we can build a true pipeline using <code>{targets}</code>, an incredibly useful library for build automation.</p>
+<p>I think I should emphasize the following: I started from very simple scripts, which is how most analyses are done. Then, using functional and literate programming, these scripts got turned into RMarkdown files, and in this part of the book these RMarkdown files will get turned into a package. It is important to understand the following point: I did this to illustrate how we can go from these simple scripts to something more robust, step by step. Of course, later, you can immediately start from either the RMarkdown files or from the package. My advice is to start from the package, because as you shall see, starting from the package is basically the same amount of effort as starting from a simple RMarkdown file, thanks to <code>{fusen}</code>, but now you have the added benefits of using package development facilities to improve your analysis.</p>
+<p>Once you have the package, you can build a true pipeline using <code>{targets}</code>, an incredibly useful library for build automation (but if you prefer to keep it at simple RMarkdown files, you can also use <code>{targets}</code>, you <em>don’t have to</em> build a package).</p>
 <p>Once we reached this stage, this is when we can finally start introducing reproducibility concretely. The reason it will take so long to actually make our pipeline reproducible is that we need solid foundations. There is no point in making a shaky analysis reproducible.</p>
 
 

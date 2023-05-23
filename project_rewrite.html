@@ -190,7 +190,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./github.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Collaborating using Trunk-based development with Github</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Collaborating using Trunk-based development</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -749,12 +749,12 @@ owner@localhost ➤ git push origin rmd</code></pre>
 <li><a href="https://is.gd/Z15Ycy">save_data.html, compiled from the save_data.Rmd source</a><a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a></li>
 <li><a href="https://is.gd/D1o4XJ">analyse_data.html, compiled from the analyse_data.Rmd source</a><a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a></li>
 </ul>
-<p>Of course, you could compile the files into Word documents or PDF, depending on your needs, and you could of course write many more details that me. I wanted to keep it short, the point of this chapter was to show you how to use literate programming not, to write a very detailed analysis.</p>
+<p>Of course, you could compile the files into Word documents or PDF, depending on your needs, and you could of course write many more details than me. I wanted to keep it short; the point of this chapter was to show you how to use literate programming and not to write a very detailed analysis.</p>
 </section>
 <section id="conclusion" class="level2" data-number="9.3">
 <h2 data-number="9.3" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">9.3</span> Conclusion</h2>
 <p>This chapter was short, but quite dense, especially when we converted the analysis script to an Rmd, because we’ve had to use two advanced concepts, <em>tidy evaluation</em> and Rmarkdown child documents. <em>Tidy</em> evaluation is not a topic that I wanted to discuss in this book, because it doesn’t have anything to do with the main topic at hand. However, part of building a robust, reproducible pipeline is to avoid repetition. In this sense, programming with <code>{dplyr}</code> and tidy evaluation are quite important. As suggested before, take a look at the linked vignette above, and then the chapter from my other free ebook. This should help get you started.</p>
-<p>The end of this chapter marks an important step: many analyses stop here, and this can be due to a variety of reasons. Maybe there’s no time left to go further, and, after all, you’ve got the results you wanted. Maybe this analysis is useful, but you don’t necessarily need it to be reproducible in 5, 10 years, so all you want is to make sure that you can at least rerun it in some months or a couple of years (but be careful with this assessment, sometimes an analysis that wasn’t supposed to be reproducible turns out to be reproducible for way longer than expected…).</p>
+<p>The end of this chapter marks an important step: many analyses stop here, and this can be due to a variety of reasons. Maybe there’s no time left to go further, and after all, you’ve got the results you wanted. Maybe this analysis is useful, but you don’t necessarily need it to be reproducible in 5, 10 years, so all you want is to make sure that you can at least rerun it in some months or only a couple of years later (but be careful with this assessment, sometimes an analysis that wasn’t supposed to be reproducible for too long turns out to need to be reproducible for way longer than expected…).</p>
 <p>Because I want this book to be a pragmatic guide, I will now talk about putting the least amount of effort to make your current analysis reproducible, and this is by freezing package versions, which I will show you in the next chapter.</p>
 
 
