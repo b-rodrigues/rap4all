@@ -123,8 +123,22 @@ Once we have a package, we can use `{testthat}` for unit testing, and base R
 functions for assertive programming. At this stage, our code should be
 well-documented, easy to share, and thoroughly tested.
 
-Once this is achieved, we can build a true pipeline using `{targets}`, an
-incredibly useful library for build automation.
+I think I should emphasize the following: I started from very simple scripts,
+which is how most analyses are done. Then, using functional and literate
+programming, these scripts got turned into RMarkdown files, and in this part of
+the book these RMarkdown files will get turned into a package. It is important
+to understand the following point: I did this to illustrate how we can go from
+these simple scripts to something more robust, step by step. Of course, later,
+you can immediately start from either the RMarkdown files or from the package.
+My advice is to start from the package, because as you shall see, starting from
+the package is basically the same amount of effort as starting from a simple
+RMarkdown file, thanks to `{fusen}`, but now you have the added benefits of
+using package development facilities to improve your analysis.
+
+Once you have the package, you can build a true pipeline using `{targets}`, an
+incredibly useful library for build automation (but if you prefer to keep it at
+simple RMarkdown files, you can also use `{targets}`, you *don’t have to* build
+a package).
 
 Once we reached this stage, this is when we can finally start introducing
 reproducibility concretely. The reason it will take so long to actually make our

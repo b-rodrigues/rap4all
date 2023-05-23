@@ -14,7 +14,7 @@ documentation, nor ensure that what we wrote is indeed correct. For this, we
 would need to write tests, which are missing from our current analysis. We only
 wrote one test, which made sure that all the communes were accounted for. This
 is why going with a package is so useful (and I need to stress here that the aim
-is of writing a package is NOT to upload it to CRAN): packages offer us a great
+of writing a package is NOT to upload it to CRAN): packages offer us a great
 framework for documenting, testing and sharing our code (even if only sharing
 internally in your company/team, or even just future you). So in order to take
 advantage of what packaging our code has to offer, we well learn about the
@@ -28,19 +28,19 @@ So I hope that I made my point clear: it is not recommended to stop at this
 stage, but I also recognize that we live in the real world with real physical
 constraints. So because we live in this imperfect world, sometimes we need to
 deliver imperfect work. So let’s see what we can do that is very cheap in terms
-of effort and time, but still allow us to have some hope of having our analysis
-reproducible using the `{renv}` package. It is quite easy to get started with
-`{renv}`: simply install it, and get a record of the used packages and their
-versions with one single command. This record gets saved inside a file that can
-then be used to restore this project’s library in the future, and without
-interfering with the other packages that you already have installed on your
-machine. You see, `{renv}` creates a per-project library (a library is the set
-of packages installed on your machine) which means that you can have as many
-versions of, `{dplyr}` as needed (one per project). The right version of
-`{dplyr}` will be installed and used for the right project only, and without
-interfering with other installed versions.
+of effort and time, but that still allows us to have some hope of having our
+analysis reproducible, all thanks to the `{renv}` package. It is quite easy to
+get started with `{renv}`: simply install it, and get a record of the used
+packages and their versions with one single command. This record gets saved
+inside a file that can then be used to restore this project’s library in the
+future, and without interfering with the other packages that you already have
+installed on your machine. You see, `{renv}` creates a per-project library (a
+library is the set of R packages installed on your machine) which means that you
+can have as many versions of `{dplyr}` as needed (one per project). The right
+version of `{dplyr}` will be installed and used for the right project only, and
+without interfering with other installed versions.
 
-Let’s see how this works by creating such a project-wide library for our little
+Let’s see how this works by creating such a project-specific library for our little
 project.
 
 ## Recording packages’ version with `{renv}`
@@ -53,23 +53,23 @@ mean:
 - the packages used for the analysis;
 - and otherwise the whole computational environment, even the computer hardware itself.
 
-`{renv}` is a package that takes care of point number 2: it allows you to easily
-record the packages that were used for a specific project. This record is a file
-called `renv.lock` which will appear at the root of your project once you’ve set
-up `{renv}` and run it. You can use `{renv}` once you’re done with an analysis
-like in our case, or better yet, immediately at the start of the project. You
-can keep updating the `renv.lock` file as you add or remove packages from your
+`{renv}` enables you to create **R**eproducible **Env**ironments and is a
+package that takes care of point number 2: it allows you to easily record the
+packages that were used for a specific project. This record is a file called
+`renv.lock` which will appear at the root of your project once you’ve set up
+`{renv}` and run it. You can use `{renv}` once you’re done with an analysis like
+in our case, or better yet, immediately at the start of the project. You can
+keep updating the `renv.lock` file as you add or remove packages from your
 analysis. The `renv.lock` file can then be used to restore the exact same
 package library that was used for your analysis on another computer, or on the
 same computer but in the future.
 
 This works because `{renv}` does more than simply create a list of the used
 packages and recording their versions inside the `renv.lock` file: it actually
-creates a per-project library (remember, the *library* is the set of packages
-installed on your computer) that is completely isolated for the main, default, R
-library on your machine, but also from the other `{renv}` libraries that you
-might have set up for your other projects. `{renv}` enables you to create
-**R**eproducible **Env**ironments. To save time when setting up an `{renv}`
+creates a per-project library that is completely isolated for the main, default,
+R library on your machine, but also from the other `{renv}` libraries that you
+might have set up for your other projects (remember, the *library* is the set of
+R packages installed on your computer). To save time when setting up an `{renv}`
 library, packages simply get copied over from your main library instead of being
 re-downloaded and re-installed (if the required packages are already installed
 in your default library).
@@ -110,7 +110,6 @@ Switched to a new branch 'renv'
 
 We will now be working on this branch. Simply work as usual, but when pushing,
 make sure to push to the `renv` branch:
-
 
 ::: {.content-hidden when-format="pdf"}
 ```
@@ -238,17 +237,19 @@ drwxr-xr-x 1 owner Domain Users     0 Feb 27 12:40 library
 So inside the `renv` folder, there is another folder called `library`: this is
 the folder that contains our isolated library for just this project. That’s
 something that we would not want to back up on Github as it grows quite large.
-So here is the right moment to introduce the `.gitignore` file (notice the `.`
-at the start of the name). This is a file that contains the paths to other files
-and folders that should be ignored. If you open it, you will see that the
-`library/` is listed there (among others) so it will be ignored. This is because
-it’s the folder that contains all the packages for the project and it might grow
-very large, so this is something that we don’t want to track.
+To avoid tracking this folder and backing it up on Github.com a file called
+`.gitignore` (notice the `.` at the start of the name) gets used. This is a file
+that contains the paths to other files and folders that should be ignored. If
+you open it, you will see that the `library/` folder is listed there so it will
+be ignored. You can have as many `.gitignore` files as necessary, but if you put
+one on the root folder of your project, then that `.gitignore` will work
+project-wide.
 
-If you are working with sensitive data, you could also add a `.gitignore` file
-in the root of the project’s directory, and simply list files and folders that
-you want Git to ignore. Create this file using your favourite text editor and
-simply add, for example if you’re working with sensitive data, the following:
+For example, if you are working with sensitive data, you could also add a
+`.gitignore` file in the root of the project’s directory, and simply list the
+folder containing he sensitive data. Create this file using your favourite text
+editor and simply add, for example if you’re working with sensitive data, the
+following:
 
 ```
 datasets/
@@ -312,12 +313,13 @@ owner@localhost $ cat renv.lock
 ```
 
 The `renv.lock` file is a json file listing all the packages, as well as their
-dependencies, that are used for the project, and it states the R version that
-was used when it was generated as well. It is important to remember that when
-you’ll use `{renv}` to restore a project’s library on a new machine, the R
-version will not be restored: so you will be running these old packages on a
-newer version of R, which may sometimes be a problem (but we’re going to discuss
-this later).
+dependencies, that are used for the project. At the top of the file, the R
+version that was used to generate the `renv.lock` file is also named. It is
+important to remember that when you’ll use `{renv}` to restore a project’s
+library on a new machine, the R version will not be restored: so in the future,
+you might be restoring this project and run old versions of packages on a newer
+version of R, which may sometimes be a problem (but we’re going to discuss this
+later).
 
 So... that’s it. You’ve generated the `renv.lock` file, which means that future
 you, or someone else can restore the library that you used to write this
@@ -373,7 +375,7 @@ Notice the word "Archive" in the url? That’s because this project uses `{vroom
 1.5.5, but as of writing (early 2023), `{vroom}` is at version 1.6.1.
 
 Now, maybe you’ve run `renv::restore()`, but the installation of the packages
-failed. If that’s the case, let me explain what likely happened.
+may have failed. If that’s the case, let me explain what likely happened.
 
 I tried restoring the project’s library on two different machines: a Windows
 laptop and a Linux workstation. `renv::restore()` failed on the Windows laptop,
@@ -388,21 +390,22 @@ libraries get compiled using Rtools 4.2 and not Rtools 4.0 (which includes the
 libraries for R 4.1 as well).
 
 So in order to run this project successfully, I should install the right version
-of R and Rtools, and this is usually not so difficult, especially on Windows.
-But that might be a problem on other operating systems. Does that mean that
-`{renv}` is useless? No, not at all.
+of R and Rtools and on Windows that should not be too complicated. But that
+might be a problem on other operating systems. Does that mean that `{renv}` is
+useless? No, not at all.
 
 At a minimum, `{renv}` ensures that a project’s library doesn’t interfere with
-another project’s library. This is especially useful if you’re working on a
-project for some time (say, several months at least) and want to make sure that
-you can keep working on other projects in parallel. That’s because what often
-happens is that you update your packages to use that sweet new feature from some
-package but when you go back to your long-term project and try to run, it, lo
-and behold it doesn’t work anymore. This is because another function coming from
-some other package that also got updated and that you use in your long-term
-project got removed, or renamed, or simply works differently now. This types
-of issues can be avoided by using a per-project library, which is exactly
-what `{renv}` does.
+another project’s library while you’re working on different projects. You can be
+working on several projects and be sure that if you update your library (for
+example, to use a nice new function from one specific package), that update will
+only affect the project where the library was updated, and not the other
+libraries from the other projects. When working with a system-wide library,
+updating packages for a project could introduce breaks in other projects.
+Without `{renv}`, such breaks could happen because another function coming from
+some other package that also got updated and that you use in another long-term
+project got removed, or renamed, or simply works differently now. This types of
+issues can be avoided by using a per-project library, which is exactly what
+`{renv}` does.
 
 But also, apart from that already quite useful feature, `renv.lock` files
 provide a very useful blueprint for Docker, which we are going to explore in a
@@ -461,16 +464,17 @@ Error in library(ggplot2) : there is no package called 'ggplot2'
 ```
 
 Don’t be confused: remember that `{renv}` is now activated, and that each
-project where `{renv}` is enabled has its own project-wide library. You may have
-`{ggplot2}` installed on your system-wide library, but this project does not
-have it yet. This means that you need to install `{ggplot2}` for your project.
-To do so, simply start an R session within your project and run
-`install.packages("ggplot2")`. If the version installed on your system-wide
-library is the latest version available on CRAN, the package will simply be
-copied over, if not, the latest version will be installed on your project’s
-library. You can now update the `renv.lock` file. This is done using
-`renv::snapshot()`; this will show you a list of new packages to record inside
-the `renv.lock` file and ask you to continue:
+project where `{renv}` is enabled has its own project-specific library. You may
+have `{ggplot2}` installed on your system-wide library, but this
+`{renv}`-enabled project does not have it yet on its own specific library. This
+means that you need to install `{ggplot2}` for your project. To do so, simply
+start an R session within your project and run `install.packages("ggplot2")`. If
+the version installed on your system-wide library is the latest version
+available on CRAN, the package will simply be copied over from the system-wide
+to the project-specific library, if not, the latest version will be downloaded
+onto your project’s library. You can now update the `renv.lock` file. This is
+done using `renv::snapshot()`; this will show you a list of new packages to
+record inside the `renv.lock` file and ask you to continue:
 
 ```{r, eval = F}
 **list of many packages over here**
@@ -483,8 +487,10 @@ If you now open the `renv.lock` file, and look for the string `"ggplot2"` you
 should see it listed there alongside its dependencies. Let me reiterate: this
 version of `{ggplot2}` is now unique to this project. You can work on other
 projects with other versions of `{ggplot2}` without interfering with this one.
-You can even install arbitrary versions of packages using `renv::install()`. For
-example, to install an older version of `{AER}`:
+If for some reason you didn’t want to have the latest version of `{ggplot2}`
+installed in the project-specific library, you could have installed an older
+version, still thanks to `{renv}`. For example, to install an older version of
+`{AER}`:
 
 ```{r, eval = F}
 renv::install("AER@1.0-0") # this is a version from August 2008
@@ -495,11 +501,11 @@ that used `{renv}`, installation of older packages may fail. If you need to use
 old packages, there are approaches that work better, which we are also going to
 explore in this chapter.
 
-Back to daily usage of `{renv}`: keep installing the required packages for your
-project and calling `renv::snapshot()` to keep a record of the library for
-reproducibility purposes. Once you’re done with your project, call
-`renv::snapshot()` one last time to make sure that every dependency is correctly
-accounted for. Don't forget to version the `renv.lock` file using Git!
+When you install more of the required packages for your project, you need to
+call `renv::snapshot()` to add the packages to the `renv.lock` file. Once you’re
+done with your project, call `renv::snapshot()` one last time to make sure that
+every dependency is correctly accounted for. Don't forget to version the
+`renv.lock` file using Git!
 
 ### Collaborating with `{renv}`
 
@@ -514,17 +520,16 @@ see [here](https://rstudio.github.io/renv/articles/collaborating.html)^[https://
 
 ### {renv}’s shortcomings
 
-In the next section, I’m going to go over two packages that make it easy to
-install old packages, which can be useful for reproducibility as well. But
-before that, let’s discuss `{renv}`’s shortcomings (which we already alluded to
-before). It is quite important to understand what `{renv}` does and what it
-doesn’t do, and why `{renv}` alone is not enough.
+As useful as `{renv}` is, it also comes with some shortcomings (which I’ve
+already alluded to before). It is quite important to understand what `{renv}`
+does and what it doesn’t do, and why `{renv}` alone is not enough to ensure the
+long-term reproducibility of your projects.
 
 The first problem, and I’m repeating myself here, is that `{renv}` only records
 the R version used for the project, but does not restore it when calling
 `renv::restore()`. You need to install the right R version yourself. On Windows
-this should be fairly easy to do, but you then need to make sure that you’re
-running the right version of R with the right scripts, which can get confusing.
+this should be fairly easy to do, but then you need to start juggling R versions
+and know which scrips need which R version, which can get confusing.
 
 There is the `{rig}` package that makes it easy to install and switch between R
 versions that you could check
@@ -537,7 +542,7 @@ The other issue of using `{renv}` is that future you, or your team-mates or
 people that want to reproduce your results need to install packages that may be
 quite difficult to install, either because they’re very old by now, or because
 their dependencies are difficult to satisfy. Have you ever tried to install a
-package thet depended on `{rJava}`? Or the `{rgdal}` package? Installing these
+package that depended on `{rJava}`? Or the `{rgdal}` package? Installing these
 packages can be quite challenging, because they need specific system
 requirements that may be impossible for you to install (either because you don’t
 have admin rights on your workstation, or because the required version of these
@@ -549,13 +554,15 @@ container, which is a much lower bar than installing these old libraries.
 
 I want to stress that this does not mean that `{renv}` is useless: we will keep
 using it, but together with Docker to ensure the reproducibility of our project.
-As I’ve written above alread, *at a minimum `{renv}` ensures that a project’s
+As I’ve written above already, *at a minimum `{renv}` ensures that a project’s
 library doesn’t interfere with another project’s library* and this is in itself
-already quite useful.
+already quite useful. The `renv.lock` file also provides a blueprint that can be
+used (by you or someone else) to build a Docker image for long-term
+reproducibility.
 
-Let’s now quickly disuss two other packages before finishing this chapter, which
-provide an answer to the question: *how to rerun an old analysis if no renv.lock
-file is available?*
+Let’s now quickly discuss two other packages before finishing this chapter,
+which provide an answer to the question: *how to rerun an old analysis if no
+`renv.lock` file was made available at the time the analysis was made?*.
 
 ## Becoming an R-cheologist
 
@@ -627,9 +634,10 @@ but you will get the following message:
 |   >ok
 ```
 
-So here again, we are advised to switch to the version of R that was current at
-that time. If we follow the message’s advice, and add `tolerate.R.version =
-'4.2.2'`, we may get the script to run:
+Groundhog is speaking to us, advising us to switch to the version of R that was
+current at that time the script was written. If we want to ignore the message’s
+advice, and add `tolerate.R.version = '4.2.2'`, we may get the script to run
+anyways:
 
 ```{r, eval = F}
 groundhog.library("
@@ -656,13 +664,14 @@ reproducibility puzzle, which is the whole computational environment itself.
 
 In this chapter you had a first (maybe a bit sour) taste of reproducibility.
 This is because while the tools presented here are very useful, they will not be
-sufficient if we want our project to be truly reproducible. There are too many
-things that can go wrong when re-installing old package versions, so we must
-instead provide a way for users to not have to do it at all. This is where
-Docker is going to be helpful. But before that, we need to hit the development
-bench again. We are actually not quite done with our project; before going to
-full reproducibility, we should turn our analysis into a package. And so you
-will see, this is going to be much, much, easier than you might expect. You
-already did 95% of the job! There are many advantages to turning our analysis
-into a package, and not only from a reproducibility perspective.
+sufficient if we want our project to be truly reproducible, especially in the
+long-term. There are too many things that can go wrong when re-installing old
+package versions, so we must instead provide a way for users to not have to do
+it at all. This is where Docker is going to be helpful. But before that, we need
+to hit the development bench again. We are actually not quite done with our
+project; before going to full reproducibility, we should turn our analysis into
+a package. And as you will see, this is going to be much, much, easier than you
+might expect. You already did 95% of the job! There are many advantages to
+turning our analysis into a package, and not only from a reproducibility
+perspective.
 
