@@ -1,7 +1,7 @@
 # Testing your code
 
 Testing code is crucial, and we all do it in some form or another. The problem
-is that it is not something that we do consistently. Usually code gets tested in
+is that it is not something that we do consistently: usually code gets tested in
 the beginning of a project, but then, as we start focusing on the analysis more
 and more and need to respect deadlines, testing gets forgotten.
 
@@ -13,9 +13,9 @@ don’t rely on future you to run tests, because future you is just as unreliabl
 as you are. Tests need to be run each time *any* of the code from a project gets
 changed. This might seem overkill (why test a function that you didn’t even
 touch for weeks?), but because there are dependencies between your functions, a
-change in one function can affect another. Especially if the output of function
-A is the input of function B, and now, because of your changes, the output of
-function A changed in a way that it breaks function B, or also modifies its
+change in one function can affect another function. Especially if the output of
+function A is the input of function B: you changed function A and now the output
+of function A changed in a way that it breaks function B, or also modifies its
 output in an unexpected way.
 
 There are several types of tests that we can use:
@@ -59,13 +59,14 @@ testthat::expect_true(
 
 When using `{fusen}`, a unit test should be a self-contained chunk that can be
 executed completely independently. This is why in this chunk we re-created the
-different variables that we needed, `communes` and `flat_data`. If you were
-developing the package without `{fusen}`, you would do the same, so don’t think
-that this is somehow a limitation of `{fusen}`.
+different variables that were needed, `communes` and `flat_data`. If you were
+developing the package without `{fusen}`, you would need to do the same, so
+don’t think that this is somehow a limitation of `{fusen}`.
 
 The test above ensures that we find all the former and current communes of
 Luxembourg in our dataset. Let me explain again why we want to write such a test
-down in a script and not simply try it out in our console.
+down in a script and not simply try it out in our console "manually" to check if
+the code works.
 
 For this test to pass, a lot of moving pieces have to fall together. If anything
 changes, be it because you changed something in either `get_raw_data()` or
@@ -76,14 +77,14 @@ are certain that if you use the code in `save_data.Rmd` you will get a new
 dataset that is likely correct, even if new communes merge. And mergers will
 happen around 2024 by the way, the communes of Groussbous and Wal will merge,
 and the communes of Bous and Waldbredimus as well. So you need to make sure that
-when this happens, your code knows how to handle this, or at least gives out an
+when this happens, your code knows how to handle this, or at least returns an
 error as early as possible.
 
-Ideally, we would test every function that we wrote, but sometimes that’s not
-really possible, either due to lack of time, or because the function is quite
-trivial, so maybe no test is warranted. But be careful what you consider trivial
-though, I have personally been bitten in the past by trivially simple functions!
-For example, a function like this one:
+Ideally, you need to test every function that you wrote, but sometimes that’s
+not really possible, either due to lack of time, or because the function is
+quite trivial, so maybe no test is warranted. But be careful what you consider
+trivial though, I have personally been bitten in the past by "trivially" simple
+functions! For example, a function like this one:
 
 ````{verbatim}
 ```{r function-make_commune_level_data}
@@ -103,16 +104,15 @@ make_commune_level_data <- function(flat_data){
 ````
 
 might not need to be unit-tested. An assertion, which we will learn about in the
-next section, is likely better suited. However, as functions become more
-complex, unit tests are highly recommended. This is because it can become very
-difficult to make sure that changing some part of the function somewhere does
-not affect some other part. This is where writing several unit tests can be
-useful. As long as all unit tests keep succeeding (or passing) you are somewhat
-sure that what you’re doing is not breaking stuff. And unit tests are especially
-useful when collaborating using trunk-based development! As the project leader,
-you could for example refuse to merge changes that break unit tests (the first
-project I worked on that used unit tests was organized like this, so we all
-better made sure that we wrote sensible code).
+next section, is likely better suited to the above function. However, as
+functions become more complex, unit tests are highly recommended. This is
+because it can become very difficult to make sure that changing some part of the
+function somewhere does not affect some other part. This is where writing
+several unit tests can be useful. As long as all unit tests keep succeeding (or
+passing) you are somewhat sure that what you’re doing is not breaking stuff. And
+unit tests are especially useful when collaborating using trunk-based
+development! As the project leader, you could for example refuse to merge
+changes that break unit tests.
 
 Before continuing, let’s rewrite the test we have already. While it is fully
 working, I didn’t really write it in the canonical form. Inside
@@ -148,15 +148,15 @@ test_that("Check if all communes are accounted for", {
 ````
 
 The only difference is that instead of calling `testthat::expect_true()`
-directly, we have wrapped this call inside `testthat::test_that()`. This way, we
-can add a description to the test. This is useful if the test fails.
+directly, I wrapped this call inside `testthat::test_that()`. This way, I can
+add a description to the test. This is useful if the test fails.
 
 Save `dev/save_data.Rmd` and go back to `0-dev_history.Rmd` to inflate
 `save_data.Rmd` again. Everything should work without problems.
 
 If the test fails, you get an informative message. To illustrate, I’ve added a
-typo in the test and inflated `save_data.Rmd`. Because tests always run when
-files get inflated, this test failed and here is what happened:
+typo in the test and inflated `save_data.Rmd`. Because tests always run when a
+fusen-package gets inflated, this test failed and here is the output:
 
 ```
 ══ Failed tests ════════════════════════════════════════════════════════════════
@@ -190,9 +190,9 @@ trivial.
 
 Let’s try with something simple. `get_laspeyeres()` expects either
 `commune_level_data` or `country_level_data`. What happens if we provide another
-dataset? Very likely an error. So let’s test for this. Go back to the
-`save_data.Rmd` file and add the following, under the function definition of
-`get_laspeyeres()`:
+dataset? The function very likely returns an error. So let’s test for this. Go
+back to the `save_data.Rmd` file and add the following, under the function
+definition of `get_laspeyeres()`:
 
 
 ````{verbatim}
@@ -228,6 +228,7 @@ test_that("Wrong data", {
 test_that("Empty data", {
 
   expect_error(
+  # this subsetting results in an empty dataset
     get_laspeyeres(subset(mtcars, am == 2))
   )
 
@@ -239,7 +240,7 @@ test_that("Empty data", {
 This second test checks what happens if we provide an empty dataset. This should
 not happen, but hey, it’s always a good idea to see what could happen. Here we
 also expect an error, so we use `expect_error()` as well. Inflating
-`save_data.Rmd` runs the tests again, all of them successfully.
+`save_data.Rmd` runs the tests again, and all of them succeed.
 
 Now, I know what you’re thinking. Probably something along the lines of *"Bruno,
 you told me that making my projects reproducible and reliable and robust would
@@ -257,7 +258,7 @@ expected, when we provide a random dataset to it. But it would be interesting to
 know why it fails. Simply run `get_laspeyeres(mtcars)` in the console. This is
 what we get back:
 
-```{r, eval = F}
+```
 Error in `mutate()`:
 ! Problem while computing `p0 = ifelse(year == "2010",
   average_price_nominal_euros, NA)`.
@@ -267,23 +268,27 @@ Run `rlang::last_error()` to see where the error occurred.
 ```
 
 So the functions fails but for the wrong reason. It fails because the column
-`year` cannot be found in the data. But what if there was a column `year`? The
-code would continue, but then likely fail for something else. It would be much
-safer to make it fail as soon as it detects that the provided data sets are not
-one of `commune_level_data` and `country_level_data`. But for this, we need
-assertive programming, which we will discuss in the next section. Remember, unit
-testing tests should run during development time, and assertive testing is for
-run-time. In the next section we will be changing the function to fail when the
-right datasets are not provided, but our unit test will not need to change; the
-function still fails, but this time it’ll be for the right reasons.
+`year` cannot be found in the data. But what if there was a column `year` in the
+data? The code would continue, but then likely fail for some other reason. It
+would be much safer to make it fail as soon as possible, by detecting right from
+the start if the provided data sets are not one of `commune_level_data` or
+`country_level_data`. But for this, we need assertive programming, which we will
+discuss in the next section. Why an assertive test and not an unit test? Because
+unit tests should run during development time, and assertive tests run at
+run-time (whent the function is executed). So in this case, we want the input to
+get checked at run-tim. In the next section we will be changing the function to
+fail when the right datasets are not provided, but our unit test will not need
+to change; the function still fails, but this time it’ll be for the right
+reasons.
 
-This is another advantage of writing unit tests: it forces you to think about
-what you’re doing. It very often improves your code quite a lot, and not just
-from a pure algorithmic perspective, but also from a user experience
-perspective. Writing these tests made us think about the failure of our
-function when we provide a random dataset, and made us realise that it would be
-much better for users if the returned error message is something such as "Wrong
-dataset, please provide either `commune_level_data` or `country_level_data`".
+This is another advantage of writing tests: it forces you to think about what
+you’re doing. The simple act of thinking and writing tests very often improves
+your code quite a lot, and not just from a pure algorithmic perspective, but
+also from a user experience perspective. Writing these tests made us think about
+the failure of our function when users provide a wrong dataset, and made us
+realise that it would be much better for users if the returned error message is
+something along the lines of "Wrong dataset, please provide either
+`commune_level_data` or `country_level_data`".
 
 Let’s continue with testing `get_laspeyeres()`. It would be nice to see if the
 function actually does what it’s supposed to do correctly. For this, we need to
@@ -311,10 +316,10 @@ input_df$average_price_nominal_euros <- c(234, 345, 560, 670)
 input_df$average_price_m2_nominal_euros <- c(23, 34, 56, 67)
 ```
 
-This creates a data frame with two years, two communes and some mock prices. 
+This creates a data frame with two years, two communes and some mock prices.
 Now, I need to create the output. I start from the input, and add the columns
-that `get_laspeyeres()` computes "by hand". Remember, you need to make sure
-that these results are correct!
+that get computed by running `get_laspeyeres()` myself, "by hand". Remember,
+you need to make sure that these results are correct!
 
 ```{r, eval = F}
 expected_df <- input_df
@@ -333,10 +338,10 @@ expected_df$pl_m2 <-
     expected_df$p0_m2 * 100
 ```
 
-If you look at each line, you see that this is basically what `get_laspeyeres()`
-does. We can inspect the results, maybe even calculate each cell using a pocket
-calculator. It doesn’t matter, what’s important is that the `expected_df` is
-correct and saved. This is what the full test looks like:
+If you look at each line, you see that this is exactly what `get_laspeyeres()`
+does. We can inspect the results, maybe even verify the value of each cell using
+a pocket calculator. It doesn’t matter, what’s important is that
+`expected_df` is correct and saved. This is what the full test looks like:
 
 ````{verbatim}
 ```{r, eval = F}
@@ -369,36 +374,42 @@ test_that("get_laspeyeres() produces correct results", {
 ```
 ````
 
-Notice that I’ve used `expect_equivalent()` and not `expect_equal()`. This is because
-`expected_df` is of class `data.frame`, while `get_laspeyeres()` outputs a `tibble`.
-So if you use `expect_equal()` the test would not pass. Sometimes, this level of 
+Notice that I’ve used `expect_equivalent()` and not `expect_equal()` to check if
+`expected_df` is equal to the output of `get_laspeyeres(input_df)`. This is
+because `expected_df` is of class `data.frame`, while `get_laspeyeres()` outputs
+a `tibble`. So if you use `expect_equal()` the test would not pass, because the
+classes of both objects are not strictly equal. Sometimes, this level of
 strictness is required, but not always, as is the case here.
 
 Once again, inflate `save_data.Rmd`. This will run the tests, and if everything
-went well, you should end up, again, with a functioning package. I highly
-advise that you consult `{testthat}`’s documentation to learn about all the other
+went well, you should end up, again, with a functioning package. I highly advise
+that you consult `{testthat}`’s documentation to learn about all the other
 functions that you can use for writing unit tests.
 
-Let’s now go to assertive programming.
+If you’ve managed to write the unit tests and inflate the package successfully,
+then let’s move on to assertive programming.
 
 ## Assertive programming
 
-Remember in chapter 6, where I discussed safe functions? As a refresher, here’s the `nchar()`
-function, providing a correct output when the input is a character:
+Remember in chapter 6, where I discussed safe functions? As a refresher, here’s
+the `nchar()` function, providing a correct output when the input is a
+character:
 
 ```{r}
 nchar("100000000")
 ```
 
-and here is `nchar()` providing a *surprising* result when the input is a number:
+and here is `nchar()` providing a *surprising* result when the input is a
+number:
 
 ```{r}
 nchar(100000000)
 ```
 
-This is because `100000000` gets converted to `1e+08` and then this gets converted into the 
-string `"1e+08"` which is 5 characters long. So in that section, I suggested to define your
-own `nchar2()` that makes sure that the provided input is a character:
+This is because `100000000` gets converted to `1e+08` and then this gets
+converted into the string `"1e+08"` which is 5 characters long. So in that
+section, I suggested to define your own `nchar2()` that makes sure that the
+provided input is a character:
 
 ```{r}
 nchar2 <- function(x, result = 0){
@@ -441,7 +452,7 @@ nchar3 <- function(x, result = 0){
 ```
 
 If we go back to `get_laspeyeres()`, we should be using assertive programming to
-make sure that the provided datasets are one of `commune_level_data` and
+make sure that the provided datasets are one of `commune_level_data` or
 `country_level_data`. This is how we could rewrite the function:
 
 ```{r, eval = F}
@@ -483,9 +494,12 @@ get_laspeyeres <- function(dataset){
 ```
 
 We can now also edit the unit test from before, the one where we provide the
-wrong data. This unit test would fail, as expected, but for the wrong reason. We
-now want to make sure that it fails for the right reason, so for this we change
-the unit tests like this:
+wrong data. With this new specification of the function, this unit test would
+still pass (the function returns an error), as expected, but for the wrong
+reason. We now want to make sure that it fails for the right reason, in other
+words, that it fails not because no `year` column is found, but because the
+provided data set is neither `commune_level_data` nor `country_level_data`, so
+for this we change the unit tests like this:
 
 ```{r, eval = F}
 test_that("Wrong data", {
@@ -519,10 +533,11 @@ to tell us that as well!
 Before inflating to run these tests, you should also change the test titled
 "get_laspeyeres() provides correct answers". This is because the name of the
 input dataset used for the test is `input_df`. So if you leave it like this, the
-assertion that we’ve included in the function will make this test fail. So change this
-test by simply saving `input_df` `commune_level_data`:
+assertion that we’ve included in the function will make this test fail. So
+change this test by simply saving `input_df` `commune_level_data`:
 
 ```{r, eval = F}
+# rename data to make assertion pass
 commune_level_data <- input_df
 
 expect_equivalent(
@@ -530,14 +545,15 @@ expect_equivalent(
 )
 ```
 
-if you forget to do this, don’t worry, the unit test would fail to remind you!
+if you forget to do this, don’t worry, the unit test would not fail to remind
+you!
 
-Go back to `0-dev_history.Rmd` and inflate the file again to update it. The unit
-test we wrote before should keep passing, but now, it passes for the right
-reason: we provided a dataset that is neither `commune_level_data` nor
-`country_level_data` and not because there is no column `year` in the dataset!
+Go back to `0-dev_history.Rmd` and inflate the file again to update it.
+Everything should work without any issues. If not, take the time to make the
+unit tests pass and inflate the package successfully! 
 
-You can also make sure that the provided input is of the right class:
+Something else that is well-suited for assertive programming is checking whether
+the provided inputs are of the right class:
 
 ```{r}
 any_function <- function(dataset){
@@ -566,7 +582,7 @@ Error in any_function("this is not a data frame") :
   `dataset` must be a data frame
 ```
 
-`inherits()` checks if an option inherits from a certain class. So for example,
+`inherits()` checks if an object inherits from a certain class. So for example,
 a `tibble` or a `data.table` that are classes that are defined by inheriting
 attributes from the `data.frame` class, will also successfully pass the test
 above. You can be as strict as you need: for example, do you need any type of
@@ -590,21 +606,24 @@ inherits(2L, "integer")
 ```
 
 Do you want, for some reason, that your functions only accept `tibble`s and not
-`data.frame`s? Be as strict as you need:
+`data.frame`s? Be as strict as you need. This will succeed:
 
 ```{r}
 inherits(tibble::as_tibble(mtcars), "tbl_df")
 ```
 
+This will fail:
+
 ```{r}
 inherits(mtcars, "tbl_df")
 ```
 
-You could also use more complex assertions. For example, suppose that you need to clean
-data using many functions, with several filters. Something could go wrong in any of these
-functions for a variety of reasons. So each of these functions could test if all the 
-individuals are still in the data, and that you didn’t remove any of them by mistake.
-A test like:
+You could also use more complex assertions. For example, suppose that you need
+to clean data using many functions, with several filters. Something could go
+wrong in any of these functions for a variety of reasons. So each of these
+functions could test if all the individuals are still in the data, and that you
+didn’t remove any of them by mistake. A test like this could make sure that each
+levels of the variable `am` are still in the data:
 
 ```{r, eval = F}
 
@@ -618,14 +637,14 @@ summary_stats <- function(dataframe, var){
 ```
 
 Now, when running `summary_stats(mtcars, "am")`, if somehow the level "1" or "0"
-is missing from `mtcars`, the function would throw an error. 
+is missing from `mtcars`, the function would throw an error.
 
 There are several packages for assertive programming that you might want to
 check out:
 
-- [{assertthat}](https://github.com/hadley/assertthat)
-- [{chk}](https://poissonconsulting.github.io/chk/)
-- [{checkmate}](https://mllg.github.io/checkmate/)
+- [{assertthat}](https://github.com/hadley/assertthat)^[https://github.com/hadley/assertthat]
+- [{chk}](https://poissonconsulting.github.io/chk/)^[https://poissonconsulting.github.io/chk/]
+- [{checkmate}](https://mllg.github.io/checkmate/)^[https://mllg.github.io/checkmate/]
 
 I won’t discuss any of them; what’s important is for you to know that assertive
 programming is something that is useful, and that you should add to your
@@ -634,21 +653,20 @@ toolbox.
 ## Test-driven development
 
 Test-driven development, or TDD, is the programming paradigm in which instead of
-writing a function and then several tests to ensure that it’s working as
-expected, you start with several tests. Of course, since there is no function to
-test, these tests will all fail at first. But the goal is to then write a
-function such that the tests pass.
+writing a function and then several tests to ensure that the code is working as
+expected, you start by writing tests, and then the function. Of course, since
+there is no function to test, these tests will all obviously fail at first. But
+the goal is to then write a function such that the tests pass.
 
 TDD is interesting in at least two scenarios:
 
 - You want to write a function, but don’t know exactly where to start. Maybe it’s a very complex function. So writing tests can help you think about it, and already fix certain properties that this function should have.
-- You use the tests as a way to write requirements for a codebase. This can be useful when working in a team, and you don’t want to "waste" time writing requirements, so instead you already write the tests. Careful though, because a "smart" programmer could write code that passes the tests but doesn’t actually do anything otherwise useful.
+- You use the tests as a way to write requirements for a code-base. This can be useful when working in a team, and you don’t want to "waste" time writing requirements, so instead you write tests that describe how the function should work, what type of inputs get accepted, how its output looks like... Careful though, because a "smart" programmer could write code that passes the tests but doesn’t actually do anything otherwise useful.
 
 I tend to use TDD when I need to write a function but don’t quite know where to
 start. I start by writing the most basic tests and make them ever more
 complicated. At some point, I start having an idea for the function’s
-implementation and have a go at it. Sometimes this makes me even realise that I 
-was testing for something irrelevant!
+implementation and have a go at it. 
 
 Some programmers only do TDD; so they start by writing many, many tests, and
 then only start writing their functions. Personally, I think that this is also
@@ -656,13 +674,14 @@ not ideal, because you could waste a lot of time writing meaningless tests.
 
 ## Code coverage
 
-It is useful to have an idea of which functions are tested and which are not, but
-also *how much* of a function is being tested. For example, suppose that you have
-an `if...else...` clause somewhere in a function. Did you write a test for each of 
-the outcomes of this clause? Maybe you only wrote a test when this clause evaluates
-to `TRUE`, but forgot to write a test for the case it is `FALSE`.
+It is useful to have an idea of which functions are tested and which are not,
+but also *how much* of a function is being tested. For example, suppose that you
+have an `if...else...` clause somewhere in a function. Did you write a test for
+each of the outcomes of this clause? Maybe you only wrote a test when this
+clause evaluates to `TRUE`, but forgot to write a test for the case it is
+`FALSE`.
 
-The packages `{covr}` allows you to track the test coverage of your package. 
+The packages `{covr}` allows you to track the test coverage of your package.
 Install `{covr}` and run `report()` in the console to get the results:
 
 ```{r, eval = F}
@@ -671,8 +690,8 @@ covr::report()
 
 This should open a tab in your web browser with some statistics. You can click
 on the individual scripts to see the source code of your functions: each line
-that is highlighted in green represents a line that is being tested, and lines in red
-are lines that are not being tested:
+that is highlighted in green represents a line that is being tested, and lines
+in red are lines that are not being tested:
 
 ::: {.content-hidden when-format="pdf"}
 <figure>
@@ -689,13 +708,13 @@ knitr::include_graphics("images/covr.PNG")
 ```
 :::
 
-You could strive to get 100% coverage by painting all the lines green (by writing
-unit tests that test these lines). But in practice, it is not always so easy to 
-get 100% coverage, so don’t fret if you don’t achieve perfection.
+You could strive to get 100% coverage by painting all the lines green (by
+writing unit tests that test these lines). But in practice, it is not always so
+easy to get 100% coverage, so don’t fret if you don’t achieve perfection.
 
-If you’re working on a server (and thus do not have access to a graphical user interface)
-you can instead opt for the `covr::package_coverage()` function which provides you
-with the following results (inside your console):
+If you’re working on a server (and thus do not have access to a graphical user
+interface) you can instead use the `covr::package_coverage()` function which
+provides you with the following results (printed in the console):
 
 ```
 housing Coverage: 73.33%
@@ -704,8 +723,8 @@ R/get_raw_data.R: 80.65%
 ```
 
 The percentage represents the share of lines of code that are tested by our unit
-tests. We see that the share of lines being tested in `get_laspeyeres().R` is
-57%: this is because the script `get_laspeyeres()` contains two functions,
+tests. We see that the share of lines being tested in `get_laspeyeres.R` is
+57%: this is because the script `get_laspeyeres.R` contains two functions,
 `get_laspeyeres()` and `make_plot()`. We do not test `make_plot()` at all, hence
 why the percentage is so low. We could move `make_plot()` to another script by
 simply putting the function under a level two header in the original `.Rmd`
@@ -733,13 +752,12 @@ things go wrong and break, but silently. You still get an output that may look
 ok at first glance, and only realise something is wrong way too late. Testing
 helps avoiding such situations.
 
-So remember: it might *feel* like packaging your code and writing tests for it 
-takes time, but:
+So remember: it might *feel* like packaging your code and writing tests for it
+takes time, butyou’re actually already doing it, but non-systematically and
+manually and it ends up saving you time in the long run instead. Testing also
+helps with developing complex functions.
 
-- you’re actually already doing it, albeit casually;
-- it saves you time in the long run.
-
-The tools I’ve showed you in this chapter and in the previous chapter are probably the
-fastest, easiest way to go from your analysis to a documented and tested package
-in a matter of hours. The benefits these provide however are measured in days of
-work.
+The tools I’ve showed you in this and the previous chapter are probably the
+fastest, easiest options to go from your analysis to a documented and tested
+package in a matter of hours. The benefits these provide however are measured in
+days of work.
