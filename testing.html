@@ -322,8 +322,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
-<p>Testing code is crucial, and we all do it in some form or another. The problem is that it is not something that we do consistently. Usually code gets tested in the beginning of a project, but then, as we start focusing on the analysis more and more and need to respect deadlines, testing gets forgotten.</p>
-<p>In this chapter, you are going to learn how to make testing your code consistent and, very importantly, fully automatic. Just like in the previous chapter, the key is to <em>write everything down</em>. Don’t just do a little test in the console to see if the function you’ve just written works as expected. Write it down! And don’t rely on future you to run tests, because future you is just as unreliable as you are. Tests need to be run each time <em>any</em> of the code from a project gets changed. This might seem overkill (why test a function that you didn’t even touch for weeks?), but because there are dependencies between your functions, a change in one function can affect another. Especially if the output of function A is the input of function B, and now, because of your changes, the output of function A changed in a way that it breaks function B, or also modifies its output in an unexpected way.</p>
+<p>Testing code is crucial, and we all do it in some form or another. The problem is that it is not something that we do consistently: usually code gets tested in the beginning of a project, but then, as we start focusing on the analysis more and more and need to respect deadlines, testing gets forgotten.</p>
+<p>In this chapter, you are going to learn how to make testing your code consistent and, very importantly, fully automatic. Just like in the previous chapter, the key is to <em>write everything down</em>. Don’t just do a little test in the console to see if the function you’ve just written works as expected. Write it down! And don’t rely on future you to run tests, because future you is just as unreliable as you are. Tests need to be run each time <em>any</em> of the code from a project gets changed. This might seem overkill (why test a function that you didn’t even touch for weeks?), but because there are dependencies between your functions, a change in one function can affect another function. Especially if the output of function A is the input of function B: you changed function A and now the output of function A changed in a way that it breaks function B, or also modifies its output in an unexpected way.</p>
 <p>There are several types of tests that we can use:</p>
 <ul>
 <li>unit testing: these are written while developing, and executed while developing;</li>
@@ -356,10 +356,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>            all(communes %in% unique(flat_data$locality))</span>
 <span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>                      )</span>
 <span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>```</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>When using <code>{fusen}</code>, a unit test should be a self-contained chunk that can be executed completely independently. This is why in this chunk we re-created the different variables that we needed, <code>communes</code> and <code>flat_data</code>. If you were developing the package without <code>{fusen}</code>, you would do the same, so don’t think that this is somehow a limitation of <code>{fusen}</code>.</p>
-<p>The test above ensures that we find all the former and current communes of Luxembourg in our dataset. Let me explain again why we want to write such a test down in a script and not simply try it out in our console.</p>
-<p>For this test to pass, a lot of moving pieces have to fall together. If anything changes, be it because you changed something in either <code>get_raw_data()</code> or <code>clean_raw_data()</code> or because something changed with the Wikipedia tables you scraped, this test will not pass. And you should be made aware of failures as soon as possible! Also, this test ensures that when the data gets updated, you are certain that if you use the code in <code>save_data.Rmd</code> you will get a new dataset that is likely correct, even if new communes merge. And mergers will happen around 2024 by the way, the communes of Groussbous and Wal will merge, and the communes of Bous and Waldbredimus as well. So you need to make sure that when this happens, your code knows how to handle this, or at least gives out an error as early as possible.</p>
-<p>Ideally, we would test every function that we wrote, but sometimes that’s not really possible, either due to lack of time, or because the function is quite trivial, so maybe no test is warranted. But be careful what you consider trivial though, I have personally been bitten in the past by trivially simple functions! For example, a function like this one:</p>
+<p>When using <code>{fusen}</code>, a unit test should be a self-contained chunk that can be executed completely independently. This is why in this chunk we re-created the different variables that were needed, <code>communes</code> and <code>flat_data</code>. If you were developing the package without <code>{fusen}</code>, you would need to do the same, so don’t think that this is somehow a limitation of <code>{fusen}</code>.</p>
+<p>The test above ensures that we find all the former and current communes of Luxembourg in our dataset. Let me explain again why we want to write such a test down in a script and not simply try it out in our console “manually” to check if the code works.</p>
+<p>For this test to pass, a lot of moving pieces have to fall together. If anything changes, be it because you changed something in either <code>get_raw_data()</code> or <code>clean_raw_data()</code> or because something changed with the Wikipedia tables you scraped, this test will not pass. And you should be made aware of failures as soon as possible! Also, this test ensures that when the data gets updated, you are certain that if you use the code in <code>save_data.Rmd</code> you will get a new dataset that is likely correct, even if new communes merge. And mergers will happen around 2024 by the way, the communes of Groussbous and Wal will merge, and the communes of Bous and Waldbredimus as well. So you need to make sure that when this happens, your code knows how to handle this, or at least returns an error as early as possible.</p>
+<p>Ideally, you need to test every function that you wrote, but sometimes that’s not really possible, either due to lack of time, or because the function is quite trivial, so maybe no test is warranted. But be careful what you consider trivial though, I have personally been bitten in the past by “trivially” simple functions! For example, a function like this one:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>```{r function-make_commune_level_data}</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>#' make_commune_level_data Makes the final data at commune level</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>#'</span>
@@ -374,7 +374,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>```</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>might not need to be unit-tested. An assertion, which we will learn about in the next section, is likely better suited. However, as functions become more complex, unit tests are highly recommended. This is because it can become very difficult to make sure that changing some part of the function somewhere does not affect some other part. This is where writing several unit tests can be useful. As long as all unit tests keep succeeding (or passing) you are somewhat sure that what you’re doing is not breaking stuff. And unit tests are especially useful when collaborating using trunk-based development! As the project leader, you could for example refuse to merge changes that break unit tests (the first project I worked on that used unit tests was organized like this, so we all better made sure that we wrote sensible code).</p>
+<p>might not need to be unit-tested. An assertion, which we will learn about in the next section, is likely better suited to the above function. However, as functions become more complex, unit tests are highly recommended. This is because it can become very difficult to make sure that changing some part of the function somewhere does not affect some other part. This is where writing several unit tests can be useful. As long as all unit tests keep succeeding (or passing) you are somewhat sure that what you’re doing is not breaking stuff. And unit tests are especially useful when collaborating using trunk-based development! As the project leader, you could for example refuse to merge changes that break unit tests.</p>
 <p>Before continuing, let’s rewrite the test we have already. While it is fully working, I didn’t really write it in the canonical form. Inside <code>dev/save_data.Rmd</code>, change the code of the test to the following:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>```{r tests-clean_flat_data}</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a># We now need to check if we have them all in the data.</span>
@@ -402,9 +402,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>})</span>
 <span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>```</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>The only difference is that instead of calling <code>testthat::expect_true()</code> directly, we have wrapped this call inside <code>testthat::test_that()</code>. This way, we can add a description to the test. This is useful if the test fails.</p>
+<p>The only difference is that instead of calling <code>testthat::expect_true()</code> directly, I wrapped this call inside <code>testthat::test_that()</code>. This way, I can add a description to the test. This is useful if the test fails.</p>
 <p>Save <code>dev/save_data.Rmd</code> and go back to <code>0-dev_history.Rmd</code> to inflate <code>save_data.Rmd</code> again. Everything should work without problems.</p>
-<p>If the test fails, you get an informative message. To illustrate, I’ve added a typo in the test and inflated <code>save_data.Rmd</code>. Because tests always run when files get inflated, this test failed and here is what happened:</p>
+<p>If the test fails, you get an informative message. To illustrate, I’ve added a typo in the test and inflated <code>save_data.Rmd</code>. Because tests always run when a fusen-package gets inflated, this test failed and here is the output:</p>
 <pre><code>══ Failed tests ════════════════════════════════════════════════════════════════
 ── Error ('test-get_raw_data.R:18'): Check if all communes are accounted for ───
 Error in `communs %in% unique(flat_data$locality)`: object 'communs' not found
@@ -421,7 +421,7 @@ Error: Test failures
 Execution halted</code></pre>
 <p>The file <code>test-get_raw_data.R</code> contains our test, generated by inflating <code>save_data.Rmd</code>. You can find it under the <code>tests/testthat/</code> folder of your inflated package. You can also see the description that we’ve added, which helps us find the test that failed. In cases like this, you should go back to the function that makes the test fail and correct it, until the test passes. You should also make sure that everything is alright with the test itself. If there really is a typo in the test, you should of course correct the test (in <code>dev/save_data.Rmd</code>, not in <code>tests/testthat/</code>)!</p>
 <p>Now, let’s add a unit test to another function, <code>get_laspeyeres()</code>. This function seems to me like a good candidate for testing, as it is not that trivial.</p>
-<p>Let’s try with something simple. <code>get_laspeyeres()</code> expects either <code>commune_level_data</code> or <code>country_level_data</code>. What happens if we provide another dataset? Very likely an error. So let’s test for this. Go back to the <code>save_data.Rmd</code> file and add the following, under the function definition of <code>get_laspeyeres()</code>:</p>
+<p>Let’s try with something simple. <code>get_laspeyeres()</code> expects either <code>commune_level_data</code> or <code>country_level_data</code>. What happens if we provide another dataset? The function very likely returns an error. So let’s test for this. Go back to the <code>save_data.Rmd</code> file and add the following, under the function definition of <code>get_laspeyeres()</code>:</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>```{r tests-get_laspeyeres}</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>test_that("Wrong data", {</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -445,13 +445,14 @@ Execution halted</code></pre>
 <span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>test_that("Empty data", {</span>
 <span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>  expect_error(</span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>    get_laspeyeres(subset(mtcars, am == 2))</span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>})</span>
-<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>```</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>This second test checks what happens if we provide an empty dataset. This should not happen, but hey, it’s always a good idea to see what could happen. Here we also expect an error, so we use <code>expect_error()</code> as well. Inflating <code>save_data.Rmd</code> runs the tests again, all of them successfully.</p>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>  # this subsetting results in an empty dataset</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>    get_laspeyeres(subset(mtcars, am == 2))</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>```</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This second test checks what happens if we provide an empty dataset. This should not happen, but hey, it’s always a good idea to see what could happen. Here we also expect an error, so we use <code>expect_error()</code> as well. Inflating <code>save_data.Rmd</code> runs the tests again, and all of them succeed.</p>
 <p>Now, I know what you’re thinking. Probably something along the lines of <em>“Bruno, you told me that making my projects reproducible and reliable and robust would not take much more time than what I was already doing before. This certainly doesn’t feel like it!”</em>, to which I answer that your feelings on the issue are wrong. It may not feel like it, but doing this does two things:</p>
 <ul>
 <li>It ultimately saves you time. You typed the test once, and can now rerun it automatically every time you inflate the <code>.Rmd</code> files. You don’t need to remember to test the code, and don’t need to remember how to test the code.</li>
@@ -459,16 +460,14 @@ Execution halted</code></pre>
 </ul>
 <p>Trust the process.</p>
 <p>Let’s go back to the two tests from before: <code>get_laspeyeres()</code> fails, as expected, when we provide a random dataset to it. But it would be interesting to know why it fails. Simply run <code>get_laspeyeres(mtcars)</code> in the console. This is what we get back:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>Error <span class="cf">in</span> <span class="st">`</span><span class="at">mutate()</span><span class="st">`</span><span class="sc">:</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="sc">!</span> Problem <span class="cf">while</span> computing <span class="st">`</span><span class="at">p0 = ifelse(year == "2010",</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="at">  average_price_nominal_euros, NA)</span><span class="st">`</span>.</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>Caused by error <span class="cf">in</span> <span class="st">`</span><span class="at">ifelse()</span><span class="st">`</span><span class="sc">:</span></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="sc">!</span> object <span class="st">'year'</span> not found</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>Run <span class="st">`</span><span class="at">rlang::last_error()</span><span class="st">`</span> to see where the error occurred.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>So the functions fails but for the wrong reason. It fails because the column <code>year</code> cannot be found in the data. But what if there was a column <code>year</code>? The code would continue, but then likely fail for something else. It would be much safer to make it fail as soon as it detects that the provided data sets are not one of <code>commune_level_data</code> and <code>country_level_data</code>. But for this, we need assertive programming, which we will discuss in the next section. Remember, unit testing tests should run during development time, and assertive testing is for run-time. In the next section we will be changing the function to fail when the right datasets are not provided, but our unit test will not need to change; the function still fails, but this time it’ll be for the right reasons.</p>
-<p>This is another advantage of writing unit tests: it forces you to think about what you’re doing. It very often improves your code quite a lot, and not just from a pure algorithmic perspective, but also from a user experience perspective. Writing these tests made us think about the failure of our function when we provide a random dataset, and made us realise that it would be much better for users if the returned error message is something such as “Wrong dataset, please provide either <code>commune_level_data</code> or <code>country_level_data</code>”.</p>
+<pre><code>Error in `mutate()`:
+! Problem while computing `p0 = ifelse(year == "2010",
+  average_price_nominal_euros, NA)`.
+Caused by error in `ifelse()`:
+! object 'year' not found
+Run `rlang::last_error()` to see where the error occurred.</code></pre>
+<p>So the functions fails but for the wrong reason. It fails because the column <code>year</code> cannot be found in the data. But what if there was a column <code>year</code> in the data? The code would continue, but then likely fail for some other reason. It would be much safer to make it fail as soon as possible, by detecting right from the start if the provided data sets are not one of <code>commune_level_data</code> or <code>country_level_data</code>. But for this, we need assertive programming, which we will discuss in the next section. Why an assertive test and not an unit test? Because unit tests should run during development time, and assertive tests run at run-time (whent the function is executed). So in this case, we want the input to get checked at run-tim. In the next section we will be changing the function to fail when the right datasets are not provided, but our unit test will not need to change; the function still fails, but this time it’ll be for the right reasons.</p>
+<p>This is another advantage of writing tests: it forces you to think about what you’re doing. The simple act of thinking and writing tests very often improves your code quite a lot, and not just from a pure algorithmic perspective, but also from a user experience perspective. Writing these tests made us think about the failure of our function when users provide a wrong dataset, and made us realise that it would be much better for users if the returned error message is something along the lines of “Wrong dataset, please provide either <code>commune_level_data</code> or <code>country_level_data</code>”.</p>
 <p>Let’s continue with testing <code>get_laspeyeres()</code>. It would be nice to see if the function actually does what it’s supposed to do correctly. For this, we need to start from an input, and then create the expected output. It doesn’t matter how you create this output, what matters is that you make absolutely sure that it is correct, and then, never touch it ever again. Let’s call this output the “truth”. Then, you provide <code>get_laspeyeres()</code> with this input and save the output that <code>get_laspeyeres()</code> generates. You then compare the “truth” to this output. If everything matches, congratulations, your function produces the right output.</p>
 <p>So let’s start. Remember that unit tests should be self-contained, so I’m going to create the input dataset and the expected data set (what I called the “truth”) in the test itself. This is the code I’m going to use to create the mock, input dataset:</p>
 <div class="cell">
@@ -481,7 +480,7 @@ Execution halted</code></pre>
 <span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>input_df<span class="sc">$</span>average_price_nominal_euros <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">234</span>, <span class="dv">345</span>, <span class="dv">560</span>, <span class="dv">670</span>)</span>
 <span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>input_df<span class="sc">$</span>average_price_m2_nominal_euros <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">23</span>, <span class="dv">34</span>, <span class="dv">56</span>, <span class="dv">67</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>This creates a data frame with two years, two communes and some mock prices. Now, I need to create the output. I start from the input, and add the columns that <code>get_laspeyeres()</code> computes “by hand”. Remember, you need to make sure that these results are correct!</p>
+<p>This creates a data frame with two years, two communes and some mock prices. Now, I need to create the output. I start from the input, and add the columns that get computed by running <code>get_laspeyeres()</code> myself, “by hand”. Remember, you need to make sure that these results are correct!</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>expected_df <span class="ot">&lt;-</span> input_df</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -498,7 +497,7 @@ Execution halted</code></pre>
 <span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>  expected_df<span class="sc">$</span>average_price_m2_nominal_euros<span class="sc">/</span></span>
 <span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>    expected_df<span class="sc">$</span>p0_m2 <span class="sc">*</span> <span class="dv">100</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>If you look at each line, you see that this is basically what <code>get_laspeyeres()</code> does. We can inspect the results, maybe even calculate each cell using a pocket calculator. It doesn’t matter, what’s important is that the <code>expected_df</code> is correct and saved. This is what the full test looks like:</p>
+<p>If you look at each line, you see that this is exactly what <code>get_laspeyeres()</code> does. We can inspect the results, maybe even verify the value of each cell using a pocket calculator. It doesn’t matter, what’s important is that <code>expected_df</code> is correct and saved. This is what the full test looks like:</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>```{r, eval = F}</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>test_that("get_laspeyeres() produces correct results", {</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -527,9 +526,9 @@ Execution halted</code></pre>
 <span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a>})</span>
 <span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a>```</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Notice that I’ve used <code>expect_equivalent()</code> and not <code>expect_equal()</code>. This is because <code>expected_df</code> is of class <code>data.frame</code>, while <code>get_laspeyeres()</code> outputs a <code>tibble</code>. So if you use <code>expect_equal()</code> the test would not pass. Sometimes, this level of strictness is required, but not always, as is the case here.</p>
+<p>Notice that I’ve used <code>expect_equivalent()</code> and not <code>expect_equal()</code> to check if <code>expected_df</code> is equal to the output of <code>get_laspeyeres(input_df)</code>. This is because <code>expected_df</code> is of class <code>data.frame</code>, while <code>get_laspeyeres()</code> outputs a <code>tibble</code>. So if you use <code>expect_equal()</code> the test would not pass, because the classes of both objects are not strictly equal. Sometimes, this level of strictness is required, but not always, as is the case here.</p>
 <p>Once again, inflate <code>save_data.Rmd</code>. This will run the tests, and if everything went well, you should end up, again, with a functioning package. I highly advise that you consult <code>{testthat}</code>’s documentation to learn about all the other functions that you can use for writing unit tests.</p>
-<p>Let’s now go to assertive programming.</p>
+<p>If you’ve managed to write the unit tests and inflate the package successfully, then let’s move on to assertive programming.</p>
 </section>
 <section id="assertive-programming" class="level2" data-number="12.2">
 <h2 data-number="12.2" class="anchored" data-anchor-id="assertive-programming"><span class="header-section-number">12.2</span> Assertive programming</h2>
@@ -581,7 +580,7 @@ Execution halted</code></pre>
 <span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>  }</span>
 <span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>If we go back to <code>get_laspeyeres()</code>, we should be using assertive programming to make sure that the provided datasets are one of <code>commune_level_data</code> and <code>country_level_data</code>. This is how we could rewrite the function:</p>
+<p>If we go back to <code>get_laspeyeres()</code>, we should be using assertive programming to make sure that the provided datasets are one of <code>commune_level_data</code> or <code>country_level_data</code>. This is how we could rewrite the function:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>get_laspeyeres <span class="ot">&lt;-</span> <span class="cf">function</span>(dataset){</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -619,7 +618,7 @@ Execution halted</code></pre>
 <span id="cb17-34"><a href="#cb17-34" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb17-35"><a href="#cb17-35" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>We can now also edit the unit test from before, the one where we provide the wrong data. This unit test would fail, as expected, but for the wrong reason. We now want to make sure that it fails for the right reason, so for this we change the unit tests like this:</p>
+<p>We can now also edit the unit test from before, the one where we provide the wrong data. With this new specification of the function, this unit test would still pass (the function returns an error), as expected, but for the wrong reason. We now want to make sure that it fails for the right reason, in other words, that it fails not because no <code>year</code> column is found, but because the provided data set is neither <code>commune_level_data</code> nor <code>country_level_data</code>, so for this we change the unit tests like this:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">test_that</span>(<span class="st">"Wrong data"</span>, {</span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -640,15 +639,16 @@ Actual message: "dataset must be one of `commune_level_data`
 <p>So now, not only does our function fail for the right reasons, our test is able to tell us that as well!</p>
 <p>Before inflating to run these tests, you should also change the test titled “get_laspeyeres() provides correct answers”. This is because the name of the input dataset used for the test is <code>input_df</code>. So if you leave it like this, the assertion that we’ve included in the function will make this test fail. So change this test by simply saving <code>input_df</code> <code>commune_level_data</code>:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>commune_level_data <span class="ot">&lt;-</span> input_df</span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="fu">expect_equivalent</span>(</span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>  expected_df, <span class="fu">get_laspeyeres</span>(commune_level_data)</span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># rename data to make assertion pass</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>commune_level_data <span class="ot">&lt;-</span> input_df</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="fu">expect_equivalent</span>(</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>  expected_df, <span class="fu">get_laspeyeres</span>(commune_level_data)</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>if you forget to do this, don’t worry, the unit test would fail to remind you!</p>
-<p>Go back to <code>0-dev_history.Rmd</code> and inflate the file again to update it. The unit test we wrote before should keep passing, but now, it passes for the right reason: we provided a dataset that is neither <code>commune_level_data</code> nor <code>country_level_data</code> and not because there is no column <code>year</code> in the dataset!</p>
-<p>You can also make sure that the provided input is of the right class:</p>
+<p>if you forget to do this, don’t worry, the unit test would not fail to remind you!</p>
+<p>Go back to <code>0-dev_history.Rmd</code> and inflate the file again to update it. Everything should work without any issues. If not, take the time to make the unit tests pass and inflate the package successfully!</p>
+<p>Something else that is well-suited for assertive programming is checking whether the provided inputs are of the right class:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>any_function <span class="ot">&lt;-</span> <span class="cf">function</span>(dataset){</span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -671,7 +671,7 @@ Actual message: "dataset must be one of `commune_level_data`
 </div>
 <pre><code>Error in any_function("this is not a data frame") : 
   `dataset` must be a data frame</code></pre>
-<p><code>inherits()</code> checks if an option inherits from a certain class. So for example, a <code>tibble</code> or a <code>data.table</code> that are classes that are defined by inheriting attributes from the <code>data.frame</code> class, will also successfully pass the test above. You can be as strict as you need: for example, do you need any type of number? You could do the following:</p>
+<p><code>inherits()</code> checks if an object inherits from a certain class. So for example, a <code>tibble</code> or a <code>data.table</code> that are classes that are defined by inheriting attributes from the <code>data.frame</code> class, will also successfully pass the test above. You can be as strict as you need: for example, do you need any type of number? You could do the following:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">inherits</span>(<span class="dv">2</span>, <span class="st">"numeric"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -692,20 +692,21 @@ Actual message: "dataset must be one of `commune_level_data`
 <pre><code>[1] TRUE</code></pre>
 </div>
 </div>
-<p>Do you want, for some reason, that your functions only accept <code>tibble</code>s and not <code>data.frame</code>s? Be as strict as you need:</p>
+<p>Do you want, for some reason, that your functions only accept <code>tibble</code>s and not <code>data.frame</code>s? Be as strict as you need. This will succeed:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">inherits</span>(tibble<span class="sc">::</span><span class="fu">as_tibble</span>(mtcars), <span class="st">"tbl_df"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] TRUE</code></pre>
 </div>
 </div>
+<p>This will fail:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">inherits</span>(mtcars, <span class="st">"tbl_df"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] FALSE</code></pre>
 </div>
 </div>
-<p>You could also use more complex assertions. For example, suppose that you need to clean data using many functions, with several filters. Something could go wrong in any of these functions for a variety of reasons. So each of these functions could test if all the individuals are still in the data, and that you didn’t remove any of them by mistake. A test like:</p>
+<p>You could also use more complex assertions. For example, suppose that you need to clean data using many functions, with several filters. Something could go wrong in any of these functions for a variety of reasons. So each of these functions could test if all the individuals are still in the data, and that you didn’t remove any of them by mistake. A test like this could make sure that each levels of the variable <code>am</code> are still in the data:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>summary_stats <span class="ot">&lt;-</span> <span class="cf">function</span>(dataframe, var){</span>
 <span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stopifnot</span>(<span class="st">"Some individuals are missing!"</span> <span class="ot">=</span></span>
@@ -717,21 +718,21 @@ Actual message: "dataset must be one of `commune_level_data`
 <p>Now, when running <code>summary_stats(mtcars, "am")</code>, if somehow the level “1” or “0” is missing from <code>mtcars</code>, the function would throw an error.</p>
 <p>There are several packages for assertive programming that you might want to check out:</p>
 <ul>
-<li><a href="https://github.com/hadley/assertthat">{assertthat}</a></li>
-<li><a href="https://poissonconsulting.github.io/chk/">{chk}</a></li>
-<li><a href="https://mllg.github.io/checkmate/">{checkmate}</a></li>
+<li><a href="https://github.com/hadley/assertthat">{assertthat}</a><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></li>
+<li><a href="https://poissonconsulting.github.io/chk/">{chk}</a><a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></li>
+<li><a href="https://mllg.github.io/checkmate/">{checkmate}</a><a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></li>
 </ul>
 <p>I won’t discuss any of them; what’s important is for you to know that assertive programming is something that is useful, and that you should add to your toolbox.</p>
 </section>
 <section id="test-driven-development" class="level2" data-number="12.3">
 <h2 data-number="12.3" class="anchored" data-anchor-id="test-driven-development"><span class="header-section-number">12.3</span> Test-driven development</h2>
-<p>Test-driven development, or TDD, is the programming paradigm in which instead of writing a function and then several tests to ensure that it’s working as expected, you start with several tests. Of course, since there is no function to test, these tests will all fail at first. But the goal is to then write a function such that the tests pass.</p>
+<p>Test-driven development, or TDD, is the programming paradigm in which instead of writing a function and then several tests to ensure that the code is working as expected, you start by writing tests, and then the function. Of course, since there is no function to test, these tests will all obviously fail at first. But the goal is to then write a function such that the tests pass.</p>
 <p>TDD is interesting in at least two scenarios:</p>
 <ul>
 <li>You want to write a function, but don’t know exactly where to start. Maybe it’s a very complex function. So writing tests can help you think about it, and already fix certain properties that this function should have.</li>
-<li>You use the tests as a way to write requirements for a codebase. This can be useful when working in a team, and you don’t want to “waste” time writing requirements, so instead you already write the tests. Careful though, because a “smart” programmer could write code that passes the tests but doesn’t actually do anything otherwise useful.</li>
+<li>You use the tests as a way to write requirements for a code-base. This can be useful when working in a team, and you don’t want to “waste” time writing requirements, so instead you write tests that describe how the function should work, what type of inputs get accepted, how its output looks like… Careful though, because a “smart” programmer could write code that passes the tests but doesn’t actually do anything otherwise useful.</li>
 </ul>
-<p>I tend to use TDD when I need to write a function but don’t quite know where to start. I start by writing the most basic tests and make them ever more complicated. At some point, I start having an idea for the function’s implementation and have a go at it. Sometimes this makes me even realise that I was testing for something irrelevant!</p>
+<p>I tend to use TDD when I need to write a function but don’t quite know where to start. I start by writing the most basic tests and make them ever more complicated. At some point, I start having an idea for the function’s implementation and have a go at it.</p>
 <p>Some programmers only do TDD; so they start by writing many, many tests, and then only start writing their functions. Personally, I think that this is also not ideal, because you could waste a lot of time writing meaningless tests.</p>
 </section>
 <section id="code-coverage" class="level2" data-number="12.4">
@@ -749,24 +750,28 @@ The output of report() inside a web browser.
 </figcaption>
 </figure>
 <p>You could strive to get 100% coverage by painting all the lines green (by writing unit tests that test these lines). But in practice, it is not always so easy to get 100% coverage, so don’t fret if you don’t achieve perfection.</p>
-<p>If you’re working on a server (and thus do not have access to a graphical user interface) you can instead opt for the <code>covr::package_coverage()</code> function which provides you with the following results (inside your console):</p>
+<p>If you’re working on a server (and thus do not have access to a graphical user interface) you can instead use the <code>covr::package_coverage()</code> function which provides you with the following results (printed in the console):</p>
 <pre><code>housing Coverage: 73.33%
 R/get_laspeyeres.R: 57.14%
 R/get_raw_data.R: 80.65%</code></pre>
-<p>The percentage represents the share of lines of code that are tested by our unit tests. We see that the share of lines being tested in <code>get_laspeyeres().R</code> is 57%: this is because the script <code>get_laspeyeres()</code> contains two functions, <code>get_laspeyeres()</code> and <code>make_plot()</code>. We do not test <code>make_plot()</code> at all, hence why the percentage is so low. We could move <code>make_plot()</code> to another script by simply putting the function under a level two header in the original <code>.Rmd</code> file and then inflating again. But in any case, this would not improve the overall coverage of the package; we would ideally need to write a test for <code>make_plot()</code>. This is left as an exercise to the reader.</p>
+<p>The percentage represents the share of lines of code that are tested by our unit tests. We see that the share of lines being tested in <code>get_laspeyeres.R</code> is 57%: this is because the script <code>get_laspeyeres.R</code> contains two functions, <code>get_laspeyeres()</code> and <code>make_plot()</code>. We do not test <code>make_plot()</code> at all, hence why the percentage is so low. We could move <code>make_plot()</code> to another script by simply putting the function under a level two header in the original <code>.Rmd</code> file and then inflating again. But in any case, this would not improve the overall coverage of the package; we would ideally need to write a test for <code>make_plot()</code>. This is left as an exercise to the reader.</p>
 </section>
 <section id="conclusion" class="level2" data-number="12.5">
 <h2 data-number="12.5" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">12.5</span> Conclusion</h2>
 <p>Testing is crucial and useful. Not just because it gives you peace of mind but also because writing tests forces you to think about your code, by putting yourself in the shoes of your users (which include future you as well). In most cases, it is even something that you’ve been doing but perhaps not as systematically as you should.</p>
 <p>There really is no other way to say this: you need to consider writing tests as an integral part of the project, and need to take the required time it takes to write them into account when planning projects. But keep in mind that writing them makes you gain a lot of time in the long run, so actually, you might even be faster by writing tests! Tests also allow you to immediately see where something went wrong, when something goes wrong. So tests save you time here as well. Without tests, when something goes wrong, you have a hard time finding where the bug comes from, and end up wasting precious time. And worse, sometimes things go wrong and break, but silently. You still get an output that may look ok at first glance, and only realise something is wrong way too late. Testing helps avoiding such situations.</p>
-<p>So remember: it might <em>feel</em> like packaging your code and writing tests for it takes time, but:</p>
-<ul>
-<li>you’re actually already doing it, albeit casually;</li>
-<li>it saves you time in the long run.</li>
-</ul>
-<p>The tools I’ve showed you in this chapter and in the previous chapter are probably the fastest, easiest way to go from your analysis to a documented and tested package in a matter of hours. The benefits these provide however are measured in days of work.</p>
+<p>So remember: it might <em>feel</em> like packaging your code and writing tests for it takes time, butyou’re actually already doing it, but non-systematically and manually and it ends up saving you time in the long run instead. Testing also helps with developing complex functions.</p>
+<p>The tools I’ve showed you in this and the previous chapter are probably the fastest, easiest options to go from your analysis to a documented and tested package in a matter of hours. The benefits these provide however are measured in days of work.</p>
 
 
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1"><p>https://github.com/hadley/assertthat<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>https://poissonconsulting.github.io/chk/<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>https://mllg.github.io/checkmate/<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
 </section>
 
 </main> <!-- /main -->
