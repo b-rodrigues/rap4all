@@ -4,14 +4,13 @@ As I wrote in the conclusion of the previous chapter, the book could have
 stopped there. So consider this chapter as a bonus. What I’m going to show here
 is not the most important aspect of reproducibility, and you could even make the
 case that is not needed at all. However, I still think that it is worth showing
-you how to use Github Actions, even if only superficially, and then you decide
-whether this is a tool that you should add to your toolbox.
+you how to use CI/CD, even if only superficially, and then you decide whether
+this is a tool that you should add to your toolbox.
 
 The CI/CD (*C*ontinuous *I*ntegration and *C*ontinuous *D*eployment or
 *D*elivery) platform I’ll be discussing here is Github Actions, which should not
 surprise you since we’ve been using Github for version control. But maybe you’re
-wondering what a "CI/CD platform" even is, so I’ll start by explaining what this
-is in very simple terms.
+wondering what a "CI/CD platform" even is, so let me start there.
 
 Let’s go back to the first idea of this book: Don’t Repeat Yourself. We have
 written functions and used tools such as `{renv}` to avoid having to repeat
@@ -20,8 +19,9 @@ running containers, running `docker build` and `docker run` over and over again.
 It would be great if instead we didn’t need to do it. This is what a CI/CD
 platform essentially allows you to do. The idea is that building, running and,
 if applicable, deploying are also tasks that can be automated, so why not
-automate them and only take care of writing code? And the size of your team
-grows, the need to automate these tasks grows as well.
+automate them and only take care of writing code? And as the size of your team
+grows, the need to automate these tasks grows as well. Using CI/CD is an
+essential part of the DevOps methodology to software engineering.
 
 This chapter can be seen as a small introduction to DevOps for data science. 
 
@@ -40,14 +40,15 @@ the definition of the infrastructure the code will run on. This way, our Github
 repository will be a single source of truth.
 
 Concretely this means that each time we will push code (or merge a pull request,
-or perform any other Git-related event) to our Github repository, any arbitrary
-action gets executed, like building a Docker image. This image can then be
-pushed to Docker Hub, or a container can be executed. This container in turn can
-run a pipeline and the output can then be downloaded from Github. All of this
-happens in the cloud, all you need to do is push changes in the code. As stated
-in the chapter on Git, Github offers 2000 minutes of computation time a month
-for CI/CD, which should be really sufficient for a lot of purposes (but of
-course, if your RAP takes hours to complete, you might want to run it locally).
+or perform any other Git-related event) to our Github repository, we can define
+a certain set of arbitrary actions to get executed, like building a Docker
+image. This image can then be pushed to Docker Hub, or a container can be
+executed. This container in turn can run a pipeline and the output can then be
+downloaded from Github. All of this happens in the cloud, all you need to do is
+push code changes to Github. As stated in the chapter on Git, Github offers 2000
+minutes of computation time a month for CI/CD, which should be really sufficient
+for a lot of purposes (but of course, if your RAP takes hours to complete, you
+might want to run it locally instead).
 
 Github Actions is very flexible, and you could use it to perform many tasks, not
 just building Docker images or running containers. For example this book gets
@@ -83,7 +84,7 @@ deployment simply as "shipping".
 
 ## CI/CD quickstart for R programmers (and others)
 
-Before defining an "Hello World" pipeline that gets exectude in the cloud, I
+Before defining an "Hello World" pipeline that gets executed in the cloud, I
 need to define some terms. A workflow that runs on Github Actions is defined as
 a Yaml file, and this file contains a succession of "actions", and each action
 performs a specific task. Here is the simplest Github Actions workflow file 
@@ -106,11 +107,11 @@ action to run each time something gets pushed to the repo.
 
 Each time code gets pushed to the repository containing this workflow file, a
 *runner* runs the code `echo "Hello World!"` on the latest version of Ubuntu. A
-workflow file is thus defined as a series of steps (that can either run code, or
-an action) that get executed on a so-called runner (in essence, a container).
-This workflow gets executed when a specific event occurs, in the example above
-that event is pushing to the repo. To see the output of the workflow, click 
-on "Actions" on your Github repository:
+workflow file is thus defined as a series of steps, that can either run code, or
+an action (more on actions later) that get executed on a so-called runner (in
+essence, a container). This workflow gets executed when a specific event occurs,
+in the example above that event is pushing to the repo. To see the output of the
+workflow, click on "Actions" on your Github repository:
 
 ::: {.content-hidden when-format="pdf"}
 <figure>
@@ -219,7 +220,6 @@ knitr::include_graphics("images/ga_hello-from-r.png")
 ```
 :::
 
-
 We could have installed any other version of R by the way. We can keep adding
 steps, for example let’s add one to install `{renv}` and install packages from
 an `renv.lock` file (the file needs to be in our repository, and becomes
@@ -247,13 +247,13 @@ jobs:
 
 I think you’re starting to see where this is going. This workflow runs on Ubuntu
 22.04, installs R version 4.2.2 and installs all the packages defined in the
-`renv.lock` file living in our repository (and if you don't have an `renv.lock`
+`renv.lock` file stored in our repository (and if you don't have an `renv.lock`
 file, only `{renv}` will get installed). So to have our RAP running in the
 cloud, we would simply need to add the other required files and finish writing
 the workflow. One note of warning though: if you're running pipelines defined
 like the above, each time you push, every step will run from scratch (apart from
 package installation using `r-lib/actions/setup-renv@v2` because packages will
-be cached for future runs of the workflow).
+be cached for future runs of the workflow), and this may take some time to run.
 
 ## Running a RAP using Github Actions
 
@@ -277,9 +277,9 @@ useful actions, like caching packages, so they don’t need to get re-downloaded
 each time you push a change to the repository!
 
 You can see the repository with the workflow file
-[here](https://github.com/rap4all/housing/tree/gitops-pipeline). The workflow
-file is inside the `.github/workflows/` folder
-[here](https://github.com/rap4all/housing/blob/gitops-pipeline/.github/workflows/targets.yaml).
+[here](https://github.com/rap4all/housing/tree/gitops-pipeline)^[https://github.com/rap4all/housing/tree/gitops-pipeline].
+The workflow file is inside the `.github/workflows/` folder
+[here](https://github.com/rap4all/housing/blob/gitops-pipeline/.github/workflows/targets.yaml)^[https://github.com/rap4all/housing/blob/gitops-pipeline/.github/workflows/targets.yaml].
 As I explained before, pay attention to line 29 (where I stated that the action
 should trigger when a change gets pushed to the branch `gitops-pipeline`), to
 line 35 where I changed the runner from `ubuntu-latest` to `ubuntu-22.04`, line
@@ -311,13 +311,14 @@ relatively quickly, and you don’t need to keep it running forever on the same
 operating system? Then Github Actions is for you. Or perhaps you are writing a
 book using Rmarkdown, or Quarto and don’t want to bother building it and
 deploying it manually? Then Github Actions is for you as well (and take a look
-at this book’s workflow file [here](https://github.com/b-rodrigues/rap4all/blob/master/.github/workflows/quarto-publish.yml) for an example of exactly this). But if
-you are working on a pipeline that may take several hours to run, and you want
-it to stay reproducible for a very long time, then using Docker might be a
-better option. Thankfully, you can also use Github Actions to build Docker
-images and upload them to Docker Hub. You can even then run a Docker container
-that runs your RAP (but here again, if your pipeline takes several hours to run,
-you may not want to do that).
+at this book’s workflow file
+[here](https://github.com/b-rodrigues/rap4all/blob/master/.github/workflows/quarto-publish.yml)^[https://github.com/b-rodrigues/rap4all/blob/master/.github/workflows/quarto-publish.yml]
+for an example of exactly this). But if you are working on a pipeline that may
+take several hours to run, and you want it to stay reproducible for a very long
+time, then using Docker might be a better option. Thankfully, you can also use
+Github Actions to build Docker images and upload them to Docker Hub. You can
+even then run a Docker container that runs your RAP (but here again, if your
+pipeline takes several hours to run, you may not want to do that).
 
 ## Craft a dockerized development environment with Github Actions
 
@@ -383,7 +384,7 @@ for the actual file.
 I believe that this file is the simplest one you could have for this. Let's study 
 it in detail.
 
-The start of the file is pretty start: we give the workflow a new, and state
+The start of the file is pretty standard: we give the workflow a name, and state
 that it should run on `ubuntu-latest` whenever anything gets pushed to either
 `main` or `master`. We define an environment variable called `r_4.2.2`. This is
 the name of the image that we are going to build. We will build an image that
@@ -403,7 +404,7 @@ Hub. Essentially, we need to be able to tell our Github Actions runner how to
 login to Docker Hub, and of course we want to do so in a secure manner (and it
 must run non-interactively). To login to Docker Hub from Github Actions, you
 need first to create an access token from your Docker Hub account. Login to your
-Docker Hub account, got to your account settings and then to the "Security" tab:
+Docker Hub account, go to your account settings and then to the "Security" tab:
 
 ::: {.content-hidden when-format="pdf"}
 <figure>
@@ -471,13 +472,13 @@ where `latest` would be the latest version of the image that is available.
 Getting `bob/r_4.2.2` is quite easy: simply use your Docker Hub username that
 you defined as a secret, then literally type `/` and then use the image name
 that you've defined in the beginning of the workflow file. Careful though:
-`bob/r_4.2.2` needs to exist on Docker Hub as well. `bob` is easy, that your
+`bob/r_4.2.2` needs to exist on Docker Hub as well. `bob` is easy, that’s your
 Docker Hub username as already stated, but `r_4.2.2` is a repository that you
-need to create on Docker Hub. So both your image name and the repository on
+need to create on Docker Hub. So both your image name and the repository name on
 Docker Hub will be `r_4.2.2`. If you don't create a repository on Docker Hub
 that is exactly named like that, your image will not get pushed, because Github
 Actions will not know where to push the image. So if this is not already the
-case, go back to Docker Hub and create a repository names `r_4.2.2`. For the
+case, go back to Docker Hub and create a repository named `r_4.2.2`. For the
 version, you can do whatever you want, but I suggest to use the context
 `github.ref_name` and `github.sha`. `github.ref_name` gives the name of the
 branch that starts the workflow, and `github.sha` returns the hash number of the
@@ -485,7 +486,6 @@ commit that starts the workflow. This way, your image will be named something
 like `bob/r_4.2.2:master-65ai9besta65948`. This allows you to see which commit
 generated which image, which is really useful. We then also set `push` to
 `true`, so that the image gets pushed.
-
 
 With this workflow file in hand, I can now build a Docker image and push it to Docker
 Hub simply by pushing code to my repository. Here are two commits that generated two
@@ -634,7 +634,7 @@ use locally. But you'll notice that I use `/github/workspace/shared_folder` as
 the path to the shared folder. You likely guessed it, `/github/workspace/` is
 the "local" path inside the Github Actions runner. This is equivalent to the
 `/home/` directory on a Linux machine. The command is also on multiple lines
-(remember, to write a command over multiple lines on github actions, you need to
+(to write a command over multiple lines on github actions, you need to
 start by `>` and then use as many lines as you need).
 
 The final action, `actions/upload-artifact@v3` is used to upload the contents of
@@ -663,7 +663,7 @@ knitr::include_graphics("images/ga_artifacts.png")
 
 And that's it! You could tweak the workflow file to instead push the files to a
 new branch in the repository, like the workflow file that
-`tarets::tar_github_actions()` generates. But I think that this solution is
+`targets::tar_github_actions()` generates. But I think that this solution is
 easier to use, and also, if you need to download the artifact from a previous
 run, it's all right there. Simply select a previous run and download the
 artifact. If instead you push the outputs to a new branch, you'd need to revert

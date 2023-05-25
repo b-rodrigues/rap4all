@@ -74,7 +74,7 @@ get started.
 Let's start with a "hello-world" type pipeline. Create a new folder called
 something like `targets_intro/`, and start a fresh R session in it. For now,
 let’s ignore `{renv}`. We will see how `{renv}` works together with `{targets}`
-to provide a reproducible pipeline later. In that fresh session inside the
+to provide an (almost reproducible) pipeline later. In that fresh session inside the
 `targets_intro/` run the following line:
 
 ```{r, eval = FALSE}
@@ -165,8 +165,7 @@ something like `tar_target(z, f(y))` (just like in the template).
 
 ## A pipeline is a composition of pure functions
 
-This pipeline can immediately be ran using the `targets::tar_make()` command in
-a console. Doing so shows you the following output:
+You can run this pipeline by typing `targets::tar_make()` in a console:
 
 ```{r, eval = F}
 targets::tar_make()
@@ -210,21 +209,24 @@ folder, you should see two objects, `data` and `data_summary`. These are the
 outputs of our pipeline.
 
 So each target that is defined inside the pipeline gets saved there in the
-`.rds` format. This is an R-specific format that can be used to save *any* type
+`.rds` format. This is an R-specific format that you can use to save *any* type
 of object. It doesn’t matter what it is: a simple data frame, a fitted model, a
-ggplot, whatever, any object can be saved into this format using the `saveRDS()`
-function, and can be read back into another R session using `readRDS()`.
-`{targets}` makes use of these two functions to save every target. Keep this in
-mind if you use Git to version the code of your pipeline (which you are doing of
-course), and add the `targets/` folder to the `.gitignore` (unless you really
-want to also version it, but it shouldn’t be necessary).
+ggplot, whatever, you can write any R object to disk in this format using the
+`saveRDS()` function, and then read it back into another R session using
+`readRDS()`. `{targets}` makes use of these two functions to save every target
+computed by your pipeline, and simply retrieves them from the `_targets/` folder
+instead of recomputing them. Keep this in mind if you use Git to version the
+code of your pipeline (which you are doing of course), and add the `_targets/`
+folder to the `.gitignore` (unless you really want to also version it, but it
+shouldn’t be necessary).
 
-So because the pipeline is pure, and none of its outputs gets saved into the
-global environment, calling `data_summary` results in that error. So to retrieve
-the outputs you should use `targets::tar_read()` or `targets::tar_load()`. The
-difference is that `tar_read()` simply reads the output and shows it in the
-console but `tar_load()` reads and saves the object into the global environment.
-So to retrieve our `data_summary` object let’s use `tar_load(data_summary)`:
+So because the pipeline is pure, and none of its outputs get saved into the
+global environment, calling `data_summary` results in the error above. So to
+retrieve the outputs you should use `targets::tar_read()` or
+`targets::tar_load()`. The difference is that `tar_read()` simply reads the
+output and shows it in the console but `tar_load()` reads and saves the object
+into the global environment. So to retrieve our `data_summary` object let’s use
+`tar_load(data_summary)`:
 
 ```{r, eval = F}
 tar_load(data_summary)
@@ -237,8 +239,8 @@ data_summary
 ```
 
 ```{r, eval = F}
-   x    y 
-50.5 50.5 
+   x    y
+50.5 50.5
 ```
 
 It is possible to load all the outputs using `targets::tar_load_everything()` so
@@ -247,8 +249,8 @@ that you don’t need to load each output one by one.
 Before continuing with more `{targets}` features, I want to really stress the
 fact that the pipeline is the composition of pure functions. So functions that
 only have a side-effect will be difficult to handle. Examples of such functions
-are functions that read in data, or that print something to the screen. For
-example, plotting in base R consists in a series of calls to functions with
+are functions that read data, or that print something to the screen. For
+example, plotting in base R consists of a series of calls to functions with
 side-effects. If you open an R console and type `plot(mtcars)`, you will see a
 plot. But the function `plot()` does not create any output. It just prints a
 picture on your screen, which is a side-effect. To convince yourself that
@@ -259,7 +261,7 @@ output of `plot()` in a variable:
 a <- plot(mtcars)
 ```
 
-doing this will show the plot, but then if you call `a`, the plot will not
+doing this will show the plot, but if you then call `a`, the plot will not
 appear, and instead you will get NULL:
 
 ```{r, eval = F}
@@ -274,8 +276,8 @@ This is also why saving plots in R is awkward, it’s because there’s no objec
 actually save!
 
 So because `plot()` is not a pure function, if you try to use it in a
-`{targets}` pipeline, you will get `NULL` as well when loading the target. To
-see this, change the list of targets like this:
+`{targets}` pipeline, you will get `NULL` as well when loading the target that
+should be holding the plot. To see this, change the list of targets like this:
 
 ```{r, eval = F}
 
@@ -294,15 +296,16 @@ list(
 )
 ```
 
-I’ve simply added a new target using `tar_target()`. Run the pipeline again
-using `tar_make()` and then type `tar_load(data_plot)` to load the `data_plot`
-target. But typing `data_plot` only shows `NULL` and not the plot!
+I’ve simply added a new target using `tar_target()` at the end, to generate a
+plot. Run the pipeline again using `tar_make()` and then type
+`tar_load(data_plot)` to load the `data_plot` target. But typing `data_plot`
+only shows `NULL` and not the plot!
 
 There are several workarounds for this. The first is to use `ggplot()` instead.
 This is because the output of `ggplot()` is an object of type `ggplot`. You can
-do something like `a <- ggplot()` and then type `a` to see an empty canvas.
-Doing `str(a)` also shows an output (the structure of the object a of class
-`ggplot`).
+do something like `a <- ggplot() + etc...` and then type `a` to see the plot.
+Doing `str(a)` also shows the underlying list holding the structure of the plot,
+as a list.
 
 The second workaround is to save the plot to disk. For this, you need to write a
 new function, for example:
@@ -358,22 +361,22 @@ After running this pipeline you should see a file called `my_plot.png` in the
 folder of your pipeline. If you type `tar_load(data_plot)`, and then `data_plot`
 you will see that this target returns the `filename` argument of `save_plot()`.
 This is because a target needs to return something, and in the case of functions
-that save a file to disk returning the path is recommended. This is because if I
-then need to use this file in another target, I could do `tar_target(x,
-f(data_plot))`. Because the `data_plot` target returns a path, I can write `f()`
-in such a way that it knows how to handle this path. If instead I write
-`tar_target(x, f("path/to/my_plot.png"))`, then `{targets}` would have no way of
-knowing that the target `x` depends on the target `data_plot`. The dependency
-between these two targets would break. Hence why the first option is preferable.
+that save a file to disk returning the path where the file gets saved is
+recommended. This is because if I then need to use this file in another target,
+I could do `tar_target(x, f(data_plot))`. Because the `data_plot` target returns
+a path, I can write `f()` in such a way that it knows how to handle this path.
+If instead I write `tar_target(x, f("path/to/my_plot.png"))`, then `{targets}`
+would have no way of knowing that the target `x` depends on the target
+`data_plot`. The dependency between these two targets would break. Hence why the
+first option is preferable.
 
 Finally, you will have noticed that the last target also has the option `format =
 "file"`. This will be topic of the next section.
 
-It is worth noting that the `ggplot` system has a "native" plot export function,
-`ggplot2::ggsave()`, which takes the `ggplot` objects as inputs. If the .png image
-is actually needed for your project, you would need to define _two_ targets,
-one to generate the `ggplot` object, and then another to save that object to disk
-as an image.
+It is worth noting that the `{ggplot2}` package includes a function to save
+`ggplot` objects to disk called `ggplot2::ggsave()`. So you could define two
+targets, one to compute the `ggplot` object itself, and another to generate a
+`.png` image of that `ggplot` object.
 
 ## Handling files
 
@@ -533,7 +536,7 @@ knitr::include_graphics("images/targets_visnetwork.png")
 :::
 
 In the image above, each target has been computed, so they are all up-to-date.
-If you now change the input data as before, here is what you will see instead:
+If you now change the input data, here is what you will see instead:
 
 ::: {.content-hidden when-format="pdf"}
 <figure>
@@ -647,7 +650,7 @@ Finally, run the pipeline one last time to compute the final output.
 
 ## Running the pipeline in parallel
 
-`{targets}` make it easy to run independent parts of our pipeline in parallel.
+`{targets}` makes it easy to run independent parts of our pipeline in parallel.
 In the example from before, it was quite obvious to know which parts were
 independent, but when the pipeline grows in complexity, it can be very difficult
 to see which parts are independent.
@@ -727,10 +730,10 @@ knitr::include_graphics("images/targets_visnetwork_slow_summary.png")
 (You will also notice that I’ve removed the unneeded functions, `path_data()`
 and `summ()`).
 
-Running this pipeline sequentially will take about a minute. To re-run the
-pipeline completely from scratch, call `targets::tar_destroy()`. This will make
-all the targets outdated. Then, run the pipeline from scratch with
-`targets::tar_make()`:
+Running this pipeline sequentially will take about a minute, because each call
+to `slow_summary()` takes 30 seconds. To re-run the pipeline completely from
+scratch, call `targets::tar_destroy()`. This will make all the targets outdated.
+Then, run the pipeline from scratch with `targets::tar_make()`:
 
 ```{r, eval = F}
 targets::tar_make()
@@ -754,12 +757,12 @@ targets::tar_make()
 • end pipeline [1.019 minutes]
 ```
 
-But because computing `summary_iris` is completely independent of
-`summary_mtcars`, these two computations could be running at the same time on
-two separate CPU cores. To do this, we need to first load two additional
-packages, `{future}` and `{future.callr}` at the top of the script. Then, we
-also need to call `plan(callr)` before defining our pipeline. Here is what the
-complete `_targets.R` looks like:
+Since computing `summary_iris` is completely independent of `summary_mtcars`,
+these two computations could be running at the same time on two separate CPU
+cores. To do this, we need to first load two additional packages, `{future}` and
+`{future.callr}` at the top of the script. Then, we also need to call
+`plan(callr)` before defining our pipeline. Here is what the complete
+`_targets.R` looks like:
 
 ```{r, eval = F}
 library(targets)
@@ -825,9 +828,8 @@ list(
 
 You can now run this pipeline in parallel using `targets::tar_make_future()`
 (and sequentially as well, just as usual with `targets::tar_make()`). To run the
-pipeline from scratch to test this, call `targets::tar_destroy()`. This will
-remove every target and calling `targets::tar_make()` will build the entire
-pipeline from scratch:
+pipeline from scratch to test this, call `targets::tar_destroy()` and then
+`targets::tar_make()` will build the entire pipeline from scratch:
 
 ```
 # Set workers = 2 to use 2 cpu cores
@@ -854,22 +856,29 @@ targets::tar_make_future(workers = 2)
 
 As you can see, this was faster but not quite twice as fast, but almost. The
 reason this isn’t exactly twice as fast is because there is some overhead to run
-code in parallel. New R session have to be spawned by `{targets}` and data needs
-to be transferred, and packages loaded, in these new sessions. This is why it’s
-only worth parallelizing code that takes some time to run. If you decrease the
-number of sleep seconds in `slow_summary(...)` (for example to 10), running the
-code in parallel might be slower than running the code sequentially, because of
-that overhead. But if you have several long-running computations, it’s really
-worth the very small price that you pay for the initial setup.
+code in parallel. New R sessions have to be spawned by `{targets}`, data needs
+to be transferred and packages must be loaded in these new sessions. This is why
+it’s only worth parallelizing code that takes some time to run. If you decrease
+the number of sleep seconds in `slow_summary(...)` (for example to 10), running
+the code in parallel might be slower than running the code sequentially, because
+of that overhead. But if you have several long-running computations, it’s really
+worth the very small price that you pay for the initial setup. Let me re-iterate
+again that in order to run your pipeline in parallel, the extra worker sessions
+that get spawned by `{targets}` need to know which packages they need to load,
+which is way you should load the packages your pipeline needs using:
+
+```{r, eval = FALSE}
+tar_option_set(packages = "dplyr")
+```
 
 ## {targets} and RMarkdown (or Quarto)
 
 It is also possible to compile documents using RMardown (or Quarto) with
 `{targets}`. The way this works is by setting up a pipeline that produces the
-outputs you need in the document. For example, if you’re showing a table in the
-document, create a target in the pipeline that builds the underlying data. Do
-the same for a plot, or a statistical model that you run on some data. Then, in
-the `.Rmd` (or `.Qmd`) source file, use `targets::tar_load()` or
+outputs you need in the document, and then defining the document as a target to
+be computed as well. For example, if you’re showing a table in the document,
+create a target in the pipeline that builds the underlying data. Do the same for
+a plot, or a statistical model. Then, in the `.Rmd` (or `.Qmd`) source file, use
 `targets::tar_read()`to load the different objects you need.
 
 Consider the following `_targets.R` file:
@@ -914,8 +923,9 @@ data as well as plot. But we don’t simply want these objects to be saved as
 `.rds` files by the pipeline, we want to be able to use them to write a document
 (either in the `.Rmd` or `.Qmd` format). For this, we need another package,
 called `{tarchetypes}`. This package comes many functions that allow you to
-define new types of targets. The new target factory (or function) that we need
-is `tarchetypes::tar_render()`. As you can probably guess from the name, this
+define new types of targets (these functions are called *target factories* in
+`{targets}` jargon). The new target factory that we need is
+`tarchetypes::tar_render()`. As you can probably guess from the name, this
 function renders an `.Rmd` file. Write the following lines in an `.Rmd` file and
 save it next to the pipeline:
 
@@ -934,8 +944,8 @@ tar_read(summary_mtcars)
 
 ````
 
-Here is the `_targets.R` file (I loaded `{tarchetypes}` at the top and added 
-a new target at the bottom):
+Here is the `_targets.R` file again, where I now load `{tarchetypes}` at the top
+and add a new target at the bottom:
 
 ```{r, eval = FALSE}
 library(targets)
@@ -976,20 +986,22 @@ list(
 )
 ```
 
-Running this pipeline with `targets::tar_make()` will now create an `.html` file
-that you can open in your web-browser. Even if you want to build another format,
-I advise you to develop using the `.html` format. This is because you can open
-the `.html` file in the web-browser, and keep working on the source. Each time
-you run the pipeline after you made some changes to the file, you simply need to
-refresh the web-browser to see your changes. If instead you compile a Word
-document, you will need to always close the file, and then re-open it to see
-your changes, which is quite annoying. (A good second reason to have output in
-the `.html` format is that HTML is a text-only format, and thus can be tracked
-with version control systems covered in @sec-chapter-github. The MS Word format
-is binary, and tracking it in git is always an undecipherable mess. Keep in mind
-though that HTML files can get large, and you would want to invoke the special
-git extension called [git LFS](https://git-lfs.com/)^[https://git-lfs.com/].) So
-if you open the output file, you should be seeing something quite plain looking:
+Running this pipeline with `targets::tar_make()` will now compile the source
+`.Rmd` file into ar `.html` file that you can open in your web-browser. Even if
+you want to compile the document into another format, I advise you to develop
+using the `.html` format. This is because you can open the `.html` file in the
+web-browser, and keep working on the source. Each time you run the pipeline
+after you made some changes to the file, you simply need to refresh the
+web-browser to see your changes. If instead you compile a Word document, you
+will need to always close the file, and then re-open it to see your changes,
+which is quite annoying. A good second reason to have output in the `.html`
+format is that HTML is a text-only format, and thus can be tracked with version
+control systems covered in @sec-chapter-github. The MS Word format is binary,
+and tracking it in Git is always an undecipherable mess. Keep in mind though
+that HTML files can get large, in which case you may want to not track the
+output `.html`. 
+
+If you open the output file, you should be seeing something quite plain looking:
 
 ::: {.content-hidden when-format="pdf"}
 <figure>
@@ -1009,8 +1021,10 @@ knitr::include_graphics("images/mtcars_rmd_1.png")
 Don’t worry, we will make it look nice, but right at the end. Don’t waste time
 making things look good too early on. Ideally, try to get the pipeline to run on
 a simple example, and then keep adding features. Also, try to get *as much
-feedback* as possible on the *content* as *early* as possible. Let’s now get the
-`ggplot` of the data to show in the document as well.
+feedback* as possible on the *content* as *early* as possible from your
+colleagues. No point in wasting time to make something look good if what you’re
+writing is not at all what was expected. Let’s now get the `ggplot` of the data
+to show in the document as well.
 
 For this, simply add:
 
@@ -1032,7 +1046,8 @@ and run the pipeline again. Because the data changed and every target depends on
 the data, the document gets entirely rebuilt. I hope that you see why this is
 really great: in case you need to be build weekly, daily, heck, even hourly
 reports, by using `{targets}` the updated report can now get built
-automatically. Restore the data by running:
+automatically, and the targets that are not impacted by these recurrent updates
+will not need to be recomputed. Restore the data by running:
 
 ```{r, eval = FALSE}
 write.csv(mtcars,
@@ -1040,16 +1055,17 @@ write.csv(mtcars,
           row.names = F)
 ```
 
-and rebuilding the document by running the pipeline. We can work a little on the
-document itself, by transforming the output into nice looking table using
-`{flextable}`. But there is an issue however: the output of `summary()` on a
-`data.frame` object is not a `data.frame`, but a `table`. But `flextable()`
-expects a `data.frame`. So if you call `flextable()` on the output of
-`summary()`, you’ll get an error message. Instead, we need a replacement for
-`summary()` that outputs a `data.frame`. This replacement is `skimr::skim()`;
-let’s go back to our pipeline and change the call to `summary()` to `skim()`
-(after adding the `{skimr}` to the list of loaded packages, as well as
-`{flextable}`):
+and rebuilding the document by running the pipeline.
+
+Now that the pipeline runs well, we can work a little on the document itself, by
+transforming the output into a nice looking table using `{flextable}`. But there
+is an issue however: the output of `summary()` on a `data.frame` object is not a
+`data.frame`, but a `table` and`flextable::flextable()` expects a `data.frame`.
+So if you call `flextable::flextable()` on the output of `summary()`, you’ll get
+an error message. Instead, we need a replacement for `summary()` that outputs a
+`data.frame`. This replacement is `skimr::skim()`; let’s go back to our pipeline
+and change the call to `summary()` to `skim()` (after adding the `{skimr}` to
+the list of loaded packages, as well as `{flextable}`):
 
 ````{verbatim}
 library(targets)
@@ -1108,9 +1124,9 @@ tar_read(summary_mtcars) %>%
 ```
 ````
 
-If you look at the output now, you’ll see a nice table with a lot of summary
-statistics. Since the output of `skim()` is a `data.frame`, you can only keep
-the stats you want by `select()`ing the columns you need:
+If you run the pipeline and look at the output now, you’ll see a nice table with
+a lot of summary statistics. Since the output of `skim()` is a `data.frame`, you
+can only keep the stats you want by `dplyr::select()`ing the columns you need:
 
 ````{verbatim}
 ## Load the summary
@@ -1125,10 +1141,10 @@ tar_read(summary_mtcars) %>%
 ```
 ````
 
-If you want to hide the R code in the output document, simply use
-`knitr::opts_chunk$set(echo = F)` in a chunk with the `include = FALSE` option.
+If you want to hide all the R code in the output document, simply use
+`knitr::opts_chunk$set(echo = F)` in the source `.Rmd` file, or if you want
+to hide the code from individual chunks use `echo = FALSE` in the chunks header.
 Here is what the final source code of the `.Rmd` could look like:
-
 
 ````{verbatim}
 ---
@@ -1138,12 +1154,13 @@ date: today
 ---
 
 ```{r, include = FALSE}
+# Hides all source code
 knitr::opts_chunk$set(echo = F)
 ```
 
 ## Load the summary statistics
 
-I really like to see the distribution of the 
+I really like to see the distribution of the
 variables as a cell of a table:
 
 ```{r}
@@ -1173,20 +1190,30 @@ stuff to it (like changing the theme of the ggplot). Once you’re happy with th
 contents, you can add `output: word_document` to the header of the document
 (just below `date: today` for example) to generate a Word document.
 
+Let me reiterate the advantages of using `{targets}` to compile RMarkdown
+documents: because the computation of all the objects is handled by `{targets}`,
+compiling the document itself is very quick. All that needs to happen is loading
+pre-computed targets. This also means that you benefit from all the other
+advantages of using `{targets}`: only the outdated targets get recomputed, and
+the computation of the targets can happen in parallel. Without `{targets}`,
+compiling the RMarkdown document would always recompute all the objects, and all
+the objects’ recomputation would happen sequentially.
+
 ## Rewriting our project as a pipeline and {renv} redux {#sec-targets-rewrite}
 
-It is now time to turn our little project into a full-fledged pipeline. For
-this, we’re going back to our project’s folder and specifically to the `fusen`
-branch. This is the branch where we used `{fusen}` to turn our `.Rmd` into a
-package. This package contains the functions that we need to update the data.
-But remember, we wrote the analysis in another `.Rmd` file that we did not
-inflate, `analyse_data.Rmd`. We are now going to write a `{targets}` pipeline
-that will make use of the inflated package and compute all the targets required
-for the analysis. The first step is to create a new branch, but you could also
-create an entirely new repository if you want. It’s up to you. If you create a
-new branch, start from the `rmd` branch, since this will provide a nice starting
-point.
+It is now time to return our little project into a full-fledged reproducible
+pipeline. For this, we’re going back to our project’s folder and specifically to
+the `fusen` branch. This is the branch where we used `{fusen}` to turn our
+`.Rmd` into a package. This package contains the functions that we need to
+update the data. But remember, we wrote the analysis in another `.Rmd` file that
+we did not inflate, `analyse_data.Rmd`. We are now going to write a `{targets}`
+pipeline that will make use of the inflated package and compute all the targets
+required for the analysis. The first step is to create a new branch, but you
+could also create an entirely new repository if you want. It’s up to you. If you
+create a new branch, start from the `rmd` branch, since this will provide a nice
+starting point.
 
+::: {.content-hidden when-format="pdf"}
 ```
 #switch to the rmd branch
 owner@localhost ➤ git checkout rmd
@@ -1194,6 +1221,17 @@ owner@localhost ➤ git checkout rmd
 #create and switch to the new branch called pipeline
 owner@localhost ➤ git checkout -b pipeline 
 ```
+:::
+
+::: {.content-visible when-format="pdf"}
+```
+#switch to the rmd branch
+owner@localhost $ git checkout rmd
+
+#create and switch to the new branch called pipeline
+owner@localhost $ git checkout -b pipeline 
+```
+:::
 
 If you start with a fresh repository, you can grab the `analyse_data.Rmd` from 
 [here](https://raw.githubusercontent.com/b-rodrigues/rap4all/master/rmds/analyse_data.Rmd)^[https://is.gd/L2GICG].
@@ -1202,16 +1240,23 @@ First order of business, let’s delete `save_data.Rmd` (unless you started with
 an empty repo). We don’t need that file anymore, since everything is now
 available in the package we developed:
 
+::: {.content-hidden when-format="pdf"}
 ```
 owner@localhost ➤ rm save_data.Rmd
 ```
+:::
+
+::: {.content-visible when-format="pdf"}
+```
+owner@localhost $ rm save_data.Rmd
+```
+:::
 
 Let’s now start an R session in that folder and install our `{housing}` package.
 Whether you followed along and developed the package, or skipped the previous
 parts and didn’t develop the package by following along, install it from my
-Github repository. This ensures that you have exactly the same version as me. Run
-the following lines (but make sure that you started a fresh R session in the
-right folder):
+Github repository. This ensures that you have exactly the same version as me.
+Run the following line:
 
 ```{r, eval = F}
 remotes::install_github("rap4all/housing@fusen",
@@ -1219,7 +1264,7 @@ remotes::install_github("rap4all/housing@fusen",
 ```
 
 This will install the package from my Github repository, and very specifically
-the version from the `fusen` branch at commit `387a52b` (you may need to install
+the version from the `fusen` branch at commit `1c86095` (you may need to install
 the `{remotes}` package first). Now that the package is installed, we can start 
 building the pipeline. In the same R session, call `targets::tar_script()` which
 will give us a nice template `_targets.R` file:
@@ -1230,16 +1275,16 @@ targets::tar_script()
 
 You should at most have three files: `README.md`, `_targets.R` and
 `analyse_data.Rmd` (unless you started with an empty repo, in which case you
-don’t have the `README.md` file). The `_targets.R` script will contain the required
-code to perform the computations that we need. Inside `analyse_data.Rmd`, we will
-simply load the required, pre-computed targets, and show them in the document.
+don’t have the `README.md` file). We will now change `analyse_data.Rmd`, to load
+pre-computed targets, instead of computing them inside the `analyse_data.Rmd` at
+compilation time.
 
 First, we need to load the data. The two datasets we use are now part of the
 package, so we can simply load them using `data(commune_level_data)` and
-`data(country_level_data)`. But remember, `{targets}` only loves pure functions, and
-`data()` is not pure! Let’s see what happens when you call `data(mtcars)`. 
-If you’re using RStudio, this is really visible: in a fresh session, calling `data(mtcars)`
-shows the following in the `Environment` pane:
+`data(country_level_data)`. But remember, `{targets}` only loves pure functions,
+and `data()` is not pure! Let’s see what happens when you call `data(mtcars)`.
+If you’re using RStudio, this is really visible: in a fresh session, calling
+`data(mtcars)` shows the following in the `Environment` pane:
 
 ::: {.content-hidden when-format="pdf"}
 <figure>
@@ -1256,7 +1301,6 @@ knitr::include_graphics("images/mtcars_promise.png")
 ```
 :::
 
-
 At this stage, `mtcars` is only a `promise`. It’s only if you need to interact
 with `mtcars` that the `promise` becomes a `data.frame`. So `data()` returns a promise,
 does this mean that we can save that into a variable? If you try the following:
@@ -1265,10 +1309,10 @@ does this mean that we can save that into a variable? If you try the following:
 x <- data(mtcars)
 ```
 
-And check out `x`, you will see that `x` contains the string `"mtcars"` and is of class
-character! So `data()` returns a promise by saving it directly to the global environment
-(this is a side-effect) but it returns a string. Because `{targets}` needs pure functions,
-if we write:
+And check out `x`, you will see that `x` contains the string `"mtcars"` and is
+of class character! So `data()` returns a promise by saving it directly to the
+global environment (this is a side-effect) but it returns a string. Because
+`{targets}` needs pure functions, if we write:
 
 ```{r, eval = F}
 tar_target(
@@ -1279,9 +1323,9 @@ tar_target(
 
 the `target_mtcars` target will be equal to the `"mtcars"` character string.
 This might be confusing, but just remember: a target must return something, and
-functions with side-effects don’t always return something, or the thing we want.
-Also remember the example on plotting with `plot()`, which does not return an
-object. It’s actually the same issue here.
+functions with side-effects don’t always return something, or not the thing we
+want. Also remember the example on plotting with `plot()`, which does not return
+an object. It’s actually the same issue here.
 
 So to solve this, we need a pure function that returns the `data.frame`. This
 means that it first needs to load the data, which results in a promise (which
@@ -1310,9 +1354,8 @@ bound value (`"commune_level_data"`) it would result in an error. This is
 because `data()` would be looking for a data set literally called `data_name`
 instead of replacing `data_name` by its bound value. The second argument,
 `package = ` simply states that we’re looking for that dataset in the
-`{housing}` package and uses the value of `package_name`. 
-Now comes the `envir =` argument. 
-This argument tells `data()` where to load the data set. By
+`{housing}` package and uses the bound value of `package_name`. Now comes the
+`envir =` argument. This argument tells `data()` where to load the data set. By
 default, `data()` loads the data in the global environment. But remember, we
 want our function to be pure, meaning, it should only return the data object and
 not load anything into the global environment! So that’s where the temporary
@@ -1340,9 +1383,9 @@ pure functions that actually return something to work well. Unfortunately some
 of R’s default functions are not pure, so we need this kind of workaround.
 However, all of this work is not in vain! By forcing us to use pure functions,
 `{targets}` contributes to the general quality and safety of our pipeline. Once
-our pipeline is done running, nothing the global environment should have stayed 
-untouched. This is because having stuff pollute the global environment can cause
-interactions with subsequent runs of the same (or another) pipeline.
+our pipeline is done running, the global environment will stay clean. Having
+stuff pollute the global environment can cause interactions with subsequent runs
+of the pipeline.
 
 Let’s continue the pipeline: here is what it will ultimately look like:
 
@@ -1395,12 +1438,7 @@ list(
 
 ```
 
-Remember, the idea is that all the computations are taken out of the `.Rmd` file
-and put into a `{targets}` pipeline. This way, if certain targets need to get
-updated, we don’t need to recompute everything when knitting the `.Rmd`
-document. Only the outdated targets get recomputed, and the because the document
-simply retrieves the required targets from the cache, it gets knitted very
-quickly. Here is what `analyse_data.Rmd` now looks like:
+And here is what `analyse_data.Rmd` now looks like:
 
 ````{verbatim}
 ---
@@ -1451,7 +1489,7 @@ As you can see, the data gets loaded by using `targets::tar_load()` which loads
 the two pre-computed data sets. The end portion of the document looks fairly
 similar to what we had before turning our analysis into a package and then a
 pipeline. We use a child document to generate as many sections as required
-automatically (remember, Don’t Repeat Yourself!). Try to change something in the
+automatically (remember, *Don’t Repeat Yourself!*). Try to change something in the
 pipeline, for example remove some communes from the `communes` object, and rerun
 the whole pipeline using `tar_make()`.
 
@@ -1520,29 +1558,28 @@ to re-run the project. This is what the `Readme.md` file could look like:
 ````
 
 If you followed along, don’t forget to change the `url` of the repository to
-your own.
+your own in the first bullet point of th Readme.
 
 ## Some little tips before concluding
 
-In this section I’ll be showing you some other useful functions included in the `{targets}` package that
-I think you should know!
+In this section I’ll be showing you some other useful functions included in the
+`{targets}` package that I think you should know!
 
 ### Load every target at once
 
-It is possible to load every target included in the cache at once using `tar_load_everything()`. But be careful,
-if your pipeline builds many targets, this can take some time!
+It is possible to load every target included in the cache at once using
+`tar_load_everything()`. But be careful, if your pipeline builds many targets,
+this can take some time!
 
 ### Get metadata information on your pipeline
 
-`tar_meta()` will return a data frame with some information about the pipeline. I find it quite useful after
-running the pipeline, and it turns out that some warnings or errors were raised. This is how this data frame
-looks like:
+`tar_meta()` will return a data frame with some information about the pipeline.
+I find it quite useful after running the pipeline, and it turns out that some
+warnings or errors were raised. This is how this data frame looks like:
 
 ```{r, eval = F}
 targets::tar_meta()
 ```
-
-(I have removed the last columns, or it would fit)
 
 ```
 # A tibble: 11 × 18
@@ -1556,7 +1593,7 @@ targets::tar_meta()
  6 country_d… stem  ae21… 9dc7a6… 1d321… [...]
 ```
 
-There are more columns that those I’m showing, of great interest are the columns
+There are more columns than those I’m showing, of great interest are the columns
 `warnings` and `error`. In the example below, I have changed the code to
 `read_data()`, and now it raises a warning:
 
@@ -1582,8 +1619,8 @@ Warning messages:
 > 
 ```
 
-Because warnings were raised, the pipeline raises another
-warning telling you to run `tar_meta(fields = warnings, complete_only = TRUE)` so let’s do it:
+Because warnings were raised, the pipeline raises another warning telling you to
+run `tar_meta(fields = warnings, complete_only = TRUE)` so let’s do it:
 
 ```{r, eval = F}
 tar_meta(fields = warnings, complete_only = TRUE)
@@ -1604,14 +1641,13 @@ So now you can better see what is going on.
 
 ### Make a target (or the whole pipeline) outdated
 
-With `tar_invalidate()` you can make a target outdated, so that when
-you rerun the pipeline, it gets re-computed (alongside every target that
-depends on it). This can sometimes be useful to make sure that everything
-is running correctly. Try running `tar_invalidate("communes")`
-and see what happens. It is also possible to complete nuke the whole pipeline
-and rerun it from scratch using `tar_destroy()`. You’ll get asked to confirm
-if that’s what you want to do, and if yes, reruning the pipeline after that
-will start from scratch.
+With `tar_invalidate()` you can make a target outdated, so that when you rerun
+the pipeline, it gets re-computed (alongside every target that depends on it).
+This can sometimes be useful to make sure that everything is running correctly.
+Try running `tar_invalidate("communes")` and see what happens. It is also
+possible to complete nuke the whole pipeline and rerun it from scratch using
+`tar_destroy()`. You’ll get asked to confirm if that’s what you want to do, and
+if yes, reruning the pipeline after that will start from scratch.
 
 ### Customize the network’s visualisation
 
@@ -1650,7 +1686,7 @@ is not clear which target is raising this error: that’s because it’s not a
 target that is raising this error, but the pipeline itself! Remember that the
 pipeline is nothing but a list of targets. If your last target ends with a `,`
 character, `list()` is expecting another element. But because there’s none, this
-error gets raised. Try the following `list(1,2,)` and you will get the same
+error gets raised. Type `list(1,2,)` in the console and you will get the same
 error message. Simply check your last target, there is a `,` in there that you
 should remove!
 
