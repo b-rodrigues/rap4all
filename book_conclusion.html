@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Building reproducible analytical pipelines with R - 17&nbsp; “So what?”</title>
+<title>Building reproducible analytical pipelines with R - 17&nbsp; The end</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -80,7 +80,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./book_conclusion.html"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">"So what?"</span></a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./book_conclusion.html"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">The end</span></a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -241,7 +241,7 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./book_conclusion.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">“So what?”</span></span></a>
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">The end</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -256,14 +256,20 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#so-what" id="toc-so-what" class="nav-link active" data-scroll-target="#so-what"><span class="header-section-number">18</span> “So what?”</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">“So what?”</span></h1>
+<h1 class="title"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">The end</span></h1>
 </div>
 
 
@@ -279,7 +285,7 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 <p>Congratulations, you’re done with the book and I hope you learned a thing or two.</p>
-<p>Part 1 focused on teaching you best practices, tools and techniques to make your code as clean as possible. In part 2, I taught how to turn your project into a pipeline, and then how to make this pipeline reproducible using <code>{renv}</code> and Docker. To summarise, here are all the things that we need to think about to write a RAP:</p>
+<p>Part 1 focused on teaching you best practices, tools and techniques to make your code as clean as possible. In part 2, I taught you how to turn your project into a pipeline, and then how to make this pipeline reproducible using <code>{renv}</code> and Docker. To summarise, here are all the things that we need to think about to write a RAP:</p>
 <ul>
 <li>Write code that is as clean as possible: keep it DRY, document and test it well;</li>
 <li>Record package dependencies of the project;</li>
@@ -288,6 +294,8 @@ ul.task-list li input[type="checkbox"] {
 <li>Record the computational environment.</li>
 </ul>
 <p>If you tick all these boxes, you, or anyone else, should not have any problems reproducing the results of your project. While it may seem that ticking these boxes takes up valuable time from other tasks, if you use the techniques and tools that I’ve showed you in part 1, this should not be the case, and you might end up even gaining time. The only exception to this will be preparing a Docker image, but if you supply at the very least an <code>renv.lock</code> file, creating a Docker image to run a project could even be done much later, and only if it’s really needed (and maybe even by someone else).</p>
+<section id="so-what" class="level1" data-number="18">
+<h1 data-number="18"><span class="header-section-number">18</span> “So what?”</h1>
 <p>If you’ve reached this conclusion and are still thinking “meh, yeah, reproducibility is nice and all, but… so what?” I hope that this last attempt of mine to convince you that RAPs are important will be successful.</p>
 <p>So, why bother building RAPs? Firstly, there are purely technical considerations. It is not impossible that in quite a near future, we will work on ever thinner clients while the heavy-duty computations will run on the cloud. Should this be the case, being comfortable with the topics discussed in this book will be valuable. Also, in this very near future, large language models will be able to set up most, if not all, of the required boilerplate code to set up a RAP. This means that you will be able to focus on analysis, but you still need to understand what are the different pieces of a RAP, and how they fit together, in order to understand the code that the large language model prepared for you, but also to revise it if needed. And it is not a stretch to imagine that simple analyses could be taken over by large language models as well. So you might very soon find yourself in a position where you will not be the one doing an analysis and setting up a RAP, but instead check, verify and adjust an analysis and a RAP built by an AI. Being familiar with the concepts laid out in this book will help you successfully perform these tasks in a world where every data scientist will have AI assistants.</p>
 <p>But more importantly, the following factors are inherently part of data analysis:</p>
@@ -296,11 +304,12 @@ ul.task-list li input[type="checkbox"] {
 <li>sustainability;</li>
 <li>scalability.</li>
 </ul>
-<p>It doesn’t matter if you’re working in research, for a public institution or a private sector company: the three points above are incredibly important and it’s impossible to perform data analysis without taking these into consideration, regardless of whether AIs take over some, or most, of the tasks you perform today. In the case of research, the <em>publish or perish</em> model has distorted incentives so much that unfortunately a lot of researchers are focused on getting published as quickly as possible, and see the three factors listed above as hurdles to get published quickly. Herculean efforts have to be made to reproduce studies that are not reproducible, and more often than not, people that try to reproduce the results are unsuccessful. Thankfully, things are changing and there are more and more efforts that are being made to make research reproducible by design, and not as an afterthought. In the private sector, tight deadlines lead to the same problem: analysts think that making the project reproducible as an hindrance to being able to deliver on time. But here as well, taking the time to make the project will help with making sure that what is delivered is of high quality, and it will also help with making reusing existing code for future projects much easier, even further accelerating development.</p>
+<p>It doesn’t matter if you’re working in research, for a public institution or a private sector company: the three points above are incredibly important and it’s impossible to perform data analysis without taking these into consideration, regardless of whether AIs take over some, or most, of the tasks you perform today. In the case of research, the <em>publish or perish</em> model has distorted incentives so much that unfortunately a lot of researchers are focused on getting published as quickly as possible, and see the three factors listed above as hurdles to get published quickly. Herculean efforts have to be made to reproduce studies that are not reproducible, and more often than not, people that try to reproduce the results are unsuccessful. Thankfully, things are changing and there are more and more efforts that are being made to make research reproducible by design, and not as an afterthought. In the private sector, tight deadlines lead to the same problem: analysts think that making the project reproducible as an hindrance to being able to deliver on time. But here as well, taking the time to make the project reproducible will help with making sure that what is delivered is of high quality, and it will also help with making reusing existing code for future projects much easier, even further accelerating development.</p>
 <p>Data analysis, at whatever level and for whatever field, is not just about getting to a result, the way to get to the result is part of it! This is true for science, this is true for industry, this is true everywhere. You get to decide where on the iceberg of reproducibility you want to settle, but the lower, the better.</p>
 <p>So why build RAPs? Well, because there’s no alternative if you want to perform your work seriously.</p>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
