@@ -206,9 +206,9 @@ commune_level_data <- make_commune_level_data(flat_data)
 ```
 
 We now save the dataset in a folder for further analysis (keep chunk option to
-`eval = F` to avoid running it when knitting):
+`eval = FALSE` to avoid running it when knitting):
 
-```{r, eval = F}
+```{r, eval = FALSE}
 write.csv(commune_level_data,
           "datasets/house_prices_commune_level_data.csv",
           row.names = FALSE)
