@@ -41,10 +41,10 @@ knitr::include_graphics("images/lux_rhode_island.png")
 ```
 :::
 
-What you should also know is that the population is about 645.000 as of writing
-(January 2023), half of which are foreigners. Around 400.000 persons work in
+What you should also know is that the population is about 645,000 as of writing
+(January 2023), half of which are foreigners. Around 400,000 persons work in
 Luxembourg, of which half do not live in Luxembourg; so every morning from
-Monday to Friday, 200.000 people enter the country to work and then leave in the
+Monday to Friday, 200,000 people enter the country to work and then leave in the
 evening to go back to either Belgium, France or Germany, the neighbouring
 countries. As you can imagine, this puts enormous pressure on the transportation
 system and on the roads, but also on the housing market; everyone wants to live
@@ -92,7 +92,7 @@ There is a lot of heterogeneity though; the capital and the communes right next
 to the capital are much more expensive than communes from the less densely
 populated north, for example. The south of the country is also more expensive
 than the north, but not as much as the capital and surrounding communes. Not
-only is price driven by demand, but also by scarcity; in 2021, .5% of residents
+only is price driven by demand, but also by scarcity; in 2021, 0.5% of residents
 owned 50% of the buildable land for housing purposes (Source: *Observatoire de
 l'Habitat, Note 29*, [archived download
 link](https://archive.org/download/note-29/note-29.pdf)^[https://archive.org/download/note-29/note-29.pdf]).
@@ -135,7 +135,7 @@ tool. So data is made human-readable, in contrast to machine readable. Let us
 quickly discuss this topic as it is essential to grasp the difference between
 the two (and in our experience, a lot of collective pain inflicted to
 statisticians and researchers could have been avoided if this concept was more
-well-known). The picture below shows an Excel made for human consumption:
+well-known). The picture below shows an Excel file made for human consumption:
 
 ::: {.content-hidden when-format="pdf"}
 <figure>
@@ -402,7 +402,7 @@ there’s also a less obvious reason; since 2010, several communes have merged
 into new ones. So there are communes that are in our data in 2010 and
 2011, but disappear from 2012 onwards. So we need to do several things: first,
 get a list of all existing communes from 2010 onwards, and then, harmonise
-spelling. Here again, we can use a list of Wikipedia:
+spelling. Here again, we can use a list from Wikipedia:
 
 ```{r}
 former_communes <-
@@ -446,7 +446,7 @@ has existed since 2010, we don’t have any commune that is unaccounted for. So
 are we done with cleaning the data? Yes, we can now start with analysing the
 data. Take a look
 [here](https://raw.githubusercontent.com/b-rodrigues/rap4all/master/scripts/save_data.R)^[https://is.gd/7PhUjd]
-to see the finalised script. Also read some of the comments the I’ve added. This
+to see the finalised script. Also read some of the comments that I’ve added. This
 is a typical R script, and at first glance, one might wonder what is wrong with
 it. Actually, not much, but the problem if you leave this script as it is, is
 that it is very likely that we will have problems rerunning it in the future. As
@@ -459,7 +459,7 @@ We are now going to analyse the data. The first thing we are going to do is
 compute a Laspeyeres price index. This price index allows us to make comparisons
 through time; for example, the index at year 2012 measures how much more
 expensive (or cheaper) housing became relative to the base year (2010). However,
-since we only have one good, this index becomes quite simple to compute: it is
+since we only have one 'good' (housing), this index becomes quite simple to compute: it is
 nothing but the prices at year *t* divided by the prices in 2010 (if we had a
 basket of goods, we would need to use the Laspeyeres index formula to compute
 the index at all periods).
@@ -508,7 +508,7 @@ analysis. How should these get installed? Ideally, the same versions of the
 packages you used and the same version of R should get used by that person to
 rerun the analysis.
 
-All of this still needs to get documented, but listing the packages that were
+All of this still needs to be documented, but listing the packages that were
 used for an analysis and their versions takes quite some time. Thankfully, in
 part 2, we will learn about the `{renv}` package to deal with this in a couple
 lines of code.
@@ -523,7 +523,7 @@ data, or at least alert you if that is the case. Sometimes, when new years get
 added, data for previous years also get corrected, so it would be nice to make
 sure that you know this. Also, in the specific case of our data, communes might
 get fused into a new one, or maybe even divided into smaller communes (even
-though this is has not happened in a long time, it is not entirely out of the
+though this has not happened in a long time, it is not entirely out of the
 question).
 
 In summary, what is missing from the current project are enough tests to make
@@ -539,7 +539,7 @@ package them. We are going to learn just that in future chapters of this book.
 But sometimes you might not be interested in reusing code for another project:
 however, even if that’s the case, structuring your code into functions and
 packaging them makes it easy to reuse code even inside the same project. Look at
-the last part of the `analysis.R` script: we copy and pasted the same code 5
+the last part of the `analysis.R` script: we copied and pasted the same code 5
 times and only slightly changed it. We are going to learn how not to repeat
 ourselves by using functions and you will immediately see the benefits of
 writing functions, even when simply to reuse them inside the same project.
@@ -550,7 +550,7 @@ Now this might seem weird: after all, if we start from the same dataset, does it
 matter *when* we run the scripts? We should be getting the same result if we
 build the project today, in 5 months or in 5 years. Well, not necessarily. While
 it is true that R is quite stable, this cannot necessarily be said of the
-packages that get used. There is no guarantee that the authors of the packages
+packages that we use. There is no guarantee that the authors of the packages
 will not change the package’s functions to work differently, or take arguments
 in a different order, or even that the packages will all be available at all in
 5 years. And even if the packages are still available and function the same,
@@ -558,7 +558,7 @@ bugs in the packages might get corrected that could alter the result. This might
 seem like a non-problem; after all, if bugs get corrected, shouldn’t you be
 happy to update your results as well? But this depends on what it is we’re
 talking about. Sometimes it is necessary to reproduce results exactly as they
-were, even if it they were wrong, for example in the context of an audit.
+were, even if they were wrong, for example in the context of an audit.
 
 So we also need a way to somehow snapshot and freeze the computational
 environment that was used to create the project originally.
