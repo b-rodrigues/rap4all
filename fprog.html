@@ -149,7 +149,42 @@ div.csl-indent {
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Building reproducible analytical pipelines with R</a> 
-        <div class="sidebar-tools-main">
+        <div class="sidebar-tools-main tools-wide">
+    <a href="https://github.com/b-rodrigues/rap4all" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <div class="dropdown">
+      <a href="" title="Download" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download"><i class="bi bi-download"></i></a>
+      <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-0">
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="./Building-reproducible-analytical-pipelines-with-R.pdf">
+              <i class="bi bi-bi-file-pdf pe-1"></i>
+            Download PDF
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="./Building-reproducible-analytical-pipelines-with-R.epub">
+              <i class="bi bi-bi-journal pe-1"></i>
+            Download ePub
+            </a>
+          </li>
+      </ul>
+    </div>
+    <div class="dropdown">
+      <a href="" title="Share" id="quarto-navigation-tool-dropdown-1" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Share"><i class="bi bi-share"></i></a>
+      <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-1">
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://twitter.com/intent/tweet?url=|url|">
+              <i class="bi bi-bi-twitter pe-1"></i>
+            Twitter
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://www.facebook.com/sharer/sharer.php?u=|url|">
+              <i class="bi bi-bi-facebook pe-1"></i>
+            Facebook
+            </a>
+          </li>
+      </ul>
+    </div>
   <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
 </div>
     </div>
@@ -343,7 +378,7 @@ div.csl-indent {
   </ul></li>
   <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">6.5</span> Conclusion</a></li>
   </ul>
-</nav>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/b-rodrigues/rap4all/edit/main/fprog.qmd" class="toc-action">Edit this page</a></p></div></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -777,8 +812,8 @@ To read the log of this object, call read_log(.c).</code></pre>
 <div class="sourceCode cell-code" id="cb74"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a>chronicler<span class="sc">::</span><span class="fu">read_log</span>(result)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "Complete log:"                                                                                
-[2] "NOK! sqrt() ran unsuccessfully with following exception: NaNs produced at 2023-05-26 12:30:51"
-[3] "Total running time: 0.00111746788024902 secs"                                                 </code></pre>
+[2] "NOK! sqrt() ran unsuccessfully with following exception: NaNs produced at 2023-05-26 17:08:44"
+[3] "Total running time: 0.00115418434143066 secs"                                                 </code></pre>
 </div>
 </div>
 <p>The <code>{purrr}</code> package also comes with function factories that you might find useful (<code>{possibly}</code>, <code>{safely}</code> and <code>{quietly}</code>).</p>
@@ -1612,7 +1647,7 @@ NULL</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>function (x, ...) 
 UseMethod("print")
-&lt;bytecode: 0x558dac3fb8c0&gt;
+&lt;bytecode: 0x5653319c8ad0&gt;
 &lt;environment: namespace:base&gt;</code></pre>
 </div>
 </div>
@@ -1656,7 +1691,7 @@ UseMethod("print")
     }
     invisible(x)
 }
-&lt;bytecode: 0x558dad651838&gt;
+&lt;bytecode: 0x565332c1c8f8&gt;
 &lt;environment: namespace:base&gt;</code></pre>
 </div>
 </div>
