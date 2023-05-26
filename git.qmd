@@ -12,7 +12,7 @@ But what is version control anyway?
 
 Version control tools make it easy to keep track of the changes that were made
 to text files (like R scripts). Any change made to any file of a project is
-cataloged, making it possible to trace back how the file changed, who made the
+catalogued, making it possible to trace back how the file changed, who made the
 changes, and when these changes were made. Using version control it is also
 quite easy to collaborate on a project by forcing team members to deal
 explicitly with the potential conflicts that might arise when the same file got
@@ -65,7 +65,7 @@ Disadvantages are:
 - It is not possible to self-host an instance of Github (not for free at least).
 
 The fact it is owned by Microsoft may not seem like an issue, but Microsoft’s
-track record of previous acquisitions is not great (Nokia, Skype), and the
+track record of previous acquisitions is open to question (Nokia, Skype), and the
 [recent discussions about using source code hosted on Github to train machine
 learning models
 (Copilot)](https://web.archive.org/web/20230130103241/https://www.theverge.com/2021/7/7/22561180/github-copilot-legal-copyright-fair-use-public-code)^[https://is.gd/rQgCj8]
@@ -92,7 +92,7 @@ automated tests each time a collaborator uploads some changes to the project.
 This way, we can make sure that no change introduced a bug. Or take this book;
 each time I write and push a new section or chapter to Github, the website, PDF
 and Epub of this book get re-generated and updated automatically. Each Github
-account gets 2000 minutes a month of free computing time a month, which is
+account gets 2000 minutes a month of free computing time, which is
 really a lot. In part 2, we will make use of Github Actions to run our RAP in
 the cloud, by simply pushing updates to our code on Github.
 
@@ -177,7 +177,7 @@ gets released.
 
 Don’t worry, using the command line is not as hard as it sounds.
 
-If you don't have already a Github account, now is the time to create one. Just
+If you don't already have a Github account, now is the time to create one. Just
 go over to [https://github.com/](https://github.com/) and simply follow the
 instructions and select the free tier to open your account.
 
@@ -455,7 +455,7 @@ nothing to commit, working tree clean
 This means that every change is accounted for in a commit. So if we were to push
 now, we could then set our computer on fire: every change would be safely backed
 up on Github.com. We can also choose to not push yet, and keep working and
-committing. For example, we could commit 5 times and just push ones: all of the
+committing. For example, we could commit 5 times and just push once: all of the
 5 commits would be pushed to Github.com.
 
 Let's do just that by changing one file. Open `analysis.R` in any editor and
@@ -878,7 +878,7 @@ knitr::include_graphics("images/git_new_repo_2.png")
 Name your repository, and choose whether it should be open to the world or if it
 should be private and only accessible to your coworkers. We are going to make it
 a public repository, but you could make it private and follow along, this would
-change nothing to what we're going to learn.
+change nothing in what we're going to learn.
 
 We then land on this page:
 
@@ -980,7 +980,7 @@ The reason is quite simple: Github has absolutely no idea who we are! Remember,
 if the repository is public, anyone can clone it. But that doesn't mean that
 anyone can simply push code to the repo! This means that we need a way to tell
 Github that we are the owner of the repository. For this, we need a way to log
-in securely, and we will do so using a public/private rsa key pair. The idea is
+in securely, and we will do so using a public/private RSA encryption key pair. The idea is
 quite simple; we are going to generate two files on our computer. These two
 files form a public/private key pair. We are going to upload the public key to
 Github; and every time we want to interact with Github, Github will check the
@@ -992,7 +992,7 @@ each time we push (but actually, not anymore, since password login was turned
 off some years ago). It is much easier to not have to log in manually and let
 our key pair do the job for us.
 
-Let's generate a public/private rsa key pair. Open a terminal on Linux or macOS,
+Let's generate a public/private RSA key pair. Open a terminal on Linux or macOS,
 or Git Bash on Windows and run the following command:
 
 ::: {.content-hidden when-format="pdf"}
@@ -1174,8 +1174,8 @@ knitr::include_graphics("images/github_repo_1.png")
 
 We have succeeded in installing Git and making it work with our Github account.
 If you use another machine for development, you will need to generate another
-rsa key pair on that machine and add the public key to Github. If you use
-another code hosting platform, you can use the same rsa key pair, but will need
+RSA key pair on that machine and add the public key to Github. If you use
+another code hosting platform, you can use the same RSA key pair, but will need
 to add the public key to this other code hosting platform. You can even use the
 same key pair as a passwordless authentication method for ssh (for example to
 log into a server, but this is outside the scope of this book). Before
@@ -1221,7 +1221,7 @@ Most important for our needs is the "Issues", "Pull requests", "Actions" and
 "Settings" tab.
 
 In the next chapter we are going to learn about pull requests which are
-essential for collaborating using Git and Github.com. I will learn about the
+essential for collaborating using Git and Github.com. We will learn about the
 "Actions" tab in the second part of the book.
 
 So let's start with "Settings".
@@ -1280,7 +1280,7 @@ knitr::include_graphics("images/github_add_collab2.png")
 ```
 :::
 
-Then click on the user's profile and he or she should get an invitation per
+Then click on the user's profile and he or she should get an invitation by
 email.
 
 This is what it looks like from the perspective of Bruno's account now:
