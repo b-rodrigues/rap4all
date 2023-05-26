@@ -720,7 +720,9 @@ chunk to inflate the `.Rmd` file and generate the package is there. I can run
 this chunk from `0-dev_history.Rmd` and have my package successfully generated.
 Something important to notice as well: my fusen-ready `.Rmd` file is simply
 called `save_data.Rmd`, while the generated, inflated file, that will be part of
-the package under the `vignettes/` folder is called `dev-save_data.Rmd`.
+the package under the `vignettes/` folder is called `dev-save_data.Rmd`. 
+
+When you inflate you flat file into a package, the R console will be verbose. This lists all files that are created or modified, but there is also a long list of checks that run automatically. This is the output of `devtools::check()` that is included inside `fusen::inflate()`. This function verifies that your package, once inflated, follows the rules of package development. It is likely that this will result in some fails, warnings and notes. Your goal is to make it to `0 errors, 0 warnings, 0 notes`. This will be a tricky part while developing packages, as you may not understand all outputs the first times. However, if you read the long list carefully, you will see that you are helped in many ways: position of the problems, type of problem, ... Fix the problems in the flat file, and inflate again, until the number of errors is null. We will not get deeper into it in this book, you may want to search for `check()` in [https://r-pkgs.org](https://r-pkgs.org) to go further.
 
 I suggest that you stop here, and really try to get this working as well. You
 can start by simply cloning this
@@ -903,7 +905,9 @@ website’s files in the `docs/` folder: open the `index.html` file using a
 web-browser and you can start navigating the documentation!
 
 If your package is on Github, you can also host the website for free on Github
-pages. For this, first make sure that the `.gitignore` file in the root of your
+pages. For this, you can build the website locally and send it to GitHub, or use GitHub Actions to build and publish it automatically. 
+
+For the manual build, first make sure that the `.gitignore` file in the root of your
 package does not contain the `docs/` folder. If it does, remove it. Then, commit and
 push. This will upload the `docs/` package on Github. Then, go to the
 repository’s settings, and "Pages" and then choose the branch that contains the
@@ -918,13 +922,21 @@ repository’s settings, and "Pages" and then choose the branch that contains th
 :::
 
 ::: {.content-visible when-format="pdf"}
-```{r, echo = F}
+```{r, echo = FALSE}
 #| fig-cap: "Choose these options to host your package’s website for free!"
 knitr::include_graphics("images/pkgdown_deploy.png")
 ```
 :::
 
-As an example, you can visit the website of the package we’ve built together
+For the automatic build, first make sure that the `.gitignore` file in the root of your
+package does contain the `docs/` folder, so that you do not send your local verifications. Then go to your `0-dev_history.Rmd` to run:
+```
+usethis::use_github_action("pkgdown")
+```
+Commit the `.github/` directory with its yml files and push.
+GitHub Action is a service that automatically runs following instructions in the yml file, at each commit. When you commit in the `main` or `master` branch, the website will be built. As above, in the GitHub settings, you will need to define the root of the `gh-pages` branch to be published as GitHub Pages. This is called Continuous Integration and Continuous Deployment. Note that you may want to set the other GitHub Actions listed in the `0-dev_history.Rmd` to make it check your package on a different computer than yours. There is a chapter about CI/CD later in this book.
+
+As an example of the website, you can visit the website of the package we’ve built together
 [here](https://rap4all.github.io/housing/)^[https://rap4all.github.io/housing/].
 
 The package’s `README` will be shown, if available, on the starting page of the
@@ -945,6 +957,8 @@ remotes::install_github("rap4all/housing@fusen",
                         ref = "ae42601")
 ```
 ````
+
+You can also include the link to your website documentation.
 
 ## Conclusion
 
