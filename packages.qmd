@@ -440,7 +440,7 @@ branches and push, you can fork this
 then clone it to start from a sane base. Switch to the `rmd` branch, and create
 a branch called `fusen`.
 
-First order of business: create a `{fusen}` template in the folder. Start a
+First order of business: create a `{fusen}` flat template in a `dev/` folder. Start a
 fresh R session inside the `housing/` folder, and run the following:
 
 ```{r, eval = F}
@@ -452,7 +452,7 @@ fusen::create_fusen(path = ".",
 Because we already have a folder for our project, called `housing/` we use
 `"."` which essentially means "right here". We need the `overwrite = TRUE`
 option because the folder exists already. Running the above command will add the
-`dev/` folder. Move `save_data.Rmd` inside; remember, we only want to inflate
+`dev/` folder. Move `save_data.Rmd` inside `dev/`; remember, we only want to inflate
 that one: `analyse_data.Rmd` will be a simple `.Rmd` that will use our package
 to load the needed functions and data.
 
@@ -468,10 +468,10 @@ Ok, so now, we need to make `save_data.Rmd` ready to be inflated. Take
 inspiration from the `flat_minimal.Rmd` that `fusen::create_fusen()` put in the
 `dev/` folder. This is what the end-result should [look
 like](https://is.gd/anRjt4)^[https://is.gd/anRjt4] (no worries, I’m going to
-explain how I got there).
+explain how I got there). For consistency with your future use of {fusen}, you could also rename the `save_data.Rmd` to `flat_save_data.Rmd`, although this won't avoid {fusen} to work properly.
 
 Let’s start by the first function, `get_raw_data()`. If you compare the
-[before](https://gist.githubusercontent.com/b-rodrigues/16952727d35355bf3b9cbd5f37843c20/raw/7e5dc76560f6cbe7281862dc7b6a2f00f79b485b/save_data.Rmd)^[https://is.gd/SpzL88]^[https://is.gd/n3m6In]
+[before](https://gist.githubusercontent.com/b-rodrigues/16952727d35355bf3b9cbd5f37843c20/raw/7e5dc76560f6cbe7281862dc7b6a2f00f79b485b/save_data.Rmd)^[https://is.gd/n3m6In]
 and [after](https://is.gd/anRjt4)^[https://is.gd/anRjt4], the differences are
 that we have named the chunk containing the function, `function-get_raw_data`
 and added documentation in the form of `{roxygen2}` comments. Naming the chunks
@@ -609,7 +609,7 @@ pipe `|>`. You don’t have to do it, but the advantage of using the base pipe i
 that it removes the dependency on the `{magrittr}` package, needed for `%>%`. If
 you want to use `%>%`, you can keep it, but then should run the line:
 
-```{r, eval = F}
+```{r, eval = FALSE}
 usethis::use_pipe()
 ```
 
@@ -746,7 +746,7 @@ that the fusen-ready `save_data.Rmd` file does not save the datasets as `.csv`
 files anymore. This is because it is much better to include them directly in the
 package, and make them available to users by running the line:
 
-```{r, eval = F}
+```{r, eval = FALSE}
 data("commune_level_data")
 ```
 
@@ -773,10 +773,10 @@ If you look at `0-dev_history.Rmd`, everything is explained under the header
 "Including datasets". The idea is to run the code inside the vignette, which
 creates our datasets, and then save these datasets in the right place using
 `usethis::use_data()`, mimicking the steps from "traditional" package
-development. I wrapped all the code around the `local()` function to run all
+development. In my `0-dev_history.Rmd` [here](https://is.gd/JsJJVN)^[https://is.gd/JsJJVN], I wrapped all the code around the `local()` function to run all
 these steps inside a temporary, local environment. This way, any variable that
 gets made by knitting the vignette gets discarded once we’re done saving the
-datasets.
+datasets. You may need to install your package before, using `remotes::install_local()`.
 
 Finally, we need to document the datasets. For this, we use another `.Rmd` file
 that we inflate as well. You can find it under `dev/data_doc.Rmd`, or by
