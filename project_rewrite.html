@@ -375,7 +375,7 @@ owner@localhost ➤ git push origin rmd</code></pre>
 <p>This will push whatever changes you’ve made to files to the <code>rmd</code> branch. By using two branches like this, you keep the original <code>.R</code> scripts in the main branch, and then will end up with the <code>.Rmd</code> files in the <code>rmd</code> branch.</p>
 <p>Before moving forward now is the right moment to actually discuss why you would want to convert the script into Rmds. There are several reasons. First, as argued in the chapter on literate programming, a document that mixes prose and code is easier to read and share than a script. Next, since this Rmd file can get knitted into any type of document (PDF, Word, etc…), it also makes it easier to arrive at what interests us, the output. A script is simply a means, it’s not an end. The end is (in most cases) a document so we might as well use literate programming to avoid the cursed loop of changing the script, editing the document, going back to the script, etc.</p>
 <p>But there is yet another benefit; even if the Rmd file is not supposed to get shared with anyone else, we will, later on, use it as our starting point for the <em>Rmd first</em> method of package development as promoted by Sébastien Rochette, the author of <code>{fusen}</code>. This Rmd first method involves making use of a <em>development</em> Rmd file that contains all the usual steps that we would take to create a package. This is in contrast with the usual package development process, in which we would type the required commands to build the package in the terminal. The functions, tests, and documentation that we want to add to the package get defined using Rmd files as well. This makes them much easier to read and also share with a non-technical audience. All these Rmd files can then be converted (or <em>inflated</em> in <code>{fusen}</code> jargon) to create a fully working package. If this sounds complicated or confusing, don’t worry. Trust the process, push on, and all the pieces of the puzzle will elegantly fit together in a couple of chapters.</p>
-<p>In the following sections I will rewrite the scripts by using functional and literate programming: if you don’t want to rewrite everything, don’t worry, I link the final Rmd files at the end of each seciton. But I would advise that you follow along by writing everything as it will make absorbing the contents much simpler.</p>
+<p>In the following sections I will rewrite the scripts by using functional and literate programming: if you don’t want to rewrite everything, don’t worry, I link the final Rmd files at the end of each section. But I would advise that you follow along by writing everything as it will make absorbing the contents much simpler.</p>
 <section id="an-rmd-for-cleaning-the-data" class="level2" data-number="9.1">
 <h2 data-number="9.1" class="anchored" data-anchor-id="an-rmd-for-cleaning-the-data"><span class="header-section-number">9.1</span> An Rmd for cleaning the data</h2>
 <p>So, let’s start with the <code>save_data.R</code> script. Since we are going to use functional programming and literate programming, we are going to start from an empty <code>.Rmd</code> file. So open an empty <code>.Rmd</code> file and start with the following lines:</p>
@@ -445,7 +445,7 @@ owner@localhost ➤ git push origin rmd</code></pre>
 <span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(year, locality, n_offers, <span class="fu">starts_with</span>(<span class="st">"average"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>and here is the same code, but as a function:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>```{r, eval = F}</span>
+<div class="sourceCode" id="cb9"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>```{r, eval = FALSE}</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>get_raw_data &lt;- function(url = "https://is.gd/1vvBAc"){</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  raw_data &lt;- tempfile(fileext = ".xlsx")</span>
@@ -638,9 +638,9 @@ owner@localhost ➤ git push origin rmd</code></pre>
 <span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>```</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>We can finish with a chunk to save the data to disk:</p>
 <div class="sourceCode" id="cb17"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>We now save the dataset in a folder for further analysis (keep chunk option to</span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>`eval = F` to avoid running it when knitting):</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>`eval = FALSE` to avoid running it when knitting):</span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>```{r, eval = F}</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>```{r, eval = FALSE}</span>
 <span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>write.csv(commune_level_data,</span>
 <span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>          "datasets/house_prices_commune_level_data.csv",</span>
 <span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>          row.names = FALSE)</span>
@@ -649,7 +649,7 @@ owner@localhost ➤ git push origin rmd</code></pre>
 <span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>          row.names = FALSE)</span>
 <span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>```</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>This last chunk is something I like to add to my Rmd files.</p>
-<p>Instead of showing it in the final document but not evaluating its contents using the chunk option <code>eval = F</code>, like I did, you could use <code>include = F</code>, so it doesn’t appear in the compiled document at all. The first time you compile this document, you could change the option to <code>eval = T</code>, so that the data gets written to disk, and then change it to <code>eval = F</code> to avoid overwriting the data on subsequent knittings. This is up to you, and it also depends on who the audience of the knitted output is (do they want to see this chunk at all?).</p>
+<p>Instead of showing it in the final document but not evaluating its contents using the chunk option <code>eval = FALSE</code>, like I did, you could use <code>include = FALSE</code>, so it doesn’t appear in the compiled document at all. The first time you compile this document, you could change the option to <code>eval = TRUE</code>, so that the data gets written to disk, and then change it to <code>eval = FALSE</code> to avoid overwriting the data on subsequent knittings. This is up to you, and it also depends on who the audience of the knitted output is (do they want to see this chunk at all?).</p>
 <p>Ok, and that’s it. You can take a look at the finalised file <a href="https://raw.githubusercontent.com/b-rodrigues/rap4all/master/rmds/save_data.Rmd">here</a><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>. You can now remove the <code>save_data.R</code> script, as you have successfully ported the code over to a <code>Rmd</code>.</p>
 <p>If you have not done it yet, you can commit these changes and push.</p>
 <p>Let’s now do the same thing for the analysis script.</p>
@@ -765,7 +765,7 @@ owner@localhost ➤ git push origin rmd</code></pre>
 <span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>    '\n',</span>
 <span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>    '## Plot for commune: `r x`',</span>
 <span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>    '\n',</span>
-<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>    '```{r, echo = F}',</span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>    '```{r, echo = FALSE}',</span>
 <span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>    'print(make_plot(x))',</span>
 <span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>    '```'</span>
 <span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a></span>
