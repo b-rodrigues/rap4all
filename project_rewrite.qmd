@@ -107,7 +107,7 @@ couple of chapters.
 
 In the following sections I will rewrite the scripts by using functional and
 literate programming: if you don’t want to rewrite everything, don’t worry, I
-link the final Rmd files at the end of each seciton. But I would advise that you
+link the final Rmd files at the end of each section. But I would advise that you
 follow along by writing everything as it will make absorbing the contents much
 simpler.
 
@@ -208,7 +208,7 @@ and here is the same code, but as a function:
 
 
 ````{verbatim}
-```{r, eval = F}
+```{r, eval = FALSE}
 get_raw_data <- function(url = "https://is.gd/1vvBAc"){
 
   raw_data <- tempfile(fileext = ".xlsx")
@@ -460,9 +460,9 @@ We can finish with a chunk to save the data to disk:
 
 ````{verbatim}
 We now save the dataset in a folder for further analysis (keep chunk option to
-`eval = F` to avoid running it when knitting):
+`eval = FALSE` to avoid running it when knitting):
 
-```{r, eval = F}
+```{r, eval = FALSE}
 write.csv(commune_level_data,
           "datasets/house_prices_commune_level_data.csv",
           row.names = FALSE)
@@ -475,10 +475,10 @@ write.csv(country_level_data,
 This last chunk is something I like to add to my Rmd files.
 
 Instead of showing it in the final document but not evaluating its contents
-using the chunk option `eval = F`, like I did, you could use `include = F`, so
+using the chunk option `eval = FALSE`, like I did, you could use `include = FALSE`, so
 it doesn’t appear in the compiled document at all. The first time you compile
-this document, you could change the option to `eval = T`, so that the data gets
-written to disk, and then change it to `eval = F` to avoid overwriting the data
+this document, you could change the option to `eval = TRUE`, so that the data gets
+written to disk, and then change it to `eval = FALSE` to avoid overwriting the data
 on subsequent knittings. This is up to you, and it also depends on who the
 audience of the knitted output is (do they want to see this chunk at all?).
 
@@ -578,7 +578,7 @@ so this the year the Laspeyeres index will have a value of 100.
 
 The following lines are probably the most complicated:
 
-```{r, eval = F}
+```{r, eval = FALSE}
 which_dataset <- deparse(substitute(dataset))
 
 group_var <- if(grepl("commune", which_dataset)){
@@ -611,7 +611,7 @@ So by using `quo()`, we can delay evaluation. So how can we tell the function
 that it’s time to evaluate `locality`? This is where we need `!!` (pronounced
 *bang-bang*). You’ll see that `!!` gets used on `group_var` inside `locality`:
 
-```{r, eval = F}
+```{r, eval = FALSE}
 group_by(!!group_var)
 ```
 
@@ -675,7 +675,7 @@ res <- lapply(communes, function(x){
     '\n',
     '## Plot for commune: `r x`',
     '\n',
-    '```{r, echo = F}',
+    '```{r, echo = FALSE}',
     'print(make_plot(x))',
     '```'
 
