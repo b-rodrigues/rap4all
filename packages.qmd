@@ -45,8 +45,7 @@ Let’s first go over the benefits of turning your analysis into a package once
 again, as this is crucial.
 
 The main point is not to turn the analysis into a package to publish on CRAN
-(but you can if you want to). The point is that when you analyse data, more
-often than not you have to write a lot of custom code, and very often, you don’t
+(but you can if you want to). The point is that when you analyse data, you have to write a lot of custom code, and very often, you don’t
 expect to write that much custom code when starting. Let’s think about our
 little project: all we wanted was to create some plots from Luxembourguish
 houses’ price data. And yet, we had to scrape Wikipedia on two occasions, clean
@@ -74,7 +73,7 @@ projects.
 
 If you haven’t already, install the `{fusen}` package:
 
-```{r, eval = F}
+```{r, eval = FALSE}
 install.packages("fusen")
 ```
 
@@ -84,7 +83,7 @@ the form of an `.Rmd` file and go from there to a package. Let’s dive right in
 it by starting from a template included in the `{fusen}` package. Start an R
 session from your home (or Documents) directory and run the following:
 
-```{r, eval = F}
+```{r, eval = FALSE}
 fusen::create_fusen(path = "fusen.quickstart",
                     template = "minimal")
 ```
@@ -114,7 +113,7 @@ owner@localhost $ ls dev/
 They’re both important, so let me explain what they do:
 
 - `flat_minimal.Rmd` is only an example, a stand-in for our own `.Rmd` files. When doing actual work, we will be using the Rmd file(s) that we have written before (`analyse_data.Rmd` and `save_data.Rmd`) instead, or if this is a fresh project, we could rename `flat_minimal.Rmd` and use it a template for our analysis.
-- `0-dev_history.Rmd` contains lines of code that you typically run when you’re developing a package. For example, a line to initialise Git for the project, a line to add some dependencies, etc, etc. The idea is to **write down everything** that you type in the console in this file. This leaves a trace of what you have been doing, and also acts as a checklist so that you can make sure that you didn’t forget anything.
+- `0-dev_history.Rmd` contains lines of code that you typically run when you’re developing a package. For example, a line to initialise Git for the project, a line to add some dependencies, etc. The idea is to **write down everything** that you type in the console in this file. This leaves a trace of what you have been doing, and also acts as a checklist so that you can make sure that you didn’t forget anything. You can also re-use for any other package development project.
 
 Before describing these files in detail, I want to show you this image taken
 from `{fusen}`’s
@@ -124,12 +123,12 @@ from `{fusen}`’s
 <figure>
     <img src="images/fusen_inflate_functions.png"
          alt="fusen takes care of the boring stuff for you!"></img>
-    <figcaption>fusen takes care of the boring stuff for you!</figcaption>
+    <figcaption>{fusen} takes care of the boring stuff for you!</figcaption>
 </figure>
 :::
 
 ::: {.content-visible when-format="pdf"}
-```{r, echo = F}
+```{r, echo = FALSE}
 #| fig-cap: "fusen takes care of the boring stuff for you!"
 knitr::include_graphics("images/fusen_inflate_functions.png")
 ```
@@ -140,7 +139,7 @@ On the left-hand side of the image, we see the two template `.Rmd` files from
 the main chunk in that file that we need to execute to get started with
 `{fusen}`. Running this chunk will create the package's `DESCRIPTION` file
 (don't worry if you don't know about this file yet, I will explain). Then, the
-second file `flat_minimal.Rmd` (or our very own `.Rmd` files) contain functions,
+second file `flat_minimal.Rmd` (or our very own `.Rmd` files) contains functions,
 tests, examples, and everything we need for our analysis. When we *inflate* the
 Rmd file, `{fusen}` places every piece from this `.Rmd` file in the right place:
 the functions get copied into the package's `R/` folder, tests go into the
@@ -192,19 +191,19 @@ and explicitly. Also, you might have noticed that in the chunk with the function
 definition there are a bunch of comments that start with `#'`. These are
 `{roxygen2}` type comments. As the package’s documentation gets built, these
 comments get automatically turned into the documentation you see when you type
-`help(my_fun)` in an R console. So even the comments that you typically write to
+`help("my_fun")` in an R console. So even the comments that you typically write to
 explain how your code works can be re-used to build documentation that will be
 much easier to browse than comments in source code!
 
 So, basically, a `{fusen}`-ready `.Rmd` file is nothing more than an `.Rmd` file
 with some structure imposed on it. Instead of documenting your functions as
 simple comments, document them using `{roxygen2}` comments, which then get
-turned into the package’s documentation automatically. Instead of writing ad-hoc
+turned into the package’s documentation automatically. Instead of trying
+your function out on some mock data in your console, write down that example
+inside the `.Rmd` file itself. Instead of writing ad-hoc
 tests, or worse, instead of testing your functions on your console manually,
 one by one (and we’ve all done this), write down the test inside the
-`.Rmd` file itself, right next to the function you’re testing. Instead of trying
-your function out on some mock data in your console, write down that example
-inside the `.Rmd` file itself.
+`.Rmd` file itself, right next to the function you’re testing. 
 
 **Write it down**, **write it down**, **write it down**... you’re already
 documenting and testing things (most of the time in the console only), so why
@@ -213,7 +212,7 @@ ageing, mushy brain so much? Don’t make yourself remember things, just write
 them down! `{fusen}` gives you a perfect framework to do this. The added benefit
 is that it will improve your package’s quality through the tests and examples
 that are not directly part of the analysis itself but are still required to make
-sure that the analysis is of high quality. So if you start messing with your
+sure that the analysis is of high quality, reproducible and maintainable. So that if you start messing with your
 functions, you have the tests right there to tell you if you introduced breaking
 changes.
 
@@ -244,19 +243,17 @@ usethis::use_mit_license("Sébastien Rochette")
 ```
 ````
 
-You can select the code inside the `description` chunk and then run it in the
-console. This will create the package’s `DESCRIPTION` file.
+The `fill_description()` function will create the package’s `DESCRIPTION` file.
 [Here](https://raw.githubusercontent.com/b-rodrigues/chronicler/c34239d0d42a4ad6082dff614fc6b4c0e9b917d8/DESCRIPTION)^[https://is.gd/PfvkSZ]
 is an example of such a file. This file provides some information on who wrote
 the package, the purpose of the package, as well as some metadata such as the
-package’s version. What’s also quite important are the packages listed below the
-keywords `Depends:`, `Imports:` and `Suggests:`. `Depends:` is where you list
+package’s version. While developing your package, you will continuously fill some important extra parts of this file, such that parts that list dependencies required to be able to use your package: `Depends:`, `Imports:` and `Suggests:`. `Depends:` is where you list
 packages (or R versions) that must be installed for your package to work (if
 they’re not installed, they will be installed alongside your package). This is
 the same with `Imports:`, and the difference with `Depends:` is most of the time
 irrelevant: packages listed under `Depends:` will not only be loaded when you
 load your package, but also attached. This means that the functions from these
-packages will also be available to the end-user when loading your package.
+packages will also be available to the end-user when loading your package. Most of the time, you do not have to list packages under `Depends:`.
 Packages listed under `Imports:` will only be loaded, meaning that their
 functions will only be available to your packages’ functions, not the end-users
 themselves. If that’s confusing, don’t worry too much about it, this will not be
@@ -269,11 +266,10 @@ focus on writing your `.Rmd` files.
 
 The last line of this chunk runs `usethis::use_mit_license()`. `{usethis}` is a
 package that contains many helper functions to help you develop packages. You
-can choose among many licenses, but this is only relevant if you want to publish
-your package on CRAN, and you don’t need to think too much about it at the
+can choose among many licenses. Note that any open-source work should present a license, so that users know how they are allowed to use it. Otherwise, theoretically, without license, no one is allowed to re-use or share your work. You don’t need to think too much about it at the
 start, since you can always change the license later. And if you don’t want to
 publish your package anywhere (nor CRAN, nor Github) and keep it completely
-internal to your organisation, you don’t need to think about it at all. My very
+internal to your organisation, you can just define a proprietary license with `usethis::use_proprietary_license("your name")`. My very
 personal take on licenses is that you should use copyleft licenses as much as
 possible (so licenses like the GPL) which ensure that if others take your code
 and change it, their changes also have to be republished to the public under the
@@ -298,7 +294,7 @@ roof](https://web.archive.org/web/20230223092823/https://www.cs.vu.nl/~ast/intel
 (archived link for posterity). Anyway, I got side-tracked here, let’s go back to
 our package.
 
-Run the code inside the description chunk in an R console (don’t change anything
+Run the code of the two functions inside the `description` chunk in an R console (don’t change anything
 for now, and make sure that the R session was started on the root of the
 project, so in the `fusen.quickstart/` folder), and see the `DESCRIPTION` file
 appear magically in the root of the folder (as well as the `LICENSE` file,
@@ -308,7 +304,7 @@ For now, we can ignore the rest of the `0-dev_history.Rmd` file: actually,
 everything that follows the `description` code chunk is totally optional, but
 still useful. If you look at them, you see that the lines that follow simply help
 you remember to do useful things, like initialising Git, creating a `Readme`
-file, add some usual dependencies, as so one. But let’s ignore this for now, and
+file, add some usual dependencies, and so on. But let’s ignore this for now, and
 go to the `flat_minimal.Rmd` file.
 
 Go at the end of the file, and take a look at the chunk titled
