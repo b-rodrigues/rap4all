@@ -12,8 +12,8 @@ reproducibility of our pipelines.
 ## The reproducibility iceberg
 
 I think it is time to reflect on why I bothered with the first part of the book
-at all, because for now, I didn’t really learn teach you anything directly related
-to reproducibility, so didn’t I just jump straight to the reproducibility part?
+at all, because for now, I didn’t really teach you anything directly related
+to reproducibility, so why didn’t I just jump straight to the reproducibility part?
 
 Remember the introduction, where I talked about the reproducibility continuum or
 spectrum? It is now time to discuss this in greater detail. I propose a new
@@ -77,11 +77,17 @@ packages means that the exact same versions of the packages that were used
 originally will get used regardless of *when* in the future we rerun the
 analysis.
 
-But if budget and time allow we can still go deeper, and definitely should. We
-also want to make running the script as easy as possible, and ideally, *as
-non-interactively as possible*. Any human interaction with the analysis is a
-source of errors, so that’s why we also need to thoroughly and systematically
-test our code. These tests also need to run non-interactively. Also, using the
+But if budget and time allow we can still go deeper, and definitely should. One day, 
+you will want to update your script to use the newest functionality of your preferred package, but with package version recording, 
+you will be stuck in the past with a very old version and its dependencies. 
+How will you know that upgrading this package will not break anything anywhere in your workflow? 
+Also,
+we want to make running the script as easy as possible, and ideally, *as
+non-interactively as possible*. Indeed, any human interaction with the analysis is a
+source of errors.
+That’s why we need to thoroughly and systematically
+test our code. These tests also need to run non-interactively.
+Using the
 tools described in part two of this book, we can actually set up the project,
 right from the very beginning, in a way that it will be reproducible quite
 naturally. By using the right tools and setting things up right, we don’t really
@@ -107,7 +113,7 @@ Docker, so that’s why we will not be discussing *Guix*.
 
 We will travel down the iceberg in the coming chapters. First, we will use what
 we’ve learned up until now to rewrite our project using functional and literate
-programming. Our project will not be two scripts anymore, but two Rmd files that
+programming. Our project will not be two scripts anymore, but two Rmarkdown files that
 we can knit and that we can then read and also send to non-technical
 stakeholders.
 
