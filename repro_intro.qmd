@@ -552,6 +552,8 @@ reproducibility of your project. Here again, Docker provides a solution. Future
 you, your team-mates or other people simply need to be able to run a Docker
 container, which is a much lower bar than installing these old libraries.
 
+Note also that during your journey, you will want to improve your scripts, you maybe will also want to upgrade some dependencies to take advantage of recent developments in some packages. This will require to upgrade the `{renv}` environment. But how will you be sure that these upgrades will not impair some other parts of your code? This is where we will speak about turning our analysis into a package and testing our code.
+
 I want to stress that this does not mean that `{renv}` is useless: we will keep
 using it, but together with Docker to ensure the reproducibility of our project.
 As I’ve written above already, *at a minimum `{renv}` ensures that a project’s
