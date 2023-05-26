@@ -1,7 +1,7 @@
 # Collaborating using Trunk-based development {#sec-chapter-github}
 
 As already mentioned several times, there are two ways of collaborating with Git
-(and Github): either as a team, or either as an external dev (external, as in,
+(and Github): either as a team, or as an external dev (external, as in,
 not part of the development team of a given project). External contributors can
 only contribute code to public repositories, and the project owners can either
 accept or refuse the patches.
@@ -14,7 +14,7 @@ on collaboration within a team.
 ### TBD basics
 
 Remember the issue we opened and assigned to Bruno? Bruno will now take care of
-this issue by adding a Readme file. This will be also the opportunity to
+this issue by adding a Readme file. This will also be the opportunity to
 introduce trunk-based development. The idea of trunk-based development is
 simple; team members should work on separate branches to add features or fix
 bugs, and then merge their branch to the "trunk" (in our case the *master*
@@ -461,7 +461,7 @@ knitr::include_graphics("images/github_changes_approved.png")
 :::
 
 The reviewer can now merge the pull request by clicking on the "Merge pull
-request" button. Github even suggests we deleted the branch, which served its
+request" button. Github even suggests we delete the branch, which has served its
 purpose:
 
 ::: {.content-hidden when-format="pdf"}
@@ -490,7 +490,7 @@ difficult, this usually means that it would be impossible to do any other way,
 and would inevitably result in someone having to reconcile the files by hand.
 What makes handling conflicts easier with Git though, is that Git is able to
 tell you where you can find clashes on a per-line basis. So for instance, if you
-change the ten first lines of a script, and I change the ten next lines, there
+change the first ten lines of a script, and I change the next ten lines, there
 would be no conflict, and Git will automatically merge both our contributions
 into a single file. Other tools, like Dropbox, would fail in a situation like
 this, because these tools can only handle conflicts on a per-file basis. The
@@ -504,7 +504,7 @@ find them and deal with the problems.
 We will see all of this in the coming sections.
 
 So how do conflicts happen? Let's imagine the following scenario. Both Bruno and
-the project owner will create a branch, and edit the same file. Perhaps they
+the project owner create branches, and edit the same file. Perhaps they
 talked over the phone and decided to add a feature or correct a bug. Perhaps
 they decided that it wasn't worth opening an issue on Github and assign someone
 to do it. After all, they discussed this on the phone and decided that Bruno
@@ -865,7 +865,7 @@ Automatic merge failed; fix conflicts and then commit the result.
 ```
 
 Git detects that there's some conflicts and tells the owner to fix them, and then
-commit the results. So let's open `analysis.R` and see how it looks like (you can
+commit the results. So let's open `analysis.R` and see how it looks (you can
 view the file online on this
 [link](https://gist.github.com/b-rodrigues/f713702268c99328ad16af56f7d32892)^[https://is.gd/ktWtjr].
 First of all, you will see Git deals with conflicts on a per-line basis. So each
@@ -873,7 +873,7 @@ line that the owner changed that does not conflict with Bruno's change gets
 immediately updated to reflect the owner's changes. For example, remember that
 the owner removed the line that loaded the `{purrr}` package? This line was also
 removed by pulling the changes from master into the feature branch. Also, you
-should notice that every `%>%` was changed into `|>` as well. This two changes
+should notice that every `%>%` was changed into `|>` as well. These two changes
 happened without any issues.
 
 Then, you should understand what happens when a conflict gets detected on some
@@ -899,9 +899,9 @@ hash of the commit from which these lines come from.
 So this makes things quite easy; one simply needs to remove the outdated code,
 and then commit and push the fixed file! The project owner only needs to remove
 `<<<<<<< HEAD` and `=======` and what's between these lines, as well as the
-lines that show the hash commit. The project owner can now commit and pushes the
-changes, opens a pull request, asks Bruno to review the changes one last time and
-merges everything back to master.
+lines that show the hash commit. The project owner can now commit and push the
+changes, open a pull request, ask Bruno to review the changes one last time and
+merge everything back to master.
 
 ::: {.content-hidden when-format="pdf"}
 <figure>
@@ -969,8 +969,8 @@ feature branch into the trunk before you could. This way, when pulling,
 conflicts (if any) arise at that point. It is then your responsibility to solve
 the conflicts (and this works just like in the previous section) and then commit
 and push the commits with the conflicts resolved. Another contributor who then
-wishes to merged his or fear feature branch into to the trunk will have to pull
-again, ensuring that conflicts get resolved before he or she can merge. If no
+wishes to merge his or her feature branch into the trunk will have to pull
+again, ensuring that conflicts get resolved before they can merge. If no
 conflicts arise (for example, you both worked on different files, or on
 different lines of the same files), then no resolution is needed and the feature
 branch can be merged into master.
@@ -1032,7 +1032,7 @@ knitr::include_graphics("images/github_fork.png")
 ```
 :::
 
-Forking creates a copy of the repository to Bruno's account:
+Forking creates a copy of the repository in Bruno's account:
 
 ::: {.content-hidden when-format="pdf"}
 <figure>
