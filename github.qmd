@@ -209,6 +209,10 @@ knitr::include_graphics("images/github_add_readme_recent_push.png")
 ```
 :::
 
+::: {.content-visible when-format="pdf"}
+\newpage
+:::
+
 Bruno can now decide to continue working on this branch, or, since the purpose
 of this branch was only to add the Readme file, decide instead to do a pull
 request. By clicking on the "Compare & pull request" button Bruno now sees this:
@@ -244,6 +248,10 @@ added) and most importantly, add a reviewer if needed:
 #| fig-cap: "Let boss decide if this is good enough."
 knitr::include_graphics("images/github_add_reviewer.png")
 ```
+:::
+
+::: {.content-visible when-format="pdf"}
+\newpage
 :::
 
 This is what Bruno sees now:
@@ -303,6 +311,10 @@ knitr::include_graphics("images/github_review.png")
 ```
 :::
 
+::: {.content-visible when-format="pdf"}
+\newpage
+:::
+
 Here, the reviewer can check the commit, the files that were changed, and see if
 there are any conflicts between this code and the code base on the master (or
 trunk) branch. Github also tells us two interesting things: the owner can add a
@@ -354,6 +366,10 @@ Let's choose one last option: by scrolling down, it's possible to select the
 option "Do not allow bypassing the above settings". This makes sure that even
 administrations (the owners of the project) must abide by the same rules.
 
+::: {.content-visible when-format="pdf"}
+\newpage
+:::
+
 Let's go back to the pull request. We can see now that a review is required:
 
 ::: {.content-hidden when-format="pdf"}
@@ -369,6 +385,10 @@ Let's go back to the pull request. We can see now that a review is required:
 #| fig-cap: "Time to review."
 knitr::include_graphics("images/github_review_required.png")
 ```
+:::
+
+::: {.content-visible when-format="pdf"}
+\newpage
 :::
 
 So now the owner actually has to go and see the files that were changed:

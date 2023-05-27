@@ -857,8 +857,11 @@ knitr::include_graphics("images/git_new_repo.png")
 ```
 :::
 
-You will then land on this page:
+::: {.content-visible when-format="pdf"}
+\newpage
+:::
 
+You will then land on this page:
 
 ::: {.content-hidden when-format="pdf"}
 <figure>
@@ -895,6 +898,10 @@ We then land on this page:
 #| fig-cap: "Some instructions to get you started."
 knitr::include_graphics("images/git_repo_start.png")
 ```
+:::
+
+::: {.content-visible when-format="pdf"}
+\newpage
 :::
 
 We get some instructions on how to actually get started with our project. The
@@ -1057,8 +1064,13 @@ The key's randomart image is:
 If now you go to the specified path on the first line (so in our case
 `/home/user/.ssh/` you should see two files, `id_rsa` and `id_rsa.pub`, the
 private and public keys respectively. We're almost done: what you need to do now
-is copy the contents of the `id_rsa.pub` file to Github. Go to your profile
-settings:
+is copy the contents of the `id_rsa.pub` file to Github. 
+
+::: {.content-visible when-format="pdf"}
+\newpage
+:::
+
+Go to your profile settings:
 
 ::: {.content-hidden when-format="pdf"}
 <figure>
@@ -1110,6 +1122,10 @@ paste the contents of `id_rsa.pub` in the text box and click on "add SSH key":
 #| fig-cap: "Copy the contents of the public key here."
 knitr::include_graphics("images/github_add_ssh.png")
 ```
+:::
+
+::: {.content-visible when-format="pdf"}
+\newpage
 :::
 
 We can now go back to our terminal and try to push again:
@@ -1196,6 +1212,10 @@ knitr::include_graphics("images/github_repo_1.png")
 ```
 :::
 
+::: {.content-visible when-format="pdf"}
+\newpage
+:::
+
 Once you're on your repository's landing page you see the same files and folders
 as in the root directory of the project on your computer. In our case here, we
 see our two files. Github suggests that we add a README file; we are going to
@@ -1241,6 +1261,10 @@ knitr::include_graphics("images/github_settings2.png")
 ```
 :::
 
+::: {.content-visible when-format="pdf"}
+\newpage
+:::
+
 There are many options that you can choose from, but what's important for our
 purposes is the "Collaborators" option. This is where you can invite people to
 contribute to the repository. People that are invited in this way can directly
@@ -1260,7 +1284,6 @@ push to the repository. Let's invite the author of this book:
 knitr::include_graphics("images/github_add_collab.png")
 ```
 :::
-
 
 Start by typing the person's Github username. You can also invite collaborators
 by providing their email address.
@@ -1282,6 +1305,11 @@ knitr::include_graphics("images/github_add_collab2.png")
 
 Then click on the user's profile and he or she should get an invitation by
 email.
+
+
+::: {.content-visible when-format="pdf"}
+\newpage
+:::
 
 This is what it looks like from the perspective of Bruno's account now:
 
