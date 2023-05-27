@@ -261,7 +261,7 @@ Because running `{targets}` pipelines on Github Actions is a common task, there
 is of course a way to do it very easily, without the need to write our own
 workflow file. Simply go to the folder that contains your pipeline (which, I
 hope, is versioned using Git, right?), open an R session and run
-`tarets::tar_github_actions()`. This will automatically create a folder called
+`targets::tar_github_actions()`. This will automatically create a folder called
 `.github/` in the root of your pipeline’s folder, with inside a `workflows/`
 folder, and inside a `targets.yaml` workflow file. This file is ready to use,
 but you may adapt it to your needs. For example, this workflow file runs on
@@ -306,7 +306,7 @@ But, and yes there is a but, you should think about the following, potential, is
 - you are limited to 2000 minutes of free run-time. If your pipeline takes several hours to run, you might need to upgrade to a paid account, or run it locally (but this is mitigated thanks to caching on Github and by using `{targets}` that caches results as well);
 - Github Actions does not keep old versions of operating systems for too long. For example, as of writing, only versions 20.04 and 22.04 of Ubuntu are available. Ubuntu 18.04 was removed in August 2022. If your RAP absolutely needs a specific version of Ubuntu for a very long time, Github Actions might not be the right solution. The same is true for Windows or macOS as well. However, what you might want to do instead is migrate the pipeline to newer versions of Ubuntu when these become available. Generally speaking, this should not be a very painful process.
 
-So you need to think about what it is you really need. Does you pipeline run
+So you need to think about what it is you really need. Does your pipeline run
 relatively quickly, and you don’t need to keep it running forever on the same
 operating system? Then Github Actions is for you. Or perhaps you are writing a
 book using Rmarkdown, or Quarto and don’t want to bother building it and
@@ -677,11 +677,11 @@ reproducible. However, I believe that setting up your project to make it run on
 Github Actions (or any other CI/CD service) truly forces you to master all the
 topics presented in this book. In the conclusion of part 1 of the book, I wrote
 that it seemed as if functional programming was only about putting restrictions
-to our code, for very little gain. In some ways, forcing yourself to use a CI/CD
+on our code, for very little gain. In some ways, forcing yourself to use a CI/CD
 service can feel similar. But here’s the thing: if your project builds
 successfully on a CI/CD service, and if the results remain stable through time,
 then your project is reproducible. Someone else could then run it locally by
-simply following the same steps as in the workflow file, which would consist in
+simply following the same steps as in the workflow file, which would consist of
 the very same basic steps: clone the repository, build a Docker image and run a
 container (or set up the required R package library using `{renv}` and then run
 the pipeline with `{targets}` if you’re not using Docker).
