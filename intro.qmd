@@ -280,7 +280,7 @@ that is not easy to install (anyone that tried to install R packages on Linux
 that depend on the `{rJava}` package know what I’m talking about).
 
 So a least worse pipeline would be one that could be run more easily on any
-similar machine as yours. This could be achieved by not using hardcoded absolute
+similar machine to yours. This could be achieved by not using hardcoded absolute
 paths, and by providing instructions to set up the environment. For example, in
 the case of R, this could be as simple as providing a script called something
 like `install_deps.R` that would be a call to `install.packages()`. It could
@@ -301,11 +301,11 @@ latest version of `{ggplot2}` (as of writing, version 3.4.0) will get installed.
 Maybe that’s not a problem, but it can be if your script uses a function from
 version 2.2.1 that is not available anymore in the latest version (or maybe its
 name got changed, or maybe it was modified somehow and doesn’t provide the exact
-same result). And the more packages the script uses (and the older it is), the
+same result). The more packages the script uses (and the older it is), the
 higher the likelihood that some package version will not be compatible. There is
 also the issue of the R version itself. Generally speaking, recent versions of R
 seem to not be too bad when it comes to running older code written in R. I know
-this because in 2022 I’ve ran every example that comes bundled with R since
+this because in 2022 I’ve run every example that comes bundled with R since
 version 0.6.0 on the then current version (as of writing) of R, version 4.2.2.
 Here is the result of this experiment:
 
@@ -332,7 +332,7 @@ These are the examples from the default packages like `{base}`, `{stats}`,
 version 0.6.0 still work on the current version of R. A small fraction output a
 message (which doesn’t mean the code doesn’t work), some 5% raise a warning,
 which again doesn’t necessarily mean that the code doesn’t work, and finally
-around 20% or so errors. As you can see, the closer we get to the current
+around 20% or so produce errors. As you can see, the closer we get to the current
 release, the fewer errors get raised (if you want to run the code for yourself,
 check out this [Github
 repository](https://github.com/b-rodrigues/code_longevity)).
@@ -342,7 +342,7 @@ runs without error, doesn’t mean that the result is exactly the same. There
 might be cases where the same function returns different results on different
 versions of R.)
 
-But while this is evidence of R itself being quite stable through time, there
+While this is evidence of R itself being quite stable through time, there
 are studies that show a less rosy picture. In a recent study (@trisovic2022
 ^[https://www.nature.com/articles/s41597-022-01143-6]), some researchers tried
 to rerun up to 9000 R scripts downloaded from the Harvard Dataverse. There were
