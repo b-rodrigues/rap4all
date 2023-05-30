@@ -192,6 +192,15 @@ library(stringr)
 library(janitor)
 ```
 
+Even though this book is not about analysing data per se, let me just briefly
+explain what these packages do, in case you're not familiar. The `{dplyr}`
+package provides many functions for data manipulation, for example aggregating
+group-wise. `{purrr}` is a package for functional programming, a programming
+paradigm that I'll introduce later in the book, `{readxl}` reads in Excel
+workbooks, `{stringr}` is a package for manipulating strings, and finally
+`{janitor}` provides some very nice functions, to perform some common tasks like
+easily rename every column of a data frame in snake case.
+
 Next, the code below downloads the data, and puts it in a data frame:
 
 ```{r}
