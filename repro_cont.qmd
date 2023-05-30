@@ -222,16 +222,17 @@ things, or else you would have stopped reading this book much earlier.
 
 *Linux* is not the name of any one specific operating system, but of an
 operating system kernel. A kernel is an important component of an operating
-system. What sets the Linux kernel apart from the one used for Windows or macOS,
-is that the Linux kernel is open-source and free software. So anyone can take
-that kernel, and add all the other components needed to build a complete
-operating system. This is why there are many *Linux distributions*: a Linux
-distribution is a complete operating system that uses Linux as its kernel. The
-most popular Linux distribution is called Ubuntu, and if one time you googled
-something along the lines of "easy linux os for beginners" the answer that came
-out on top was likely Ubuntu, or one of the other variants of Ubuntu (yes,
-because Ubuntu itself is also open-source and free software, it is possible to
-build a variant using Ubuntu as a basis, like Linux Mint).
+system. Linux is free and open-source, and among the most successful free and
+open source projects ever. Because it's license allows (and encourages) re-use,
+anyone can take that kernel, and add all the other components needed to build a
+complete operating system and release the finished product. This is why there
+are many *Linux distributions*: a Linux distribution is a complete operating
+system that uses Linux as its kernel. The most popular Linux distribution is
+called Ubuntu, and if one time you googled something along the lines of "easy
+linux os for beginners" the answer that came out on top was likely Ubuntu, or
+one of the other variants of Ubuntu (yes, because Ubuntu itself is also
+open-source and free software, it is possible to build a variant using Ubuntu as
+a basis, like Linux Mint).
 
 To define our Docker images, we will be using Ubuntu as a base. The Ubuntu
 operating system has two releases a year, one in April and one in October. On
@@ -1549,18 +1550,19 @@ But the issue is the infrastructure. For now, using Docker and more importantly
 hosting images is free for personal use, education, open-source communities and
 small businesses. So this means that a project like Rocker likely pays nothing
 for hosting all the images they produce (but who knows, I may be wrong on this).
-Docker recently announced that they would abandon their *Docker Free Team
-subscription* plans that some open-source organizations use, and that they
-should upgrade to a paid subscription within 30 days. So it is not unreasonable
-to think that free users with a free account might also be forced to pay one
-day. Don’t get me wrong, I’m not saying that Docker is not allowed to make
-money. But it is something that you need to keep in mind in case you cannot
-afford a subscription (and who knows how much it’s going to cost). This is
-definitely a risk that needs mitigation, and a plan B. This plan B could be to
-host the images yourself, by saving them using `docker save`. Or you could even
-self-host an image registry (or lobby your employer/institution/etc to host a
-registry for its developers/data scientists/researchers). In any case, it's good
-to have options and now what potential risks using this technology entail.
+But in early 2023, Docker announced that they would abandon their *Docker Free
+Team subscription* plans that some open-source organisations use, meaning that
+these organisations had 30 days to switch to a paid subscription. Docker finally
+did not do this, but it is not unreasonable to think that they might change
+their minds once more and this time really go through with this plan. Don’t get
+me wrong, I’m not saying that Docker is not allowed to make money. But it is
+something that you need to keep in mind in case you cannot afford a subscription
+(and who knows how much it’s going to cost). This is definitely a risk that
+needs mitigation, and thus a plan B. This plan B could be to host the images
+yourself, by saving them using `docker save`. Or you could even self-host an
+image registry (or lobby your employer/institution/etc to host a registry for
+its developers/data scientists/researchers). In any case, it's good to have
+options and now what potential risks using this technology entail.
 
 ### Is Docker enough?
 
