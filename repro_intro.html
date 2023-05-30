@@ -442,7 +442,7 @@ drwxr-xr-x 1 owner Domain Users     0 Feb 27 12:44 renv
 -rw-r--r-- 1 owner Domain Users 20502 Feb 27 12:44 renv.lock
 -rw-r--r-- 1 owner Domain Users  6378 Feb 27 12:38 save_data.Rmd</code></pre>
 <p>As you can see, there are two new files and one folder. The new files are the <code>renv.lock</code> file that I mentioned before and a file called <code>.Rprofile</code>. The new folder is simply called <code>renv</code>. The <code>renv.lock</code> is the file that lists all the packages used for the analysis. <code>.Rprofile</code> files are files that get read by R automatically at startup (as discussed at the very beginning of part one of this book). You should have a system-wide one that gets read on startups of R, but if R discovers an <code>.Rprofile</code> file in the directory it starts on, then that file gets read instead. Let’s see the contents of this file (you can open this file in any text editor, like Notepad on Windows, but then again I prefer the command line):</p>
-<pre><code>owner@localhost ➤ cat.Rprofile</code></pre>
+<pre><code>owner@localhost ➤ cat .Rprofile</code></pre>
 <p>The files contains the single line:</p>
 <pre><code>source("renv/activate.R")</code></pre>
 <p><code>activate.R</code> is an R script that was also create by <code>renv::init()</code>, which you can find in the <code>renv</code> folder. Let’s take a look at the contents of this folder:</p>
