@@ -359,6 +359,7 @@ ul.task-list li input[type="checkbox"] {
 <p>gets shown instead, then this means that Git is not installed on your system. To install Git, use your distribution’s package manager, as it is very likely that Git is packaged for your system. On Ubuntu, arguably the most popular Linux distribution, this means running:</p>
 <pre><code>sudo apt-get update
 sudo apt-get install git</code></pre>
+<p>If you’re using Ubuntu, may instead use <code>apt</code> instead of <code>apt-get</code>. Both commands are basically interchangeable, use whatever you’re used to. I’ve first used Ubuntu in 2008, and even though I don’t use it anymore as my daily Linux distro (that honor goes to openSUSE), I still use <code>apt-get</code> out of habit.</p>
 <p>On macOS and Windows, follow the instructions from the <a href="https://git-scm.com/book/en/v2/Getting-Started-Installing-Git">Git Book</a><a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>. It should be as easy as running an installer for any program.</p>
 <p>Depending on your operating system, a graphical user interface might have been installed with Git, making it possible to interact with Git outside of the command line. It is also possible to use Git from within RStudio and many other editors have interfaces to Git as well. We are not going to use any graphical user interface however. This is because there is no common, universal graphical user interface; they all work slightly differently. The only universal is the command line. Also, learning how to use Git via the command line will make it easier the day you will need to use it from a server, which will very likely happen. It also makes my job easier: it is simpler to tell you which commands to run and explain them to you than littering the book with dozens upon dozens of screenshots that might get outdated as soon as a new version of the interface gets released.</p>
 <p>Don’t worry, using the command line is not as hard as it sounds.</p>
@@ -434,8 +435,8 @@ Changes to be committed:
         new file:   save_data.R</code></pre>
 <p>Nice! Our two files are being tracked now, so we can commit the changes. <em>Committing</em> means that we are happy with our work, and we can snapshot it. These snapshots then get uploaded to Github by pushing them. This way, the changes will be available for our coworkers for them to pull. I’ll explain what this means later, so don’t worry if this is confusing, it won’t be by the end of the chapter. Also, you should know that there is a special file, called <code>.gitignore</code>, that allows you to list files or folders that you want Git to ignore. This can be useful in cases where you are working with sensitive data and don’t want it to be uploaded to Github. We will not use the <code>.gitignore</code> file just yet, but will do so in part two of the book. So for now, just remember that this is an option.</p>
 <p>We are now ready to commit our files. Each commit must have a commit message, and we can write this message as an option to the <code>git commit</code> command:</p>
-<pre><code>owner@localhost ➤ git commit -am "Project start"</code></pre>
-<p>Apparently the <code>-am</code> option stands for <em>apply mailbox</em>, which I’m sure makes sense to some people, but I prefer to think of <code>-am</code> as standing for <em>a</em>dd <em>m</em>essage. All that remains is pushing this commit to Github. But let’s run <code>git status</code> again:</p>
+<pre><code>owner@localhost ➤ git commit -m "Project start"</code></pre>
+<p>The <code>-m</code> option is there to specify the message for the commit. Before pushing the commit, let’s run <code>git status</code> again:</p>
 <pre><code>owner@localhost ➤ git status</code></pre>
 <pre><code>On branch master
 nothing to commit, working tree clean</code></pre>
@@ -466,7 +467,7 @@ no changes added to commit (use "git add" and/or "git commit -a")</code></pre>
 <pre><code>owner@localhost ➤ git add .</code></pre>
 <p>(You can run <code>git status</code> at this point to check if the file was correctly added to be committed.)</p>
 <p>Then, we need to commit the changes and add a nice commit message:</p>
-<pre><code>owner@localhost ➤ git commit -am "Added a comment to analysis.R"</code></pre>
+<pre><code>owner@localhost ➤ git commit -m "Added a comment to analysis.R"</code></pre>
 <p>Try to keep commit messages as short and as explicit as possible. This is not always easy, but it really pays off to strive for short, clear messages. Also, ideally, you would want to keep commits as small as possible, ideally one commit per change. For example, if you’re adding and amending comments in scripts, once you’re done with that make this a commit. Then, maybe clean up some code. That’s another, separate commit. This makes rolling back changes or reviewing them much easier. This will be crucial later on when we will use trunk based development to collaborate with our teammates on a project. It is generally not a good idea to code all day and then only push one single big fat commit at the end of the day, but that is what happens very often…</p>
 <p>By the way, even if our changes are still not on Github.com, we can still roll back to previous commits. For example, suppose that I delete the file accidentally by running <code>rm analysis.R</code>:</p>
 <pre><code>owner@localhost ➤ rm analysis.R</code></pre>
@@ -497,7 +498,7 @@ Changes not staged for commit:
 no changes added to commit (use "git add" and/or "git commit -a")</code></pre>
 <p>Let’s add these changes and commit them:</p>
 <pre><code>owner@localhost ➤ git add .
-owner@localhost ➤ git commit -am "Removed analysis.R"</code></pre>
+owner@localhost ➤ git commit -m "Removed analysis.R"</code></pre>
 <pre><code>[master 8e51867] Removed analysis.R
  1 file changed, 131 deletions(-)
  delete mode 100644 analysis.R</code></pre>
