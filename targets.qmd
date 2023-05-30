@@ -529,7 +529,7 @@ in your web browser that looks like this:
 :::
 
 ::: {.content-visible when-format="pdf"}
-```{r, echo = F}
+```{r, echo = F, out.height="300px"}
 #| fig-cap: "This image opens in your web-browser."
 knitr::include_graphics("images/targets_visnetwork.png")
 ```
@@ -547,7 +547,7 @@ If you now change the input data, here is what you will see instead:
 :::
 
 ::: {.content-visible when-format="pdf"}
-```{r, echo = F}
+```{r, echo = F, out.height="300px"}
 #| fig-cap: "Because the input data was changed, we need to run the pipeline again."
 knitr::include_graphics("images/targets_visnetwork_outdated.png")
 ```
@@ -605,7 +605,7 @@ see the entire workflow:
 :::
 
 ::: {.content-visible when-format="pdf"}
-```{r, echo = F}
+```{r, echo = F, out.height="300px"}
 #| fig-cap: "We clearly see that the pipeline has two completely independent parts."
 knitr::include_graphics("images/targets_visnetwork_iris.png")
 ```
@@ -640,7 +640,7 @@ This target creates a list with the two summaries that we compute. Call
 :::
 
 ::: {.content-visible when-format="pdf"}
-```{r, echo = F}
+```{r, echo = F, out.height="300px"}
 #| fig-cap: "The two separate workflows end up in one output."
 knitr::include_graphics("images/targets_visnetwork_list_summaries.png")
 ```
@@ -721,7 +721,7 @@ here’s what the pipeline looks like before running:
 
 
 ::: {.content-visible when-format="pdf"}
-```{r, echo = F}
+```{r, echo = F, out.height="300px"}
 #| fig-cap: "slow_summary() is used instead of summary()."
 knitr::include_graphics("images/targets_visnetwork_slow_summary.png")
 ```

@@ -35,7 +35,7 @@ country.
 :::
 
 ::: {.content-visible when-format="pdf"}
-```{r, echo = F, out.width="400px"}
+```{r, echo = F, out.width="250px"}
 #| fig-cap: "Luxembourg is about as big as the US State of Rhode Island."
 knitr::include_graphics("images/lux_rhode_island.png")
 ```
@@ -300,6 +300,10 @@ Let's see what happened:
 raw_data |>
   filter(is.na(average_price_nominal_euros))
 ```
+
+::: {.content-visible when-format="pdf"}
+\newpage
+:::
 
 It turns out that there are no prices for certain communes, but that we also
 have some rows with garbage in there. Let's go back to the raw data to see what

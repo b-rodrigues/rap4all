@@ -415,7 +415,7 @@ Docker Hub account, go to your account settings and then to the "Security" tab:
 :::
 
 ::: {.content-visible when-format="pdf"}
-```{r, echo = F}
+```{r, echo = F, out.height="300px"}
 #| fig-cap: "Create your access token."
 knitr::include_graphics("images/docker_hub_token.png")
 ```
@@ -433,7 +433,7 @@ Delete". On the next window that pops up, make sure to save your access token:
 :::
 
 ::: {.content-visible when-format="pdf"}
-```{r, echo = F}
+```{r, echo = F, out.height="300px"}
 #| fig-cap: "Make sure to write it down!"
 knitr::include_graphics("images/docker_hub_copy_token.png")
 ```
@@ -452,7 +452,7 @@ You then need to go to the settings area of the repository. Under "Security",
 :::
 
 ::: {.content-visible when-format="pdf"}
-```{r, echo = F}
+```{r, echo = F, out.height="300px"}
 #| fig-cap: "Copy the token in your repo's secrets."
 knitr::include_graphics("images/docker_hub_copy_token.png")
 ```
@@ -500,7 +500,7 @@ images:
 :::
 
 ::: {.content-visible when-format="pdf"}
-```{r, echo = F}
+```{r, echo = F, out.width="300px"}
 #| fig-cap: "Two successful runs of Github Actions."
 knitr::include_graphics("images/ga_dockerfile.png")
 ```
@@ -517,7 +517,7 @@ and here are the two corresponding images on Docker Hub:
 :::
 
 ::: {.content-visible when-format="pdf"}
-```{r, echo = F}
+```{r, echo = F, out.width="300px"}
 #| fig-cap: "The corresponding images on Docker Hub."
 knitr::include_graphics("images/ga_dockerhub.png")
 ```
@@ -539,10 +539,14 @@ shows you some useful information:
 :::
 
 ::: {.content-visible when-format="pdf"}
-```{r, echo = F}
+```{r, echo = F, out.height="300px"}
 #| fig-cap: "This is the image with the correct R version."
 knitr::include_graphics("images/docker_hub_image.png")
 ```
+:::
+
+::: {.content-visible when-format="pdf"}
+\newpage
 :::
 
 ## Run a RAP using a dockerized development environment on Github Actions

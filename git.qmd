@@ -1081,7 +1081,7 @@ Go to your profile settings:
 :::
 
 ::: {.content-visible when-format="pdf"}
-```{r, echo = F}
+```{r, echo = F, out.height="200px"}
 #| fig-cap: "Click on your user profile's image in the top-right corner."
 knitr::include_graphics("images/github_settings.png")
 ```
@@ -1098,7 +1098,7 @@ And then click on "SSH and GPG keys":
 :::
 
 ::: {.content-visible when-format="pdf"}
-```{r, echo = F}
+```{r, echo = F, out.width="300px"}
 #| fig-cap: "Go to your user settings and choose 'SSH and GPG keys'."
 knitr::include_graphics("images/github_gpg.png")
 ```
@@ -1118,7 +1118,7 @@ paste the contents of `id_rsa.pub` in the text box and click on "add SSH key":
 :::
 
 ::: {.content-visible when-format="pdf"}
-```{r, echo = F}
+```{r, echo = F, out.width="300px"}
 #| fig-cap: "Copy the contents of the public key here."
 knitr::include_graphics("images/github_add_ssh.png")
 ```
@@ -1179,10 +1179,11 @@ repository's main page, we should see the following:
 :::
 
 ::: {.content-visible when-format="pdf"}
-```{r, echo = F}
+```{r, echo = F, out.width="300px"}
 #| fig-cap: "Finally!"
 knitr::include_graphics("images/github_repo_1.png")
 ```
+\newpage
 :::
 
 
@@ -1206,7 +1207,7 @@ continuing we are going to take a little tour of Github.
 :::
 
 ::: {.content-visible when-format="pdf"}
-```{r, echo = F}
+```{r, echo = F, out.width="300px"}
 #| fig-cap: "You repository's landing page."
 knitr::include_graphics("images/github_repo_1.png")
 ```
@@ -1255,7 +1256,7 @@ So let's start with "Settings".
 :::
 
 ::: {.content-visible when-format="pdf"}
-```{r, echo = F}
+```{r, echo = F, out.width="300px"}
 #| fig-cap: "Choose the 'Settings' tab."
 knitr::include_graphics("images/github_settings2.png")
 ```
@@ -1279,7 +1280,7 @@ push to the repository. Let's invite the author of this book:
 :::
 
 ::: {.content-visible when-format="pdf"}
-```{r, echo = F}
+```{r, echo = F, out.width="300px"}
 #| fig-cap: "Follow along to add a collaborator."
 knitr::include_graphics("images/github_add_collab.png")
 ```
@@ -1322,7 +1323,7 @@ This is what it looks like from the perspective of Bruno's account now:
 :::
 
 ::: {.content-visible when-format="pdf"}
-```{r, echo = F}
+```{r, echo = F, out.height="100px"}
 #| fig-cap: "Bruno can now push as if he owned the repository."
 knitr::include_graphics("images/github_collab_added.png")
 ```
@@ -1336,6 +1337,10 @@ before that, let's see what the "Issues" tab is about.
 If the repository is public, anyone can open an issue to either submit a bug, or
 suggest some ideas, and if the repository is private, only invited collaborators
 can do this.
+
+::: {.content-visible when-format="pdf"}
+\newpage
+:::
 
 Let's open an issue to illustrate how this works:
 
