@@ -419,21 +419,18 @@ and we can write this message as an option to the `git commit` command:
 
 ::: {.content-hidden when-format="pdf"}
 ```
-owner@localhost ➤ git commit -am "Project start"
+owner@localhost ➤ git commit -m "Project start"
 ```
 :::
 
 ::: {.content-visible when-format="pdf"}
 ```
-owner@localhost $ git commit -am "Project start"
+owner@localhost $ git commit -m "Project start"
 ```
 :::
 
-
-Apparently the `-am` option stands for *apply mailbox*, which I’m sure makes
-sense to some people, but I prefer to think of `-am` as standing for *a*dd
-*m*essage. All that remains is pushing this commit to Github. But let's run `git
-status` again:
+The `-m` option is there to specify the message for the commit. Before
+pushing the commit, let's run `git status` again:
 
 ::: {.content-hidden when-format="pdf"}
 ```
@@ -530,13 +527,13 @@ Then, we need to commit the changes and add a nice commit message:
 
 ::: {.content-hidden when-format="pdf"}
 ```
-owner@localhost ➤ git commit -am "Added a comment to analysis.R"
+owner@localhost ➤ git commit -m "Added a comment to analysis.R"
 ```
 :::
 
 ::: {.content-visible when-format="pdf"}
 ```
-owner@localhost $ git commit -am "Added a comment to analysis.R"
+owner@localhost $ git commit -m "Added a comment to analysis.R"
 ```
 :::
 
@@ -657,14 +654,14 @@ Let's add these changes and commit them:
 ::: {.content-hidden when-format="pdf"}
 ```
 owner@localhost ➤ git add .
-owner@localhost ➤ git commit -am "Removed analysis.R"
+owner@localhost ➤ git commit -m "Removed analysis.R"
 ```
 :::
 
 ::: {.content-visible when-format="pdf"}
 ```
 owner@localhost $ git add .
-owner@localhost $ git commit -am "Removed analysis.R"
+owner@localhost $ git commit -m "Removed analysis.R"
 ```
 :::
 

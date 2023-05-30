@@ -143,14 +143,14 @@ referencing the issue number in the commit message:
 ::: {.content-hidden when-format="pdf"}
 ```
 bruno@computer ➤ git add .
-bruno@computer ➤ git commit -am "fixed #1"
+bruno@computer ➤ git commit -m "fixed #1"
 ```
 :::
 
 ::: {.content-visible when-format="pdf"}
 ```
 bruno@computer $ git add .
-bruno@computer $ git commit -am "fixed #1"
+bruno@computer $ git commit -m "fixed #1"
 ```
 :::
 
@@ -688,7 +688,7 @@ changes to their respective branches. This is Bruno:
 ::: {.content-hidden when-format="pdf"}
 ```
 bruno@computer ➤ git add .
-bruno@computer ➤ git commit -am "make_plot() for plotting"
+bruno@computer ➤ git commit -m "make_plot() for plotting"
 bruno@computer ➤ git push origin add_cool_feature
 ```
 :::
@@ -696,7 +696,7 @@ bruno@computer ➤ git push origin add_cool_feature
 ::: {.content-visible when-format="pdf"}
 ```
 bruno@computer $ git add .
-bruno@computer $ git commit -am "make_plot() for plotting"
+bruno@computer $ git commit -m "make_plot() for plotting"
 bruno@computer $ git push origin add_cool_feature
 ```
 :::
@@ -722,7 +722,7 @@ and this is the owner:
 ::: {.content-hidden when-format="pdf"}
 ```
 owner@localhost ➤ git add .
-owner@localhost ➤ git commit -am "cleanup"
+owner@localhost ➤ git commit -m "cleanup"
 owner@localhost ➤ git push origin add_sweet_feature
 ```
 :::
@@ -730,7 +730,7 @@ owner@localhost ➤ git push origin add_sweet_feature
 ::: {.content-visible when-format="pdf"}
 ```
 owner@localhost $ git add .
-owner@localhost $ git commit -am "cleanup"
+owner@localhost $ git commit -m "cleanup"
 owner@localhost $ git push origin add_sweet_feature
 ```
 :::
@@ -1053,6 +1053,10 @@ The main ideas of trunk-based development are:
 - The master branch (or trunk) contains always working, production-grade code;
 - To enforce discipline, it might be worth it to make opening pull requests mandatory for merging back to the trunk, and require a review.
 
+::: {.content-visible when-format="pdf"}
+\newpage
+:::
+
 ## Contributing to public repositories
 
 In this last section, we are going to briefly discuss how to contribute to a
@@ -1141,6 +1145,10 @@ knitr::include_graphics("images/github_my_fork.png")
 ```
 :::
 
+::: {.content-visible when-format="pdf"}
+\newpage
+:::
+
 So now, Bruno can clone this repository and work on it, because he is working on
 a copy of the repository that he owns. Anything Bruno does on this copy will not
 affect the original repository.
@@ -1203,7 +1211,7 @@ knitr::include_graphics("images/github_pull_request_typo.png")
 ```
 :::
 
-What does the owner of the original repository, "rap4all" see? The pull request
+What does the owner of the original repository, "rap4all", see? The pull request
 Bruno opened is now in the original repository's "Pull request" menu, and the
 owner can check what the contribution is, if it breaks code or not, etc. This is
 essentially the same workflow as the one presented before in trunk-based
