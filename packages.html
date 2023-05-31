@@ -367,7 +367,7 @@ div.csl-indent {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Packaging your code</span></h1>
+<h1 class="title"><span id="chap-packages" class="quarto-section-identifier"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Packaging your code</span></span></h1>
 </div>
 
 
@@ -418,9 +418,9 @@ div.csl-indent {
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>                    <span class="at">template =</span> <span class="st">"minimal"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>This will create a directory called <code>fusen.quickstart</code> inside your home (or Documents) directory. Inside that folder, you will find another folder called <code>dev/</code>. Let’s see what’s inside it (I use the command line to list the files, but you’re free to use your file explorer program):</p>
-<pre><code>owner@localhost ➤ ls dev/
-
-0-dev_history.Rmd  flat_minimal.Rmd</code></pre>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">owner@localhost</span> ➤ ls dev/</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="ex">0-dev_history.Rmd</span>  flat_minimal.Rmd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><code>dev/</code> contains two <code>.Rmd</code> files, <code>0-dev_history.Rmd</code> and <code>flat_miminal.Rmd</code>. They’re both important, so let me explain what they do:</p>
 <ul>
 <li><code>flat_minimal.Rmd</code> is only an example, a stand-in for our own <code>.Rmd</code> files. When doing actual work, we will be using the Rmd file(s) that we have written before (<code>analyse_data.Rmd</code> and <code>save_data.Rmd</code>) instead, or if this is a fresh project, we could rename <code>flat_minimal.Rmd</code> and use it a template for our analysis.</li>
@@ -517,14 +517,14 @@ div.csl-indent {
 <li>put all the functions into <code>save_data.Rmd</code> and only inflate that file. The other, <code>analyse_data.Rmd</code> can then be used exclusively for the analysis <em>stricto sensu</em>.</li>
 </ul>
 <p>This is really up to you, there is no right or wrong answer. You could even go for another option if you wanted. It all depends on how much time you want to invest into this. If you want to get done quickly, the first option, where you simply inflate both files is the fastest. If you have more time, the last option, where you neatly split everything might be better. I propose that we go for the second option. This way, we only have to inflate one file, and in our case here, it won’t take much time anyways. It’s literally only moving two code chunks from <code>analyse_data.Rmd</code> to <code>save_data.Rmd</code>. So before continuing, let’s go back to our repository and switch back to the <code>rmd</code> branch that contains the <code>.Rmd</code> files (let’s ignore freezing packages with <code>{renv}</code> and thus the <code>renv</code> branch for now):</p>
-<pre><code>owner@localhost ➤ git checkout rmd</code></pre>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">owner@localhost</span> ➤ git checkout rmd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Using the <code>rmd</code> branch as a starting point, let’s create a new branch called <code>fusen</code>:</p>
-<pre><code>owner@localhost ➤ git checkout -b fusen</code></pre>
-<pre><code>Switched to a new branch 'fusen'</code></pre>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">owner@localhost</span> ➤ git checkout <span class="at">-b</span> fusen</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">Switched</span> to a new branch <span class="st">'fusen'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>We will now be working on this branch. Simply work as usual, but when pushing, make sure to push to the <code>fusen</code> branch:</p>
-<pre><code>owner@localhost ➤ git add .
-owner@localhost ➤ git commit -m "some changes"
-owner@localhost ➤ git push origin fusen</code></pre>
+<div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ex">owner@localhost</span> ➤ git add .</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="ex">owner@localhost</span> ➤ git commit <span class="at">-m</span> <span class="st">"some changes"</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="ex">owner@localhost</span> ➤ git push origin fusen</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>By now, that repository should have four branches:</p>
 <ul>
 <li><em>master</em>, or <em>main</em> with the simple <code>.R</code> scripts;</li>
@@ -545,20 +545,20 @@ owner@localhost ➤ git push origin fusen</code></pre>
 <p>Let’s start by the first function, <code>get_raw_data()</code>. If you compare the <a href="https://gist.githubusercontent.com/b-rodrigues/16952727d35355bf3b9cbd5f37843c20/raw/7e5dc76560f6cbe7281862dc7b6a2f00f79b485b/save_data.Rmd">before</a><a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a> and <a href="https://is.gd/anRjt4">after</a><a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a>, the differences are that we have named the chunk containing the function, <code>function-get_raw_data</code> and added documentation in the form of <code>{roxygen2}</code> comments. Naming the chunks is essential: this is how <code>{fusen}</code> knows that this chunk contains a function that should go into the <code>R/</code> folder. <code>{roxygen2}</code> comments are strictly speaking not required, but it is highly advised that you add them: this way, your function will get documented and users (including future you) will be able to read the documentation by typing <code>help(get_raw_data)</code>. And you’re likely already adding comments explaining what the function does anyway. Another difference is that I have made all the functions referentially transparent. Take a closer look at <code>make_plot()</code> in the before and after <code>.Rmd</code>’s. You will see that I’ve added two arguments to <code>make_plot()</code>, <code>country_level_data</code> and <code>commune_level_data</code>. This is really important, so don’t forget to do it!</p>
 <p>Remember when I mentioned that the good thing about turning our analysis into a package is that it gives us a framework to develop high quality code by using nice development tools? <code>{roxygen2}</code> type comments for documentation is the first such tool in this list. By commenting your functions, you explain what the inputs are, what the outputs are going to be, and also how to use the functions with some examples. Using <code>{fusen}</code> (and <code>{roxygen2}</code>), you simply continue doing the same, but with some added structure. This added structure is not costly to impose on yourself, and comes with many added benefits (in this case, free documentation!). I’m repeating myself but I really want to drive this point home: the goal is not to have to <em>add</em> code on top of what you already did. The point is to do what you always do, but within a framework.</p>
 <p>Let’s now look at the functions’ <code>{roxygen2}</code>-type comments. The first line:</p>
-<pre><code>#' get_raw_data Gets raw nominal house price data from LU Open Data Portal</code></pre>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co">#' get_raw_data Gets raw nominal house price data from LU Open Data Portal</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>will create the title of the function’s help page. Then come the <code>@param</code> lines (in this case we only have one):</p>
-<pre><code>#' @param url Optional: Persistent url to the data</code></pre>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co">#' @param url Optional: Persistent url to the data</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>This lists the parameters of the function. Here you can explain exactly what the inputs should be. What happens if the function you’re documenting has several parameters and you forget to document one? If that happens, when you will inflate the file, you will get a warning in the console that will look like this:</p>
-<pre><code>inflate warnings and errors: Undocumented arguments in documentation 
-object 'get_raw_data'
-  'url'</code></pre>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>inflate warnings and errors<span class="sc">:</span> Undocumented arguments <span class="cf">in</span> documentation </span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>object <span class="st">'get_raw_data'</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">'url'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Then come the <code>@importFrom</code> statements. This is where you list dependencies:</p>
-<pre><code>#' @importFrom readxl excel_sheets read_excel
-#' @importFrom utils download.file
-#' @importFrom dplyr mutate rename select
-#' @importFrom stringr str_trim
-#' @importFrom janitor clean_names
-#' @importFrom purrr map_dfr</code></pre>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co">#' @importFrom readxl excel_sheets read_excel</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="co">#' @importFrom utils download.file</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="co">#' @importFrom dplyr mutate rename select</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="co">#' @importFrom stringr str_trim</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="co">#' @importFrom janitor clean_names</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="co">#' @importFrom purrr map_dfr</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>This is important, because the statements will write the dependencies into the package’s <code>NAMESPACE</code> file. This file is important, because any function defined there will be available to your package’s functions when you load the package. So if your function use <code>dplyr::mutate()</code> for example, your package needs to know where to look for <code>mutate()</code>. This is where the <code>NAMESPACE</code> file comes into play. Take the opportunity to list the dependencies of your function to review them: maybe you’re using a package for a single dependency that you could easily remove. For example, I’m using <code>stringr::str_trim()</code> to remove whitespace around characters. But I could be using the base R function <code>trimws()</code> instead, which would remove this dependency. I’m going to keep it here, because I’m lazy though. It might seem like extra work to add these statements. But you have to see it this way: you are writing the functions here, once, that need to be available to your functions for them to work. The alternative is to have to write:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"readxl"</span>)</span>
@@ -570,16 +570,16 @@ object 'get_raw_data'
 </div>
 <p>on top of each script that uses your functions. This gets old pretty fast and is error prone. By declaring the dependencies here, you ensure that they get recorded by <code>{renv}</code> and will make using your project much easier.</p>
 <p>You will also notice the following <code>importFrom</code> statement:</p>
-<pre><code>#' @importFrom utils download.file</code></pre>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co">#' @importFrom utils download.file</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><code>download.file()</code> is included in the <code>{utils}</code> package, itself included with a base installation of R. So you don’t really need to specify it; but when inflating the file, you get the following message:</p>
-<pre><code>Consider adding
-  importFrom("utils", "download.file")
-to your NAMESPACE file.</code></pre>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>Consider adding</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">importFrom</span>(<span class="st">"utils"</span>, <span class="st">"download.file"</span>)</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>to your NAMESPACE file.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>hence why I’ve added it, to silence this message. Again, not mandatory, but why not do it?</p>
 <p>Now comes the <code>@return</code> keyword: this simply tells your users what the function returns. If the function doesn’t return anything, because it only has a side effect (for example, writing something to disk, or printing something on screen), then you could return <code>NULL</code>.</p>
-<pre><code>#' @return A data frame</code></pre>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co">#' @return A data frame</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Last but not least, the <code>@export</code> keyword:</p>
-<pre><code>#' @export</code></pre>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co">#' @export</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>This makes the function available to users that load the package using <code>library(housing)</code>. If you don’t add this keyword, the function will be only available to the other functions of the package. Another way to see this: functions decorated with the <code>@export</code> keyword are public, functions without it are private. But the concept of private functions doesn’t really exist in R. You can always access a “private” function by using <code>:::</code> (three times the <code>:</code>), as in <code>package:::private_function()</code>.</p>
 <p>The other functions are documented in the same manner, so I won’t comment them here. Something else you might have noticed: I replaced every <code>%&gt;%</code> by the base pipe <code>|&gt;</code>. You don’t have to do it, but the advantage of using the base pipe is that it removes the dependency on the <code>{magrittr}</code> package, needed for <code>%&gt;%</code>. If you want to use <code>%&gt;%</code>, you can keep it, but then should run the line:</p>
 <div class="cell">
@@ -696,7 +696,7 @@ to your NAMESPACE file.</code></pre>
 <span id="cb31-14"><a href="#cb31-14" aria-hidden="true" tabindex="-1"></a>, <span class="at">overwrite =</span> <span class="cn">TRUE</span>) <span class="co"># you need to add overwrite = TRUE to overwrite the file</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>You have to be very disciplined here, because you have to make sure that you keep updating this and documenting which version of the package should get used for which project. Also, make sure that you can store generated <code>.tar.gz</code> alongside the project and that you provide clear installation instructions. To install a package from a <code>.tar.gz</code> file, open a new R session and run the following:</p>
-<pre><code>remotes::install_local("path/to/package/housing_0.0.0.9000.tar.gz")</code></pre>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_local</span>(<span class="st">"path/to/package/housing_0.0.0.9000.tar.gz"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="marketing-your-work" class="level3" data-number="11.5.3">
 <h3 data-number="11.5.3" class="anchored" data-anchor-id="marketing-your-work"><span class="header-section-number">11.5.3</span> Marketing your work</h3>
@@ -712,7 +712,7 @@ Choose these options to host your package’s website for free!
 </figcaption>
 </figure>
 <p>For the automatic build, first make sure that the <code>.gitignore</code> file in the root of your package does contain the <code>docs/</code> folder, so that you do not send your local verifications. Then go to your <code>0-dev_history.Rmd</code> to run:</p>
-<pre><code>usethis::use_github_action("pkgdown")</code></pre>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">use_github_action</span>(<span class="st">"pkgdown"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Commit the <code>.github/</code> directory with its yml files and push. GitHub Action is a service that automatically runs following instructions in the yml file, at each commit. When you commit in the <code>main</code> or <code>master</code> branch, the website will be built. As above, in the GitHub settings, you will need to define the root of the <code>gh-pages</code> branch to be published as GitHub Pages. This is called Continuous Integration and Continuous Deployment. Note that you may want to set the other GitHub Actions listed in the <code>0-dev_history.Rmd</code> to make it check your package on a different computer than yours. There is a chapter about CI/CD later in this book.</p>
 <p>As an example of the website, you can visit the website of the package we’ve built together <a href="https://rap4all.github.io/housing/">here</a><a href="#fn14" class="footnote-ref" id="fnref14" role="doc-noteref"><sup>14</sup></a>.</p>
 <p>The package’s <code>README</code> will be shown, if available, on the starting page of the website. So if you want to add a <code>README</code> to your package, go to the <code>0-dev_history.Rmd</code> file and execute the line <code>usethis::use_readme_rmd()</code>, which adds a template <code>README</code> file in the root of your package. Regardless of whether you want to build a website, adding a <code>README</code> to it is always a good idea! You could explain what the main features of the package are, and how to install it, especially if you want your users or future you to install the package at a certain commit, it is quite useful to write it down clearly in the instructions. Something like:</p>

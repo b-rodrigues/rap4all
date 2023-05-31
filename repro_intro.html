@@ -402,12 +402,12 @@ div.csl-indent {
 <li><code>analyse_data.Rmd</code>, the script that analyses the data.</li>
 </ul>
 <p>Also, make sure that the changes are correctly backed up on Github.com, so if you haven’t already, commit and push any change to the <code>rmd</code> branch. Because we will be experimenting with a new feature, create a new branch called <code>renv</code>. You should know the drill by now, but if not simply follow along:</p>
-<pre><code>owner@localhost ➤ git checkout -b renv</code></pre>
-<pre><code>Switched to a new branch 'renv'</code></pre>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">owner@localhost</span> ➤ git checkout <span class="at">-b</span> renv</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">Switched</span> to a new branch <span class="st">'renv'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>We will now be working on this branch. Simply work as usual, but when pushing, make sure to push to the <code>renv</code> branch:</p>
-<pre><code>owner@localhost ➤ git add .
-owner@localhost ➤ git commit -m "some changes"
-owner@localhost ➤ git push origin renv</code></pre>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">owner@localhost</span> ➤ git add .</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="ex">owner@localhost</span> ➤ git commit <span class="at">-m</span> <span class="st">"some changes"</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="ex">owner@localhost</span> ➤ git push origin renv</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Once this is done, start an R session, and simply type the following in a console:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>renv<span class="sc">::</span><span class="fu">init</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -430,73 +430,73 @@ owner@localhost ➤ git push origin renv</code></pre>
 <span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="sc">*</span> renv activated <span class="sc">--</span> please restart the R session.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Let’s take a look at the files that were created (if you prefer using your file browser, feel free to do so, but I prefer the command line):</p>
-<pre><code>owner@localhost ➤ ls -la</code></pre>
-<pre><code>total 1070
-drwxr-xr-x 1 owner Domain Users     0 Feb 27 12:44 .
-drwxr-xr-x 1 owner Domain Users     0 Feb 27 12:35 ..
--rw-r--r-- 1 owner Domain Users    27 Feb 27 12:44 .Rprofile
-drwxr-xr-x 1 owner Domain Users     0 Feb 27 12:40 .git
--rw-r--r-- 1 owner Domain Users   306 Feb 27 12:35 README.md
--rw-r--r-- 1 owner Domain Users  2398 Feb 27 12:38 analyse_data.Rmd
-drwxr-xr-x 1 owner Domain Users     0 Feb 27 12:44 renv
--rw-r--r-- 1 owner Domain Users 20502 Feb 27 12:44 renv.lock
--rw-r--r-- 1 owner Domain Users  6378 Feb 27 12:38 save_data.Rmd</code></pre>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">owner@localhost</span> ➤ ls <span class="at">-la</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">total</span> 1070</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxr-xr-x</span> 1 owner Domain Users     0 Feb 27 12:44 .</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxr-xr-x</span> 1 owner Domain Users     0 Feb 27 12:35 ..</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="ex">-rw-r--r--</span> 1 owner Domain Users    27 Feb 27 12:44 .Rprofile</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxr-xr-x</span> 1 owner Domain Users     0 Feb 27 12:40 .git</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="ex">-rw-r--r--</span> 1 owner Domain Users   306 Feb 27 12:35 README.md</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="ex">-rw-r--r--</span> 1 owner Domain Users  2398 Feb 27 12:38 analyse_data.Rmd</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxr-xr-x</span> 1 owner Domain Users     0 Feb 27 12:44 renv</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="ex">-rw-r--r--</span> 1 owner Domain Users 20502 Feb 27 12:44 renv.lock</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="ex">-rw-r--r--</span> 1 owner Domain Users  6378 Feb 27 12:38 save_data.Rmd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>As you can see, there are two new files and one folder. The new files are the <code>renv.lock</code> file that I mentioned before and a file called <code>.Rprofile</code>. The new folder is simply called <code>renv</code>. The <code>renv.lock</code> is the file that lists all the packages used for the analysis. <code>.Rprofile</code> files are files that get read by R automatically at startup (as discussed at the very beginning of part one of this book). You should have a system-wide one that gets read on startups of R, but if R discovers an <code>.Rprofile</code> file in the directory it starts on, then that file gets read instead. Let’s see the contents of this file (you can open this file in any text editor, like Notepad on Windows, but then again I prefer the command line):</p>
-<pre><code>owner@localhost ➤ cat .Rprofile</code></pre>
+<div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">owner@localhost</span> ➤ cat .Rprofile</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>The files contains the single line:</p>
-<pre><code>source("renv/activate.R")</code></pre>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"renv/activate.R"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><code>activate.R</code> is an R script that was also create by <code>renv::init()</code>, which you can find in the <code>renv</code> folder. Let’s take a look at the contents of this folder:</p>
-<pre><code>owner@localhost ➤ ls renv</code></pre>
-<pre><code>total 107
-drwxr-xr-x 1 owner Domain Users     0 Feb 27 12:44 .
-drwxr-xr-x 1 owner Domain Users     0 Feb 27 12:35 ..
--rw-r--r-- 1 owner Domain Users    27 Feb 27 12:44 activate.R
-drwxr-xr-x 1 owner Domain Users     0 Feb 27 12:40 .gitignore
-drwxr-xr-x 1 owner Domain Users     0 Feb 27 12:40 library
--rw-r--r-- 1 owner Domain Users  6378 Feb 27 12:38 settings.dcf</code></pre>
+<div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">owner@localhost</span> ➤ ls renv</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="ex">total</span> 107</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxr-xr-x</span> 1 owner Domain Users     0 Feb 27 12:44 .</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxr-xr-x</span> 1 owner Domain Users     0 Feb 27 12:35 ..</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="ex">-rw-r--r--</span> 1 owner Domain Users    27 Feb 27 12:44 activate.R</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxr-xr-x</span> 1 owner Domain Users     0 Feb 27 12:40 .gitignore</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxr-xr-x</span> 1 owner Domain Users     0 Feb 27 12:40 library</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="ex">-rw-r--r--</span> 1 owner Domain Users  6378 Feb 27 12:38 settings.dcf</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>So inside the <code>renv</code> folder, there is another folder called <code>library</code>: this is the folder that contains our isolated library for just this project. That’s something that we would not want to back up on Github as it grows quite large. To avoid tracking this folder and backing it up on Github.com a file called <code>.gitignore</code> (notice the <code>.</code> at the start of the name) gets used. This is a file that contains the paths to other files and folders that should be ignored. If you open it, you will see that the <code>library/</code> folder is listed there so it will be ignored. You can have as many <code>.gitignore</code> files as necessary, but if you put one on the root folder of your project, then that <code>.gitignore</code> will work project-wide.</p>
 <p>For example, if you are working with sensitive data, you could also add a <code>.gitignore</code> file in the root of the project’s directory, and simply list the folder containing he sensitive data. Create this file using your favourite text editor and simply add, for example if you’re working with sensitive data, the following:</p>
-<pre><code>datasets/</code></pre>
+<div class="sourceCode" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ex">datasets/</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>This will prevent the <code>datasets/</code> folder from being tracked and backed up.</p>
 <p>Let’s restart a fresh R session in our project’s directory; you should see the following startup message:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="sc">*</span> Project <span class="st">'path/to/housing'</span> loaded. [renv <span class="dv">0</span>.<span class="fl">16.0</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>This means that this R session will use the packages installed in the isolated library we’ve just created. Let’s now take a look at the <code>renv.lock</code> file:</p>
-<pre><code>owner@localhost ➤ cat renv.lock</code></pre>
-<pre><code>{
-  "R": {
-    "Version": "4.2.2",
-    "Repositories": [
-      {
-        "Name": "CRAN",
-        "URL": "https://packagemanager.rstudio.com/all/latest"
-      }
-    ]
-  },
-  "Packages": {
-    "MASS": {
-      "Package": "MASS",
-      "Version": "7.3-58.1",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Hash": "762e1804143a332333c054759f89a706",
-      "Requirements": []
-    },
-    "Matrix": {
-      "Package": "Matrix",
-      "Version": "1.5-1",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Hash": "539dc0c0c05636812f1080f473d2c177",
-      "Requirements": [
-        "lattice"
-      ]
-
-      ***and many more packages***</code></pre>
+<div class="sourceCode" id="cb15"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="ex">owner@localhost</span> ➤ cat renv.lock</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"R"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"Version"</span><span class="fu">:</span> <span class="st">"4.2.2"</span><span class="fu">,</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"Repositories"</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>      <span class="fu">{</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"Name"</span><span class="fu">:</span> <span class="st">"CRAN"</span><span class="fu">,</span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"URL"</span><span class="fu">:</span> <span class="st">"https://packagemanager.rstudio.com/all/latest"</span></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>      <span class="fu">}</span></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>    <span class="ot">]</span></span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">},</span></span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"Packages"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"MASS"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"Package"</span><span class="fu">:</span> <span class="st">"MASS"</span><span class="fu">,</span></span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"Version"</span><span class="fu">:</span> <span class="st">"7.3-58.1"</span><span class="fu">,</span></span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"Source"</span><span class="fu">:</span> <span class="st">"Repository"</span><span class="fu">,</span></span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"Repository"</span><span class="fu">:</span> <span class="st">"CRAN"</span><span class="fu">,</span></span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"Hash"</span><span class="fu">:</span> <span class="st">"762e1804143a332333c054759f89a706"</span><span class="fu">,</span></span>
+<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"Requirements"</span><span class="fu">:</span> <span class="ot">[]</span></span>
+<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a>    <span class="fu">},</span></span>
+<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"Matrix"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"Package"</span><span class="fu">:</span> <span class="st">"Matrix"</span><span class="fu">,</span></span>
+<span id="cb16-22"><a href="#cb16-22" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"Version"</span><span class="fu">:</span> <span class="st">"1.5-1"</span><span class="fu">,</span></span>
+<span id="cb16-23"><a href="#cb16-23" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"Source"</span><span class="fu">:</span> <span class="st">"Repository"</span><span class="fu">,</span></span>
+<span id="cb16-24"><a href="#cb16-24" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"Repository"</span><span class="fu">:</span> <span class="st">"CRAN"</span><span class="fu">,</span></span>
+<span id="cb16-25"><a href="#cb16-25" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"Hash"</span><span class="fu">:</span> <span class="st">"539dc0c0c05636812f1080f473d2c177"</span><span class="fu">,</span></span>
+<span id="cb16-26"><a href="#cb16-26" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"Requirements"</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb16-27"><a href="#cb16-27" aria-hidden="true" tabindex="-1"></a>        <span class="st">"lattice"</span></span>
+<span id="cb16-28"><a href="#cb16-28" aria-hidden="true" tabindex="-1"></a>      <span class="ot">]</span></span>
+<span id="cb16-29"><a href="#cb16-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-30"><a href="#cb16-30" aria-hidden="true" tabindex="-1"></a>      <span class="er">***and</span> <span class="er">many</span> <span class="er">more</span> <span class="er">packages***</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>The <code>renv.lock</code> file is a json file listing all the packages, as well as their dependencies, that are used for the project. At the top of the file, the R version that was used to generate the <code>renv.lock</code> file is also named. It is important to remember that when you’ll use <code>{renv}</code> to restore a project’s library on a new machine, the R version will not be restored: so in the future, you might be restoring this project and run old versions of packages on a newer version of R, which may sometimes be a problem (but we’re going to discuss this later).</p>
 <p>So… that’s it. You’ve generated the <code>renv.lock</code> file, which means that future you, or someone else can restore the library that you used to write this analysis. All that’s required is for that person (or future you) to install <code>{renv}</code> and then use the <code>renv.lock</code> file that you generated to restore the library. Let’s see how this works by cloning the following Github repository on this <a href="https://github.com/b-rodrigues/targets-minimal">link</a><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> (forked from this one <a href="https://github.com/wlandau/targets-minimal">here</a><a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>):</p>
-<pre><code>owner@localhost ➤ git clone git@github.com:b-rodrigues/targets-minimal.git</code></pre>
+<div class="sourceCode" id="cb17"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="ex">owner@localhost</span> ➤ git clone git@github.com:b-rodrigues/targets-minimal.git</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>You should see a <code>targets-minimal</code> folder on your computer now. Start an R session in that folder and type the following command:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>renv<span class="sc">::</span><span class="fu">restore</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -511,8 +511,8 @@ drwxr-xr-x 1 owner Domain Users     0 Feb 27 12:40 library
 <span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>Would you like to activate this project before restore? [Y<span class="sc">/</span>n]<span class="sc">:</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Type <code>Y</code> and you should see a list of packages that need to be installed. You’ll get asked once more if you want to proceed, type <code>y</code> and watch as the packages get installed. If you pay attention to the links, you should see that many of them get pulled from the CRAN archive, for example:</p>
-<pre><code>Retrieving
-  'https://cloud.r-project.org/src/contrib/Archive/vroom/vroom_1.5.5.tar.gz' ...</code></pre>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>Retrieving</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">'https://cloud.r-project.org/src/contrib/Archive/vroom/vroom_1.5.5.tar.gz'</span> ...</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Notice the word “Archive” in the url? That’s because this project uses <code>{vroom}</code> 1.5.5, but as of writing (early 2023), <code>{vroom}</code> is at version 1.6.1.</p>
 <p>Now, maybe you’ve run <code>renv::restore()</code>, but the installation of the packages may have failed. If that’s the case, let me explain what likely happened.</p>
 <p>I tried restoring the project’s library on two different machines: a Windows laptop and a Linux workstation. <code>renv::restore()</code> failed on the Windows laptop, but succeeded on the Linux workstation.</p>
@@ -545,8 +545,8 @@ drwxr-xr-x 1 owner Domain Users     0 Feb 27 12:40 library
 <p>Before continuing, make sure that it correctly compiles into a HTML file by running <code>rmarkdown::render("test.Rmd")</code> in the correct directory.</p>
 <p>In the <code>setup</code> chunk you load the packages that you need. Now, save this file, and start a fresh session in the same directory and run <code>renv::init()</code>. You should see the familiar prompts described above, as well as the <code>renv.lock</code> file (which will only contain <code>{dplyr}</code> and its dependencies).</p>
 <p>Now, after the <code>library(dplyr)</code> line, add the following <code>library(ggplot2)</code> (or any other package that you use on a daily basis). Make sure to save the <code>.Rmd</code> file and try to render it again by using <code>rmarkdown::render("test.Rmd")</code> (or if you’re using RStudio, by clicking the right button), but, spoiler alert, it won’t work. Instead you should see this:</p>
-<pre><code>Quitting from lines 7-9 (my_new_project.Rmd)
-Error in library(ggplot2) : there is no package called 'ggplot2'</code></pre>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>Quitting from lines <span class="dv">7-9</span> (my_new_project.Rmd)</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>Error <span class="cf">in</span> <span class="fu">library</span>(ggplot2) <span class="sc">:</span> there is no package called <span class="st">'ggplot2'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Don’t be confused: remember that <code>{renv}</code> is now activated, and that each project where <code>{renv}</code> is enabled has its own project-specific library. You may have <code>{ggplot2}</code> installed on your system-wide library, but this <code>{renv}</code>-enabled project does not have it yet on its own specific library. This means that you need to install <code>{ggplot2}</code> for your project. To do so, simply start an R session within your project and run <code>install.packages("ggplot2")</code>. If the version installed on your system-wide library is the latest version available on CRAN, the package will simply be copied over from the system-wide to the project-specific library, if not, the latest version will be downloaded onto your project’s library. You can now update the <code>renv.lock</code> file. This is done using <code>renv::snapshot()</code>; this will show you a list of new packages to record inside the <code>renv.lock</code> file and ask you to continue:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="sc">**</span>list of many packages over here<span class="sc">**</span></span>
@@ -609,18 +609,18 @@ Error in library(ggplot2) : there is no package called 'ggplot2'</code></pre>
 <span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">"/home/project/output/myplot.pdf"</span>, myplot)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>but you will get the following message:</p>
-<pre><code>---------------------------------------------------------------------------
-|IMPORTANT.
-|    Groundhog says: you are using R-4.2.2, but the version of R current
-|    for the entered date, '2017-10-04', is R-3.4.x. It is recommended
-|    that you either keep this date and switch to that version of R, or
-|    you keep the version of R you are using but switch the date to
-|    between '2022-04-22' and '2023-01-08'.
-|
-|    You may bypass this R-version check by adding:
-|    `tolerate.R.version='4.2.2'`as an option in your groundhog.library()
-|    call. Please type 'OK' to confirm you have read this message.
-|   &gt;ok</code></pre>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="sc">---------------------------------------------------------------------------</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="er">|</span>IMPORTANT.</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="sc">|</span>    Groundhog says<span class="sc">:</span> you are using R<span class="dv">-4</span>.<span class="fl">2.2</span>, but the version of R current</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="sc">|</span>    <span class="cf">for</span> the entered date, <span class="st">'2017-10-04'</span>, is R<span class="dv">-3</span>.<span class="fl">4.</span>x. It is recommended</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="sc">|</span>    that you either keep this date and <span class="cf">switch</span> to that version of R, or</span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a><span class="sc">|</span>    you keep the version of R you are using but <span class="cf">switch</span> the date to</span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a><span class="sc">|</span>    between <span class="st">'2022-04-22'</span> and <span class="st">'2023-01-08'</span>.</span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a><span class="sc">|</span></span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a><span class="er">|</span>    You may bypass this R<span class="sc">-</span>version check by adding<span class="sc">:</span></span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a><span class="er">|</span>    <span class="st">`</span><span class="at">tolerate.R.version='4.2.2'</span><span class="st">`</span>as an option <span class="cf">in</span> your <span class="fu">groundhog.library</span>()</span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a><span class="sc">|</span>    call. Please type <span class="st">'OK'</span> to confirm you have read this message.</span>
+<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a><span class="sc">|</span>   <span class="er">&gt;</span>ok</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Groundhog is speaking to us, advising us to switch to the version of R that was current at that time the script was written. If we want to ignore the message’s advice, and add <code>tolerate.R.version = '4.2.2'</code>, we may get the script to run anyways:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">groundhog.library</span>(<span class="st">"</span></span>

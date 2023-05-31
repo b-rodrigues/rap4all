@@ -421,14 +421,14 @@ Running a pipeline with Docker results in the same outputs.
 </section>
 <section id="a-primer-on-linux" class="level2" data-number="14.2">
 <h2 data-number="14.2" class="anchored" data-anchor-id="a-primer-on-linux"><span class="header-section-number">14.2</span> A primer on Linux</h2>
-<p>Up until this point, you could have followed along using any operating system. Most of the code shown in this book is R code, so it doesn’t matter on what operating system you’re running it. But there was some code that I ran in the Linux console (for example, I’ve used <code>ls</code> to list files). These commands should also work on macOS, and some even on Windows (<code>ls</code> also works on the Windows command prompt, and in Powershell as well). Instead of using the command line, you could have followed along using the user interface of your operating system as well. For example, in Chapter 11, I list the contents of the <code>dev/</code> directory using the following command:</p>
-<pre><code>owner@localhost ➤ ls dev/</code></pre>
+<p>Up until this point, you could have followed along using any operating system. Most of the code shown in this book is R code, so it doesn’t matter on what operating system you’re running it. But there was some code that I ran in the Linux console (for example, I’ve used <code>ls</code> to list files). These commands should also work on macOS, but on Windows, I told you to run them in the Git Bash terminal instead. This is because <code>ls</code> (and other such commands) don’t work in the default Windows command prompt (but should work in Powershell though). Instead of using the terminal (or Git Bash) to navigate your computer’s file system, you could have followed along using the user interface of your operating system as well. For example, in Chapter 11 <span class="citation" data-cites="chap-packages">(<a href="references.html#ref-chap-packages" role="doc-biblioref"><strong>chap-packages?</strong></a>)</span>, I list the contents of the <code>dev/</code> directory using the following command:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">owner@localhost</span> ➤ ls dev/</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>but you could have just opened the <code>dev/</code> folder in the file explorer of your operating system of choice. But to use Docker, you will need to get to know Linux and the Linux ecosystem and concepts a little bit. No worries, it’s not as difficult as it sounds, and I think that you likely aren’t afraid of difficult things, or else you would have stopped reading this book much earlier.</p>
 <p><em>Linux</em> is not the name of any one specific operating system, but of an operating system kernel. A kernel is an important component of an operating system. Linux is free and open-source, and among the most successful free and open source projects ever. Because it’s license allows (and encourages) re-use, anyone can take that kernel, and add all the other components needed to build a complete operating system and release the finished product. This is why there are many <em>Linux distributions</em>: a Linux distribution is a complete operating system that uses Linux as its kernel. The most popular Linux distribution is called Ubuntu, and if one time you googled something along the lines of “easy linux os for beginners” the answer that came out on top was likely Ubuntu, or one of the other variants of Ubuntu (yes, because Ubuntu itself is also open-source and free software, it is possible to build a variant using Ubuntu as a basis, like Linux Mint).</p>
 <p>To define our Docker images, we will be using Ubuntu as a base. The Ubuntu operating system has two releases a year, one in April and one in October. On even years, the April release is long-term support (LTS) release. LTS releases get security updates for 5 years, and Docker images generally use an LTS release as a base. As of writing (May 2023), the current LTS is Ubuntu 22.04 <em>Jammy Jellyfish</em> (Ubuntu releases are named with a number of the form YY.MM and then a code name based on some animal).</p>
 <p>If you want, you can install Ubuntu on your computer. But there’s no need for this, since you can use Docker to ship your projects!</p>
 <p>A major difference between Ubuntu (and other Linux distributions) and macOS and Windows is how you install software. In short, software for Linux distributions is distributed as packages. If you want to install, say, the Emacs text editor, you can run the following command in the terminal:</p>
-<pre><code>sudo apt-get install emacs-gtk</code></pre>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt-get install emacs-gtk</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Let’s break this down: <code>sudo</code> makes the next commands run as root. <em>root</em> is Linux jargon for the administrator account. So if I type <code>sudo xyz</code>, the command <code>xyz</code> will run with administrator privileges. Then comes <code>apt-get install</code>. <code>apt-get</code> is Ubuntu’s package manager, and <code>install</code> is the command that installs <code>emacs-gtk</code>. <code>emacs-gtk</code> is the name of the Emacs package. Because you’re an R user, this should be somewhat familiar: after all, extensions for R are also installed using a package manager and a command: <code>install.packages("package_name")</code>. Just like in R, where the packages get downloaded from CRAN, Ubuntu downloads packages from a repository which you can browse <a href="https://packages.ubuntu.com/jammy/">here</a>. Of course, because using the command line is intimidating for beginners, it is also possible to install packages using a software store, just like on macOS or Windows. But remember, Docker only uses what it absolutely needs to function, so there’s no interactive user interface. This is not because Docker’s developers don’t like user interfaces, but because the point of Docker is not to use Docker images interactively, so there’s no need for the user interface. So you need to know how to install Ubuntu packages with the command line.</p>
 <p>Just like for R, it is possible to install software from different sources. It is possible to add different repositories, and install software from there. We are not going to use this here, but just as an aside, if you are using Ubuntu on your computer as your daily driver operating system, you really should check out <a href="https://github.com/eddelbuettel/r2u">r2u</a>, an Ubuntu repository that comes with pre-compiled R packages that can get installed, very, very quickly. Even though we will not be using this here (and I’ll explain why later in this chapter), you should definitely consider <code>r2u</code> to provide binary R packages if you use Ubuntu as your daily operating system.</p>
 <p>Let’s suppose that you are using Ubuntu on your machine, and are using R. If you want to install the <code>{dplyr}</code> R package, something interesting happens when you type:</p>
@@ -469,22 +469,22 @@ libxml2-dev</code></pre>
 
 RUN uname -a</code></pre>
 <p>This very simple Dockerfile does two things: it starts by stating that it’s based on the Ubuntu Jammy (so version 22.04) operating system, and then runs the <code>uname -a</code> command. This command, which gets run inside the Ubunu command line, prints the Linux kernel version from that particular Ubuntu release. <code>FROM</code> and <code>RUN</code> are Docker commands; there are a couple of others that we will discover a bit later. Now, what do you do with this Dockerfile? Remember, a Dockerfile defines an image. So now, we need to build this image to run a container. Open a terminal/command prompt in the folder where the Dockerfile is and type the following:</p>
-<pre><code>owner@localhost ➤ docker build -t raps_hello .</code></pre>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">owner@localhost</span> ➤ docker build <span class="at">-t</span> raps_hello .</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>The <code>docker build</code> command builds an image from the Dockerfile that is in the path <code>.</code> (a single <code>.</code> means “this current working directory”). The <code>-t</code> option tags that image with the name <code>raps_hello</code>. If everything goes well, you should see this output:</p>
-<pre><code>Sending build context to Docker daemon  2.048kB
-Step 1/2 : FROM ubuntu:jammy
- ---&gt; 08d22c0ceb15
-Step 2/2 : RUN uname -a
- ---&gt; Running in 697194b9a519
-Linux 697194b9a519 6.2.6-1-default #1 SMP PREEMPT_DYNAMIC 
-     Mon Mar 13 18:57:27 UTC 2023 (fa1a4c6) x86_64 x86_64 x86_64 GNU/Linux
-Removing intermediate container 697194b9a519
- ---&gt; a0ea59f23d01
-Successfully built a0ea59f23d01
-Successfully tagged raps_hello:latest</code></pre>
+<div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">Sending</span> build context to Docker daemon  2.048kB</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Step</span> 1/2 : FROM ubuntu:jammy</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a> <span class="ex">---</span><span class="op">&gt;</span> 08d22c0ceb15</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="ex">Step</span> 2/2 : RUN uname <span class="at">-a</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a> <span class="ex">---</span><span class="op">&gt;</span> Running in 697194b9a519</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="ex">Linux</span> 697194b9a519 6.2.6-1-default <span class="co">#1 SMP PREEMPT_DYNAMIC </span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>     <span class="ex">Mon</span> Mar 13 18:57:27 UTC 2023 <span class="er">(</span><span class="ex">fa1a4c6</span><span class="kw">)</span> <span class="ex">x86_64</span> x86_64 x86_64 GNU/Linux</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="ex">Removing</span> intermediate container 697194b9a519</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a> <span class="ex">---</span><span class="op">&gt;</span> a0ea59f23d01</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="ex">Successfully</span> built a0ea59f23d01</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="ex">Successfully</span> tagged raps_hello:latest</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Look at <code>Step 2/2</code>: you should see the output of the <code>uname -a</code> command:</p>
-<pre><code>Linux 697194b9a519 6.2.6-1-default #1 SMP PREEMPT_DYNAMIC
-     Mon Mar 13 18:57:27 UTC 2023 (fa1a4c6) x86_64 x86_64 x86_64 GNU/Linux</code></pre>
+<div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ex">Linux</span> 697194b9a519 6.2.6-1-default <span class="co">#1 SMP PREEMPT_DYNAMIC</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>     <span class="ex">Mon</span> Mar 13 18:57:27 UTC 2023 <span class="er">(</span><span class="ex">fa1a4c6</span><span class="kw">)</span> <span class="ex">x86_64</span> x86_64 x86_64 GNU/Linux</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Every <code>RUN</code> statement in the Dockerfile gets executed at build time: so this is what we will use to install R and needed packages. This way, once the image is built, we end up with an image that contains all the software we need.</p>
 <p>Now, we would like to be able to use this image. Using a built image, we can start one or several containers that we can use for whatever we want. Let’s now create a more realistic example. Let’s build a Docker image that comes with R pre-installed. But for this, we need to go back to our Dockerfile and change it a bit:</p>
 <pre><code>FROM ubuntu:jammy
@@ -499,35 +499,35 @@ CMD ["R"]</code></pre>
 <p>First we define a variable using <code>ENV</code>, called <code>TZ</code> and we set that to the <code>Europe/Luxembourg</code> time zone (you can change this to your own time zone). We then run a rather complex looking command that sets the defined time zone system-wide. We had to do all this, because when we will later install R, a system-level dependency called <code>tzdata</code> gets installed alongside it. This tool then asks the user to enter his or her time zone interactively. But we cannot interact with the image interactively as it’s being built, so the build process gets stuck at this prompt. By using these two commands, we can set the correct time zone and once <code>tzdata</code> gets installed, that tool doesn’t ask for the time zone anymore, so the build process can continue. This is a rather known issue when building Docker images based on Ubuntu, so the fix is easily found with a Google search (but I’m giving it to you, dear reader, for free).</p>
 <p>Then come <code>RUN</code> statements. The first one uses Ubuntu’s package manager to first refresh the repositories (this ensures that our local Ubuntu installation repositories are in synch with the latest software updates that were pushed to the central Ubuntu repos). Then we use Ubuntu’s package manager to install <code>r-base</code>. <code>r-base</code> is the package that installs R. We then finish this Dockerfile by running <code>CMD ["R"]</code>. This is the command that will be executed when we run the container. Remember: <code>RUN</code> commands get executed at build-time, <code>CMD</code> commands at run-time. This distinction will be important later on.</p>
 <p>Let’s build the image (this will take some time, because a lot of software gets installed):</p>
-<pre><code>owner@localhost ➤ docker build -t raps_ubuntu_r .</code></pre>
+<div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="ex">owner@localhost</span> ➤ docker build <span class="at">-t</span> raps_ubuntu_r .</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>This builds an image called <code>raps_ubuntu_r</code>. This image is based on Ubuntu 22.04 Jammy Jellyfish and comes with R pre-installed. But the version of R that gets installed is the one made available through the Ubuntu repositories, and as of writing that is version 4.1.2, while the latest version available is R version 4.2.3. So the version available through the Ubuntu repositories lags behind the actual release. But no matter, we will deal with that later.</p>
 <p>We can now start a container with the following command:</p>
-<pre><code>owner@localhost ➤ docker run raps_ubuntu_r</code></pre>
+<div class="sourceCode" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ex">owner@localhost</span> ➤ docker run raps_ubuntu_r</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>And this is the output we get:</p>
-<pre><code>Fatal error: you must specify '--save', '--no-save' or '--vanilla'</code></pre>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>Fatal error<span class="sc">:</span> you must specify <span class="st">'--save'</span>, <span class="st">'--no-save'</span> or <span class="st">'--vanilla'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>What is going on here? When you run a container, the command specified by <code>CMD</code> gets executed, and then the container quits. So here, the container ran the command <code>R</code>, which started the R interpreter, but then quit immediately. When quitting R, users should specify if they want to save or not save the workspace. This is what the message above is telling us. So, how can be use this? Is there a way to use this R version interactively?</p>
 <p>Yes, there is a way to use this R version boxed inside our Docker image interactively, even though that’s not really what we want to achieve. What we want instead is that our pipeline gets executed when we run the container. We don’t want to mess with the container interactively. But let me show you how we can interact with this dockerized R version. First, you need to let the container run in the background. You can achieve this by running the following command:</p>
-<pre><code>owner@localhost ➤ docker run -d -it --name ubuntu_r_1 raps_ubuntu_r</code></pre>
+<div class="sourceCode" id="cb15"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="ex">owner@localhost</span> ➤ docker run <span class="at">-d</span> <span class="at">-it</span> <span class="at">--name</span> ubuntu_r_1 raps_ubuntu_r</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>This runs the container that we name “ubuntu_r_1” from the image “raps_ubuntu_r” (remember that we can run many containers from one single image definition). Thanks to the option <code>-d</code>, the container runs in the background, and the option <code>-it</code> states that we want an interactive shell to be waiting for us. So the container runs in the background, with an interactive shell waiting for us, instead of launching (and then immediately stopping) the R command. You can now “connect” to the interactive shell and start R in it using:</p>
-<pre><code>owner@localhost ➤ docker exec -it ubuntu_r_1 R</code></pre>
+<div class="sourceCode" id="cb16"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="ex">owner@localhost</span> ➤ docker exec <span class="at">-it</span> ubuntu_r_1 R</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>You should now see the familiar R prompt:</p>
-<pre><code>R version 4.1.2 (2021-11-01) -- "Bird Hippie"
-Copyright (C) 2021 The R Foundation for Statistical Computing
-Platform: x86_64-pc-linux-gnu (64-bit)
-
-R is free software and comes with ABSOLUTELY NO WARRANTY.
-You are welcome to redistribute it under certain conditions.
-Type 'license()' or 'licence()' for distribution details.
-
-R is a collaborative project with many contributors.
-Type 'contributors()' for more information and
-'citation()' on how to cite R or R packages in publications.
-
-Type 'demo()' for some demos, 'help()' for on-line help, or
-'help.start()' for an HTML browser interface to help.
-Type 'q()' to quit R.
-
-&gt; </code></pre>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>R version <span class="dv">4</span>.<span class="fl">1.2</span> (<span class="dv">2021-11-01</span>) <span class="sc">--</span> <span class="st">"Bird Hippie"</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">Copyright</span> (C) <span class="dv">2021</span> The R Foundation <span class="cf">for</span> Statistical Computing</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>Platform<span class="sc">:</span> x86_64<span class="sc">-</span>pc<span class="sc">-</span>linux<span class="sc">-</span><span class="fu">gnu</span> (<span class="dv">64</span><span class="sc">-</span>bit)</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>R is free software and comes with ABSOLUTELY NO WARRANTY.</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>You are welcome to redistribute it under certain conditions.</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>Type <span class="st">'license()'</span> or <span class="st">'licence()'</span> <span class="cf">for</span> distribution details.</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>R is a collaborative project with many contributors.</span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>Type <span class="st">'contributors()'</span> <span class="cf">for</span> more information and</span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a><span class="st">'citation()'</span> on how to cite R or R packages <span class="cf">in</span> publications.</span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>Type <span class="st">'demo()'</span> <span class="cf">for</span> some demos, <span class="st">'help()'</span> <span class="cf">for</span> on<span class="sc">-</span>line help, or</span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a><span class="st">'help.start()'</span> <span class="cf">for</span> an HTML browser interface to help.</span>
+<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a>Type <span class="st">'q()'</span> to quit R.</span>
+<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Welcome to a dockerized version of R. Now, all of this might have felt overly complicated to you. And of course if this is the first time that you have played around with Docker, it is tricky indeed. However, you shouldn’t worry too much about it, for several reasons:</p>
 <ul>
 <li>we are not going to use Docker containers interactively, that’s not really the point, but it can be useful to log in into the running container to check if things are working as expected;</li>
@@ -603,31 +603,31 @@ RUN R -e "setwd('/home/housing');renv::init();renv::restore()"</code></pre>
 <p>This runs the <code>R</code> program from the Linux command line with the option <code>-e</code>. This option allows you to pass an <code>R</code> expression to the command line, which needs to be written between <code>""</code>. Using <code>R -e</code> will quickly become an habit, because this is how you can run R non-interactively, from the command line. The expression we pass sets the working directory to <code>/home/housing</code>, and then we use <code>renv::init()</code> and <code>renv::restore()</code> to restore the packages from the <code>renv.lock</code> file that we copied before. Using this Dockerfile, we can now build an image that will come with R version 4.2.2 pre-installed as well as all the same packages that we used to develop the <code>housing</code> pipeline.</p>
 <p>Build the image using <code>docker build -t housing_image .</code> (don’t forget the <code>.</code> at the end).</p>
 <p>The build process will take some time, so I would advise you to go get a hot beverage in the meantime. Now, we did half the work: we have an environment that contains the required software for our pipeline, but the pipeline files themselves are missing. But before adding the pipeline itself, let’s see if the Docker image we built is working. For this, log in to a command line inside a running Docker container started from this image with this single command:</p>
-<pre><code>docker run --rm -it --name housing_container housing_image bash</code></pre>
+<div class="sourceCode" id="cb20"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="ex">owner@localhost</span> ➤ docker run <span class="at">--rm</span> <span class="at">-it</span> <span class="at">--name</span> housing_container housing_image bash</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>This starts <code>bash</code> (Ubuntu’s command line) inside the <code>housing_container</code> that gets started from the <code>housing_image</code> image. We add the <code>--rm</code> flag do <code>docker run</code>, this way the Docker container gets stopped when we log out (if not, then the Docker container will continue running in the background). Once logged in, we can move to the folder’s project using:</p>
-<pre><code>user@docker ➤ cd home/housing</code></pre>
+<div class="sourceCode" id="cb21"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="ex">user@docker</span> ➤ cd home/housing</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>and then start the R interpreter:</p>
-<pre><code>user@docker ➤ R</code></pre>
+<div class="sourceCode" id="cb22"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="ex">user@docker</span> ➤ R</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>if everything goes well, you should see the familiar R prompt with a message from <code>{renv}</code> at the end:</p>
-<pre><code>R version 4.2.2 (2022-10-31) -- "Innocent and Trusting"
-Copyright (C) 2022 The R Foundation for Statistical Computing
-Platform: x86_64-pc-linux-gnu (64-bit)
-
-R is free software and comes with ABSOLUTELY NO WARRANTY.
-You are welcome to redistribute it under certain conditions.
-Type 'license()' or 'licence()' for distribution details.
-
-  Natural language support but running in an English locale
-
-R is a collaborative project with many contributors.
-Type 'contributors()' for more information and
-'citation()' on how to cite R or R packages in publications.
-
-Type 'demo()' for some demos, 'help()' for on-line help, or
-'help.start()' for an HTML browser interface to help.
-Type 'q()' to quit R.
-
-* Project '/home/housing' loaded. [renv 0.16.0]</code></pre>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>R version <span class="dv">4</span>.<span class="fl">2.2</span> (<span class="dv">2022-10-31</span>) <span class="sc">--</span> <span class="st">"Innocent and Trusting"</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">Copyright</span> (C) <span class="dv">2022</span> The R Foundation <span class="cf">for</span> Statistical Computing</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>Platform<span class="sc">:</span> x86_64<span class="sc">-</span>pc<span class="sc">-</span>linux<span class="sc">-</span><span class="fu">gnu</span> (<span class="dv">64</span><span class="sc">-</span>bit)</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>R is free software and comes with ABSOLUTELY NO WARRANTY.</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>You are welcome to redistribute it under certain conditions.</span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>Type <span class="st">'license()'</span> or <span class="st">'licence()'</span> <span class="cf">for</span> distribution details.</span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>  Natural language support but running <span class="cf">in</span> an English locale</span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>R is a collaborative project with many contributors.</span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>Type <span class="st">'contributors()'</span> <span class="cf">for</span> more information and</span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a><span class="st">'citation()'</span> on how to cite R or R packages <span class="cf">in</span> publications.</span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a>Type <span class="st">'demo()'</span> <span class="cf">for</span> some demos, <span class="st">'help()'</span> <span class="cf">for</span> on<span class="sc">-</span>line help, or</span>
+<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a><span class="st">'help.start()'</span> <span class="cf">for</span> an HTML browser interface to help.</span>
+<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a>Type <span class="st">'q()'</span> to quit R.</span>
+<span id="cb23-18"><a href="#cb23-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-19"><a href="#cb23-19" aria-hidden="true" tabindex="-1"></a><span class="sc">*</span> Project <span class="st">'/home/housing'</span> loaded. [renv <span class="dv">0</span>.<span class="fl">16.0</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Try to load the <code>{housing}</code> package with <code>library("housing")</code>. This should work flawlessly!</p>
 </section>
 <section id="dockerizing-projects" class="level2" data-number="14.5">
@@ -703,12 +703,12 @@ CMD mv /home/housing/pipeline_output/* /home/housing/shared_folder/</code></pre>
 <span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>The argument to <code>output_dir</code> gets passed to <code>knitr::knit()</code> and simply states that the output files should be saved in that folder. I can now build the image using <code>docker build -t housing_image .</code>. Once the build process is done, we can log in to the container to see if our files are there. But let me repeat again, that you are not really supposed to do so. You could simply run the container now and get your files. But let’s just take a quick look. You can log in to a bash session using:</p>
-<pre><code>owner@localhost ➤ docker run --rm -it --name housing_container housing_image bash</code></pre>
+<div class="sourceCode" id="cb27"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="ex">owner@localhost</span> ➤ docker run <span class="at">--rm</span> <span class="at">-it</span> <span class="at">--name</span> housing_container housing_image bash</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>If you then move to <code>/home/housing/pipeline_output</code> and run <code>ls</code> in that folder, you should see <code>analyse_data.html</code>. That’s our output! So how do we get it out?</p>
 <p>You need to run the container with the <code>-v</code> flag which allows you to specify the path to the shared folder on your computer, and the shared folder inside the Docker container. The code below shows how to do it (I’ve used the <code>\</code> to break this long command over two lines):</p>
-<pre><code>owner@localhost ➤ docker run --rm --name housing_container -v \
-                  /host/path/to/shared_folder:/home/housing/shared_folder:rw \
-                  housing_image</code></pre>
+<div class="sourceCode" id="cb28"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="ex">owner@localhost</span> ➤ docker run <span class="at">--rm</span> <span class="at">--name</span> housing_container <span class="at">-v</span> <span class="dt">\</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>                  /host/path/to/shared_folder:/home/housing/shared_folder:rw <span class="dt">\</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>                  housing_image</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><code>/host/path/to/shared_folder</code> is the path to the shared folder on my computer. <code>/home/housing/shared_folder</code> is the path to the shared folder inside the Docker container. When these lines run, the very last <code>CMD</code> statement from the Dockerfile runs, moving the contents from inside the Docker container to our computer. If you check the contents of the <code>shared_folder</code> on your computer, you will see <code>analyse_data.html</code> in there.</p>
 <p>That’s it, we have now a complete reproducible analytical pipeline. We managed to tick every one of the following boxes when running our pipeline:</p>
 <ul>
@@ -765,7 +765,7 @@ RUN R -e "remotes::install_github('rstudio/renv@0.16.0')"</code></pre>
 <li>You use the Docker image not only to ship RAPs, but also for development.</li>
 </ul>
 <p>The last option implies that you use Docker interactively, which is not ideal, but it is possible. For example, you could install RStudio server and run a Dockerized version of RStudio from a running Docker container. This is actually what happens if you follow the instructions on the Rocker project’s homepage. You can get a dockerized RStudio instance by running:</p>
-<pre><code>docker run --rm -ti -e PASSWORD=yourpassword -p 8787:8787 rocker/rstudio</code></pre>
+<div class="sourceCode" id="cb30"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="ex">owner@localhost</span> ➤ docker run <span class="at">--rm</span> <span class="at">-ti</span> <span class="at">-e</span> PASSWORD=yourpassword <span class="at">-p</span> 8787:8787 rocker/rstudio</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>and then going to <code>http://localhost:8787</code> on your web-browser. You can then log in with the username “rstudio” and the password “yourpassword”. But you would also need to mount a volume (I called it “shared folder” previously) to keep the files you edit on your computer (remember, Docker container are immutable, so any files created within a Docker container will be lost when it’s stopped). Overall, I think that this is too cumbersome, especially because the risks of getting different results only because of your operating system are very, very, very low. I would simply advise the following:</p>
 <ul>
 <li>Use the same version of R on your computer and on Docker;</li>
@@ -780,28 +780,28 @@ RUN R -e "remotes::install_github('rstudio/renv@0.16.0')"</code></pre>
 <p>If you want to share Docker images through Docker Hub, you first need to create a free account. A free account gives you unlimited public repositories. If you want to make your images private, you need a paid account. For our purposes though, a free account is more than enough. Again, in the next section, we will discuss how you can build new images upon other images without using Docker Hub.</p>
 <p>If you want to follow along, make sure that you have also written a Dockerfile and built an image that you can upload on Docker Hub. I will be uploading the image <code>dev_env_r</code> to Docker Hub, so if you want you could use for your own projects.</p>
 <p>If you built an image to upload, now is the right moment to talk about the <code>docker images</code> command. This will list all the images available on your computer. You should see something like this:</p>
-<pre><code>REPOSITORY         TAG       IMAGE ID       CREATED       SIZE
-rver_intro         latest    d3764d067534   2 days ago    1.61GB
-dev_env_r          latest    92fcf973ba42   2 days ago    1.42GB
-raps_ubuntu_r      latest    7dabadf3c7ee   4 days ago    1.04GB
-rocker/tidyverse   4.2.2     545e4538a28a   3 weeks ago   2.19GB
-rocker/r-ver       4.2.2     08942f81ec9c   3 weeks ago   824MB</code></pre>
+<div class="sourceCode" id="cb31"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="ex">REPOSITORY</span>         TAG       IMAGE ID       CREATED       SIZE</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="ex">rver_intro</span>         latest    d3764d067534   2 days ago    1.61GB</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="ex">dev_env_r</span>          latest    92fcf973ba42   2 days ago    1.42GB</span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a><span class="ex">raps_ubuntu_r</span>      latest    7dabadf3c7ee   4 days ago    1.04GB</span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a><span class="ex">rocker/tidyverse</span>   4.2.2     545e4538a28a   3 weeks ago   2.19GB</span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a><span class="ex">rocker/r-ver</span>       4.2.2     08942f81ec9c   3 weeks ago   824MB</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Take note of the image id of the <code>dev_env_r</code> image (second line), we will use it to push our image to Docker Hub. Also, don’t be alarmed by the size of the images, because this is a bit misleading. Different images that use the same base (so here Ubuntu Jammy), will reuse “layers” such that they don’t actually take up the size that is printed by <code>docker images</code>. So if images A and B both use Ubuntu Jammy as a base, but image A has RStudio installed and B also RStudio but Python as well, most of the space that A and B take up will be shared. The only difference will be that B will need a little bit more space for Python.</p>
 <p>You can also list the running containers with <code>docker container ls</code> (or <code>docker ps</code>). If a container is running you should see something like this:</p>
-<pre><code>CONTAINER ID   IMAGE              COMMAND   CREATED
-545e4538a28a   rocker/tidyverse   "/init"   3 minutes ago
-
-STATUS         PORTS                                       NAMES
-Up 3 minutes   0.0.0.0:8787-&gt;8787/tcp, :::8787-&gt;8787/tcp   elastic_morse</code></pre>
+<div class="sourceCode" id="cb32"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="ex">CONTAINER</span> ID   IMAGE              COMMAND   CREATED</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="ex">545e4538a28a</span>   rocker/tidyverse   <span class="st">"/init"</span>   3 minutes ago</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a><span class="ex">STATUS</span>         PORTS                                       NAMES</span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a><span class="ex">Up</span> 3 minutes   0.0.0.0:8787-<span class="op">&gt;</span>8787/tcp, :::8787-<span class="op">&gt;</span>8787/tcp   elastic_morse</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>You can stop the container by running <code>docker stop CONTAINER ID</code>. So, list the images again using <code>docker images</code>. Take note of the image id of the image you want to push to Docker Hub.</p>
 <p>Now, log in to Docker Hub using <code>docker login</code> (yes, from your terminal). You will be asked for your credentials, and if log in is successful, you see a message <code>Log In Succeeded</code> in your terminal (of course, you need first to have an account on Docker Hub).</p>
 <p>Now, you need to tag the image (this gives it a version number). So you would write something like:</p>
-<pre><code>owner@localhost ➤ docker tag IMAGE_ID your_username_on_docker_hub/your_image:version1</code></pre>
+<div class="sourceCode" id="cb33"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="ex">owner@localhost</span> ➤ docker tag IMAGE_ID your_username_on_docker_hub/your_image:version1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>so in my case, it would be:</p>
-<pre><code>owner@localhost ➤ docker tag 92fcf973ba42 rap4all/dev_env_r:4.2.2</code></pre>
+<div class="sourceCode" id="cb34"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="ex">owner@localhost</span> ➤ docker tag 92fcf973ba42 rap4all/dev_env_r:4.2.2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Next, I need to push it using <code>docker push</code>:</p>
-<pre><code>owner@localhost ➤ docker push rap4all/dev_env_r:4.2.2</code></pre>
-<pre><code>owner@localhost $ docker push rap4all/dev_env_r:4.2.2</code></pre>
+<div class="sourceCode" id="cb35"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="ex">owner@localhost</span> ➤ docker push rap4all/dev_env_r:4.2.2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb36"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="ex">owner@localhost</span> $ docker push rap4all/dev_env_r:4.2.2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>You can go check your profile and your repositories, you should see your image there. In my case, you can find the image <a href="https://hub.docker.com/layers/rap4all/dev_env_r/4.2.2/images/sha256-a961d6b11bc1fb3ead5cfcd82e24d3cfbce763fda0efce62f8b0abb319e80160?context=repo">here</a>.</p>
 <p>This image can now be used as a stable base for developing our pipelines. Here’s how I can now use this base image for my <code>housing</code> pipeline:</p>
 <pre><code>FROM rap4all/dev_env_r:4.2.2
@@ -833,24 +833,23 @@ CMD mv /home/housing/pipeline_output/* /home/housing/shared_folder/</code></pre>
 <h3 data-number="14.6.3" class="anchored" data-anchor-id="sharing-a-compressed-archive-of-your-image"><span class="header-section-number">14.6.3</span> Sharing a compressed archive of your image</h3>
 <p>If you can’t upload the image on Docker Hub, you can still “save it” into a file and share that file instead (internally to your institution/company).</p>
 <p>Run <code>docker save</code> to save the image into a file:</p>
-<pre><code>owner@localhost ➤ docker save dev_env_r &gt; dev_env_r.tar</code></pre>
+<div class="sourceCode" id="cb38"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="ex">owner@localhost</span> ➤ docker save dev_env_r <span class="op">&gt;</span> dev_env_r.tar</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>This will create a <code>.tar</code> file of the image. You can then compress this file with an archiving tool if you want. If you’re on Linux, you could do so in one go (this will take some time):</p>
-<pre><code>owner@localhost ➤ docker save dev_env_r | gzip &gt; dev_env_r.tgz</code></pre>
+<div class="sourceCode" id="cb39"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="ex">owner@localhost</span> ➤ docker save dev_env_r <span class="kw">|</span> <span class="fu">gzip</span> <span class="op">&gt;</span> dev_env_r.tgz</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>If you want to load this image, use <code>docker load</code>:</p>
-<pre><code>owner@localhost ➤ docker load &lt; dev_env_r.tar</code></pre>
+<div class="sourceCode" id="cb40"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="ex">owner@localhost</span> ➤ docker load <span class="op">&lt;</span> dev_env_r.tar</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>you should see an output like this:</p>
-<pre><code>202fe64c3ce3: Loading layer [======================&gt;]  80.33MB/80.33MB
-e7484d5519b7: Loading layer [======================&gt;]  6.144kB/6.144kB
-a0f5608ee4a8: Loading layer [======================&gt;]  645.4MB/645.4MB
-475d1d69813f: Loading layer [======================&gt;]  102.9kB/102.9kB
-d7963749937d: Loading layer [======================&gt;]  108.9MB/108.9MB
-224a0042a76f: Loading layer [======================&gt;]    600MB/600MB
-a75e978c1654: Loading layer [======================&gt;]  605.7kB/605.7kB
-7efc10233531: Loading layer [======================&gt;]  1.474MB/1.474MB
-Loaded image: dev_env_r:latest
-</code></pre>
+<div class="sourceCode" id="cb41"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="ex">202fe64c3ce3:</span> Loading layer [======================<span class="op">&gt;</span>]  80.33MB/80.33MB</span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="ex">e7484d5519b7:</span> Loading layer [======================<span class="op">&gt;</span>]  6.144kB/6.144kB</span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a><span class="ex">a0f5608ee4a8:</span> Loading layer [======================<span class="op">&gt;</span>]  645.4MB/645.4MB</span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a><span class="ex">475d1d69813f:</span> Loading layer [======================<span class="op">&gt;</span>]  102.9kB/102.9kB</span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a><span class="ex">d7963749937d:</span> Loading layer [======================<span class="op">&gt;</span>]  108.9MB/108.9MB</span>
+<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a><span class="ex">224a0042a76f:</span> Loading layer [======================<span class="op">&gt;</span>]    600MB/600MB</span>
+<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a><span class="ex">a75e978c1654:</span> Loading layer [======================<span class="op">&gt;</span>]  605.7kB/605.7kB</span>
+<span id="cb41-8"><a href="#cb41-8" aria-hidden="true" tabindex="-1"></a><span class="ex">7efc10233531:</span> Loading layer [======================<span class="op">&gt;</span>]  1.474MB/1.474MB</span>
+<span id="cb41-9"><a href="#cb41-9" aria-hidden="true" tabindex="-1"></a><span class="ex">Loaded</span> image: dev_env_r:latest</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>or if you compressed the file on Linux, you can also use:</p>
-<pre><code>owner@localhost ➤ docker load -i dev_env_r.tgz</code></pre>
+<div class="sourceCode" id="cb42"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="ex">owner@localhost</span> ➤ docker load <span class="at">-i</span> dev_env_r.tgz</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>to load the archive.</p>
 <p>You can then use <code>dev_env_r</code> for a pipeline by using this <code>FROM</code> statement in your Dockerfile:</p>
 <pre><code>FROM dev_env_r</code></pre>

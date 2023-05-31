@@ -391,15 +391,15 @@ div.csl-indent {
 <p>So in summary: to avoid a lot of pain by merging branches that moved away too much from the trunk, we will create branches, add our code, and merge them to the trunk as soon as possible. <em>As soon as possible</em> can mean several things, but usually this means as soon as a feature was added, a bug was fixed, or as soon as we added some code that does not break the whole project, even if the feature we wanted to add is not done yet. The philosophy is that if merging fails, it should fail as early as possible. Early failures are easy to deal with.</p>
 <p>Our aim should be to provide a functioning project to anyone cloning the master branch anytime (but still offer a simple way to install a point release of the project).</p>
 <p>So, back to our issue. First, Bruno needs to clone the repository:</p>
-<pre><code>bruno@computer ➤ git clone git@github.com:rap4all/housing.git</code></pre>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">bruno@computer</span> ➤ git clone git@github.com:rap4all/housing.git</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>To add the feature, Bruno will now create a new branch by using the <code>git checkout</code> command with the <code>-b</code> flag:</p>
-<pre><code>bruno@computer ➤ git checkout -b "add_readme"</code></pre>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">bruno@computer</span> ➤ git checkout <span class="at">-b</span> <span class="st">"add_readme"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>The project automatically switches to the new branch:</p>
-<pre><code>Switched to a new branch 'add_readme'</code></pre>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">Switched</span> to a new branch <span class="st">'add_readme'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>We can also run <code>git status</code> to double-check:</p>
-<pre><code>bruno@computer ➤ git status</code></pre>
-<pre><code>On branch add_readme
-nothing to commit, working tree clean</code></pre>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">bruno@computer</span> ➤ git status</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">On</span> branch add_readme</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="ex">nothing</span> to commit, working tree clean</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Bruno adds a file called <code>README.md</code> and adds the following text to it:</p>
 <pre><code># Housing data for Luxembourg
 
@@ -410,32 +410,32 @@ tidy them up into a flat data frame.
 - save_data.R: downloads, cleans, and creates data frames from the data
 - analysis.R: creates plots of the data</code></pre>
 <p>Let’s save this and run <code>git status</code> to see what happened:</p>
-<pre><code>bruno@computer ➤ git status</code></pre>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">bruno@computer</span> ➤ git status</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Git tells Bruno that the <code>README.md</code> file is not being tracked:</p>
-<pre><code>On branch add_readme
-Untracked files:
-  (use "git add &lt;file&gt;..." to include in what will be committed)
-        README.md
-
-nothing added to commit but untracked files present (use "git add" to track)</code></pre>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">On</span> branch add_readme</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Untracked</span> files:</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">(</span><span class="ex">use</span> <span class="st">"git add &lt;file&gt;..."</span> to include in what will be committed<span class="kw">)</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>        <span class="ex">README.md</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="ex">nothing</span> added to commit but untracked files present <span class="er">(</span><span class="ex">use</span> <span class="st">"git add"</span> to track<span class="kw">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>So next Bruno is going to track it and push the changes. Also, Bruno is going to use a neat trick when pushing: because Bruno is working on fixing an issue, it would be great if he could close it as he pushes the fix. This is possible by referencing the issue number in the commit message:</p>
-<pre><code>bruno@computer ➤ git add .
-bruno@computer ➤ git commit -m "fixed #1"</code></pre>
+<div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">bruno@computer</span> ➤ git add .</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="ex">bruno@computer</span> ➤ git commit <span class="at">-m</span> <span class="st">"fixed #1"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><code>#1</code> refers to the number of the issue (it’s the first issue that was opened in the repository). So by referencing this issue with its number in the commit message and pushing, the issue gets automatically closed when Bruno pushes:</p>
-<pre><code>bruno@computer ➤ git push origin add_readme</code></pre>
+<div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ex">bruno@computer</span> ➤ git push origin add_readme</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>As you can see from the command above, Bruno pushes to “add_readme”, the branch he opened to solve the issue, not “master”. If he tried to push to “master” a message saying that “master” is up-to-date would get printed. Let’s see the output of pushing to “add_readme”:</p>
-<pre><code>Enumerating objects: 4, done.
-Counting objects: 100% (4/4), done.
-Delta compression using up to 12 threads
-Compressing objects: 100% (3/3), done.
-Writing objects: 100% (3/3), 501 bytes | 501.00 KiB/s, done.
-Total 3 (delta 0), reused 0 (delta 0), pack-reused 0
-remote:
-remote: Create a pull request for 'add_readme' on GitHub by visiting:
-remote:      https://github.com/rap4all/housing/pull/new/add_readme
-remote:
-To github.com:rap4all/housing.git
- * [new branch]      add_readme -&gt; add_readme</code></pre>
+<div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">Enumerating</span> objects: 4, done.</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Counting</span> objects: 100% <span class="er">(</span><span class="ex">4/4</span><span class="kw">)</span><span class="ex">,</span> done.</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="ex">Delta</span> compression using up to 12 threads</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="ex">Compressing</span> objects: 100% <span class="er">(</span><span class="ex">3/3</span><span class="kw">)</span><span class="ex">,</span> done.</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="ex">Writing</span> objects: 100% <span class="er">(</span><span class="ex">3/3</span><span class="kw">)</span><span class="ex">,</span> 501 bytes <span class="kw">|</span> <span class="ex">501.00</span> KiB/s, done.</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="ex">Total</span> 3 <span class="er">(</span><span class="ex">delta</span> 0<span class="kw">)</span><span class="ex">,</span> reused 0 <span class="er">(</span><span class="ex">delta</span> 0<span class="kw">)</span><span class="ex">,</span> pack-reused 0</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="ex">remote:</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="ex">remote:</span> Create a pull request for <span class="st">'add_readme'</span> on GitHub by visiting:</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="ex">remote:</span>      https://github.com/rap4all/housing/pull/new/add_readme</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="ex">remote:</span></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a><span class="ex">To</span> github.com:rap4all/housing.git</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a> <span class="ex">*</span> [new branch]      add_readme <span class="at">-</span><span class="op">&gt;</span> add_readme</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Git tells us that Bruno now needs to create a pull request. What is that? Well, if we want to merge our branch back to the trunk, we need to do so by using a pull request. Let’s see what Bruno sees on Github:</p>
 <figure class="figure">
 <img src="images/github_add_readme_recent_push.png" alt="Bruno sees that the 'add_readme' branch has been recently updated." class="figure-img">
@@ -554,21 +554,21 @@ Let’s get rid of this branch.
 <p>We will see all of this in the coming sections.</p>
 <p>So how do conflicts happen? Let’s imagine the following scenario. Both Bruno and the project owner create branches, and edit the same file. Perhaps they talked over the phone and decided to add a feature or correct a bug. Perhaps they decided that it wasn’t worth opening an issue on Github and assign someone to do it. After all, they discussed this on the phone and decided that Bruno should do it. Or was it the owner who needed to solve the issue? No one remembers now. Either way, they both did, and changed the same file, so a conflict will ensue.</p>
 <p>First, Bruno needs to switch back to the master branch on his computer:</p>
-<pre><code>bruno@computer ➤ git checkout master</code></pre>
-<pre><code>Switched to branch 'master'
-Your branch is behind 'origin/master' by 2 commits, and can be fast-forwarded.
-  (use "git pull" to update your local branch)</code></pre>
+<div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="ex">bruno@computer</span> ➤ git checkout master</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ex">Switched</span> to branch <span class="st">'master'</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Your</span> branch is behind <span class="st">'origin/master'</span> by 2 commits, and can be fast-forwarded.</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">(</span><span class="ex">use</span> <span class="st">"git pull"</span> to update your local branch<span class="kw">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Git tells us to update the code on our computer by running <code>git pull</code>. We use <code>git push</code> to upload code to Github, and use <code>git pull</code> to download code from Github. Let’s run it and see what happens:</p>
-<pre><code>bruno@computer ➤ git pull</code></pre>
-<pre><code>Updating b7f82ee..c774ebf
-Fast-forward
- README.md | 7 +++++++
- 1 file changed, 7 insertions(+)
- create mode 100644 README.md</code></pre>
+<div class="sourceCode" id="cb14"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="ex">bruno@computer</span> ➤ git pull</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="ex">Updating</span> b7f82ee..c774ebf</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Fast-forward</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a> <span class="ex">README.md</span> <span class="kw">|</span> <span class="ex">7</span> +++++++</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a> <span class="ex">1</span> file changed, 7 insertions<span class="er">(</span><span class="ex">+</span><span class="kw">)</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a> <span class="ex">create</span> mode 100644 README.md</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Files on Bruno’s computer have been updated. The owner of the project (called <code>owner</code>, remember?) can do the same and will see the same. Now, Bruno creates a new branch to work on the new feature:</p>
-<pre><code>bruno@computer ➤ git checkout -b add_cool_feature</code></pre>
+<div class="sourceCode" id="cb16"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="ex">bruno@computer</span> ➤ git checkout <span class="at">-b</span> add_cool_feature</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>And the project owner also creates a new branch:</p>
-<pre><code>owner@localhost ➤ git checkout -b add_nice_feature</code></pre>
+<div class="sourceCode" id="cb17"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="ex">owner@localhost</span> ➤ git checkout <span class="at">-b</span> add_nice_feature</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>They now edit the same file, <code>analysis.R</code>. Bruno added this function:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>make_plot <span class="ot">&lt;-</span> <span class="cf">function</span>(country_level_data,</span>
@@ -606,39 +606,39 @@ Fast-forward
 <span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a><span class="co"># and so on...</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>The end effect is the same, but by using this function, the code is now shorter, and clearer. Also, if someone wants to change, say, the theme of the plot, now this only needs to be changed in one place and not for each commune. Now, what did the owner change? The owner started by removing the line that loaded the <code>{purrr}</code> package, as no function from the package was used in the script, and then also changed every <code>%&gt;%</code> to <code>|&gt;</code>. It seems that much more than just who would make the changes got lost in translation… Anyways, both now push their changes to their respective branches. This is Bruno:</p>
-<pre><code>bruno@computer ➤ git add .
-bruno@computer ➤ git commit -m "make_plot() for plotting"
-bruno@computer ➤ git push origin add_cool_feature</code></pre>
-<pre><code>Enumerating objects: 5, done.
-Counting objects: 100% (5/5), done.
-Delta compression using up to 12 threads
-Compressing objects: 100% (3/3), done.
-Writing objects: 100% (3/3), 647 bytes | 647.00 KiB/s, done.
-Total 3 (delta 1), reused 0 (delta 0), pack-reused 0
-remote: Resolving deltas: 100% (1/1), completed with 1 local object.
-remote:
-remote: Create a pull request for 'add_cool_feature' on GitHub by visiting:
-remote:      https://github.com/rap4all/housing/pull/new/add_cool_feature
-remote:
-To github.com:rap4all/housing.git
- * [new branch]      add_cool_feature -&gt; add_cool_feature</code></pre>
+<div class="sourceCode" id="cb20"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="ex">bruno@computer</span> ➤ git add .</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="ex">bruno@computer</span> ➤ git commit <span class="at">-m</span> <span class="st">"make_plot() for plotting"</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="ex">bruno@computer</span> ➤ git push origin add_cool_feature</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="ex">Enumerating</span> objects: 5, done.</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Counting</span> objects: 100% <span class="er">(</span><span class="ex">5/5</span><span class="kw">)</span><span class="ex">,</span> done.</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="ex">Delta</span> compression using up to 12 threads</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="ex">Compressing</span> objects: 100% <span class="er">(</span><span class="ex">3/3</span><span class="kw">)</span><span class="ex">,</span> done.</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="ex">Writing</span> objects: 100% <span class="er">(</span><span class="ex">3/3</span><span class="kw">)</span><span class="ex">,</span> 647 bytes <span class="kw">|</span> <span class="ex">647.00</span> KiB/s, done.</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a><span class="ex">Total</span> 3 <span class="er">(</span><span class="ex">delta</span> 1<span class="kw">)</span><span class="ex">,</span> reused 0 <span class="er">(</span><span class="ex">delta</span> 0<span class="kw">)</span><span class="ex">,</span> pack-reused 0</span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a><span class="ex">remote:</span> Resolving deltas: 100% <span class="er">(</span><span class="ex">1/1</span><span class="kw">)</span><span class="ex">,</span> completed with 1 local object.</span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a><span class="ex">remote:</span></span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a><span class="ex">remote:</span> Create a pull request for <span class="st">'add_cool_feature'</span> on GitHub by visiting:</span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a><span class="ex">remote:</span>      https://github.com/rap4all/housing/pull/new/add_cool_feature</span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a><span class="ex">remote:</span></span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a><span class="ex">To</span> github.com:rap4all/housing.git</span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a> <span class="ex">*</span> [new branch]      add_cool_feature <span class="at">-</span><span class="op">&gt;</span> add_cool_feature</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>and this is the owner:</p>
-<pre><code>owner@localhost ➤ git add .
-owner@localhost ➤ git commit -m "cleanup"
-owner@localhost ➤ git push origin add_sweet_feature</code></pre>
-<pre><code>Enumerating objects: 5, done.
-Counting objects: 100% (5/5), done.
-Delta compression using up to 4 threads
-Compressing objects: 100% (3/3), done.
-Writing objects: 100% (3/3), 449 bytes | 449.00 KiB/s, done.
-Total 3 (delta 1), reused 0 (delta 0)
-remote: Resolving deltas: 100% (1/1), completed with 1 local object.
-remote:
-remote: Create a pull request for 'add_sweet_feature' on GitHub by visiting:
-remote:      https://github.com/rap4all/housing/pull/new/add_sweet_feature
-remote:
-To github.com:rap4all/housing.git
- * [new branch]      add_sweet_feature -&gt; add_sweet_feature</code></pre>
+<div class="sourceCode" id="cb22"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="ex">owner@localhost</span> ➤ git add .</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="ex">owner@localhost</span> ➤ git commit <span class="at">-m</span> <span class="st">"cleanup"</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="ex">owner@localhost</span> ➤ git push origin add_sweet_feature</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="ex">Enumerating</span> objects: 5, done.</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Counting</span> objects: 100% <span class="er">(</span><span class="ex">5/5</span><span class="kw">)</span><span class="ex">,</span> done.</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="ex">Delta</span> compression using up to 4 threads</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="ex">Compressing</span> objects: 100% <span class="er">(</span><span class="ex">3/3</span><span class="kw">)</span><span class="ex">,</span> done.</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="ex">Writing</span> objects: 100% <span class="er">(</span><span class="ex">3/3</span><span class="kw">)</span><span class="ex">,</span> 449 bytes <span class="kw">|</span> <span class="ex">449.00</span> KiB/s, done.</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a><span class="ex">Total</span> 3 <span class="er">(</span><span class="ex">delta</span> 1<span class="kw">)</span><span class="ex">,</span> reused 0 <span class="er">(</span><span class="ex">delta</span> 0<span class="kw">)</span></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a><span class="ex">remote:</span> Resolving deltas: 100% <span class="er">(</span><span class="ex">1/1</span><span class="kw">)</span><span class="ex">,</span> completed with 1 local object.</span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a><span class="ex">remote:</span></span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a><span class="ex">remote:</span> Create a pull request for <span class="st">'add_sweet_feature'</span> on GitHub by visiting:</span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a><span class="ex">remote:</span>      https://github.com/rap4all/housing/pull/new/add_sweet_feature</span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a><span class="ex">remote:</span></span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a><span class="ex">To</span> github.com:rap4all/housing.git</span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a> <span class="ex">*</span> [new branch]      add_sweet_feature <span class="at">-</span><span class="op">&gt;</span> add_sweet_feature</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>So, let’s think about what just happened: two developers changed the same file, <code>analysis.R</code>, in two separate branches. These two branches need to be merged back to the trunk.</p>
 <p>So Bruno does a pull request:</p>
 <figure class="figure">
@@ -679,32 +679,32 @@ First, let’s approve the changes.
 </figure>
 <p>The pull request can get merged and Bruno’s feature branch deleted. Now, it wouldn’t make sense for the project owner to create a pull request to merge his or her changes. They would conflict with what Bruno did. So the project owner goes back to his or her computer and essentially updates the code in his or her feature branch by merging master into it.</p>
 <p>So, the project owner checks that he or she is working on the feature branch:</p>
-<pre><code>owner@localhost ➤ git status</code></pre>
-<pre><code>On branch add_sweet_feature
-nothing to commit, working tree clean</code></pre>
+<div class="sourceCode" id="cb24"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="ex">owner@localhost</span> ➤ git status</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="ex">On</span> branch add_sweet_feature</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="ex">nothing</span> to commit, working tree clean</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Ok, so now let’s get the updated code from master, by pulling from master:</p>
-<pre><code>owner@localhost ➤ git pull origin master</code></pre>
+<div class="sourceCode" id="cb26"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="ex">owner@localhost</span> ➤ git pull origin master</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>The owner now sees this:</p>
-<pre><code>remote: Enumerating objects: 6, done.
-remote: Counting objects: 100% (6/6), done.
-remote: Compressing objects: 100% (3/3), done.
-remote: Total 4 (delta 1), reused 3 (delta 1), pack-reused 0
-Unpacking objects: 100% (4/4), 1.23 KiB | 418.00 KiB/s, done.
-From github.com:rap4all/housing
- * branch            master     -&gt; FETCH_HEAD
-   c774ebf..a43c68f  master     -&gt; origin/master
-Auto-merging analysis.R
-CONFLICT (content): Merge conflict in analysis.R
-Automatic merge failed; fix conflicts and then commit the result.</code></pre>
+<div class="sourceCode" id="cb27"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="ex">remote:</span> Enumerating objects: 6, done.</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="ex">remote:</span> Counting objects: 100% <span class="er">(</span><span class="ex">6/6</span><span class="kw">)</span><span class="ex">,</span> done.</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="ex">remote:</span> Compressing objects: 100% <span class="er">(</span><span class="ex">3/3</span><span class="kw">)</span><span class="ex">,</span> done.</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="ex">remote:</span> Total 4 <span class="er">(</span><span class="ex">delta</span> 1<span class="kw">)</span><span class="ex">,</span> reused 3 <span class="er">(</span><span class="ex">delta</span> 1<span class="kw">)</span><span class="ex">,</span> pack-reused 0</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="ex">Unpacking</span> objects: 100% <span class="er">(</span><span class="ex">4/4</span><span class="kw">)</span><span class="ex">,</span> 1.23 KiB <span class="kw">|</span> <span class="ex">418.00</span> KiB/s, done.</span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a><span class="ex">From</span> github.com:rap4all/housing</span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a> <span class="ex">*</span> branch            master     <span class="at">-</span><span class="op">&gt;</span> FETCH_HEAD</span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>   <span class="ex">c774ebf..a43c68f</span>  master     <span class="at">-</span><span class="op">&gt;</span> origin/master</span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a><span class="ex">Auto-merging</span> analysis.R</span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a><span class="ex">CONFLICT</span> <span class="er">(</span><span class="ex">content</span><span class="kw">)</span><span class="bu">:</span> Merge conflict in analysis.R</span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a><span class="ex">Automatic</span> merge failed<span class="kw">;</span> <span class="ex">fix</span> conflicts and then commit the result.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Git detects that there’s some conflicts and tells the owner to fix them, and then commit the results. So let’s open <code>analysis.R</code> and see how it looks (you can view the file online on this <a href="https://gist.github.com/b-rodrigues/f713702268c99328ad16af56f7d32892">link</a><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>. First of all, you will see Git deals with conflicts on a per-line basis. So each line that the owner changed that does not conflict with Bruno’s change gets immediately updated to reflect the owner’s changes. For example, remember that the owner removed the line that loaded the <code>{purrr}</code> package? This line was also removed by pulling the changes from master into the feature branch. Also, you should notice that every <code>%&gt;%</code> was changed into <code>|&gt;</code> as well. These two changes happened without any issues.</p>
 <p>Then, you should understand what happens when a conflict gets detected on some lines. For example, this is the first conflict you should see:</p>
-<pre><code>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
-filtered_data &lt;- commune_level_data |&gt;
-  filter(locality == communes[1])
-=======
-  filtered_data &lt;- commune_level_data %&gt;%
-    filter(locality == commune)
-&gt;&gt;&gt;&gt;&gt;&gt;&gt; a43c68f5596563ffca33b3729451bffc762782c3</code></pre>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&lt;</span><span class="er">&lt;&lt;&lt;&lt;&lt;&lt;</span> HEAD</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>filtered_data <span class="ot">&lt;-</span> commune_level_data <span class="sc">|&gt;</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(locality <span class="sc">==</span> communes[<span class="dv">1</span>])</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="sc">==</span><span class="er">=====</span></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>  filtered_data <span class="ot">&lt;-</span> commune_level_data <span class="sc">%&gt;%</span></span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(locality <span class="sc">==</span> commune)</span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span><span class="er">&gt;&gt;&gt;&gt;&gt;&gt;</span> a43c68f5596563ffca33b3729451bffc762782c3</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>We see how the lines look on the owner’s computer and how they look in the master branch (or trunk). The lines between <code>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</code> and <code>=======</code> are the lines in the owner’s feature branch. The lines between <code>=======</code> and <code>&gt;&gt;&gt;&gt;&gt;&gt;&gt; a43c68f5596563ffca33b3729451bffc762782c3</code> are how they look in the master branch (or trunk). This very long chain of characters that starts with <code>a43c68f</code> is the hash of the commit from which these lines come from.</p>
 <p>So this makes things quite easy; one simply needs to remove the outdated code, and then commit and push the fixed file! The project owner only needs to remove <code>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</code> and <code>=======</code> and what’s between these lines, as well as the lines that show the hash commit. The project owner can now commit and push the changes, open a pull request, ask Bruno to review the changes one last time and merge everything back to master.</p>
 <figure class="figure">
@@ -718,12 +718,12 @@ The conflict has been gracefully solved.
 <section id="make-sure-you-blame-the-right-person" class="level3" data-number="5.1.3">
 <h3 data-number="5.1.3" class="anchored" data-anchor-id="make-sure-you-blame-the-right-person"><span class="header-section-number">5.1.3</span> Make sure you blame the right person</h3>
 <p>If many people contribute to a single project, it might sometimes be difficult to know who changed what and when exactly. This is where the <code>git blame</code> command is useful. If you want to know who changed the file called <code>analysis.R</code> for example, simply run:</p>
-<pre><code>owner@localhost ➤ git blame analysis.R</code></pre>
+<div class="sourceCode" id="cb29"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="ex">owner@localhost</span> ➤ git blame analysis.R</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>and you will see a detailed history, line by line, with the user name of the contributors and a date stamp:</p>
-<pre><code>b7f82ee1 (Bruno   2023-02-05 18:03:37 +0100 24) #Let’s also compute it...
-b7f82ee1 (Bruno   2023-02-05 18:03:37 +0100 25) 
-55804ccb (Owner   2023-02-11 22:33:20 +0000 26) country_level_data &lt;- ...
-55804ccb (Owner   2023-02-11 22:33:20 +0000 27)   mutate(p0 = ifelse(y...</code></pre>
+<div class="sourceCode" id="cb30"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="ex">b7f82ee1</span> <span class="er">(</span><span class="ex">Bruno</span> 2023-02-05 18:03:37 +0100 24<span class="kw">)</span> <span class="co">#Let’s also compute it...</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="ex">b7f82ee1</span> <span class="er">(</span><span class="ex">Bruno</span> 2023-02-05 18:03:37 +0100 25<span class="kw">)</span> </span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="ex">55804ccb</span> <span class="er">(</span><span class="ex">Owner</span> 2023-02-11 22:33:20 +0000 26<span class="kw">)</span> <span class="ex">country_level_data</span> <span class="op">&lt;</span>- ...</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a><span class="ex">55804ccb</span> <span class="er">(</span><span class="ex">Owner</span> 2023-02-11 22:33:20 +0000 27<span class="kw">)</span>   <span class="ex">mutate</span><span class="er">(</span><span class="ex">p0</span> = ifelse<span class="er">(</span><span class="ex">y...</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>We can see that Bruno edited lines 24 and 25 on the 5th of February as part of the commit with the hash b7f82ee1, while the owner of the repository changed lines 26 and 27 on the 11th of February as part of the commit with the hash 55804ccb.</p>
 <p>Take advantage of <code>git blame</code> to have a clear overview of each file’s changes.</p>
 </section>
@@ -775,8 +775,8 @@ Bruno goes ahead with forking.
 Bruno’s fork.
 </figcaption>
 </figure>
-<p>So now, Bruno can clone this repository and work on it, because he is working on a copy of the repository that he owns. Anything Bruno does on this copy will not affect the original repository.</p>
-<pre><code>bruno@computer ➤ git clone git@github.com:b-rodrigues/my_cool_project.git </code></pre>
+<p>So now, Bruno can clone this repository and work on it, because he is working on a copy of the repository that he owns. Anything Bruno does on this copy will not affect the original repository:</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="ex">bruno@computer</span> ➤ git clone git@github.com:b-rodrigues/my_cool_project.git </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Bruno now fixes the typo in the <code>README.md</code> file, commits and pushes to his fork:</p>
 <figure class="figure">
 <img src="images/github_typo_fixed.png" alt="Bruno fixed the typo in his fork." class="figure-img">

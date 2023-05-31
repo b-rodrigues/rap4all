@@ -437,16 +437,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>targets<span class="sc">::</span><span class="fu">tar_make</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<pre><code>• start target data
-• built target data [0.82 seconds]
-• start target data_summary
-• built target data_summary [0.02 seconds]
-• end pipeline [1.71 seconds]</code></pre>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>• start target data</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>• built target data [<span class="fl">0.82</span> seconds]</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>• start target data_summary</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>• built target data_summary [<span class="fl">0.02</span> seconds]</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>• end pipeline [<span class="fl">1.71</span> seconds]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>The pipeline is done running! So, now what? This pipeline simply built some summary statistics, but where are they? Typing <code>data_summary</code> in the console to try to inspect this output results in the following:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>data_summary</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<pre><code>Error: object 'data_summary' not found</code></pre>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>Error<span class="sc">:</span> object <span class="st">'data_summary'</span> not found</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>What is going on?</p>
 <p>First, you need to remember our chapter on functional programming. We want our pipeline to be a sequence of pure functions. This means that our pipeline running successfully should not depend on anything in the global environment (apart from loading the packages in the first part of the script, and the options set with <code>tar_option_set()</code> for the others) and it should not change anything outside of its scope. This means that the pipeline should not change anything in the global environment either. This is exactly how a <code>{targets}</code> pipeline operates. A pipeline defined using <code>{targets}</code> will be pure and so the output of the pipeline will not be saved in the global environment. Now, strictly speaking, the pipeline is not exactly pure. Check the folder that contains the <code>_targets.R</code> script. There should now be a <code>_targets/</code> folder in there as well. If you go inside that folder, and then open the <code>objects/</code> folder, you should see two objects, <code>data</code> and <code>data_summary</code>. These are the outputs of our pipeline.</p>
 <p>So each target that is defined inside the pipeline gets saved there in the <code>.rds</code> format. This is an R-specific format that you can use to save <em>any</em> type of object. It doesn’t matter what it is: a simple data frame, a fitted model, a ggplot, whatever, you can write any R object to disk in this format using the <code>saveRDS()</code> function, and then read it back into another R session using <code>readRDS()</code>. <code>{targets}</code> makes use of these two functions to save every target computed by your pipeline, and simply retrieves them from the <code>_targets/</code> folder instead of recomputing them. Keep this in mind if you use Git to version the code of your pipeline (which you are doing of course), and add the <code>_targets/</code> folder to the <code>.gitignore</code> (unless you really want to also version it, but it shouldn’t be necessary).</p>
@@ -578,10 +578,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(<span class="fu">head</span>(mtcars), <span class="st">"mtcars.csv"</span>, <span class="at">row.names =</span> F)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>If you try to run the pipeline again, our changes to the data are ignored:</p>
-<pre><code>✔ skip target data_mtcars
-✔ skip target plot_mtcars
-✔ skip target summary_mtcars
-✔ skip pipeline [0.1 seconds]</code></pre>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>✔ skip target data_mtcars</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>✔ skip target plot_mtcars</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>✔ skip target summary_mtcars</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>✔ skip pipeline [<span class="fl">0.1</span> seconds]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>As you can see, because <code>{targets}</code> is not tracking the changes in the <code>mtcars.csv</code> file, from its point of view nothing changed. And thus the pipeline gets skipped because according to <code>{targets}</code>, it is up-to-date.</p>
 <p>Let’s change the csv back:</p>
 <div class="cell">
@@ -768,21 +768,21 @@ slow_summary() is used instead of summary().
 <div class="cell">
 <div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>targets<span class="sc">::</span><span class="fu">tar_make</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<pre><code>• start target path_data_mtcars
-• built target path_data_mtcars [0.18 seconds]
-• start target data_iris
-• built target data_iris [0 seconds]
-• start target data_mtcars
-• built target data_mtcars [0 seconds]
-• start target summary_iris
-• built target summary_iris [30.26 seconds]
-• start target plot_mtcars
-• built target plot_mtcars [0.16 seconds]
-• start target summary_mtcars
-• built target summary_mtcars [30.29 seconds]
-• start target list_summaries
-• built target list_summaries [0 seconds]
-• end pipeline [1.019 minutes]</code></pre>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>• start target path_data_mtcars</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>• built target path_data_mtcars [<span class="fl">0.18</span> seconds]</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>• start target data_iris</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>• built target data_iris [<span class="dv">0</span> seconds]</span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>• start target data_mtcars</span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>• built target data_mtcars [<span class="dv">0</span> seconds]</span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>• start target summary_iris</span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>• built target summary_iris [<span class="fl">30.26</span> seconds]</span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a>• start target plot_mtcars</span>
+<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a>• built target plot_mtcars [<span class="fl">0.16</span> seconds]</span>
+<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a>• start target summary_mtcars</span>
+<span id="cb30-12"><a href="#cb30-12" aria-hidden="true" tabindex="-1"></a>• built target summary_mtcars [<span class="fl">30.29</span> seconds]</span>
+<span id="cb30-13"><a href="#cb30-13" aria-hidden="true" tabindex="-1"></a>• start target list_summaries</span>
+<span id="cb30-14"><a href="#cb30-14" aria-hidden="true" tabindex="-1"></a>• built target list_summaries [<span class="dv">0</span> seconds]</span>
+<span id="cb30-15"><a href="#cb30-15" aria-hidden="true" tabindex="-1"></a>• end pipeline [<span class="fl">1.019</span> minutes]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Since computing <code>summary_iris</code> is completely independent of <code>summary_mtcars</code>, these two computations could be running at the same time on two separate CPU cores. To do this, we need to first load two additional packages, <code>{future}</code> and <code>{future.callr}</code> at the top of the script. Then, we also need to call <code>plan(callr)</code> before defining our pipeline. Here is what the complete <code>_targets.R</code> looks like:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(targets)</span>
@@ -846,23 +846,23 @@ slow_summary() is used instead of summary().
 <span id="cb31-59"><a href="#cb31-59" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>You can now run this pipeline in parallel using <code>targets::tar_make_future()</code> (and sequentially as well, just as usual with <code>targets::tar_make()</code>). To run the pipeline from scratch to test this, call <code>targets::tar_destroy()</code> and then <code>targets::tar_make()</code> will build the entire pipeline from scratch:</p>
-<pre><code># Set workers = 2 to use 2 cpu cores
-targets::tar_make_future(workers = 2)</code></pre>
-<pre><code>• start target path_data_mtcars
-• start target data_iris
-• built target path_data_mtcars [0.2 seconds]
-• start target data_mtcars
-• built target data_iris [0.22 seconds]
-• start target summary_iris
-• built target data_mtcars [0.2 seconds]
-• start target plot_mtcars
-• built target plot_mtcars [0.35 seconds]
-• start target summary_mtcars
-• built target summary_iris [30.5 seconds]
-• built target summary_mtcars [30.52 seconds]
-• start target list_summaries
-• built target list_summaries [0.21 seconds]
-• end pipeline [38.72 seconds]</code></pre>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set workers = 2 to use 2 cpu cores</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>targets<span class="sc">::</span><span class="fu">tar_make_future</span>(<span class="at">workers =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>• start target path_data_mtcars</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>• start target data_iris</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>• built target path_data_mtcars [<span class="fl">0.2</span> seconds]</span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>• start target data_mtcars</span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>• built target data_iris [<span class="fl">0.22</span> seconds]</span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>• start target summary_iris</span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>• built target data_mtcars [<span class="fl">0.2</span> seconds]</span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a>• start target plot_mtcars</span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a>• built target plot_mtcars [<span class="fl">0.35</span> seconds]</span>
+<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a>• start target summary_mtcars</span>
+<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a>• built target summary_iris [<span class="fl">30.5</span> seconds]</span>
+<span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a>• built target summary_mtcars [<span class="fl">30.52</span> seconds]</span>
+<span id="cb33-13"><a href="#cb33-13" aria-hidden="true" tabindex="-1"></a>• start target list_summaries</span>
+<span id="cb33-14"><a href="#cb33-14" aria-hidden="true" tabindex="-1"></a>• built target list_summaries [<span class="fl">0.21</span> seconds]</span>
+<span id="cb33-15"><a href="#cb33-15" aria-hidden="true" tabindex="-1"></a>• end pipeline [<span class="fl">38.72</span> seconds]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>As you can see, this was faster but not quite twice as fast, but almost. The reason this isn’t exactly twice as fast is because there is some overhead to run code in parallel. New R sessions have to be spawned by <code>{targets}</code>, data needs to be transferred and packages must be loaded in these new sessions. This is why it’s only worth parallelizing code that takes some time to run. If you decrease the number of sleep seconds in <code>slow_summary(...)</code> (for example to 10), running the code in parallel might be slower than running the code sequentially, because of that overhead. But if you have several long-running computations, it’s really worth the very small price that you pay for the initial setup. Let me re-iterate again that in order to run your pipeline in parallel, the extra worker sessions that get spawned by <code>{targets}</code> need to know which packages they need to load, which is way you should load the packages your pipeline needs using:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tar_option_set</span>(<span class="at">packages =</span> <span class="st">"dplyr"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -966,7 +966,9 @@ The output of our pipeline. Our first data product!
 </figure>
 <p>Don’t worry, we will make it look nice, but right at the end. Don’t waste time making things look good too early on. Ideally, try to get the pipeline to run on a simple example, and then keep adding features. Also, try to get <em>as much feedback</em> as possible on the <em>content</em> as <em>early</em> as possible from your colleagues. No point in wasting time to make something look good if what you’re writing is not at all what was expected. Let’s now get the <code>ggplot</code> of the data to show in the document as well.</p>
 <p>For this, simply add:</p>
-<div class="sourceCode" id="cb38"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>tar_read(plot_mtcars)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb38"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>```{r}</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>tar_read(plot_mtcars)</span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>```</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>at the bottom of the <code>.Rmd</code> file. Running the pipeline again will now add the plot to the document. Before continuing, let me just remind you, again, of the usefulness of <code>{targets}</code> by changing the underlying data. Run the following:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(<span class="fu">head</span>(mtcars),</span>
@@ -1085,14 +1087,14 @@ The output of our pipeline. Our first data product!
 <section id="sec-targets-rewrite" class="level2" data-number="13.8">
 <h2 data-number="13.8" class="anchored" data-anchor-id="sec-targets-rewrite"><span class="header-section-number">13.8</span> Rewriting our project as a pipeline and {renv} redux</h2>
 <p>It is now time to return our little project into a full-fledged reproducible pipeline. For this, we’re going back to our project’s folder and specifically to the <code>fusen</code> branch. This is the branch where we used <code>{fusen}</code> to turn our <code>.Rmd</code> into a package. This package contains the functions that we need to update the data. But remember, we wrote the analysis in another <code>.Rmd</code> file that we did not inflate, <code>analyse_data.Rmd</code>. We are now going to write a <code>{targets}</code> pipeline that will make use of the inflated package and compute all the targets required for the analysis. The first step is to create a new branch, but you could also create an entirely new repository if you want. It’s up to you. If you create a new branch, start from the <code>rmd</code> branch, since this will provide a nice starting point.</p>
-<pre><code>#switch to the rmd branch
-owner@localhost ➤ git checkout rmd
-
-#create and switch to the new branch called pipeline
-owner@localhost ➤ git checkout -b pipeline </code></pre>
+<div class="sourceCode" id="cb45"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="co">#switch to the rmd branch</span></span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="ex">owner@localhost</span> ➤ git checkout rmd</span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a><span class="co">#create and switch to the new branch called pipeline</span></span>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a><span class="ex">owner@localhost</span> ➤ git checkout <span class="at">-b</span> pipeline </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>If you start with a fresh repository, you can grab the <code>analyse_data.Rmd</code> from <a href="https://raw.githubusercontent.com/b-rodrigues/rap4all/master/rmds/analyse_data.Rmd">here</a><a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>.</p>
 <p>First order of business, let’s delete <code>save_data.Rmd</code> (unless you started with an empty repo). We don’t need that file anymore, since everything is now available in the package we developed:</p>
-<pre><code>owner@localhost ➤ rm save_data.Rmd</code></pre>
+<div class="sourceCode" id="cb46"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="ex">owner@localhost</span> ➤ rm save_data.Rmd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Let’s now start an R session in that folder and install our <code>{housing}</code> package. Whether you followed along and developed the package, or skipped the previous parts and didn’t develop the package by following along, install it from my Github repository. This ensures that you have exactly the same version as me. Run the following line:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"rap4all/housing@fusen"</span>,</span>
@@ -1236,33 +1238,32 @@ What’s described as ‘mtcars’ is not a ‘data.frame’, yet.
 <div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>renv<span class="sc">::</span><span class="fu">init</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>This will create an <code>renv.lock</code> file with all the dependencies of the pipeline listed. Very importantly, our Github package also gets listed:</p>
-<pre><code>"housing": {
-  "Package": "housing",
-  "Version": "0.1",
-  "Source": "GitHub",
-  "RemoteType": "github",
-  "RemoteHost": "api.github.com",
-  "RemoteRepo": "housing",
-  "RemoteUsername": "rap4all",
-  "RemoteRef": "fusen",
-  "RemoteSha": "1c860959310b80e67c41f7bbdc3e84cef00df18e",
-  "Hash": "859672476501daeea9b719b9218165f1",
-  "Requirements": [
-    "dplyr",
-    "ggplot2",
-    "janitor",
-    "purrr",
-    "readxl",
-    "rlang",
-    "rvest",
-    "stringr",
-    "tidyr"
-  ]
-},
-</code></pre>
+<div class="sourceCode" id="cb55"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="er">"housing":</span> <span class="fu">{</span></span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"Package"</span><span class="fu">:</span> <span class="st">"housing"</span><span class="fu">,</span></span>
+<span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"Version"</span><span class="fu">:</span> <span class="st">"0.1"</span><span class="fu">,</span></span>
+<span id="cb55-4"><a href="#cb55-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"Source"</span><span class="fu">:</span> <span class="st">"GitHub"</span><span class="fu">,</span></span>
+<span id="cb55-5"><a href="#cb55-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"RemoteType"</span><span class="fu">:</span> <span class="st">"github"</span><span class="fu">,</span></span>
+<span id="cb55-6"><a href="#cb55-6" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"RemoteHost"</span><span class="fu">:</span> <span class="st">"api.github.com"</span><span class="fu">,</span></span>
+<span id="cb55-7"><a href="#cb55-7" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"RemoteRepo"</span><span class="fu">:</span> <span class="st">"housing"</span><span class="fu">,</span></span>
+<span id="cb55-8"><a href="#cb55-8" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"RemoteUsername"</span><span class="fu">:</span> <span class="st">"rap4all"</span><span class="fu">,</span></span>
+<span id="cb55-9"><a href="#cb55-9" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"RemoteRef"</span><span class="fu">:</span> <span class="st">"fusen"</span><span class="fu">,</span></span>
+<span id="cb55-10"><a href="#cb55-10" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"RemoteSha"</span><span class="fu">:</span> <span class="st">"1c860959310b80e67c41f7bbdc3e84cef00df18e"</span><span class="fu">,</span></span>
+<span id="cb55-11"><a href="#cb55-11" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"Hash"</span><span class="fu">:</span> <span class="st">"859672476501daeea9b719b9218165f1"</span><span class="fu">,</span></span>
+<span id="cb55-12"><a href="#cb55-12" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"Requirements"</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb55-13"><a href="#cb55-13" aria-hidden="true" tabindex="-1"></a>    <span class="st">"dplyr"</span><span class="ot">,</span></span>
+<span id="cb55-14"><a href="#cb55-14" aria-hidden="true" tabindex="-1"></a>    <span class="st">"ggplot2"</span><span class="ot">,</span></span>
+<span id="cb55-15"><a href="#cb55-15" aria-hidden="true" tabindex="-1"></a>    <span class="st">"janitor"</span><span class="ot">,</span></span>
+<span id="cb55-16"><a href="#cb55-16" aria-hidden="true" tabindex="-1"></a>    <span class="st">"purrr"</span><span class="ot">,</span></span>
+<span id="cb55-17"><a href="#cb55-17" aria-hidden="true" tabindex="-1"></a>    <span class="st">"readxl"</span><span class="ot">,</span></span>
+<span id="cb55-18"><a href="#cb55-18" aria-hidden="true" tabindex="-1"></a>    <span class="st">"rlang"</span><span class="ot">,</span></span>
+<span id="cb55-19"><a href="#cb55-19" aria-hidden="true" tabindex="-1"></a>    <span class="st">"rvest"</span><span class="ot">,</span></span>
+<span id="cb55-20"><a href="#cb55-20" aria-hidden="true" tabindex="-1"></a>    <span class="st">"stringr"</span><span class="ot">,</span></span>
+<span id="cb55-21"><a href="#cb55-21" aria-hidden="true" tabindex="-1"></a>    <span class="st">"tidyr"</span></span>
+<span id="cb55-22"><a href="#cb55-22" aria-hidden="true" tabindex="-1"></a>  <span class="ot">]</span></span>
+<span id="cb55-23"><a href="#cb55-23" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span><span class="er">,</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>If you look at the fields titled <code>RemoteSha</code> and <code>RemoteRef</code> you should recognize the commit hash and repository that were used to install the package:</p>
-<pre><code>"RemoteRef": "fusen",
-"RemoteSha": "1c860959310b80e67c41f7bbdc3e84cef00df18e",</code></pre>
+<div class="sourceCode" id="cb56"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="er">"RemoteRef":</span> <span class="er">"fusen",</span></span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a><span class="er">"RemoteSha":</span> <span class="er">"1c860959310b80e67c41f7bbdc3e84cef00df18e",</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>This means that if someone wants to re-run our project, by running <code>renv::restore()</code> the correct version of the package will get installed! To finish things, we should edit the <code>Readme.md</code> file and add instructions on how to re-run the project. This is what the <code>Readme.md</code> file could look like:</p>
 <div class="sourceCode" id="cb57"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a># How to run</span>
 <span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -1287,44 +1288,44 @@ What’s described as ‘mtcars’ is not a ‘data.frame’, yet.
 <div class="cell">
 <div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>targets<span class="sc">::</span><span class="fu">tar_meta</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<pre><code># A tibble: 11 × 18
-   name       type  data  command depend [...]
-   &lt;chr&gt;      &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;  [...]
- 1 analyse_d… stem  c251… 995812… 3233e… [...]
- 2 commune_d… stem  024d… 85c2ab… ec7f2… [...]
- 3 commune_l… stem  fb07… f48470… ce0d8… [...]
- 4 commune_l… stem  fb07… 2549df… 15e48… [...]
- 5 communes   stem  b097… be3c56… a3dad… [...]
- 6 country_d… stem  ae21… 9dc7a6… 1d321… [...]</code></pre>
+<div class="sourceCode" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="co"># A tibble: 11 × 18</span></span>
+<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a>   name       type  data  command depend [...]</span>
+<span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a>   <span class="sc">&lt;</span>chr<span class="sc">&gt;</span>      <span class="er">&lt;</span>chr<span class="sc">&gt;</span> <span class="er">&lt;</span>chr<span class="sc">&gt;</span> <span class="er">&lt;</span>chr<span class="sc">&gt;</span>   <span class="er">&lt;</span>chr<span class="sc">&gt;</span>  [...]</span>
+<span id="cb59-4"><a href="#cb59-4" aria-hidden="true" tabindex="-1"></a> <span class="dv">1</span> analyse_d… stem  c251… 995812… 3233e… [...]</span>
+<span id="cb59-5"><a href="#cb59-5" aria-hidden="true" tabindex="-1"></a> <span class="dv">2</span> commune_d… stem  024d… 85c2ab… ec7f2… [...]</span>
+<span id="cb59-6"><a href="#cb59-6" aria-hidden="true" tabindex="-1"></a> <span class="dv">3</span> commune_l… stem  fb07… f48470… ce0d8… [...]</span>
+<span id="cb59-7"><a href="#cb59-7" aria-hidden="true" tabindex="-1"></a> <span class="dv">4</span> commune_l… stem  fb07… 2549df… <span class="fl">15e48</span>… [...]</span>
+<span id="cb59-8"><a href="#cb59-8" aria-hidden="true" tabindex="-1"></a> <span class="dv">5</span> communes   stem  b097… be3c56… a3dad… [...]</span>
+<span id="cb59-9"><a href="#cb59-9" aria-hidden="true" tabindex="-1"></a> <span class="dv">6</span> country_d… stem  ae21… 9dc7a6… 1d321… [...]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>There are more columns than those I’m showing, of great interest are the columns <code>warnings</code> and <code>error</code>. In the example below, I have changed the code to <code>read_data()</code>, and now it raises a warning:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a>targets<span class="sc">::</span><span class="fu">tar_make</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<pre><code>• start target commune_level_data
-• built target commune_level_data [0.61 seconds]
-• start target country_level_data
-• built target country_level_data [0.02 seconds]
-✔ skip target communes
-✔ skip target commune_data
-✔ skip target country_data
-✔ skip target analyse_data
-• end pipeline [0.75 seconds]
-Warning messages:
-1: this is a warning 
-2: this is a warning 
-3: 2 targets produced warnings. Run tar_meta(fields = warnings, 
-  complete_only = TRUE) for the messages. 
-&gt; </code></pre>
+<div class="sourceCode" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a>• start target commune_level_data</span>
+<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a>• built target commune_level_data [<span class="fl">0.61</span> seconds]</span>
+<span id="cb61-3"><a href="#cb61-3" aria-hidden="true" tabindex="-1"></a>• start target country_level_data</span>
+<span id="cb61-4"><a href="#cb61-4" aria-hidden="true" tabindex="-1"></a>• built target country_level_data [<span class="fl">0.02</span> seconds]</span>
+<span id="cb61-5"><a href="#cb61-5" aria-hidden="true" tabindex="-1"></a>✔ skip target communes</span>
+<span id="cb61-6"><a href="#cb61-6" aria-hidden="true" tabindex="-1"></a>✔ skip target commune_data</span>
+<span id="cb61-7"><a href="#cb61-7" aria-hidden="true" tabindex="-1"></a>✔ skip target country_data</span>
+<span id="cb61-8"><a href="#cb61-8" aria-hidden="true" tabindex="-1"></a>✔ skip target analyse_data</span>
+<span id="cb61-9"><a href="#cb61-9" aria-hidden="true" tabindex="-1"></a>• end pipeline [<span class="fl">0.75</span> seconds]</span>
+<span id="cb61-10"><a href="#cb61-10" aria-hidden="true" tabindex="-1"></a>Warning messages<span class="sc">:</span></span>
+<span id="cb61-11"><a href="#cb61-11" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span><span class="sc">:</span> this is a warning </span>
+<span id="cb61-12"><a href="#cb61-12" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span><span class="sc">:</span> this is a warning </span>
+<span id="cb61-13"><a href="#cb61-13" aria-hidden="true" tabindex="-1"></a><span class="dv">3</span><span class="sc">:</span> <span class="dv">2</span> targets produced warnings. Run <span class="fu">tar_meta</span>(<span class="at">fields =</span> warnings, </span>
+<span id="cb61-14"><a href="#cb61-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">complete_only =</span> <span class="cn">TRUE</span>) <span class="cf">for</span> the messages. </span>
+<span id="cb61-15"><a href="#cb61-15" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Because warnings were raised, the pipeline raises another warning telling you to run <code>tar_meta(fields = warnings, complete_only = TRUE)</code> so let’s do it:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tar_meta</span>(<span class="at">fields =</span> warnings, <span class="at">complete_only =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>This code returns a data frame with the name of the targets that produced the warning, alongside the warning.</p>
-<pre><code># A tibble: 2 × 2
-  name               warnings
-  &lt;chr&gt;              &lt;chr&gt;
-1 commune_level_data this is a warning
-2 country_level_data this is a warning</code></pre>
+<div class="sourceCode" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="co"># A tibble: 2 × 2</span></span>
+<span id="cb63-2"><a href="#cb63-2" aria-hidden="true" tabindex="-1"></a>  name               warnings</span>
+<span id="cb63-3"><a href="#cb63-3" aria-hidden="true" tabindex="-1"></a>  <span class="sc">&lt;</span>chr<span class="sc">&gt;</span>              <span class="er">&lt;</span>chr<span class="sc">&gt;</span></span>
+<span id="cb63-4"><a href="#cb63-4" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> commune_level_data this is a warning</span>
+<span id="cb63-5"><a href="#cb63-5" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> country_level_data this is a warning</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>So now you can better see what is going on.</p>
 </section>
 <section id="make-a-target-or-the-whole-pipeline-outdated" class="level3" data-number="13.9.3">
@@ -1347,11 +1348,11 @@ Warning messages:
 <section id="understanding-this-cryptic-error-message" class="level3" data-number="13.9.6">
 <h3 data-number="13.9.6" class="anchored" data-anchor-id="understanding-this-cryptic-error-message"><span class="header-section-number">13.9.6</span> Understanding this cryptic error message</h3>
 <p>Sometimes, when you try to run the pipeline, you get the following error message:</p>
-<pre><code>Error:
-! Error running targets::tar_make()
-  Target errors: targets::tar_meta(fields = error, complete_only = TRUE)
-  Tips: https://books.ropensci.org/targets/debugging.html
-  Last error: argument 9 is empty</code></pre>
+<div class="sourceCode" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a>Error<span class="sc">:</span></span>
+<span id="cb65-2"><a href="#cb65-2" aria-hidden="true" tabindex="-1"></a><span class="sc">!</span> Error running targets<span class="sc">::</span><span class="fu">tar_make</span>()</span>
+<span id="cb65-3"><a href="#cb65-3" aria-hidden="true" tabindex="-1"></a>  Target errors<span class="sc">:</span> targets<span class="sc">::</span><span class="fu">tar_meta</span>(<span class="at">fields =</span> error, <span class="at">complete_only =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb65-4"><a href="#cb65-4" aria-hidden="true" tabindex="-1"></a>  Tips<span class="sc">:</span> https<span class="sc">:</span><span class="er">//</span>books.ropensci.org<span class="sc">/</span>targets<span class="sc">/</span>debugging.html</span>
+<span id="cb65-5"><a href="#cb65-5" aria-hidden="true" tabindex="-1"></a>  Last error<span class="sc">:</span> argument <span class="dv">9</span> is empty</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>The last line is what interests us here: “Last error: argument 9 is empty”. It is not clear which target is raising this error: that’s because it’s not a target that is raising this error, but the pipeline itself! Remember that the pipeline is nothing but a list of targets. If your last target ends with a <code>,</code> character, <code>list()</code> is expecting another element. But because there’s none, this error gets raised. Type <code>list(1,2,)</code> in the console and you will get the same error message. Simply check your last target, there is a <code>,</code> in there that you should remove!</p>
 </section>
 </section>

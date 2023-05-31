@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -353,13 +387,13 @@ ul.task-list li input[type="checkbox"] {
 <section id="installing-git-and-opening-a-github-account" class="level2" data-number="4.1">
 <h2 data-number="4.1" class="anchored" data-anchor-id="installing-git-and-opening-a-github-account"><span class="header-section-number">4.1</span> Installing Git and opening a Github account</h2>
 <p>Git is a program that you install on your computer. If you’re running a Linux distribution, chances are Git is already installed. Try to run the following command in a terminal to see if this is the case:</p>
-<pre><code>which git</code></pre>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">which</span> git</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>If a path like <code>/usr/bin/git</code> gets shown, congratulations, you can skip the rest of this paragraph. If something like:</p>
-<pre><code>/usr/bin/which: no git in (/home/username/.local/bin:/home/username/bin:etc...)</code></pre>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">/usr/bin/which:</span> no git in <span class="er">(</span><span class="ex">/home/username/.local/bin:/home/username/bin:etc...</span><span class="kw">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>gets shown instead, then this means that Git is not installed on your system. To install Git, use your distribution’s package manager, as it is very likely that Git is packaged for your system. On Ubuntu, arguably the most popular Linux distribution, this means running:</p>
-<pre><code>sudo apt-get update
-sudo apt-get install git</code></pre>
-<p>If you’re using Ubuntu, may instead use <code>apt</code> instead of <code>apt-get</code>. Both commands are basically interchangeable, use whatever you’re used to. I’ve first used Ubuntu in 2008, and even though I don’t use it anymore as my daily Linux distro (that honor goes to openSUSE), I still use <code>apt-get</code> out of habit.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt-get update</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt-get install git</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>If you’re using Ubuntu, you may use <code>apt</code> instead of <code>apt-get</code>. Both commands are basically interchangeable, use whatever you’re used to. I’ve first used Ubuntu in 2008, and even though I don’t use it anymore as my daily Linux distro (that honor goes to openSUSE), I still use <code>apt-get</code> out of habit.</p>
 <p>On macOS and Windows, follow the instructions from the <a href="https://git-scm.com/book/en/v2/Getting-Started-Installing-Git">Git Book</a><a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>. It should be as easy as running an installer for any program.</p>
 <p>Depending on your operating system, a graphical user interface might have been installed with Git, making it possible to interact with Git outside of the command line. It is also possible to use Git from within RStudio and many other editors have interfaces to Git as well. We are not going to use any graphical user interface however. This is because there is no common, universal graphical user interface; they all work slightly differently. The only universal is the command line. Also, learning how to use Git via the command line will make it easier the day you will need to use it from a server, which will very likely happen. It also makes my job easier: it is simpler to tell you which commands to run and explain them to you than littering the book with dozens upon dozens of screenshots that might get outdated as soon as a new version of the interface gets released.</p>
 <p>Don’t worry, using the command line is not as hard as it sounds.</p>
@@ -380,181 +414,180 @@ This is your Github dashboard.
 <li>analysis.R: <a href="https://is.gd/qCJEbi">https://is.gd/qCJEbi</a></li>
 </ul>
 <p>Open the folder that contains the two scripts in a file explorer. On most Linux desktop environments you should be able to right-click inside that folder anywhere on a blank space and select an option titled something like “Open Terminal here”. If you’re using Windows, you can pretty much do the same but look instead for the option titled “Open Git Bash here”. On macOS, you need to first activate this option. Simply google for “open terminal at folder macOS” and follow the instructions. It is also possible to drag and drop a folder into a terminal which will then open the correct path in the terminal. Another option, of course, is to simply open a terminal and navigate to the correct folder using <code>cd</code> (<strong>c</strong>hange <strong>d</strong>irectory, this should work the same on Windows, macOS and Linux):</p>
-<pre><code>cd /home/user/housing/</code></pre>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> /home/user/housing/</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Make sure that you are in the right folder by <strong>l</strong>i<strong>s</strong>ting the contents of the folder:</p>
-<pre><code>ls</code></pre>
-<p>One little thing: from now on, the prompt of a terminal (or Git bash terminal on Windows) will start with <code>owner@localhost</code>. This is the user called <code>owner</code> (“owner” simply because that will be the project manager in our examples from now on) and the computer <code>owner</code> uses is called <code>localhost</code> (this prompt can look different on your machine, sometimes the full path to the current working directory is listed instead). So here is what happens when <code>owner</code> runs <code>ls</code> on the root directory of the project:</p>
-<pre><code>owner@localhost ➤ ls
-analysis.R save_data.R</code></pre>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>From now on, make sure to type the commands you see in the terminal (on Linux and macOS) or in the Git Bash terminal on Windows. To distinguish the terminal from the R command line prompt, the prompt of a terminal (or Git Bash terminal on Windows) will start with <code>owner@localhost</code>. <code>owner</code> is the username of the project manager in our examples from now on, and the computer <code>owner</code> used by this project manager is called <code>localhost</code> (this prompt can look different on your machine, sometimes the full path to the current working directory is listed instead). So here is what happens when <code>owner</code> runs <code>ls</code> on the root directory of the project:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">owner@localhost</span> ➤ ls</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="ex">analysis.R</span> save_data.R</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>(On Linux you could also try <code>ll</code> which is often available. It is an alias for <code>ls -l</code> which provides a more detailed view. There’s also <code>ls -la</code> which also lists hidden files.)</p>
 <p>Make sure that you see the two scripts being listed when running <code>ls</code>. If not, this means that you are in the wrong directory, so make sure that you open the terminal in the correct folder.</p>
 <p>It’s now time to start tracking these files using Git. In the same terminal in which we ran <code>ls</code>, run now the following <code>git</code> command:</p>
-<pre><code>owner@localhost ➤ git init</code></pre>
-<pre><code>hint: Using 'master' as the name for the initial branch.
-hint: This default branch name is subject to change. 
-hint: To configure the initial branch name to use in all of your
-hint: new repositories, which will suppress this warning, call:
-hint: 
-hint:   git config --global init.defaultBranch &lt;name&gt;
-hint: 
-hint: Names commonly chosen instead of 'master' are 'main', 
-hint: 'trunk' and 'development'. The just-created branch can be 
-hint: renamed via this command:
-hint: 
-hint:   git branch -m &lt;name&gt;
-Initialized empty Git repository in /home/user/housing/.git/</code></pre>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">owner@localhost</span> ➤ git init</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">hint:</span> Using <span class="st">'master'</span> as the name for the initial branch.</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="ex">hint:</span> This default branch name is subject to change. </span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="ex">hint:</span> To configure the initial branch name to use in all of your</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="ex">hint:</span> new repositories, which will suppress this warning, call:</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="ex">hint:</span> </span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="ex">hint:</span>   git config <span class="at">--global</span> init.defaultBranch <span class="op">&lt;</span>name<span class="op">&gt;</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="ex">hint:</span> </span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="ex">hint:</span> Names commonly chosen instead of <span class="st">'master'</span> are <span class="st">'main'</span>, </span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="ex">hint:</span> <span class="st">'trunk'</span> and <span class="st">'development'</span>. The just-created branch can be </span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="ex">hint:</span> renamed via this command:</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="ex">hint:</span> </span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="ex">hint:</span>   git branch <span class="at">-m</span> <span class="op">&lt;</span>name<span class="op">&gt;</span></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="ex">Initialized</span> empty Git repository in /home/user/housing/.git/</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Take some time to read the hints. Many <code>git</code> commands give you hints and it’s always a good idea to read them. This hint here tells us that the default branch name is “master” and that this is subject to change. Think of a branch as a <em>version</em> of your code. The “master” branch will hold the default version of your code. But you could create a branch called “dev” that would contain a version of the code with features that are still in development. There is nothing special about the default, “master” branch, and it could have been called anything else. For example, if you create a repository on Github first, instead of creating it on your computer, the default branch will be called “main”. You need to pay attention to this, because when we will start interacting with our Github repository, we need to make sure that we have the right branch name in mind. Also, note that because the “master” branch is the most important branch, it gets sometimes referred to as the “trunk”. Some teams that use trunk based development (which I will discuss in the next chapter) even name this branch “trunk”. Let’s now run this other <code>git</code> command:</p>
-<pre><code>owner@localhost ➤ git status</code></pre>
-<pre><code>On branch master
-
-No commits yet
-
-Untracked files:
-  (use "git add &lt;file&gt;..." to include in what will be committed)
-        analysis.R
-        save_data.R
-
-nothing added to commit but untracked files present (use "git add" to track)</code></pre>
+<div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">owner@localhost</span> ➤ git status</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ex">On</span> branch master</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="ex">No</span> commits yet</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="ex">Untracked</span> files:</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  <span class="kw">(</span><span class="ex">use</span> <span class="st">"git add &lt;file&gt;..."</span> to include in what will be committed<span class="kw">)</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>        <span class="ex">analysis.R</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>        <span class="ex">save_data.R</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="ex">nothing</span> added to commit but untracked files present <span class="er">(</span><span class="ex">use</span> <span class="st">"git add"</span> to track<span class="kw">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Git tells us quite clearly that it sees two files, but that they’re currently not being tracked. So if we would modify them, Git would not keep track of the changes. So it’s a good idea to just do what Git tells us to do: let’s <em>add</em> them so that Git can track them:</p>
-<pre><code>owner@localhost ➤ git add</code></pre>
-<pre><code>Nothing specified, nothing added.
-hint: Maybe you wanted to say 'git add .'?
-hint: Turn this message off by running
-hint: "git config advice.addEmptyPathspec false"</code></pre>
+<div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">owner@localhost</span> ➤ git add</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="ex">Nothing</span> specified, nothing added.</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="ex">hint:</span> Maybe you wanted to say <span class="st">'git add .'</span><span class="pp">?</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="ex">hint:</span> Turn this message off by running</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="ex">hint:</span> <span class="st">"git config advice.addEmptyPathspec false"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Shoot, simply running <code>git add</code> does not do us any good. We need to specify which files we want to add. We can name them one by one, for example <code>git add file1.R file2.txt</code>, but if we simply want to track all the files in the folder, we can simply use the <code>.</code> placeholder:</p>
-<pre><code>owner@localhost ➤ git add .</code></pre>
+<div class="sourceCode" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ex">owner@localhost</span> ➤ git add .</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>No message this time… is that a good thing? Let’s run <code>git status</code> and see what’s going on:</p>
-<pre><code>owner@localhost ➤ git status</code></pre>
-<pre><code>On branch master
-
-No commits yet
-
-Changes to be committed:
-  (use "git rm --cached &lt;file&gt;..." to unstage)
-        new file:   analysis.R
-        new file:   save_data.R</code></pre>
+<div class="sourceCode" id="cb14"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="ex">owner@localhost</span> ➤ git status</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="ex">On</span> branch master</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="ex">No</span> commits yet</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="ex">Changes</span> to be committed:</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>  <span class="kw">(</span><span class="ex">use</span> <span class="st">"git rm --cached &lt;file&gt;..."</span> to unstage<span class="kw">)</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>        <span class="ex">new</span> file:   analysis.R</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>        <span class="ex">new</span> file:   save_data.R</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Nice! Our two files are being tracked now, so we can commit the changes. <em>Committing</em> means that we are happy with our work, and we can snapshot it. These snapshots then get uploaded to Github by pushing them. This way, the changes will be available for our coworkers for them to pull. I’ll explain what this means later, so don’t worry if this is confusing, it won’t be by the end of the chapter. Also, you should know that there is a special file, called <code>.gitignore</code>, that allows you to list files or folders that you want Git to ignore. This can be useful in cases where you are working with sensitive data and don’t want it to be uploaded to Github. We will not use the <code>.gitignore</code> file just yet, but will do so in part two of the book. So for now, just remember that this is an option.</p>
 <p>We are now ready to commit our files. Each commit must have a commit message, and we can write this message as an option to the <code>git commit</code> command:</p>
-<pre><code>owner@localhost ➤ git commit -m "Project start"</code></pre>
+<div class="sourceCode" id="cb16"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="ex">owner@localhost</span> ➤ git commit <span class="at">-m</span> <span class="st">"Project start"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>The <code>-m</code> option is there to specify the message for the commit. Before pushing the commit, let’s run <code>git status</code> again:</p>
-<pre><code>owner@localhost ➤ git status</code></pre>
-<pre><code>On branch master
-nothing to commit, working tree clean</code></pre>
+<div class="sourceCode" id="cb17"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="ex">owner@localhost</span> ➤ git status</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="ex">On</span> branch master</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="ex">nothing</span> to commit, working tree clean</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>This means that every change is accounted for in a commit. So if we were to push now, we could then set our computer on fire: every change would be safely backed up on Github.com. We can also choose to not push yet, and keep working and committing. For example, we could commit 5 times and just push once: all of the 5 commits would be pushed to Github.com.</p>
 <p>Let’s do just that by changing one file. Open <code>analysis.R</code> in any editor and simply change the start of the script by adding one line. So go from:</p>
-<pre><code>library(dplyr)
-library(ggplot2)
-library(purrr)
-library(tidyr)</code></pre>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(purrr)</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>To:</p>
-<pre><code># This script analyses housing data for Luxembourg
-
-library(dplyr)
-library(ggplot2)
-library(purrr)
-library(tidyr)</code></pre>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># This script analyses housing data for Luxembourg</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(purrr)</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>and now run <code>git status</code> again:</p>
-<pre><code>owner@localhost ➤ git status</code></pre>
-<pre><code>On branch master
-Changes not staged for commit:
-  (use "git add &lt;file&gt;..." to update what will be committed)
-  (use "git restore &lt;file&gt;..." to discard changes in working directory)
-        modified:   analysis.R
-
-no changes added to commit (use "git add" and/or "git commit -a")</code></pre>
+<div class="sourceCode" id="cb21"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="ex">owner@localhost</span> ➤ git status</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="ex">On</span> branch master</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Changes</span> not staged for commit:</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">(</span><span class="ex">use</span> <span class="st">"git add &lt;file&gt;..."</span> to update what will be committed<span class="kw">)</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">(</span><span class="ex">use</span> <span class="st">"git restore &lt;file&gt;..."</span> to discard changes in working directory<span class="kw">)</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>        <span class="ex">modified:</span>   analysis.R</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a><span class="ex">no</span> changes added to commit <span class="er">(</span><span class="ex">use</span> <span class="st">"git add"</span> and/or <span class="st">"git commit -a"</span><span class="kw">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Because the file is being tracked, Git can now tell us that something changed and that we did not commit this change. So if our computer would self-combust, these changes would get lost forever. Better commit them and push them to Github.com as soon as possible!</p>
 <p>Remember, first, we need to add these changes to a commit using <code>git add .</code>:</p>
-<pre><code>owner@localhost ➤ git add .</code></pre>
+<div class="sourceCode" id="cb23"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="ex">owner@localhost</span> ➤ git add .</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>(You can run <code>git status</code> at this point to check if the file was correctly added to be committed.)</p>
 <p>Then, we need to commit the changes and add a nice commit message:</p>
-<pre><code>owner@localhost ➤ git commit -m "Added a comment to analysis.R"</code></pre>
+<div class="sourceCode" id="cb24"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="ex">owner@localhost</span> ➤ git commit <span class="at">-m</span> <span class="st">"Added a comment to analysis.R"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Try to keep commit messages as short and as explicit as possible. This is not always easy, but it really pays off to strive for short, clear messages. Also, ideally, you would want to keep commits as small as possible, ideally one commit per change. For example, if you’re adding and amending comments in scripts, once you’re done with that make this a commit. Then, maybe clean up some code. That’s another, separate commit. This makes rolling back changes or reviewing them much easier. This will be crucial later on when we will use trunk based development to collaborate with our teammates on a project. It is generally not a good idea to code all day and then only push one single big fat commit at the end of the day, but that is what happens very often…</p>
 <p>By the way, even if our changes are still not on Github.com, we can still roll back to previous commits. For example, suppose that I delete the file accidentally by running <code>rm analysis.R</code>:</p>
-<pre><code>owner@localhost ➤ rm analysis.R</code></pre>
+<div class="sourceCode" id="cb25"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="ex">owner@localhost</span> ➤ rm analysis.R</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Let’s run <code>git status</code> and look for the changes (it’s a line starting with the word <code>deleted</code>):</p>
-<pre><code>On branch master
-Changes not staged for commit:
-  (use "git add/rm &lt;file&gt;..." to update what will be committed)
-  (use "git restore &lt;file&gt;..." to discard changes in working directory)
-        deleted:    analysis.R
-
-no changes added to commit (use "git add" and/or "git commit -a")</code></pre>
+<div class="sourceCode" id="cb26"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="ex">On</span> branch master</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Changes</span> not staged for commit:</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">(</span><span class="ex">use</span> <span class="st">"git add/rm &lt;file&gt;..."</span> to update what will be committed<span class="kw">)</span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">(</span><span class="ex">use</span> <span class="st">"git restore &lt;file&gt;..."</span> to discard changes in working directory<span class="kw">)</span></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>        <span class="ex">deleted:</span>    analysis.R</span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a><span class="ex">no</span> changes added to commit <span class="er">(</span><span class="ex">use</span> <span class="st">"git add"</span> and/or <span class="st">"git commit -a"</span><span class="kw">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Yep, <code>analysis.R</code> is gone. And deleting on the console usually means that the file is gone forever. Well technically no, there are still ways to recover deleted files using certain tools, but since we were using Git we can use it to recover the files! Because we did not commit the deletion of the file, we can simple tell Git to ignore our changes. A simple way to achieve this is to stash the changes, and then <em>drop</em> (or delete) the stash:</p>
-<pre><code>owner@localhost ➤ git stash</code></pre>
-<pre><code>Saved working directory and index state WIP on master: \
-  ab43b4b Added a comment to analysis.R</code></pre>
+<div class="sourceCode" id="cb27"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="ex">owner@localhost</span> ➤ git stash</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="ex">Saved</span> working directory and index state WIP on master: <span class="dt">\</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>  ab43b4b Added a comment to analysis.R</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>So the deletion was stashed away, (so in case we want it back we could get it back with <code>git stash pop</code>) and our project was rolled back to the previous commit. Simply take a look at the files:</p>
-<pre><code>owner@localhost ➤ ls</code></pre>
-<pre><code>analysis.R save_data.R</code></pre>
+<div class="sourceCode" id="cb29"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="ex">owner@localhost</span> ➤ ls</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb30"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="ex">analysis.R</span> save_data.R</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>There it is! You can get rid of the stash with <code>git stash drop</code>. But what if we had deleted the file and committed the change? In this scenario we could not use <code>git stash</code>, but we would need to revert to a commit. Let’s try, first let me remove the file:</p>
-<pre><code>owner@localhost ➤ rm analysis.R</code></pre>
+<div class="sourceCode" id="cb31"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="ex">owner@localhost</span> ➤ rm analysis.R</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>and check the status with <code>git status</code>:</p>
-<pre><code>On branch master
-Changes not staged for commit:
-  (use "git add/rm &lt;file&gt;..." to update what will be committed)
-  (use "git restore &lt;file&gt;..." to discard changes in working directory)
-        deleted:    analysis.R
-
-no changes added to commit (use "git add" and/or "git commit -a")</code></pre>
+<div class="sourceCode" id="cb32"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="ex">On</span> branch master</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Changes</span> not staged for commit:</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">(</span><span class="ex">use</span> <span class="st">"git add/rm &lt;file&gt;..."</span> to update what will be committed<span class="kw">)</span></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">(</span><span class="ex">use</span> <span class="st">"git restore &lt;file&gt;..."</span> to discard changes in working directory<span class="kw">)</span></span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>        <span class="ex">deleted:</span>    analysis.R</span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a><span class="ex">no</span> changes added to commit <span class="er">(</span><span class="ex">use</span> <span class="st">"git add"</span> and/or <span class="st">"git commit -a"</span><span class="kw">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Let’s add these changes and commit them:</p>
-<pre><code>owner@localhost ➤ git add .
-owner@localhost ➤ git commit -m "Removed analysis.R"</code></pre>
-<pre><code>[master 8e51867] Removed analysis.R
- 1 file changed, 131 deletions(-)
- delete mode 100644 analysis.R</code></pre>
+<div class="sourceCode" id="cb33"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="ex">owner@localhost</span> ➤ git add .</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="ex">owner@localhost</span> ➤ git commit <span class="at">-m</span> <span class="st">"Removed analysis.R"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb34"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[master</span> 8e51867] Removed analysis.R</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a> <span class="ex">1</span> file changed, 131 deletions<span class="er">(</span><span class="ex">-</span><span class="kw">)</span></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a> <span class="ex">delete</span> mode 100644 analysis.R</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>What’s the status now?</p>
-<pre><code>owner@localhost ➤ git status</code></pre>
-<pre><code>On branch master
-nothing to commit, working tree clean</code></pre>
+<div class="sourceCode" id="cb35"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="ex">owner@localhost</span> ➤ git status</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb36"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="ex">On</span> branch master</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="ex">nothing</span> to commit, working tree clean</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Now, we’ve done it! <code>git stash</code> won’t be of any help now. So how to recover our file? For this, we need to know to which commit we want to roll back. Each commit not only has a message, but also an unique identifier that you can access with <code>git log</code>:</p>
-<pre><code>owner@localhost ➤ git log</code></pre>
-<pre><code>commit 8e51867dc5ae89e5f2ab2798be8920e703f73455 (HEAD -&gt; master)
-Author: User &lt;owner@mailbox.com&gt;
-Date:   Sun Feb 5 17:54:30 2023 +0100
-
-    Removed analysis.R
-
-commit ab43b4b1069cd987685253632827f19d7a402b27
-Author: User &lt;owner@mailbox.com&gt;
-Date:   Sun Feb 5 17:41:52 2023 +0100
-
-    Added a comment to analysis.R
-
-commit df2beecba0101304f1b56e300a3cd713ce7366e5
-Author: User &lt;owner@mailbox.com&gt;
-Date:   Sun Feb 5 17:32:26 2023 +0100
-
-    Project start
-</code></pre>
+<div class="sourceCode" id="cb37"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="ex">owner@localhost</span> ➤ git log</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb38"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="ex">commit</span> 8e51867dc5ae89e5f2ab2798be8920e703f73455 <span class="er">(</span><span class="ex">HEAD</span> <span class="at">-</span><span class="op">&gt;</span> master<span class="kw">)</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Author:</span> User <span class="op">&lt;</span>owner@mailbox.com<span class="op">&gt;</span></span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a><span class="ex">Date:</span>   Sun Feb 5 17:54:30 2023 +0100</span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>    <span class="ex">Removed</span> analysis.R</span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a><span class="ex">commit</span> ab43b4b1069cd987685253632827f19d7a402b27</span>
+<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a><span class="ex">Author:</span> User <span class="op">&lt;</span>owner@mailbox.com<span class="op">&gt;</span></span>
+<span id="cb38-9"><a href="#cb38-9" aria-hidden="true" tabindex="-1"></a><span class="ex">Date:</span>   Sun Feb 5 17:41:52 2023 +0100</span>
+<span id="cb38-10"><a href="#cb38-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-11"><a href="#cb38-11" aria-hidden="true" tabindex="-1"></a>    <span class="ex">Added</span> a comment to analysis.R</span>
+<span id="cb38-12"><a href="#cb38-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-13"><a href="#cb38-13" aria-hidden="true" tabindex="-1"></a><span class="ex">commit</span> df2beecba0101304f1b56e300a3cd713ce7366e5</span>
+<span id="cb38-14"><a href="#cb38-14" aria-hidden="true" tabindex="-1"></a><span class="ex">Author:</span> User <span class="op">&lt;</span>owner@mailbox.com<span class="op">&gt;</span></span>
+<span id="cb38-15"><a href="#cb38-15" aria-hidden="true" tabindex="-1"></a><span class="ex">Date:</span>   Sun Feb 5 17:32:26 2023 +0100</span>
+<span id="cb38-16"><a href="#cb38-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-17"><a href="#cb38-17" aria-hidden="true" tabindex="-1"></a>    <span class="ex">Project</span> start</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>The first one from the top is the last commit we’ve made. We would like to go back to the one with the message “Added a comment to analysis.R”. See the very long string of characters after “commit”? That’s the commit’s unique identifier, called hash. You need to copy it (or only like the first 10 or so characters, that’s enough as well). By the way, depending on your terminal and operating system, <code>git log</code> may open <code>less</code> to view the log. <code>less</code> is a program that makes it easy to view long documents. Quit it by simply pressing <code>q</code> on your keyboard. We are now ready to revert to the right commit with the following command:</p>
-<pre><code>owner@localhost ➤ git revert ab43b4b1069cd98768..HEAD</code></pre>
+<div class="sourceCode" id="cb39"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="ex">owner@localhost</span> ➤ git revert ab43b4b1069cd98768..HEAD</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>and we’re done! Check that all is right by running <code>ls</code> to see that the file magically returned, and <code>git log</code> to read the log of what happened:</p>
-<pre><code>owner@localhost ➤ git log</code></pre>
-<pre><code>commit b7f82ee119df52550e9ca1a8da2d81281e6aac58 (HEAD -&gt; master)
-Author: User &lt;owner@mailbox.com&gt;
-Date:   Sun Feb 5 18:03:37 2023 +0100
-
-    Revert "Removed analysis.R"
-    
-    This reverts commit 8e51867dc5ae89e5f2ab2798be8920e703f73455.
-
-commit 8e51867dc5ae89e5f2ab2798be8920e703f73455 (HEAD -&gt; master)
-Author: User &lt;owner@mailbox.com&gt;
-Date:   Sun Feb 5 17:54:30 2023 +0100
-
-    Removed analysis.R
-
-commit ab43b4b1069cd987685253632827f19d7a402b27
-Author: User &lt;owner@mailbox.com&gt;
-Date:   Sun Feb 5 17:41:52 2023 +0100
-
-    Added a comment to analysis.R
-
-commit df2beecba0101304f1b56e300a3cd713ce7366e5
-Author: User &lt;owner@mailbox.com&gt;
-Date:   Sun Feb 5 17:32:26 2023 +0100
-
-    Project start</code></pre>
+<div class="sourceCode" id="cb40"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="ex">owner@localhost</span> ➤ git log</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb41"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="ex">commit</span> b7f82ee119df52550e9ca1a8da2d81281e6aac58 <span class="er">(</span><span class="ex">HEAD</span> <span class="at">-</span><span class="op">&gt;</span> master<span class="kw">)</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Author:</span> User <span class="op">&lt;</span>owner@mailbox.com<span class="op">&gt;</span></span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a><span class="ex">Date:</span>   Sun Feb 5 18:03:37 2023 +0100</span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>    <span class="ex">Revert</span> <span class="st">"Removed analysis.R"</span></span>
+<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a>    <span class="ex">This</span> reverts commit 8e51867dc5ae89e5f2ab2798be8920e703f73455.</span>
+<span id="cb41-8"><a href="#cb41-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-9"><a href="#cb41-9" aria-hidden="true" tabindex="-1"></a><span class="ex">commit</span> 8e51867dc5ae89e5f2ab2798be8920e703f73455 <span class="er">(</span><span class="ex">HEAD</span> <span class="at">-</span><span class="op">&gt;</span> master<span class="kw">)</span></span>
+<span id="cb41-10"><a href="#cb41-10" aria-hidden="true" tabindex="-1"></a><span class="ex">Author:</span> User <span class="op">&lt;</span>owner@mailbox.com<span class="op">&gt;</span></span>
+<span id="cb41-11"><a href="#cb41-11" aria-hidden="true" tabindex="-1"></a><span class="ex">Date:</span>   Sun Feb 5 17:54:30 2023 +0100</span>
+<span id="cb41-12"><a href="#cb41-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-13"><a href="#cb41-13" aria-hidden="true" tabindex="-1"></a>    <span class="ex">Removed</span> analysis.R</span>
+<span id="cb41-14"><a href="#cb41-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-15"><a href="#cb41-15" aria-hidden="true" tabindex="-1"></a><span class="ex">commit</span> ab43b4b1069cd987685253632827f19d7a402b27</span>
+<span id="cb41-16"><a href="#cb41-16" aria-hidden="true" tabindex="-1"></a><span class="ex">Author:</span> User <span class="op">&lt;</span>owner@mailbox.com<span class="op">&gt;</span></span>
+<span id="cb41-17"><a href="#cb41-17" aria-hidden="true" tabindex="-1"></a><span class="ex">Date:</span>   Sun Feb 5 17:41:52 2023 +0100</span>
+<span id="cb41-18"><a href="#cb41-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-19"><a href="#cb41-19" aria-hidden="true" tabindex="-1"></a>    <span class="ex">Added</span> a comment to analysis.R</span>
+<span id="cb41-20"><a href="#cb41-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-21"><a href="#cb41-21" aria-hidden="true" tabindex="-1"></a><span class="ex">commit</span> df2beecba0101304f1b56e300a3cd713ce7366e5</span>
+<span id="cb41-22"><a href="#cb41-22" aria-hidden="true" tabindex="-1"></a><span class="ex">Author:</span> User <span class="op">&lt;</span>owner@mailbox.com<span class="op">&gt;</span></span>
+<span id="cb41-23"><a href="#cb41-23" aria-hidden="true" tabindex="-1"></a><span class="ex">Date:</span>   Sun Feb 5 17:32:26 2023 +0100</span>
+<span id="cb41-24"><a href="#cb41-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-25"><a href="#cb41-25" aria-hidden="true" tabindex="-1"></a>    <span class="ex">Project</span> start</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Using a range of commits in <code>git revert</code> reverts all the commits from the starting commit (not included) to the last commit. In this example, because only the commit starting with <code>8e51867dc5</code> was included in that range, only this commit was reverted. You could have achieved the same result with <code>git revert 8e51867dc5</code>.</p>
 <p>This small example illustrates how useful Git is, even without using Github, and even if working alone on a project. At the very least it offers you a way to simply walk back changes and gives you a nice timeline of your project. Maybe this does not impress you much, because we live in a world where cloud services like Dropbox made things like this very accessible. But where Git (with the help of a service like Github) really shines is when collaboration is needed. Git and code hosting services like Github make it possible to collaborate at very large scale: thousands of developers contribute to the Linux kernel, arguably the most successful open source project ever, powering most of today’s smartphones, servers, supercomputers and embedded computers,<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> and you can use these tools to collaborate at a smaller scale very efficiently as well.</p>
 </section>
@@ -592,48 +625,48 @@ Make sure to select ‘SSH’.
 </figcaption>
 </figure>
 <p>This will change the links in the instructions from <code>https</code> to <code>ssh</code>. We will explain why this is important in a couple of paragraphs. For now, let’s read the instructions. Since we have already started working, we need to follow the instructions titled “…or push an existing repository from the command line”. Let’s review these commands. This is what Github suggests we run:</p>
-<pre><code>git remote add origin git@github.com:rap4all/housing.git
-git branch -M main
-git push -u origin main</code></pre>
+<div class="sourceCode" id="cb42"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> remote add origin git@github.com:rap4all/housing.git</span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> branch <span class="at">-M</span> main</span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> push <span class="at">-u</span> origin main</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>What’s really important is the first command and last command. The first command adds a remote (referred to as <em>origin</em>) that points to our repository. If you’re following along, you should copy the link from your repository here. It would look exactly the same, but the user name <code>rap4all</code> would be replaced by your Github username. So now, every time I push, my changes will get uploaded to Github. The second line renames the branch from “master” to “main”. You are of course free to do so. I don’t like changing the defaults from Git, so I will keep using the name “master”. The last command pushes our changes to the “main” branch (but we need to change “main” to “master”).</p>
 <p>Let’s do just that:</p>
-<pre><code>owner@localhost ➤ git remote add origin git@github.com:rap4all/housing.git</code></pre>
+<div class="sourceCode" id="cb43"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="ex">owner@localhost</span> ➤ git remote add origin git@github.com:rap4all/housing.git</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>This produces no output. We’re now ready to push:</p>
-<pre><code>owner@localhost ➤ git push -u origin master</code></pre>
+<div class="sourceCode" id="cb44"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="ex">owner@localhost</span> ➤ git push <span class="at">-u</span> origin master</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>and it fails:</p>
-<pre><code>ERROR: Permission to rap4all/housing.git denied to b-rodrigues.
-fatal: Could not read from remote repository.
-
-Please make sure you have the correct access rights
-and the repository exists.</code></pre>
+<div class="sourceCode" id="cb45"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="ex">ERROR:</span> Permission to rap4all/housing.git denied to b-rodrigues.</span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="ex">fatal:</span> Could not read from remote repository.</span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a><span class="ex">Please</span> make sure you have the correct access rights</span>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a><span class="ex">and</span> the repository exists.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>The reason is quite simple: Github has absolutely no idea who we are! Remember, if the repository is public, anyone can clone it. But that doesn’t mean that anyone can simply push code to the repo! This means that we need a way to tell Github that we are the owner of the repository. For this, we need a way to log in securely, and we will do so using a public/private RSA encryption key pair. The idea is quite simple; we are going to generate two files on our computer. These two files form a public/private key pair. We are going to upload the public key to Github; and every time we want to interact with Github, Github will check the public key against the private key that we keep on our machine (never, ever, send the private key to anyone). If they match, Github knows that we are who we claim to be and will let us push to the repository. This is why we switched from <code>https</code> to <code>ssh</code> before. <code>https</code> would allow us to log in by typing a password each time we push (but actually, not anymore, since password login was turned off some years ago). It is much easier to not have to log in manually and let our key pair do the job for us.</p>
 <p>Let’s generate a public/private RSA key pair. Open a terminal on Linux or macOS, or Git Bash on Windows and run the following command:</p>
-<pre><code>owner@localhost ➤ ssh-keygen</code></pre>
+<div class="sourceCode" id="cb46"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="ex">owner@localhost</span> ➤ ssh-keygen</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>The following lines will appear in your terminal:</p>
-<pre><code>Generating public/private rsa key pair.
-Enter file in which to save the key (/home/user/.ssh/id_rsa): </code></pre>
+<div class="sourceCode" id="cb47"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="ex">Generating</span> public/private rsa key pair.</span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Enter</span> file in which to save the key <span class="er">(</span><span class="ex">/home/user/.ssh/id_rsa</span><span class="kw">)</span><span class="bu">:</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Simply leave this empty and press enter. This next message now appears:</p>
-<pre><code>Enter passphrase (empty for no passphrase): </code></pre>
+<div class="sourceCode" id="cb48"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="ex">Enter</span> passphrase <span class="er">(</span><span class="ex">empty</span> for no passphrase<span class="kw">)</span><span class="bu">:</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Leave it empty as well. Entering a passphrase is not really needed, since the ssh key pair itself will deal with the login. In some situations, a passphrase might be useful if you’re worried that someone might get physical access to your machine and push code by impersonating you. But if you work with such sensitive data and code that this is a real worry, maybe don’t use Github?</p>
 <p>So once you pressed enter, you get asked to confirm the passphrase:</p>
-<pre><code>Enter same passphrase again: </code></pre>
+<div class="sourceCode" id="cb49"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="ex">Enter</span> same passphrase again: </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Here again, simply leave it empty and press enter on your keyboard. Once this is done, you should see this:</p>
-<pre><code>Your identification has been saved in /home/user/.ssh/id_rsa
-Your public key has been saved in /home/user/.ssh/id_rsa.pub
-The key fingerprint is:
-SHA256:tPZnR7qdN06mV53Mc36F3mASIyD55ktQJFBAVqJXNQw owner@localhost
-The key's randomart image is:
-+---[RSA 3072]----+
-|   .*=E*=.       |
-|   o o.oo.. .    |
-|  . .  o.  o o   |
-|   .  ..o.  . o  |
-|       +S    o.+.|
-|       .o.   o.o*|
-|       . o. + +=*|
-|        .  o ++*=|
-|            ..=oo|
-+----[SHA256]-----+</code></pre>
+<div class="sourceCode" id="cb50"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="ex">Your</span> identification has been saved in /home/user/.ssh/id_rsa</span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Your</span> public key has been saved in /home/user/.ssh/id_rsa.pub</span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a><span class="ex">The</span> key fingerprint is:</span>
+<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a><span class="ex">SHA256:tPZnR7qdN06mV53Mc36F3mASIyD55ktQJFBAVqJXNQw</span> owner@localhost</span>
+<span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a><span class="ex">The</span> key<span class="st">'s randomart image is:</span></span>
+<span id="cb50-6"><a href="#cb50-6" aria-hidden="true" tabindex="-1"></a><span class="st">+---[RSA 3072]----+</span></span>
+<span id="cb50-7"><a href="#cb50-7" aria-hidden="true" tabindex="-1"></a><span class="st">|   .*=E*=.       |</span></span>
+<span id="cb50-8"><a href="#cb50-8" aria-hidden="true" tabindex="-1"></a><span class="st">|   o o.oo.. .    |</span></span>
+<span id="cb50-9"><a href="#cb50-9" aria-hidden="true" tabindex="-1"></a><span class="st">|  . .  o.  o o   |</span></span>
+<span id="cb50-10"><a href="#cb50-10" aria-hidden="true" tabindex="-1"></a><span class="st">|   .  ..o.  . o  |</span></span>
+<span id="cb50-11"><a href="#cb50-11" aria-hidden="true" tabindex="-1"></a><span class="st">|       +S    o.+.|</span></span>
+<span id="cb50-12"><a href="#cb50-12" aria-hidden="true" tabindex="-1"></a><span class="st">|       .o.   o.o*|</span></span>
+<span id="cb50-13"><a href="#cb50-13" aria-hidden="true" tabindex="-1"></a><span class="st">|       . o. + +=*|</span></span>
+<span id="cb50-14"><a href="#cb50-14" aria-hidden="true" tabindex="-1"></a><span class="st">|        .  o ++*=|</span></span>
+<span id="cb50-15"><a href="#cb50-15" aria-hidden="true" tabindex="-1"></a><span class="st">|            ..=oo|</span></span>
+<span id="cb50-16"><a href="#cb50-16" aria-hidden="true" tabindex="-1"></a><span class="st">+----[SHA256]-----+</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>If now you go to the specified path on the first line (so in our case <code>/home/user/.ssh/</code> you should see two files, <code>id_rsa</code> and <code>id_rsa.pub</code>, the private and public keys respectively. We’re almost done: what you need to do now is copy the contents of the <code>id_rsa.pub</code> file to Github.</p>
 <p>Go to your profile settings:</p>
 <figure class="figure">
@@ -657,23 +690,23 @@ Copy the contents of the public key here.
 </figcaption>
 </figure>
 <p>We can now go back to our terminal and try to push again:</p>
-<pre><code>owner@localhost ➤ git push -u origin master</code></pre>
+<div class="sourceCode" id="cb51"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="ex">owner@localhost</span> ➤ git push <span class="at">-u</span> origin master</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>The following message gets printed:</p>
-<pre><code>The authenticity of host 'github.com (140.82.121.3)' can't be established.
-ED25519 key fingerprint is SHA256:+DiY3wvvV6TuJJhbpZisF/zLDA0zPMSvHdkr4UvCOqU.
-This key is not known by any other names
-Are you sure you want to continue connecting (yes/no/[fingerprint])?</code></pre>
+<div class="sourceCode" id="cb52"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="ex">The</span> authenticity of host <span class="st">'github.com (140.82.121.3)'</span> can<span class="st">'t be established.</span></span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a><span class="st">ED25519 key fingerprint is SHA256:+DiY3wvvV6TuJJhbpZisF/zLDA0zPMSvHdkr4UvCOqU.</span></span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a><span class="st">This key is not known by any other names</span></span>
+<span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a><span class="st">Are you sure you want to continue connecting (yes/no/[fingerprint])?</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Type <code>yes</code> and then you should see the following:</p>
-<pre><code>Enumerating objects: 10, done.
-Counting objects: 100% (10/10), done.
-Delta compression using up to 4 threads
-Compressing objects: 100% (9/9), done.
-Writing objects: 100% (10/10), 2.77 KiB | 2.77 MiB/s, done.
-Total 10 (delta 2), reused 0 (delta 0), pack-reused 0
-remote: Resolving deltas: 100% (2/2), done.
-To github.com:rap4all/housing.git
- * [new branch]      master -&gt; master
-Branch 'master' set up to track remote branch 'master' from 'origin'.</code></pre>
+<div class="sourceCode" id="cb53"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="ex">Enumerating</span> objects: 10, done.</span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Counting</span> objects: 100% <span class="er">(</span><span class="ex">10/10</span><span class="kw">)</span><span class="ex">,</span> done.</span>
+<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a><span class="ex">Delta</span> compression using up to 4 threads</span>
+<span id="cb53-4"><a href="#cb53-4" aria-hidden="true" tabindex="-1"></a><span class="ex">Compressing</span> objects: 100% <span class="er">(</span><span class="ex">9/9</span><span class="kw">)</span><span class="ex">,</span> done.</span>
+<span id="cb53-5"><a href="#cb53-5" aria-hidden="true" tabindex="-1"></a><span class="ex">Writing</span> objects: 100% <span class="er">(</span><span class="ex">10/10</span><span class="kw">)</span><span class="ex">,</span> 2.77 KiB <span class="kw">|</span> <span class="ex">2.77</span> MiB/s, done.</span>
+<span id="cb53-6"><a href="#cb53-6" aria-hidden="true" tabindex="-1"></a><span class="ex">Total</span> 10 <span class="er">(</span><span class="ex">delta</span> 2<span class="kw">)</span><span class="ex">,</span> reused 0 <span class="er">(</span><span class="ex">delta</span> 0<span class="kw">)</span><span class="ex">,</span> pack-reused 0</span>
+<span id="cb53-7"><a href="#cb53-7" aria-hidden="true" tabindex="-1"></a><span class="ex">remote:</span> Resolving deltas: 100% <span class="er">(</span><span class="ex">2/2</span><span class="kw">)</span><span class="ex">,</span> done.</span>
+<span id="cb53-8"><a href="#cb53-8" aria-hidden="true" tabindex="-1"></a><span class="ex">To</span> github.com:rap4all/housing.git</span>
+<span id="cb53-9"><a href="#cb53-9" aria-hidden="true" tabindex="-1"></a> <span class="ex">*</span> [new branch]      master <span class="at">-</span><span class="op">&gt;</span> master</span>
+<span id="cb53-10"><a href="#cb53-10" aria-hidden="true" tabindex="-1"></a><span class="ex">Branch</span> <span class="st">'master'</span> set up to track remote branch <span class="st">'master'</span> from <span class="st">'origin'</span>.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>And we’re done! Our commits are now safely backed up on Github. If we go to our repository’s main page, we should see the following:</p>
 <figure class="figure">
 <img src="images/github_repo_1.png" alt="Finally!" class="figure-img">
