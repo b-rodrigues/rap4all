@@ -196,20 +196,22 @@ Up until this point, you could have followed along using any operating system.
 Most of the code shown in this book is R code, so it doesn’t matter on what
 operating system you’re running it. But there was some code that I ran in the
 Linux console (for example, I’ve used `ls` to list files). These commands should
-also work on macOS, and some even on Windows (`ls` also works on the Windows
-command prompt, and in Powershell as well). Instead of using the command line,
-you could have followed along using the user interface of your operating system
-as well. For example, in Chapter 11, I list the contents of the `dev/` directory
-using the following command:
+also work on macOS, but on Windows, I told you to run them in the Git Bash
+terminal instead. This is because `ls` (and other such commands) don’t work in
+the default Windows command prompt (but should work in Powershell though).
+Instead of using the terminal (or Git Bash) to navigate your computer’s file
+system, you could have followed along using the user interface of your operating
+system as well. For example, in Chapter 11 @chap-packages, I list the contents
+of the `dev/` directory using the following command:
 
 ::: {.content-hidden when-format="pdf"}
-```
+```bash
 owner@localhost ➤ ls dev/
 ```
 :::
 
 ::: {.content-visible when-format="pdf"}
-```
+```bash
 owner@localhost $ ls dev/
 ```
 :::
@@ -250,7 +252,7 @@ Windows is how you install software. In short, software for Linux distributions
 is distributed as packages. If you want to install, say, the Emacs text editor,
 you can run the following command in the terminal:
 
-```
+```bash
 sudo apt-get install emacs-gtk
 ```
 
@@ -406,13 +408,13 @@ terminal/command prompt in the folder where the Dockerfile is and type the
 following:
 
 ::: {.content-hidden when-format="pdf"}
-```
+```bash
 owner@localhost ➤ docker build -t raps_hello .
 ```
 :::
 
 ::: {.content-visible when-format="pdf"}
-```
+```bash
 owner@localhost $ docker build -t raps_hello .
 ```
 :::
@@ -422,7 +424,7 @@ path `.` (a single `.` means "this current working directory"). The `-t` option
 tags that image with the name `raps_hello`. If everything goes well, you 
 should see this output:
 
-```
+```bash
 Sending build context to Docker daemon  2.048kB
 Step 1/2 : FROM ubuntu:jammy
  ---> 08d22c0ceb15
@@ -438,7 +440,7 @@ Successfully tagged raps_hello:latest
 
 Look at `Step 2/2`: you should see the output of the `uname -a` command:
 
-```
+```bash
 Linux 697194b9a519 6.2.6-1-default #1 SMP PREEMPT_DYNAMIC
      Mon Mar 13 18:57:27 UTC 2023 (fa1a4c6) x86_64 x86_64 x86_64 GNU/Linux
 ```
@@ -491,13 +493,13 @@ Let's build the image (this will take some time, because a lot of software gets
 installed):
 
 ::: {.content-hidden when-format="pdf"}
-```
+```bash
 owner@localhost ➤ docker build -t raps_ubuntu_r .
 ```
 :::
 
 ::: {.content-visible when-format="pdf"}
-```
+```bash
 owner@localhost $ docker build -t raps_ubuntu_r .
 ```
 :::
@@ -512,20 +514,20 @@ behind the actual release. But no matter, we will deal with that later.
 We can now start a container with the following command:
 
 ::: {.content-hidden when-format="pdf"}
-```
+```bash
 owner@localhost ➤ docker run raps_ubuntu_r
 ```
 :::
 
 ::: {.content-visible when-format="pdf"}
-```
+```bash
 owner@localhost $ docker run raps_ubuntu_r
 ```
 :::
 
 And this is the output we get:
 
-```
+```r
 Fatal error: you must specify '--save', '--no-save' or '--vanilla'
 ```
 
@@ -545,14 +547,14 @@ container run in the background. You can achieve this by running the following
 command:
 
 ::: {.content-hidden when-format="pdf"}
-```
+```bash
 owner@localhost ➤ docker run -d -it --name ubuntu_r_1 raps_ubuntu_r
 ```
 :::
 
 
 ::: {.content-visible when-format="pdf"}
-```
+```bash
 owner@localhost $ docker run -d -it --name ubuntu_r_1 raps_ubuntu_r
 ```
 :::
@@ -566,20 +568,20 @@ instead of launching (and then immediately stopping) the R command. You can now
 "connect" to the interactive shell and start R in it using:
 
 ::: {.content-hidden when-format="pdf"}
-```
+```bash
 owner@localhost ➤ docker exec -it ubuntu_r_1 R
 ```
 :::
 
 ::: {.content-visible when-format="pdf"}
-```
+```bash
 owner@localhost $ docker exec -it ubuntu_r_1 R
 ```
 :::
 
 You should now see the familiar R prompt:
 
-```
+```r
 R version 4.1.2 (2021-11-01) -- "Bird Hippie"
 Copyright (C) 2021 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
@@ -846,9 +848,17 @@ themselves are missing. But before adding the pipeline itself, let’s see if th
 Docker image we built is working. For this, log in to a command line inside a
 running Docker container started from this image with this single command:
 
+::: {.content-hidden when-format="pdf"}
+```bash
+owner@localhost ➤ docker run --rm -it --name housing_container housing_image bash
 ```
-docker run --rm -it --name housing_container housing_image bash
+:::
+
+::: {.content-visible when-format="pdf"}
+```bash
+owner@localhost $ docker run --rm -it --name housing_container housing_image bash
 ```
+:::
 
 This starts `bash` (Ubuntu’s command line) inside the `housing_container` that
 gets started from the `housing_image` image. We add the `--rm` flag do `docker
@@ -857,13 +867,13 @@ the Docker container will continue running in the background). Once logged in,
 we can move to the folder’s project using:
 
 ::: {.content-hidden when-format="pdf"}
-```
+```bash
 user@docker ➤ cd home/housing
 ```
 :::
 
 ::: {.content-visible when-format="pdf"}
-```
+```bash
 user@docker $ cd home/housing
 ```
 :::
@@ -871,13 +881,13 @@ user@docker $ cd home/housing
 and then start the R interpreter:
 
 ::: {.content-hidden when-format="pdf"}
-```
+```bash
 user@docker ➤ R
 ```
 :::
 
 ::: {.content-visible when-format="pdf"}
-```
+```bash
 user@docker $ R
 ```
 :::
@@ -885,7 +895,7 @@ user@docker $ R
 if everything goes well, you should see the familiar R prompt with a message
 from `{renv}` at the end:
 
-```
+```r
 R version 4.2.2 (2022-10-31) -- "Innocent and Trusting"
 Copyright (C) 2022 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
@@ -1062,13 +1072,13 @@ now and get your files. But let’s just take a quick look. You can log in to a
 bash session using:
 
 ::: {.content-hidden when-format="pdf"}
-```
+```bash
 owner@localhost ➤ docker run --rm -it --name housing_container housing_image bash
 ```
 :::
 
 ::: {.content-visible when-format="pdf"}
-```
+```bash
 owner@localhost $ docker run --rm -it --name housing_container housing_image bash
 ```
 :::
@@ -1082,7 +1092,7 @@ Docker container. The code below shows how to do it (I’ve used the `\` to brea
 this long command over two lines):
 
 ::: {.content-hidden when-format="pdf"}
-```
+```bash
 owner@localhost ➤ docker run --rm --name housing_container -v \
                   /host/path/to/shared_folder:/home/housing/shared_folder:rw \
                   housing_image
@@ -1090,7 +1100,7 @@ owner@localhost ➤ docker run --rm --name housing_container -v \
 :::
 
 ::: {.content-visible when-format="pdf"}
-```
+```bash
 owner@localhost $ docker run --rm --name housing_container -v \
                   /host/path/to/shared_folder:/home/housing/shared_folder:rw \
                   housing_image
@@ -1230,9 +1240,17 @@ Dockerized version of RStudio from a running Docker container. This is actually
 what happens if you follow the instructions on the Rocker project’s homepage.
 You can get a dockerized RStudio instance by running:
 
+::: {.content-hidden when-format="pdf"}
+```bash
+owner@localhost ➤ docker run --rm -ti -e PASSWORD=yourpassword -p 8787:8787 rocker/rstudio
 ```
-docker run --rm -ti -e PASSWORD=yourpassword -p 8787:8787 rocker/rstudio
+:::
+
+::: {.content-visible when-format="pdf"}
+```bash
+owner@localhost $ docker run --rm -ti -e PASSWORD=yourpassword -p 8787:8787 rocker/rstudio
 ```
+:::
 
 and then going to `http://localhost:8787` on your web-browser. You can then log
 in with the username "rstudio" and the password "yourpassword". But you would
@@ -1274,7 +1292,7 @@ If you built an image to upload, now is the right moment to talk about the
 `docker images` command. This will list all the images available on your computer.
 You should see something like this:
 
-```
+```bash
 REPOSITORY         TAG       IMAGE ID       CREATED       SIZE
 rver_intro         latest    d3764d067534   2 days ago    1.61GB
 dev_env_r          latest    92fcf973ba42   2 days ago    1.42GB
@@ -1295,7 +1313,7 @@ only difference will be that B will need a little bit more space for Python.
 You can also list the running containers with `docker container ls` (or `docker ps`). 
 If a container is running you should see something like this:
 
-```
+```bash
 CONTAINER ID   IMAGE              COMMAND   CREATED
 545e4538a28a   rocker/tidyverse   "/init"   3 minutes ago
 
@@ -1316,13 +1334,13 @@ Now, you need to tag the image (this gives it a version number). So you would wr
 something like:
 
 ::: {.content-hidden when-format="pdf"}
-```
+```bash
 owner@localhost ➤ docker tag IMAGE_ID your_username_on_docker_hub/your_image:version1
 ```
 :::
 
 ::: {.content-visible when-format="pdf"}
-```
+```bash
 owner@localhost $ docker tag IMAGE_ID your_username_on_docker_hub/your_image:version1
 ```
 :::
@@ -1330,13 +1348,13 @@ owner@localhost $ docker tag IMAGE_ID your_username_on_docker_hub/your_image:ver
 so in my case, it would be:
 
 ::: {.content-hidden when-format="pdf"}
-```
+```bash
 owner@localhost ➤ docker tag 92fcf973ba42 rap4all/dev_env_r:4.2.2
 ```
 :::
 
 ::: {.content-visible when-format="pdf"}
-```
+```bash
 owner@localhost $ docker tag 92fcf973ba42 rap4all/dev_env_r:4.2.2
 ```
 :::
@@ -1344,13 +1362,13 @@ owner@localhost $ docker tag 92fcf973ba42 rap4all/dev_env_r:4.2.2
 Next, I need to push it using `docker push`:
 
 ::: {.content-hidden when-format="pdf"}
-```
+```bash
 owner@localhost ➤ docker push rap4all/dev_env_r:4.2.2
 ```
 :::
 
 ::: {.content-hidden when-format="pdf"}
-```
+```bash
 owner@localhost $ docker push rap4all/dev_env_r:4.2.2
 ```
 :::
@@ -1417,13 +1435,13 @@ and share that file instead (internally to your institution/company).
 Run `docker save` to save the image into a file:
 
 ::: {.content-hidden when-format="pdf"}
-```
+```bash
 owner@localhost ➤ docker save dev_env_r > dev_env_r.tar
 ```
 :::
 
 ::: {.content-visible when-format="pdf"}
-```
+```bash
 owner@localhost $ docker save dev_env_r > dev_env_r.tar
 ```
 :::
@@ -1433,13 +1451,13 @@ with an archiving tool if you want. If you're on Linux, you could do so in one
 go (this will take some time):
 
 ::: {.content-hidden when-format="pdf"}
-```
+```bash
 owner@localhost ➤ docker save dev_env_r | gzip > dev_env_r.tgz
 ```
 :::
 
 ::: {.content-visible when-format="pdf"}
-```
+```bash
 owner@localhost $ docker save dev_env_r | gzip > dev_env_r.tgz
 ```
 :::
@@ -1447,20 +1465,20 @@ owner@localhost $ docker save dev_env_r | gzip > dev_env_r.tgz
 If you want to load this image, use `docker load`:
 
 ::: {.content-hidden when-format="pdf"}
-```
+```bash
 owner@localhost ➤ docker load < dev_env_r.tar
 ```
 :::
 
 ::: {.content-visible when-format="pdf"}
-```
+```bash
 owner@localhost $ docker load < dev_env_r.tar
 ```
 :::
 
 you should see an output like this:
 
-```
+```bash
 202fe64c3ce3: Loading layer [======================>]  80.33MB/80.33MB
 e7484d5519b7: Loading layer [======================>]  6.144kB/6.144kB
 a0f5608ee4a8: Loading layer [======================>]  645.4MB/645.4MB
@@ -1476,17 +1494,16 @@ Loaded image: dev_env_r:latest
 or if you compressed the file on Linux, you can also use:
 
 ::: {.content-hidden when-format="pdf"}
-```
+```bash
 owner@localhost ➤ docker load -i dev_env_r.tgz
 ```
 :::
 
 ::: {.content-visible when-format="pdf"}
-```
+```bash
 owner@localhost $ docker load -i dev_env_r.tgz
 ```
 :::
-
 
 to load the archive.
 

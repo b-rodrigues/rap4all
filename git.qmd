@@ -137,14 +137,14 @@ Git is a program that you install on your computer. If you’re running a Linux
 distribution, chances are Git is already installed. Try to run the following
 command in a terminal to see if this is the case:
 
-```
+```bash
 which git
 ```
 
 If a path like `/usr/bin/git` gets shown, congratulations, you can skip the rest
 of this paragraph. If something like:
 
-```
+```bash
 /usr/bin/which: no git in (/home/username/.local/bin:/home/username/bin:etc...)
 ```
 
@@ -153,15 +153,15 @@ install Git, use your distribution’s package manager, as it is very likely tha
 Git is packaged for your system. On Ubuntu, arguably the most popular Linux
 distribution, this means running:
 
-```
+```bash
 sudo apt-get update
 sudo apt-get install git
 ```
 
-If you're using Ubuntu, may instead use `apt` instead of `apt-get`. Both
-commands are basically interchangeable, use whatever you're used to. I've first
-used Ubuntu in 2008, and even though I don't use it anymore as my daily Linux
-distro (that honor goes to openSUSE), I still use `apt-get` out of habit.
+If you're using Ubuntu, you may use `apt` instead of `apt-get`. Both commands
+are basically interchangeable, use whatever you're used to. I've first used
+Ubuntu in 2008, and even though I don't use it anymore as my daily Linux distro
+(that honor goes to openSUSE), I still use `apt-get` out of habit.
 
 On macOS and Windows, follow the instructions from the [Git
 Book](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)^[https://is.gd/9HZqW4].
@@ -225,35 +225,36 @@ option, of course, is to simply open a terminal and navigate to the correct
 folder using `cd` (**c**hange **d**irectory, this should work the same on
 Windows, macOS and Linux):
 
-```
+```bash
 cd /home/user/housing/
 ```
 
 Make sure that you are in the right folder by **l**i**s**ting the contents of
 the folder:
 
-```
+```bash
 ls
 ```
 
-One little thing: from now on, the prompt of a terminal (or Git bash terminal on
-Windows) will start with `owner@localhost`. This is the user called `owner`
-("owner" simply because that will be the project manager in our examples from
-now on) and the computer `owner` uses is called `localhost` (this prompt can
-look different on your machine, sometimes the full path to the current working
-directory is listed instead). So here is what happens when `owner` runs `ls` on
-the root directory of the project:
-
+From now on, make sure to type the commands you see in the terminal (on Linux
+and macOS) or in the Git Bash terminal on Windows. To distinguish the terminal
+from the R command line prompt, the prompt of a terminal (or Git Bash terminal
+on Windows) will start with `owner@localhost`. `owner` is the username of the
+project manager in our examples from now on, and the computer `owner` used by
+this project manager is called `localhost` (this prompt can look different on
+your machine, sometimes the full path to the current working directory is listed
+instead). So here is what happens when `owner` runs `ls` on the root directory
+of the project:
 
 ::: {.content-hidden when-format="pdf"}
-```
+```bash
 owner@localhost ➤ ls
 analysis.R save_data.R
 ```
 :::
 
 ::: {.content-visible when-format="pdf"}
-```
+```bash
 owner@localhost $ ls
 analysis.R save_data.R
 ```
@@ -271,18 +272,18 @@ It's now time to start tracking these files using Git. In the same terminal in
 which we ran `ls`, run now the following `git` command:
 
 ::: {.content-hidden when-format="pdf"}
-```
+```bash
 owner@localhost ➤ git init
 ```
 ::: 
 
 ::: {.content-visible when-format="pdf"}
-```
+```bash
 owner@localhost $ git init
 ```
 ::: 
 
-```
+```bash
 hint: Using 'master' as the name for the initial branch.
 hint: This default branch name is subject to change. 
 hint: To configure the initial branch name to use in all of your
@@ -315,18 +316,18 @@ that use trunk based development (which I will discuss in the next chapter) even
 name this branch "trunk". Let's now run this other `git` command:
 
 ::: {.content-hidden when-format="pdf"}
-```
+```bash
 owner@localhost ➤ git status
 ```
 :::
 
 ::: {.content-visible when-format="pdf"}
-```
+```bash
 owner@localhost $ git status
 ```
 :::
 
-```
+```bash
 On branch master
 
 No commits yet
@@ -345,18 +346,18 @@ changes. So it's a good idea to just do what Git tells us to do: let's *add*
 them so that Git can track them:
 
 ::: {.content-hidden when-format="pdf"}
-```
+```bash
 owner@localhost ➤ git add
 ```
 :::
 
 ::: {.content-visible when-format="pdf"}
-```
+```bash
 owner@localhost $ git add
 ```
 :::
 
-```
+```bash
 Nothing specified, nothing added.
 hint: Maybe you wanted to say 'git add .'?
 hint: Turn this message off by running
@@ -369,34 +370,33 @@ file2.txt`, but if we simply want to track all the files in the folder, we
 can simply use the `.` placeholder:
 
 ::: {.content-hidden when-format="pdf"}
-```
+```bash
 owner@localhost ➤ git add .
 ```
 :::
 
 ::: {.content-visible when-format="pdf"}
-```
+```bash
 owner@localhost $ git add .
 ```
 :::
-
 
 No message this time... is that a good thing? Let's run `git status` and see
 what's going on:
 
 ::: {.content-hidden when-format="pdf"}
-```
+```bash
 owner@localhost ➤ git status
 ```
 :::
 
 ::: {.content-visible when-format="pdf"}
-```
+```bash
 owner@localhost $ git status
 ```
 :::
 
-```
+```bash
 On branch master
 
 No commits yet
@@ -423,13 +423,13 @@ We are now ready to commit our files. Each commit must have a commit message,
 and we can write this message as an option to the `git commit` command:
 
 ::: {.content-hidden when-format="pdf"}
-```
+```bash
 owner@localhost ➤ git commit -m "Project start"
 ```
 :::
 
 ::: {.content-visible when-format="pdf"}
-```
+```bash
 owner@localhost $ git commit -m "Project start"
 ```
 :::
@@ -438,18 +438,18 @@ The `-m` option is there to specify the message for the commit. Before
 pushing the commit, let's run `git status` again:
 
 ::: {.content-hidden when-format="pdf"}
-```
+```bash
 owner@localhost ➤ git status
 ```
 :::
 
 ::: {.content-visible when-format="pdf"}
-```
+```bash
 owner@localhost $ git status
 ```
 :::
 
-```
+```bash
 On branch master
 nothing to commit, working tree clean
 ```
@@ -463,7 +463,7 @@ committing. For example, we could commit 5 times and just push once: all of the
 Let's do just that by changing one file. Open `analysis.R` in any editor and
 simply change the start of the script by adding one line. So go from:
 
-```
+```r
 library(dplyr)
 library(ggplot2)
 library(purrr)
@@ -472,7 +472,7 @@ library(tidyr)
 
 To:
 
-```
+```r
 # This script analyses housing data for Luxembourg
 
 library(dplyr)
@@ -484,19 +484,18 @@ library(tidyr)
 and now run `git status` again:
 
 ::: {.content-hidden when-format="pdf"}
-```
+```bash
 owner@localhost ➤ git status
 ```
 :::
 
 ::: {.content-visible when-format="pdf"}
-```
+```bash
 owner@localhost $ git status
 ```
 :::
 
-
-```
+```bash
 On branch master
 Changes not staged for commit:
   (use "git add <file>..." to update what will be committed)
@@ -514,13 +513,13 @@ Github.com as soon as possible!
 Remember, first, we need to add these changes to a commit using `git add .`:
 
 ::: {.content-hidden when-format="pdf"}
-```
+```bash
 owner@localhost ➤ git add .
 ```
 :::
 
 ::: {.content-visible when-format="pdf"}
-```
+```bash
 owner@localhost $ git add .
 ```
 :::
@@ -531,13 +530,13 @@ to be committed.)
 Then, we need to commit the changes and add a nice commit message:
 
 ::: {.content-hidden when-format="pdf"}
-```
+```bash
 owner@localhost ➤ git commit -m "Added a comment to analysis.R"
 ```
 :::
 
 ::: {.content-visible when-format="pdf"}
-```
+```bash
 owner@localhost $ git commit -m "Added a comment to analysis.R"
 ```
 :::
@@ -558,13 +557,13 @@ roll back to previous commits. For example, suppose that I delete the file
 accidentally by running `rm analysis.R`:
 
 ::: {.content-hidden when-format="pdf"}
-```
+```bash
 owner@localhost ➤ rm analysis.R
 ```
 :::
 
 ::: {.content-visible when-format="pdf"}
-```
+```bash
 owner@localhost $ rm analysis.R
 ```
 :::
@@ -572,7 +571,7 @@ owner@localhost $ rm analysis.R
 Let’s run `git status` and look for the changes (it’s a line starting with the
 word `deleted`):
 
-```
+```bash
 On branch master
 Changes not staged for commit:
   (use "git add/rm <file>..." to update what will be committed)
@@ -590,19 +589,18 @@ simple tell Git to ignore our changes. A simple way to achieve this is to stash
 the changes, and then *drop* (or delete) the stash:
 
 ::: {.content-hidden when-format="pdf"}
-```
+```bash
 owner@localhost ➤ git stash
 ```
 :::
 
 ::: {.content-visible when-format="pdf"}
-```
+```bash
 owner@localhost $ git stash
 ```
 :::
 
-
-```
+```bash
 Saved working directory and index state WIP on master: \
   ab43b4b Added a comment to analysis.R
 ```
@@ -611,18 +609,18 @@ So the deletion was stashed away, (so in case we want it back we could get it ba
 and our project was rolled back to the previous commit. Simply take a look at the files:
 
 ::: {.content-hidden when-format="pdf"}
-```
+```bash
 owner@localhost ➤ ls
 ```
 :::
 
 ::: {.content-visible when-format="pdf"}
-```
+```bash
 owner@localhost $ ls
 ```
 :::
 
-```
+```bash
 analysis.R save_data.R
 ```
 
@@ -631,20 +629,20 @@ file and committed the change? In this scenario we could not use `git stash`, bu
 revert to a commit. Let's try, first let me remove the file:
 
 ::: {.content-hidden when-format="pdf"}
-```
+```bash
 owner@localhost ➤ rm analysis.R
 ```
 :::
 
 ::: {.content-visible when-format="pdf"}
-```
+```bash
 owner@localhost $ rm analysis.R
 ```
 :::
 
 and check the status with `git status`:
 
-```
+```bash
 On branch master
 Changes not staged for commit:
   (use "git add/rm <file>..." to update what will be committed)
@@ -657,21 +655,20 @@ no changes added to commit (use "git add" and/or "git commit -a")
 Let's add these changes and commit them:
 
 ::: {.content-hidden when-format="pdf"}
-```
+```bash
 owner@localhost ➤ git add .
 owner@localhost ➤ git commit -m "Removed analysis.R"
 ```
 :::
 
 ::: {.content-visible when-format="pdf"}
-```
+```bash
 owner@localhost $ git add .
 owner@localhost $ git commit -m "Removed analysis.R"
 ```
 :::
 
-
-```
+```bash
 [master 8e51867] Removed analysis.R
  1 file changed, 131 deletions(-)
  delete mode 100644 analysis.R
@@ -681,18 +678,18 @@ What’s the status now?
 
 
 ::: {.content-hidden when-format="pdf"}
-```
+```bash
 owner@localhost ➤ git status
 ```
 :::
 
 ::: {.content-visible when-format="pdf"}
-```
+```bash
 owner@localhost $ git status
 ```
 :::
 
-```
+```bash
 On branch master
 nothing to commit, working tree clean
 ```
@@ -703,19 +700,18 @@ commit not only has a message, but also an unique identifier that you can access
 with `git log`:
 
 ::: {.content-hidden when-format="pdf"}
-```
+```bash
 owner@localhost ➤ git log
 ```
 :::
 
 ::: {.content-visible when-format="pdf"}
-```
+```bash
 owner@localhost $ git log
 ```
 :::
 
-
-```
+```bash
 commit 8e51867dc5ae89e5f2ab2798be8920e703f73455 (HEAD -> master)
 Author: User <owner@mailbox.com>
 Date:   Sun Feb 5 17:54:30 2023 +0100
@@ -747,42 +743,39 @@ keyboard. We are now ready to revert to the right commit with the following
 command:
 
 ::: {.content-hidden when-format="pdf"}
-```
+```bash
 owner@localhost ➤ git revert ab43b4b1069cd98768..HEAD
 ```
 :::
 
 ::: {.content-visible when-format="pdf"}
-```
+```bash
 owner@localhost $ git revert ab43b4b1069cd98768..HEAD
 ```
 :::
-
 
 and we're done! Check that all is right by running `ls` to see that the file
 magically returned, and `git log` to read the log of what happened:
 
 ::: {.content-hidden when-format="pdf"}
-```
+```bash
 owner@localhost ➤ git log
 ```
 :::
 
-
 ::: {.content-visible when-format="pdf"}
-```
+```bash
 owner@localhost $ git log
 ```
 :::
 
-
-```
+```bash
 commit b7f82ee119df52550e9ca1a8da2d81281e6aac58 (HEAD -> master)
 Author: User <owner@mailbox.com>
 Date:   Sun Feb 5 18:03:37 2023 +0100
 
     Revert "Removed analysis.R"
-    
+
     This reverts commit 8e51867dc5ae89e5f2ab2798be8920e703f73455.
 
 commit 8e51867dc5ae89e5f2ab2798be8920e703f73455 (HEAD -> master)
@@ -930,7 +923,7 @@ instructions. Since we have already started working, we need to follow the
 instructions titled "...or push an existing repository from the command line".
 Let's review these commands. This is what Github suggests we run:
 
-```
+```bash
 git remote add origin git@github.com:rap4all/housing.git
 git branch -M main
 git push -u origin main
@@ -949,13 +942,13 @@ branch (but we need to change "main" to "master").
 Let's do just that:
 
 ::: {.content-hidden when-format="pdf"}
-```
+```bash
 owner@localhost ➤ git remote add origin git@github.com:rap4all/housing.git
 ```
 :::
 
 ::: {.content-visible when-format="pdf"}
-```
+```bash
 owner@localhost $ git remote add origin git@github.com:rap4all/housing.git
 ```
 :::
@@ -963,21 +956,21 @@ owner@localhost $ git remote add origin git@github.com:rap4all/housing.git
 This produces no output. We're now ready to push:
 
 ::: {.content-hidden when-format="pdf"}
-```
+```bash
 owner@localhost ➤ git push -u origin master
 ```
 :::
 
 
 ::: {.content-visible when-format="pdf"}
-```
+```bash
 owner@localhost $ git push -u origin master
 ```
 :::
 
 and it fails:
 
-```
+```bash
 ERROR: Permission to rap4all/housing.git denied to b-rodrigues.
 fatal: Could not read from remote repository.
 
@@ -989,43 +982,43 @@ The reason is quite simple: Github has absolutely no idea who we are! Remember,
 if the repository is public, anyone can clone it. But that doesn't mean that
 anyone can simply push code to the repo! This means that we need a way to tell
 Github that we are the owner of the repository. For this, we need a way to log
-in securely, and we will do so using a public/private RSA encryption key pair. The idea is
-quite simple; we are going to generate two files on our computer. These two
-files form a public/private key pair. We are going to upload the public key to
-Github; and every time we want to interact with Github, Github will check the
-public key against the private key that we keep on our machine (never, ever,
-send the private key to anyone). If they match, Github knows that we are who we
-claim to be and will let us push to the repository. This is why we switched from
-`https` to `ssh` before. `https` would allow us to log in by typing a password
-each time we push (but actually, not anymore, since password login was turned
-off some years ago). It is much easier to not have to log in manually and let
-our key pair do the job for us.
+in securely, and we will do so using a public/private RSA encryption key pair.
+The idea is quite simple; we are going to generate two files on our computer.
+These two files form a public/private key pair. We are going to upload the
+public key to Github; and every time we want to interact with Github, Github
+will check the public key against the private key that we keep on our machine
+(never, ever, send the private key to anyone). If they match, Github knows that
+we are who we claim to be and will let us push to the repository. This is why we
+switched from `https` to `ssh` before. `https` would allow us to log in by
+typing a password each time we push (but actually, not anymore, since password
+login was turned off some years ago). It is much easier to not have to log in
+manually and let our key pair do the job for us.
 
 Let's generate a public/private RSA key pair. Open a terminal on Linux or macOS,
 or Git Bash on Windows and run the following command:
 
 ::: {.content-hidden when-format="pdf"}
-```
+```bash
 owner@localhost ➤ ssh-keygen
 ```
 :::
 
 ::: {.content-visible when-format="pdf"}
-```
+```bash
 owner@localhost $ ssh-keygen
 ```
 :::
 
 The following lines will appear in your terminal:
 
-```
+```bash
 Generating public/private rsa key pair.
 Enter file in which to save the key (/home/user/.ssh/id_rsa): 
 ```
 
 Simply leave this empty and press enter. This next message now appears:
 
-```
+```bash
 Enter passphrase (empty for no passphrase): 
 ```
 
@@ -1037,14 +1030,14 @@ sensitive data and code that this is a real worry, maybe don't use Github?
 
 So once you pressed enter, you get asked to confirm the passphrase:
 
-```
+```bash
 Enter same passphrase again: 
 ```
 
 Here again, simply leave it empty and press enter on your keyboard. Once this is
 done, you should see this:
 
-```
+```bash
 Your identification has been saved in /home/user/.ssh/id_rsa
 Your public key has been saved in /home/user/.ssh/id_rsa.pub
 The key fingerprint is:
@@ -1110,7 +1103,6 @@ and then click on "New SSH key". Name this key (it's a good idea to write
 something that makes recognizing the computer that generated the key easy) and
 paste the contents of `id_rsa.pub` in the text box and click on "add SSH key":
 
-
 ::: {.content-hidden when-format="pdf"}
 <figure>
     <img src="images/github_add_ssh.png"
@@ -1133,21 +1125,20 @@ knitr::include_graphics("images/github_add_ssh.png")
 We can now go back to our terminal and try to push again:
 
 ::: {.content-hidden when-format="pdf"}
-```
+```bash
 owner@localhost ➤ git push -u origin master
 ```
 :::
 
-
 ::: {.content-visible when-format="pdf"}
-```
+```bash
 owner@localhost $ git push -u origin master
 ```
 :::
 
 The following message gets printed:
 
-```
+```bash
 The authenticity of host 'github.com (140.82.121.3)' can't be established.
 ED25519 key fingerprint is SHA256:+DiY3wvvV6TuJJhbpZisF/zLDA0zPMSvHdkr4UvCOqU.
 This key is not known by any other names
@@ -1156,7 +1147,7 @@ Are you sure you want to continue connecting (yes/no/[fingerprint])?
 
 Type `yes` and then you should see the following:
 
-```
+```bash
 Enumerating objects: 10, done.
 Counting objects: 100% (10/10), done.
 Delta compression using up to 4 threads
@@ -1376,6 +1367,10 @@ You will land on this interface:
 #| fig-cap: "Write what the issue's about here."
 knitr::include_graphics("images/github_new_issue_empty.png")
 ```
+:::
+
+::: {.content-visible when-format="pdf"}
+\newpage
 :::
 
 Give a nice title to the issue (1), add a thorough description (2), (optionally)

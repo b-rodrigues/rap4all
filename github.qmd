@@ -46,13 +46,13 @@ project).
 So, back to our issue. First, Bruno needs to clone the repository:
 
 ::: {.content-hidden when-format="pdf"}
-```
+```bash
 bruno@computer ➤ git clone git@github.com:rap4all/housing.git
 ```
 :::
 
 ::: {.content-visible when-format="pdf"}
-```
+```bash
 bruno@computer $ git clone git@github.com:rap4all/housing.git
 ```
 :::
@@ -61,38 +61,38 @@ To add the feature, Bruno will now create a new branch by using the `git
 checkout` command with the `-b` flag:
 
 ::: {.content-hidden when-format="pdf"}
-```
+```bash
 bruno@computer ➤ git checkout -b "add_readme"
 ```
 :::
 
 ::: {.content-visible when-format="pdf"}
-```
+```bash
 bruno@computer $ git checkout -b "add_readme"
 ```
 :::
 
 The project automatically switches to the new branch:
 
-```
+```bash
 Switched to a new branch 'add_readme'
 ```
 
 We can also run `git status` to double-check:
 
 ::: {.content-hidden when-format="pdf"}
-```
+```bash
 bruno@computer ➤ git status
 ```
 :::
 
 ::: {.content-visible when-format="pdf"}
-```
+```bash
 bruno@computer $ git status
 ```
 :::
 
-```
+```bash
 On branch add_readme
 nothing to commit, working tree clean
 ```
@@ -113,20 +113,20 @@ tidy them up into a flat data frame.
 Let's save this and run `git status` to see what happened:
 
 ::: {.content-hidden when-format="pdf"}
-```
+```bash
 bruno@computer ➤ git status
 ```
 :::
 
 ::: {.content-visible when-format="pdf"}
-```
+```bash
 bruno@computer $ git status
 ```
 :::
 
 Git tells Bruno that the `README.md` file is not being tracked:
 
-```
+```bash
 On branch add_readme
 Untracked files:
   (use "git add <file>..." to include in what will be committed)
@@ -141,14 +141,14 @@ would be great if he could close it as he pushes the fix. This is possible by
 referencing the issue number in the commit message:
 
 ::: {.content-hidden when-format="pdf"}
-```
+```bash
 bruno@computer ➤ git add .
 bruno@computer ➤ git commit -m "fixed #1"
 ```
 :::
 
 ::: {.content-visible when-format="pdf"}
-```
+```bash
 bruno@computer $ git add .
 bruno@computer $ git commit -m "fixed #1"
 ```
@@ -159,13 +159,13 @@ in the repository). So by referencing this issue with its number in the commit
 message and pushing, the issue gets automatically closed when Bruno pushes:
 
 ::: {.content-hidden when-format="pdf"}
-```
+```bash
 bruno@computer ➤ git push origin add_readme
 ```
 :::
 
 ::: {.content-visible when-format="pdf"}
-```
+```bash
 bruno@computer $ git push origin add_readme
 ```
 :::
@@ -175,7 +175,7 @@ he opened to solve the issue, not "master". If he tried to push to "master" a
 message saying that "master" is up-to-date would get printed. Let's see the
 output of pushing to "add_readme":
 
-```
+```bash
 Enumerating objects: 4, done.
 Counting objects: 100% (4/4), done.
 Delta compression using up to 12 threads
@@ -563,19 +563,19 @@ conflict will ensue.
 First, Bruno needs to switch back to the master branch on his computer:
 
 ::: {.content-hidden when-format="pdf"}
-```
+```bash
 bruno@computer ➤ git checkout master
 ```
 :::
 
 ::: {.content-visible when-format="pdf"}
-```
+```bash
 bruno@computer $ git checkout master
 ```
 :::
 
 
-```
+```bash
 Switched to branch 'master'
 Your branch is behind 'origin/master' by 2 commits, and can be fast-forwarded.
   (use "git pull" to update your local branch)
@@ -586,18 +586,18 @@ Git tells us to update the code on our computer by running `git pull`. We use
 Github. Let's run it and see what happens:
 
 ::: {.content-hidden when-format="pdf"}
-```
+```bash
 bruno@computer ➤ git pull
 ```
 :::
 
 ::: {.content-visible when-format="pdf"}
-```
+```bash
 bruno@computer $ git pull
 ```
 :::
 
-```
+```bash
 Updating b7f82ee..c774ebf
 Fast-forward
  README.md | 7 +++++++
@@ -610,13 +610,13 @@ Files on Bruno's computer have been updated. The owner of the project (called
 new branch to work on the new feature:
 
 ::: {.content-hidden when-format="pdf"}
-```
+```bash
 bruno@computer ➤ git checkout -b add_cool_feature
 ```
 :::
 
 ::: {.content-visible when-format="pdf"}
-```
+```bash
 bruno@computer $ git checkout -b add_cool_feature
 ```
 :::
@@ -624,13 +624,13 @@ bruno@computer $ git checkout -b add_cool_feature
 And the project owner also creates a new branch:
 
 ::: {.content-hidden when-format="pdf"}
-```
+```bash
 owner@localhost ➤ git checkout -b add_nice_feature
 ```
 :::
 
 ::: {.content-visible when-format="pdf"}
-```
+```bash
 owner@localhost $ git checkout -b add_nice_feature
 ```
 :::
@@ -686,7 +686,7 @@ would make the changes got lost in translation... Anyways, both now push their
 changes to their respective branches. This is Bruno:
 
 ::: {.content-hidden when-format="pdf"}
-```
+```bash
 bruno@computer ➤ git add .
 bruno@computer ➤ git commit -m "make_plot() for plotting"
 bruno@computer ➤ git push origin add_cool_feature
@@ -694,14 +694,14 @@ bruno@computer ➤ git push origin add_cool_feature
 :::
 
 ::: {.content-visible when-format="pdf"}
-```
+```bash
 bruno@computer $ git add .
 bruno@computer $ git commit -m "make_plot() for plotting"
 bruno@computer $ git push origin add_cool_feature
 ```
 :::
 
-```
+```bash
 Enumerating objects: 5, done.
 Counting objects: 100% (5/5), done.
 Delta compression using up to 12 threads
@@ -720,7 +720,7 @@ To github.com:rap4all/housing.git
 and this is the owner:
 
 ::: {.content-hidden when-format="pdf"}
-```
+```bash
 owner@localhost ➤ git add .
 owner@localhost ➤ git commit -m "cleanup"
 owner@localhost ➤ git push origin add_sweet_feature
@@ -728,14 +728,14 @@ owner@localhost ➤ git push origin add_sweet_feature
 :::
 
 ::: {.content-visible when-format="pdf"}
-```
+```bash
 owner@localhost $ git add .
 owner@localhost $ git commit -m "cleanup"
 owner@localhost $ git push origin add_sweet_feature
 ```
 :::
 
-```
+```bash
 Enumerating objects: 5, done.
 Counting objects: 100% (5/5), done.
 Delta compression using up to 4 threads
@@ -819,7 +819,6 @@ knitr::include_graphics("images/github_new_pull_request_review_pending.png")
 ```
 :::
 
-
 By clicking on it, the project owner can review the pull request and decide what
 to do with it. So at this point, the owner did not open a pull request for the
 feature he or she worked on yet. And maybe that's a good thing, because now the
@@ -881,18 +880,18 @@ feature branch by merging master into it.
 So, the project owner checks that he or she is working on the feature branch:
 
 ::: {.content-hidden when-format="pdf"}
-```
+```bash
 owner@localhost ➤ git status
 ```
 :::
 
 ::: {.content-visible when-format="pdf"}
-```
+```bash
 owner@localhost $ git status
 ```
 :::
 
-```
+```bash
 On branch add_sweet_feature
 nothing to commit, working tree clean
 ```
@@ -900,20 +899,20 @@ nothing to commit, working tree clean
 Ok, so now let's get the updated code from master, by pulling from master:
 
 ::: {.content-hidden when-format="pdf"}
-```
+```bash
 owner@localhost ➤ git pull origin master
 ```
 :::
 
 ::: {.content-visible when-format="pdf"}
-```
+```bash
 owner@localhost $ git pull origin master
 ```
 :::
 
 The owner now sees this:
 
-```
+```bash
 remote: Enumerating objects: 6, done.
 remote: Counting objects: 100% (6/6), done.
 remote: Compressing objects: 100% (3/3), done.
@@ -942,7 +941,7 @@ happened without any issues.
 Then, you should understand what happens when a conflict gets detected on some
 lines. For example, this is the first conflict you should see:
 
-```
+```r
 <<<<<<< HEAD
 filtered_data <- commune_level_data |>
   filter(locality == communes[1])
@@ -997,13 +996,13 @@ is useful. If you want to know who changed the file called `analysis.R` for
 example, simply run:
 
 ::: {.content-hidden when-format="pdf"}
-```
+```bash
 owner@localhost ➤ git blame analysis.R
 ```
 :::
 
 ::: {.content-visible when-format="pdf"}
-```
+```bash
 owner@localhost $ git blame analysis.R
 ```
 :::
@@ -1011,11 +1010,11 @@ owner@localhost $ git blame analysis.R
 and you will see a detailed history, line by line, with the user name of the
 contributors and a date stamp:
 
-```
-b7f82ee1 (Bruno   2023-02-05 18:03:37 +0100 24) #Let’s also compute it...
-b7f82ee1 (Bruno   2023-02-05 18:03:37 +0100 25) 
-55804ccb (Owner   2023-02-11 22:33:20 +0000 26) country_level_data <- ...
-55804ccb (Owner   2023-02-11 22:33:20 +0000 27)   mutate(p0 = ifelse(y...
+```bash
+b7f82ee1 (Bruno 2023-02-05 18:03:37 +0100 24) #Let’s also compute it...
+b7f82ee1 (Bruno 2023-02-05 18:03:37 +0100 25) 
+55804ccb (Owner 2023-02-11 22:33:20 +0000 26) country_level_data <- ...
+55804ccb (Owner 2023-02-11 22:33:20 +0000 27)   mutate(p0 = ifelse(y...
 ```
 
 We can see that Bruno edited lines 24 and 25 on the 5th of February as part of
@@ -1145,22 +1144,18 @@ knitr::include_graphics("images/github_my_fork.png")
 ```
 :::
 
-::: {.content-visible when-format="pdf"}
-\newpage
-:::
-
 So now, Bruno can clone this repository and work on it, because he is working on
 a copy of the repository that he owns. Anything Bruno does on this copy will not
-affect the original repository.
+affect the original repository:
 
 ::: {.content-hidden when-format="pdf"}
-```
+```bash
 bruno@computer ➤ git clone git@github.com:b-rodrigues/my_cool_project.git 
 ```
 :::
 
 ::: {.content-visible when-format="pdf"}
-```
+```bash
 bruno@computer $ git clone git@github.com:b-rodrigues/my_cool_project.git 
 ```
 :::
@@ -1189,10 +1184,6 @@ knitr::include_graphics("images/github_typo_fixed.png")
 As you can see, Bruno's fork is now ahead of the original repo by one commit. By
 clicking on "Contribute", Bruno can open a pull request to propose his fix to
 the original repository.
-
-::: {.content-visible when-format="pdf"}
-\newpage
-:::
 
 This pull request will be opened over at the original repository:
 
@@ -1255,6 +1246,9 @@ knitr::include_graphics("images/github_contribution_done.png")
 ```
 :::
 
+::: {.content-visible when-format="pdf"}
+\newpage
+:::
 
 ## Further reading
 

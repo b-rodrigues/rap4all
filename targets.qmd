@@ -171,7 +171,7 @@ You can run this pipeline by typing `targets::tar_make()` in a console:
 targets::tar_make()
 ```
 
-```
+```r
 • start target data
 • built target data [0.82 seconds]
 • start target data_summary
@@ -187,7 +187,7 @@ to inspect this output results in the following:
 data_summary
 ```
 
-```
+```r
 Error: object 'data_summary' not found
 ```
 
@@ -428,7 +428,7 @@ write.csv(head(mtcars), "mtcars.csv", row.names = F)
 
 If you try to run the pipeline again, our changes to the data are ignored:
 
-```
+```r
 ✔ skip target data_mtcars
 ✔ skip target plot_mtcars
 ✔ skip target summary_mtcars
@@ -739,7 +739,7 @@ Then, run the pipeline from scratch with `targets::tar_make()`:
 targets::tar_make()
 ```
 
-```
+```r
 • start target path_data_mtcars
 • built target path_data_mtcars [0.18 seconds]
 • start target data_iris
@@ -831,12 +831,12 @@ You can now run this pipeline in parallel using `targets::tar_make_future()`
 pipeline from scratch to test this, call `targets::tar_destroy()` and then
 `targets::tar_make()` will build the entire pipeline from scratch:
 
-```
+```r
 # Set workers = 2 to use 2 cpu cores
 targets::tar_make_future(workers = 2)
 ```
 
-```
+```r
 • start target path_data_mtcars
 • start target data_iris
 • built target path_data_mtcars [0.2 seconds]
@@ -1029,7 +1029,9 @@ to show in the document as well.
 For this, simply add:
 
 ````{verbatim}
+```{r}
 tar_read(plot_mtcars)
+```
 ````
 
 at the bottom of the `.Rmd` file. Running the pipeline again will now add the
@@ -1214,7 +1216,7 @@ create a new branch, start from the `rmd` branch, since this will provide a nice
 starting point.
 
 ::: {.content-hidden when-format="pdf"}
-```
+```bash
 #switch to the rmd branch
 owner@localhost ➤ git checkout rmd
 
@@ -1224,7 +1226,7 @@ owner@localhost ➤ git checkout -b pipeline
 :::
 
 ::: {.content-visible when-format="pdf"}
-```
+```bash
 #switch to the rmd branch
 owner@localhost $ git checkout rmd
 
@@ -1241,13 +1243,13 @@ an empty repo). We don’t need that file anymore, since everything is now
 available in the package we developed:
 
 ::: {.content-hidden when-format="pdf"}
-```
+```bash
 owner@localhost ➤ rm save_data.Rmd
 ```
 :::
 
 ::: {.content-visible when-format="pdf"}
-```
+```bash
 owner@localhost $ rm save_data.Rmd
 ```
 :::
@@ -1506,7 +1508,7 @@ renv::init()
 This will create an `renv.lock` file with all the dependencies of the pipeline
 listed. Very importantly, our Github package also gets listed:
 
-```
+```json
 "housing": {
   "Package": "housing",
   "Version": "0.1",
@@ -1536,7 +1538,7 @@ listed. Very importantly, our Github package also gets listed:
 If you look at the fields titled `RemoteSha` and `RemoteRef` you should
 recognize the commit hash and repository that were used to install the package:
 
-```
+```json
 "RemoteRef": "fusen",
 "RemoteSha": "1c860959310b80e67c41f7bbdc3e84cef00df18e",
 ```
@@ -1581,7 +1583,7 @@ warnings or errors were raised. This is how this data frame looks like:
 targets::tar_meta()
 ```
 
-```
+```r
 # A tibble: 11 × 18
    name       type  data  command depend [...]
    <chr>      <chr> <chr> <chr>   <chr>  [...]
@@ -1601,7 +1603,7 @@ There are more columns than those I’m showing, of great interest are the colum
 targets::tar_make()
 ```
 
-```
+```r
 • start target commune_level_data
 • built target commune_level_data [0.61 seconds]
 • start target country_level_data
@@ -1629,7 +1631,7 @@ tar_meta(fields = warnings, complete_only = TRUE)
 This code returns a data frame with the name of the targets
 that produced the warning, alongside the warning.
 
-```
+```r
 # A tibble: 2 × 2
   name               warnings
   <chr>              <chr>
@@ -1673,7 +1675,7 @@ withr::with_dir(
 
 Sometimes, when you try to run the pipeline, you get the following error message:
 
-```
+```r
 Error:
 ! Error running targets::tar_make()
   Target errors: targets::tar_meta(fields = error, complete_only = TRUE)

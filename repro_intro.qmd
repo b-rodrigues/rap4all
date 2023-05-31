@@ -93,18 +93,19 @@ will be experimenting with a new feature, create a new branch called `renv`. You
 should know the drill by now, but if not simply follow along:
 
 ::: {.content-hidden when-format="pdf"}
-```
+```bash
 owner@localhost ➤ git checkout -b renv
 ```
 :::
 
 ::: {.content-visible when-format="pdf"}
-```
+```bash
 owner@localhost $ git checkout -b renv
 ```
 :::
 
-```
+
+```bash
 Switched to a new branch 'renv'
 ```
 
@@ -112,7 +113,7 @@ We will now be working on this branch. Simply work as usual, but when pushing,
 make sure to push to the `renv` branch:
 
 ::: {.content-hidden when-format="pdf"}
-```
+```bash
 owner@localhost ➤ git add .
 owner@localhost ➤ git commit -m "some changes"
 owner@localhost ➤ git push origin renv
@@ -120,7 +121,7 @@ owner@localhost ➤ git push origin renv
 :::
 
 ::: {.content-visible when-format="pdf"}
-```
+```bash
 owner@localhost $ git add .
 owner@localhost $ git commit -m "some changes"
 owner@localhost $ git push origin renv
@@ -156,18 +157,19 @@ Let’s take a look at the files that were created (if you prefer using your fil
 browser, feel free to do so, but I prefer the command line):
 
 ::: {.content-hidden when-format="pdf"}
-```
+```bash
 owner@localhost ➤ ls -la
 ```
 :::
 
 ::: {.content-visible when-format="pdf"}
-```
+```bash
 owner@localhost $ ls -la
 ```
 :::
 
-```
+
+```bash
 total 1070
 drwxr-xr-x 1 owner Domain Users     0 Feb 27 12:44 .
 drwxr-xr-x 1 owner Domain Users     0 Feb 27 12:35 ..
@@ -192,20 +194,20 @@ in any text editor, like Notepad on Windows, but then again I prefer the command
 line):
 
 ::: {.content-hidden when-format="pdf"}
-```
+```bash
 owner@localhost ➤ cat .Rprofile
 ```
 :::
 
 ::: {.content-visible when-format="pdf"}
-```
+```bash
 owner@localhost $ cat .Rprofile
 ```
 :::
 
 The files contains the single line:
 
-```
+```r
 source("renv/activate.R")
 ```
 
@@ -213,18 +215,18 @@ source("renv/activate.R")
 can find in the `renv` folder. Let’s take a look at the contents of this folder:
 
 ::: {.content-hidden when-format="pdf"}
-```
+```bash
 owner@localhost ➤ ls renv
 ```
 :::
 
 ::: {.content-visible when-format="pdf"}
-```
+```bash
 owner@localhost $ ls renv
 ```
 :::
 
-```
+```bash
 total 107
 drwxr-xr-x 1 owner Domain Users     0 Feb 27 12:44 .
 drwxr-xr-x 1 owner Domain Users     0 Feb 27 12:35 ..
@@ -251,7 +253,7 @@ folder containing he sensitive data. Create this file using your favourite text
 editor and simply add, for example if you’re working with sensitive data, the
 following:
 
-```
+```bash
 datasets/
 ```
 
@@ -268,18 +270,18 @@ This means that this R session will use the packages installed in the isolated
 library we’ve just created. Let’s now take a look at the `renv.lock` file:
 
 ::: {.content-hidden when-format="pdf"}
-```
+```bash
 owner@localhost ➤ cat renv.lock
 ```
 :::
 
 ::: {.content-visible when-format="pdf"}
-```
+```bash
 owner@localhost $ cat renv.lock
 ```
 :::
 
-```
+```json
 {
   "R": {
     "Version": "4.2.2",
@@ -332,13 +334,13 @@ this
 [here](https://github.com/wlandau/targets-minimal)^[https://is.gd/AAnByB]):
 
 ::: {.content-hidden when-format="pdf"}
-```
+```bash
 owner@localhost ➤ git clone git@github.com:b-rodrigues/targets-minimal.git
 ```
 :::
 
 ::: {.content-visible when-format="pdf"}
-```
+```bash
 owner@localhost $ git clone git@github.com:b-rodrigues/targets-minimal.git
 ```
 :::
@@ -366,7 +368,7 @@ get asked once more if you want to proceed, type `y` and watch as the packages
 get installed. If you pay attention to the links, you should see that many of
 them get pulled from the CRAN archive, for example:
 
-```
+```r
 Retrieving
   'https://cloud.r-project.org/src/contrib/Archive/vroom/vroom_1.5.5.tar.gz' ...
 ```
@@ -458,7 +460,7 @@ file and try to render it again by using `rmarkdown::render("test.Rmd")` (or if
 you’re using RStudio, by clicking the right button), but, spoiler alert, it
 won’t work. Instead you should see this:
 
-```
+```r
 Quitting from lines 7-9 (my_new_project.Rmd)
 Error in library(ggplot2) : there is no package called 'ggplot2'
 ```
@@ -621,7 +623,7 @@ ggsave("/home/project/output/myplot.pdf", myplot)
 
 but you will get the following message:
 
-```
+```r
 ---------------------------------------------------------------------------
 |IMPORTANT.
 |    Groundhog says: you are using R-4.2.2, but the version of R current

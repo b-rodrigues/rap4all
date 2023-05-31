@@ -52,6 +52,10 @@ in Luxembourg to avoid the horrible daily commute, and everyone wants to live
 either in the capital city, or in the second largest urban area in the south, in
 a city called Esch-sur-Alzette.
 
+::: {.content-visible when-format="pdf"}
+\newpage
+:::
+
 The plot below shows the value of the House Price Index through time for
 Luxembourg and the European Union:
 
@@ -63,7 +67,7 @@ withr::with_package("ggplot2",
   {
     ggplot(data = housing_lu_eu) +
       geom_line(aes(y = OBS_VALUE, x = TIME_PERIOD, group = geo, colour = geo),
-                size = 1.5) +
+                linewidth = 1.5) +
       labs(title = "House price and sales index (2010 = 100)",
            caption = "Source: Eurostat") +
       theme_minimal() +
@@ -127,6 +131,10 @@ So to summarise; our goal is to:
 We are going to start in the most basic way possible; we are simply going to
 write a script and deal with each step separately.
 
+::: {.content-visible when-format="pdf"}
+\newpage
+:::
+
 ## Saving trapped data from Excel
 
 Getting data from Excel into a tidy data frame can be very tricky. This is
@@ -184,7 +192,7 @@ For ease of presentation, I'm going to show you each step of the analysis here
 separately, but I'll be putting everything together in a single script once
 I'm done explaining each step. So first, let's load some packages:
 
-```{r, messages = FALSE}
+```{r, warning = FALSE, message = FALSE}
 library(dplyr)
 library(purrr)
 library(readxl)
@@ -203,7 +211,7 @@ easily rename every column of a data frame in snake case.
 
 Next, the code below downloads the data, and puts it in a data frame:
 
-```{r}
+```{r, warning = FALSE, message = FALSE}
 # The url below points to an Excel file
 # hosted on the book’s github repository
 url <- "https://is.gd/1vvBAc"

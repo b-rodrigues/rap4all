@@ -1,4 +1,4 @@
-# Packaging your code
+# Packaging your code {#chap-packages}
 
 In this chapter, you're going to learn how to create your own package. And let
 me be clear right from the start: the goal here is not to convert your analysis
@@ -94,7 +94,7 @@ Documents) directory. Inside that folder, you will find another folder called
 but you’re free to use your file explorer program):
 
 ::: {.content-hidden when-format="pdf"}
-```
+```bash
 owner@localhost ➤ ls dev/
 
 0-dev_history.Rmd  flat_minimal.Rmd
@@ -102,12 +102,12 @@ owner@localhost ➤ ls dev/
 :::
 
 ::: {.content-visible when-format="pdf"}
-```
+```bash
 owner@localhost $ ls dev/
-
 0-dev_history.Rmd  flat_minimal.Rmd
 ```
 :::
+
 
 `dev/` contains two `.Rmd` files, `0-dev_history.Rmd` and `flat_miminal.Rmd`.
 They’re both important, so let me explain what they do:
@@ -378,13 +378,13 @@ go back to our repository and switch back to the `rmd` branch that contains the
 branch for now):
 
 ::: {.content-hidden when-format="pdf"}
-```
+```bash
 owner@localhost ➤ git checkout rmd
 ```
 :::
 
 ::: {.content-visible when-format="pdf"}
-```
+```bash
 owner@localhost $ git checkout rmd
 ```
 :::
@@ -393,18 +393,18 @@ Using the `rmd` branch as a starting point, let’s create a new branch called
 `fusen`:
 
 ::: {.content-hidden when-format="pdf"}
-```
+```bash
 owner@localhost ➤ git checkout -b fusen
 ```
 :::
 
 ::: {.content-visible when-format="pdf"}
-```
+```bash
 owner@localhost $ git checkout -b fusen
 ```
 :::
 
-```
+```bash
 Switched to a new branch 'fusen'
 ```
 
@@ -412,7 +412,7 @@ We will now be working on this branch. Simply work as usual, but when pushing,
 make sure to push to the `fusen` branch:
 
 ::: {.content-hidden when-format="pdf"}
-```
+```bash
 owner@localhost ➤ git add .
 owner@localhost ➤ git commit -m "some changes"
 owner@localhost ➤ git push origin fusen
@@ -420,7 +420,7 @@ owner@localhost ➤ git push origin fusen
 :::
 
 ::: {.content-visible when-format="pdf"}
-```
+```bash
 owner@localhost $ git add .
 owner@localhost $ git commit -m "some changes"
 owner@localhost $ git push origin fusen
@@ -500,14 +500,14 @@ point is to do what you always do, but within a framework.
 
 Let’s now look at the functions’ `{roxygen2}`-type comments. The first line:
 
-```
+```r
 #' get_raw_data Gets raw nominal house price data from LU Open Data Portal
 ```
 
 will create the title of the function’s help page. Then come the `@param`
 lines (in this case we only have one):
 
-```
+```r
 #' @param url Optional: Persistent url to the data
 ```
 
@@ -517,7 +517,7 @@ parameters and you forget to document one? If that happens, when you will
 inflate the file, you will get a warning in the console that will look like
 this:
 
-```
+```r
 inflate warnings and errors: Undocumented arguments in documentation 
 object 'get_raw_data'
   'url'
@@ -525,7 +525,7 @@ object 'get_raw_data'
 
 Then come the `@importFrom` statements. This is where you list dependencies:
 
-```
+```r
 #' @importFrom readxl excel_sheets read_excel
 #' @importFrom utils download.file
 #' @importFrom dplyr mutate rename select
@@ -563,7 +563,7 @@ recorded by `{renv}` and will make using your project much easier.
 
 You will also notice the following `importFrom` statement:
 
-```
+```r
 #' @importFrom utils download.file
 ```
 
@@ -571,7 +571,7 @@ You will also notice the following `importFrom` statement:
 base installation of R. So you don’t really need to specify it; but when
 inflating the file, you get the following message:
 
-```
+```r
 Consider adding
   importFrom("utils", "download.file")
 to your NAMESPACE file.
@@ -585,13 +585,13 @@ returns. If the function doesn’t return anything, because it only has a side
 effect (for example, writing something to disk, or printing something on
 screen), then you could return `NULL`.
 
-```
+```r
 #' @return A data frame
 ```
 
 Last but not least, the `@export` keyword:
 
-```
+```r
 #' @export
 ```
 
@@ -882,7 +882,7 @@ alongside the project and that you provide clear installation instructions. To
 install a package from a `.tar.gz` file, open a new R session and run the
 following:
 
-```
+```r
 remotes::install_local("path/to/package/housing_0.0.0.9000.tar.gz")
 ```
 
@@ -928,13 +928,23 @@ knitr::include_graphics("images/pkgdown_deploy.png")
 ```
 :::
 
-For the automatic build, first make sure that the `.gitignore` file in the root of your
-package does contain the `docs/` folder, so that you do not send your local verifications. Then go to your `0-dev_history.Rmd` to run:
-```
+For the automatic build, first make sure that the `.gitignore` file in the root
+of your package does contain the `docs/` folder, so that you do not send your
+local verifications. Then go to your `0-dev_history.Rmd` to run:
+
+```r
 usethis::use_github_action("pkgdown")
 ```
-Commit the `.github/` directory with its yml files and push.
-GitHub Action is a service that automatically runs following instructions in the yml file, at each commit. When you commit in the `main` or `master` branch, the website will be built. As above, in the GitHub settings, you will need to define the root of the `gh-pages` branch to be published as GitHub Pages. This is called Continuous Integration and Continuous Deployment. Note that you may want to set the other GitHub Actions listed in the `0-dev_history.Rmd` to make it check your package on a different computer than yours. There is a chapter about CI/CD later in this book.
+
+Commit the `.github/` directory with its yml files and push. GitHub Action is a
+service that automatically runs following instructions in the yml file, at each
+commit. When you commit in the `main` or `master` branch, the website will be
+built. As above, in the GitHub settings, you will need to define the root of the
+`gh-pages` branch to be published as GitHub Pages. This is called Continuous
+Integration and Continuous Deployment. Note that you may want to set the other
+GitHub Actions listed in the `0-dev_history.Rmd` to make it check your package
+on a different computer than yours. There is a chapter about CI/CD later in this
+book.
 
 As an example of the website, you can visit the website of the package we’ve built together
 [here](https://rap4all.github.io/housing/)^[https://rap4all.github.io/housing/].
