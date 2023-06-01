@@ -29,7 +29,7 @@ knitr::include_graphics("images/report_draft_loop.png")
 ```
 :::
 
-The problem is that writing code, getting some results, and putting this results
+The problem is that writing code, getting some results, and putting these results
 into a document (it doesn’t matter what kind) is often very tedious. The picture
 above illustrates this cursed report drafting loop. Get some results, copy and
 paste images into Word or Powerpoint, get a change request, or notice a mistake,
@@ -78,20 +78,20 @@ and Quarto.
 
 Sweave was the first tool available to R (and S) users, and allowed the mixing
 of R and LaTeX code to create a document. Friedrich Leisch developed Sweave in
-2002 and described it in his 2002 paper (@leisch2002). As Leisch argues, *the
+2002 and described it in his 2002 paper [@leisch2002]. As Leisch argues, *the
 traditional way of writing a report as part of a statistical data analysis
 project uses two separate steps*: running the analysis using some software, and
 then copy and pasting the results into a word processing tool (as illustrated
 above). To really drive that point home: the problem with this approach is that
 much time is wasted copy and pasting things, so experimenting with different
-layouts or data analysis techniques is very time consuming. Copy and paste
+layouts or data analysis techniques is very time-consuming. Copy and paste
 mistakes will also happen (it’s not a question of if, but when) and updating
 reports (for example, when new data comes in) means that someone will have,
 again, to copy and paste the updated results into a new document.
 
 Sweave makes it possible to embed the analysis in the final document itself, by
 providing a way to mix LaTeX and R code which gets executed whenever the final,
-output document gets compiled. This gives practiotioners considerable time
+output document gets compiled. This gives practitioners considerable time
 savings because it eliminates the copy and pasting of results from R outputs
 into a document.
 
@@ -128,8 +128,8 @@ what’s going on. The first line states what type of document we’re writing. 
 comes `\begin{document}` which tells the compiler where the document starts.
 Then comes the content. You can see that it’s a mixture of plain English with R
 code defined inside chunks starting with `<<>>=` and ending with `@`. Finally,
-the documents ends with `\end{document}`. Getting a human readable PDF from this
-source is a two-step process: first this source gets converted into a `.tex`
+the document ends with `\end{document}`. Getting a human-readable PDF from this
+source is a two-step process: first, this source gets converted into a `.tex`
 file and then this `.tex` file into a PDF. Sweave is included with every R
 installation since version 1.5.0, and still works to this day. For example, we
 can test that our Sweave installation works just fine by compiling the example
@@ -155,7 +155,7 @@ example more than 20 years later is an incredible testament to how mature and
 stable this software is (both R, Sweave, and LaTeX). But as impressive as this
 is, LaTeX has a steep learning curve, and Leisch even advocated the use of the
 Emacs text editor to edit Sweave files, which also has a very steep learning
-curve (but this is entirely optional; for example I’ve edited and compiled the
+curve (but this is entirely optional; for example, I’ve edited and compiled the
 example on the RStudio IDE).
 
 The next generation of literate programming tools was provided by a package
@@ -289,7 +289,7 @@ Posit, called Quarto. If you’re an R user and already know `{knitr}` and the R
 format, you should be able to immediately use Quarto. So what’s the difference?
 In practice and for R users not much but there are some things that Quarto is
 able to do out of the box for which you'd need extensions with `{knitr}`. Quarto
-has some nice defaults; in fact this book is written in Quarto's Markdown
+has some nice defaults; in fact, this book is written in Quarto's Markdown
 flavour and compiled with Quarto instead of `{knitr}` because the default Quarto
 output looks nicer than the default `{knitr}` output. However, there may even be
 things that Quarto can’t do at all (at least for now) when compared to
@@ -411,7 +411,7 @@ you don't even need a working Word installation to compile documents to the
 `docx` format). However, if you already have a working LaTeX installation, you
 shouldn’t have to do anything else to generate PDF documents. If you don’t have
 a working LaTeX distribution, then Yihui Xie, the creator of `{knitr}` created
-an R package called `{tinytex}` that makes it extremely easy to install. In
+an R package called `{tinytex}` that make it extremely easy to install. In
 fact, this is the way I recommend installing LaTeX even if you’re not an R user
 (it is possible to use the tinytex distribution without R; it’s just that the
 `{tinytex}` R package provides many functions that makes installing and
@@ -424,7 +424,7 @@ tinytex::install_tinytex()
 ```
 
 and that’s it! If you need to install specific LaTeX packages, then refer to the
-**Maintenance** section on [tinytex’s](https://yihui.org/tinytex/#maintenance)
+**Maintenance** section on [tinytex’s](https://yihui.org/tinytex/#maintenance)^[https://yihui.org/tinytex/#maintenance]
 website. For example, to compile the example from Leisch’s article on Sweave
 discussed previously, the `grfext` LaTeX package needs to be installed (as
 explained by the error output in the console when I tried compiling). To install
@@ -586,7 +586,7 @@ date: "2023-01-28"
 ````
 
 There are several other options available that you can define in the header.
-Later on I will show you some more options, for example how to define a table of
+Later on, I will show you some more options, for example how to define a table of
 contents.
 
 To finish this part on code chunks, you should know about inline code chunks.
@@ -630,7 +630,7 @@ This sentence has a footnote.^[This is the footnote]
 ````
 
 and that you can write LaTeX formulas as well. For example, add the lines below
-into the example from before and render either a PDF or a Html document (don’t
+into the example from before and render either a PDF or an HTML document (don’t
 put the LaTeX formula below inside a chunk, simply paste it as if it were normal
 text. This doesn’t work for Word output because Word does not support LaTeX
 equations):
@@ -671,7 +671,7 @@ forbidden. Striving for 0 copy and pasting will make our code much more robust
 and likely to be correct.
 
 To keep DRY, we started by using functions, as discussed in the previous
-chapter, but we can go much farther than that. For example, suppose that we need
+chapter, but we can go much further than that. For example, suppose that we need
 to write a document that has the following structure:
 
 - A title
@@ -1200,12 +1200,12 @@ your report, or parts of your script, instead of using these more advanced
 features provided by the language. It is tempting, especially under time
 pressure, to just copy and paste bits of code and get things done instead of
 writing what seems to be unnecessary code to finally achieve the same thing. The
-problem however, is that in practice copy and pasting code to simply get things
+problem, however, is that in practice copy and pasting code to simply get things
 done will come bite you sooner rather than later. Especially when you're still
 in the exploration/drafting phase of the project. It may take more time to set
 up, but once you're done, it is much easier to experiment with different
 parameters, test the code or even re-use the code for other projects. Not only
-that, but forcing you to actually think about how to set up your code in a way
+that but forcing you to actually think about how to set up your code in a way
 that avoids repeating yourself also helps with truly understanding the problem
 at hand. What part of the problem is constant and does not change? What does
 change? How often, and why? Can you also fix these parts or not? What if instead

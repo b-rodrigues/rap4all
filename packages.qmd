@@ -1,4 +1,4 @@
-# Packaging your code {#chap-packages}
+# Packaging your code {#sec-packages}
 
 In this chapter, you're going to learn how to create your own package. And let
 me be clear right from the start: the goal here is not to convert your analysis
@@ -29,9 +29,9 @@ By turning your analysis into a package you will essentially end up with two
 Making this separation will then make it easier to record dependencies of your
 analysis using `{renv}`, as your package will be a package like any other that
 needs to be recorded. And what’s more, we can start with the `.Rmd` files that
-we have already written! The `{fusen}` package will bridge the gap between the
-`.Rmd` files and the package: as Sébastien Rochette, the author of `{fusen}`,
-says:
+we have already written! The `{fusen}` package (@rochette2022) will bridge the
+gap between the `.Rmd` files and the package: as Sébastien Rochette, the author
+of `{fusen}`, says:
 
 > If you have written an Rmd file, you have (almost) already written a package.
 
@@ -66,7 +66,7 @@ means that we can more easily maintain and update each part separately. So the
 pure software development part goes into the package, which then gives us the
 possibility to use many great tools to ensure that our code is properly
 documented and tested, and then the analysis can go inside a purely reproducible
-pipeline. Putting the code into a package also makes it easier to re-use across
+pipeline. Putting the code into a package also makes it easier to reuse across
 projects.
 
 ## `{fusen}` quickstart
@@ -112,8 +112,8 @@ owner@localhost $ ls dev/
 `dev/` contains two `.Rmd` files, `0-dev_history.Rmd` and `flat_miminal.Rmd`.
 They’re both important, so let me explain what they do:
 
-- `flat_minimal.Rmd` is only an example, a stand-in for our own `.Rmd` files. When doing actual work, we will be using the Rmd file(s) that we have written before (`analyse_data.Rmd` and `save_data.Rmd`) instead, or if this is a fresh project, we could rename `flat_minimal.Rmd` and use it a template for our analysis.
-- `0-dev_history.Rmd` contains lines of code that you typically run when you’re developing a package. For example, a line to initialise Git for the project, a line to add some dependencies, etc. The idea is to **write down everything** that you type in the console in this file. This leaves a trace of what you have been doing, and also acts as a checklist so that you can make sure that you didn’t forget anything. You can also re-use for any other package development project.
+- `flat_minimal.Rmd` is only an example, a stand-in for our own `.Rmd` files. When doing actual work, we will be using the Rmd file(s) that we have written before (`analyse_data.Rmd` and `save_data.Rmd`) instead, or if this is a fresh project, we could rename `flat_minimal.Rmd` and use it as a template for our analysis.
+- `0-dev_history.Rmd` contains lines of code that you typically run when you’re developing a package. For example, a line to initialise Git for the project, a line to add some dependencies, etc. The idea is to **write down everything** that you type in the console in this file. This leaves a trace of what you have been doing and also acts as a checklist so that you can make sure that you didn’t forget anything. You can also re-use for any other package development project.
 
 Before describing these files in detail, I want to show you this image taken
 from `{fusen}`’s
@@ -188,7 +188,7 @@ use `{fusen}`, and what’s really nice is that this is essentially what we did
 before, but with some added structure on it. Using `{fusen}` just *forces* us to
 clean up our code and define examples and tests (if we want them) more cleanly
 and explicitly. Also, you might have noticed that in the chunk with the function
-definition there are a bunch of comments that start with `#'`. These are
+definition, there are a bunch of comments that start with `#'`. These are
 `{roxygen2}` type comments. As the package’s documentation gets built, these
 comments get automatically turned into the documentation you see when you type
 `help("my_fun")` in an R console. So even the comments that you typically write to
@@ -247,35 +247,42 @@ The `fill_description()` function will create the package’s `DESCRIPTION` file
 [Here](https://raw.githubusercontent.com/b-rodrigues/chronicler/c34239d0d42a4ad6082dff614fc6b4c0e9b917d8/DESCRIPTION)^[https://is.gd/PfvkSZ]
 is an example of such a file. This file provides some information on who wrote
 the package, the purpose of the package, as well as some metadata such as the
-package’s version. While developing your package, you will continuously fill some important extra parts of this file, such that parts that list dependencies required to be able to use your package: `Depends:`, `Imports:` and `Suggests:`. `Depends:` is where you list
-packages (or R versions) that must be installed for your package to work (if
-they’re not installed, they will be installed alongside your package). This is
-the same with `Imports:`, and the difference with `Depends:` is most of the time
-irrelevant: packages listed under `Depends:` will not only be loaded when you
-load your package, but also attached. This means that the functions from these
-packages will also be available to the end-user when loading your package. Most of the time, you do not have to list packages under `Depends:`.
-Packages listed under `Imports:` will only be loaded, meaning that their
-functions will only be available to your packages’ functions, not the end-users
-themselves. If that’s confusing, don’t worry too much about it, this will not be
-consequential for our purposes. Finally, `Suggests:` are dependencies that are
-not critical for your package to run, usually these are only necessary if you
-want to run the code from the package’s vignettes or examples. As you can
-imagine, listing the right packages under the right category can be a daunting
-task. But don’t worry, `{fusen}` takes care of this automatically for us! Simply
-focus on writing your `.Rmd` files.
+package’s version. While developing your package, you will continuously fill in
+some important extra parts of this file, such that parts that list dependencies
+required to be able to use your package: `Depends:`, `Imports:` and `Suggests:`.
+`Depends:` is where you list packages (or R versions) that must be installed for
+your package to work (if they’re not installed, they will be installed alongside
+your package). This is the same with `Imports:`, and the difference with
+`Depends:` is most of the time irrelevant: packages listed under `Depends:` will
+not only be loaded when you load your package, but also attached. This means
+that the functions from these packages will also be available to the end user
+when loading your package. Most of the time, you do not have to list packages
+under `Depends:`. Packages listed under `Imports:` will only be loaded, meaning
+that their functions will only be available to your packages’ functions, not the
+end-users themselves. If that’s confusing, don’t worry too much about it, this
+will not be consequential for our purposes. Finally, `Suggests:` are
+dependencies that are not critical for your package to run, usually these are
+only necessary if you want to run the code from the package’s vignettes or
+examples. As you can imagine, listing the right packages under the right
+category can be a daunting task. But don’t worry, `{fusen}` takes care of this
+automatically for us! Simply focus on writing your `.Rmd` files.
 
 The last line of this chunk runs `usethis::use_mit_license()`. `{usethis}` is a
 package that contains many helper functions to help you develop packages. You
-can choose among many licenses. Note that any open-source work should present a license, so that users know how they are allowed to use it. Otherwise, theoretically, without license, no one is allowed to re-use or share your work. You don’t need to think too much about it at the
-start, since you can always change the license later. And if you don’t want to
-publish your package anywhere (nor CRAN, nor Github) and keep it completely
-internal to your organisation, you can just define a proprietary license with `usethis::use_proprietary_license("your name")`. My very
-personal take on licenses is that you should use copyleft licenses as much as
-possible (so licenses like the GPL) which ensure that if others take your code
-and change it, their changes also have to be republished to the public under the
-GPL -- but only if they wish to publish their changes at all. They could always
-keep their modifications totally private, which means that companies can, and
-do, use GPL’ed code in their internal products.
+can choose among many licenses. Note that any open-source work should present a
+license so that users know how they are allowed to use it. Otherwise,
+theoretically, without a license, no one is allowed to re-use or share your work.
+You don’t need to think too much about it at the start since you can always
+change the license later. And if you don’t want to publish your package anywhere
+(nor CRAN, nor Github) and keep it completely internal to your organisation, you
+can just define a proprietary license with
+`usethis::use_proprietary_license("your name")`. My very personal take on
+licenses is that you should use copyleft licenses as much as possible (so
+licenses like the GPL) which ensure that if others take your code and change it,
+their changes also have to be republished to the public under the GPL -- but
+only if they wish to publish their changes at all. They could always keep their
+modifications totally private, which means that companies can, and do, use
+GPL’ed code in their internal products.
 
 It’s when that product gets released to the public that the source code must be
 released as well. This ensures that open code stays open. 
@@ -283,7 +290,7 @@ released as well. This ensures that open code stays open.
 However, licenses like the MIT allow private companies to take open source and
 freely available code and incorporate it inside their own proprietary tools,
 without having to give back their modifications to the community. Some people
-argue that this is the *true* free license, because anyone is then also free to
+argue that this is the *true* free license because anyone is then also free to
 use any code and they also have the liberty of not having to give anything back
 to the community. I think that this is a very idiotic argument, and when
 proponents of permissive licenses like the MIT (or BSD) get their code taken and
@@ -301,11 +308,11 @@ appear magically in the root of the folder (as well as the `LICENSE` file,
 containing the license).
 
 For now, we can ignore the rest of the `0-dev_history.Rmd` file: actually,
-everything that follows the `description` code chunk is totally optional, but
-still useful. If you look at them, you see that the lines that follow simply help
-you remember to do useful things, like initialising Git, creating a `Readme`
-file, add some usual dependencies, and so on. But let’s ignore this for now, and
-go to the `flat_minimal.Rmd` file.
+everything that follows the `description` code chunk is totally optional but
+still useful. If you look at them, you see that the lines that follow simply
+help you remember to do useful things, like initialising Git, creating a
+`Readme` file, add some usual dependencies, and so on. But let’s ignore this for
+now, and go to the `flat_minimal.Rmd` file.
 
 Go at the end of the file, and take a look at the chunk titled
 `development-inflate`. This is the chunk that will convert the `.Rmd` file into
@@ -339,7 +346,7 @@ pkgdown::build_site()
 ```
 
 This will build a website for your package using the `{pkgdown}` website and
-open your web browser and show you how it looks like. The files for this website
+open your web browser and show you what it looks like. The files for this website
 are in the newly created `docs/` folder in the root of your package folder. This
 can then be hosted, for free, with a service from Github called Github Pages so
 people can explore the package’s functions and documentation without having to
@@ -367,7 +374,7 @@ We are faced with the following choice here:
 
 This is really up to you, there is no right or wrong answer. You could even go
 for another option if you wanted. It all depends on how much time you want to
-invest into this. If you want to get done quickly, the first option, where you
+invest in this. If you want to get done quickly, the first option, where you
 simply inflate both files is the fastest. If you have more time, the last
 option, where you neatly split everything might be better. I propose that we go
 for the second option. This way, we only have to inflate one file, and in our
@@ -457,7 +464,7 @@ that one: `analyse_data.Rmd` will be a simple `.Rmd` that will use our package
 to load the needed functions and data.
 
 Next step, move the functions `get_laspeyeres()` and `make_plot()` from
-`analyse_data.Rmd` to `save_data.Rmd`. Simple cut and paste these functions from
+`analyse_data.Rmd` to `save_data.Rmd`. Simply cut and paste these functions from
 one `.Rmd` to the other. Make sure `save_data.Rmd` looks something like
 [this](https://gist.githubusercontent.com/b-rodrigues/16952727d35355bf3b9cbd5f37843c20/raw/7e5dc76560f6cbe7281862dc7b6a2f00f79b485b/save_data.Rmd)^[https://is.gd/SpzL88],
 take a look at the end of the script to find the functions we’ve moved over. The
@@ -470,7 +477,7 @@ inspiration from the `flat_minimal.Rmd` that `fusen::create_fusen()` put in the
 like](https://is.gd/anRjt4)^[https://is.gd/anRjt4] (no worries, I’m going to
 explain how I got there). For consistency with your future use of {fusen}, you could also rename the `save_data.Rmd` to `flat_save_data.Rmd`, although this won't avoid {fusen} to work properly.
 
-Let’s start by the first function, `get_raw_data()`. If you compare the
+Let’s start with the first function, `get_raw_data()`. If you compare the
 [before](https://gist.githubusercontent.com/b-rodrigues/16952727d35355bf3b9cbd5f37843c20/raw/7e5dc76560f6cbe7281862dc7b6a2f00f79b485b/save_data.Rmd)^[https://is.gd/n3m6In]
 and [after](https://is.gd/anRjt4)^[https://is.gd/anRjt4], the differences are
 that we have named the chunk containing the function, `function-get_raw_data`
@@ -487,7 +494,7 @@ two arguments to `make_plot()`, `country_level_data` and `commune_level_data`.
 This is really important, so don’t forget to do it!
 
 Remember when I mentioned that the good thing about turning our analysis into a
-package is that it gives us a framework to develop high quality code by using
+package is that it gives us a framework to develop high-quality code by using
 nice development tools? `{roxygen2}` type comments for documentation is the
 first such tool in this list. By commenting your functions, you explain what the
 inputs are, what the outputs are going to be, and also how to use the functions
@@ -558,7 +565,7 @@ library("purrr")
 ```
 
 on top of each script that uses your functions. This gets old pretty fast and is
-error prone. By declaring the dependencies here, you ensure that they get
+error-prone. By declaring the dependencies here, you ensure that they get
 recorded by `{renv}` and will make using your project much easier.
 
 You will also notice the following `importFrom` statement:
@@ -598,10 +605,10 @@ Last but not least, the `@export` keyword:
 This makes the function available to users that load the package using
 `library(housing)`. If you don’t add this keyword, the function will be only
 available to the other functions of the package. Another way to see this:
-functions decorated with the `@export` keyword are public, functions without it
-are private. But the concept of private functions doesn’t really exist in R. You
-can always access a "private" function by using `:::` (three times the `:`), as
-in `package:::private_function()`.
+functions decorated with the `@export` keyword are public and functions without
+it are private. But the concept of private functions doesn’t really exist in R.
+You can always access a "private" function by using `:::` (three times the `:`),
+as in `package:::private_function()`.
 
 The other functions are documented in the same manner, so I won’t comment them
 here. Something else you might have noticed: I replaced every `%>%` by the base
@@ -722,9 +729,21 @@ Something important to notice as well: my fusen-ready `.Rmd` file is simply
 called `save_data.Rmd`, while the generated, inflated file, that will be part of
 the package under the `vignettes/` folder is called `dev-save_data.Rmd`. 
 
-When you inflate you flat file into a package, the R console will be verbose. This lists all files that are created or modified, but there is also a long list of checks that run automatically. This is the output of `devtools::check()` that is included inside `fusen::inflate()`. This function verifies that your package, once inflated, follows the rules of package development. It is likely that this will result in some fails, warnings and notes. Your goal is to make it to `0 errors, 0 warnings, 0 notes`. This will be a tricky part while developing packages, as you may not understand all outputs the first times. However, if you read the long list carefully, you will see that you are helped in many ways: position of the problems, type of problem, ... Fix the problems in the flat file, and inflate again, until the number of errors is null. We will not get deeper into it in this book, you may want to search for `check()` in [https://r-pkgs.org](https://r-pkgs.org) to go further.
+When you inflate you a flat file into a package, the R console will be verbose.
+This lists all files that are created or modified, but there is also a long list
+of checks that run automatically. This is the output of `devtools::check()` that
+is included inside `fusen::inflate()`. This function verifies that your package,
+once inflated, follows the rules of package development. This will likely result
+in some fails, warnings and notes. Your goal is to make it to `0 errors, 0
+warnings, 0 notes`. This will be a tricky part while developing packages, as you
+may not understand all outputs the first time. However, if you read the long
+list carefully, you will see that you are helped in many ways: position of the
+problems, type of problem,... Fix the problems in the flat file, and inflate
+again, until the number of errors is 0. I will not get deeper into this topic
+here, so you may want to search for `check()` in
+[https://r-pkgs.org](https://r-pkgs.org)^[https://r-pkgs.org] to go further.
 
-I suggest that you stop here, and really try to get this working as well. You
+I suggest that you stop here, and really try to get this working. You
 can start by simply cloning this
 [repository](https://github.com/b-rodrigues/housing)^[https://is.gd/jGZrMF] I
 linked in the beginning of this chapter, and follow along. After inflating, take
@@ -752,7 +771,7 @@ package, and make them available to users by running the line:
 data("commune_level_data")
 ```
 
-To include data to a package, we need the package to already be built; only once
+To include data in a package, we need the package to already be built; only once
 the package exists can we include data sets. This is why we need to inflate
 `save_data.Rmd` first. So, how do we include data sets in a package? If you are
 developing packages in the usual manner (meaning, without `{fusen}`) then you
@@ -766,19 +785,21 @@ approach! And actually, the first step is done already: we have our vignette
 `save_data.Rmd`! Let’s not forget that the whole point of `save_data.Rmd` file
 was, initially, to build these datasets and save them. So why not simply re-use
 this vignette? If you take a look at the inflated `dev-save_data.Rmd`, you will
-see that everything is right there! That’s obvious, because that was the Rmd
-file that we used to build the datasets in the first place. So remember, we
-don’t want to have to repeat ourselves. The vignette is right there with the
-code we need, so we are going to use it.
+see that everything is right there! That’s obvious because that was the Rmd file
+that we used to build the datasets in the first place. So remember, we don’t
+want to have to repeat ourselves. The vignette is right there with the code we
+need, so we are going to use it.
 
 If you look at `0-dev_history.Rmd`, everything is explained under the header
 "Including datasets". The idea is to run the code inside the vignette, which
 creates our datasets, and then save these datasets in the right place using
 `usethis::use_data()`, mimicking the steps from "traditional" package
-development. In my `0-dev_history.Rmd` [here](https://is.gd/JsJJVN)^[https://is.gd/JsJJVN], I wrapped all the code around the `local()` function to run all
-these steps inside a temporary, local environment. This way, any variable that
-gets made by knitting the vignette gets discarded once we’re done saving the
-datasets. You may need to install your package before, using `remotes::install_local()`.
+development. In my `0-dev_history.Rmd`
+[here](https://is.gd/JsJJVN)^[https://is.gd/JsJJVN], I wrapped all the code
+around the `local()` function to run all these steps inside a temporary, local
+environment. This way, any variable that gets made by knitting the vignette gets
+discarded once we’re done saving the datasets. You may need to install your
+package before, using `remotes::install_local()`.
 
 Finally, we need to document the datasets. For this, we use another `.Rmd` file
 that we inflate as well. You can find it under `dev/data_doc.Rmd`, or by
@@ -791,7 +812,7 @@ enough. We now know how to take advantage of the tools that make package
 development easy, and have diverted them for our use. If you want to develop a
 proper package and push it to CRAN, then I highly recommend you read the [second
 edition of *R packages*](https://r-pkgs.org/)^[https://r-pkgs.org/] by
-@wickham2023. This book goes into all the nitty gritty details of full package
+@wickham2023. This book goes into all the nitty-gritty details of full package
 development. But let me be clear: this does not mean that you cannot develop a
 full, CRAN-ready, package using `{fusen}`. You absolutely can! It’s just that
 this is outside the scope of the present book.
@@ -854,7 +875,7 @@ than ideal, but sometimes there simply is no alternative. In that case, you need
 to prepare a compressed archive that you can share. This is easily done using
 `devtools::build()`. Start a new session in the root directory of you package,
 and run `devtools::build()`. This will create a `.tar.gz` file that you can send
-to you team-mates, or archive for future you. Ideally, before creating this
+to your teammates, or archive for future you. Ideally, before creating this
 file, you should go to `0-dev_history.Rmd` and update the version number in the
 `fusen::fill_description()` function, like so:
 
@@ -888,12 +909,12 @@ remotes::install_local("path/to/package/housing_0.0.0.9000.tar.gz")
 
 ### Marketing your work
 
-Once your package is done, whether it is destined for CRAN or not, whether it can 
-only be shared within your organisation or not, it is important to market it and
-make it discoverable. This is where building a website for the package is important,
-and thankfully, it but takes two lines of code to build a fully functioning site.
-In the introduction we built the website for the template included with `{fusen}`,
-let’s now build a website for our housing package.
+Once your package is done, whether it is destined for CRAN or not, whether it
+can only be shared within your organisation or not, it is important to market it
+and make it discoverable. This is where building a website for the package is
+important, and thankfully, it takes two lines of code to build a fully
+functioning site. In the introduction we built the website for the template
+included with `{fusen}`, let’s now build a website for our housing package.
 
 This website can then be hosted online if you wish, or it can be shared
 internally to your organisation, offline, as a means of providing documentation.
@@ -902,10 +923,11 @@ Take a look at the very last section of the `0-dev_history.Rmd` file, titled
 "Share the package". If you execute the lines in that chunk (ideally from a
 fresh R session), a website will be built automatically. You can find the
 website’s files in the `docs/` folder: open the `index.html` file using a
-web-browser and you can start navigating the documentation!
+web browser and you can start navigating the documentation!
 
 If your package is on Github, you can also host the website for free on Github
-pages. For this, you can build the website locally and send it to GitHub, or use GitHub Actions to build and publish it automatically. 
+pages. For this, you can build the website locally and send it to GitHub, or use
+GitHub Actions to build and publish it automatically.
 
 For the manual build, first make sure that the `.gitignore` file in the root of your
 package does not contain the `docs/` folder. If it does, remove it. Then, commit and
@@ -938,7 +960,7 @@ usethis::use_github_action("pkgdown")
 
 Commit the `.github/` directory with its yml files and push. GitHub Action is a
 service that automatically runs following instructions in the yml file, at each
-commit. When you commit in the `main` or `master` branch, the website will be
+commit. When you commit to the `main` or `master` branch, the website will be
 built. As above, in the GitHub settings, you will need to define the root of the
 `gh-pages` branch to be published as GitHub Pages. This is called Continuous
 Integration and Continuous Deployment. Note that you may want to set the other
@@ -981,9 +1003,9 @@ which consisted in building the package, from the pure data analysis part, which
 will eventually become our pipeline.
 
 But turning the analysis into a package *is* optional; this is not something
-that you absolutely have to do in order to turn your analysis reproducible.
-However, the entry cost of package development is really lowered thanks to
-`{fusen}` and the benefits are really great, so I think that is important to do.
+that you absolutely have to do to turn your analysis reproducible. However, the
+entry cost of package development is really lowered thanks to `{fusen}` and the
+benefits are really great, so I think that is important to do.
 
 There is one chapter left before we actually build a full-fledged pipeline. In
 the next chapter, we will learn how to use unit and assertive testing to further

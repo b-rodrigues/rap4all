@@ -1,9 +1,9 @@
 # Project start
 
 In this chapter, we are going to work together on a very simple project. This
-project will stay with us until the end of the book. As we will go deeper in the
-book together, you will rewrite that project by implementing the techniques I
-will teach you. By the end of the book you will have built a reproducible
+project will stay with us until the end of the book. As we will go deeper into
+the book together, you will rewrite that project by implementing the techniques
+I will teach you. By the end of the book you will have built a reproducible
 analytical pipeline. To get things going, we are going to keep it simple; our
 goal here is to get an analysis done, that's it. We won't focus on
 reproducibility. We are going to download some data, and analyse it, that's it.
@@ -22,7 +22,7 @@ confusing is that “Luxembourg” is also the name of a Canton, and of a Commun
 which also has the status of a city and is the capital of the country. So
 Luxembourg the country, is divided into Cantons, one of which is called
 Luxembourg as well, cantons are divided into communes, and inside the canton of
-Luxembourg there's the commune of Luxembourg which is also the city of
+Luxembourg, there's the commune of Luxembourg which is also the city of
 Luxembourg, sometimes called Luxembourg-City, which is the capital of the
 country.
 
@@ -56,8 +56,8 @@ a city called Esch-sur-Alzette.
 \newpage
 :::
 
-The plot below shows the value of the House Price Index through time for
-Luxembourg and the European Union:
+The plot below shows the value of the House Price Index over time for Luxembourg
+and the European Union:
 
 ```{r, echo = F}
 #https://ec.europa.eu/eurostat/databrowser/bookmark/21530d9a-c423-4ab7-998a-7170326136cd?lang=en
@@ -139,7 +139,7 @@ write a script and deal with each step separately.
 
 Getting data from Excel into a tidy data frame can be very tricky. This is
 because very often, Excel is used as some kind of dashboard or presentation
-tool. So data is made human-readable, in contrast to machine readable. Let us
+tool. So data is made human-readable, in contrast to machine-readable. Let us
 quickly discuss this topic as it is essential to grasp the difference between
 the two (and in our experience, a lot of collective pain inflicted to
 statisticians and researchers could have been avoided if this concept was more
@@ -170,8 +170,8 @@ So why is this file not machine-readable? Here are some issues:
 That being said, this Excel file is still very tame, and going from this Excel
 to a tidy data frame will not be too difficult. In fact, we suspect that whoever
 made this Excel file is well aware of the contradicting requirements of human
-and machine readable formatting of data, and strove to find a compromise.
-Because more often than not, getting human readable data into a machine readable
+and machine-readable formatting of data, and strove to find a compromise.
+Because more often than not, getting human-readable data into a machine-readable
 format is a nightmare. We could call data like this *machine-friendly* data.
 
 If you want to follow along, you can download the Excel file
@@ -201,13 +201,13 @@ library(janitor)
 ```
 
 Even though this book is not about analysing data per se, let me just briefly
-explain what these packages do, in case you're not familiar with them. The `{dplyr}`
-package provides many functions for data manipulation, for example aggregating
-group-wise. `{purrr}` is a package for functional programming, a programming
-paradigm that I'll introduce later in the book, `{readxl}` reads in Excel
-workbooks, `{stringr}` is a package for manipulating strings, and finally
-`{janitor}` provides some very nice functions, to perform some common tasks like
-easily rename every column of a data frame in snake case.
+explain what these packages do, in case you're not familiar with them. The
+`{dplyr}` package provides many functions for data manipulation, for example
+aggregating group-wise. `{purrr}` is a package for functional programming, a
+programming paradigm that I'll introduce later in the book, `{readxl}` reads in
+Excel workbooks, `{stringr}` is a package for manipulating strings, and finally
+`{janitor}` (@firke2023) provides some very nice functions, to perform some
+common tasks like easily rename every column of a data frame in snake case.
 
 Next, the code below downloads the data, and puts it in a data frame:
 
@@ -248,18 +248,18 @@ raw_data <- raw_data |>
   select(year, locality, n_offers, starts_with("average"))
 ```
 
-If you are familiar with the `{tidyverse}` the above code should be quite easy
-to follow. We start by downloading the raw Excel file and save the sheet names
-into a variable. We then use a function called `read_clean()`, which takes the
-path to the Excel file and the sheet names as an argument to read the required
-sheet into a data frame. We use `skip = 10` to skip the first 10 lines in each
-Excel sheet because the first 10 lines contain a header. The last thing this
-function does is add a new column called `year` which contains the year of the
-data. We’re lucky, because the sheet names are the years: "2010", "2011" and so
-on. We then map this function to the list of sheet names, thus reading in all
-the data from all the sheets into one list of data frames. We then use
-`bind_rows()`, to bind each data frame into a single data frame, by row.
-Finally, we rename the columns (by translating their names from French to
+If you are familiar with the `{tidyverse}` (@wickham2019b) the above code should
+be quite easy to follow. We start by downloading the raw Excel file and saving
+the sheet names into a variable. We then use a function called `read_clean()`,
+which takes the path to the Excel file and the sheet names as an argument to
+read the required sheet into a data frame. We use `skip = 10` to skip the first
+10 lines in each Excel sheet because the first 10 lines contain a header. The
+last thing this function does is add a new column called `year` which contains
+the year of the data. We’re lucky because the sheet names are the years: "2010",
+"2011" and so on. We then map this function to the list of sheet names, thus
+reading in all the data from all the sheets into one list of data frames. We
+then use `bind_rows()`, to bind each data frame into a single data frame, by
+row. Finally, we rename the columns (by translating their names from French to
 English) and only select the required columns. If you don’t understand each step
 of what is going on, don’t worry too much about it; this book is not about
 learning how to use R.
@@ -274,8 +274,8 @@ raw_data
 But there’s a problem: columns that should be of type numeric are of type
 character instead (`average_price_nominal_euros` and
 `average_price_m2_nominal_euros`). There's also another issue, which you would
-eventually catch as you’ll explore the data: naming of the communes is
-not consistent. Let's take a look:
+eventually catch as you’ll explore the data: the naming of the communes is not
+consistent. Let's take a look:
 
 ```{r}
 raw_data |>
@@ -344,7 +344,7 @@ knitr::include_graphics("images/obs_hab_xlsx_missing.png")
 So it turns out that there are some rows that we need to remove. We can start by
 removing rows where `locality` is missing. Then we have a row where `locality`
 is equal to "Total d'offres". This is simply the total of every offer from every
-commune. We could keep that in a separate data frame, or even remove it. Finally
+commune. We could keep that in a separate data frame, or even remove it. Finally,
 there's a row, the last one, that states the source of the data, which we can
 remove.
 
@@ -407,7 +407,7 @@ We scrape the table from the Wikipedia page using `{rvest}`.
 then we use `purrr::pluck()` to keep the first table from the website, which is
 what we need (I made the calls to the packages explicit, because you might not
 be familiar with these packages). `janitor::clean_names()` transforms column
-names written for human eyes into machine friendly names (for example `Growth
+names written for human eyes into machine-friendly names (for example `Growth
 rate in %` would be transformed to `growth_rate_in_percent`).
 
 Let’s see if we have all the communes in our data:
@@ -496,8 +496,8 @@ ingredients to illustrate everything else that I’m going to teach you in this
 book.
 
 Most analyses would stop here: after all, we have what we need; our goal was to
-get the plots for the 5 communes of Luxemourg, Esch-sur-Alzette, Mamer, Schengen
-(which gave its name to the [Schengen
+get the plots for the 5 communes of Luxembourg, Esch-sur-Alzette, Mamer,
+Schengen (which gave its name to the [Schengen
 Area](https://en.wikipedia.org/wiki/Schengen_Area)^[https://en.wikipedia.org/wiki/Schengen_Area])
 and Wincrange. However, let’s ask ourselves the following important questions:
 
@@ -512,15 +512,15 @@ Let’s answer these questions one by one.
 
 ### How easy would it be for someone else to rerun the analysis?
 
-The analysis is composed of two R scripts, one to prepare the data, another to
-actually run the analysis proper. Performing the analysis might seem quite easy,
-because each script contains comments as to what is going on, and the code is
-not that complicated. However, we are missing any project-level documentation
+The analysis is composed of two R scripts, one to prepare the data, and another
+to actually run the analysis proper. Performing the analysis might seem quite
+easy, because each script contains comments as to what is going on, and the code
+is not that complicated. However, we are missing any project-level documentation
 that would provide clear instructions as to how to run the analysis. This might
 seem simple for us who wrote these scripts, but we are familiar with R, and this
 is still fresh in our brains. Should someone less familiar with R have to run
 the script, there is no clue for them as to how they should do it. And of
-course, should the analysis be more complex (suppose it’s composed of a dozens
+course, should the analysis be more complex (suppose it’s composed of dozens of
 scripts), this gets even worse. It might not even be easy for you to remember
 how to run this in 5 months!
 
@@ -563,7 +563,7 @@ packaging them makes it easy to reuse code even inside the same project. Look at
 the last part of the `analysis.R` script: we copied and pasted the same code 5
 times and only slightly changed it. We are going to learn how not to repeat
 ourselves by using functions and you will immediately see the benefits of
-writing functions, even when simply to reuse them inside the same project.
+writing functions, even when simply reusing them inside the same project.
 
 ### What guarantee do we have that the output is stable through time?
 
@@ -575,9 +575,9 @@ packages that we use. There is no guarantee that the authors of the packages
 will not change the package’s functions to work differently, or take arguments
 in a different order, or even that the packages will all be available at all in
 5 years. And even if the packages are still available and function the same,
-bugs in the packages might get corrected that could alter the result. This might
-seem like a non-problem; after all, if bugs get corrected, shouldn’t you be
-happy to update your results as well? But this depends on what it is we’re
+bugs in the packages might get corrected which could alter the result. This
+might seem like a non-problem; after all, if bugs get corrected, shouldn’t you
+be happy to update your results as well? But this depends on what it is we’re
 talking about. Sometimes it is necessary to reproduce results exactly as they
 were, even if they were wrong, for example in the context of an audit.
 
@@ -590,5 +590,5 @@ We now have a basic analysis that has all we need to get started. In the coming
 chapters, we are going to learn about topics that will make it easy to write
 code that is more robust, better documented and tested, and most importantly
 easy to rerun (and thus to reproduce the results). The first step will actually
-not involve having to start rewriting our scripts though; next we are going to
+not involve having to start rewriting our scripts though; next, we are going to
 learn about Git, a tool that will make our life easier by versioning our code.

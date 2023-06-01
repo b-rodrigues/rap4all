@@ -201,7 +201,7 @@ terminal instead. This is because `ls` (and other such commands) don’t work in
 the default Windows command prompt (but should work in Powershell though).
 Instead of using the terminal (or Git Bash) to navigate your computer’s file
 system, you could have followed along using the user interface of your operating
-system as well. For example, in Chapter 11 @chap-packages, I list the contents
+system as well. For example, in [Chapter -@sec-packages], I list the contents
 of the `dev/` directory using the following command:
 
 ::: {.content-hidden when-format="pdf"}
@@ -265,24 +265,25 @@ you’re an R user, this should be somewhat familiar: after all, extensions for 
 are also installed using a package manager and a command:
 `install.packages("package_name")`. Just like in R, where the packages get
 downloaded from CRAN, Ubuntu downloads packages from a repository which you can
-browse [here](https://packages.ubuntu.com/jammy/). Of course, because using the
-command line is intimidating for beginners, it is also possible to install
-packages using a software store, just like on macOS or Windows. But remember,
-Docker only uses what it absolutely needs to function, so there’s no interactive
-user interface. This is not because Docker’s developers don’t like user
-interfaces, but because the point of Docker is not to use Docker images
-interactively, so there’s no need for the user interface. So you need to know
-how to install Ubuntu packages with the command line.
+browse
+[here](https://packages.ubuntu.com/jammy/)^[https://packages.ubuntu.com/jammy/].
+Of course, because using the command line is intimidating for beginners, it is
+also possible to install packages using a software store, just like on macOS or
+Windows. But remember, Docker only uses what it absolutely needs to function, so
+there’s no interactive user interface. This is not because Docker’s developers
+don’t like user interfaces, but because the point of Docker is not to use Docker
+images interactively, so there’s no need for the user interface. So you need to
+know how to install Ubuntu packages with the command line.
 
 Just like for R, it is possible to install software from different sources. It
 is possible to add different repositories, and install software from there. We
 are not going to use this here, but just as an aside, if you are using Ubuntu on
 your computer as your daily driver operating system, you really should check out
-[r2u](https://github.com/eddelbuettel/r2u), an Ubuntu repository that comes with
-pre-compiled R packages that can get installed, very, very quickly. Even though
-we will not be using this here (and I’ll explain why later in this chapter), you
-should definitely consider `r2u` to provide binary R packages if you use Ubuntu
-as your daily operating system.
+[r2u](https://github.com/eddelbuettel/r2u)^[https://github.com/eddelbuettel/r2u],
+an Ubuntu repository that comes with pre-compiled R packages that can get
+installed, very, very quickly. Even though we will not be using this here (and
+I’ll explain why later in this chapter), you should definitely consider `r2u` to
+provide binary R packages if you use Ubuntu as your daily operating system.
 
 Let’s suppose that you are using Ubuntu on your machine, and are using R. If you want
 to install the `{dplyr}` R package, something interesting happens when you type:
@@ -374,12 +375,13 @@ Let’s start by creating a "Hello World" Docker image. As I explained in the
 beginning, to define a Docker image, we need to create a Dockerfile with some
 instructions. But first, you need of course to install Docker. To install Docker
 on any operating system (Windows, macOS or Ubuntu or other Linuxes), you can
-install [Docker Desktop](https://docs.docker.com/desktop/). If you’re running
-Ubuntu (or another Linux distribution) and don’t want the GUI, you could install
-the [Docker
-engine](https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository)
+install [Docker
+Desktop](https://docs.docker.com/desktop/)^[https://docs.docker.com/desktop/].
+If you’re running Ubuntu (or another Linux distribution) and don’t want the GUI,
+you could install the [Docker
+engine](https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository)^[https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository]
 and then follow the post-installation [steps for
-Linux](https://docs.docker.com/engine/install/linux-postinstall/#manage-docker-as-a-non-root-user)
+Linux](https://docs.docker.com/engine/install/linux-postinstall/#manage-docker-as-a-non-root-user)^[https://docs.docker.com/engine/install/linux-postinstall/#manage-docker-as-a-non-root-user]
 instead.
 
 In any case, whatever operating system you’re using, we will be using the
@@ -1208,19 +1210,19 @@ pipeline-specific `renv.lock` file. This will be done with a second Dockerfile.
 But first, we need to make the `dev_env_r` image available to others, such that
 it becomes possible to build new images upon `dev_env_r`. There are two ways to
 make images available to anyone: either online through [Docker
-Hub](https://hub.docker.com/) (in case there’s nothing preventing you from
-sharing the development environment through Docker Hub) or locally, by
-compressing the images and sharing them internally (in case you don’t want to
-share your images with the world, because they contain proprietary software that
-you’ve developed within your company for example). I want to stress that making
-the image available through Docker Hub is different from sharing the Dockerfile
-through Github. You could just share the Dockerfiles through Github, and then
-tell users to first build the dev environment, and then build the pipeline image
-by building the second, pipeline-specific Dockerfile. But by sharing a built
-image from Docker Hub, users (including future you) will only need to build the
-pipeline-specific image and this is much faster. Just like we used `FROM
-ubuntu:jammy` in our Dockerfiles before, we will now use something like `FROM
-my_repo/my_image:version_number` from now on.
+Hub](https://hub.docker.com/)^[https://hub.docker.com/] (in case there’s nothing
+preventing you from sharing the development environment through Docker Hub) or
+locally, by compressing the images and sharing them internally (in case you
+don’t want to share your images with the world, because they contain proprietary
+software that you’ve developed within your company for example). I want to
+stress that making the image available through Docker Hub is different from
+sharing the Dockerfile through Github. You could just share the Dockerfiles
+through Github, and then tell users to first build the dev environment, and then
+build the pipeline image by building the second, pipeline-specific Dockerfile.
+But by sharing a built image from Docker Hub, users (including future you) will
+only need to build the pipeline-specific image and this is much faster. Just
+like we used `FROM ubuntu:jammy` in our Dockerfiles before, we will now use
+something like `FROM my_repo/my_image:version_number` from now on.
 
 In the next section I will discuss sharing images on Docker Hub, but before
 that, let me first address the elephant in the room: the development environment
@@ -1375,7 +1377,7 @@ owner@localhost $ docker push rap4all/dev_env_r:4.2.2
 
 You can go check your profile and your repositories, you should see your image
 there. In my case, you can find the image
-[here](https://hub.docker.com/layers/rap4all/dev_env_r/4.2.2/images/sha256-a961d6b11bc1fb3ead5cfcd82e24d3cfbce763fda0efce62f8b0abb319e80160?context=repo).
+[here](https://hub.docker.com/layers/rap4all/dev_env_r/4.2.2/images/sha256-a961d6b11bc1fb3ead5cfcd82e24d3cfbce763fda0efce62f8b0abb319e80160?context=repo)^[https://is.gd/7eiz5L].
 
 This image can now be used as a stable base for developing our pipelines. Here’s how
 I can now use this base image for my `housing` pipeline:

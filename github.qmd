@@ -18,7 +18,7 @@ this issue by adding a Readme file. This will also be the opportunity to
 introduce trunk-based development. The idea of trunk-based development is
 simple; team members should work on separate branches to add features or fix
 bugs, and then merge their branch to the "trunk" (in our case the *master*
-branch) to add their changes back to the main code-base. And this process should
+branch) to add their changes back to the main codebase. And this process should
 happen quickly, ideally every day, or as soon as some code is ready. When a lot
 of work accumulates in a branch for several days or weeks, merging it back to
 the master branch can be very painful. So by working in short-lived branches, if
@@ -33,9 +33,9 @@ project (we will be using unit tests for this later).
 So in summary: to avoid a lot of pain by merging branches that moved away too
 much from the trunk, we will create branches, add our code, and merge them to
 the trunk as soon as possible. *As soon as possible* can mean several things,
-but usually this means as soon as a feature was added, a bug was fixed, or as
-soon as we added some code that does not break the whole project, even if the
-feature we wanted to add is not done yet. The philosophy is that if merging
+but usually this means *as soon as a feature was added*, *a bug was fixed*, or
+*as soon as we added some code that does not break the whole project, even if
+the feature we wanted to add is not done yet*. The philosophy is that if merging
 fails, it should fail as early as possible. Early failures are easy to deal
 with.
 
@@ -191,7 +191,7 @@ To github.com:rap4all/housing.git
 ```
 
 Git tells us that Bruno now needs to create a pull request. What is that? Well,
-if we want to merge our branch back to the trunk, we need to do so by using a
+if we want to merge our branch back into the trunk, we need to do so by using a
 pull request. Let's see what Bruno sees on Github:
 
 ::: {.content-hidden when-format="pdf"}
@@ -926,7 +926,7 @@ CONFLICT (content): Merge conflict in analysis.R
 Automatic merge failed; fix conflicts and then commit the result.
 ```
 
-Git detects that there's some conflicts and tells the owner to fix them, and then
+Git detects that there are some conflicts and tells the owner to fix them, and then
 commit the results. So let's open `analysis.R` and see how it looks (you can
 view the file online on this
 [link](https://gist.github.com/b-rodrigues/f713702268c99328ad16af56f7d32892)^[https://is.gd/ktWtjr].
@@ -1049,7 +1049,7 @@ The main ideas of trunk-based development are:
 - At the end of the day at the latest (or a previously agreed upon duration), branches need all to get merged;
 - Conflicts need to be taken care of at that point;
 - If adding a feature would take more time than just one day, then the task needs to be split in a manner that small contributions can be merged daily. In the beginning, these contributions can be simple placeholders that will be gradually enriched with functioning code until the feature is successfully implemented. This strategy is called branching by abstraction;
-- The master branch (or trunk) contains always working, production-grade code;
+- The master branch (or trunk) always contains working, production-grade, code;
 - To enforce discipline, it might be worth it to make opening pull requests mandatory for merging back to the trunk, and require a review.
 
 ::: {.content-visible when-format="pdf"}

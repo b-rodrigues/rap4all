@@ -171,7 +171,7 @@ Depending on your operating system, a graphical user interface might have been
 installed with Git, making it possible to interact with Git outside of the
 command line. It is also possible to use Git from within RStudio and many other
 editors have interfaces to Git as well. We are not going to use any graphical
-user interface however. This is because there is no common, universal graphical
+user interface, however. This is because there is no common, universal graphical
 user interface; they all work slightly differently. The only universal is the
 command line. Also, learning how to use Git via the command line will make it
 easier the day you will need to use it from a server, which will very likely
@@ -206,9 +206,9 @@ the two scripts that we wrote before.
 
 ## Git superbasics
 
-We are going to use the two script that we wrote in the previous section. 
-If you want to follow along, create a folder called `housing` and put the two scripts
-we developed before in there:
+We are going to use the two scripts that we wrote in the previous section. If
+you want to follow along, create a folder called `housing` and put the two
+scripts we developed before in there:
 
 - save_data.R: [https://is.gd/7PhUjd](https://is.gd/7PhUjd)
 - analysis.R: [https://is.gd/qCJEbi](https://is.gd/qCJEbi)
@@ -312,7 +312,7 @@ instead of creating it on your computer, the default branch will be called
 interacting with our Github repository, we need to make sure that we have the
 right branch name in mind. Also, note that because the "master" branch is the
 most important branch, it gets sometimes referred to as the "trunk". Some teams
-that use trunk based development (which I will discuss in the next chapter) even
+that use trunk-based development (which I will discuss in the next chapter) even
 name this branch "trunk". Let's now run this other `git` command:
 
 ::: {.content-hidden when-format="pdf"}
@@ -547,7 +547,7 @@ ideally, you would want to keep commits as small as possible, ideally one commit
 per change. For example, if you're adding and amending comments in scripts, once
 you're done with that make this a commit. Then, maybe clean up some code. That's
 another, separate commit. This makes rolling back changes or reviewing them much
-easier. This will be crucial later on when we will use trunk based development
+easier. This will be crucial later on when we will use trunk-based development
 to collaborate with our teammates on a project. It is generally not a good idea
 to code all day and then only push one single big fat commit at the end of the
 day, but that is what happens very often...
@@ -624,9 +624,10 @@ owner@localhost $ ls
 analysis.R save_data.R
 ```
 
-There it is! You can get rid of the stash with `git stash drop`. But what if we had deleted the
-file and committed the change? In this scenario we could not use `git stash`, but we would need to
-revert to a commit. Let's try, first let me remove the file:
+There it is! You can get rid of the stash with `git stash drop`. But what if we
+had deleted the file and committed the change? In this scenario, we could not
+use `git stash`, but we would need to revert to a commit. Let's try, first let
+me remove the file:
 
 ::: {.content-hidden when-format="pdf"}
 ```bash
@@ -810,7 +811,7 @@ like Dropbox made things like this very accessible. But where Git (with the help
 of a service like Github) really shines is when collaboration is needed. Git and
 code hosting services like Github make it possible to collaborate at very large
 scale: thousands of developers contribute to the Linux kernel, arguably the most
-successful open source project ever, powering most of today’s smartphones,
+successful open-source project ever, powering most of today’s smartphones,
 servers, supercomputers and embedded
 computers,^[https://www.zdnet.com/article/who-writes-linux-almost-10000-developers/]
 and you can use these tools to collaborate at a smaller scale very efficiently
@@ -917,7 +918,7 @@ knitr::include_graphics("images/git_repo_start_ssh.png")
 ```
 :::
 
-This will change the links in the instructions from `https` to `ssh`. We will
+This will change the links in the instructions from `https` to `ssh`. I will
 explain why this is important in a couple of paragraphs. For now, let's read the
 instructions. Since we have already started working, we need to follow the
 instructions titled "...or push an existing repository from the command line".
@@ -1280,7 +1281,7 @@ knitr::include_graphics("images/github_add_collab.png")
 :::
 
 Start by typing the person's Github username. You can also invite collaborators
-by providing their email address.
+by providing their email addresses.
 
 ::: {.content-hidden when-format="pdf"}
 <figure>
@@ -1431,16 +1432,17 @@ it simply increases the likelihood that they will actually help.
 
 Also, writing an MRE can usually make you actually debug the code yourself. Just
 like in [rubber duck
-debugging](https://en.wikipedia.org/wiki/Rubber_duck_debugging), the fact of
-simply trying to explain the problem can lead to finding what's wrong. But by
-writing an MRE, you're also reducing the problem into its most basic parts, and
-removing everything unnecessary. By doing so, you might realize that what you
-thought was a bug of the library was maybe rather a [problem between the
-keyboard and the
-chair](https://en.wikipedia.org/wiki/User_error#PEBKAC/PEBCAK/PICNIC).
+debugging](https://en.wikipedia.org/wiki/Rubber_duck_debugging)^[https://en.wikipedia.org/wiki/Rubber_duck_debugging],
+the fact of simply trying to explain the problem can lead to finding what's
+wrong. But by writing an MRE, you're also reducing the problem into its most
+basic parts, and removing everything unnecessary. By doing so, you might realize
+that what you thought was a bug of the library was maybe rather a [problem
+between the keyboard and the
+chair](https://en.wikipedia.org/wiki/User_error#PEBKAC/PEBCAK/PICNIC)^[https://en.wikipedia.org/wiki/User_error#PEBKAC/PEBCAK/PICNIC].
 
-So don't underestimate the usefulness of creating high-quality MREs for your issues! One package
-that can assist you with this is {reprex} (read about it [here](https://reprex.tidyverse.org/)).
+So don't underestimate the usefulness of creating high-quality MREs for your
+issues! One package that can assist you with this is {reprex} (read about it
+[here](https://reprex.tidyverse.org/)^[https://reprex.tidyverse.org/]).
 
 ## Conclusion
 

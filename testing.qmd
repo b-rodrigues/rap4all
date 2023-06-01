@@ -1,7 +1,7 @@
 # Testing your code
 
 Testing code is crucial, and we all do it in some form or another. The problem
-is that it is not something that we do consistently: usually code gets tested in
+is that it is not something that we do consistently: usually code gets tested at
 the beginning of a project, but then, as we start focusing on the analysis more
 and more and need to respect deadlines, testing gets forgotten.
 
@@ -273,10 +273,10 @@ data? The code would continue, but then likely fail for some other reason. It
 would be much safer to make it fail as soon as possible, by detecting right from
 the start if the provided data sets are not one of `commune_level_data` or
 `country_level_data`. But for this, we need assertive programming, which we will
-discuss in the next section. Why an assertive test and not an unit test? Because
+discuss in the next section. Why an assertive test and not a unit test? Because
 unit tests should run during development time, and assertive tests run at
-run-time (whent the function is executed). So in this case, we want the input to
-get checked at run-tim. In the next section we will be changing the function to
+run-time (when the function is executed). So in this case, we want the input to
+get checked at run-time. In the next section, we will be changing the function to
 fail when the right datasets are not provided, but our unit test will not need
 to change; the function still fails, but this time it’ll be for the right
 reasons.
@@ -285,7 +285,7 @@ This is another advantage of writing tests: it forces you to think about what
 you’re doing. The simple act of thinking and writing tests very often improves
 your code quite a lot, and not just from a pure algorithmic perspective, but
 also from a user experience perspective. Writing these tests made us think about
-the failure of our function when users provide a wrong dataset, and made us
+the failure of our function when users provide a wrong dataset and made us
 realise that it would be much better for users if the returned error message is
 something along the lines of "Wrong dataset, please provide either
 `commune_level_data` or `country_level_data`".
@@ -339,8 +339,8 @@ expected_df$pl_m2 <-
 ```
 
 If you look at each line, you see that this is exactly what `get_laspeyeres()`
-does. We can inspect the results, maybe even verify the value of each cell using
-a pocket calculator. It doesn’t matter, what’s important is that
+does. We can inspect the results and maybe even verify the value of each cell
+using a pocket calculator. It doesn’t matter, what’s important is that
 `expected_df` is correct and saved. This is what the full test looks like:
 
 ````{verbatim}
@@ -391,7 +391,7 @@ then let’s move on to assertive programming.
 
 ## Assertive programming
 
-Remember in chapter 6, where I discussed safe functions? As a refresher, here’s
+Remember in Chapter 6, where I discussed safe functions? As a refresher, here’s
 the `nchar()` function, providing a correct output when the input is a
 character:
 
@@ -408,7 +408,7 @@ nchar(100000000)
 
 This is because `100000000` gets converted to `1e+08` and then this gets
 converted into the string `"1e+08"` which is 5 characters long. So in that
-section, I suggested to define your own `nchar2()` that makes sure that the
+section, I suggested defining your own `nchar2()` that makes sure that the
 provided input is a character:
 
 ```{r}
@@ -623,7 +623,7 @@ to clean data using many functions, with several filters. Something could go
 wrong in any of these functions for a variety of reasons. So each of these
 functions could test if all the individuals are still in the data, and that you
 didn’t remove any of them by mistake. A test like this could make sure that each
-levels of the variable `am` are still in the data:
+level of the variable `am` are still in the data:
 
 ```{r, eval = F}
 
@@ -631,7 +631,7 @@ summary_stats <- function(dataframe, var){
   stopifnot("Some individuals are missing!" =
               all((unique(dataframe[[var]])) %in% c(0,1)))
 
-  # and then some comptutations here
+  # and then some computations here
 }
 
 ```
@@ -647,8 +647,7 @@ check out:
 - [{checkmate}](https://mllg.github.io/checkmate/)^[https://mllg.github.io/checkmate/]
 
 I won’t discuss any of them; what’s important is for you to know that assertive
-programming is something that is useful, and that you should add to your
-toolbox.
+programming is something that is useful and that you should add to your toolbox.
 
 ## Test-driven development
 
@@ -743,21 +742,21 @@ systematically as you should.
 There really is no other way to say this: you need to consider writing tests as
 an integral part of the project, and need to take the required time it takes to
 write them into account when planning projects. But keep in mind that writing
-them makes you gain a lot of time in the long run, so actually, you might
-even be faster by writing tests! Tests also allow you to immediately see where
+them makes you gain a lot of time in the long run, so actually, you might even
+be faster by writing tests! Tests also allow you to immediately see where
 something went wrong, when something goes wrong. So tests save you time here as
 well. Without tests, when something goes wrong, you have a hard time finding
 where the bug comes from, and end up wasting precious time. And worse, sometimes
 things go wrong and break, but silently. You still get an output that may look
 ok at first glance, and only realise something is wrong way too late. Testing
-helps avoiding such situations.
+helps to avoid such situations.
 
 So remember: it might *feel* like packaging your code and writing tests for it
-takes time, butyou’re actually already doing it, but non-systematically and
+takes time, but you’re actually already doing it, but non-systematically and
 manually and it ends up saving you time in the long run instead. Testing also
 helps with developing complex functions.
 
-The tools I’ve showed you in this and the previous chapter are probably the
+The tools I’ve shown you in this and the previous chapter are probably the
 fastest, easiest options to go from your analysis to a documented and tested
 package in a matter of hours. The benefits these provide however are measured in
 days of work.

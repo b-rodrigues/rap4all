@@ -5,7 +5,7 @@ was quite easy to justify because writing the Rmds is also writing the report
 that we need to send to our boss (or our research paper, etc). But it might be
 harder to justify writing further documentation or package the functions we’ve
 had to write for reuse later and otherwise ensure that the analysis is and stays
-reproducible. So we are going to start with the simplest and cost-effective
+reproducible. So we are going to start with the simplest and most cost-effective
 solution to the reproducibility issue, which is recording the versions of the
 packages that were used. This is quite easy and quick to do and provides at
 least some hope that the analysis will stay reproducible. But this will not do
@@ -17,7 +17,7 @@ is why going with a package is so useful (and I need to stress here that the aim
 of writing a package is NOT to upload it to CRAN): packages offer us a great
 framework for documenting, testing and sharing our code (even if only sharing
 internally in your company/team, or even just future you). So in order to take
-advantage of what packaging our code has to offer, we well learn about the
+advantage of what packaging our code has to offer, we will learn about the
 `{fusen}` package in the next chapter. `{fusen}` will enable us to convert our
 Rmd files into a package quite quickly; your analysis is much closer to being a
 package than you think. As you shall see in the next chapter, going from our
@@ -244,12 +244,12 @@ To avoid tracking this folder and backing it up on Github.com a file called
 that contains the paths to other files and folders that should be ignored. If
 you open it, you will see that the `library/` folder is listed there so it will
 be ignored. You can have as many `.gitignore` files as necessary, but if you put
-one on the root folder of your project, then that `.gitignore` will work
+one in the root folder of your project, then that `.gitignore` will work
 project-wide.
 
 For example, if you are working with sensitive data, you could also add a
 `.gitignore` file in the root of the project’s directory, and simply list the
-folder containing he sensitive data. Create this file using your favourite text
+folder containing the sensitive data. Create this file using your favourite text
 editor and simply add, for example if you’re working with sensitive data, the
 following:
 
@@ -319,12 +319,12 @@ dependencies, that are used for the project. At the top of the file, the R
 version that was used to generate the `renv.lock` file is also named. It is
 important to remember that when you’ll use `{renv}` to restore a project’s
 library on a new machine, the R version will not be restored: so in the future,
-you might be restoring this project and run old versions of packages on a newer
-version of R, which may sometimes be a problem (but we’re going to discuss this
-later).
+you might be restoring this project and running old versions of packages on a
+newer version of R, which may sometimes be a problem (but we’re going to discuss
+this later).
 
 So... that’s it. You’ve generated the `renv.lock` file, which means that future
-you, or someone else can restore the library that you used to write this
+you, or someone else, can restore the library that you used to write this
 analysis. All that’s required is for that person (or future you) to install
 `{renv}` and then use the `renv.lock` file that you generated to restore the
 library. Let’s see how this works by cloning the following Github repository on
@@ -392,8 +392,8 @@ libraries get compiled using Rtools 4.2 and not Rtools 4.0 (which includes the
 libraries for R 4.1 as well).
 
 So in order to run this project successfully, I should install the right version
-of R and Rtools and on Windows that should not be too complicated. But that
-might be a problem on other operating systems. Does that mean that `{renv}` is
+of R and Rtools which on Windows should not be too complicated. But that might
+be a problem on other operating systems. Does that mean that `{renv}` is
 useless? No, not at all.
 
 At a minimum, `{renv}` ensures that a project’s library doesn’t interfere with
@@ -500,7 +500,7 @@ renv::install("AER@1.0-0") # this is a version from August 2008
 
 But just like in the previous section, where we wanted to restore an old project
 that used `{renv}`, installation of older packages may fail. If you need to use
-old packages, there are approaches that work better, which we are also going to
+old packages there are other easier approaches which we are also going to
 explore in this chapter.
 
 When you install more of the required packages for your project, you need to
@@ -512,7 +512,7 @@ every dependency is correctly accounted for. Don't forget to version the
 ### Collaborating with `{renv}`
 
 `{renv}` is also quite useful when collaborating. You can start the project and
-generate the lock file, and when your team-mates clone the repository from
+generate the lock file, and when your teammates clone the repository from
 Github, they can get the exact same package versions as you. All of you only
 need to make sure that everyone is running the same R version to avoid any
 issues.
@@ -540,21 +540,30 @@ However, I don’t think that `{rig}` should be used for our purposes. I believe
 that it is safer to use Docker instead, and we shall see how to do so in the
 coming chapters.
 
-The other issue of using `{renv}` is that future you, or your team-mates or
+The other issue of using `{renv}` is that future you, or your teammates or
 people that want to reproduce your results need to install packages that may be
 quite difficult to install, either because they’re very old by now, or because
 their dependencies are difficult to satisfy. Have you ever tried to install a
 package that depended on `{rJava}`? Or the `{rgdal}` package? Installing these
-packages can be quite challenging, because they need specific system
+packages can be quite challenging because they need specific system
 requirements that may be impossible for you to install (either because you don’t
 have admin rights on your workstation, or because the required version of these
 system dependencies is not available anymore). Having to install these packages
 (and potentially quite old versions at that) can really hinder the
 reproducibility of your project. Here again, Docker provides a solution. Future
-you, your team-mates or other people simply need to be able to run a Docker
+you, your teammates or other people simply need to be able to run a Docker
 container, which is a much lower bar than installing these old libraries.
 
-Note also that during your journey, you will want to improve your scripts, you maybe will also want to upgrade some dependencies to take advantage of recent developments in some packages. This will require to upgrade the `{renv}` environment. But how will you be sure that these upgrades will not impair some other parts of your code? This is where we will speak about turning our analysis into a package and testing our code.
+Note also that during your journey, you will want to improve your scripts, you
+maybe will also want to upgrade some dependencies to take advantage of recent
+developments in some packages. This will require upgrading the `{renv}`
+environment. To do so, run `update.packages()` to update the packages, and then
+`renv::snapshot()` to to generate a new `renv.lock` file. But how will you be
+sure that these upgrades will not impair some other parts of your code? Turning
+the analysis into a package will help with this, as I’ll explain in the next
+chapter, because once the analysis is turned into a package, testing gets much
+easier. If the tests indicate that something went wrong, you can simply restore
+the previous lock file using Git and restore the old library.
 
 I want to stress that this does not mean that `{renv}` is useless: we will keep
 using it, but together with Docker to ensure the reproducibility of our project.
@@ -574,7 +583,7 @@ So let’s say that you need to run an old script, and there’s no `renv.lock` 
 around for you to restore the right package library. There might still be a
 solution (apart from running the script on the current version on R and
 packages, and hope that everything goes well), but for this you need to at least
-to know roughly *when* that script was written. Let’s say that you know that
+know roughly *when* that script was written. Let’s say that you know that
 this script was written back in 2017, somewhere around October. If you know
 that, you can use the `{rang}` or `{groundhog}` packages to download the
 packages as of October 2018 in a separate library and then run your script.
@@ -584,7 +593,7 @@ much detail now, as it is likely that the package will keep evolving rapidly in
 the coming weeks. So if you want to use it and follow its development, take a
 look at its Github repository
 [here](https://github.com/chainsawriot/rang)^[https://is.gd/sQu7NV] and read the
-[prepint](https://arxiv.org/abs/2303.04758) (@schoch2023).
+[prepint](https://arxiv.org/abs/2303.04758)^[https://arxiv.org/abs/2303.04758] (@schoch2023).
 
 `{groundhog}` is another option that has been around for more time and is fairly
 easy to use. Suppose that you have a script from October 2018 that looks like
@@ -669,7 +678,7 @@ reproducibility puzzle, which is the whole computational environment itself.
 In this chapter you had a first (maybe a bit sour) taste of reproducibility.
 This is because while the tools presented here are very useful, they will not be
 sufficient if we want our project to be truly reproducible, especially in the
-long-term. There are too many things that can go wrong when re-installing old
+long term. There are too many things that can go wrong when re-installing old
 package versions, so we must instead provide a way for users to not have to do
 it at all. This is where Docker is going to be helpful. But before that, we need
 to hit the development bench again. We are actually not quite done with our

@@ -148,7 +148,7 @@ Then we start with a new section called `## Downloading the data`. We then add
 a paragraph explaining from where and how we are going to download the data:
 
 ````{verbatim} 
-This data is downloaded from the luxembourguish [Open Data
+This data is downloaded from the Luxembourguish [Open Data
 Portal](https://data.public.lu/fr/datasets/prix-annonces-des-logements-par-commune/)
 (the data set called *Série rétrospective des prix
 annoncés des maisons par commune, de 2010 à 2021*), 
@@ -247,9 +247,9 @@ get_raw_data <- function(url = "https://is.gd/1vvBAc"){
 ````
 
 As you see, it’s almost exactly the same code. So why use a function? Our
-function has the advantage that it uses the url of the data as an argument.
-Which means that we can use it on other datasets (let’s remember that we are
-here focusing on prices of houses, but there’s another dataset of prices of
+function has the advantage that it uses the url of the data as an argument. This
+means that we can use it on other datasets (let’s remember that we are here
+focusing on prices of houses, but there’s another dataset of prices of
 apartments) or use it on an updated version of this dataset (which gets updated
 yearly). We can now more easily re-use this function later on (especially once
 we’ve turned this Rmd into a package in the next chapter). You can decide to
@@ -271,7 +271,7 @@ steps need to be taken:
 
 ````{verbatim}
 We need clean the data: "Luxembourg" is "Luxembourg-ville" in 2010 and 2011,
-then "Luxembourg". "Pétange" is also spelled non-consistently, and we also need
+then "Luxembourg". "Pétange" is also spelt non-consistently, and we also need
 to convert columns to the right type. We also directly remove rows where the
 locality contains information on the "Source":
 
@@ -352,7 +352,7 @@ current_communes <- get_current_communes()
 This is quite a long chunk, but there is nothing new in here, so I won’t explain
 it line by line. What’s important is that the code doing the actual work is all
 being wrapped inside functions. I reiterate: this will make reusing, testing and
-documenting much easier later on. Using the object `former_communes` and
+documenting much easier later on. Using the objects `former_communes` and
 `current_communes` we can now build the complete list:
 
 ````{verbatim}
@@ -485,9 +485,8 @@ audience of the knitted output is (do they want to see this chunk at all?).
 Ok, and that’s it. You can take a look at the finalised file
 [here](https://raw.githubusercontent.com/b-rodrigues/rap4all/master/rmds/save_data.Rmd)^[https://is.gd/eBbcsR].
 You can now remove the `save_data.R` script, as you have successfully ported the
-code over to a `Rmd`.
-
-If you have not done it yet, you can commit these changes and push.
+code over to an RMarkdown file. If you have not done it yet, you can commit
+these changes and push.
 
 Let’s now do the same thing for the analysis script.
 
@@ -573,8 +572,8 @@ get_laspeyeres <- function(dataset, start_year = "2010"){
 So, the first step is naming the function. We’ll call it `get_laspeyeres()`, and
 it’ll be a function of two arguments. The first is the data (commune or national
 level data) and the second is the starting date of the data. This second
-argument has a default value of "2010". This is the year the data starts, and
-so this the year the Laspeyeres index will have a value of 100.
+argument has a default value of "2010". This is the year the data starts, and so
+this is the year the Laspeyeres index will have a value of 100.
 
 The following lines are probably the most complicated:
 
@@ -600,12 +599,12 @@ might have the following questions: why is `locality` given as an input to
 
 A simple explanation: `locality` is a variable in the `commune_level_dataset`.
 If we don’t *quote* it using `quo()`, our function will look for a variable
-called `locality` in body of the function, but since there is no variable
+called `locality` in the body of the function, but since there is no variable
 defined that is called `locality` in there, the function will look for this
 variable in the global environment. But this is not a variable defined in the
 global environment either, it is a column in our dataset. So we need a way to
-tell this to our function: *don’t worry about evaluating this just yet, I’ll tell
-you when it’s time*.
+tell this to our function: *don’t worry about evaluating this just yet, I’ll
+tell you when it’s time*.
 
 So by using `quo()`, we can delay evaluation. So how can we tell the function
 that it’s time to evaluate `locality`? This is where we need `!!` (pronounced
