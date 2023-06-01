@@ -59,5 +59,12 @@ format:
       epub.css
   pdf:
     documentclass: scrbook
-    classoption: [paper=6.625in:9.25in,pagesize=pdftex,10pt]
+    classoption: [paper=6.125in:9.25in,pagesize=pdftex,10pt]
+    include-in-header: 
+      text: |
+        \areaset[0.375in]{4.5in}{8in}
     fig-pos: 'H'
+      
+
+
+
