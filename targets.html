@@ -54,7 +54,26 @@ div.sourceCode
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -373,7 +392,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
-<p>We are finally ready to actually build a pipeline. For this, we are going to be using a package called <code>{targets}</code> which is a so-called “build automation tool”.</p>
+<p>We are finally ready to actually build a pipeline. For this, we are going to be using a package called <code>{targets}</code> (<span class="citation" data-cites="landau2021">Landau (<a href="references.html#ref-landau2021" role="doc-biblioref">2021</a>)</span>) which is a so-called “build automation tool”.</p>
 <p>If you go back to the reproducibility iceberg, you will see that we are quite low now.</p>
 <p>Without a build automation tool, a pipeline is nothing but a series of scripts that get called one after the other, or perhaps the pipeline is only one very long script that does the required operations successfully.</p>
 <p>There are several problems with this approach, so let’s see how build automation can help us.</p>
@@ -1362,6 +1381,11 @@ What’s described as ‘mtcars’ is not a ‘data.frame’, yet.
 <p>In the next chapter, we will be going deeper in the iceberg of reproducibility still.</p>
 
 
+<div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
+<div id="ref-landau2021" class="csl-entry" role="listitem">
+Landau, William Michael. 2021. <span>“The Targets r Package: A Dynamic Make-Like Function-Oriented Pipeline Toolkit for Reproducibility and High-Performance Computing.”</span> <em>Journal of Open Source Software</em> 6 (57): 2959.
+</div>
+</div>
 </section>
 <section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr>

@@ -812,8 +812,8 @@ To read the log of this object, call read_log(.c).</code></pre>
 <div class="sourceCode cell-code" id="cb74"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a>chronicler<span class="sc">::</span><span class="fu">read_log</span>(result)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "Complete log:"                                                                                
-[2] "NOK! sqrt() ran unsuccessfully with following exception: NaNs produced at 2023-06-01 16:06:25"
-[3] "Total running time: 0.00113987922668457 secs"                                                 </code></pre>
+[2] "NOK! sqrt() ran unsuccessfully with following exception: NaNs produced at 2023-06-01 18:29:49"
+[3] "Total running time: 0.0015418529510498 secs"                                                  </code></pre>
 </div>
 </div>
 <p>The <code>{purrr}</code> package also comes with function factories that you might find useful (<code>{possibly}</code>, <code>{safely}</code> and <code>{quietly}</code>).</p>
@@ -924,7 +924,7 @@ To read the log of this object, call read_log(.c).</code></pre>
            expr    min     lq     mean median      uq    max neval
  fact_recur(50) 21.501 21.701 23.82701 21.901 22.0515 68.902   100
   fact_iter(50)  2.000  2.101  2.74599  2.201  2.3510 21.000   100</code></pre>
-<p>We see that the recursive factorial function is 10 times slower than the iterative version. In this particular example it doesn’t make much of a difference, because the functions only take microseconds to run. But if you’re working with more complex functions, this is a problem. If you want to keep using the recursive function and not switch to an iterative algorithm, there are ways to make them faster. The first is called <em>trampolining</em>. I won’t go into details, but if you’re interested, there is an R package that allows you to use trampolining with R, aptly called <a href="https://rdinnager.github.io/trampoline/"><code>{trampoline}</code></a>. Another solution is using the <a href="https://memoise.r-lib.org/"><code>{memoise}</code></a> package. Again, I won’t go into details. So if you want to use and optimize recursive functions, take a look at these packages.</p>
+<p>We see that the recursive factorial function is 10 times slower than the iterative version. In this particular example it doesn’t make much of a difference, because the functions only take microseconds to run. But if you’re working with more complex functions, this is a problem. If you want to keep using the recursive function and not switch to an iterative algorithm, there are ways to make them faster. The first is called <em>trampolining</em>. I won’t go into details, but if you’re interested, there is an R package that allows you to use trampolining with R, aptly called <a href="https://rdinnager.github.io/trampoline/"><code>{trampoline}</code></a><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>. Another solution is using the <a href="https://memoise.r-lib.org/"><code>{memoise}</code></a><a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> package. Again, I won’t go into details. So if you want to use and optimize recursive functions, take a look at these packages.</p>
 </section>
 <section id="anonymous-functions" class="level3" data-number="6.2.5">
 <h3 data-number="6.2.5" class="anchored" data-anchor-id="anonymous-functions"><span class="header-section-number">6.2.5</span> Anonymous functions</h3>
@@ -943,7 +943,7 @@ To read the log of this object, call read_log(.c).</code></pre>
 <blockquote class="blockquote">
 <p>This is the Unix philosophy: Write programs that do one thing and do it well. Write programs to work together. Write programs to handle text streams, because that is a universal interface.</p>
 </blockquote>
-<p><em>Doug McIlroy, in A Quarter Century of Unix</em><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+<p><em>Doug McIlroy, in A Quarter Century of Unix</em><a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></p>
 <p>We can take inspiration from the Unix philosophy and rewrite it for our purposes:</p>
 <p><em>Write functions that do one thing and do it well. Write functions that work together. Write functions that handle lists, because that is a universal interface.</em></p>
 <p>Strive for writing simple functions that only perform one task. Don’t hesitate to split a big function into smaller ones. Small functions that only perform one task are easier to maintain, test, document and debug. These smaller functions can then be chained using the <code>|&gt;</code> operator. In other words, it is preferable to have something like:</p>
@@ -1647,7 +1647,7 @@ NULL</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>function (x, ...) 
 UseMethod("print")
-&lt;bytecode: 0x555dae69cb50&gt;
+&lt;bytecode: 0x55d69d941150&gt;
 &lt;environment: namespace:base&gt;</code></pre>
 </div>
 </div>
@@ -1691,7 +1691,7 @@ UseMethod("print")
     }
     invisible(x)
 }
-&lt;bytecode: 0x555daf8f2818&gt;
+&lt;bytecode: 0x55d69eb96f78&gt;
 &lt;environment: namespace:base&gt;</code></pre>
 </div>
 </div>
@@ -1742,7 +1742,7 @@ UseMethod("print")
 </div>
 <p>for when the output needs to be an atomic vector of characters.</p>
 <p>There are many others, so take a look at the documentation with <code>?map</code>. There’s also <code>walk()</code> which is used if you’re only interested in the side-effect of the function (for example if the function takes paths as input and saves something to disk).</p>
-<p><code>{purrr}</code> also has functions to replace <code>Reduce()</code>, simply called <code>reduce()</code> and <code>accumulate()</code>, and there are many, many other useful functions. Read through the <a href="https://purrr.tidyverse.org/reference/index.html">documentation of the package</a><a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> and take the time to learn about all it has to offer.</p>
+<p><code>{purrr}</code> also has functions to replace <code>Reduce()</code>, simply called <code>reduce()</code> and <code>accumulate()</code>, and there are many, many other useful functions. Read through the <a href="https://purrr.tidyverse.org/reference/index.html">documentation of the package</a><a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> and take the time to learn about all it has to offer.</p>
 </section>
 <section id="withr" class="level3" data-number="6.4.3">
 <h3 data-number="6.4.3" class="anchored" data-anchor-id="withr"><span class="header-section-number">6.4.3</span> withr</h3>
@@ -1820,7 +1820,7 @@ UseMethod("print")
 </div>
 </div>
 <p>The data got downloaded, and then loaded, and then we computed the number of rows of the data, without touching the global environment, or state, of our current session.</p>
-<p>Just like for <code>{purrr}</code>, <code>{withr}</code> has many useful functions which I encourage you to <a href="https://withr.r-lib.org/reference/index.html">familiarize yourself with</a>.</p>
+<p>Just like for <code>{purrr}</code>, <code>{withr}</code> has many useful functions which I encourage you to <a href="https://withr.r-lib.org/reference/index.html">familiarize yourself with</a><a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a>.</p>
 </section>
 </section>
 <section id="conclusion" class="level2" data-number="6.5">
@@ -1833,15 +1833,18 @@ UseMethod("print")
 Chambers, John M. 2014. <span>“<span class="nocase">Object-Oriented Programming, Functional Programming and R</span>.”</span> <em>Statistical Science</em> 29 (2): 167–80.
 </div>
 <div id="ref-wickham2019" class="csl-entry" role="listitem">
-Wickham, Hadley. 2019. <em>Advanced r</em>. CRC press.
+Wickham, Hadley. 2019. <em>Advanced r</em>. CRC press. <a href="https://adv-r.hadley.nz/">https://adv-r.hadley.nz/</a>.
 </div>
 </div>
 </section>
 <section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr>
 <ol>
-<li id="fn1"><p>http://www.catb.org/~esr/writings/taoup/html/ch01s06.html<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2"><p>https://purrr.tidyverse.org/reference/index.html<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn1"><p>https://rdinnager.github.io/trampoline/<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>https://memoise.r-lib.org/<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>http://www.catb.org/~esr/writings/taoup/html/ch01s06.html<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>https://purrr.tidyverse.org/reference/index.html<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p>https://withr.r-lib.org/reference/index.html<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 

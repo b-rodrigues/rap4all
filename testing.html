@@ -357,7 +357,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
-<p>Testing code is crucial, and we all do it in some form or another. The problem is that it is not something that we do consistently: usually code gets tested in the beginning of a project, but then, as we start focusing on the analysis more and more and need to respect deadlines, testing gets forgotten.</p>
+<p>Testing code is crucial, and we all do it in some form or another. The problem is that it is not something that we do consistently: usually code gets tested at the beginning of a project, but then, as we start focusing on the analysis more and more and need to respect deadlines, testing gets forgotten.</p>
 <p>In this chapter, you are going to learn how to make testing your code consistent and, very importantly, fully automatic. Just like in the previous chapter, the key is to <em>write everything down</em>. Don’t just do a little test in the console to see if the function you’ve just written works as expected. Write it down! And don’t rely on future you to run tests, because future you is just as unreliable as you are. Tests need to be run each time <em>any</em> of the code from a project gets changed. This might seem overkill (why test a function that you didn’t even touch for weeks?), but because there are dependencies between your functions, a change in one function can affect another function. Especially if the output of function A is the input of function B: you changed function A and now the output of function A changed in a way that it breaks function B, or also modifies its output in an unexpected way.</p>
 <p>There are several types of tests that we can use:</p>
 <ul>
@@ -501,8 +501,8 @@ Execution halted</code></pre>
 Caused by error in `ifelse()`:
 ! object 'year' not found
 Run `rlang::last_error()` to see where the error occurred.</code></pre>
-<p>So the functions fails but for the wrong reason. It fails because the column <code>year</code> cannot be found in the data. But what if there was a column <code>year</code> in the data? The code would continue, but then likely fail for some other reason. It would be much safer to make it fail as soon as possible, by detecting right from the start if the provided data sets are not one of <code>commune_level_data</code> or <code>country_level_data</code>. But for this, we need assertive programming, which we will discuss in the next section. Why an assertive test and not an unit test? Because unit tests should run during development time, and assertive tests run at run-time (whent the function is executed). So in this case, we want the input to get checked at run-tim. In the next section we will be changing the function to fail when the right datasets are not provided, but our unit test will not need to change; the function still fails, but this time it’ll be for the right reasons.</p>
-<p>This is another advantage of writing tests: it forces you to think about what you’re doing. The simple act of thinking and writing tests very often improves your code quite a lot, and not just from a pure algorithmic perspective, but also from a user experience perspective. Writing these tests made us think about the failure of our function when users provide a wrong dataset, and made us realise that it would be much better for users if the returned error message is something along the lines of “Wrong dataset, please provide either <code>commune_level_data</code> or <code>country_level_data</code>”.</p>
+<p>So the functions fails but for the wrong reason. It fails because the column <code>year</code> cannot be found in the data. But what if there was a column <code>year</code> in the data? The code would continue, but then likely fail for some other reason. It would be much safer to make it fail as soon as possible, by detecting right from the start if the provided data sets are not one of <code>commune_level_data</code> or <code>country_level_data</code>. But for this, we need assertive programming, which we will discuss in the next section. Why an assertive test and not a unit test? Because unit tests should run during development time, and assertive tests run at run-time (when the function is executed). So in this case, we want the input to get checked at run-time. In the next section, we will be changing the function to fail when the right datasets are not provided, but our unit test will not need to change; the function still fails, but this time it’ll be for the right reasons.</p>
+<p>This is another advantage of writing tests: it forces you to think about what you’re doing. The simple act of thinking and writing tests very often improves your code quite a lot, and not just from a pure algorithmic perspective, but also from a user experience perspective. Writing these tests made us think about the failure of our function when users provide a wrong dataset and made us realise that it would be much better for users if the returned error message is something along the lines of “Wrong dataset, please provide either <code>commune_level_data</code> or <code>country_level_data</code>”.</p>
 <p>Let’s continue with testing <code>get_laspeyeres()</code>. It would be nice to see if the function actually does what it’s supposed to do correctly. For this, we need to start from an input, and then create the expected output. It doesn’t matter how you create this output, what matters is that you make absolutely sure that it is correct, and then, never touch it ever again. Let’s call this output the “truth”. Then, you provide <code>get_laspeyeres()</code> with this input and save the output that <code>get_laspeyeres()</code> generates. You then compare the “truth” to this output. If everything matches, congratulations, your function produces the right output.</p>
 <p>So let’s start. Remember that unit tests should be self-contained, so I’m going to create the input dataset and the expected data set (what I called the “truth”) in the test itself. This is the code I’m going to use to create the mock, input dataset:</p>
 <div class="cell">
@@ -532,7 +532,7 @@ Run `rlang::last_error()` to see where the error occurred.</code></pre>
 <span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>  expected_df<span class="sc">$</span>average_price_m2_nominal_euros<span class="sc">/</span></span>
 <span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>    expected_df<span class="sc">$</span>p0_m2 <span class="sc">*</span> <span class="dv">100</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>If you look at each line, you see that this is exactly what <code>get_laspeyeres()</code> does. We can inspect the results, maybe even verify the value of each cell using a pocket calculator. It doesn’t matter, what’s important is that <code>expected_df</code> is correct and saved. This is what the full test looks like:</p>
+<p>If you look at each line, you see that this is exactly what <code>get_laspeyeres()</code> does. We can inspect the results and maybe even verify the value of each cell using a pocket calculator. It doesn’t matter, what’s important is that <code>expected_df</code> is correct and saved. This is what the full test looks like:</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>```{r, eval = F}</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>test_that("get_laspeyeres() produces correct results", {</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -567,7 +567,7 @@ Run `rlang::last_error()` to see where the error occurred.</code></pre>
 </section>
 <section id="assertive-programming" class="level2" data-number="12.2">
 <h2 data-number="12.2" class="anchored" data-anchor-id="assertive-programming"><span class="header-section-number">12.2</span> Assertive programming</h2>
-<p>Remember in chapter 6, where I discussed safe functions? As a refresher, here’s the <code>nchar()</code> function, providing a correct output when the input is a character:</p>
+<p>Remember in Chapter 6, where I discussed safe functions? As a refresher, here’s the <code>nchar()</code> function, providing a correct output when the input is a character:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nchar</span>(<span class="st">"100000000"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -581,7 +581,7 @@ Run `rlang::last_error()` to see where the error occurred.</code></pre>
 <pre><code>[1] 5</code></pre>
 </div>
 </div>
-<p>This is because <code>100000000</code> gets converted to <code>1e+08</code> and then this gets converted into the string <code>"1e+08"</code> which is 5 characters long. So in that section, I suggested to define your own <code>nchar2()</code> that makes sure that the provided input is a character:</p>
+<p>This is because <code>100000000</code> gets converted to <code>1e+08</code> and then this gets converted into the string <code>"1e+08"</code> which is 5 characters long. So in that section, I suggested defining your own <code>nchar2()</code> that makes sure that the provided input is a character:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>nchar2 <span class="ot">&lt;-</span> <span class="cf">function</span>(x, <span class="at">result =</span> <span class="dv">0</span>){</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -741,13 +741,13 @@ Actual message: "dataset must be one of `commune_level_data`
 <pre><code>[1] FALSE</code></pre>
 </div>
 </div>
-<p>You could also use more complex assertions. For example, suppose that you need to clean data using many functions, with several filters. Something could go wrong in any of these functions for a variety of reasons. So each of these functions could test if all the individuals are still in the data, and that you didn’t remove any of them by mistake. A test like this could make sure that each levels of the variable <code>am</code> are still in the data:</p>
+<p>You could also use more complex assertions. For example, suppose that you need to clean data using many functions, with several filters. Something could go wrong in any of these functions for a variety of reasons. So each of these functions could test if all the individuals are still in the data, and that you didn’t remove any of them by mistake. A test like this could make sure that each level of the variable <code>am</code> are still in the data:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>summary_stats <span class="ot">&lt;-</span> <span class="cf">function</span>(dataframe, var){</span>
 <span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stopifnot</span>(<span class="st">"Some individuals are missing!"</span> <span class="ot">=</span></span>
 <span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>              <span class="fu">all</span>((<span class="fu">unique</span>(dataframe[[var]])) <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>)))</span>
 <span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># and then some comptutations here</span></span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># and then some computations here</span></span>
 <span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Now, when running <code>summary_stats(mtcars, "am")</code>, if somehow the level “1” or “0” is missing from <code>mtcars</code>, the function would throw an error.</p>
@@ -757,7 +757,7 @@ Actual message: "dataset must be one of `commune_level_data`
 <li><a href="https://poissonconsulting.github.io/chk/">{chk}</a><a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></li>
 <li><a href="https://mllg.github.io/checkmate/">{checkmate}</a><a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></li>
 </ul>
-<p>I won’t discuss any of them; what’s important is for you to know that assertive programming is something that is useful, and that you should add to your toolbox.</p>
+<p>I won’t discuss any of them; what’s important is for you to know that assertive programming is something that is useful and that you should add to your toolbox.</p>
 </section>
 <section id="test-driven-development" class="level2" data-number="12.3">
 <h2 data-number="12.3" class="anchored" data-anchor-id="test-driven-development"><span class="header-section-number">12.3</span> Test-driven development</h2>
@@ -794,9 +794,9 @@ R/get_raw_data.R: 80.65%</code></pre>
 <section id="conclusion" class="level2" data-number="12.5">
 <h2 data-number="12.5" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">12.5</span> Conclusion</h2>
 <p>Testing is crucial and useful. Not just because it gives you peace of mind but also because writing tests forces you to think about your code, by putting yourself in the shoes of your users (which include future you as well). In most cases, it is even something that you’ve been doing but perhaps not as systematically as you should.</p>
-<p>There really is no other way to say this: you need to consider writing tests as an integral part of the project, and need to take the required time it takes to write them into account when planning projects. But keep in mind that writing them makes you gain a lot of time in the long run, so actually, you might even be faster by writing tests! Tests also allow you to immediately see where something went wrong, when something goes wrong. So tests save you time here as well. Without tests, when something goes wrong, you have a hard time finding where the bug comes from, and end up wasting precious time. And worse, sometimes things go wrong and break, but silently. You still get an output that may look ok at first glance, and only realise something is wrong way too late. Testing helps avoiding such situations.</p>
-<p>So remember: it might <em>feel</em> like packaging your code and writing tests for it takes time, butyou’re actually already doing it, but non-systematically and manually and it ends up saving you time in the long run instead. Testing also helps with developing complex functions.</p>
-<p>The tools I’ve showed you in this and the previous chapter are probably the fastest, easiest options to go from your analysis to a documented and tested package in a matter of hours. The benefits these provide however are measured in days of work.</p>
+<p>There really is no other way to say this: you need to consider writing tests as an integral part of the project, and need to take the required time it takes to write them into account when planning projects. But keep in mind that writing them makes you gain a lot of time in the long run, so actually, you might even be faster by writing tests! Tests also allow you to immediately see where something went wrong, when something goes wrong. So tests save you time here as well. Without tests, when something goes wrong, you have a hard time finding where the bug comes from, and end up wasting precious time. And worse, sometimes things go wrong and break, but silently. You still get an output that may look ok at first glance, and only realise something is wrong way too late. Testing helps to avoid such situations.</p>
+<p>So remember: it might <em>feel</em> like packaging your code and writing tests for it takes time, but you’re actually already doing it, but non-systematically and manually and it ends up saving you time in the long run instead. Testing also helps with developing complex functions.</p>
+<p>The tools I’ve shown you in this and the previous chapter are probably the fastest, easiest options to go from your analysis to a documented and tested package in a matter of hours. The benefits these provide however are measured in days of work.</p>
 
 
 </section>

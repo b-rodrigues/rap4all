@@ -54,7 +54,26 @@ div.sourceCode
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -363,10 +382,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
-<p>In this chapter, we are going to work together on a very simple project. This project will stay with us until the end of the book. As we will go deeper in the book together, you will rewrite that project by implementing the techniques I will teach you. By the end of the book you will have built a reproducible analytical pipeline. To get things going, we are going to keep it simple; our goal here is to get an analysis done, that’s it. We won’t focus on reproducibility. We are going to download some data, and analyse it, that’s it.</p>
+<p>In this chapter, we are going to work together on a very simple project. This project will stay with us until the end of the book. As we will go deeper into the book together, you will rewrite that project by implementing the techniques I will teach you. By the end of the book you will have built a reproducible analytical pipeline. To get things going, we are going to keep it simple; our goal here is to get an analysis done, that’s it. We won’t focus on reproducibility. We are going to download some data, and analyse it, that’s it.</p>
 <section id="housing-in-luxembourg" class="level2" data-number="3.1">
 <h2 data-number="3.1" class="anchored" data-anchor-id="housing-in-luxembourg"><span class="header-section-number">3.1</span> Housing in Luxembourg</h2>
-<p>We are going to download data about house prices in Luxembourg. Luxembourg is a little Western European country the author hails from that looks like a shoe and is about the size of .98 Rhode Islands. Did you know that Luxembourg is a constitutional monarchy, and not a kingdom like Belgium, but a Grand-Duchy, and actually the last Grand-Duchy in the World? Also, what you should know to understand what we will be doing is that the country of Luxembourg is divided into Cantons, and each Cantons into Communes. If Luxembourg was the USA, Cantons would be States and Communes would be Counties (or Parishes or Boroughs). What’s confusing is that “Luxembourg” is also the name of a Canton, and of a Commune, which also has the status of a city and is the capital of the country. So Luxembourg the country, is divided into Cantons, one of which is called Luxembourg as well, cantons are divided into communes, and inside the canton of Luxembourg there’s the commune of Luxembourg which is also the city of Luxembourg, sometimes called Luxembourg-City, which is the capital of the country.</p>
+<p>We are going to download data about house prices in Luxembourg. Luxembourg is a little Western European country the author hails from that looks like a shoe and is about the size of .98 Rhode Islands. Did you know that Luxembourg is a constitutional monarchy, and not a kingdom like Belgium, but a Grand-Duchy, and actually the last Grand-Duchy in the World? Also, what you should know to understand what we will be doing is that the country of Luxembourg is divided into Cantons, and each Cantons into Communes. If Luxembourg was the USA, Cantons would be States and Communes would be Counties (or Parishes or Boroughs). What’s confusing is that “Luxembourg” is also the name of a Canton, and of a Commune, which also has the status of a city and is the capital of the country. So Luxembourg the country, is divided into Cantons, one of which is called Luxembourg as well, cantons are divided into communes, and inside the canton of Luxembourg, there’s the commune of Luxembourg which is also the city of Luxembourg, sometimes called Luxembourg-City, which is the capital of the country.</p>
 <figure class="figure">
 <img src="images/lux_rhode_island.png" alt="Luxembourg is about as big as the US State of Rhode Island." class="figure-img">
 <figcaption class="figure-caption">
@@ -374,7 +393,7 @@ Luxembourg is about as big as the US State of Rhode Island.
 </figcaption>
 </figure>
 <p>What you should also know is that the population is about 645,000 as of writing (January 2023), half of which are foreigners. Around 400,000 persons work in Luxembourg, of which half do not live in Luxembourg; so every morning from Monday to Friday, 200,000 people enter the country to work and then leave in the evening to go back to either Belgium, France or Germany, the neighbouring countries. As you can imagine, this puts enormous pressure on the transportation system and on the roads, but also on the housing market; everyone wants to live in Luxembourg to avoid the horrible daily commute, and everyone wants to live either in the capital city, or in the second largest urban area in the south, in a city called Esch-sur-Alzette.</p>
-<p>The plot below shows the value of the House Price Index through time for Luxembourg and the European Union:</p>
+<p>The plot below shows the value of the House Price Index over time for Luxembourg and the European Union:</p>
 <div class="cell">
 <div class="cell-output-display">
 <p><img src="project_start_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="672"></p>
@@ -396,7 +415,7 @@ Luxembourg is about as big as the US State of Rhode Island.
 </section>
 <section id="saving-trapped-data-from-excel" class="level2" data-number="3.2">
 <h2 data-number="3.2" class="anchored" data-anchor-id="saving-trapped-data-from-excel"><span class="header-section-number">3.2</span> Saving trapped data from Excel</h2>
-<p>Getting data from Excel into a tidy data frame can be very tricky. This is because very often, Excel is used as some kind of dashboard or presentation tool. So data is made human-readable, in contrast to machine readable. Let us quickly discuss this topic as it is essential to grasp the difference between the two (and in our experience, a lot of collective pain inflicted to statisticians and researchers could have been avoided if this concept was more well-known). The picture below shows an Excel file made for human consumption:</p>
+<p>Getting data from Excel into a tidy data frame can be very tricky. This is because very often, Excel is used as some kind of dashboard or presentation tool. So data is made human-readable, in contrast to machine-readable. Let us quickly discuss this topic as it is essential to grasp the difference between the two (and in our experience, a lot of collective pain inflicted to statisticians and researchers could have been avoided if this concept was more well-known). The picture below shows an Excel file made for human consumption:</p>
 <figure class="figure">
 <img src="images/obs_hab_xlsx_overview.png" alt="An Excel file meant for human eyes." class="figure-img">
 <figcaption class="figure-caption">
@@ -410,7 +429,7 @@ An Excel file meant for human eyes.
 <li>Numbers are text and use “,” as the thousands separator;</li>
 <li>You don’t see it in the screenshot, but each year is in a separate sheet.</li>
 </ul>
-<p>That being said, this Excel file is still very tame, and going from this Excel to a tidy data frame will not be too difficult. In fact, we suspect that whoever made this Excel file is well aware of the contradicting requirements of human and machine readable formatting of data, and strove to find a compromise. Because more often than not, getting human readable data into a machine readable format is a nightmare. We could call data like this <em>machine-friendly</em> data.</p>
+<p>That being said, this Excel file is still very tame, and going from this Excel to a tidy data frame will not be too difficult. In fact, we suspect that whoever made this Excel file is well aware of the contradicting requirements of human and machine-readable formatting of data, and strove to find a compromise. Because more often than not, getting human-readable data into a machine-readable format is a nightmare. We could call data like this <em>machine-friendly</em> data.</p>
 <p>If you want to follow along, you can download the Excel file <a href="https://github.com/b-rodrigues/rap4all/raw/master/datasets/vente-maison-2010-2021.xlsx">here</a><a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> (downloaded on January 2023 from the <a href="https://data.public.lu/en/datasets/prix-annonces-des-logements-par-commune/">luxembourguish open data portal</a><a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a>). But you don’t need to follow along with code, because I will link the completed scripts for you to download later.</p>
 <p>Each sheet contains a dataset with the following columns:</p>
 <ul>
@@ -427,7 +446,7 @@ An Excel file meant for human eyes.
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(stringr)</span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(janitor)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Even though this book is not about analysing data per se, let me just briefly explain what these packages do, in case you’re not familiar with them. The <code>{dplyr}</code> package provides many functions for data manipulation, for example aggregating group-wise. <code>{purrr}</code> is a package for functional programming, a programming paradigm that I’ll introduce later in the book, <code>{readxl}</code> reads in Excel workbooks, <code>{stringr}</code> is a package for manipulating strings, and finally <code>{janitor}</code> provides some very nice functions, to perform some common tasks like easily rename every column of a data frame in snake case.</p>
+<p>Even though this book is not about analysing data per se, let me just briefly explain what these packages do, in case you’re not familiar with them. The <code>{dplyr}</code> package provides many functions for data manipulation, for example aggregating group-wise. <code>{purrr}</code> is a package for functional programming, a programming paradigm that I’ll introduce later in the book, <code>{readxl}</code> reads in Excel workbooks, <code>{stringr}</code> is a package for manipulating strings, and finally <code>{janitor}</code> (<span class="citation" data-cites="firke2023">Firke (<a href="references.html#ref-firke2023" role="doc-biblioref">2023</a>)</span>) provides some very nice functions, to perform some common tasks like easily rename every column of a data frame in snake case.</p>
 <p>Next, the code below downloads the data, and puts it in a data frame:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The url below points to an Excel file</span></span>
@@ -465,7 +484,7 @@ An Excel file meant for human eyes.
 <span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">locality =</span> <span class="fu">str_trim</span>(locality)) <span class="sc">|&gt;</span></span>
 <span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(year, locality, n_offers, <span class="fu">starts_with</span>(<span class="st">"average"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>If you are familiar with the <code>{tidyverse}</code> the above code should be quite easy to follow. We start by downloading the raw Excel file and save the sheet names into a variable. We then use a function called <code>read_clean()</code>, which takes the path to the Excel file and the sheet names as an argument to read the required sheet into a data frame. We use <code>skip = 10</code> to skip the first 10 lines in each Excel sheet because the first 10 lines contain a header. The last thing this function does is add a new column called <code>year</code> which contains the year of the data. We’re lucky, because the sheet names are the years: “2010”, “2011” and so on. We then map this function to the list of sheet names, thus reading in all the data from all the sheets into one list of data frames. We then use <code>bind_rows()</code>, to bind each data frame into a single data frame, by row. Finally, we rename the columns (by translating their names from French to English) and only select the required columns. If you don’t understand each step of what is going on, don’t worry too much about it; this book is not about learning how to use R.</p>
+<p>If you are familiar with the <code>{tidyverse}</code> (<span class="citation" data-cites="wickham2019b">Wickham et al. (<a href="references.html#ref-wickham2019b" role="doc-biblioref">2019</a>)</span>) the above code should be quite easy to follow. We start by downloading the raw Excel file and saving the sheet names into a variable. We then use a function called <code>read_clean()</code>, which takes the path to the Excel file and the sheet names as an argument to read the required sheet into a data frame. We use <code>skip = 10</code> to skip the first 10 lines in each Excel sheet because the first 10 lines contain a header. The last thing this function does is add a new column called <code>year</code> which contains the year of the data. We’re lucky because the sheet names are the years: “2010”, “2011” and so on. We then map this function to the list of sheet names, thus reading in all the data from all the sheets into one list of data frames. We then use <code>bind_rows()</code>, to bind each data frame into a single data frame, by row. Finally, we rename the columns (by translating their names from French to English) and only select the required columns. If you don’t understand each step of what is going on, don’t worry too much about it; this book is not about learning how to use R.</p>
 <p>Running this code results in a neat data set:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>raw_data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -487,7 +506,7 @@ An Excel file meant for human eyes.
 # ℹ abbreviated name: ¹​average_price_m2_nominal_euros</code></pre>
 </div>
 </div>
-<p>But there’s a problem: columns that should be of type numeric are of type character instead (<code>average_price_nominal_euros</code> and <code>average_price_m2_nominal_euros</code>). There’s also another issue, which you would eventually catch as you’ll explore the data: naming of the communes is not consistent. Let’s take a look:</p>
+<p>But there’s a problem: columns that should be of type numeric are of type character instead (<code>average_price_nominal_euros</code> and <code>average_price_m2_nominal_euros</code>). There’s also another issue, which you would eventually catch as you’ll explore the data: the naming of the communes is not consistent. Let’s take a look:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>raw_data <span class="sc">|&gt;</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">grepl</span>(<span class="st">"Luxembourg"</span>, locality)) <span class="sc">|&gt;</span></span>
@@ -563,7 +582,7 @@ Caused by warning:
 Always look at your data.
 </figcaption>
 </figure>
-<p>So it turns out that there are some rows that we need to remove. We can start by removing rows where <code>locality</code> is missing. Then we have a row where <code>locality</code> is equal to “Total d’offres”. This is simply the total of every offer from every commune. We could keep that in a separate data frame, or even remove it. Finally there’s a row, the last one, that states the source of the data, which we can remove.</p>
+<p>So it turns out that there are some rows that we need to remove. We can start by removing rows where <code>locality</code> is missing. Then we have a row where <code>locality</code> is equal to “Total d’offres”. This is simply the total of every offer from every commune. We could keep that in a separate data frame, or even remove it. Finally, there’s a row, the last one, that states the source of the data, which we can remove.</p>
 <p>In the screenshot above, we see another row that we don’t see in our filtered data frame: one where <code>n_offers</code> is missing. This row gives the national average for columns <code>average_prince_nominal_euros</code> and <code>average_price_m2_nominal_euros</code>. What we are going to do is create two datasets: one with data on communes, and the other on national prices. Let’s first remove the rows stating the sources:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>raw_data <span class="ot">&lt;-</span> raw_data <span class="sc">|&gt;</span></span>
@@ -602,7 +621,7 @@ Always look at your data.
 <span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>  purrr<span class="sc">::</span><span class="fu">pluck</span>(<span class="dv">1</span>) <span class="sc">|&gt;</span></span>
 <span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>  janitor<span class="sc">::</span><span class="fu">clean_names</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>We scrape the table from the Wikipedia page using <code>{rvest}</code>. <code>rvest::html_table()</code> returns a list of tables from the Wikipedia table, and then we use <code>purrr::pluck()</code> to keep the first table from the website, which is what we need (I made the calls to the packages explicit, because you might not be familiar with these packages). <code>janitor::clean_names()</code> transforms column names written for human eyes into machine friendly names (for example <code>Growth rate in %</code> would be transformed to <code>growth_rate_in_percent</code>).</p>
+<p>We scrape the table from the Wikipedia page using <code>{rvest}</code>. <code>rvest::html_table()</code> returns a list of tables from the Wikipedia table, and then we use <code>purrr::pluck()</code> to keep the first table from the website, which is what we need (I made the calls to the packages explicit, because you might not be familiar with these packages). <code>janitor::clean_names()</code> transforms column names written for human eyes into machine-friendly names (for example <code>Growth rate in %</code> would be transformed to <code>growth_rate_in_percent</code>).</p>
 <p>Let’s see if we have all the communes in our data:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">setdiff</span>(<span class="fu">unique</span>(commune_level_data<span class="sc">$</span>locality), current_communes<span class="sc">$</span>commune)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -682,7 +701,7 @@ Always look at your data.
 <p>We are now going to analyse the data. The first thing we are going to do is compute a Laspeyeres price index. This price index allows us to make comparisons through time; for example, the index at year 2012 measures how much more expensive (or cheaper) housing became relative to the base year (2010). However, since we only have one ‘good’ (housing), this index becomes quite simple to compute: it is nothing but the prices at year <em>t</em> divided by the prices in 2010 (if we had a basket of goods, we would need to use the Laspeyeres index formula to compute the index at all periods).</p>
 <p>For this section, I will perform a rather simple analysis. I will immediately show you the R script: take a look at it <a href="https://raw.githubusercontent.com/b-rodrigues/rap4all/master/scripts/analysis.R">here</a><a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a>. For the analysis I selected 5 communes and plotted the evolution of prices compared to the national average.</p>
 <p>This analysis might seem trivially simple, but it contains all the needed ingredients to illustrate everything else that I’m going to teach you in this book.</p>
-<p>Most analyses would stop here: after all, we have what we need; our goal was to get the plots for the 5 communes of Luxemourg, Esch-sur-Alzette, Mamer, Schengen (which gave its name to the <a href="https://en.wikipedia.org/wiki/Schengen_Area">Schengen Area</a><a href="#fn9" class="footnote-ref" id="fnref9" role="doc-noteref"><sup>9</sup></a>) and Wincrange. However, let’s ask ourselves the following important questions:</p>
+<p>Most analyses would stop here: after all, we have what we need; our goal was to get the plots for the 5 communes of Luxembourg, Esch-sur-Alzette, Mamer, Schengen (which gave its name to the <a href="https://en.wikipedia.org/wiki/Schengen_Area">Schengen Area</a><a href="#fn9" class="footnote-ref" id="fnref9" role="doc-noteref"><sup>9</sup></a>) and Wincrange. However, let’s ask ourselves the following important questions:</p>
 <ul>
 <li>How easy would it be for someone else to rerun the analysis?</li>
 <li>How easy would it be to update the analysis once new data gets published?</li>
@@ -695,7 +714,7 @@ Always look at your data.
 <h2 data-number="3.4" class="anchored" data-anchor-id="your-project-is-not-done"><span class="header-section-number">3.4</span> Your project is not done</h2>
 <section id="how-easy-would-it-be-for-someone-else-to-rerun-the-analysis" class="level3" data-number="3.4.1">
 <h3 data-number="3.4.1" class="anchored" data-anchor-id="how-easy-would-it-be-for-someone-else-to-rerun-the-analysis"><span class="header-section-number">3.4.1</span> How easy would it be for someone else to rerun the analysis?</h3>
-<p>The analysis is composed of two R scripts, one to prepare the data, another to actually run the analysis proper. Performing the analysis might seem quite easy, because each script contains comments as to what is going on, and the code is not that complicated. However, we are missing any project-level documentation that would provide clear instructions as to how to run the analysis. This might seem simple for us who wrote these scripts, but we are familiar with R, and this is still fresh in our brains. Should someone less familiar with R have to run the script, there is no clue for them as to how they should do it. And of course, should the analysis be more complex (suppose it’s composed of a dozens scripts), this gets even worse. It might not even be easy for you to remember how to run this in 5 months!</p>
+<p>The analysis is composed of two R scripts, one to prepare the data, and another to actually run the analysis proper. Performing the analysis might seem quite easy, because each script contains comments as to what is going on, and the code is not that complicated. However, we are missing any project-level documentation that would provide clear instructions as to how to run the analysis. This might seem simple for us who wrote these scripts, but we are familiar with R, and this is still fresh in our brains. Should someone less familiar with R have to run the script, there is no clue for them as to how they should do it. And of course, should the analysis be more complex (suppose it’s composed of dozens of scripts), this gets even worse. It might not even be easy for you to remember how to run this in 5 months!</p>
 <p>And what about the required dependencies? Many packages were used in the analysis. How should these get installed? Ideally, the same versions of the packages you used and the same version of R should get used by that person to rerun the analysis.</p>
 <p>All of this still needs to be documented, but listing the packages that were used for an analysis and their versions takes quite some time. Thankfully, in part 2, we will learn about the <code>{renv}</code> package to deal with this in a couple lines of code.</p>
 </section>
@@ -707,19 +726,27 @@ Always look at your data.
 <section id="how-easy-would-it-be-to-reuse-this-code-for-another-project" class="level3" data-number="3.4.3">
 <h3 data-number="3.4.3" class="anchored" data-anchor-id="how-easy-would-it-be-to-reuse-this-code-for-another-project"><span class="header-section-number">3.4.3</span> How easy would it be to reuse this code for another project?</h3>
 <p>Said plainly, not very easy. With code in this state you have no choice but to copy and paste it into a new script and change it adequately. For re-usability, nothing beats structuring your code into functions and ideally you would even package them. We are going to learn just that in future chapters of this book.</p>
-<p>But sometimes you might not be interested in reusing code for another project: however, even if that’s the case, structuring your code into functions and packaging them makes it easy to reuse code even inside the same project. Look at the last part of the <code>analysis.R</code> script: we copied and pasted the same code 5 times and only slightly changed it. We are going to learn how not to repeat ourselves by using functions and you will immediately see the benefits of writing functions, even when simply to reuse them inside the same project.</p>
+<p>But sometimes you might not be interested in reusing code for another project: however, even if that’s the case, structuring your code into functions and packaging them makes it easy to reuse code even inside the same project. Look at the last part of the <code>analysis.R</code> script: we copied and pasted the same code 5 times and only slightly changed it. We are going to learn how not to repeat ourselves by using functions and you will immediately see the benefits of writing functions, even when simply reusing them inside the same project.</p>
 </section>
 <section id="what-guarantee-do-we-have-that-the-output-is-stable-through-time" class="level3" data-number="3.4.4">
 <h3 data-number="3.4.4" class="anchored" data-anchor-id="what-guarantee-do-we-have-that-the-output-is-stable-through-time"><span class="header-section-number">3.4.4</span> What guarantee do we have that the output is stable through time?</h3>
-<p>Now this might seem weird: after all, if we start from the same dataset, does it matter <em>when</em> we run the scripts? We should be getting the same result if we build the project today, in 5 months or in 5 years. Well, not necessarily. While it is true that R is quite stable, this cannot necessarily be said of the packages that we use. There is no guarantee that the authors of the packages will not change the package’s functions to work differently, or take arguments in a different order, or even that the packages will all be available at all in 5 years. And even if the packages are still available and function the same, bugs in the packages might get corrected that could alter the result. This might seem like a non-problem; after all, if bugs get corrected, shouldn’t you be happy to update your results as well? But this depends on what it is we’re talking about. Sometimes it is necessary to reproduce results exactly as they were, even if they were wrong, for example in the context of an audit.</p>
+<p>Now this might seem weird: after all, if we start from the same dataset, does it matter <em>when</em> we run the scripts? We should be getting the same result if we build the project today, in 5 months or in 5 years. Well, not necessarily. While it is true that R is quite stable, this cannot necessarily be said of the packages that we use. There is no guarantee that the authors of the packages will not change the package’s functions to work differently, or take arguments in a different order, or even that the packages will all be available at all in 5 years. And even if the packages are still available and function the same, bugs in the packages might get corrected which could alter the result. This might seem like a non-problem; after all, if bugs get corrected, shouldn’t you be happy to update your results as well? But this depends on what it is we’re talking about. Sometimes it is necessary to reproduce results exactly as they were, even if they were wrong, for example in the context of an audit.</p>
 <p>So we also need a way to somehow snapshot and freeze the computational environment that was used to create the project originally.</p>
 </section>
 </section>
 <section id="conclusion" class="level2" data-number="3.5">
 <h2 data-number="3.5" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">3.5</span> Conclusion</h2>
-<p>We now have a basic analysis that has all we need to get started. In the coming chapters, we are going to learn about topics that will make it easy to write code that is more robust, better documented and tested, and most importantly easy to rerun (and thus to reproduce the results). The first step will actually not involve having to start rewriting our scripts though; next we are going to learn about Git, a tool that will make our life easier by versioning our code.</p>
+<p>We now have a basic analysis that has all we need to get started. In the coming chapters, we are going to learn about topics that will make it easy to write code that is more robust, better documented and tested, and most importantly easy to rerun (and thus to reproduce the results). The first step will actually not involve having to start rewriting our scripts though; next, we are going to learn about Git, a tool that will make our life easier by versioning our code.</p>
 
 
+<div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
+<div id="ref-firke2023" class="csl-entry" role="listitem">
+Firke, Sam. 2023. <em>Janitor: Simple Tools for Examining and Cleaning Dirty Data</em>.
+</div>
+<div id="ref-wickham2019b" class="csl-entry" role="listitem">
+Wickham, Hadley, Mara Averick, Jennifer Bryan, Winston Chang, Lucy D’Agostino McGowan, Romain François, Garrett Grolemund, et al. 2019. <span>“Welcome to the <span class="nocase">tidyverse</span>.”</span> <em>Journal of Open Source Software</em> 4 (43): 1686.
+</div>
+</div>
 </section>
 <section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr>
