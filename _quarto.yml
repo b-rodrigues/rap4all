@@ -60,9 +60,13 @@ format:
   pdf:
     documentclass: scrbook
     classoption: [paper=6in:9in,pagesize=pdftex,headinclude=on,footinclude=on,12pt]
+    pandoc_args: --listings
     include-in-header:
       text: |
         \usepackage{fvextra}
         \DefineVerbatimEnvironment{Highlighting}{Verbatim}{breaklines,commandchars=\\\{\}}
         \areaset[0.50in]{4.5in}{8in}
+        \lstset{
+          breaklines=true
+          }
     fig-pos: 'H'
