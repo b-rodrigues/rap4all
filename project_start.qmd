@@ -296,7 +296,8 @@ raw_data |>
 So sometimes it is spelled correctly, with an "é", sometimes not. Let's write
 some code to correct both these issues:
 
-```{r, R.options = list("width" = 60)}
+```{r}
+options(width = 60) 
 raw_data <- raw_data |>
   mutate(locality = ifelse(grepl("Luxembourg-Ville", locality),
                            "Luxembourg",
