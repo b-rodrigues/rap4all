@@ -64,7 +64,6 @@ format:
       text: |
         \usepackage{fancyvrb}
         \usepackage{fvextra}
-        \DefineVerbatimEnvironment{Highlighting}{Verbatim}{breaklines,commandchars=\\\{\}}
+        \fvset{breaklines=true, breakanywhere=true}
         \areaset[0.50in]{4.5in}{8in}
-        \fvset{breakindentnchars=50}
     fig-pos: 'H'
