@@ -62,5 +62,7 @@ format:
     classoption: [paper=6in:9in,pagesize=pdftex,headinclude=on,footinclude=on,12pt]
     include-in-header:
       text: |
+        \usepackage{fvextra}
+        \DefineVerbatimEnvironment{Highlighting}{Verbatim}{breaklines,commandchars=\\\{\}}
         \areaset[0.50in]{4.5in}{8in}
     fig-pos: 'H'
