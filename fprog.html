@@ -812,8 +812,8 @@ To read the log of this object, call read_log(.c).</code></pre>
 <div class="sourceCode cell-code" id="cb74"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a>chronicler<span class="sc">::</span><span class="fu">read_log</span>(result)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "Complete log:"                                                                                
-[2] "NOK! sqrt() ran unsuccessfully with following exception: NaNs produced at 2023-06-01 18:39:02"
-[3] "Total running time: 0.0012662410736084 secs"                                                  </code></pre>
+[2] "NOK! sqrt() ran unsuccessfully with following exception: NaNs produced at 2023-06-02 05:22:31"
+[3] "Total running time: 0.00136160850524902 secs"                                                 </code></pre>
 </div>
 </div>
 <p>The <code>{purrr}</code> package also comes with function factories that you might find useful (<code>{possibly}</code>, <code>{safely}</code> and <code>{quietly}</code>).</p>
@@ -1058,13 +1058,20 @@ $steps
 <span id="cb106-4"><a href="#cb106-4" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>$a
-                   mpg cyl disp  hp drat    wt  qsec vs am gear carb
-Mazda RX4         21.0   6  160 110 3.90 2.620 16.46  0  1    4    4
-Mazda RX4 Wag     21.0   6  160 110 3.90 2.875 17.02  0  1    4    4
-Datsun 710        22.8   4  108  93 3.85 2.320 18.61  1  1    4    1
-Hornet 4 Drive    21.4   6  258 110 3.08 3.215 19.44  1  0    3    1
-Hornet Sportabout 18.7   8  360 175 3.15 3.440 17.02  0  0    3    2
-Valiant           18.1   6  225 105 2.76 3.460 20.22  1  0    3    1
+                   mpg cyl disp  hp drat    wt  qsec vs am
+Mazda RX4         21.0   6  160 110 3.90 2.620 16.46  0  1
+Mazda RX4 Wag     21.0   6  160 110 3.90 2.875 17.02  0  1
+Datsun 710        22.8   4  108  93 3.85 2.320 18.61  1  1
+Hornet 4 Drive    21.4   6  258 110 3.08 3.215 19.44  1  0
+Hornet Sportabout 18.7   8  360 175 3.15 3.440 17.02  0  0
+Valiant           18.1   6  225 105 2.76 3.460 20.22  1  0
+                  gear carb
+Mazda RX4            4    4
+Mazda RX4 Wag        4    4
+Datsun 710           4    1
+Hornet 4 Drive       3    1
+Hornet Sportabout    3    2
+Valiant              3    1
 
 $b
 ~lm(y ~ x)</code></pre>
@@ -1081,13 +1088,20 @@ $b
 <span id="cb108-7"><a href="#cb108-7" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>$a
-                   mpg cyl disp  hp drat    wt  qsec vs am gear carb
-Mazda RX4         21.0   6  160 110 3.90 2.620 16.46  0  1    4    4
-Mazda RX4 Wag     21.0   6  160 110 3.90 2.875 17.02  0  1    4    4
-Datsun 710        22.8   4  108  93 3.85 2.320 18.61  1  1    4    1
-Hornet 4 Drive    21.4   6  258 110 3.08 3.215 19.44  1  0    3    1
-Hornet Sportabout 18.7   8  360 175 3.15 3.440 17.02  0  0    3    2
-Valiant           18.1   6  225 105 2.76 3.460 20.22  1  0    3    1
+                   mpg cyl disp  hp drat    wt  qsec vs am
+Mazda RX4         21.0   6  160 110 3.90 2.620 16.46  0  1
+Mazda RX4 Wag     21.0   6  160 110 3.90 2.875 17.02  0  1
+Datsun 710        22.8   4  108  93 3.85 2.320 18.61  1  1
+Hornet 4 Drive    21.4   6  258 110 3.08 3.215 19.44  1  0
+Hornet Sportabout 18.7   8  360 175 3.15 3.440 17.02  0  0
+Valiant           18.1   6  225 105 2.76 3.460 20.22  1  0
+                  gear carb
+Mazda RX4            4    4
+Mazda RX4 Wag        4    4
+Datsun 710           4    1
+Hornet 4 Drive       3    1
+Hornet Sportabout    3    2
+Valiant              3    1
 
 $b
 $b$c
@@ -1325,15 +1339,15 @@ Attaching package: 'dplyr'</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: 472
 Columns: 9
-$ year                         &lt;dbl&gt; 2013, 2013, 2013, 2013, 2013, 2013, 2013,…
-$ place_name                   &lt;chr&gt; "Luxembourg", "Capellen", "Dippach", "Gar…
-$ level                        &lt;chr&gt; "Country", "Canton", "Commune", "Commune"…
-$ total_employed_population    &lt;dbl&gt; 223407, 17802, 1703, 844, 1431, 4094, 214…
-$ of_which_wage_earners        &lt;dbl&gt; 203535, 15993, 1535, 750, 1315, 3800, 187…
-$ of_which_non_wage_earners    &lt;dbl&gt; 19872, 1809, 168, 94, 116, 294, 272, 113,…
-$ unemployed                   &lt;dbl&gt; 19287, 1071, 114, 25, 74, 261, 98, 45, 66…
-$ active_population            &lt;dbl&gt; 242694, 18873, 1817, 869, 1505, 4355, 224…
-$ unemployment_rate_in_percent &lt;dbl&gt; 7.947044, 5.674773, 6.274078, 2.876870, 4…</code></pre>
+$ year                         &lt;dbl&gt; 2013, 2013, 2013, 201…
+$ place_name                   &lt;chr&gt; "Luxembourg", "Capell…
+$ level                        &lt;chr&gt; "Country", "Canton", …
+$ total_employed_population    &lt;dbl&gt; 223407, 17802, 1703, …
+$ of_which_wage_earners        &lt;dbl&gt; 203535, 15993, 1535, …
+$ of_which_non_wage_earners    &lt;dbl&gt; 19872, 1809, 168, 94,…
+$ unemployed                   &lt;dbl&gt; 19287, 1071, 114, 25,…
+$ active_population            &lt;dbl&gt; 242694, 18873, 1817, …
+$ unemployment_rate_in_percent &lt;dbl&gt; 7.947044, 5.674773, 6…</code></pre>
 </div>
 </div>
 <p>Column names are self-descriptive, but the <code>level</code> column needs some explanations. <code>level</code> contains the administrative divisions of the country, so the country of Luxembourg, then the Cantons and then the Communes.</p>
@@ -1349,15 +1363,15 @@ $ unemployment_rate_in_percent &lt;dbl&gt; 7.947044, 5.674773, 6.274078, 2.87687
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: 12
 Columns: 9
-$ year                         &lt;dbl&gt; 2013, 2013, 2013, 2014, 2014, 2014, 2015,…
-$ place_name                   &lt;chr&gt; "Esch-sur-Alzette", "Luxembourg", "Wiltz"…
-$ level                        &lt;chr&gt; "Commune", "Commune", "Commune", "Commune…
-$ total_employed_population    &lt;dbl&gt; 12725, 39513, 2344, 13155, 40768, 2377, 1…
-$ of_which_wage_earners        &lt;dbl&gt; 12031, 35531, 2149, 12452, 36661, 2192, 1…
-$ of_which_non_wage_earners    &lt;dbl&gt; 694, 3982, 195, 703, 4107, 185, 710, 4140…
-$ unemployed                   &lt;dbl&gt; 2054, 3855, 318, 1997, 3836, 315, 2031, 3…
-$ active_population            &lt;dbl&gt; 14779, 43368, 2662, 15152, 44604, 2692, 1…
-$ unemployment_rate_in_percent &lt;dbl&gt; 13.898099, 8.889043, 11.945905, 13.179778…</code></pre>
+$ year                         &lt;dbl&gt; 2013, 2013, 2013, 201…
+$ place_name                   &lt;chr&gt; "Esch-sur-Alzette", "…
+$ level                        &lt;chr&gt; "Commune", "Commune",…
+$ total_employed_population    &lt;dbl&gt; 12725, 39513, 2344, 1…
+$ of_which_wage_earners        &lt;dbl&gt; 12031, 35531, 2149, 1…
+$ of_which_non_wage_earners    &lt;dbl&gt; 694, 3982, 195, 703, …
+$ unemployed                   &lt;dbl&gt; 2054, 3855, 318, 1997…
+$ active_population            &lt;dbl&gt; 14779, 43368, 2662, 1…
+$ unemployment_rate_in_percent &lt;dbl&gt; 13.898099, 8.889043, …</code></pre>
 </div>
 </div>
 <p>We are now going to use the fact that data frames are lists, and that lists can hold any type of object. For example, remember this list from before where one of the elements is a data frame, and the second one a formula:</p>
@@ -1368,13 +1382,20 @@ $ unemployment_rate_in_percent &lt;dbl&gt; 13.898099, 8.889043, 11.945905, 13.17
 <span id="cb143-4"><a href="#cb143-4" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>$a
-                   mpg cyl disp  hp drat    wt  qsec vs am gear carb
-Mazda RX4         21.0   6  160 110 3.90 2.620 16.46  0  1    4    4
-Mazda RX4 Wag     21.0   6  160 110 3.90 2.875 17.02  0  1    4    4
-Datsun 710        22.8   4  108  93 3.85 2.320 18.61  1  1    4    1
-Hornet 4 Drive    21.4   6  258 110 3.08 3.215 19.44  1  0    3    1
-Hornet Sportabout 18.7   8  360 175 3.15 3.440 17.02  0  0    3    2
-Valiant           18.1   6  225 105 2.76 3.460 20.22  1  0    3    1
+                   mpg cyl disp  hp drat    wt  qsec vs am
+Mazda RX4         21.0   6  160 110 3.90 2.620 16.46  0  1
+Mazda RX4 Wag     21.0   6  160 110 3.90 2.875 17.02  0  1
+Datsun 710        22.8   4  108  93 3.85 2.320 18.61  1  1
+Hornet 4 Drive    21.4   6  258 110 3.08 3.215 19.44  1  0
+Hornet Sportabout 18.7   8  360 175 3.15 3.440 17.02  0  0
+Valiant           18.1   6  225 105 2.76 3.460 20.22  1  0
+                  gear carb
+Mazda RX4            4    4
+Mazda RX4 Wag        4    4
+Datsun 710           4    1
+Hornet 4 Drive       3    1
+Hornet Sportabout    3    2
+Valiant              3    1
 
 $b
 ~lm(y ~ x)</code></pre>
@@ -1616,13 +1637,20 @@ $b
 </div>
 <div class="sourceCode cell-code" id="cb179"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb179-1"><a href="#cb179-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">head</span>(mtcars))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>                   mpg cyl disp  hp drat    wt  qsec vs am gear carb
-Mazda RX4         21.0   6  160 110 3.90 2.620 16.46  0  1    4    4
-Mazda RX4 Wag     21.0   6  160 110 3.90 2.875 17.02  0  1    4    4
-Datsun 710        22.8   4  108  93 3.85 2.320 18.61  1  1    4    1
-Hornet 4 Drive    21.4   6  258 110 3.08 3.215 19.44  1  0    3    1
-Hornet Sportabout 18.7   8  360 175 3.15 3.440 17.02  0  0    3    2
-Valiant           18.1   6  225 105 2.76 3.460 20.22  1  0    3    1</code></pre>
+<pre><code>                   mpg cyl disp  hp drat    wt  qsec vs am
+Mazda RX4         21.0   6  160 110 3.90 2.620 16.46  0  1
+Mazda RX4 Wag     21.0   6  160 110 3.90 2.875 17.02  0  1
+Datsun 710        22.8   4  108  93 3.85 2.320 18.61  1  1
+Hornet 4 Drive    21.4   6  258 110 3.08 3.215 19.44  1  0
+Hornet Sportabout 18.7   8  360 175 3.15 3.440 17.02  0  0
+Valiant           18.1   6  225 105 2.76 3.460 20.22  1  0
+                  gear carb
+Mazda RX4            4    4
+Mazda RX4 Wag        4    4
+Datsun 710           4    1
+Hornet 4 Drive       3    1
+Hornet Sportabout    3    2
+Valiant              3    1</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb181"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb181-1"><a href="#cb181-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">str</span>(mtcars))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -1647,7 +1675,7 @@ NULL</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>function (x, ...) 
 UseMethod("print")
-&lt;bytecode: 0x55846469c9d8&gt;
+&lt;bytecode: 0x55c64f8c8990&gt;
 &lt;environment: namespace:base&gt;</code></pre>
 </div>
 </div>
@@ -1691,7 +1719,7 @@ UseMethod("print")
     }
     invisible(x)
 }
-&lt;bytecode: 0x5584658f2838&gt;
+&lt;bytecode: 0x55c650200838&gt;
 &lt;environment: namespace:base&gt;</code></pre>
 </div>
 </div>
@@ -1736,8 +1764,8 @@ UseMethod("print")
 <div class="cell">
 <div class="sourceCode cell-code" id="cb192"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb192-1"><a href="#cb192-1" aria-hidden="true" tabindex="-1"></a><span class="fu">map_chr</span>(letters, toupper)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1] "A" "B" "C" "D" "E" "F" "G" "H" "I" "J" "K" "L" "M" "N" "O" "P" "Q" "R" "S"
-[20] "T" "U" "V" "W" "X" "Y" "Z"</code></pre>
+<pre><code> [1] "A" "B" "C" "D" "E" "F" "G" "H" "I" "J" "K" "L" "M" "N"
+[15] "O" "P" "Q" "R" "S" "T" "U" "V" "W" "X" "Y" "Z"</code></pre>
 </div>
 </div>
 <p>for when the output needs to be an atomic vector of characters.</p>

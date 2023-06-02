@@ -490,20 +490,20 @@ An Excel file meant for human eyes.
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>raw_data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1,343 × 5
-   year  locality    n_offers average_price_nominal_euros average_price_m2_nom…¹
-   &lt;chr&gt; &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt;                       &lt;chr&gt;                 
- 1 2010  Bascharage       192 593698.31000000006          3603.57               
- 2 2010  Beaufort         266 461160.29                   2902.76               
- 3 2010  Bech              65 621760.22                   3280.51               
- 4 2010  Beckerich        176 444498.68                   2867.88               
- 5 2010  Berdorf          111 504040.85                   3055.99               
- 6 2010  Bertrange        264 795338.87                   4266.46               
- 7 2010  Bettembourg      304 555628.29                   3343.22               
- 8 2010  Bettendorf        94 495074.38                   3235.26               
- 9 2010  Betzdorf         119 625914.47                   3343.05               
-10 2010  Bissen            70 516465.57                   3321.65               
+   year  locality    n_offers average_price_nominal_euros
+   &lt;chr&gt; &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt;                      
+ 1 2010  Bascharage       192 593698.31000000006         
+ 2 2010  Beaufort         266 461160.29                  
+ 3 2010  Bech              65 621760.22                  
+ 4 2010  Beckerich        176 444498.68                  
+ 5 2010  Berdorf          111 504040.85                  
+ 6 2010  Bertrange        264 795338.87                  
+ 7 2010  Bettembourg      304 555628.29                  
+ 8 2010  Bettendorf        94 495074.38                  
+ 9 2010  Betzdorf         119 625914.47                  
+10 2010  Bissen            70 516465.57                  
 # ℹ 1,333 more rows
-# ℹ abbreviated name: ¹​average_price_m2_nominal_euros</code></pre>
+# ℹ 1 more variable: average_price_m2_nominal_euros &lt;chr&gt;</code></pre>
 </div>
 </div>
 <p>But there’s a problem: columns that should be of type numeric are of type character instead (<code>average_price_nominal_euros</code> and <code>average_price_m2_nominal_euros</code>). There’s also another issue, which you would eventually catch as you’ll explore the data: the naming of the communes is not consistent. Let’s take a look:</p>
@@ -546,10 +546,12 @@ An Excel file meant for human eyes.
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: There were 2 warnings in `mutate()`.
 The first warning was:
-ℹ In argument: `across(starts_with("average"), as.numeric)`.
+ℹ In argument: `across(starts_with("average"),
+  as.numeric)`.
 Caused by warning:
 ! NAs introduced by coercion
-ℹ Run `dplyr::last_dplyr_warnings()` to see the 1 remaining warning.</code></pre>
+ℹ Run `dplyr::last_dplyr_warnings()` to see the 1 remaining
+  warning.</code></pre>
 </div>
 </div>
 <p>Now this is interesting – converting the <code>average</code> columns to numeric resulted in some <code>NA</code> values. Let’s see what happened:</p>
@@ -558,21 +560,21 @@ Caused by warning:
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">is.na</span>(average_price_nominal_euros))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 290 × 5
-   year  locality         n_offers average_price_nomina…¹ average_price_m2_nom…²
-   &lt;chr&gt; &lt;chr&gt;               &lt;dbl&gt;                  &lt;dbl&gt;                  &lt;dbl&gt;
- 1 2010  Consthum               29                     NA                     NA
- 2 2010  Esch-sur-Sûre           7                     NA                     NA
- 3 2010  Heiderscheid           29                     NA                     NA
- 4 2010  Hoscheid               26                     NA                     NA
- 5 2010  Saeul                  14                     NA                     NA
- 6 2010  &lt;NA&gt;                   NA                     NA                     NA
- 7 2010  &lt;NA&gt;                   NA                     NA                     NA
- 8 2010  Total d'offres      19278                     NA                     NA
- 9 2010  &lt;NA&gt;                   NA                     NA                     NA
-10 2010  Source : Minist…       NA                     NA                     NA
+   year  locality            n_offers average_price_nomina…¹
+   &lt;chr&gt; &lt;chr&gt;                  &lt;dbl&gt;                  &lt;dbl&gt;
+ 1 2010  Consthum                  29                     NA
+ 2 2010  Esch-sur-Sûre              7                     NA
+ 3 2010  Heiderscheid              29                     NA
+ 4 2010  Hoscheid                  26                     NA
+ 5 2010  Saeul                     14                     NA
+ 6 2010  &lt;NA&gt;                      NA                     NA
+ 7 2010  &lt;NA&gt;                      NA                     NA
+ 8 2010  Total d'offres         19278                     NA
+ 9 2010  &lt;NA&gt;                      NA                     NA
+10 2010  Source : Ministère…       NA                     NA
 # ℹ 280 more rows
-# ℹ abbreviated names: ¹​average_price_nominal_euros,
-#   ²​average_price_m2_nominal_euros</code></pre>
+# ℹ abbreviated name: ¹​average_price_nominal_euros
+# ℹ 1 more variable: average_price_m2_nominal_euros &lt;dbl&gt;</code></pre>
 </div>
 </div>
 <p>It turns out that there are no prices for certain communes, but that we also have some rows with garbage in there. Let’s go back to the raw data to see what this is about:</p>
@@ -626,14 +628,18 @@ Always look at your data.
 <div class="cell">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">setdiff</span>(<span class="fu">unique</span>(commune_level_data<span class="sc">$</span>locality), current_communes<span class="sc">$</span>commune)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1] "Bascharage"          "Boevange-sur-Attert" "Burmerange"         
- [4] "Clémency"            "Consthum"            "Ermsdorf"           
- [7] "Erpeldange"          "Eschweiler"          "Heiderscheid"       
-[10] "Heinerscheid"        "Hobscheid"           "Hoscheid"           
-[13] "Hosingen"            "Luxembourg"          "Medernach"          
-[16] "Mompach"             "Munshausen"          "Neunhausen"         
-[19] "Redange-sur-Attert"  "Rosport"             "Septfontaines"      
-[22] "Tuntange"            "Wellenstein"         "Kaerjeng"           </code></pre>
+<pre><code> [1] "Bascharage"          "Boevange-sur-Attert"
+ [3] "Burmerange"          "Clémency"           
+ [5] "Consthum"            "Ermsdorf"           
+ [7] "Erpeldange"          "Eschweiler"         
+ [9] "Heiderscheid"        "Heinerscheid"       
+[11] "Hobscheid"           "Hoscheid"           
+[13] "Hosingen"            "Luxembourg"         
+[15] "Medernach"           "Mompach"            
+[17] "Munshausen"          "Neunhausen"         
+[19] "Redange-sur-Attert"  "Rosport"            
+[21] "Septfontaines"       "Tuntange"           
+[23] "Wellenstein"         "Kaerjeng"           </code></pre>
 </div>
 </div>
 <p>We see many communes that are in our <code>commune_level_data</code>, but not in <code>current_communes</code>. There’s one obvious reason: differences in spelling, for example, “Kaerjeng” in our data, but “Käerjeng” in the table from Wikipedia. But there’s also a less obvious reason; since 2010, several communes have merged into new ones. So there are communes that are in our data in 2010 and 2011, but disappear from 2012 onwards. So we need to do several things: first, get a list of all existing communes from 2010 onwards, and then, harmonise spelling. Here again, we can use a list from Wikipedia:</p>
@@ -649,28 +655,28 @@ Always look at your data.
 <span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>former_communes</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 20 × 3
-   name                year_dissolved reason                         
-   &lt;chr&gt;                        &lt;int&gt; &lt;chr&gt;                          
- 1 Bascharage                    2011 merged to form Käerjeng        
- 2 Boevange-sur-Attert           2018 merged to form Helperknapp     
- 3 Burmerange                    2011 merged into Schengen           
- 4 Clemency                      2011 merged to form Käerjeng        
- 5 Consthum                      2011 merged to form Parc Hosingen   
- 6 Ermsdorf                      2011 merged to form Vallée de l'Ernz
- 7 Eschweiler                    2015 merged into Wiltz              
- 8 Heiderscheid                  2011 merged into Esch-sur-Sûre      
- 9 Heinerscheid                  2011 merged into Clervaux           
-10 Hobscheid                     2018 merged to form Habscht         
-11 Hoscheid                      2011 merged to form Parc Hosingen   
-12 Hosingen                      2011 merged to form Parc Hosingen   
-13 Mompach                       2018 merged to form Rosport-Mompach 
-14 Medernach                     2011 merged to form Vallée de l'Ernz
-15 Munshausen                    2011 merged into Clervaux           
-16 Neunhausen                    2011 merged into Esch-sur-Sûre      
-17 Rosport                       2018 merged to form Rosport-Mompach 
-18 Septfontaines                 2018 merged to form Habscht         
-19 Tuntange                      2018 merged to form Helperknapp     
-20 Wellenstein                   2011 merged into Schengen           </code></pre>
+   name                year_dissolved reason                
+   &lt;chr&gt;                        &lt;int&gt; &lt;chr&gt;                 
+ 1 Bascharage                    2011 merged to form Käerje…
+ 2 Boevange-sur-Attert           2018 merged to form Helper…
+ 3 Burmerange                    2011 merged into Schengen  
+ 4 Clemency                      2011 merged to form Käerje…
+ 5 Consthum                      2011 merged to form Parc H…
+ 6 Ermsdorf                      2011 merged to form Vallée…
+ 7 Eschweiler                    2015 merged into Wiltz     
+ 8 Heiderscheid                  2011 merged into Esch-sur-…
+ 9 Heinerscheid                  2011 merged into Clervaux  
+10 Hobscheid                     2018 merged to form Habscht
+11 Hoscheid                      2011 merged to form Parc H…
+12 Hosingen                      2011 merged to form Parc H…
+13 Mompach                       2018 merged to form Rospor…
+14 Medernach                     2011 merged to form Vallée…
+15 Munshausen                    2011 merged into Clervaux  
+16 Neunhausen                    2011 merged into Esch-sur-…
+17 Rosport                       2018 merged to form Rospor…
+18 Septfontaines                 2018 merged to form Habscht
+19 Tuntange                      2018 merged to form Helper…
+20 Wellenstein                   2011 merged into Schengen  </code></pre>
 </div>
 </div>
 <p>As you can see, since 2010 many communes have merged to form new ones. We can now combine the list of current and former communes, as well as harmonise their names:</p>
