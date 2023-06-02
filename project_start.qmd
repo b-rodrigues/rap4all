@@ -35,7 +35,7 @@ country.
 :::
 
 ::: {.content-visible when-format="pdf"}
-```{r, echo = F, out.width="250px"}
+```{r, echo = F, out.width="300px"}
 #| fig-cap: "Luxembourg is about as big as the US State of Rhode Island."
 knitr::include_graphics("images/lux_rhode_island.png")
 ```
@@ -51,10 +51,6 @@ system and on the roads, but also on the housing market; everyone wants to live
 in Luxembourg to avoid the horrible daily commute, and everyone wants to live
 either in the capital city, or in the second largest urban area in the south, in
 a city called Esch-sur-Alzette.
-
-::: {.content-visible when-format="pdf"}
-\newpage
-:::
 
 The plot below shows the value of the House Price Index over time for Luxembourg
 and the European Union:
@@ -267,7 +263,10 @@ learning how to use R.
 Running this code results in a neat data set:
 
 ```{r}
-raw_data
+raw_data |>
+  glimpse()
+# dplyr::glimpse() provides a nice
+# way to visualise data frames
 ```
 
 
@@ -297,7 +296,7 @@ raw_data |>
 So sometimes it is spelled correctly, with an "é", sometimes not. Let's write
 some code to correct both these issues:
 
-```{r}
+```{r, R.options = list("width" = 60)}
 raw_data <- raw_data |>
   mutate(locality = ifelse(grepl("Luxembourg-Ville", locality),
                            "Luxembourg",
@@ -315,12 +314,9 @@ Let's see what happened:
 
 ```{r}
 raw_data |>
-  filter(is.na(average_price_nominal_euros))
+  filter(is.na(average_price_nominal_euros)) |>
+  glimpse()
 ```
-
-::: {.content-visible when-format="pdf"}
-\newpage
-:::
 
 It turns out that there are no prices for certain communes, but that we also
 have some rows with garbage in there. Let's go back to the raw data to see what
@@ -388,13 +384,14 @@ Now the data looks clean, and we can start the actual analysis... or can we?
 Before proceeding, it would be nice to make sure that we got every commune in
 there. For this, we need a list of communes from Luxembourg. [Thankfully,
 Wikipedia has such a
-list.](https://en.wikipedia.org/wiki/List_of_communes_of_Luxembourg)^[https://en.wikipedia.org/wiki/List_of_communes_of_Luxembourg]
+list](https://en.wikipedia.org/wiki/List_of_communes_of_Luxembourg)^[https://w.wiki/6nPu]
+(and here is the archived link, for posterity: [https://archive.is](https://archive.is).)
 
 Let's scrape and save this list:
 
 ```{r}
 current_communes <-
-  "https://en.wikipedia.org/wiki/List_of_communes_of_Luxembourg" |>
+  "https://w.wiki/6nPu" |>
   rvest::read_html() |>
   rvest::html_table() |>
   purrr::pluck(1) |>
@@ -413,7 +410,8 @@ rate in %` would be transformed to `growth_rate_in_percent`).
 Let’s see if we have all the communes in our data:
 
 ```{r}
-setdiff(unique(commune_level_data$locality), current_communes$commune)
+setdiff(unique(commune_level_data$locality),
+        current_communes$commune)
 ```
 
 We see many communes that are in our `commune_level_data`, but not in
@@ -427,7 +425,7 @@ spelling. Here again, we can use a list from Wikipedia:
 
 ```{r}
 former_communes <-
-  "https://en.wikipedia.org/wiki/Communes_of_Luxembourg#Former_communes" |>  
+  "https://w.wiki/_wFe7" |>  
   rvest::read_html() |>
   rvest::html_table() |>
   purrr::pluck(3) |>
