@@ -437,7 +437,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>})</span>
 <span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>```</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>The only difference is that instead of calling <code>testthat::expect_true()</code> directly, I wrapped this call inside <code>testthat::test_that()</code>. This way, I can add a description to the test. This is useful if the test fails.</p>
+<p>The only difference is that instead of calling <code>expect_true()</code> directly, I wrapped this call inside <code>test_that()</code>. This way, I can add a description to the test. This is useful if the test fails.</p>
 <p>Save <code>dev/save_data.Rmd</code> and go back to <code>0-dev_history.Rmd</code> to inflate <code>save_data.Rmd</code> again. Everything should work without problems.</p>
 <p>If the test fails, you get an informative message. To illustrate, I’ve added a typo in the test and inflated <code>save_data.Rmd</code>. Because tests always run when a fusen-package gets inflated, this test failed and here is the output:</p>
 <pre><code>══ Failed tests ════════════════════════════════════════════════════════════════

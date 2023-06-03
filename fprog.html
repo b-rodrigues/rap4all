@@ -814,8 +814,8 @@ To read the log of this object, call read_log(.c).</code></pre>
 <div class="sourceCode cell-code" id="cb74"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a>chronicler<span class="sc">::</span><span class="fu">read_log</span>(result)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "Complete log:"                                                                                
-[2] "NOK! sqrt() ran unsuccessfully with following exception: NaNs produced at 2023-06-03 20:19:00"
-[3] "Total running time: 0.00109457969665527 secs"                                                 </code></pre>
+[2] "NOK! sqrt() ran unsuccessfully with following exception: NaNs produced at 2023-06-03 21:05:25"
+[3] "Total running time: 0.0011591911315918 secs"                                                  </code></pre>
 </div>
 </div>
 <p>The <code>{purrr}</code> package also comes with function factories that you might find useful (<code>{possibly}</code>, <code>{safely}</code> and <code>{quietly}</code>).</p>
@@ -1303,7 +1303,7 @@ $Species
 [1] "factor"</code></pre>
 </div>
 </div>
-<p>Unlike a list however, the elements of a data frame must be of the same length. Data frames remain very flexible though, and using what we have learned until now it is possible to use the data frame as a structure for all our computations. For example, suppose that we have a data frame that contains data on unemployment for the different subnational divisions of the Grand-Duchy of Luxembourg, the country the author of this book hails from. Let’s suppose that I want to generate several plots, per subnational division and per year. Typically, we would use a loop for this, but we can use what we’ve learned here, as well as some functions from the <code>{dplyr}</code>, <code>{purrr}</code>, <code>{ggplot2}</code> and <code>{tidyr}</code> packages. I will be downloading data that I made available inside a package, but instead of installing the package, I will download the <code>.rda</code> file directly (which is the file format of packaged data) and then load that data into our R session:</p>
+<p>Unlike a list however, the elements of a data frame must be of the same length. Data frames remain very flexible though, and using what we have learned until now it is possible to use the data frame as a structure for all our computations. For example, suppose that we have a data frame that contains data on unemployment for the different subnational divisions of the Grand-Duchy of Luxembourg, the country the author of this book hails from. Let’s suppose that I want to generate several plots, per subnational division and per year. Typically, we would use a loop for this, but we can use what we’ve learned here, as well as some functions from the <code>{dplyr}</code>, <code>{purrr}</code>, <code>{ggplot2}</code> and <code>{tidyr}</code> packages. I will be downloading data that I made available inside a package, but instead of installing the package, I will download the <code>.rda</code> file directly (which is the file format of packaged data) and then load that data into our R session (instead of downloading from the long Github url, I download the data from a shortened <em>is.gd</em> link):</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb134"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb134-1"><a href="#cb134-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a temporary file</span></span>
 <span id="cb134-2"><a href="#cb134-2" aria-hidden="true" tabindex="-1"></a>unemp_path <span class="ot">&lt;-</span> <span class="fu">tempfile</span>(<span class="at">fileext =</span> <span class="st">".rda"</span>)</span>
@@ -1311,7 +1311,7 @@ $Species
 <span id="cb134-4"><a href="#cb134-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Download the data and save it to the path of the temporary file</span></span>
 <span id="cb134-5"><a href="#cb134-5" aria-hidden="true" tabindex="-1"></a><span class="co"># avoids having to install the package from Github</span></span>
 <span id="cb134-6"><a href="#cb134-6" aria-hidden="true" tabindex="-1"></a><span class="fu">download.file</span>(</span>
-<span id="cb134-7"><a href="#cb134-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">"https://github.com/b-rodrigues/myPackage/raw/main/data/unemp.rda"</span>,</span>
+<span id="cb134-7"><a href="#cb134-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">"https://is.gd/l57cNX"</span>,</span>
 <span id="cb134-8"><a href="#cb134-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">destfile =</span> unemp_path)</span>
 <span id="cb134-9"><a href="#cb134-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb134-10"><a href="#cb134-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the data. The data is now available as 'unemp'</span></span>
@@ -1679,7 +1679,7 @@ NULL</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>function (x, ...) 
 UseMethod("print")
-&lt;bytecode: 0x5589e5ff6a98&gt;
+&lt;bytecode: 0x55cf886b7980&gt;
 &lt;environment: namespace:base&gt;</code></pre>
 </div>
 </div>
@@ -1723,7 +1723,7 @@ UseMethod("print")
     }
     invisible(x)
 }
-&lt;bytecode: 0x5589e692e818&gt;
+&lt;bytecode: 0x55cf88fef818&gt;
 &lt;environment: namespace:base&gt;</code></pre>
 </div>
 </div>
@@ -1842,7 +1842,7 @@ UseMethod("print")
 <div class="cell">
 <div class="sourceCode cell-code" id="cb203"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb203-1"><a href="#cb203-1" aria-hidden="true" tabindex="-1"></a>withr<span class="sc">::</span><span class="fu">with_tempfile</span>(<span class="st">"unemp"</span>, {</span>
 <span id="cb203-2"><a href="#cb203-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">download.file</span>(</span>
-<span id="cb203-3"><a href="#cb203-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"https://github.com/b-rodrigues/myPackage/raw/main/data/unemp.rda"</span>,</span>
+<span id="cb203-3"><a href="#cb203-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"https://is.gd/l57cNX"</span>,</span>
 <span id="cb203-4"><a href="#cb203-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">destfile =</span> unemp)</span>
 <span id="cb203-5"><a href="#cb203-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">load</span>(unemp)</span>
 <span id="cb203-6"><a href="#cb203-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">nrow</span>(unemp)</span>
