@@ -339,26 +339,13 @@ knitr::include_graphics("images/obs_hab_xlsx_missing.png")
 So it turns out that there are some rows that we need to remove. We can start by
 removing rows where `locality` is missing. Then we have a row where `locality`
 is equal to "Total d'offres". This is simply the total of every offer from every
-commune. We could keep that in a separate data frame, or even remove it. Finally,
-there's a row, the last one, that states the source of the data, which we can
-remove.
-
-::: {.content-visible when-format="pdf"}
-In the screenshot above, we see another row that we don't see in our filtered
-data frame: one where `n_offers` is missing. This row gives the national average
-for columns `average_prince_nominal_euros` \newline and
-`average_price_m2_nominal_euros`. What we are going to do is create two
-datasets: one with data on communes, and the other on national prices. Let's
-first remove the rows stating the sources:
-:::
-
-::: {.content-hidden when-format="pdf"}
-In the screenshot above, we see another row that we don't see in our filtered
+commune. We could keep that in a separate data frame, or even remove it. The
+very last row states the source of the data and we can also remove it. Finally,
+in the screenshot above, we see another row that we don't see in our filtered
 data frame: one where `n_offers` is missing. This row gives the national average
 for columns `average_prince_nominal_euros` and `average_price_m2_nominal_euros`.
 What we are going to do is create two datasets: one with data on communes, and
 the other on national prices. Let's first remove the rows stating the sources:
-:::
 
 ```{r}
 raw_data <- raw_data |>

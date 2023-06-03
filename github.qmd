@@ -175,6 +175,7 @@ he opened to solve the issue, not "master". If he tried to push to "master" a
 message saying that "master" is up-to-date would get printed. Let's see the
 output of pushing to "add_readme":
 
+::: {.content-visible when-format="pdf"}
 ```bash
 Enumerating objects: 4, done.
 Counting objects: 100% (4/4), done.
@@ -184,11 +185,29 @@ Writing objects: 100% (3/3), 501 bytes | 501.00 KiB/s, done.
 Total 3 (delta 0), reused 0 (delta 0), pack-reused 0
 remote:
 remote: Create a pull request for 'add_readme' on GitHub by visiting:
-remote:      https://github.com/rap4all/housing/pull/new/add_readme
+remote:     https://github.com/rap4all/housing/ pull/new/add_readme
 remote:
 To github.com:rap4all/housing.git
  * [new branch]      add_readme -> add_readme
 ```
+:::
+
+::: {.content-hidden when-format="pdf"}
+```bash
+Enumerating objects: 4, done.
+Counting objects: 100% (4/4), done.
+Delta compression using up to 12 threads
+Compressing objects: 100% (3/3), done.
+Writing objects: 100% (3/3), 501 bytes | 501.00 KiB/s, done.
+Total 3 (delta 0), reused 0 (delta 0), pack-reused 0
+remote:
+remote: Create a pull request for 'add_readme' on GitHub by visiting:
+remote:     https://github.com/rap4all/housing/pull/new/add_readme
+remote:
+To github.com:rap4all/housing.git
+ * [new branch]      add_readme -> add_readme
+```
+:::
 
 Git tells us that Bruno now needs to create a pull request. What is that? Well,
 if we want to merge our branch back into the trunk, we need to do so by using a
