@@ -327,13 +327,6 @@ name this branch "trunk". Let's now run this other `git` command:
 ```bash
 owner@localhost ➤ git status
 ```
-:::
-
-::: {.content-visible when-format="pdf"}
-```bash
-owner@localhost $ git status
-```
-:::
 
 ```bash
 On branch master
@@ -347,6 +340,27 @@ Untracked files:
 
 nothing added to commit but untracked files present (use "git add" to track)
 ```
+:::
+
+::: {.content-visible when-format="pdf"}
+```bash
+owner@localhost $ git status
+```
+
+```bash
+On branch master
+
+No commits yet
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+        analysis.R
+        save_data.R
+
+nothing added to commit but untracked files present (use "git add" to track)
+```
+:::
+
 
 Git tells us quite clearly that it sees two files, but that they're currently
 not being tracked. So if we would modify them, Git would not keep track of the
@@ -357,13 +371,6 @@ them so that Git can track them:
 ```bash
 owner@localhost ➤ git add
 ```
-:::
-
-::: {.content-visible when-format="pdf"}
-```bash
-owner@localhost $ git add
-```
-:::
 
 ```bash
 Nothing specified, nothing added.
@@ -371,6 +378,21 @@ hint: Maybe you wanted to say 'git add .'?
 hint: Turn this message off by running
 hint: "git config advice.addEmptyPathspec false"
 ```
+:::
+
+::: {.content-visible when-format="pdf"}
+```bash
+owner@localhost $ git add
+```
+
+```bash
+Nothing specified, nothing added.
+hint: Maybe you wanted to say 'git add .'?
+hint: Turn this message off by running
+hint: "git config advice.addEmptyPathspec false"
+```
+:::
+
 
 Shoot, simply running `git add` does not do us any good. We need to specify which
 files we want to add. We can name them one by one, for example `git add file1.R
