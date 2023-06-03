@@ -157,7 +157,7 @@ list(
 ```
 
 The pipeline is nothing but a list (told you lists where a very important
-object) of *targets*. A target is defined using the `targets::tar_target()`
+object) of *targets*. A target is defined using the `tar_target()`
 function and has at least two inputs: the first is the name of the target
 (without quotes) and the second is the function that generates the target. So a
 target defined as `tar_target(y, f(x))` can be understood as `y <- f(x)`. The next
@@ -166,7 +166,7 @@ something like `tar_target(z, f(y))` (just like in the template).
 
 ## A pipeline is a composition of pure functions
 
-You can run this pipeline by typing `targets::tar_make()` in a console:
+You can run this pipeline by typing `tar_make()` in a console:
 
 ```{r, eval = F}
 targets::tar_make()
@@ -223,11 +223,10 @@ shouldn’t be necessary).
 
 So because the pipeline is pure, and none of its outputs get saved into the
 global environment, calling `data_summary` results in the error above. So to
-retrieve the outputs you should use `targets::tar_read()` or
-`targets::tar_load()`. The difference is that `tar_read()` simply reads the
-output and shows it in the console but `tar_load()` reads and saves the object
-into the global environment. So to retrieve our `data_summary` object let’s use
-`tar_load(data_summary)`:
+retrieve the outputs you should use `tar_read()` or `tar_load()`. The
+difference is that `tar_read()` simply reads the output and shows it in the
+console but `tar_load()` reads and saves the object into the global environment.
+So to retrieve our `data_summary` object let’s use `tar_load(data_summary)`:
 
 ```{r, eval = F}
 tar_load(data_summary)
@@ -244,7 +243,7 @@ data_summary
 50.5 50.5
 ```
 
-It is possible to load all the outputs using `targets::tar_load_everything()` so
+It is possible to load all the outputs using `tar_load_everything()` so
 that you don’t need to load each output one by one.
 
 Before continuing with more `{targets}` features, I want to really stress the
@@ -499,7 +498,7 @@ this file will be correctly recognised and any target that depends on this input
 file will be marked as being out-of-date. The other targets are exactly the
 same.
 
-Run the pipeline now using `targets::tar_make()`. Now, change the input file again:
+Run the pipeline now using `tar_make()`. Now, change the input file again:
 
 ```{r, eval = F}
 write.csv(head(mtcars),
@@ -507,7 +506,7 @@ write.csv(head(mtcars),
           row.names = F)
 ```
 
-Now, run the pipeline again using `targets::tar_make()`: this time you should
+Now, run the pipeline again using `tar_make()`: this time you should
 see that `{targets}` correctly identified the change and runs the pipeline again
 accordingly!
 
@@ -518,7 +517,7 @@ As you’ve seen in the previous section (and as I told you in the introduction)
 use. Any change to the code of any of these functions will result in `{targets}`
 identifying which targets are now out-of-date and which should be re-computed
 (alongside any other target that depends on them). It is possible to visualise
-this using `targets::tar_visnetwork()`. This opens an interactive network graph
+this using `tar_visnetwork()`. This opens an interactive network graph
 in your web browser that looks like this:
 
 ::: {.content-hidden when-format="pdf"}
@@ -594,7 +593,7 @@ list(
 )
 ```
 
-Before running the pipeline, we can call `targets::tar_visnetwork()` again to
+Before running the pipeline, we can call `tar_visnetwork()` again to
 see the entire workflow:
 
 ::: {.content-hidden when-format="pdf"}
@@ -615,7 +614,7 @@ knitr::include_graphics("images/targets_visnetwork_iris.png")
 We can see that there are now two independent parts, as well as two unused
 functions, `path_data()` and `summ()` which we could remove.
 
-Running the pipeline using `targets::tar_make()` builds everything
+Running the pipeline using `tar_make()` builds everything
 successfully. Let’s add the following target, just before the very
 last one:
 
@@ -630,7 +629,7 @@ tar_target(
 ```
 
 This target creates a list with the two summaries that we compute. Call
-`targets::tar_visnetwork()` again:
+`tar_visnetwork()` again:
 
 ::: {.content-hidden when-format="pdf"}
 <figure>
@@ -733,8 +732,8 @@ and `summ()`).
 
 Running this pipeline sequentially will take about a minute, because each call
 to `slow_summary()` takes 30 seconds. To re-run the pipeline completely from
-scratch, call `targets::tar_destroy()`. This will make all the targets outdated.
-Then, run the pipeline from scratch with `targets::tar_make()`:
+scratch, call `tar_destroy()`. This will make all the targets outdated.
+Then, run the pipeline from scratch with `tar_make()`:
 
 ```{r, eval = F}
 targets::tar_make()
@@ -830,7 +829,7 @@ list(
 You can now run this pipeline in parallel using `tar_make_future()`
 (and sequentially as well, just as usual with `tar_make()`). To run the
 pipeline from scratch to test this, call `tar_destroy()` and then
-`targets::tar_make()` will build the entire pipeline from scratch:
+`tar_make()` will build the entire pipeline from scratch:
 
 ::: {.content-visible when-format="pdf"}
 \newpage
@@ -991,7 +990,7 @@ list(
 )
 ```
 
-Running this pipeline with `targets::tar_make()` will now compile the source
+Running this pipeline with `tar_make()` will now compile the source
 `.Rmd` file into ar `.html` file that you can open in your web-browser. Even if
 you want to compile the document into another format, I advise you to develop
 using the `.html` format. This is because you can open the `.html` file in the
@@ -1191,7 +1190,7 @@ tar_read(plot_mtcars) +
 ```
 ````
 
-As you can see, once I’ve used `targets::tar_read()`, I get back the object just
+As you can see, once I’ve used `tar_read()`, I get back the object just
 as if I had generated it from within the `.Rmd` source file, and can simply add
 stuff to it (like changing the theme of the ggplot). Once you’re happy with the
 contents, you can add `output: word_document` to the header of the document
@@ -1273,7 +1272,7 @@ remotes::install_github("rap4all/housing@fusen",
 This will install the package from my Github repository, and very specifically
 the version from the `fusen` branch at commit `1c86095` (you may need to install
 the `{remotes}` package first). Now that the package is installed, we can start 
-building the pipeline. In the same R session, call `targets::tar_script()` which
+building the pipeline. In the same R session, call `tar_script()` which
 will give us a nice template `_targets.R` file:
 
 ```{r, eval = F}
@@ -1492,7 +1491,7 @@ cat(unlist(res), sep = "\n")
 ```
 ````
 
-As you can see, the data gets loaded by using `targets::tar_load()` which loads
+As you can see, the data gets loaded by using `tar_load()` which loads
 the two pre-computed data sets. The end portion of the document looks fairly
 similar to what we had before turning our analysis into a package and then a
 pipeline. We use a child document to generate as many sections as required

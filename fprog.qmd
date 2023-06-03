@@ -1138,8 +1138,9 @@ unemp_path <- tempfile(fileext = ".rda")
 
 # Download the data and save it to the path of the temporary file
 # avoids having to install the package from Github
-download.file("https://github.com/b-rodrigues/myPackage/raw/main/data/unemp.rda",
-              destfile = unemp_path)
+download.file(
+  "https://github.com/b-rodrigues/myPackage/raw/main/data/unemp.rda",
+  destfile = unemp_path)
 
 # Load the data. The data is now available as 'unemp'
 load(unemp_path)
@@ -1610,8 +1611,9 @@ use `with_tempfile()`:
 
 ```{r, warning = FALSE}
 withr::with_tempfile("unemp", {
-  download.file("https://github.com/b-rodrigues/myPackage/raw/main/data/unemp.rda",
-                destfile = unemp)
+  download.file(
+    "https://github.com/b-rodrigues/myPackage/raw/main/data/unemp.rda",
+    destfile = unemp)
   load(unemp)
   nrow(unemp)
   }
