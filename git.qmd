@@ -325,10 +325,6 @@ name this branch "trunk".
 
 Let's now run this other `git` command:
 
-::: {.content-visible when-format="pdf"}
-\newpage
-:::
-
 ::: {.content-hidden when-format="pdf"}
 ```bash
 owner@localhost ➤ git status
@@ -387,10 +383,10 @@ hint: "git config advice.addEmptyPathspec false"
 :::
 
 
-Shoot, simply running `git add` does not do us any good. We need to specify which
-files we want to add. We can name them one by one, for example `git add file1.R
-file2.txt`, but if we simply want to track all the files in the folder, we
-can simply use the `.` placeholder:
+Shoot, simply running `git add` does not do us any good. We need to specify
+which files we want to add. We can name them one by one, for example `git add
+file1.R file2.txt`, but if we simply want to track all the files in the folder,
+we can simply use the `.` placeholder:
 
 ::: {.content-hidden when-format="pdf"}
 ```bash
@@ -740,6 +736,35 @@ owner@localhost $ git log
 ```
 :::
 
+
+::: {.content-visible when-format="pdf"}
+```bash
+commit 8e51867dc5ae89e5f2ab2798be8920e703f73455 (HEAD -> master)
+Author: User <owner@mailbox.com>
+Date:   Sun Feb 5 17:54:30 2023 +0100
+
+    Removed analysis.R
+
+commit ab43b4b1069cd987685253632827f19d7a402b27
+Author: User <owner@mailbox.com>
+Date:   Sun Feb 5 17:41:52 2023 +0100
+
+    Added a comment to analysis.R
+```
+:::
+
+::: {.content-visible when-format="pdf"}
+```bash
+commit df2beecba0101304f1b56e300a3cd713ce7366e5
+Author: User <owner@mailbox.com>
+Date:   Sun Feb 5 17:32:26 2023 +0100
+
+    Project start
+
+```
+:::
+
+::: {.content-hidden when-format="pdf"}
 ```bash
 commit 8e51867dc5ae89e5f2ab2798be8920e703f73455 (HEAD -> master)
 Author: User <owner@mailbox.com>
@@ -760,6 +785,7 @@ Date:   Sun Feb 5 17:32:26 2023 +0100
     Project start
 
 ```
+:::
 
 The first one from the top is the last commit we've made. We would like to go
 back to the one with the message "Added a comment to analysis.R". See the very
