@@ -302,7 +302,7 @@ raw_data <- raw_data |>
                       locality),
          locality = ifelse(grepl("P.tange", locality),
                            "Pétange",
-                           mutate)
+                           locality)
          ) |>
   mutate(across(starts_with("average")),
          as.numeric)
@@ -394,19 +394,16 @@ Now the data looks clean, and we can start the actual analysis... or can we?
 Before proceeding, it would be nice to make sure that we got every commune in
 there. For this, we need a list of communes from Luxembourg. [Thankfully,
 Wikipedia has such a
-list](https://en.wikipedia.org/wiki/List_of_communes_of_Luxembourg)^[https://w.wiki/6nPu]
-(and here is the archived link, for posterity: [https://archive.is](https://archive.is).)
+list](https://en.wikipedia.org/wiki/List_of_communes_of_Luxembourg)^[https://w.wiki/6nPu].
 
 Let's scrape and save this list:
 
 ```{r}
-current_communes <-
-  "https://w.wiki/6nPu" |>
+current_communes <- "https://w.wiki/6nPu" |>
   rvest::read_html() |>
   rvest::html_table() |>
   purrr::pluck(1) |>
   janitor::clean_names()
-
 ```
 
 We scrape the table from the Wikipedia page using `{rvest}`.
@@ -434,8 +431,7 @@ get a list of all existing communes from 2010 onwards, and then, harmonise
 spelling. Here again, we can use a list from Wikipedia:
 
 ```{r}
-former_communes <-
-  "https://w.wiki/_wFe7" |>  
+former_communes <- "https://w.wiki/_wFe7" |>
   rvest::read_html() |>
   rvest::html_table() |>
   purrr::pluck(3) |>
@@ -451,7 +447,8 @@ now combine the list of current and former communes, as well as harmonise their
 names:
 
 ```{r}
-communes <- unique(c(former_communes$name, current_communes$commune))
+communes <- unique(c(former_communes$name,
+                     current_communes$commune))
 # we need to rename some communes
 
 # Different spelling of these communes between wikipedia and the data
@@ -467,7 +464,8 @@ communes[which(communes == "Petange")] <- "Pétange"
 Let’s run our test again:
 
 ```{r}
-setdiff(unique(commune_level_data$locality), communes)
+setdiff(unique(commune_level_data$locality),
+        communes)
 ```
 
 Great! When we compare the communes that are in our data with every commune that
