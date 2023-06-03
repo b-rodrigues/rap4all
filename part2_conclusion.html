@@ -338,7 +338,7 @@ div.csl-indent {
 <p>The first solution is the simplest and is explained in the <a href="https://rocker-project.org/use/reproducibility.html">reproducibility page</a><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> of the Rocker project. The idea is to use a digest, which is the equivalent of a commit hash on Github but for Docker images instead. As the example in the linked page above shows, instead of this:</p>
 <pre><code>FROM rocker/r-ver:4.2.0</code></pre>
 <p>which would base your Docker image on the latest Ubuntu 22.04 shipping R version 4.2.0, you would use this:</p>
-<pre><code>FROM rocker/r-ver@sha256:b343df137d83b0701e0c9f5abfb24286394cb2fdfd39afcf241ad4d6948acf3d</code></pre>
+<pre><code>FROM rocker/r-ver@sha256:b343df137d83b0701e0...</code></pre>
 <p>which is the digest of the latest rebuild of that image. You can find digests on the Docker Hub page:</p>
 <figure class="figure">
 <img src="images/digest.png" alt="You can find Docker image digests on Docker Hub." class="figure-img">
