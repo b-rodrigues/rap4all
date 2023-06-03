@@ -233,9 +233,6 @@ Bruno can now decide to continue working on this branch, or, since the purpose
 of this branch was only to add the Readme file, decide instead to do a pull
 request.
 
-::: {.content-visible when-format="pdf"}
-\newpage
-:::
 
 By clicking on the "Compare & pull request" button Bruno now sees this:
 
@@ -273,10 +270,6 @@ knitr::include_graphics("images/github_add_reviewer.png")
 :::
 
 
-::: {.content-visible when-format="pdf"}
-\newpage
-:::
-
 This is what Bruno sees now:
 
 ::: {.content-hidden when-format="pdf"}
@@ -298,10 +291,6 @@ Bruno requested the review, but Github tells us that the branch can safely be
 merged. This is because we added a file and did not touch anything else, and no
 one else worked on the project while Bruno was working. So there are no risks
 of conflicts arising.
-
-::: {.content-visible when-format="pdf"}
-\newpage
-:::
 
 Let's see what the owner now sees. The project owner should have gotten a
 notification to review the pull request:
@@ -347,10 +336,6 @@ continuous integration has not been set up (we are going to see what this means
 in the second part of this book).
 
 
-::: {.content-visible when-format="pdf"}
-\newpage
-:::
-
 Let's go ahead and add a rule forcing each pull request to be approved. By
 clicking on "Add rule", the following screen appears:
 
@@ -367,10 +352,6 @@ clicking on "Add rule", the following screen appears:
 #| fig-cap: "Choose how to protect the master branch."
 knitr::include_graphics("images/github_rules.png")
 ```
-:::
-
-::: {.content-visible when-format="pdf"}
-\newpage
 :::
 
 By clicking the first option, more sub-options appear:
@@ -399,10 +380,6 @@ Let's choose one last option: by scrolling down, it's possible to select the
 option "Do not allow bypassing the above settings". This makes sure that even
 administrations (the owners of the project) must abide by the same rules.
 
-::: {.content-visible when-format="pdf"}
-\newpage
-:::
-
 Let's go back to the pull request. We can see now that a review is required:
 
 ::: {.content-hidden when-format="pdf"}
@@ -418,10 +395,6 @@ Let's go back to the pull request. We can see now that a review is required:
 #| fig-cap: "Time to review."
 knitr::include_graphics("images/github_review_required.png")
 ```
-:::
-
-::: {.content-visible when-format="pdf"}
-\newpage
 :::
 
 So now the owner actually has to go and see the files that were changed:
@@ -457,10 +430,6 @@ It's possible to add comments to single lines if needed:
 #| fig-cap: "It's possible to add comments to lines."
 knitr::include_graphics("images/github_review_comments.png")
 ```
-:::
-
-::: {.content-visible when-format="pdf"}
-\newpage
 :::
 
 By clicking on the plus sign, a box appears and it's possible to leave a
@@ -502,10 +471,6 @@ knitr::include_graphics("images/github_approve.png")
 ```
 :::
 
-::: {.content-visible when-format="pdf"}
-\newpage
-:::
-
 By submitting the review, the reviewer is taken back to the issue:
 
 ::: {.content-hidden when-format="pdf"}
@@ -521,10 +486,6 @@ By submitting the review, the reviewer is taken back to the issue:
 #| fig-cap: "We're done, we can merge the pull request."
 knitr::include_graphics("images/github_changes_approved.png")
 ```
-:::
-
-::: {.content-visible when-format="pdf"}
-\newpage
 :::
 
 The reviewer can now merge the pull request by clicking on the "Merge pull
@@ -774,10 +735,6 @@ So, let's think about what just happened: two developers changed the same file,
 `analysis.R`, in two separate branches. These two branches need to be merged
 back to the trunk. 
 
-::: {.content-visible when-format="pdf"}
-\newpage
-:::
-
 So Bruno does a pull request:
 
 ::: {.content-hidden when-format="pdf"}
@@ -815,10 +772,6 @@ knitr::include_graphics("images/github_new_pull_request_2.png")
 
 Now Bruno can click on "Create pull request", but remember, because reviews are
 required, automatic merging is disabled.
-
-::: {.content-visible when-format="pdf"}
-\newpage
-:::
 
 If now we go see what happens from the project owner's side of things, first of
 all, there's now a notification for a pending review:
@@ -868,10 +821,6 @@ knitr::include_graphics("images/github_conflict_tbd.png")
 ```
 :::
 
-
-::: {.content-visible when-format="pdf"}
-\newpage
-:::
 
 First step, the owner reviews and approves Bruno's pull request:
 
@@ -1003,10 +952,6 @@ In (1) we see the commit that deals with the conflict, in (2) the owner asks Bru
 for a review and then in (3) we see that Bruno reviewed and approved. Finally, the
 pull request can be merged (4) and the feature branch deleted.
 
-::: {.content-visible when-format="pdf"}
-\newpage
-:::
-
 ### Make sure you blame the right person
 
 If many people contribute to a single project, it might sometimes be difficult
@@ -1071,10 +1016,6 @@ The main ideas of trunk-based development are:
 - The master branch (or trunk) always contains working, production-grade, code;
 - To enforce discipline, it might be worth it to make opening pull requests mandatory for merging back to the trunk, and require a review.
 
-::: {.content-visible when-format="pdf"}
-\newpage
-:::
-
 ## Contributing to public repositories
 
 In this last section, we are going to briefly discuss how to contribute to a
@@ -1102,10 +1043,6 @@ knitr::include_graphics("images/github_public_repo.png")
 This repository contains code written by a fellow called "rap4all", and Bruno
 uses this code daily. However, Bruno notices a typo in the readme, and wants to
 propose a fix.
-
-::: {.content-visible when-format="pdf"}
-\newpage
-:::
 
 First, Bruno visits the repository on Github (since it's a public repository,
 anyone can view it online) and creates a fork:
@@ -1142,10 +1079,6 @@ knitr::include_graphics("images/github_create_fork.png")
 ```
 :::
 
-::: {.content-visible when-format="pdf"}
-\newpage
-:::
-
 Bruno now sees the fork on his account as well:
 
 ::: {.content-hidden when-format="pdf"}
@@ -1177,10 +1110,6 @@ bruno@computer ➤ git clone git@github.com:b-rodrigues/my_cool_project.git
 ```bash
 bruno@computer $ git clone git@github.com:b-rodrigues/my_cool_project.git 
 ```
-:::
-
-::: {.content-visible when-format="pdf"}
-\newpage
 :::
 
 Bruno now fixes the typo in the `README.md` file, commits and pushes to his fork:
@@ -1228,10 +1157,6 @@ essentially the same workflow as the one presented before in trunk-based
 development with pull requests and reviews before merging (minus the forking of
 the repository).
 
-::: {.content-visible when-format="pdf"}
-\newpage
-:::
-
 ::: {.content-hidden when-format="pdf"}
 <figure>
     <img src="images/github_merge_pull_request.png"
@@ -1263,10 +1188,6 @@ Readme file as well:
 #| fig-cap: "The beauty of open source."
 knitr::include_graphics("images/github_contribution_done.png")
 ```
-:::
-
-::: {.content-visible when-format="pdf"}
-\newpage
 :::
 
 ## Further reading
