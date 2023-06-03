@@ -1118,8 +1118,15 @@ list(
 )
 ````
 
+::: {.content-hidden when-format="pdf"}
 In the `.Rmd` file, we can now pass the output of `tar_read(summary_mtcars)` to
 `flextable()`:
+:::
+
+::: {.content-visible when-format="pdf"}
+In the `.Rmd` file, we can now pass the output of `tar_read( summary_mtcars)` to
+`flextable()`:
+:::
 
 ````{verbatim}
 ## Load the summary

@@ -825,22 +825,22 @@ remove the call to `invisible()` and knit the document and see what happens with
 the output, replace the call to `lapply()` with `purrr::walk()` or
 `purrr::map()`. Really take the time to understand what is going on.
 
-While extremely powerful, this approach using `knitr::knit_expand()` only works
-if your template only contains text. If you need to print something more
-complicated in the document, you need to use child documents instead. For
-example, suppose that instead of a table we wanted to show a plot made using
-`{ggplot2}`. This would not work, because a ggplot object is not made of text,
-but is a list with many elements. The `print()` method for ggplot objects then
-does some magic and prints a plot. But if you want to show plots using
-`knitr::knit_expand()`, then the contents of the list will be shown, not the
-plot itself. This is where child documents come in. Child documents are exactly
-what you think they are: they’re smaller documents that get knitted and then
-embedded into the parent document. You can define anything within these child
-documents, and as such you can even use them to print more complex objects, like
-a ggplot object. Let’s go back to the example from before and make use of a
-child document (for ease of presentation, we will not use a separate Rmd file,
-but will inline the child document into the main document). Read the Rmd example
-below carefully, as all the steps are explained:
+While extremely powerful, this approach using `knit_expand()` only works if your
+template only contains text. If you need to print something more complicated in
+the document, you need to use child documents instead. For example, suppose that
+instead of a table we wanted to show a plot made using `{ggplot2}`. This would
+not work, because a ggplot object is not made of text, but is a list with many
+elements. The `print()` method for ggplot objects then does some magic and
+prints a plot. But if you want to show plots using `knitr::knit_expand()`, then
+the contents of the list will be shown, not the plot itself. This is where child
+documents come in. Child documents are exactly what you think they are: they’re
+smaller documents that get knitted and then embedded into the parent document.
+You can define anything within these child documents, and as such you can even
+use them to print more complex objects, like a ggplot object. Let’s go back to
+the example from before and make use of a child document (for ease of
+presentation, we will not use a separate Rmd file, but will inline the child
+document into the main document). Read the Rmd example below carefully, as all
+the steps are explained:
 
 ````{verbatim}
 ---

@@ -67,7 +67,7 @@ In this chapter, I’m going to show you how to use Github Actions to:
 
 - run some simple arbitrary code;
 - run a `{targets}` pipeline without Docker;
-- build a Docker image containing a development environment and push it to Docker Hub when pushing changes to its Dockerfile on Github;
+- build a Docker image containing a development environment (dev env) and push it to Docker Hub when pushing changes to its Dockerfile on Github;
 - run a Docker container that runs a RAP and builds some output that we can then download from Github.
 
 Finally, what does *integration* and *deployment* or *delivery* even mean?
@@ -279,7 +279,7 @@ each time you push a change to the repository!
 You can see the repository with the workflow file
 [here](https://github.com/rap4all/housing/tree/gitops-pipeline)^[https://github.com/rap4all/housing/tree/gitops-pipeline].
 The workflow file is inside the `.github/workflows/` folder
-[here](https://github.com/rap4all/housing/blob/gitops-pipeline/.github/workflows/targets.yaml)^[https://github.com/rap4all/housing/blob/gitops-pipeline/.github/workflows/targets.yaml].
+[here](https://github.com/rap4all/housing/blob/gitops-pipeline/.github/workflows/targets.yaml)^[https://is.gd/iIJwuG].
 As I explained before, pay attention to line 29 (where I stated that the action
 should trigger when a change gets pushed to the branch `gitops-pipeline`), to
 line 35 where I changed the runner from `ubuntu-latest` to `ubuntu-22.04`, line
@@ -312,7 +312,7 @@ operating system? Then Github Actions is for you. Or perhaps you are writing a
 book using Rmarkdown, or Quarto and don’t want to bother building it and
 deploying it manually? Then Github Actions is for you as well (and take a look
 at this book’s workflow file
-[here](https://github.com/b-rodrigues/rap4all/blob/master/.github/workflows/quarto-publish.yml)^[https://github.com/b-rodrigues/rap4all/blob/master/.github/workflows/quarto-publish.yml]
+[here](https://github.com/b-rodrigues/rap4all/blob/master/.github/workflows/quarto-publish.yml)^[https::/is.gd/6nhYaf]
 for an example of exactly this). But if you are working on a pipeline that may
 take several hours to run, and you want it to stay reproducible for a very long
 time, then using Docker might be a better option. Thankfully, you can also use
@@ -320,19 +320,19 @@ Github Actions to build Docker images and upload them to Docker Hub. You can
 even then run a Docker container that runs your RAP (but here again, if your
 pipeline takes several hours to run, you may not want to do that).
 
-## Craft a dockerized development environment with GA
+## Craft a dockerized dev env with GA
 
 This section and the next are going to mirror the sections on dockerizing
-projects and dockerizing development environments from the previous chapter. The
-only difference is that all the heavy lifting will happen on Github Actions,
-instead of our own computer.
+projects and dockerizing dev envs (development environments) from the previous
+chapter. The only difference is that all the heavy lifting will happen on Github
+Actions, instead of our own computer.
 
 I'm going to describe the following
 [repository](https://github.com/b-rodrigues/ga_demo/tree/main)^[https://github.com/b-rodrigues/ga_demo/tree/main].
 This repository contains a Dockerfile, and a `.github/workflows/` folder with a
 Github Actions workflow file. Each time I push any change to any file from this
 repository, a new Docker image gets built automatically and pushed to Docker
-Hub. The image that gets built defines a development environment that we will
+Hub. The image that gets built defines a dev env that we will
 then use for our RAPs.
 
 As stated before, the advantage of using Docker images for your RAPs instead of
@@ -549,9 +549,9 @@ knitr::include_graphics("images/docker_hub_image.png")
 \newpage
 :::
 
-## Run a RAP using a dockerized development environment on Github Actions
+## Run a RAP using a dockerized dev env on GA
 
-Now that we have a dockerized development environment that gets built by pushing
+Now that we have a dockerized dev env that gets built by pushing
 changes to a Github repo, it is now time to use it for our RAPs. As I wrote in
 the beginning, this will mirror the section on running a RAP that uses a
 dockerized environment, so we can start from that repository.

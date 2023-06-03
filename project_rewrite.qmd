@@ -532,8 +532,9 @@ commune_level_data <- commune_level_data %>%
                         NA)) %>%
   fill(p0_m2, .direction = "down") %>%
   ungroup() %>%
-  mutate(pl = average_price_nominal_euros/p0*100,
-         pl_m2 = average_price_m2_nominal_euros/p0_m2*100)
+  mutate(
+    pl = average_price_nominal_euros/p0*100,
+    pl_m2 = average_price_m2_nominal_euros/p0_m2 * 100)
 
 
 #Let’s also compute it for the whole country:

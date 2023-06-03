@@ -1132,6 +1132,24 @@ package, but instead of installing the package, I will download the `.rda` file
 directly (which is the file format of packaged data) and then load that data
 into our R session:
 
+::: {.content-visible when-format="pdf"}
+```{r}
+# Create a temporary file
+unemp_path <- tempfile(fileext = ".rda")
+
+# Download the data and save it to the path of the temporary file
+# avoids having to install the package from Github
+download.file(
+  "https://github.com/b-rodrigues/ myPackage/raw/main/data/unemp.rda",
+  destfile = unemp_path)
+
+# Load the data. The data is now available as 'unemp'
+load(unemp_path)
+
+```
+:::
+
+::: {.content-hidden when-format="pdf"}
 ```{r}
 # Create a temporary file
 unemp_path <- tempfile(fileext = ".rda")
@@ -1146,6 +1164,7 @@ download.file(
 load(unemp_path)
 
 ```
+:::
 
 Let’s load the required packages and take a look at the data:
 
@@ -1609,6 +1628,7 @@ test whether the link was still working. We wouldn’t want to keep the loaded
 data in our session, so to avoid having to delete it again manually, we could
 use `with_tempfile()`:
 
+::: {.content-hidden when-format="pdf"}
 ```{r, warning = FALSE}
 withr::with_tempfile("unemp", {
   download.file(
@@ -1620,6 +1640,22 @@ withr::with_tempfile("unemp", {
 )
 
 ```
+:::
+
+
+::: {.content-visible when-format="pdf"}
+```{r, warning = FALSE}
+withr::with_tempfile("unemp", {
+  download.file(
+    "https://github.com/b-rodrigues/ myPackage/raw/main/data/unemp.rda",
+    destfile = unemp)
+  load(unemp)
+  nrow(unemp)
+  }
+)
+
+```
+:::
 
 The data got downloaded, and then loaded, and then we computed the number of
 rows of the data, without touching the global environment, or state, of our

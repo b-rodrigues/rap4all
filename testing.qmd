@@ -147,9 +147,9 @@ test_that("Check if all communes are accounted for", {
 ```
 ````
 
-The only difference is that instead of calling `testthat::expect_true()`
-directly, I wrapped this call inside `testthat::test_that()`. This way, I can
-add a description to the test. This is useful if the test fails.
+The only difference is that instead of calling `expect_true()` directly, I
+wrapped this call inside `test_that()`. This way, I can add a description to the
+test. This is useful if the test fails.
 
 Save `dev/save_data.Rmd` and go back to `0-dev_history.Rmd` to inflate
 `save_data.Rmd` again. Everything should work without problems.
