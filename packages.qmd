@@ -839,16 +839,16 @@ can be done using the `{remotes}` package, like this:
 
 ```{r, eval = F}
 remotes::install_github(
-           "github_username/repository_name"
-         )
+  "github_username/repository_name"
+)
 ```
 
 It is also possible to install the package from a specific branch:
 
 ```{r, eval = F}
 remotes::install_github(
-           "github_username/repository_name@repo_name"
-         )
+  "github_username/repository_name@repo_name"
+)
 ```
 
 it is even possible to install the package exactly how it was at a specific
@@ -856,9 +856,9 @@ commit:
 
 ```{r, eval = F}
 remotes::install_github(
-           "github_username/repository_name@repo_name",
-           ref = "commit_hash"
-         )
+  "github_username/repository_name@repo_name",
+  ref = "commit_hash"
+)
 ```
 
 For example, if you want to install the package we have developed together from
@@ -867,8 +867,9 @@ wrong so you don’t install this one by mistake):
 
 ```{r, eval = F}
 remotes::install_github(
-           "rap4all/housing@fusen",
-           ref = "ae42601")
+  "rap4all/housing@fusen",
+  ref = "ae42601"
+)
 ```
 
 So the package in the `fusen` branch and at commit "ae42601" gets installed.
@@ -912,7 +913,7 @@ following:
 
 ```r
 remotes::install_local(
-     "path/to/package/housing_0.0.0.9000.tar.gz"
+  "path/to/package/housing_0.0.0.9000.tar.gz"
      )
 ```
 

@@ -363,8 +363,8 @@ test_that("get_laspeyeres() produces correct results", {
   expected_df$p0_m2 <- c(23, 23, 56, 56)
 
   # pl should be equal to the price divided by p0
-  expected_df$pl <- expected_df$average_price_nominal_euros/expected_df$p0 * 100
-  expected_df$pl_m2 <- expected_df$average_price_m2_nominal_euros/expected_df$p0_m2 * 100
+  expected_df$pl <- expected_df$average_price_nominal_euros / expected_df$p0 * 100
+  expected_df$pl_m2 <- expected_df$average_price_m2_nominal_euros / expected_df$p0_m2 * 100
 
   expect_equivalent(
     expected_df, get_laspeyeres(input_df)
@@ -462,8 +462,9 @@ get_laspeyeres <- function(dataset){
 
   stopifnot("dataset must be one of `commune_level_data`
              or `country_level_data`" =
-              (which_dataset %in% c("commune_level_data",
-                                    "country_level_data")))
+              (which_dataset %in% c(
+                 "commune_level_data",
+                 "country_level_data")))
 
   group_var <- if(grepl("commune", which_dataset)){
                  quo(locality)

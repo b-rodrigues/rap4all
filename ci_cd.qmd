@@ -596,6 +596,7 @@ I built in the previous section. Apart from that, everything's the same.
 
 The magic happens with the workflow file. Here it is:
 
+::: {.content-hidden when-format="pdf"}
 ```
 name: Reproducible pipeline
 
@@ -628,6 +629,42 @@ jobs:
         name: housing_output_${{ github.sha }}
         path: /github/workspace/shared_folder/
 ```
+:::
+
+::: {.content-visible when-format="pdf"}
+```
+name: Reproducible pipeline
+
+on:
+  push:
+    branches:
+      - main
+      - master
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Build the Docker image
+      run: docker build -t housing_image .
+
+    - name: Docker Run Action
+      run: > 
+        docker run --rm --name housing_container -v
+        /github/workspace/shared_folder: /home/housing/shared_folder:rw 
+        housing_image
+
+    - uses: actions/upload-artifact@v3
+      with:
+        name: housing_output_${{ github.sha }}
+        path: /github/workspace/shared_folder/
+```
+:::
 
 By now, you should certainly understand this workflow file without much trouble.
 First we checkout the contents of the repository to make the files available to
