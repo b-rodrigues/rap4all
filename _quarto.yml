@@ -58,12 +58,21 @@ format:
     css:
       epub.css
   pdf:
+    keep-tex: true
     documentclass: scrbook
     classoption: [paper=6in:9in,pagesize=pdftex,headinclude=on,footinclude=on,12pt]
     include-in-header:
       text: |
-        \usepackage{fancyvrb}
         \usepackage{fvextra}
-        \fvset{breaklines=true, breakanywhere=true}
+        \DefineVerbatimEnvironment{Highlighting}{Verbatim}{breaklines,commandchars=\\\{\}}
         \areaset[0.50in]{4.5in}{8in}
+    include-before-body:
+      text: |
+        \RecustomVerbatimEnvironment{verbatim}{Verbatim}{
+           showspaces = false,
+           showtabs = false,
+           breaksymbolleft={},
+           breaklines
+           % Note: setting commandchars=\\\{\} here will cause an error 
+    }  
     fig-pos: 'H'
