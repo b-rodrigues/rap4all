@@ -214,7 +214,9 @@ url <- "https://is.gd/1vvBAc"
 
 raw_data <- tempfile(fileext = ".xlsx")
 
-download.file(url, raw_data, method = "auto", mode = "wb")
+download.file(url, raw_data,
+              method = "auto",
+              mode = "wb")
 
 sheets <- excel_sheets(raw_data)
 
@@ -263,12 +265,8 @@ learning how to use R.
 Running this code results in a neat data set:
 
 ```{r}
-raw_data |>
-  glimpse()
-# dplyr::glimpse() provides a nice
-# way to visualise data frames
+raw_data
 ```
-
 
 But there’s a problem: columns that should be of type numeric are of type
 character instead (`average_price_nominal_euros` and
@@ -297,26 +295,26 @@ So sometimes it is spelled correctly, with an "é", sometimes not. Let's write
 some code to correct both these issues:
 
 ```{r}
-options(width = 60) 
 raw_data <- raw_data |>
-  mutate(locality = ifelse(grepl("Luxembourg-Ville", locality),
-                           "Luxembourg",
-                           locality),
+  mutate(
+    locality = ifelse(grepl("Luxembourg-Ville", locality),
+                      "Luxembourg",
+                      locality),
          locality = ifelse(grepl("P.tange", locality),
                            "Pétange",
-                           locality)
+                           mutate)
          ) |>
-  mutate(across(starts_with("average"), as.numeric))
+  mutate(across(starts_with("average")),
+         as.numeric)
 
 ```
 
-Now this is interesting -- converting the `average` columns to numeric resulted in some `NA` values.
-Let's see what happened:
+Now this is interesting -- converting the `average` columns to numeric resulted
+in some `NA` values. Let's see what happened:
 
 ```{r}
 raw_data |>
-  filter(is.na(average_price_nominal_euros)) |>
-  glimpse()
+  filter(is.na(average_price_nominal_euros))
 ```
 
 It turns out that there are no prices for certain communes, but that we also
@@ -345,11 +343,22 @@ commune. We could keep that in a separate data frame, or even remove it. Finally
 there's a row, the last one, that states the source of the data, which we can
 remove.
 
+::: {.content-visible when-format="pdf"}
+In the screenshot above, we see another row that we don't see in our filtered
+data frame: one where `n_offers` is missing. This row gives the national average
+for columns `average_prince_nominal_euros` \\ and
+`average_price_m2_nominal_euros`. What we are going to do is create two
+datasets: one with data on communes, and the other on national prices. Let's
+first remove the rows stating the sources:
+:::
+
+::: {.content-hidden when-format="pdf"}
 In the screenshot above, we see another row that we don't see in our filtered
 data frame: one where `n_offers` is missing. This row gives the national average
 for columns `average_prince_nominal_euros` and `average_price_m2_nominal_euros`.
 What we are going to do is create two datasets: one with data on communes, and
 the other on national prices. Let's first remove the rows stating the sources:
+:::
 
 ```{r}
 raw_data <- raw_data |>

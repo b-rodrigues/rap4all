@@ -1,15 +1,15 @@
 # Part 1: Don’t Repeat Yourself
 
-The first idea we are going to focus on is Don’t Repeat Yourself.
-Simply by avoiding having to repeat oneself, we will naturally
-implement best practices to make our pipelines reproducible.
+The first idea we are going to focus on is Don’t Repeat Yourself. Simply by
+avoiding having to repeat yourself, you will naturally implement best practices
+to make your pipelines reproducible.
 
 ## Introduction
 
 Part 1 will focus on teaching you the fundamental ingredients to
 reproducibility. By fundamental ingredients I mean those tools that you
 absolutely need to have in your toolbox before even attempting to make a project
-reproducible. These tools are so important, that a good chunk of this book is
+reproducible. These tools are so important that a good chunk of this book is
 dedicated to them:
 
 - Version control;
@@ -22,18 +22,16 @@ your day to day. If that’s the case, you still might want to at least skim par
 to actually build reproducible analytical pipelines (RAPs).
 
 So this means that part 1 will not teach you how to build reproducible
-pipelines. But I cannot immediately start building reproducible analytical
-pipelines without first making sure that you understand the core concepts laid
-out above. To help us understand these concepts, we will start by analysing some
-data together. We are going to download, clean and plot some data, and we will
-achieve this by writing two scripts. These scripts will be written in a very
-"typical non software engineery" way, as to mimic how analysts, data scientists
-or researchers without any formal training in computer science would perform
-such an analysis. This does not mean that the quality of the analysis will be
-low. But it means that, typically, these programmers have delievering results
-fast, and by any means necessary, as the top priority. Our goal with this book
-is to show you, and hopefully convince you, that by adopting certain simple
-ideas from software engineering it is possible to deliver just as fast as
-before, but in a more consistent and robust way.
-
-Let’s get started!
+pipelines. But I cannot immediately start teaching you how to build reproducible
+analytical pipelines without first making sure that you understand the core
+concepts laid out above. To help you understand these concepts, we will start by
+analysing some data together. We are going to download, clean and plot some
+data, and we will achieve this by writing two scripts. These scripts will be
+written in a very typical non-"software engineery" way, as to mimic how
+analysts, data scientists or researchers without any formal training in computer
+science would perform such an analysis. This does not mean that the quality of
+the analysis will be low. But it means that, typically, these programmers have
+delievering results fast, and by any means necessary, as their top priority. My
+goal with this book is to show you, and hopefully convince you, that by adopting
+certain simple ideas from software engineering it is possible to deliver just as
+fast as before, but in a more consistent and robust way.
