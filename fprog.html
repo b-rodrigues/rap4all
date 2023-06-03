@@ -561,9 +561,10 @@ div.csl-indent {
 <p>This means that if we omit this argument, the empty list will get used by default. This avoids the users from having to manually specify it.</p>
 <p>We can call it like this:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>food_list <span class="ot">&lt;-</span> <span class="fu">h</span>(<span class="st">"Bruno"</span>, food_list) <span class="co"># since food_list is</span></span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>                                   <span class="co"># already defined,  we don't</span></span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>                                   <span class="co"># need to start with an empty list</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>food_list <span class="ot">&lt;-</span> <span class="fu">h</span>(<span class="st">"Bruno"</span>, food_list)</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a> <span class="co"># since food_list is</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a> <span class="co"># already defined,  we don't</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a> <span class="co"># need to start with an empty list</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"Bruno likes feijoada"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -586,23 +587,24 @@ div.csl-indent {
 <div class="cell">
 <div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>h <span class="ot">&lt;-</span> <span class="cf">function</span>(name, <span class="at">food_list =</span> <span class="fu">list</span>(), <span class="at">seed =</span> <span class="dv">123</span>){</span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># We set the seed, making sure that we get the same</span></span>
-<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># selection of food for a given seed</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># We set the seed, making sure that we get</span></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># the same selection of food for a given seed</span></span>
 <span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set.seed</span>(seed)</span>
 <span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>  food <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="st">"lasagna"</span>, <span class="st">"cassoulet"</span>, <span class="st">"feijoada"</span>), <span class="dv">1</span>)</span>
 <span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># We now need to unset the seed, because if we don't,</span></span>
-<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a>  <span class="co"># guess what, the seed will stay set for the whole session!</span></span>
-<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set.seed</span>(<span class="cn">NULL</span>)</span>
-<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-14"><a href="#cb28-14" aria-hidden="true" tabindex="-1"></a>  food_list <span class="ot">&lt;-</span> <span class="fu">append</span>(food_list, food)</span>
-<span id="cb28-15"><a href="#cb28-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-16"><a href="#cb28-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="fu">paste0</span>(name, <span class="st">" likes "</span>, food))</span>
-<span id="cb28-17"><a href="#cb28-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-18"><a href="#cb28-18" aria-hidden="true" tabindex="-1"></a>  food_list</span>
-<span id="cb28-19"><a href="#cb28-19" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># We now need to unset the seed, because</span></span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a>  <span class="co"># if we don't, guess what, the seed will</span></span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a>  <span class="co"># stay set for the whole session!</span></span>
+<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set.seed</span>(<span class="cn">NULL</span>)</span>
+<span id="cb28-14"><a href="#cb28-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-15"><a href="#cb28-15" aria-hidden="true" tabindex="-1"></a>  food_list <span class="ot">&lt;-</span> <span class="fu">append</span>(food_list, food)</span>
+<span id="cb28-16"><a href="#cb28-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-17"><a href="#cb28-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="fu">paste0</span>(name, <span class="st">" likes "</span>, food))</span>
+<span id="cb28-18"><a href="#cb28-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-19"><a href="#cb28-19" aria-hidden="true" tabindex="-1"></a>  food_list</span>
+<span id="cb28-20"><a href="#cb28-20" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Let’s now call <code>h()</code> several times with its default arguments:</p>
 <div class="cell">
@@ -812,8 +814,8 @@ To read the log of this object, call read_log(.c).</code></pre>
 <div class="sourceCode cell-code" id="cb74"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a>chronicler<span class="sc">::</span><span class="fu">read_log</span>(result)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "Complete log:"                                                                                
-[2] "NOK! sqrt() ran unsuccessfully with following exception: NaNs produced at 2023-06-03 16:49:41"
-[3] "Total running time: 0.00114989280700684 secs"                                                 </code></pre>
+[2] "NOK! sqrt() ran unsuccessfully with following exception: NaNs produced at 2023-06-03 17:26:00"
+[3] "Total running time: 0.00113940238952637 secs"                                                 </code></pre>
 </div>
 </div>
 <p>The <code>{purrr}</code> package also comes with function factories that you might find useful (<code>{possibly}</code>, <code>{safely}</code> and <code>{quietly}</code>).</p>
@@ -1422,7 +1424,7 @@ $b
 <p>Let’s now think about this for a moment. If the column titled <code>data</code> is a list of data frames, it should be possible to use a function like <code>map()</code> or <code>lapply()</code> to apply a function on each of these data frames. Remember that <code>map()</code> or <code>lapply()</code> require a list of elements of whatever type and a function that accepts objects of this type as input. So this means that we could apply a function that plots the data to each element of the column titled <code>data</code>. Since each element of this column is a data frame, this function needs a data frame as an input. As a first and simple example to illustrate this, let’s suppose that we want to determine the number of rows of each data frame. This is how we would do it:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb148"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb148-1"><a href="#cb148-1" aria-hidden="true" tabindex="-1"></a>nested_unemp <span class="sc">%&gt;%</span></span>
-<span id="cb148-2"><a href="#cb148-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">nrows =</span> <span class="fu">map</span>(data, nrow)) <span class="co"># ’data’ is the name of</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb148-2"><a href="#cb148-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">nrows =</span> <span class="fu">map</span>(data, nrow))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 3
   place_name                     data nrows    
@@ -1431,8 +1433,9 @@ $b
 2 Luxembourg                  [4 × 8] &lt;int [1]&gt;
 3 Wiltz                       [4 × 8] &lt;int [1]&gt;</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb150"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb150-1"><a href="#cb150-1" aria-hidden="true" tabindex="-1"></a>                                  <span class="co"># the list-column that contains</span></span>
-<span id="cb150-2"><a href="#cb150-2" aria-hidden="true" tabindex="-1"></a>                                  <span class="co"># the smaller data frames</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb150"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb150-1"><a href="#cb150-1" aria-hidden="true" tabindex="-1"></a> <span class="co"># ’data’ is the name of</span></span>
+<span id="cb150-2"><a href="#cb150-2" aria-hidden="true" tabindex="-1"></a> <span class="co"># the list-column that contains</span></span>
+<span id="cb150-3"><a href="#cb150-3" aria-hidden="true" tabindex="-1"></a> <span class="co"># the smaller data frames</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>The new column, titled <code>nrows</code> is a list of integers. We can simplify it by converting it directly to an atomic vector of integers by using <code>map_int()</code> instead of <code>map()</code>:</p>
 <div class="cell">
@@ -1675,7 +1678,7 @@ NULL</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>function (x, ...) 
 UseMethod("print")
-&lt;bytecode: 0x557001e4ca60&gt;
+&lt;bytecode: 0x55947b954a60&gt;
 &lt;environment: namespace:base&gt;</code></pre>
 </div>
 </div>
@@ -1719,7 +1722,7 @@ UseMethod("print")
     }
     invisible(x)
 }
-&lt;bytecode: 0x557002784818&gt;
+&lt;bytecode: 0x55947c28c818&gt;
 &lt;environment: namespace:base&gt;</code></pre>
 </div>
 </div>
