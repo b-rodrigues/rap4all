@@ -624,8 +624,9 @@ Saved working directory and index state WIP on master: \
   ab43b4b Added a comment to analysis.R
 ```
 
-So the deletion was stashed away, (so in case we want it back we could get it back with `git stash pop`)
-and our project was rolled back to the previous commit. Simply take a look at the files:
+So the deletion was stashed away, (so in case we want it back we could get it
+back with `git stash pop`) and our project was rolled back to the previous
+commit. Simply take a look at the files:
 
 ::: {.content-hidden when-format="pdf"}
 ```bash
@@ -694,11 +695,6 @@ owner@localhost $ git commit -m "Removed analysis.R"
  delete mode 100644 analysis.R
 ```
 
-::: {.content-visible when-format="pdf"}
-\newpage
-:::
-
-
 What’s the status now?
 
 
@@ -737,34 +733,6 @@ owner@localhost $ git log
 :::
 
 
-::: {.content-visible when-format="pdf"}
-```bash
-commit 8e51867dc5ae89e5f2ab2798be8920e703f73455 (HEAD -> master)
-Author: User <owner@mailbox.com>
-Date:   Sun Feb 5 17:54:30 2023 +0100
-
-    Removed analysis.R
-
-commit ab43b4b1069cd987685253632827f19d7a402b27
-Author: User <owner@mailbox.com>
-Date:   Sun Feb 5 17:41:52 2023 +0100
-
-    Added a comment to analysis.R
-```
-:::
-
-::: {.content-visible when-format="pdf"}
-```bash
-commit df2beecba0101304f1b56e300a3cd713ce7366e5
-Author: User <owner@mailbox.com>
-Date:   Sun Feb 5 17:32:26 2023 +0100
-
-    Project start
-
-```
-:::
-
-::: {.content-hidden when-format="pdf"}
 ```bash
 commit 8e51867dc5ae89e5f2ab2798be8920e703f73455 (HEAD -> master)
 Author: User <owner@mailbox.com>
@@ -785,7 +753,6 @@ Date:   Sun Feb 5 17:32:26 2023 +0100
     Project start
 
 ```
-:::
 
 The first one from the top is the last commit we've made. We would like to go
 back to the one with the message "Added a comment to analysis.R". See the very
