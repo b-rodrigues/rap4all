@@ -144,9 +144,17 @@ which git
 If a path like `/usr/bin/git` gets shown, congratulations, you can skip the rest
 of this paragraph. If something like:
 
+::: {.content-hidden when-format="pdf"}
 ```bash
 /usr/bin/which: no git in (/home/username/.local/bin:/home/username/bin:etc...)
 ```
+:::
+
+::: {.content-visible when-format="pdf"}
+```bash
+/usr/bin/which: no git in (/home/username/.local/bin: /home/username/bin:etc...)
+```
+:::
 
 gets shown instead, then this means that Git is not installed on your system. To
 install Git, use your distribution’s package manager, as it is very likely that
