@@ -250,9 +250,10 @@ default. This avoids the users from having to manually specify it.
 We can call it like this:
 
 ```{r, eval = F}
-food_list <- h("Bruno", food_list) # since food_list is
-                                   # already defined,  we don't
-                                   # need to start with an empty list
+food_list <- h("Bruno", food_list)
+ # since food_list is
+ # already defined,  we don't
+ # need to start with an empty list
 ```
 
 ```{r, eval = F}
@@ -284,14 +285,15 @@ situations like this. Let's redefine `h()` one last time:
 ```{r, eval = F}
 h <- function(name, food_list = list(), seed = 123){
 
-  # We set the seed, making sure that we get the same
-  # selection of food for a given seed
+  # We set the seed, making sure that we get
+  # the same selection of food for a given seed
 
   set.seed(seed)
   food <- sample(c("lasagna", "cassoulet", "feijoada"), 1)
 
-  # We now need to unset the seed, because if we don't,
-  # guess what, the seed will stay set for the whole session!
+  # We now need to unset the seed, because
+  # if we don't, guess what, the seed will
+  # stay set for the whole session!
 
   set.seed(NULL)
 
@@ -1225,9 +1227,10 @@ it:
 
 ```{r}
 nested_unemp %>%
-  mutate(nrows = map(data, nrow)) # ’data’ is the name of
-                                  # the list-column that contains
-                                  # the smaller data frames
+  mutate(nrows = map(data, nrow))
+ # ’data’ is the name of
+ # the list-column that contains
+ # the smaller data frames
 ```
 
 The new column, titled `nrows` is a list of integers. We can simplify it by

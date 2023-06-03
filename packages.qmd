@@ -838,21 +838,27 @@ control system), users of the package can install it directly from Github. This
 can be done using the `{remotes}` package, like this:
 
 ```{r, eval = F}
-remotes::install_github("github_username/repository_name")
+remotes::install_github(
+           "github_username/repository_name"
+         )
 ```
 
 It is also possible to install the package from a specific branch:
 
 ```{r, eval = F}
-remotes::install_github("github_username/repository_name@repo_name")
+remotes::install_github(
+           "github_username/repository_name@repo_name"
+         )
 ```
 
 it is even possible to install the package exactly how it was at a specific
 commit:
 
 ```{r, eval = F}
-remotes::install_github("github_username/repository_name@repo_name",
-                        ref = "commit_hash")
+remotes::install_github(
+           "github_username/repository_name@repo_name",
+           ref = "commit_hash"
+         )
 ```
 
 For example, if you want to install the package we have developed together from
@@ -860,8 +866,9 @@ my Github account, you could run the following (the commit hash is actually
 wrong so you don’t install this one by mistake):
 
 ```{r, eval = F}
-remotes::install_github("rap4all/housing@fusen",
-                        ref = "ae42601")
+remotes::install_github(
+           "rap4all/housing@fusen",
+           ref = "ae42601")
 ```
 
 So the package in the `fusen` branch and at commit "ae42601" gets installed.
@@ -904,7 +911,9 @@ install a package from a `.tar.gz` file, open a new R session and run the
 following:
 
 ```r
-remotes::install_local("path/to/package/housing_0.0.0.9000.tar.gz")
+remotes::install_local(
+     "path/to/package/housing_0.0.0.9000.tar.gz"
+     )
 ```
 
 ### Marketing your work

@@ -147,6 +147,7 @@ messages in the knitted document.
 Then we start with a new section called `## Downloading the data`. We then add
 a paragraph explaining from where and how we are going to download the data:
 
+::: {.content-hidden when-format="pdf"}
 ````{verbatim} 
 This data is downloaded from the Luxembourguish [Open Data
 Portal](https://data.public.lu/fr/datasets/prix-annonces-des-logements-par-commune/)
@@ -161,6 +162,24 @@ Portal to access the data, but I have also rehosted the data,
 and use my link to download the data (for archival purposes):
 
 ````
+::: {.content-visible when-format="pdf"}
+
+::: {.content-visible when-format="pdf"}
+````{verbatim} 
+This data is downloaded from the Luxembourguish [Open Data
+Portal](https://data.public.lu/fr/datasets/ prix-annonces-des-logements-par-commune/)
+(the data set called *Série rétrospective des prix
+annoncés des maisons par commune, de 2010 à 2021*), 
+and the original data is from the "Observatoire de
+l'habitat". This data contains prices for houses sold 
+since 2010 for each luxembourguish commune. 
+
+The function below uses the permanent URL from the Open Data 
+Portal to access the data, but I have also rehosted the data, 
+and use my link to download the data (for archival purposes):
+
+````
+::: {.content-visible when-format="pdf"}
 
 This is much more detailed than using comments in a script, one of the benefits
 of literate programming. Then comes a function to download and get the data.
@@ -310,7 +329,7 @@ We’re now scraping data from Wikipedia of former Luxembourguish communes:
 
 ```{r}
 get_former_communes <- function(
-            url = "https://en.wikipedia.org/wiki/Communes_of_Luxembourg#Former_communes",
+            url = "https://w.wiki/_wFe7",
             min_year = 2009,
             table_position = 3
             ){
@@ -332,7 +351,7 @@ We can scrape current communes:
 
 ```{r}
 get_current_communes <- function(
-                 url = "https://en.wikipedia.org/wiki/List_of_communes_of_Luxembourg",
+                 url = "https://w.wiki/6nPu",
                  table_position = 1
                  ){
 
