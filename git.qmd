@@ -683,6 +683,11 @@ owner@localhost $ git commit -m "Removed analysis.R"
  delete mode 100644 analysis.R
 ```
 
+::: {.content-visible when-format="pdf"}
+\newpage
+:::
+
+
 What’s the status now?
 
 
@@ -696,6 +701,7 @@ owner@localhost ➤ git status
 ```bash
 owner@localhost $ git status
 ```
+\newline
 :::
 
 ```bash
@@ -882,12 +888,12 @@ knitr::include_graphics("images/git_new_repo_2.png")
 ```
 :::
 
-Name your repository, and choose whether it should be open to the world or if it
-should be private and only accessible to your coworkers. We are going to make it
-a public repository, but you could make it private and follow along, this would
-change nothing in what we're going to learn.
+Name your repository (1), and choose whether it should be open to the world or
+if it should be private and only accessible to your coworkers (2). We are going
+to make it a public repository, but you could make it private and follow along,
+this would change nothing in what we're going to learn.
 
-We then land on this page:
+Click on *Create repository* (3). You then land on this page:
 
 ::: {.content-hidden when-format="pdf"}
 <figure>
