@@ -686,8 +686,9 @@ owner@localhost ➤ git push origin rmd</code></pre>
 <span id="cb18-26"><a href="#cb18-26" aria-hidden="true" tabindex="-1"></a>                        average_price_m2_nominal_euros,</span>
 <span id="cb18-27"><a href="#cb18-27" aria-hidden="true" tabindex="-1"></a>                        <span class="cn">NA</span>)) <span class="sc">%&gt;%</span></span>
 <span id="cb18-28"><a href="#cb18-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fill</span>(p0_m2, <span class="at">.direction =</span> <span class="st">"down"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb18-29"><a href="#cb18-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">pl =</span> average_price_nominal_euros<span class="sc">/</span>p0<span class="sc">*</span><span class="dv">100</span>,</span>
-<span id="cb18-30"><a href="#cb18-30" aria-hidden="true" tabindex="-1"></a>         <span class="at">pl_m2 =</span> average_price_m2_nominal_euros<span class="sc">/</span>p0_m2<span class="sc">*</span><span class="dv">100</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb18-29"><a href="#cb18-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb18-30"><a href="#cb18-30" aria-hidden="true" tabindex="-1"></a>    <span class="at">pl =</span> average_price_nominal_euros<span class="sc">/</span>p0<span class="sc">*</span><span class="dv">100</span>,</span>
+<span id="cb18-31"><a href="#cb18-31" aria-hidden="true" tabindex="-1"></a>    <span class="at">pl_m2 =</span> average_price_m2_nominal_euros<span class="sc">/</span>p0_m2 <span class="sc">*</span> <span class="dv">100</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>As you can see, this is almost exactly the same code twice. The only difference between the two code snippets, is that we need to group by commune when computing the Laspeyeres index for the communes (remember, this index will make it easy to make comparisons). Instead of repeating 99% of the lines, we should create a function that will group the data if the data is the commune level data, and not group the data if it’s the national data. Here is this function:</p>
 <div class="cell">
@@ -711,10 +712,11 @@ owner@localhost ➤ git push origin rmd</code></pre>
 <span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a>                          <span class="cn">NA</span>)) <span class="sc">%&gt;%</span></span>
 <span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a>    <span class="fu">fill</span>(p0_m2, <span class="at">.direction =</span> <span class="st">"down"</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb19-20"><a href="#cb19-20" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb19-21"><a href="#cb19-21" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">pl =</span> average_price_nominal_euros<span class="sc">/</span>p0<span class="sc">*</span><span class="dv">100</span>,</span>
-<span id="cb19-22"><a href="#cb19-22" aria-hidden="true" tabindex="-1"></a>           <span class="at">pl_m2 =</span> average_price_m2_nominal_euros<span class="sc">/</span>p0_m2<span class="sc">*</span><span class="dv">100</span>)</span>
-<span id="cb19-23"><a href="#cb19-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-24"><a href="#cb19-24" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb19-21"><a href="#cb19-21" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(</span>
+<span id="cb19-22"><a href="#cb19-22" aria-hidden="true" tabindex="-1"></a>      <span class="at">pl =</span> average_price_nominal_euros<span class="sc">/</span>p0<span class="sc">*</span><span class="dv">100</span>,</span>
+<span id="cb19-23"><a href="#cb19-23" aria-hidden="true" tabindex="-1"></a>      <span class="at">pl_m2 =</span> average_price_m2_nominal_euros<span class="sc">/</span>p0_m2<span class="sc">*</span><span class="dv">100</span>)</span>
+<span id="cb19-24"><a href="#cb19-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-25"><a href="#cb19-25" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>So, the first step is naming the function. We’ll call it <code>get_laspeyeres()</code>, and it’ll be a function of two arguments. The first is the data (commune or national level data) and the second is the starting date of the data. This second argument has a default value of “2010”. This is the year the data starts, and so this is the year the Laspeyeres index will have a value of 100.</p>
 <p>The following lines are probably the most complicated:</p>

@@ -447,12 +447,12 @@ div.csl-indent {
 <span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>             <span class="fu">summarize_data</span>(data)) <span class="co"># Call your custom functions.</span></span>
 <span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>The pipeline is nothing but a list (told you lists where a very important object) of <em>targets</em>. A target is defined using the <code>targets::tar_target()</code> function and has at least two inputs: the first is the name of the target (without quotes) and the second is the function that generates the target. So a target defined as <code>tar_target(y, f(x))</code> can be understood as <code>y &lt;- f(x)</code>. The next target can use the output of the previous target as an input, so you could have something like <code>tar_target(z, f(y))</code> (just like in the template).</p>
+<p>The pipeline is nothing but a list (told you lists where a very important object) of <em>targets</em>. A target is defined using the <code>tar_target()</code> function and has at least two inputs: the first is the name of the target (without quotes) and the second is the function that generates the target. So a target defined as <code>tar_target(y, f(x))</code> can be understood as <code>y &lt;- f(x)</code>. The next target can use the output of the previous target as an input, so you could have something like <code>tar_target(z, f(y))</code> (just like in the template).</p>
 </section>
 </section>
 <section id="a-pipeline-is-a-composition-of-pure-functions" class="level2" data-number="13.3">
 <h2 data-number="13.3" class="anchored" data-anchor-id="a-pipeline-is-a-composition-of-pure-functions"><span class="header-section-number">13.3</span> A pipeline is a composition of pure functions</h2>
-<p>You can run this pipeline by typing <code>targets::tar_make()</code> in a console:</p>
+<p>You can run this pipeline by typing <code>tar_make()</code> in a console:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>targets<span class="sc">::</span><span class="fu">tar_make</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -469,7 +469,7 @@ div.csl-indent {
 <p>What is going on?</p>
 <p>First, you need to remember our chapter on functional programming. We want our pipeline to be a sequence of pure functions. This means that our pipeline running successfully should not depend on anything in the global environment (apart from loading the packages in the first part of the script, and the options set with <code>tar_option_set()</code> for the others) and it should not change anything outside of its scope. This means that the pipeline should not change anything in the global environment either. This is exactly how a <code>{targets}</code> pipeline operates. A pipeline defined using <code>{targets}</code> will be pure and so the output of the pipeline will not be saved in the global environment. Now, strictly speaking, the pipeline is not exactly pure. Check the folder that contains the <code>_targets.R</code> script. There should now be a <code>_targets/</code> folder in there as well. If you go inside that folder, and then open the <code>objects/</code> folder, you should see two objects, <code>data</code> and <code>data_summary</code>. These are the outputs of our pipeline.</p>
 <p>So each target that is defined inside the pipeline gets saved there in the <code>.rds</code> format. This is an R-specific format that you can use to save <em>any</em> type of object. It doesn’t matter what it is: a simple data frame, a fitted model, a ggplot, whatever, you can write any R object to disk in this format using the <code>saveRDS()</code> function, and then read it back into another R session using <code>readRDS()</code>. <code>{targets}</code> makes use of these two functions to save every target computed by your pipeline, and simply retrieves them from the <code>_targets/</code> folder instead of recomputing them. Keep this in mind if you use Git to version the code of your pipeline (which you are doing of course), and add the <code>_targets/</code> folder to the <code>.gitignore</code> (unless you really want to also version it, but it shouldn’t be necessary).</p>
-<p>So because the pipeline is pure, and none of its outputs get saved into the global environment, calling <code>data_summary</code> results in the error above. So to retrieve the outputs you should use <code>targets::tar_read()</code> or <code>targets::tar_load()</code>. The difference is that <code>tar_read()</code> simply reads the output and shows it in the console but <code>tar_load()</code> reads and saves the object into the global environment. So to retrieve our <code>data_summary</code> object let’s use <code>tar_load(data_summary)</code>:</p>
+<p>So because the pipeline is pure, and none of its outputs get saved into the global environment, calling <code>data_summary</code> results in the error above. So to retrieve the outputs you should use <code>tar_read()</code> or <code>tar_load()</code>. The difference is that <code>tar_read()</code> simply reads the output and shows it in the console but <code>tar_load()</code> reads and saves the object into the global environment. So to retrieve our <code>data_summary</code> object let’s use <code>tar_load(data_summary)</code>:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tar_load</span>(data_summary)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -481,7 +481,7 @@ div.csl-indent {
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>   x    y</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fl">50.5</span> <span class="fl">50.5</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>It is possible to load all the outputs using <code>targets::tar_load_everything()</code> so that you don’t need to load each output one by one.</p>
+<p>It is possible to load all the outputs using <code>tar_load_everything()</code> so that you don’t need to load each output one by one.</p>
 <p>Before continuing with more <code>{targets}</code> features, I want to really stress the fact that the pipeline is the composition of pure functions. So functions that only have a side-effect will be difficult to handle. Examples of such functions are functions that read data, or that print something to the screen. For example, plotting in base R consists of a series of calls to functions with side-effects. If you open an R console and type <code>plot(mtcars)</code>, you will see a plot. But the function <code>plot()</code> does not create any output. It just prints a picture on your screen, which is a side-effect. To convince yourself that <code>plot()</code> does not create any output and only has a side-effect, try to save the output of <code>plot()</code> in a variable:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="fu">plot</span>(mtcars)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -643,17 +643,17 @@ div.csl-indent {
 </div>
 <p>This would have exactly the same effect as using the <code>path_data()</code> function.</p>
 <p>So now we got a target called <code>path_data_mtcars</code> that returns nothing but the path to the data. But because we’ve used the <code>format = "file"</code> option, <code>{targets}</code> now knows that this is a file that must be tracked. So any change on this file will be correctly recognised and any target that depends on this input file will be marked as being out-of-date. The other targets are exactly the same.</p>
-<p>Run the pipeline now using <code>targets::tar_make()</code>. Now, change the input file again:</p>
+<p>Run the pipeline now using <code>tar_make()</code>. Now, change the input file again:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(<span class="fu">head</span>(mtcars),</span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>          <span class="st">"mtcars.csv"</span>,</span>
 <span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>          <span class="at">row.names =</span> F)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Now, run the pipeline again using <code>targets::tar_make()</code>: this time you should see that <code>{targets}</code> correctly identified the change and runs the pipeline again accordingly!</p>
+<p>Now, run the pipeline again using <code>tar_make()</code>: this time you should see that <code>{targets}</code> correctly identified the change and runs the pipeline again accordingly!</p>
 </section>
 <section id="the-dependency-graph" class="level2" data-number="13.5">
 <h2 data-number="13.5" class="anchored" data-anchor-id="the-dependency-graph"><span class="header-section-number">13.5</span> The dependency graph</h2>
-<p>As you’ve seen in the previous section (and as I told you in the introduction) <code>{targets}</code> keeps track of changes in files, but also in the functions that you use. Any change to the code of any of these functions will result in <code>{targets}</code> identifying which targets are now out-of-date and which should be re-computed (alongside any other target that depends on them). It is possible to visualise this using <code>targets::tar_visnetwork()</code>. This opens an interactive network graph in your web browser that looks like this:</p>
+<p>As you’ve seen in the previous section (and as I told you in the introduction) <code>{targets}</code> keeps track of changes in files, but also in the functions that you use. Any change to the code of any of these functions will result in <code>{targets}</code> identifying which targets are now out-of-date and which should be re-computed (alongside any other target that depends on them). It is possible to visualise this using <code>tar_visnetwork()</code>. This opens an interactive network graph in your web browser that looks like this:</p>
 <figure class="figure">
 <img src="images/targets_visnetwork.png" alt="This image opens in your web-browser." class="figure-img">
 <figcaption class="figure-caption">
@@ -700,7 +700,7 @@ Because the input data was changed, we need to run the pipeline again.
 <span id="cb25-28"><a href="#cb25-28" aria-hidden="true" tabindex="-1"></a>    <span class="at">format =</span> <span class="st">"file"</span>)</span>
 <span id="cb25-29"><a href="#cb25-29" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Before running the pipeline, we can call <code>targets::tar_visnetwork()</code> again to see the entire workflow:</p>
+<p>Before running the pipeline, we can call <code>tar_visnetwork()</code> again to see the entire workflow:</p>
 <figure class="figure">
 <img src="images/targets_visnetwork_iris.png" alt="We clearly see that the pipeline has two completely independent parts." class="figure-img">
 <figcaption class="figure-caption">
@@ -708,7 +708,7 @@ We clearly see that the pipeline has two completely independent parts.
 </figcaption>
 </figure>
 <p>We can see that there are now two independent parts, as well as two unused functions, <code>path_data()</code> and <code>summ()</code> which we could remove.</p>
-<p>Running the pipeline using <code>targets::tar_make()</code> builds everything successfully. Let’s add the following target, just before the very last one:</p>
+<p>Running the pipeline using <code>tar_make()</code> builds everything successfully. Let’s add the following target, just before the very last one:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tar_target</span>(</span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  list_summaries,</span>
@@ -718,7 +718,7 @@ We clearly see that the pipeline has two completely independent parts.
 <span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>  )</span>
 <span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>),</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>This target creates a list with the two summaries that we compute. Call <code>targets::tar_visnetwork()</code> again:</p>
+<p>This target creates a list with the two summaries that we compute. Call <code>tar_visnetwork()</code> again:</p>
 <figure class="figure">
 <img src="images/targets_visnetwork_list_summaries.png" alt="The two separate workflows end up in one output." class="figure-img">
 <figcaption class="figure-caption">
@@ -783,7 +783,7 @@ slow_summary() is used instead of summary().
 </figcaption>
 </figure>
 <p>(You will also notice that I’ve removed the unneeded functions, <code>path_data()</code> and <code>summ()</code>).</p>
-<p>Running this pipeline sequentially will take about a minute, because each call to <code>slow_summary()</code> takes 30 seconds. To re-run the pipeline completely from scratch, call <code>targets::tar_destroy()</code>. This will make all the targets outdated. Then, run the pipeline from scratch with <code>targets::tar_make()</code>:</p>
+<p>Running this pipeline sequentially will take about a minute, because each call to <code>slow_summary()</code> takes 30 seconds. To re-run the pipeline completely from scratch, call <code>tar_destroy()</code>. This will make all the targets outdated. Then, run the pipeline from scratch with <code>tar_make()</code>:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>targets<span class="sc">::</span><span class="fu">tar_make</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -864,7 +864,7 @@ slow_summary() is used instead of summary().
 <span id="cb31-58"><a href="#cb31-58" aria-hidden="true" tabindex="-1"></a>    <span class="at">format =</span> <span class="st">"file"</span>)</span>
 <span id="cb31-59"><a href="#cb31-59" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>You can now run this pipeline in parallel using <code>tar_make_future()</code> (and sequentially as well, just as usual with <code>tar_make()</code>). To run the pipeline from scratch to test this, call <code>tar_destroy()</code> and then <code>targets::tar_make()</code> will build the entire pipeline from scratch:</p>
+<p>You can now run this pipeline in parallel using <code>tar_make_future()</code> (and sequentially as well, just as usual with <code>tar_make()</code>). To run the pipeline from scratch to test this, call <code>tar_destroy()</code> and then <code>tar_make()</code> will build the entire pipeline from scratch:</p>
 <div class="sourceCode" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set workers = 2 to use 2 cpu cores</span></span>
 <span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>targets<span class="sc">::</span><span class="fu">tar_make_future</span>(<span class="at">workers =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="sourceCode" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>• start target path_data_mtcars</span>
@@ -975,7 +975,7 @@ slow_summary() is used instead of summary().
 <span id="cb37-35"><a href="#cb37-35" aria-hidden="true" tabindex="-1"></a>  )</span>
 <span id="cb37-36"><a href="#cb37-36" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Running this pipeline with <code>targets::tar_make()</code> will now compile the source <code>.Rmd</code> file into ar <code>.html</code> file that you can open in your web-browser. Even if you want to compile the document into another format, I advise you to develop using the <code>.html</code> format. This is because you can open the <code>.html</code> file in the web-browser, and keep working on the source. Each time you run the pipeline after you made some changes to the file, you simply need to refresh the web-browser to see your changes. If instead you compile a Word document, you will need to always close the file, and then re-open it to see your changes, which is quite annoying. A good second reason to have output in the <code>.html</code> format is that HTML is a text-only format, and thus can be tracked with version control systems covered in <a href="github.html"><span>Chapter&nbsp;5</span></a>. The MS Word format is binary, and tracking it in Git is always an undecipherable mess. Keep in mind though that HTML files can get large, in which case you may want to not track the output <code>.html</code>.</p>
+<p>Running this pipeline with <code>tar_make()</code> will now compile the source <code>.Rmd</code> file into ar <code>.html</code> file that you can open in your web-browser. Even if you want to compile the document into another format, I advise you to develop using the <code>.html</code> format. This is because you can open the <code>.html</code> file in the web-browser, and keep working on the source. Each time you run the pipeline after you made some changes to the file, you simply need to refresh the web-browser to see your changes. If instead you compile a Word document, you will need to always close the file, and then re-open it to see your changes, which is quite annoying. A good second reason to have output in the <code>.html</code> format is that HTML is a text-only format, and thus can be tracked with version control systems covered in <a href="github.html"><span>Chapter&nbsp;5</span></a>. The MS Word format is binary, and tracking it in Git is always an undecipherable mess. Keep in mind though that HTML files can get large, in which case you may want to not track the output <code>.html</code>.</p>
 <p>If you open the output file, you should be seeing something quite plain looking:</p>
 <figure class="figure">
 <img src="images/mtcars_rmd_1.png" alt="The output of our pipeline. Our first data product!" class="figure-img">
@@ -1100,7 +1100,7 @@ The output of our pipeline. Our first data product!
 <span id="cb44-35"><a href="#cb44-35" aria-hidden="true" tabindex="-1"></a>  theme_minimal() +</span>
 <span id="cb44-36"><a href="#cb44-36" aria-hidden="true" tabindex="-1"></a>  theme(legend.position = "bottom")</span>
 <span id="cb44-37"><a href="#cb44-37" aria-hidden="true" tabindex="-1"></a>```</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>As you can see, once I’ve used <code>targets::tar_read()</code>, I get back the object just as if I had generated it from within the <code>.Rmd</code> source file, and can simply add stuff to it (like changing the theme of the ggplot). Once you’re happy with the contents, you can add <code>output: word_document</code> to the header of the document (just below <code>date: today</code> for example) to generate a Word document.</p>
+<p>As you can see, once I’ve used <code>tar_read()</code>, I get back the object just as if I had generated it from within the <code>.Rmd</code> source file, and can simply add stuff to it (like changing the theme of the ggplot). Once you’re happy with the contents, you can add <code>output: word_document</code> to the header of the document (just below <code>date: today</code> for example) to generate a Word document.</p>
 <p>Let me reiterate the advantages of using <code>{targets}</code> to compile RMarkdown documents: because the computation of all the objects is handled by <code>{targets}</code>, compiling the document itself is very quick. All that needs to happen is loading pre-computed targets. This also means that you benefit from all the other advantages of using <code>{targets}</code>: only the outdated targets get recomputed, and the computation of the targets can happen in parallel. Without <code>{targets}</code>, compiling the RMarkdown document would always recompute all the objects, and all the objects’ recomputation would happen sequentially.</p>
 </section>
 <section id="sec-targets-rewrite" class="level2" data-number="13.8">
@@ -1119,7 +1119,7 @@ The output of our pipeline. Our first data product!
 <div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"rap4all/housing@fusen"</span>,</span>
 <span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>                        <span class="at">ref =</span> <span class="st">"1c86095"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>This will install the package from my Github repository, and very specifically the version from the <code>fusen</code> branch at commit <code>1c86095</code> (you may need to install the <code>{remotes}</code> package first). Now that the package is installed, we can start building the pipeline. In the same R session, call <code>targets::tar_script()</code> which will give us a nice template <code>_targets.R</code> file:</p>
+<p>This will install the package from my Github repository, and very specifically the version from the <code>fusen</code> branch at commit <code>1c86095</code> (you may need to install the <code>{remotes}</code> package first). Now that the package is installed, we can start building the pipeline. In the same R session, call <code>tar_script()</code> which will give us a nice template <code>_targets.R</code> file:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>targets<span class="sc">::</span><span class="fu">tar_script</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -1251,7 +1251,7 @@ What’s described as ‘mtcars’ is not a ‘data.frame’, yet.
 <span id="cb53-40"><a href="#cb53-40" aria-hidden="true" tabindex="-1"></a>cat(unlist(res), sep = "\n")</span>
 <span id="cb53-41"><a href="#cb53-41" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb53-42"><a href="#cb53-42" aria-hidden="true" tabindex="-1"></a>```</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>As you can see, the data gets loaded by using <code>targets::tar_load()</code> which loads the two pre-computed data sets. The end portion of the document looks fairly similar to what we had before turning our analysis into a package and then a pipeline. We use a child document to generate as many sections as required automatically (remember, <em>Don’t Repeat Yourself!</em>). Try to change something in the pipeline, for example remove some communes from the <code>communes</code> object, and rerun the whole pipeline using <code>tar_make()</code>.</p>
+<p>As you can see, the data gets loaded by using <code>tar_load()</code> which loads the two pre-computed data sets. The end portion of the document looks fairly similar to what we had before turning our analysis into a package and then a pipeline. We use a child document to generate as many sections as required automatically (remember, <em>Don’t Repeat Yourself!</em>). Try to change something in the pipeline, for example remove some communes from the <code>communes</code> object, and rerun the whole pipeline using <code>tar_make()</code>.</p>
 <p>We are now done with this introduction to <code>{targets}</code>: we have turned our analysis into a pipeline, and now we need to ensure that the outputs it produces are reproducible. So the first step is to use <code>{renv}</code>; but as already discussed, this will not be enough, but it is essential that you do it! So let’s initialize <code>{renv}</code>:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>renv<span class="sc">::</span><span class="fu">init</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>

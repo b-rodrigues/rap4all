@@ -468,7 +468,7 @@ More than 20 years later, the output is still the same.
 It’s very close to the Sweave output.
 </figcaption>
 </figure>
-<p>Just like in a Sweave document, an Rmd source file also has a header in which authors can define a number of general options. Here I’ve only specified that I wanted a pdf document as an output file. I then copy and pasted the contents from the Sweave source, but changed the chunk delimiters from <code>&lt;&lt;&gt;&gt;=</code> and <code>@</code> to <code>```ooa</code> to start an R chunk and <code>```</code> to end it. Remember; we need to specify the engine in the chunk because <code>{knitr}</code> supports many engines. For example, it is possible to run a bash command by adding this chunk to the source:</p>
+<p>Just like in a Sweave document, an Rmd source file also has a header in which authors can define a number of general options. Here I’ve only specified that I wanted a pdf document as an output file. I then copy and pasted the contents from the Sweave source, but changed the chunk delimiters from <code>&lt;&lt;&gt;&gt;=</code> and <code>@</code> to <code>```wxz</code> to start an R chunk and <code>```</code> to end it. Remember; we need to specify the engine in the chunk because <code>{knitr}</code> supports many engines. For example, it is possible to run a bash command by adding this chunk to the source:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>---</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>output: pdf_document</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>---</span>
@@ -750,34 +750,39 @@ A rendered LaTeX equation.
 <span id="cb20-44"><a href="#cb20-44" aria-hidden="true" tabindex="-1"></a>```</span>
 <span id="cb20-45"><a href="#cb20-45" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb20-46"><a href="#cb20-46" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-47"><a href="#cb20-47" aria-hidden="true" tabindex="-1"></a>We don’t want to create these sections for every variable by hand.</span>
-<span id="cb20-48"><a href="#cb20-48" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-49"><a href="#cb20-49" aria-hidden="true" tabindex="-1"></a>Instead, we can define a function that returns the R markdown </span>
-<span id="cb20-50"><a href="#cb20-50" aria-hidden="true" tabindex="-1"></a>code required to create this. This is this function:</span>
-<span id="cb20-51"><a href="#cb20-51" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-52"><a href="#cb20-52" aria-hidden="true" tabindex="-1"></a>```{r}</span>
-<span id="cb20-53"><a href="#cb20-53" aria-hidden="true" tabindex="-1"></a>return_section &lt;- function(dataset, var){</span>
-<span id="cb20-54"><a href="#cb20-54" aria-hidden="true" tabindex="-1"></a>  a &lt;- knitr::knit_expand(text = c(</span>
-<span id="cb20-55"><a href="#cb20-55" aria-hidden="true" tabindex="-1"></a>                       "## Frequency table for variable: {{variable}}",</span>
-<span id="cb20-56"><a href="#cb20-56" aria-hidden="true" tabindex="-1"></a>                       create_table(dataset, var)),</span>
-<span id="cb20-57"><a href="#cb20-57" aria-hidden="true" tabindex="-1"></a>                     variable = var)</span>
-<span id="cb20-58"><a href="#cb20-58" aria-hidden="true" tabindex="-1"></a>  cat(a, sep = "\n")</span>
-<span id="cb20-59"><a href="#cb20-59" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb20-60"><a href="#cb20-60" aria-hidden="true" tabindex="-1"></a>```</span>
-<span id="cb20-61"><a href="#cb20-61" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-62"><a href="#cb20-62" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-63"><a href="#cb20-63" aria-hidden="true" tabindex="-1"></a>This new function, `return_section()` uses `knitr::knit_expand()` </span>
-<span id="cb20-64"><a href="#cb20-64" aria-hidden="true" tabindex="-1"></a>to generate R Markdown code. Words between `{{}}` get replaced by </span>
-<span id="cb20-65"><a href="#cb20-65" aria-hidden="true" tabindex="-1"></a>the provided `var` argument to the function. So when we call </span>
-<span id="cb20-66"><a href="#cb20-66" aria-hidden="true" tabindex="-1"></a>`return_section("am")`, `{{variable}}` is replaced by `"am"`.</span>
-<span id="cb20-67"><a href="#cb20-67" aria-hidden="true" tabindex="-1"></a>`"am"` then gets passed down to `create_table()` and the</span>
-<span id="cb20-68"><a href="#cb20-68" aria-hidden="true" tabindex="-1"></a>frequency table gets generated. We can now generate all the </span>
-<span id="cb20-69"><a href="#cb20-69" aria-hidden="true" tabindex="-1"></a>section by simply applying our function to a list of column names:</span>
-<span id="cb20-70"><a href="#cb20-70" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-71"><a href="#cb20-71" aria-hidden="true" tabindex="-1"></a>```{r, results = "asis"}</span>
-<span id="cb20-72"><a href="#cb20-72" aria-hidden="true" tabindex="-1"></a>invisible(lapply(colnames(mtcars), return_section, dataset = mtcars))</span>
-<span id="cb20-73"><a href="#cb20-73" aria-hidden="true" tabindex="-1"></a>```</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>The last function, named <code>return_section()</code> uses <code>knitr::knit_expand()</code>, which is the function that does the heavy lifting. This function returns literal R Markdown code. It returns <code>## Frequency table for variable: {{variable}}</code> which creates a level 2 section title with the text <em>Frequency table for variable: xxx</em> where the <code>xxx</code> will get replaced by the variable passed to <code>return_section()</code>. So calling <code>return_section(mtcars, "am")</code> will print the following in your console:</p>
+<span id="cb20-47"><a href="#cb20-47" aria-hidden="true" tabindex="-1"></a>We don’t want to create these sections for</span>
+<span id="cb20-48"><a href="#cb20-48" aria-hidden="true" tabindex="-1"></a>every variable by hand.</span>
+<span id="cb20-49"><a href="#cb20-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-50"><a href="#cb20-50" aria-hidden="true" tabindex="-1"></a>Instead, we can define a function that</span>
+<span id="cb20-51"><a href="#cb20-51" aria-hidden="true" tabindex="-1"></a>returns the R markdown code required to</span>
+<span id="cb20-52"><a href="#cb20-52" aria-hidden="true" tabindex="-1"></a>create this. This is this function:</span>
+<span id="cb20-53"><a href="#cb20-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-54"><a href="#cb20-54" aria-hidden="true" tabindex="-1"></a>```{r}</span>
+<span id="cb20-55"><a href="#cb20-55" aria-hidden="true" tabindex="-1"></a>return_section &lt;- function(dataset, var){</span>
+<span id="cb20-56"><a href="#cb20-56" aria-hidden="true" tabindex="-1"></a>  a &lt;- knitr::knit_expand(text = c(</span>
+<span id="cb20-57"><a href="#cb20-57" aria-hidden="true" tabindex="-1"></a>               ## Frequency table for variable: {{variable}}",</span>
+<span id="cb20-58"><a href="#cb20-58" aria-hidden="true" tabindex="-1"></a>                create_table(dataset, var)),</span>
+<span id="cb20-59"><a href="#cb20-59" aria-hidden="true" tabindex="-1"></a>                variable = var)</span>
+<span id="cb20-60"><a href="#cb20-60" aria-hidden="true" tabindex="-1"></a>  cat(a, sep = "\n")</span>
+<span id="cb20-61"><a href="#cb20-61" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb20-62"><a href="#cb20-62" aria-hidden="true" tabindex="-1"></a>```</span>
+<span id="cb20-63"><a href="#cb20-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-64"><a href="#cb20-64" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-65"><a href="#cb20-65" aria-hidden="true" tabindex="-1"></a>This new function, `return_section()` uses </span>
+<span id="cb20-66"><a href="#cb20-66" aria-hidden="true" tabindex="-1"></a>`knitr::knit_expand()` to generate RMarkdown </span>
+<span id="cb20-67"><a href="#cb20-67" aria-hidden="true" tabindex="-1"></a>code. Words between `{{}}` get replaced by </span>
+<span id="cb20-68"><a href="#cb20-68" aria-hidden="true" tabindex="-1"></a>the provided `var` argument to the function. </span>
+<span id="cb20-69"><a href="#cb20-69" aria-hidden="true" tabindex="-1"></a>So when we call `return_section("am")`, </span>
+<span id="cb20-70"><a href="#cb20-70" aria-hidden="true" tabindex="-1"></a>`{{variable}}` is replaced by `"am"`. `"am"` </span>
+<span id="cb20-71"><a href="#cb20-71" aria-hidden="true" tabindex="-1"></a>then gets passed down to `create_table()` </span>
+<span id="cb20-72"><a href="#cb20-72" aria-hidden="true" tabindex="-1"></a>and the frequency table gets generated. </span>
+<span id="cb20-73"><a href="#cb20-73" aria-hidden="true" tabindex="-1"></a>We can now generate all the section by simply</span>
+<span id="cb20-74"><a href="#cb20-74" aria-hidden="true" tabindex="-1"></a>applying our function to a list of column names:</span>
+<span id="cb20-75"><a href="#cb20-75" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-76"><a href="#cb20-76" aria-hidden="true" tabindex="-1"></a>```{r, results = "asis"}</span>
+<span id="cb20-77"><a href="#cb20-77" aria-hidden="true" tabindex="-1"></a>invisible(lapply(colnames(mtcars), return_section, dataset = mtcars))</span>
+<span id="cb20-78"><a href="#cb20-78" aria-hidden="true" tabindex="-1"></a>```</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The last function, named <code>return_section()</code> uses <code>knit_expand()</code>, which is the function that does the heavy lifting. This function returns literal R Markdown code. It returns <code>## Frequency table for variable: {{variable}}</code> which creates a level 2 section title with the text <em>Frequency table for variable: xxx</em> where the <code>xxx</code> will get replaced by the variable passed to <code>return_section()</code>. So calling <code>return_section(mtcars, "am")</code> will print the following in your console:</p>
 <pre><code>## Frequency table for variable: am
 |am | Freq|
 |:--|----:|

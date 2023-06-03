@@ -465,35 +465,35 @@ div.csl-indent {
 <p>This means that this R session will use the packages installed in the isolated library we’ve just created. Let’s now take a look at the <code>renv.lock</code> file:</p>
 <div class="sourceCode" id="cb15"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="ex">owner@localhost</span> ➤ cat renv.lock</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="sourceCode" id="cb16"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"R"</span><span class="fu">:</span> <span class="fu">{</span></span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"Version"</span><span class="fu">:</span> <span class="st">"4.2.2"</span><span class="fu">,</span></span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"Repositories"</span><span class="fu">:</span> <span class="ot">[</span></span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>      <span class="fu">{</span></span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"Name"</span><span class="fu">:</span> <span class="st">"CRAN"</span><span class="fu">,</span></span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"URL"</span><span class="fu">:</span> <span class="st">"https://packagemanager.rstudio.com/all/latest"</span></span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>      <span class="fu">}</span></span>
-<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>    <span class="ot">]</span></span>
-<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">},</span></span>
-<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"Packages"</span><span class="fu">:</span> <span class="fu">{</span></span>
-<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"MASS"</span><span class="fu">:</span> <span class="fu">{</span></span>
-<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"Package"</span><span class="fu">:</span> <span class="st">"MASS"</span><span class="fu">,</span></span>
-<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"Version"</span><span class="fu">:</span> <span class="st">"7.3-58.1"</span><span class="fu">,</span></span>
-<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"Source"</span><span class="fu">:</span> <span class="st">"Repository"</span><span class="fu">,</span></span>
-<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"Repository"</span><span class="fu">:</span> <span class="st">"CRAN"</span><span class="fu">,</span></span>
-<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"Hash"</span><span class="fu">:</span> <span class="st">"762e1804143a332333c054759f89a706"</span><span class="fu">,</span></span>
-<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"Requirements"</span><span class="fu">:</span> <span class="ot">[]</span></span>
-<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a>    <span class="fu">},</span></span>
-<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"Matrix"</span><span class="fu">:</span> <span class="fu">{</span></span>
-<span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"Package"</span><span class="fu">:</span> <span class="st">"Matrix"</span><span class="fu">,</span></span>
-<span id="cb16-22"><a href="#cb16-22" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"Version"</span><span class="fu">:</span> <span class="st">"1.5-1"</span><span class="fu">,</span></span>
-<span id="cb16-23"><a href="#cb16-23" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"Source"</span><span class="fu">:</span> <span class="st">"Repository"</span><span class="fu">,</span></span>
-<span id="cb16-24"><a href="#cb16-24" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"Repository"</span><span class="fu">:</span> <span class="st">"CRAN"</span><span class="fu">,</span></span>
-<span id="cb16-25"><a href="#cb16-25" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"Hash"</span><span class="fu">:</span> <span class="st">"539dc0c0c05636812f1080f473d2c177"</span><span class="fu">,</span></span>
-<span id="cb16-26"><a href="#cb16-26" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"Requirements"</span><span class="fu">:</span> <span class="ot">[</span></span>
-<span id="cb16-27"><a href="#cb16-27" aria-hidden="true" tabindex="-1"></a>        <span class="st">"lattice"</span></span>
-<span id="cb16-28"><a href="#cb16-28" aria-hidden="true" tabindex="-1"></a>      <span class="ot">]</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="dt">"R"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"Version"</span><span class="fu">:</span> <span class="st">"4.2.2"</span><span class="fu">,</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"Repositories"</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">{</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>   <span class="dt">"Name"</span><span class="fu">:</span> <span class="st">"CRAN"</span><span class="fu">,</span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>   <span class="dt">"URL"</span><span class="fu">:</span> <span class="st">"https://packagemanager.rstudio.com/all/latest"</span></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">}</span></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>  <span class="ot">]</span></span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a><span class="fu">},</span></span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a><span class="dt">"Packages"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"MASS"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"Package"</span><span class="fu">:</span> <span class="st">"MASS"</span><span class="fu">,</span></span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"Version"</span><span class="fu">:</span> <span class="st">"7.3-58.1"</span><span class="fu">,</span></span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"Source"</span><span class="fu">:</span> <span class="st">"Repository"</span><span class="fu">,</span></span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"Repository"</span><span class="fu">:</span> <span class="st">"CRAN"</span><span class="fu">,</span></span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"Hash"</span><span class="fu">:</span> <span class="st">"762e1804143a332333c054759f89a706"</span><span class="fu">,</span></span>
+<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"Requirements"</span><span class="fu">:</span> <span class="ot">[]</span></span>
+<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">},</span></span>
+<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"Matrix"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"Package"</span><span class="fu">:</span> <span class="st">"Matrix"</span><span class="fu">,</span></span>
+<span id="cb16-22"><a href="#cb16-22" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"Version"</span><span class="fu">:</span> <span class="st">"1.5-1"</span><span class="fu">,</span></span>
+<span id="cb16-23"><a href="#cb16-23" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"Source"</span><span class="fu">:</span> <span class="st">"Repository"</span><span class="fu">,</span></span>
+<span id="cb16-24"><a href="#cb16-24" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"Repository"</span><span class="fu">:</span> <span class="st">"CRAN"</span><span class="fu">,</span></span>
+<span id="cb16-25"><a href="#cb16-25" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"Hash"</span><span class="fu">:</span> <span class="st">"539dc0c0c05636812f1080f473d2c177"</span><span class="fu">,</span></span>
+<span id="cb16-26"><a href="#cb16-26" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"Requirements"</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb16-27"><a href="#cb16-27" aria-hidden="true" tabindex="-1"></a>      <span class="st">"lattice"</span></span>
+<span id="cb16-28"><a href="#cb16-28" aria-hidden="true" tabindex="-1"></a>    <span class="ot">]</span></span>
 <span id="cb16-29"><a href="#cb16-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-30"><a href="#cb16-30" aria-hidden="true" tabindex="-1"></a>      <span class="er">***and</span> <span class="er">many</span> <span class="er">more</span> <span class="er">packages***</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb16-30"><a href="#cb16-30" aria-hidden="true" tabindex="-1"></a>    <span class="er">***and</span> <span class="er">many</span> <span class="er">more</span> <span class="er">packages***</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>The <code>renv.lock</code> file is a json file listing all the packages, as well as their dependencies, that are used for the project. At the top of the file, the R version that was used to generate the <code>renv.lock</code> file is also named. It is important to remember that when you’ll use <code>{renv}</code> to restore a project’s library on a new machine, the R version will not be restored: so in the future, you might be restoring this project and running old versions of packages on a newer version of R, which may sometimes be a problem (but we’re going to discuss this later).</p>
 <p>So… that’s it. You’ve generated the <code>renv.lock</code> file, which means that future you, or someone else, can restore the library that you used to write this analysis. All that’s required is for that person (or future you) to install <code>{renv}</code> and then use the <code>renv.lock</code> file that you generated to restore the library. Let’s see how this works by cloning the following Github repository on this <a href="https://github.com/b-rodrigues/targets-minimal">link</a><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> (forked from this one <a href="https://github.com/wlandau/targets-minimal">here</a><a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>):</p>
 <div class="sourceCode" id="cb17"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="ex">owner@localhost</span> ➤ git clone git@github.com:b-rodrigues/targets-minimal.git</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -512,7 +512,7 @@ div.csl-indent {
 </div>
 <p>Type <code>Y</code> and you should see a list of packages that need to be installed. You’ll get asked once more if you want to proceed, type <code>y</code> and watch as the packages get installed. If you pay attention to the links, you should see that many of them get pulled from the CRAN archive, for example:</p>
 <div class="sourceCode" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>Retrieving</span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">'https://cloud.r-project.org/src/contrib/Archive/vroom/vroom_1.5.5.tar.gz'</span> ...</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">'https://cloud.r-project.org/src/contrib /Archive/vroom/vroom_1.5.5.tar.gz'</span> ...</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Notice the word “Archive” in the url? That’s because this project uses <code>{vroom}</code> 1.5.5, but as of writing (early 2023), <code>{vroom}</code> is at version 1.6.1.</p>
 <p>Now, maybe you’ve run <code>renv::restore()</code>, but the installation of the packages may have failed. If that’s the case, let me explain what likely happened.</p>
 <p>I tried restoring the project’s library on two different machines: a Windows laptop and a Linux workstation. <code>renv::restore()</code> failed on the Windows laptop, but succeeded on the Linux workstation.</p>

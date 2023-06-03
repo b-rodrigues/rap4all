@@ -649,10 +649,11 @@ Run `rlang::last_error()` to see where the error occurred.</code></pre>
 <span id="cb17-30"><a href="#cb17-30" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
 <span id="cb17-31"><a href="#cb17-31" aria-hidden="true" tabindex="-1"></a>    <span class="fu">fill</span>(p0_m2, <span class="at">.direction =</span> <span class="st">"down"</span>) <span class="sc">|&gt;</span></span>
 <span id="cb17-32"><a href="#cb17-32" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ungroup</span>() <span class="sc">|&gt;</span></span>
-<span id="cb17-33"><a href="#cb17-33" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">pl =</span> average_price_nominal_euros<span class="sc">/</span>p0<span class="sc">*</span><span class="dv">100</span>,</span>
-<span id="cb17-34"><a href="#cb17-34" aria-hidden="true" tabindex="-1"></a>           <span class="at">pl_m2 =</span> average_price_m2_nominal_euros<span class="sc">/</span>p0_m2<span class="sc">*</span><span class="dv">100</span>)</span>
-<span id="cb17-35"><a href="#cb17-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-36"><a href="#cb17-36" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb17-33"><a href="#cb17-33" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(</span>
+<span id="cb17-34"><a href="#cb17-34" aria-hidden="true" tabindex="-1"></a>      <span class="at">pl =</span> average_price_nominal_euros<span class="sc">/</span>p0<span class="sc">*</span><span class="dv">100</span>,</span>
+<span id="cb17-35"><a href="#cb17-35" aria-hidden="true" tabindex="-1"></a>      <span class="at">pl_m2 =</span> average_price_m2_nominal_euros<span class="sc">/</span>p0_m2<span class="sc">*</span><span class="dv">100</span>)</span>
+<span id="cb17-36"><a href="#cb17-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-37"><a href="#cb17-37" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We can now also edit the unit test from before, the one where we provide the wrong data. With this new specification of the function, this unit test would still pass (the function returns an error), as expected, but for the wrong reason. We now want to make sure that it fails for the right reason, in other words, that it fails not because no <code>year</code> column is found, but because the provided data set is neither <code>commune_level_data</code> nor <code>country_level_data</code>, so for this we change the unit tests like this:</p>
 <div class="cell">
