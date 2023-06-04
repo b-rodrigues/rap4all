@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Building reproducible analytical pipelines with R - 11&nbsp; Rewriting our project</title>
+<title>Building reproducible analytical pipelines with R - 9&nbsp; Rewriting our project</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -114,7 +114,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./project_rewrite.html"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Rewriting our project</span></a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./part2_intro.html">Part 2: Write IT down</a></li><li class="breadcrumb-item"><a href="./project_rewrite.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Rewriting our project</span></a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -195,112 +195,122 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
   </div>
 </li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./part1_intro.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Part 1: Don’t Repeat Yourself</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./part1_intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Part 1: Don’t Repeat Yourself</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./prerequisites.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Before we start</span></span></a>
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Before we start</span></span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./project_start.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Project start</span></span></a>
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Project start</span></span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./git.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Version control with Git</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Version control with Git</span></span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./github.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Collaborating using Trunk-based development</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Collaborating using Trunk-based development</span></span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./fprog.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Functional programming</span></span></a>
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Functional programming</span></span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./lit_prog.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Literate programming</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Literate programming</span></span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./part1_conclusion.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Conclusion of part 1</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Conclusion of part 1</span></span></a>
   </div>
 </li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./part2_intro.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Part 2: Write IT down</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./part2_intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Part 2: Write IT down</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./project_rewrite.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Rewriting our project</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Rewriting our project</span></span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./repro_intro.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Basic reproducibility: freezing packages</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Basic reproducibility: freezing packages</span></span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./packages.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Packaging your code</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Packaging your code</span></span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./testing.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Testing your code</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Testing your code</span></span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./targets.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Build automation with targets</span></span></a>
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Build automation with targets</span></span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./repro_cont.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Reproducible analytical pipelines with Docker</span></span></a>
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Reproducible analytical pipelines with Docker</span></span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./ci_cd.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Continuous integration and continuous deployment</span></span></a>
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Continuous integration and continuous deployment</span></span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./part2_conclusion.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Conclusion of part 2</span></span></a>
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Conclusion of part 2</span></span></a>
   </div>
 </li>
+      </ul>
+  </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./book_conclusion.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">The end</span></span></a>
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">The end</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -319,9 +329,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#an-rmd-for-cleaning-the-data" id="toc-an-rmd-for-cleaning-the-data" class="nav-link active" data-scroll-target="#an-rmd-for-cleaning-the-data"><span class="header-section-number">11.1</span> An Rmd for cleaning the data</a></li>
-  <li><a href="#an-rmd-for-analysing-the-data" id="toc-an-rmd-for-analysing-the-data" class="nav-link" data-scroll-target="#an-rmd-for-analysing-the-data"><span class="header-section-number">11.2</span> An Rmd for analysing the data</a></li>
-  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">11.3</span> Conclusion</a></li>
+  <li><a href="#an-rmd-for-cleaning-the-data" id="toc-an-rmd-for-cleaning-the-data" class="nav-link active" data-scroll-target="#an-rmd-for-cleaning-the-data"><span class="header-section-number">9.1</span> An Rmd for cleaning the data</a></li>
+  <li><a href="#an-rmd-for-analysing-the-data" id="toc-an-rmd-for-analysing-the-data" class="nav-link" data-scroll-target="#an-rmd-for-analysing-the-data"><span class="header-section-number">9.2</span> An Rmd for analysing the data</a></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">9.3</span> Conclusion</a></li>
   </ul>
 <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/b-rodrigues/rap4all/edit/main/project_rewrite.qmd" class="toc-action">Edit this page</a></p></div></div></nav>
     </div>
@@ -330,7 +340,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Rewriting our project</span></h1>
+<h1 class="title"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Rewriting our project</span></h1>
 </div>
 
 
@@ -366,8 +376,8 @@ owner@localhost ➤ git push origin rmd</code></pre>
 <p>Before moving forward now is the right moment to actually discuss why you would want to convert the script into Rmds. There are several reasons. First, as argued in the chapter on literate programming, a document that mixes prose and code is easier to read and share than a script. Next, since this Rmd file can get knitted into any type of document (PDF, Word, etc…), it also makes it easier to arrive at what interests us, the output. A script is simply a means, it’s not an end. The end is (in most cases) a document so we might as well use literate programming to avoid the cursed loop of changing the script, editing the document, going back to the script, etc.</p>
 <p>But there is yet another benefit; even if the Rmd file is not supposed to get shared with anyone else, we will, later on, use it as our starting point for the <em>Rmd first</em> method of package development as promoted by Sébastien Rochette, the author of <code>{fusen}</code>. This Rmd first method involves making use of a <em>development</em> Rmd file that contains all the usual steps that we would take to create a package. This is in contrast with the usual package development process, in which we would type the required commands to build the package in the terminal. The functions, tests, and documentation that we want to add to the package get defined using Rmd files as well. This makes them much easier to read and also share with a non-technical audience. All these Rmd files can then be converted (or <em>inflated</em> in <code>{fusen}</code> jargon) to create a fully working package. If this sounds complicated or confusing, don’t worry. Trust the process, push on, and all the pieces of the puzzle will elegantly fit together in a couple of chapters.</p>
 <p>In the following sections I will rewrite the scripts by using functional and literate programming: if you don’t want to rewrite everything, don’t worry, I link the final Rmd files at the end of each section. But I would advise that you follow along by writing everything as it will make absorbing the contents much simpler.</p>
-<section id="an-rmd-for-cleaning-the-data" class="level2" data-number="11.1">
-<h2 data-number="11.1" class="anchored" data-anchor-id="an-rmd-for-cleaning-the-data"><span class="header-section-number">11.1</span> An Rmd for cleaning the data</h2>
+<section id="an-rmd-for-cleaning-the-data" class="level2" data-number="9.1">
+<h2 data-number="9.1" class="anchored" data-anchor-id="an-rmd-for-cleaning-the-data"><span class="header-section-number">9.1</span> An Rmd for cleaning the data</h2>
 <p>So, let’s start with the <code>save_data.R</code> script. Since we are going to use functional programming and literate programming, we are going to start from an empty <code>.Rmd</code> file. So open an empty <code>.Rmd</code> file and start with the following lines:</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>---</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>title: "Nominal house prices data in Luxembourg - Data cleaning"</span>
@@ -643,8 +653,8 @@ owner@localhost ➤ git push origin rmd</code></pre>
 <p>Ok, and that’s it. You can take a look at the finalised file <a href="https://raw.githubusercontent.com/b-rodrigues/rap4all/master/rmds/save_data.Rmd">here</a><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>. You can now remove the <code>save_data.R</code> script, as you have successfully ported the code over to an RMarkdown file. If you have not done it yet, you can commit these changes and push.</p>
 <p>Let’s now do the same thing for the analysis script.</p>
 </section>
-<section id="an-rmd-for-analysing-the-data" class="level2" data-number="11.2">
-<h2 data-number="11.2" class="anchored" data-anchor-id="an-rmd-for-analysing-the-data"><span class="header-section-number">11.2</span> An Rmd for analysing the data</h2>
+<section id="an-rmd-for-analysing-the-data" class="level2" data-number="9.2">
+<h2 data-number="9.2" class="anchored" data-anchor-id="an-rmd-for-analysing-the-data"><span class="header-section-number">9.2</span> An Rmd for analysing the data</h2>
 <p>We will follow the same steps as before to convert the analysis script into an analysis RMarkdown file. Instead of showing the whole file here, I will show you two important points.</p>
 <p>The first point is removing redundancy. In the original script, we had the following lines:</p>
 <div class="cell">
@@ -778,8 +788,8 @@ owner@localhost ➤ git push origin rmd</code></pre>
 </ul>
 <p>Of course, you could compile the files into Word documents or PDF, depending on your needs, and you could of course write many more details than me. I wanted to keep it short; the point of this chapter was to show you how to use literate programming and not to write a very detailed analysis.</p>
 </section>
-<section id="conclusion" class="level2" data-number="11.3">
-<h2 data-number="11.3" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">11.3</span> Conclusion</h2>
+<section id="conclusion" class="level2" data-number="9.3">
+<h2 data-number="9.3" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">9.3</span> Conclusion</h2>
 <p>This chapter was short, but quite dense, especially when we converted the analysis script to an Rmd, because we’ve had to use two advanced concepts, <em>tidy evaluation</em> and Rmarkdown child documents. <em>Tidy</em> evaluation is not a topic that I wanted to discuss in this book, because it doesn’t have anything to do with the main topic at hand. However, part of building a robust, reproducible pipeline is to avoid repetition. In this sense, programming with <code>{dplyr}</code> and tidy evaluation are quite important. As suggested before, take a look at the linked vignette above, and then the chapter from my other free ebook. This should help get you started.</p>
 <p>The end of this chapter marks an important step: many analyses stop here, and this can be due to a variety of reasons. Maybe there’s no time left to go further, and after all, you’ve got the results you wanted. Maybe this analysis is useful, but you don’t necessarily need it to be reproducible in 5, 10 years, so all you want is to make sure that you can at least rerun it in some months or only a couple of years later (but be careful with this assessment, sometimes an analysis that wasn’t supposed to be reproducible for too long turns out to need to be reproducible for way longer than expected…).</p>
 <p>Because I want this book to be a pragmatic guide, I will now talk about putting the least amount of effort to make your current analysis reproducible, and this is by freezing package versions, which I will show you in the next chapter.</p>
@@ -1150,12 +1160,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="./part2_intro.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Part 2: Write IT down</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Part 2: Write IT down</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="./repro_intro.html" class="pagination-link">
-        <span class="nav-page-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Basic reproducibility: freezing packages</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Basic reproducibility: freezing packages</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

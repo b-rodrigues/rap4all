@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Building reproducible analytical pipelines with R - 15&nbsp; Build automation with targets</title>
+<title>Building reproducible analytical pipelines with R - 13&nbsp; Build automation with targets</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -133,7 +133,7 @@ div.csl-indent {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./targets.html"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Build automation with targets</span></a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./part2_intro.html">Part 2: Write IT down</a></li><li class="breadcrumb-item"><a href="./targets.html"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Build automation with targets</span></a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -214,112 +214,122 @@ div.csl-indent {
  <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
   </div>
 </li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./part1_intro.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Part 1: Don’t Repeat Yourself</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./part1_intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Part 1: Don’t Repeat Yourself</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./prerequisites.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Before we start</span></span></a>
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Before we start</span></span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./project_start.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Project start</span></span></a>
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Project start</span></span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./git.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Version control with Git</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Version control with Git</span></span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./github.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Collaborating using Trunk-based development</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Collaborating using Trunk-based development</span></span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./fprog.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Functional programming</span></span></a>
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Functional programming</span></span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./lit_prog.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Literate programming</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Literate programming</span></span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./part1_conclusion.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Conclusion of part 1</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Conclusion of part 1</span></span></a>
   </div>
 </li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./part2_intro.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Part 2: Write IT down</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./part2_intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Part 2: Write IT down</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./project_rewrite.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Rewriting our project</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Rewriting our project</span></span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./repro_intro.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Basic reproducibility: freezing packages</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Basic reproducibility: freezing packages</span></span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./packages.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Packaging your code</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Packaging your code</span></span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./testing.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Testing your code</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Testing your code</span></span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./targets.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Build automation with targets</span></span></a>
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Build automation with targets</span></span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./repro_cont.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Reproducible analytical pipelines with Docker</span></span></a>
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Reproducible analytical pipelines with Docker</span></span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./ci_cd.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Continuous integration and continuous deployment</span></span></a>
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Continuous integration and continuous deployment</span></span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./part2_conclusion.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Conclusion of part 2</span></span></a>
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Conclusion of part 2</span></span></a>
   </div>
 </li>
+      </ul>
+  </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./book_conclusion.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">The end</span></span></a>
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">The end</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -338,27 +348,27 @@ div.csl-indent {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="header-section-number">15.1</span> Introduction</a></li>
-  <li><a href="#targets-quick-start" id="toc-targets-quick-start" class="nav-link" data-scroll-target="#targets-quick-start"><span class="header-section-number">15.2</span> {targets} quick-start</a>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="header-section-number">13.1</span> Introduction</a></li>
+  <li><a href="#targets-quick-start" id="toc-targets-quick-start" class="nav-link" data-scroll-target="#targets-quick-start"><span class="header-section-number">13.2</span> {targets} quick-start</a>
   <ul class="collapse">
-  <li><a href="#targets.rs-anatomy" id="toc-targets.rs-anatomy" class="nav-link" data-scroll-target="#targets.rs-anatomy"><span class="header-section-number">15.2.1</span> _targets.R’s anatomy</a></li>
+  <li><a href="#targets.rs-anatomy" id="toc-targets.rs-anatomy" class="nav-link" data-scroll-target="#targets.rs-anatomy"><span class="header-section-number">13.2.1</span> _targets.R’s anatomy</a></li>
   </ul></li>
-  <li><a href="#a-pipeline-is-a-composition-of-pure-functions" id="toc-a-pipeline-is-a-composition-of-pure-functions" class="nav-link" data-scroll-target="#a-pipeline-is-a-composition-of-pure-functions"><span class="header-section-number">15.3</span> A pipeline is a composition of pure functions</a></li>
-  <li><a href="#handling-files" id="toc-handling-files" class="nav-link" data-scroll-target="#handling-files"><span class="header-section-number">15.4</span> Handling files</a></li>
-  <li><a href="#the-dependency-graph" id="toc-the-dependency-graph" class="nav-link" data-scroll-target="#the-dependency-graph"><span class="header-section-number">15.5</span> The dependency graph</a></li>
-  <li><a href="#running-the-pipeline-in-parallel" id="toc-running-the-pipeline-in-parallel" class="nav-link" data-scroll-target="#running-the-pipeline-in-parallel"><span class="header-section-number">15.6</span> Running the pipeline in parallel</a></li>
-  <li><a href="#targets-and-rmarkdown-or-quarto" id="toc-targets-and-rmarkdown-or-quarto" class="nav-link" data-scroll-target="#targets-and-rmarkdown-or-quarto"><span class="header-section-number">15.7</span> {targets} and RMarkdown (or Quarto)</a></li>
-  <li><a href="#sec-targets-rewrite" id="toc-sec-targets-rewrite" class="nav-link" data-scroll-target="#sec-targets-rewrite"><span class="header-section-number">15.8</span> Rewriting our project as a pipeline and {renv} redux</a></li>
-  <li><a href="#some-little-tips-before-concluding" id="toc-some-little-tips-before-concluding" class="nav-link" data-scroll-target="#some-little-tips-before-concluding"><span class="header-section-number">15.9</span> Some little tips before concluding</a>
+  <li><a href="#a-pipeline-is-a-composition-of-pure-functions" id="toc-a-pipeline-is-a-composition-of-pure-functions" class="nav-link" data-scroll-target="#a-pipeline-is-a-composition-of-pure-functions"><span class="header-section-number">13.3</span> A pipeline is a composition of pure functions</a></li>
+  <li><a href="#handling-files" id="toc-handling-files" class="nav-link" data-scroll-target="#handling-files"><span class="header-section-number">13.4</span> Handling files</a></li>
+  <li><a href="#the-dependency-graph" id="toc-the-dependency-graph" class="nav-link" data-scroll-target="#the-dependency-graph"><span class="header-section-number">13.5</span> The dependency graph</a></li>
+  <li><a href="#running-the-pipeline-in-parallel" id="toc-running-the-pipeline-in-parallel" class="nav-link" data-scroll-target="#running-the-pipeline-in-parallel"><span class="header-section-number">13.6</span> Running the pipeline in parallel</a></li>
+  <li><a href="#targets-and-rmarkdown-or-quarto" id="toc-targets-and-rmarkdown-or-quarto" class="nav-link" data-scroll-target="#targets-and-rmarkdown-or-quarto"><span class="header-section-number">13.7</span> {targets} and RMarkdown (or Quarto)</a></li>
+  <li><a href="#sec-targets-rewrite" id="toc-sec-targets-rewrite" class="nav-link" data-scroll-target="#sec-targets-rewrite"><span class="header-section-number">13.8</span> Rewriting our project as a pipeline and {renv} redux</a></li>
+  <li><a href="#some-little-tips-before-concluding" id="toc-some-little-tips-before-concluding" class="nav-link" data-scroll-target="#some-little-tips-before-concluding"><span class="header-section-number">13.9</span> Some little tips before concluding</a>
   <ul class="collapse">
-  <li><a href="#load-every-target-at-once" id="toc-load-every-target-at-once" class="nav-link" data-scroll-target="#load-every-target-at-once"><span class="header-section-number">15.9.1</span> Load every target at once</a></li>
-  <li><a href="#get-metadata-information-on-your-pipeline" id="toc-get-metadata-information-on-your-pipeline" class="nav-link" data-scroll-target="#get-metadata-information-on-your-pipeline"><span class="header-section-number">15.9.2</span> Get metadata information on your pipeline</a></li>
-  <li><a href="#make-a-target-or-the-whole-pipeline-outdated" id="toc-make-a-target-or-the-whole-pipeline-outdated" class="nav-link" data-scroll-target="#make-a-target-or-the-whole-pipeline-outdated"><span class="header-section-number">15.9.3</span> Make a target (or the whole pipeline) outdated</a></li>
-  <li><a href="#customize-the-networks-visualisation" id="toc-customize-the-networks-visualisation" class="nav-link" data-scroll-target="#customize-the-networks-visualisation"><span class="header-section-number">15.9.4</span> Customize the network’s visualisation</a></li>
-  <li><a href="#use-targets-from-one-pipeline-in-another-project" id="toc-use-targets-from-one-pipeline-in-another-project" class="nav-link" data-scroll-target="#use-targets-from-one-pipeline-in-another-project"><span class="header-section-number">15.9.5</span> Use targets from one pipeline in another project</a></li>
-  <li><a href="#understanding-this-cryptic-error-message" id="toc-understanding-this-cryptic-error-message" class="nav-link" data-scroll-target="#understanding-this-cryptic-error-message"><span class="header-section-number">15.9.6</span> Understanding this cryptic error message</a></li>
+  <li><a href="#load-every-target-at-once" id="toc-load-every-target-at-once" class="nav-link" data-scroll-target="#load-every-target-at-once"><span class="header-section-number">13.9.1</span> Load every target at once</a></li>
+  <li><a href="#get-metadata-information-on-your-pipeline" id="toc-get-metadata-information-on-your-pipeline" class="nav-link" data-scroll-target="#get-metadata-information-on-your-pipeline"><span class="header-section-number">13.9.2</span> Get metadata information on your pipeline</a></li>
+  <li><a href="#make-a-target-or-the-whole-pipeline-outdated" id="toc-make-a-target-or-the-whole-pipeline-outdated" class="nav-link" data-scroll-target="#make-a-target-or-the-whole-pipeline-outdated"><span class="header-section-number">13.9.3</span> Make a target (or the whole pipeline) outdated</a></li>
+  <li><a href="#customize-the-networks-visualisation" id="toc-customize-the-networks-visualisation" class="nav-link" data-scroll-target="#customize-the-networks-visualisation"><span class="header-section-number">13.9.4</span> Customize the network’s visualisation</a></li>
+  <li><a href="#use-targets-from-one-pipeline-in-another-project" id="toc-use-targets-from-one-pipeline-in-another-project" class="nav-link" data-scroll-target="#use-targets-from-one-pipeline-in-another-project"><span class="header-section-number">13.9.5</span> Use targets from one pipeline in another project</a></li>
+  <li><a href="#understanding-this-cryptic-error-message" id="toc-understanding-this-cryptic-error-message" class="nav-link" data-scroll-target="#understanding-this-cryptic-error-message"><span class="header-section-number">13.9.6</span> Understanding this cryptic error message</a></li>
   </ul></li>
-  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">15.10</span> Conclusion</a></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">13.10</span> Conclusion</a></li>
   </ul>
 <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/b-rodrigues/rap4all/edit/main/targets.qmd" class="toc-action">Edit this page</a></p></div></div></nav>
     </div>
@@ -367,7 +377,7 @@ div.csl-indent {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Build automation with targets</span></h1>
+<h1 class="title"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Build automation with targets</span></h1>
 </div>
 
 
@@ -386,8 +396,8 @@ div.csl-indent {
 <p>If you go back to the reproducibility iceberg, you will see that we are quite low now.</p>
 <p>Without a build automation tool, a pipeline is nothing but a series of scripts that get called one after the other, or perhaps the pipeline is only one very long script that does the required operations successfully.</p>
 <p>There are several problems with this approach, so let’s see how build automation can help us.</p>
-<section id="introduction" class="level2" data-number="15.1">
-<h2 data-number="15.1" class="anchored" data-anchor-id="introduction"><span class="header-section-number">15.1</span> Introduction</h2>
+<section id="introduction" class="level2" data-number="13.1">
+<h2 data-number="13.1" class="anchored" data-anchor-id="introduction"><span class="header-section-number">13.1</span> Introduction</h2>
 <p>Script-based workflows are problematic for several reasons. The first is that scripts can, and will, be executed out of order. You can mitigate some of the problems this can create by using pure functions, but you still need to make sure not to run the scripts out of order. But what does that actually mean? Well, suppose that you changed a function, and only want to re-execute the parts of the pipeline that are impacted by that change. But this supposes that you can know, in your head, which part of the script was impacted and which was not. And this can be quite difficult to figure out, especially when the pipeline is huge. So you will run certain parts of the script, and not others, in the hope that you don’t need to re-run everything.</p>
 <p>Another issue is that pipelines written as scripts are usually quite difficult to read and understand. To mitigate this, what you’d typically do is write a lot of comments. But here again you face the problem of needing to maintain these comments, and once the comments and the code are out of synch… the problems start (or rather, they continue).</p>
 <p>Running the different parts of the pipeline in parallel is also very complicated if your pipeline is defined as script. You would need to break the script into independent parts (and make really sure that these parts are independent) and execute them in parallel, perhaps using a separate R session for each script. The good news is that if you followed the advice from this book you have been using functional programming and so your pipeline is a series of pure function calls, which simplifies running the pipeline in parallel.</p>
@@ -401,8 +411,8 @@ div.csl-indent {
 </ul>
 <p>Just like many of the other tools that we have encountered in this book, what build automation tools do is allow you to not have to rely on your brain. You <em>write down</em> the recipe once, and then you can focus again on just the code of your actual project. You shouldn’t have to think about the pipeline itself, nor think about how to best run it. Let your computer figure that out for you, it’s much better at such tasks than you.</p>
 </section>
-<section id="targets-quick-start" class="level2" data-number="15.2">
-<h2 data-number="15.2" class="anchored" data-anchor-id="targets-quick-start"><span class="header-section-number">15.2</span> {targets} quick-start</h2>
+<section id="targets-quick-start" class="level2" data-number="13.2">
+<h2 data-number="13.2" class="anchored" data-anchor-id="targets-quick-start"><span class="header-section-number">13.2</span> {targets} quick-start</h2>
 <p>First thing’s first: to know everything about the <code>{targets}</code> package, you should read the excellent <a href="https://books.ropensci.org/targets/"><code>{targets}</code> manual</a><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>. Everything’s in there. So what I’m going to do is really just give you a very quick intro to what I think are really the main points you should know about to get started.</p>
 <p>Let’s start with a “hello-world” type pipeline. Create a new folder called something like <code>targets_intro/</code>, and start a fresh R session in it. For now, let’s ignore <code>{renv}</code>. We will see how <code>{renv}</code> works together with <code>{targets}</code> to provide an (almost reproducible) pipeline later. In that fresh session inside the <code>targets_intro/</code> run the following line:</p>
 <div class="cell">
@@ -415,8 +425,8 @@ div.csl-indent {
 <li>third is the pipeline itself, defined as a series of <em>targets</em>.</li>
 </ul>
 <p>Let’s go through all these parts one by one.</p>
-<section id="targets.rs-anatomy" class="level3" data-number="15.2.1">
-<h3 data-number="15.2.1" class="anchored" data-anchor-id="targets.rs-anatomy"><span class="header-section-number">15.2.1</span> _targets.R’s anatomy</h3>
+<section id="targets.rs-anatomy" class="level3" data-number="13.2.1">
+<h3 data-number="13.2.1" class="anchored" data-anchor-id="targets.rs-anatomy"><span class="header-section-number">13.2.1</span> _targets.R’s anatomy</h3>
 <p>The first part of the pipeline is where packages and helper functions get loaded. In the template, the very first line is a <code>library(targets)</code> call followed by a function definition. There are two important things here that you need to understand.</p>
 <p>If your pipeline needs, say, the <code>{dplyr}</code> package to run, you could write <code>library(dplyr)</code> right after the <code>library(targets)</code> call. However, it is best to actually do as in the template, and load the packages using <code>tar_option_set(packages = "dplyr")</code>. This is because if you execute the pipeline in parallel, you need to make sure that all the packages are available to all the workers (typically, one worker per CPU core). If you load the packages at the top of the <code>_targets.R</code> script, the packages will be available for the original session that called <code>library(...)</code>, but not to any worker sessions spawned for parallel execution.</p>
 <p>So, the idea is that at the very top of your script, you only load the <code>{targets}</code> library and other packages that are required for running the pipeline itself (as we shall see in coming sections). But packages that are required by functions that are running inside the pipeline should ideally be loaded as in the template. Another way of saying this: at the top of the script, think “pipeline infrastructure” packages (<code>{targets}</code> and some others), but inside <code>tar_option_set()</code> think “functions that run inside the pipeline” packages.</p>
@@ -440,8 +450,8 @@ div.csl-indent {
 <p>The pipeline is nothing but a list (told you lists where a very important object) of <em>targets</em>. A target is defined using the <code>tar_target()</code> function and has at least two inputs: the first is the name of the target (without quotes) and the second is the function that generates the target. So a target defined as <code>tar_target(y, f(x))</code> can be understood as <code>y &lt;- f(x)</code>. The next target can use the output of the previous target as an input, so you could have something like <code>tar_target(z, f(y))</code> (just like in the template).</p>
 </section>
 </section>
-<section id="a-pipeline-is-a-composition-of-pure-functions" class="level2" data-number="15.3">
-<h2 data-number="15.3" class="anchored" data-anchor-id="a-pipeline-is-a-composition-of-pure-functions"><span class="header-section-number">15.3</span> A pipeline is a composition of pure functions</h2>
+<section id="a-pipeline-is-a-composition-of-pure-functions" class="level2" data-number="13.3">
+<h2 data-number="13.3" class="anchored" data-anchor-id="a-pipeline-is-a-composition-of-pure-functions"><span class="header-section-number">13.3</span> A pipeline is a composition of pure functions</h2>
 <p>You can run this pipeline by typing <code>tar_make()</code> in a console:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>targets<span class="sc">::</span><span class="fu">tar_make</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -550,8 +560,8 @@ div.csl-indent {
 <p>Finally, you will have noticed that the last target also has the option <code>format = "file"</code>. This will be topic of the next section.</p>
 <p>It is worth noting that the <code>{ggplot2}</code> package includes a function to save <code>ggplot</code> objects to disk called <code>ggplot2::ggsave()</code>. So you could define two targets, one to compute the <code>ggplot</code> object itself, and another to generate a <code>.png</code> image of that <code>ggplot</code> object.</p>
 </section>
-<section id="handling-files" class="level2" data-number="15.4">
-<h2 data-number="15.4" class="anchored" data-anchor-id="handling-files"><span class="header-section-number">15.4</span> Handling files</h2>
+<section id="handling-files" class="level2" data-number="13.4">
+<h2 data-number="13.4" class="anchored" data-anchor-id="handling-files"><span class="header-section-number">13.4</span> Handling files</h2>
 <p>In this section, we will learn how <code>{targets}</code> handles files. First, run the following lines in the folder that contains the <code>_targets.R</code> script that we’ve been using up until now:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(mtcars)</span>
@@ -641,8 +651,8 @@ div.csl-indent {
 </div>
 <p>Now, run the pipeline again using <code>tar_make()</code>: this time you should see that <code>{targets}</code> correctly identified the change and runs the pipeline again accordingly!</p>
 </section>
-<section id="the-dependency-graph" class="level2" data-number="15.5">
-<h2 data-number="15.5" class="anchored" data-anchor-id="the-dependency-graph"><span class="header-section-number">15.5</span> The dependency graph</h2>
+<section id="the-dependency-graph" class="level2" data-number="13.5">
+<h2 data-number="13.5" class="anchored" data-anchor-id="the-dependency-graph"><span class="header-section-number">13.5</span> The dependency graph</h2>
 <p>As you’ve seen in the previous section (and as I told you in the introduction) <code>{targets}</code> keeps track of changes in files, but also in the functions that you use. Any change to the code of any of these functions will result in <code>{targets}</code> identifying which targets are now out-of-date and which should be re-computed (alongside any other target that depends on them). It is possible to visualise this using <code>tar_visnetwork()</code>. This opens an interactive network graph in your web browser that looks like this:</p>
 <figure class="figure">
 <img src="images/targets_visnetwork.png" alt="This image opens in your web-browser." class="figure-img">
@@ -717,8 +727,8 @@ The two separate workflows end up in one output.
 </figure>
 <p>Finally, run the pipeline one last time to compute the final output.</p>
 </section>
-<section id="running-the-pipeline-in-parallel" class="level2" data-number="15.6">
-<h2 data-number="15.6" class="anchored" data-anchor-id="running-the-pipeline-in-parallel"><span class="header-section-number">15.6</span> Running the pipeline in parallel</h2>
+<section id="running-the-pipeline-in-parallel" class="level2" data-number="13.6">
+<h2 data-number="13.6" class="anchored" data-anchor-id="running-the-pipeline-in-parallel"><span class="header-section-number">13.6</span> Running the pipeline in parallel</h2>
 <p><code>{targets}</code> makes it easy to run independent parts of our pipeline in parallel. In the example from before, it was quite obvious to know which parts were independent, but when the pipeline grows in complexity, it can be very difficult to see which parts are independent.</p>
 <p>Let’s now run the example from before in parallel. But first, we need to create a function that takes some time to run. <code>summary()</code> is so quick that running both of its calls in parallel is not worth it (and would actually even run slower, I’ll explain why at the end). Let’s define a new function called <code>slow_summary()</code>:</p>
 <div class="cell">
@@ -877,8 +887,8 @@ slow_summary() is used instead of summary().
 <div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tar_option_set</span>(<span class="at">packages =</span> <span class="st">"dplyr"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="targets-and-rmarkdown-or-quarto" class="level2" data-number="15.7">
-<h2 data-number="15.7" class="anchored" data-anchor-id="targets-and-rmarkdown-or-quarto"><span class="header-section-number">15.7</span> {targets} and RMarkdown (or Quarto)</h2>
+<section id="targets-and-rmarkdown-or-quarto" class="level2" data-number="13.7">
+<h2 data-number="13.7" class="anchored" data-anchor-id="targets-and-rmarkdown-or-quarto"><span class="header-section-number">13.7</span> {targets} and RMarkdown (or Quarto)</h2>
 <p>It is also possible to compile documents using RMardown (or Quarto) with <code>{targets}</code>. The way this works is by setting up a pipeline that produces the outputs you need in the document, and then defining the document as a target to be computed as well. For example, if you’re showing a table in the document, create a target in the pipeline that builds the underlying data. Do the same for a plot, or a statistical model. Then, in the <code>.Rmd</code> (or <code>.Qmd</code>) source file, use <code>targets::tar_read()</code>to load the different objects you need.</p>
 <p>Consider the following <code>_targets.R</code> file:</p>
 <div class="cell">
@@ -965,7 +975,7 @@ slow_summary() is used instead of summary().
 <span id="cb37-35"><a href="#cb37-35" aria-hidden="true" tabindex="-1"></a>  )</span>
 <span id="cb37-36"><a href="#cb37-36" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Running this pipeline with <code>tar_make()</code> will now compile the source <code>.Rmd</code> file into ar <code>.html</code> file that you can open in your web-browser. Even if you want to compile the document into another format, I advise you to develop using the <code>.html</code> format. This is because you can open the <code>.html</code> file in the web-browser, and keep working on the source. Each time you run the pipeline after you made some changes to the file, you simply need to refresh the web-browser to see your changes. If instead you compile a Word document, you will need to always close the file, and then re-open it to see your changes, which is quite annoying. A good second reason to have output in the <code>.html</code> format is that HTML is a text-only format, and thus can be tracked with version control systems covered in <a href="github.html"><span>Chapter&nbsp;6</span></a>. The MS Word format is binary, and tracking it in Git is always an undecipherable mess. Keep in mind though that HTML files can get large, in which case you may want to not track the output <code>.html</code>.</p>
+<p>Running this pipeline with <code>tar_make()</code> will now compile the source <code>.Rmd</code> file into ar <code>.html</code> file that you can open in your web-browser. Even if you want to compile the document into another format, I advise you to develop using the <code>.html</code> format. This is because you can open the <code>.html</code> file in the web-browser, and keep working on the source. Each time you run the pipeline after you made some changes to the file, you simply need to refresh the web-browser to see your changes. If instead you compile a Word document, you will need to always close the file, and then re-open it to see your changes, which is quite annoying. A good second reason to have output in the <code>.html</code> format is that HTML is a text-only format, and thus can be tracked with version control systems covered in <a href="github.html"><span>Chapter&nbsp;5</span></a>. The MS Word format is binary, and tracking it in Git is always an undecipherable mess. Keep in mind though that HTML files can get large, in which case you may want to not track the output <code>.html</code>.</p>
 <p>If you open the output file, you should be seeing something quite plain looking:</p>
 <figure class="figure">
 <img src="images/mtcars_rmd_1.png" alt="The output of our pipeline. Our first data product!" class="figure-img">
@@ -1093,8 +1103,8 @@ The output of our pipeline. Our first data product!
 <p>As you can see, once I’ve used <code>tar_read()</code>, I get back the object just as if I had generated it from within the <code>.Rmd</code> source file, and can simply add stuff to it (like changing the theme of the ggplot). Once you’re happy with the contents, you can add <code>output: word_document</code> to the header of the document (just below <code>date: today</code> for example) to generate a Word document.</p>
 <p>Let me reiterate the advantages of using <code>{targets}</code> to compile RMarkdown documents: because the computation of all the objects is handled by <code>{targets}</code>, compiling the document itself is very quick. All that needs to happen is loading pre-computed targets. This also means that you benefit from all the other advantages of using <code>{targets}</code>: only the outdated targets get recomputed, and the computation of the targets can happen in parallel. Without <code>{targets}</code>, compiling the RMarkdown document would always recompute all the objects, and all the objects’ recomputation would happen sequentially.</p>
 </section>
-<section id="sec-targets-rewrite" class="level2" data-number="15.8">
-<h2 data-number="15.8" class="anchored" data-anchor-id="sec-targets-rewrite"><span class="header-section-number">15.8</span> Rewriting our project as a pipeline and {renv} redux</h2>
+<section id="sec-targets-rewrite" class="level2" data-number="13.8">
+<h2 data-number="13.8" class="anchored" data-anchor-id="sec-targets-rewrite"><span class="header-section-number">13.8</span> Rewriting our project as a pipeline and {renv} redux</h2>
 <p>It is now time to return our little project into a full-fledged reproducible pipeline. For this, we’re going back to our project’s folder and specifically to the <code>fusen</code> branch. This is the branch where we used <code>{fusen}</code> to turn our <code>.Rmd</code> into a package. This package contains the functions that we need to update the data. But remember, we wrote the analysis in another <code>.Rmd</code> file that we did not inflate, <code>analyse_data.Rmd</code>. We are now going to write a <code>{targets}</code> pipeline that will make use of the inflated package and compute all the targets required for the analysis. The first step is to create a new branch, but you could also create an entirely new repository if you want. It’s up to you. If you create a new branch, start from the <code>rmd</code> branch, since this will provide a nice starting point.</p>
 <div class="sourceCode" id="cb45"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="co">#switch to the rmd branch</span></span>
 <span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="ex">owner@localhost</span> ➤ git checkout rmd</span>
@@ -1284,15 +1294,15 @@ What’s described as ‘mtcars’ is not a ‘data.frame’, yet.
 <span id="cb57-8"><a href="#cb57-8" aria-hidden="true" tabindex="-1"></a>- Checkout `analyse_data.html` for the output.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>If you followed along, don’t forget to change the <code>url</code> of the repository to your own in the first bullet point of th Readme.</p>
 </section>
-<section id="some-little-tips-before-concluding" class="level2" data-number="15.9">
-<h2 data-number="15.9" class="anchored" data-anchor-id="some-little-tips-before-concluding"><span class="header-section-number">15.9</span> Some little tips before concluding</h2>
+<section id="some-little-tips-before-concluding" class="level2" data-number="13.9">
+<h2 data-number="13.9" class="anchored" data-anchor-id="some-little-tips-before-concluding"><span class="header-section-number">13.9</span> Some little tips before concluding</h2>
 <p>In this section I’ll be showing you some other useful functions included in the <code>{targets}</code> package that I think you should know!</p>
-<section id="load-every-target-at-once" class="level3" data-number="15.9.1">
-<h3 data-number="15.9.1" class="anchored" data-anchor-id="load-every-target-at-once"><span class="header-section-number">15.9.1</span> Load every target at once</h3>
+<section id="load-every-target-at-once" class="level3" data-number="13.9.1">
+<h3 data-number="13.9.1" class="anchored" data-anchor-id="load-every-target-at-once"><span class="header-section-number">13.9.1</span> Load every target at once</h3>
 <p>It is possible to load every target included in the cache at once using <code>tar_load_everything()</code>. But be careful, if your pipeline builds many targets, this can take some time!</p>
 </section>
-<section id="get-metadata-information-on-your-pipeline" class="level3" data-number="15.9.2">
-<h3 data-number="15.9.2" class="anchored" data-anchor-id="get-metadata-information-on-your-pipeline"><span class="header-section-number">15.9.2</span> Get metadata information on your pipeline</h3>
+<section id="get-metadata-information-on-your-pipeline" class="level3" data-number="13.9.2">
+<h3 data-number="13.9.2" class="anchored" data-anchor-id="get-metadata-information-on-your-pipeline"><span class="header-section-number">13.9.2</span> Get metadata information on your pipeline</h3>
 <p><code>tar_meta()</code> will return a data frame with some information about the pipeline. I find it quite useful after running the pipeline, and it turns out that some warnings or errors were raised. This is how this data frame looks like:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>targets<span class="sc">::</span><span class="fu">tar_meta</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1337,16 +1347,16 @@ What’s described as ‘mtcars’ is not a ‘data.frame’, yet.
 <span id="cb63-5"><a href="#cb63-5" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> country_level_data this is a warning</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>So now you can better see what is going on.</p>
 </section>
-<section id="make-a-target-or-the-whole-pipeline-outdated" class="level3" data-number="15.9.3">
-<h3 data-number="15.9.3" class="anchored" data-anchor-id="make-a-target-or-the-whole-pipeline-outdated"><span class="header-section-number">15.9.3</span> Make a target (or the whole pipeline) outdated</h3>
+<section id="make-a-target-or-the-whole-pipeline-outdated" class="level3" data-number="13.9.3">
+<h3 data-number="13.9.3" class="anchored" data-anchor-id="make-a-target-or-the-whole-pipeline-outdated"><span class="header-section-number">13.9.3</span> Make a target (or the whole pipeline) outdated</h3>
 <p>With <code>tar_invalidate()</code> you can make a target outdated, so that when you rerun the pipeline, it gets re-computed (alongside every target that depends on it). This can sometimes be useful to make sure that everything is running correctly. Try running <code>tar_invalidate("communes")</code> and see what happens. It is also possible to complete nuke the whole pipeline and rerun it from scratch using <code>tar_destroy()</code>. You’ll get asked to confirm if that’s what you want to do, and if yes, reruning the pipeline after that will start from scratch.</p>
 </section>
-<section id="customize-the-networks-visualisation" class="level3" data-number="15.9.4">
-<h3 data-number="15.9.4" class="anchored" data-anchor-id="customize-the-networks-visualisation"><span class="header-section-number">15.9.4</span> Customize the network’s visualisation</h3>
+<section id="customize-the-networks-visualisation" class="level3" data-number="13.9.4">
+<h3 data-number="13.9.4" class="anchored" data-anchor-id="customize-the-networks-visualisation"><span class="header-section-number">13.9.4</span> Customize the network’s visualisation</h3>
 <p>By calling <code>visNetwork::visNetworkEditor(tar_visnetwork())</code>, a Shiny app gets started that lets you customize the look of your pipeline’s network. You can play around with the options and see the effect they have on the look of the network. It is also possible to generate R code that you can then paste into a script to consistently generate the same look.</p>
 </section>
-<section id="use-targets-from-one-pipeline-in-another-project" class="level3" data-number="15.9.5">
-<h3 data-number="15.9.5" class="anchored" data-anchor-id="use-targets-from-one-pipeline-in-another-project"><span class="header-section-number">15.9.5</span> Use targets from one pipeline in another project</h3>
+<section id="use-targets-from-one-pipeline-in-another-project" class="level3" data-number="13.9.5">
+<h3 data-number="13.9.5" class="anchored" data-anchor-id="use-targets-from-one-pipeline-in-another-project"><span class="header-section-number">13.9.5</span> Use targets from one pipeline in another project</h3>
 <p>If you need to load some targets inside another project (for example, because you need to reference an older study), you can do so easily with <code>{withr}</code>:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a>withr<span class="sc">::</span><span class="fu">with_dir</span>(</span>
@@ -1354,8 +1364,8 @@ What’s described as ‘mtcars’ is not a ‘data.frame’, yet.
 <span id="cb64-3"><a href="#cb64-3" aria-hidden="true" tabindex="-1"></a>  targets<span class="sc">::</span><span class="fu">tar_load</span>(target_name))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="understanding-this-cryptic-error-message" class="level3" data-number="15.9.6">
-<h3 data-number="15.9.6" class="anchored" data-anchor-id="understanding-this-cryptic-error-message"><span class="header-section-number">15.9.6</span> Understanding this cryptic error message</h3>
+<section id="understanding-this-cryptic-error-message" class="level3" data-number="13.9.6">
+<h3 data-number="13.9.6" class="anchored" data-anchor-id="understanding-this-cryptic-error-message"><span class="header-section-number">13.9.6</span> Understanding this cryptic error message</h3>
 <p>Sometimes, when you try to run the pipeline, you get the following error message:</p>
 <div class="sourceCode" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a>Error<span class="sc">:</span></span>
 <span id="cb65-2"><a href="#cb65-2" aria-hidden="true" tabindex="-1"></a><span class="sc">!</span> Error running targets<span class="sc">::</span><span class="fu">tar_make</span>()</span>
@@ -1365,8 +1375,8 @@ What’s described as ‘mtcars’ is not a ‘data.frame’, yet.
 <p>The last line is what interests us here: “Last error: argument 9 is empty”. It is not clear which target is raising this error: that’s because it’s not a target that is raising this error, but the pipeline itself! Remember that the pipeline is nothing but a list of targets. If your last target ends with a <code>,</code> character, <code>list()</code> is expecting another element. But because there’s none, this error gets raised. Type <code>list(1,2,)</code> in the console and you will get the same error message. Simply check your last target, there is a <code>,</code> in there that you should remove!</p>
 </section>
 </section>
-<section id="conclusion" class="level2" data-number="15.10">
-<h2 data-number="15.10" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">15.10</span> Conclusion</h2>
+<section id="conclusion" class="level2" data-number="13.10">
+<h2 data-number="13.10" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">13.10</span> Conclusion</h2>
 <p>I hope to have convinced you that you need to add build automation tools to your toolbox. <code>{targets}</code> is a fantastic package, because it takes care of something incredibly tedious for you. By using <code>{targets}</code> you don’t have to remember which objects you need to recompute when you need to change code. You don’t need to rewrite your code to make it run in parallel. And by using <code>{renv}</code>, other users can run your pipeline in a couple of lines and reproduce the results.</p>
 <p>In the next chapter, we will be going deeper in the iceberg of reproducibility still.</p>
 
@@ -1738,12 +1748,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="./testing.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Testing your code</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Testing your code</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="./repro_cont.html" class="pagination-link">
-        <span class="nav-page-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Reproducible analytical pipelines with Docker</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Reproducible analytical pipelines with Docker</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
