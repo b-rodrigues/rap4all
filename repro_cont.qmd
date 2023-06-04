@@ -1104,7 +1104,7 @@ owner@localhost ➤ docker run --rm --name housing_container -v \
 ::: {.content-visible when-format="pdf"}
 ```bash
 owner@localhost $ docker run --rm --name housing_container -v \
-                  /host/path/to/shared_folder:/home/housing/shared_folder:rw \
+                  /host/path/to/shared_folder: /home/housing/shared_folder:rw \
                   housing_image
 ```
 :::
@@ -1406,7 +1406,12 @@ RUN cd /home/housing && R -e "targets::tar_make()"
 CMD mv /home/housing/pipeline_output/* /home/housing/shared_folder/
 ```
 
-Take a look at this Dockerfile’s first line: `FROM rap4all/dev_env_r:4.2.2`.
+Take a look at this Dockerfile’s first line:
+
+```
+FROM rap4all/dev_env_r:4.2.2`
+```
+
 This is different from before, where I pulled from `ubuntu:jammy`. Now I’m
 re-using the image that defines the development environment, and I can do so
 for as many projects as necessary. In time, I could update to a newer version

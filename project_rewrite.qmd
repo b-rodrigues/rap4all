@@ -532,8 +532,9 @@ commune_level_data <- commune_level_data %>%
                         NA)) %>%
   fill(p0_m2, .direction = "down") %>%
   ungroup() %>%
-  mutate(pl = average_price_nominal_euros/p0*100,
-         pl_m2 = average_price_m2_nominal_euros/p0_m2*100)
+  mutate(
+    pl = average_price_nominal_euros/p0*100,
+    pl_m2 = average_price_m2_nominal_euros/p0_m2 * 100)
 
 
 #Let’s also compute it for the whole country:
@@ -547,11 +548,12 @@ country_level_data <- country_level_data %>%
                         average_price_m2_nominal_euros,
                         NA)) %>%
   fill(p0_m2, .direction = "down") %>%
-  mutate(pl = average_price_nominal_euros/p0*100,
-         pl_m2 = average_price_m2_nominal_euros/p0_m2*100)
+  mutate(
+    pl = average_price_nominal_euros/p0*100,
+    pl_m2 = average_price_m2_nominal_euros/p0_m2 * 100)
 
 ```
- 
+
 As you can see, this is almost exactly the same code twice. The only difference
 between the two code snippets, is that we need to group by commune when
 computing the Laspeyeres index for the communes (remember, this index will make
@@ -581,8 +583,9 @@ get_laspeyeres <- function(dataset, start_year = "2010"){
                           NA)) %>%
     fill(p0_m2, .direction = "down") %>%
     ungroup() %>%
-    mutate(pl = average_price_nominal_euros/p0*100,
-           pl_m2 = average_price_m2_nominal_euros/p0_m2*100)
+    mutate(
+      pl = average_price_nominal_euros/p0*100,
+      pl_m2 = average_price_m2_nominal_euros/p0_m2*100)
 
 }
 

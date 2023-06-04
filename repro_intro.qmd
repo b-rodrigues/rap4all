@@ -281,38 +281,75 @@ owner@localhost $ cat renv.lock
 ```
 :::
 
+::: {.content-visible when-format="pdf"}
 ```json
 {
-  "R": {
-    "Version": "4.2.2",
-    "Repositories": [
-      {
-        "Name": "CRAN",
-        "URL": "https://packagemanager.rstudio.com/all/latest"
-      }
-    ]
+"R": {
+  "Version": "4.2.2",
+  "Repositories": [
+  {
+   "Name": "CRAN",
+   "URL": "https://packagemanager.rstudio.com/ all/latest"
+  }
+  ]
+},
+"Packages": {
+  "MASS": {
+    "Package": "MASS",
+    "Version": "7.3-58.1",
+    "Source": "Repository",
+    "Repository": "CRAN",
+    "Hash": "762e1804143a332333c054759f89a706",
+    "Requirements": []
   },
-  "Packages": {
-    "MASS": {
-      "Package": "MASS",
-      "Version": "7.3-58.1",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Hash": "762e1804143a332333c054759f89a706",
-      "Requirements": []
-    },
-    "Matrix": {
-      "Package": "Matrix",
-      "Version": "1.5-1",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Hash": "539dc0c0c05636812f1080f473d2c177",
-      "Requirements": [
-        "lattice"
-      ]
+  "Matrix": {
+    "Package": "Matrix",
+    "Version": "1.5-1",
+    "Source": "Repository",
+    "Repository": "CRAN",
+    "Hash": "539dc0c0c05636812f1080f473d2c177",
+    "Requirements": [
+      "lattice"
+    ]
 
-      ***and many more packages***
+    ***and many more packages***
 ```
+:::
+
+::: {.content-hidden when-format="pdf"}
+```json
+{
+"R": {
+  "Version": "4.2.2",
+  "Repositories": [
+  {
+   "Name": "CRAN",
+   "URL": "https://packagemanager.rstudio.com/all/latest"
+  }
+  ]
+},
+"Packages": {
+  "MASS": {
+    "Package": "MASS",
+    "Version": "7.3-58.1",
+    "Source": "Repository",
+    "Repository": "CRAN",
+    "Hash": "762e1804143a332333c054759f89a706",
+    "Requirements": []
+  },
+  "Matrix": {
+    "Package": "Matrix",
+    "Version": "1.5-1",
+    "Source": "Repository",
+    "Repository": "CRAN",
+    "Hash": "539dc0c0c05636812f1080f473d2c177",
+    "Requirements": [
+      "lattice"
+    ]
+
+    ***and many more packages***
+```
+:::
 
 The `renv.lock` file is a json file listing all the packages, as well as their
 dependencies, that are used for the project. At the top of the file, the R
@@ -368,10 +405,17 @@ get asked once more if you want to proceed, type `y` and watch as the packages
 get installed. If you pay attention to the links, you should see that many of
 them get pulled from the CRAN archive, for example:
 
+::: {.content-visible when-format="pdf"}
 ```r
-Retrieving
-  'https://cloud.r-project.org/src/contrib/Archive/vroom/vroom_1.5.5.tar.gz' ...
+Retrieving 'https://cloud.r-project.org/src/contrib/Archive /vroom/vroom_1.5.5.tar.gz'
 ```
+:::
+
+::: {.content-hidden when-format="pdf"}
+```r
+Retrieving 'https://cloud.r-project.org/src/contrib/Archive/vroom/vroom_1.5.5.tar.gz'
+```
+:::
 
 Notice the word "Archive" in the url? That’s because this project uses `{vroom}`
 1.5.5, but as of writing (early 2023), `{vroom}` is at version 1.6.1.

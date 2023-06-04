@@ -743,28 +743,33 @@ So it would look like this:
 create_table(mtcars, "am")
 ```
 
-We don’t want to create these sections for every variable by hand.
+We don’t want to create these sections for
+every variable by hand.
 
-Instead, we can define a function that returns the R markdown 
-code required to create this. This is this function:
+Instead, we can define a function that
+returns the R markdown code required to
+create this. This is this function:
 
 ```{r}
 return_section <- function(dataset, var){
   a <- knitr::knit_expand(text = c(
-                       "## Frequency table for variable: {{variable}}",
-                       create_table(dataset, var)),
-                     variable = var)
+               ## Frequency table for variable: {{variable}}",
+                create_table(dataset, var)),
+                variable = var)
   cat(a, sep = "\n")
 }
 ```
 
-This new function, `return_section()` uses `knitr::knit_expand()` 
-to generate R Markdown code. Words between `{{}}` get replaced by 
-the provided `var` argument to the function. So when we call 
-`return_section("am")`, `{{variable}}` is replaced by `"am"`.
-`"am"` then gets passed down to `create_table()` and the
-frequency table gets generated. We can now generate all the 
-section by simply applying our function to a list of column names:
+This new function, `return_section()` uses 
+`knitr::knit_expand()` to generate RMarkdown 
+code. Words between `{{}}` get replaced by 
+the provided `var` argument to the function. 
+So when we call `return_section("am")`, 
+`{{variable}}` is replaced by `"am"`. `"am"` 
+then gets passed down to `create_table()` 
+and the frequency table gets generated. 
+We can now generate all the section by simply
+applying our function to a list of column names:
 
 ```{r, results = "asis"}
 invisible(lapply(colnames(mtcars), return_section, dataset = mtcars))
@@ -772,7 +777,7 @@ invisible(lapply(colnames(mtcars), return_section, dataset = mtcars))
 
 ````
 
-The last function, named `return_section()` uses `knitr::knit_expand()`, which
+The last function, named `return_section()` uses `knit_expand()`, which
 is the function that does the heavy lifting. This function returns literal R
 Markdown code. It returns `## Frequency table for variable: {{variable}}` which
 creates a level 2 section title with the text *Frequency table for variable:
@@ -820,22 +825,22 @@ remove the call to `invisible()` and knit the document and see what happens with
 the output, replace the call to `lapply()` with `purrr::walk()` or
 `purrr::map()`. Really take the time to understand what is going on.
 
-While extremely powerful, this approach using `knitr::knit_expand()` only works
-if your template only contains text. If you need to print something more
-complicated in the document, you need to use child documents instead. For
-example, suppose that instead of a table we wanted to show a plot made using
-`{ggplot2}`. This would not work, because a ggplot object is not made of text,
-but is a list with many elements. The `print()` method for ggplot objects then
-does some magic and prints a plot. But if you want to show plots using
-`knitr::knit_expand()`, then the contents of the list will be shown, not the
-plot itself. This is where child documents come in. Child documents are exactly
-what you think they are: they’re smaller documents that get knitted and then
-embedded into the parent document. You can define anything within these child
-documents, and as such you can even use them to print more complex objects, like
-a ggplot object. Let’s go back to the example from before and make use of a
-child document (for ease of presentation, we will not use a separate Rmd file,
-but will inline the child document into the main document). Read the Rmd example
-below carefully, as all the steps are explained:
+While extremely powerful, this approach using `knit_expand()` only works if your
+template only contains text. If you need to print something more complicated in
+the document, you need to use child documents instead. For example, suppose that
+instead of a table we wanted to show a plot made using `{ggplot2}`. This would
+not work, because a ggplot object is not made of text, but is a list with many
+elements. The `print()` method for ggplot objects then does some magic and
+prints a plot. But if you want to show plots using `knitr::knit_expand()`, then
+the contents of the list will be shown, not the plot itself. This is where child
+documents come in. Child documents are exactly what you think they are: they’re
+smaller documents that get knitted and then embedded into the parent document.
+You can define anything within these child documents, and as such you can even
+use them to print more complex objects, like a ggplot object. Let’s go back to
+the example from before and make use of a child document (for ease of
+presentation, we will not use a separate Rmd file, but will inline the child
+document into the main document). Read the Rmd example below carefully, as all
+the steps are explained:
 
 ````{verbatim}
 ---

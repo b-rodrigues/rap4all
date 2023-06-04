@@ -1130,7 +1130,8 @@ as well as some functions from the `{dplyr}`, `{purrr}`, `{ggplot2}` and
 `{tidyr}` packages. I will be downloading data that I made available inside a
 package, but instead of installing the package, I will download the `.rda` file
 directly (which is the file format of packaged data) and then load that data
-into our R session:
+into our R session (instead of downloading from the long Github url, I download
+the data from a shortened *is.gd* link):
 
 ```{r}
 # Create a temporary file
@@ -1138,8 +1139,9 @@ unemp_path <- tempfile(fileext = ".rda")
 
 # Download the data and save it to the path of the temporary file
 # avoids having to install the package from Github
-download.file("https://github.com/b-rodrigues/myPackage/raw/main/data/unemp.rda",
-              destfile = unemp_path)
+download.file(
+  "https://is.gd/l57cNX",
+  destfile = unemp_path)
 
 # Load the data. The data is now available as 'unemp'
 load(unemp_path)
@@ -1610,8 +1612,9 @@ use `with_tempfile()`:
 
 ```{r, warning = FALSE}
 withr::with_tempfile("unemp", {
-  download.file("https://github.com/b-rodrigues/myPackage/raw/main/data/unemp.rda",
-                destfile = unemp)
+  download.file(
+    "https://is.gd/l57cNX",
+    destfile = unemp)
   load(unemp)
   nrow(unemp)
   }
