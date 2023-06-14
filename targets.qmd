@@ -990,10 +990,10 @@ list(
 )
 ```
 
-Running this pipeline with `tar_make()` will now compile the source
-`.Rmd` file into ar `.html` file that you can open in your web-browser. Even if
-you want to compile the document into another format, I advise you to develop
-using the `.html` format. This is because you can open the `.html` file in the
+Running this pipeline with `tar_make()` will now compile the source `.Rmd` file
+into an `.html` file that you can open in your web-browser. Even if you want to
+compile the document into another format, I advise you to develop using the
+`.html` format. This is because you can open the `.html` file in the
 web-browser, and keep working on the source. Each time you run the pipeline
 after you made some changes to the file, you simply need to refresh the
 web-browser to see your changes. If instead you compile a Word document, you
@@ -1002,8 +1002,8 @@ which is quite annoying. A good second reason to have output in the `.html`
 format is that HTML is a text-only format, and thus can be tracked with version
 control systems covered in @sec-chapter-github. The MS Word format is binary,
 and tracking it in Git is always an undecipherable mess. Keep in mind though
-that HTML files can get large, in which case you may want to not track the
-output `.html`. 
+that `.html` files can get large, in which case you may want to not track them,
+but only track the source `.Rmd` instead.
 
 If you open the output file, you should be seeing something quite plain looking:
 
@@ -1050,7 +1050,7 @@ write.csv(head(mtcars),
 
 and run the pipeline again. Because the data changed and every target depends on
 the data, the document gets entirely rebuilt. I hope that you see why this is
-really great: in case you need to be build weekly, daily, heck, even hourly
+really great: in case you need to build weekly, daily, heck, even hourly
 reports, by using `{targets}` the updated report can now get built
 automatically, and the targets that are not impacted by these recurrent updates
 will not need to be recomputed. Restore the data by running:
@@ -1061,12 +1061,12 @@ write.csv(mtcars,
           row.names = F)
 ```
 
-and rebuilding the document by running the pipeline.
+and rebuild the document by running the pipeline.
 
 Now that the pipeline runs well, we can work a little on the document itself, by
 transforming the output into a nice looking table using `{flextable}`. But there
 is an issue however: the output of `summary()` on a `data.frame` object is not a
-`data.frame`, but a `table` and`flextable::flextable()` expects a `data.frame`.
+`data.frame`, but a `table` and `flextable::flextable()` expects a `data.frame`.
 So if you call `flextable::flextable()` on the output of `summary()`, you’ll get
 an error message. Instead, we need a replacement for `summary()` that outputs a
 `data.frame`. This replacement is `skimr::skim()`; let’s go back to our pipeline
