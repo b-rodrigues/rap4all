@@ -306,8 +306,8 @@ reason to use Quarto, Quarto is not tied to R. Quarto is actually a standalone
 tool that needs to be installed alongside your R installation, and works
 completely independently. In fact, you can use Quarto without having R installed
 at all, as Quarto, just like `{knitr}` supports many engines. This means that if
-you’re primarily using Python, you can author documents with Quarto that
-executed Python chunks. Quarto also supports the Julia programming language and
+you’re primarily using Python, you can use Quarto to author documents that mix
+Python chunks and prose. Quarto also supports the Julia programming language and
 Observable JS, making it possible to include interactive visualisations into an
 Html document. Let’s take a look at how the example from Leisch’s paper looks as
 a Qmd (Quarto’s flavour of Markdown) file:
@@ -417,12 +417,12 @@ you don't even need a working Word installation to compile documents to the
 `docx` format). However, if you already have a working LaTeX installation, you
 shouldn’t have to do anything else to generate PDF documents. If you don’t have
 a working LaTeX distribution, then Yihui Xie, the creator of `{knitr}` created
-an R package called `{tinytex}` that make it extremely easy to install. In
-fact, this is the way I recommend installing LaTeX even if you’re not an R user
-(it is possible to use the tinytex distribution without R; it’s just that the
-`{tinytex}` R package provides many functions that makes installing and
-maintaining it very easy). Simply run these commands in an R console to get
-started:
+an R package called `{tinytex}` which you can use to install a working LaTeX
+distribution very easily. In fact, this is the way I recommend installing LaTeX
+even if you’re not an R user (it is possible to use the tinytex distribution
+without R; it’s just that the `{tinytex}` R package provides many functions that
+makes installing and maintaining it very easy). Simply run these commands in an
+R console to get started:
 
 ```{r, eval = F}
 install.packages("tinytex")
@@ -571,12 +571,13 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 ````
 
-This is an R chunk named `setup` and with the option `include = FALSE`. Naming
-chunks is optional, but we are going to make use of this later on. The code that
-runs in this chunk defines a global option to show the source code from all the
-chunks by default (which is the default behaviour). You can change `TRUE` to
-`FALSE` if you want to hide every code chunk instead (if you’re using Quarto,
-global options are set
+This is an R chunk named `setup` with the option `include = FALSE` (so neither
+the chunk itself, nor the output it produces will be shown in the compiled
+document). Naming chunks is optional, but we are going to make use of this later
+on. The code that runs in this chunk defines a global option to show the source
+code from all the chunks by default (which is the default behaviour). You can
+change `TRUE` to `FALSE` if you want to hide every code chunk instead (if you’re
+using Quarto, global options are set
 [differently](https://quarto.org/docs/computations/execution-options.html
 )^[https://quarto.org/docs/computations/execution-options.html]).
 
@@ -959,6 +960,21 @@ document, try to print other types of output, really take your time to
 understand this. To know more about child documents, take a look at [this
 section](https://bookdown.org/yihui/rmarkdown-cookbook/child-document.html#child-document)^[https://is.gd/gAqzf9]
 of the R Markdown Cookbook (@xie2020r).
+
+By the way, if you wish to add a table of contents to your document, change the 
+header to this:
+
+
+````{verbatim}
+---
+title: "Templating with child documents and TOC"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+date: "2023-01-27"
+---
+````
 
 ### Tables in R Markdown documents
 
