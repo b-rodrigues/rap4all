@@ -14,6 +14,7 @@ sheets <- excel_sheets(raw_data)
 read_clean <- function(..., sheet){
   read_excel(..., sheet = sheet) |>
     mutate(year = sheet)
+}
 
 raw_data <- map(
   sheets,
@@ -127,5 +128,6 @@ communes[which(communes == "Petange")] <- "Pétange"
 setdiff(unique(commune_level_data$locality), communes)
 
 # save the data (uncomment if you need to save)
+# you may need to create the `datasets` folder first
 write.csv(commune_level_data, "datasets/commune_level_data.csv", row.names = TRUE)
 write.csv(country_level_data, "datasets/country_level_data.csv", row.names = TRUE)
