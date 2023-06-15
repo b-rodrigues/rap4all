@@ -126,5 +126,5 @@ wincrange_plot <- ggplot(data_to_plot) +
 ggsave("plots/lux_plot.pdf", lux_plot)
 ggsave("plots/esch_plot.pdf", esch_plot)
 ggsave("plots/mamer_plot.pdf", mamer_plot)
-ggsave("plots/schengen_plot.pdf", schenger_plot)
+ggsave("plots/schengen_plot.pdf", schengen_plot)
 ggsave("plots/wincrange_plot.pdf", wincrange_plot)
