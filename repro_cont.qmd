@@ -27,8 +27,54 @@ well).
 
 Next comes the operating system on which the pipeline was developed. In
 practice, this rarely matters, but there have been cases where the same code
-produces different results on different operating systems, sometimes even
-on different versions of the same operating system!
+produced different results on different operating systems, sometimes even on
+different versions of the same operating system! For example, @neupane2019
+discuss their attempt at reproducing a paper from 2014. The original scripts and
+data were available, and yet they were not able to reproduce the results, even
+though they made sure to use the same version of Python that the original
+authors from 2014 were using. The reason was the operating system: they were
+conducting their replication exercise on a different operating system, and this
+was causing the results to be different. What was going on? The original script
+relied on how the operating system ordered the files for analysis. If the files
+were ordered in a different way, the results would be different. And file
+ordering is operating system dependent! The table below, from @neupane2019,
+shows how the results vary depending on which operating system the script runs:
+
+::: {.content-hidden when-format="pdf"}
+<figure>
+    <img src="images/neupane_table1.png"
+         alt="Different operating system yield different results."></img>
+    <figcaption>Different operating system yield different results.</figcaption>
+</figure>
+:::
+
+
+::: {.content-visible when-format="pdf"}
+```{r, echo = F}
+#| fig-cap: "Different operating system yield different results."
+knitr::include_graphics("images/neupane_table1.png")
+```
+:::
+
+and this table shows how Windows and Ubuntu (Linux) sort files:
+
+::: {.content-hidden when-format="pdf"}
+<figure>
+    <img src="images/neupane_table2.png"
+         alt="Different OS order files differently!"></img>
+    <figcaption>Different OS order files differently!</figcaption>
+</figure>
+:::
+
+::: {.content-visible when-format="pdf"}
+```{r, echo = F}
+#| fig-cap: "Different OS order files differently!"
+knitr::include_graphics("images/neupane_table1.png")
+```
+:::
+
+So the operating system can have an impact, and often an unexpected impact,
+on our pipeline!
 
 And finally, I believe that we are in a transition period when it comes to
 hardware architecture. Apple will very likely completely switch over to an ARM
@@ -67,6 +113,10 @@ f(1, "windows 10 - build 22H2 - patch 10.0.19045.2075",
 and so on. `f()` is only pure as far as the R version currently running `f()` is
 concerned. But everything else should also be taken into account! Remember, in
 technical terms, this means that our function is not referentially transparent.
+This is exactly what happened in the paper from @neupane2019 that I described
+before. The authors relied on a *hidden* state (the order of the files) to
+program their script; in other words, their pipeline was not referentially
+transparent.
 
 To deal with this, I will now teach you how to use Docker. Docker will
 essentially allow you to turn your pipeline referentially transparent, by
