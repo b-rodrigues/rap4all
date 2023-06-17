@@ -464,8 +464,8 @@ Create a second secret with your Docker Hub username called
 secrets.DOCKERHUB_USERNAME }}` in the workflow file, same for your Docker Hub
 token with `${{ secrets.DOCKERHUB_TOKEN }}`.
 
-Finally, we build and push the image to Docker Hub. This is done using one
-single action called `docker/build-push-action@v4`. We use the `tags` option to
+Finally, we build and push the image to Docker Hub. This is done using the
+action called `docker/build-push-action@v4`. We use the `tags` option to
 tag our image. The tag needs to start with your username, followed by a `/`,
 then the image name, and then a version, so something like `bob/r_4.2.2:latest`
 where `latest` would be the latest version of the image that is available.

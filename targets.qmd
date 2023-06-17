@@ -1678,7 +1678,7 @@ with `{withr}`:
 
 ```{r, eval = F}
 withr::with_dir(
-  "path/to/root/of/project", 
+  "path/to/root/of/project",
   targets::tar_load(target_name))
 ```
 
@@ -1686,6 +1686,8 @@ withr::with_dir(
 
 Sometimes, when you try to run the pipeline, you get the following error message:
 
+
+::: {.content-hidden when-format="pdf"}
 ```r
 Error:
 ! Error running targets::tar_make()
@@ -1693,6 +1695,17 @@ Error:
   Tips: https://books.ropensci.org/targets/debugging.html
   Last error: argument 9 is empty
 ```
+:::
+
+::: {.content-visible when-format="pdf"}
+```r
+Error:
+! Error running targets::tar_make()
+  Target errors: targets::tar_meta(fields = error, complete_only = TRUE)
+  Tips: https://books.ropensci.org/targets/ debugging.html
+  Last error: argument 9 is empty
+```
+:::
 
 The last line is what interests us here: "Last error: argument 9 is empty". It
 is not clear which target is raising this error: that’s because it’s not a
