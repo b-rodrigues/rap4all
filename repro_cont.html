@@ -54,7 +54,26 @@ div.sourceCode
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -378,7 +397,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul>
 <p>But there are still many variables that we need to consider. If we go back to the reproducibility iceberg, you will notice that we can still go deeper. As the code stands now, we did our best using programming paradigms and libraries, but now we need to consider other aspects.</p>
 <p>As already mentioned in the introduction and Chapter 10, <code>{renv}</code> <em>only</em> restores package versions. The R version used for the analysis only gets recorded. So to make sure that the pipeline reproduces the same results, you’d need to install the same R version that was used to build the pipeline originally. But installing the right R version can be difficult sometimes; it depends on the operating system you want to install it on, and how old a version we’re talking about. Installing R 4.0 on Windows should be quite easy, but I wouldn’t be very keen on trying to install R 2.15.0 (released on March 2012) on a current Linux distribution (and it might be problematic even on Windows as well).</p>
-<p>Next comes the operating system on which the pipeline was developed. In practice, this rarely matters, but there have been cases where the same code produces different results on different operating systems, sometimes even on different versions of the same operating system!</p>
+<p>Next comes the operating system on which the pipeline was developed. In practice, this rarely matters, but there have been cases where the same code produced different results on different operating systems, sometimes even on different versions of the same operating system! For example, <span class="citation" data-cites="neupane2019">Bhandari Neupane et al. (<a href="references.html#ref-neupane2019" role="doc-biblioref">2019</a>)</span> discuss their attempt at reproducing a paper from 2014. The original scripts and data were available, and yet they were not able to reproduce the results, even though they made sure to use the same version of Python that the original authors from 2014 were using. The reason was the operating system: they were conducting their replication exercise on a different operating system, and this was causing the results to be different. What was going on? The original script relied on how the operating system ordered the files for analysis. If the files were ordered in a different way, the results would be different. And file ordering is operating system dependent! The table below, from <span class="citation" data-cites="neupane2019">Bhandari Neupane et al. (<a href="references.html#ref-neupane2019" role="doc-biblioref">2019</a>)</span>, shows how the results vary depending on which operating system the script runs:</p>
+<figure class="figure">
+<img src="images/neupane_table1.png" alt="Different operating system yield different results." class="figure-img">
+<figcaption class="figure-caption">
+Different operating system yield different results.
+</figcaption>
+</figure>
+<p>and this table shows how Windows and Ubuntu (Linux) sort files:</p>
+<figure class="figure">
+<img src="images/neupane_table2.png" alt="Different OS order files differently!" class="figure-img">
+<figcaption class="figure-caption">
+Different OS order files differently!
+</figcaption>
+</figure>
+<p>So the operating system can have an impact, and often an unexpected impact, on our pipeline!</p>
 <p>And finally, I believe that we are in a transition period when it comes to hardware architecture. Apple will very likely completely switch over to an ARM architecture with their Apple silicon CPUs (as of writing, the Mac Pro is the only computer manufactured by Apple that doesn’t use an Apple silicon CPU and only because it was released in 2019) and it wouldn’t surprise me if other manufacturers follow suit and develop their own ARM cpus. This means that projects written today may not run anymore in the future, because of this architecture changes. Libraries compiled for current architectures would need to be recompiled for ARM, and that may be difficult.</p>
 <p>So, as I explained in the previous chapter, we want our pipeline to be the composition of pure functions. Nothing in the global environment (apart from <code>{target}</code>-specific options) should influence the runs of the pipeline. But, what about the environment R is running in? The R engine is itself running in some kind of environment. This is what I’ve explained above: operating system (and all the math libraries that are included in the OS that R relies on to run code) and hardware are variables that need to be recorded and/or frozen as much as possible.</p>
 <p>Think about it this way: when you running a pure function <code>f()</code> of one argument you think you do this:</p>
@@ -387,7 +420,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre><code>f(1, "windows 10 - build 22H2 - patch 10.0.19045.2075", 
   "intel x86_64 cpu i9-13900F", 
   "R version 4.2.2")</code></pre>
-<p>and so on. <code>f()</code> is only pure as far as the R version currently running <code>f()</code> is concerned. But everything else should also be taken into account! Remember, in technical terms, this means that our function is not referentially transparent.</p>
+<p>and so on. <code>f()</code> is only pure as far as the R version currently running <code>f()</code> is concerned. But everything else should also be taken into account! Remember, in technical terms, this means that our function is not referentially transparent. This is exactly what happened in the paper from <span class="citation" data-cites="neupane2019">Bhandari Neupane et al. (<a href="references.html#ref-neupane2019" role="doc-biblioref">2019</a>)</span> that I described before. The authors relied on a <em>hidden</em> state (the order of the files) to program their script; in other words, their pipeline was not referentially transparent.</p>
 <p>To deal with this, I will now teach you how to use Docker. Docker will essentially allow you to turn your pipeline referentially transparent, by freezing R’s and the operating system’s versions (and the CPU architecture as well).</p>
 <p>Before continuing, let me warn you: if you’re using an Apple computer with an Apple Silicon CPU (M1 or M2), then you may have issues following along. I don’t own such a machine so I cannot test if the code below works flawlessly. What I can say is that I’ve read some users of these computers have had trouble using Docker in the past. These issues might have been solved in the meantime. It seems that enabling the option “use Rosetta for x86/amd64 emulation on Apple Silicon” in Docker Desktop (I will discuss Docker Desktop briefly in the following sections) may solve the issue.</p>
 <section id="what-is-docker" class="level2" data-number="14.1">
@@ -897,6 +930,11 @@ CMD mv /home/housing/pipeline_output/* /home/housing/shared_folder/</code></pre>
 <p>In the next and final chapter, we will learn some basics about continuous integration with Github Actions, which will allow us to automate even the building of Docker images and running pipelines.</p>
 
 
+<div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
+<div id="ref-neupane2019" class="csl-entry" role="listitem">
+Bhandari Neupane, Jayanti, Ram P. Neupane, Yuheng Luo, Wesley Y. Yoshida, Rui Sun, and Philip G. Williams. 2019. <span>“Characterization of Leptazolines a–d, Polar Oxazolines from the Cyanobacterium Leptolyngbya Sp., Reveals a Glitch with the <span>‘Willoughby–Hoye’</span> Scripts for Calculating NMR Chemical Shifts.”</span> <em>Organic Letters</em> 21 (20): 8449–53.
+</div>
+</div>
 </section>
 <section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr>
