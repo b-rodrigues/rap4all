@@ -218,8 +218,7 @@ knitr::include_graphics("images/hello_rmd.PNG")
 Just like in a Sweave document, an Rmd source file also has a header in which
 authors can define a number of general options. Here I’ve only specified that I wanted a
 pdf document as an output file. I then copy and pasted the contents from the
-Sweave source, but changed the chunk delimiters from `<<>>=` and `@` to ````
-```{r} ```` to start an R chunk and ```` ``` ```` to end it. Remember; we need
+Sweave source, but changed the chunk delimiters from `<<>>=` and `@` to ```` ```{r} ```` to start an R chunk and ```` ``` ```` to end it. Remember; we need
 to specify the engine in the chunk because `{knitr}` supports many engines. For
 example, it is possible to run a bash command by adding this chunk to the
 source:
