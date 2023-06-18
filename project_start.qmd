@@ -202,7 +202,7 @@ explain what these packages do, in case you're not familiar with them. The
 aggregating group-wise. `{purrr}` is a package for functional programming, a
 programming paradigm that I'll introduce later in the book, `{readxl}` reads in
 Excel workbooks, `{stringr}` is a package for manipulating strings, and finally
-`{janitor}` (@firke2023) provides some very nice functions, to perform some
+`{janitor}` [@firke2023] provides some very nice functions, to perform some
 common tasks like easily rename every column of a data frame in snake case.
 
 Next, the code below downloads the data, and puts it in a data frame:
@@ -246,7 +246,7 @@ raw_data <- raw_data |>
   select(year, locality, n_offers, starts_with("average"))
 ```
 
-If you are familiar with the `{tidyverse}` (@wickham2019b) the above code should
+If you are familiar with the `{tidyverse}` [@wickham2019b] the above code should
 be quite easy to follow. We start by downloading the raw Excel file and saving
 the sheet names into a variable. We then use a function called `read_clean()`,
 which takes the path to the Excel file and the sheet names as an argument to
