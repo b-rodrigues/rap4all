@@ -12,7 +12,7 @@ to test, document, share, and ultimately rerun.
 
 ## Introduction
 
-Remember that the philosophy of part one of this book is "don’t repeat
+Remember that the philosophy of part one of this book is "don't repeat
 yourself". In this chapter we will see how we can reduce the amount of code as
 much as possible. In the previous chapter we’ve seen how Bruno was able to get
 rid of many lines of code (that were all the same) by writing a single function:
@@ -373,7 +373,7 @@ bad(5)
 
 This will return `15`. But if `y <- 45` then `bad(5)` would this time around
 return `50`. It is much safer, and clearer to make `y` an explicit input of the
-function instead of having to keep track of `y`’s value (and it’s so easy to do,
+function instead of having to keep track of `y`’s value (and it's so easy to do,
 why just not do it):
 
 ```{r, eval = F}
@@ -383,7 +383,7 @@ good <- function(x, y){
 ```
 
 `good()` is a referentially transparent function; it is much safer than `bad()`.
-`good()` is also a pure function, because it’s a function that does not interact
+`good()` is also a pure function, because it's a function that does not interact
 in any way with the global environment. It does not write anything to the global
 environment, nor requires anything from the global environment. Function `h()`
 from the previous section was not pure, because it created an object and wrote
@@ -402,7 +402,7 @@ Contrary to what the name implies, this means that functions, especially the
 ones you define yourself, are nothing special. A function is an object like any
 other, and can thus be manipulated as such. Think of anything that you can do
 with any object in R, and you can do the same thing with a function. For
-example, let’s consider the `+()` function. It takes two numeric objects and
+example, let's consider the `+()` function. It takes two numeric objects and
 returns their sum:
 
 ```{r}
@@ -417,7 +417,7 @@ You can replace the numbers with functions that return numbers:
 sqrt(1) + log(5.3)
 ```
 
-It’s also possible to define a function that explicitly takes another function
+It's also possible to define a function that explicitly takes another function
 as an input:
 
 ```{r}
@@ -437,7 +437,7 @@ h(10, log10)
 Because `h()` takes another function as an argument, `h()` is called a
 higher-order function.
 
-If you don’t know how many arguments `f()`, the function you’re wrapping, has,
+If you don't know how many arguments `f()`, the function you're wrapping, has,
 you can use the `...`:
 
 ```{r}
@@ -446,7 +446,7 @@ h <- function(number, f, ...){
 }
 ```
 
-`...` are simply a placeholder for any potential additional argument that `f()`
+`...` are simply a place-holder for any potential additional argument that `f()`
 might have:
 
 ```{r}
@@ -455,7 +455,7 @@ h(c(1, 2, NA, 3), mean, na.rm = TRUE)
 h(c(1, 2, NA, 3), mean, na.rm = FALSE)
 ```
 
-`na.rm` is an argument of `mean()`. As the developer of `h()`, I don’t
+`na.rm` is an argument of `mean()`. As the developer of `h()`, I don't
 necessarily know what `f()` might be, but even if I knew what `f()` would be and
 knew all its arguments, I might not want to list them all. So I can use `...`
 instead. The following is also possible:
@@ -514,7 +514,7 @@ Error in strict_sqrt(-10) : x is negative
 ```
 
 However, it can be quite tedious to redefine every function that we need in our
-pipeline, and remember, we don’t want to repeat ourselves. So, because functions
+pipeline, and remember, we don't want to repeat ourselves. So, because functions
 are nothing special, we can define a function that takes a function as an
 argument, converts any warning thrown by that function into an error, and
 returns a new function. For example:
@@ -560,7 +560,7 @@ s_log(-4)
 Error in value[[3L]](cond) : Can't do that chief
 ```
 
-Functions that return functions are called *function factories* and they’re
+Functions that return functions are called *function factories* and they're
 incredibly useful. I use this so much that I've written a package, available on
 CRAN, called `{chronicler}`, that does this:
 
@@ -627,7 +627,7 @@ the body of the function.
 ### Safe functions
 
 It is important that your functions are safe and predictable. You should avoid
-writing functions that behave like the `nchar()` base function. Let’s see why
+writing functions that behave like the `nchar()` base function. Let's see why
 this function is not safe:
 
 ```{r}
@@ -640,7 +640,7 @@ It returns the expected result of 8. But what if I remove the quotes?
 nchar(10000000)
 ```
 
-What is going on here? I’ll give you a hint: simply type `10000000` in the
+What is going on here? I'll give you a hint: simply type `10000000` in the
 console:
 
 ```{r}
@@ -650,7 +650,7 @@ console:
 `10000000` gets represented as `1e+07` by R. This number in scientific notation
 gets then converted into the character "1e+07" by `nchar()`, and this conversion
 happens silently. `nchar()` then counts the number of characters, and
-*correctly* returns 5. The problem is that it doesn’t make sense to provide a
+*correctly* returns 5. The problem is that it doesn't make sense to provide a
 number to a function that expects a character. This function should have
 returned an error message, or at the very least raised a warning that the number
 got converted into a character. Here is how you could rewrite `nchar()` to make
@@ -697,7 +697,7 @@ factorial function. However, there is an issue with recursive functions (in the
 R programming language, other programming languages may not have the same
 problem, like Haskell): while it is sometimes easier to write a function using a
 recursive algorithm than an iterative algorithm, like for the factorial
-function, recursive functions in R are quite slow. Let’s take a look at two
+function, recursive functions in R are quite slow. Let's take a look at two
 definitions of the factorial function, one recursive, the other iterative:
 
 ```{r}
@@ -736,12 +736,12 @@ Unit: microseconds
 ```
 
 We see that the recursive factorial function is 10 times slower than the
-iterative version. In this particular example it doesn’t make much of a
-difference, because the functions only take microseconds to run. But if you’re
+iterative version. In this particular example it doesn't make much of a
+difference, because the functions only take microseconds to run. But if you're
 working with more complex functions, this is a problem. If you want to keep
 using the recursive function and not switch to an iterative algorithm, there are
-ways to make them faster. The first is called *trampolining*. I won’t go into
-details, but if you’re interested, there is an R package that allows you to use
+ways to make them faster. The first is called *trampolining*. I won't go into
+details, but if you're interested, there is an R package that allows you to use
 trampolining with R, aptly called
 [`{trampoline}`](https://rdinnager.github.io/trampoline/)^[https://rdinnager.github.io/trampoline/].
 Another solution is using the [`{memoise}`](https://memoise.r-lib.org/)^[https://memoise.r-lib.org/] package.

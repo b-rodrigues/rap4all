@@ -21,18 +21,18 @@ Git Bash (on Windows) or in a terminal (for Linux and macOS) should result in
 this:
 
 ::: {.content-hidden when-format="pdf"}
-```
+```bash
 owner@localhost ➤ git status
 ```
 :::
 
 ::: {.content-visible when-format="pdf"}
-```
+```bash
 owner@localhost $ git status
 ```
 :::
 
-```
+```bash
 On branch master
 nothing to commit, working tree clean
 ```
@@ -42,18 +42,18 @@ If that’s the case, congrats, we can start working. Start by creating a new br
 and call it `rmd`:
 
 ::: {.content-hidden when-format="pdf"}
-```
+```bash
 owner@localhost ➤ git checkout -b rmd
 ```
 :::
 
 ::: {.content-visible when-format="pdf"}
-```
+```bash
 owner@localhost $ git checkout -b rmd
 ```
 :::
 
-```
+```bash
 Switched to a new branch 'rmd'
 ```
 
@@ -61,17 +61,17 @@ We will now be working on this branch, simply work as usual, but when pushing, m
 sure to push to the `rmd` branch:
 
 ::: {.content-hidden when-format="pdf"}
-```
+```bash
 owner@localhost ➤ git add .
-owner@localhost ➤ git commit -am "some changes"
+owner@localhost ➤ git commit -m "some changes"
 owner@localhost ➤ git push origin rmd
 ```
 :::
 
 ::: {.content-visible when-format="pdf"}
-```
+```bash
 owner@localhost $ git add .
-owner@localhost $ git commit -am "some changes"
+owner@localhost $ git commit -m "some changes"
 owner@localhost $ git push origin rmd
 ```
 :::
