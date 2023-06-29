@@ -12,3 +12,8 @@ want to support this initiative.
 A print version through Amazon Kindle Direct Publishing is also planned.
 
 If you spot a typo, feel free to open an issue or pull request.
+
+## NEWS
+
+2023-06-29: A typo was spotted on the PDF version of the book, at the top of 
+page 468. The command after `docker push:` was missing. This is now fixed.
