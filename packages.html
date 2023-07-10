@@ -348,7 +348,7 @@ div.csl-indent {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#benefits-of-packages" id="toc-benefits-of-packages" class="nav-link active" data-scroll-target="#benefits-of-packages"><span class="header-section-number">11.1</span> Benefits of packages</a></li>
+  <li><a href="#benefits-of" id="toc-benefits-of" class="nav-link active" data-scroll-target="#benefits-of"><span class="header-section-number">11.1</span> Benefits of</a></li>
   <li><a href="#fusen-quickstart" id="toc-fusen-quickstart" class="nav-link" data-scroll-target="#fusen-quickstart"><span class="header-section-number">11.2</span> <code>{fusen}</code> quickstart</a></li>
   <li><a href="#turning-our-rmds-into-a-package" id="toc-turning-our-rmds-into-a-package" class="nav-link" data-scroll-target="#turning-our-rmds-into-a-package"><span class="header-section-number">11.3</span> Turning our Rmds into a package</a></li>
   <li><a href="#including-datasets" id="toc-including-datasets" class="nav-link" data-scroll-target="#including-datasets"><span class="header-section-number">11.4</span> Including datasets</a></li>
@@ -400,8 +400,8 @@ div.csl-indent {
 <p>If you have written an Rmd file, you have (almost) already written a package.</p>
 </blockquote>
 <p>But you could just as well start directly with an empty <code>{fusen}</code> package template, and then start your analysis from there. Package development with <code>{fusen}</code> is simply writing RMarkdown code.</p>
-<section id="benefits-of-packages" class="level2" data-number="11.1">
-<h2 data-number="11.1" class="anchored" data-anchor-id="benefits-of-packages"><span class="header-section-number">11.1</span> Benefits of packages</h2>
+<section id="benefits-of" class="level2" data-number="11.1">
+<h2 data-number="11.1" class="anchored" data-anchor-id="benefits-of"><span class="header-section-number">11.1</span> Benefits of</h2>
 <p>Let’s first go over the benefits of turning your analysis into a package once again, as this is crucial.</p>
 <p>The main point is not to turn the analysis into a package to publish on CRAN (but you can if you want to). The point is that when you analyse data, you have to write a lot of custom code, and very often, you don’t expect to write that much custom code when starting. Let’s think about our little project: all we wanted was to create some plots from Luxembourguish houses’ price data. And yet, we had to scrape Wikipedia on two occasions, clean an Excel file, and write a test… the project is quite modest but the amount of code (and thus opportunities to make mistakes) is quite large. But, that’s not something that we could have anticipated, hence why we didn’t start the analysis by writing a package but a script (or an <code>.Rmd</code>) instead. But then as this script grows larger and larger, we realise that we might need something else than a simple <code>.Rmd</code> file and this is when we would start writing a package. Without <code>{fusen}</code>, we would almost need to start from scratch.</p>
 <p>The other benefit of turning all this code into a package is that we get a clear separation between the code that we wrote purely to get our analysis going (what I called the <em>software development part</em> before) from the analysis itself (which would then typically consist in computing descriptive statistics, running regression or machine learning models, and visualisation). This then in turn means that we can more easily maintain and update each part separately. So the pure software development part goes into the package, which then gives us the possibility to use many great tools to ensure that our code is properly documented and tested, and then the analysis can go inside a purely reproducible pipeline. Putting the code into a package also makes it easier to reuse across projects.</p>
@@ -687,24 +687,28 @@ div.csl-indent {
 <section id="code-cannot-be-hosted" class="level3" data-number="11.5.2">
 <h3 data-number="11.5.2" class="anchored" data-anchor-id="code-cannot-be-hosted"><span class="header-section-number">11.5.2</span> Code cannot be hosted</h3>
 <p>If the code cannot be hosted, then you have to share it <em>manually</em>. That’s less than ideal, but sometimes there simply is no alternative. In that case, you need to prepare a compressed archive that you can share. This is easily done using <code>devtools::build()</code>. Start a new session in the root directory of you package, and run <code>devtools::build()</code>. This will create a <code>.tar.gz</code> file that you can send to your teammates, or archive for future you. Ideally, before creating this file, you should go to <code>0-dev_history.Rmd</code> and update the version number in the <code>fusen::fill_description()</code> function, like so:</p>
-<pre><code>fusen::fill_description(
-  pkg = here::here(),
-  fields = list(
-    Title = "Housing Data For Luxembourg",
-    Version = "0.1", # notice that I’ve added a version number here
-    Description = "This package contains functions to get,
-                   clean and analyse housing price data for Luxembourg.",
-    `Authors@R` = c(
-      person("Bruno", "Rodrigues", email = "bruno@brodrigues.co",
-             role = c("aut", "cre"),
-             comment = c(ORCID = "0000-0002-3211-3689"))
-    )
-  )
-, overwrite = TRUE) # you need to add overwrite = TRUE to overwrite the file</code></pre>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>fusen<span class="sc">::</span><span class="fu">fill_description</span>(</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">pkg =</span> here<span class="sc">::</span><span class="fu">here</span>(),</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">fields =</span> <span class="fu">list</span>(</span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">Title =</span> <span class="st">"Housing Data For Luxembourg"</span>,</span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">Version =</span> <span class="st">"0.1"</span>, <span class="co"># notice that I’ve added a version number here</span></span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">Description =</span> <span class="st">"This package contains functions to get,</span></span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a><span class="st">                   clean and analyse housing price data for Luxembourg."</span>,</span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">Authors@R</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">c</span>(</span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>      <span class="fu">person</span>(<span class="st">"Bruno"</span>, <span class="st">"Rodrigues"</span>, <span class="at">email =</span> <span class="st">"bruno@brodrigues.co"</span>,</span>
+<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a>             <span class="at">role =</span> <span class="fu">c</span>(<span class="st">"aut"</span>, <span class="st">"cre"</span>),</span>
+<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a>             <span class="at">comment =</span> <span class="fu">c</span>(<span class="at">ORCID =</span> <span class="st">"0000-0002-3211-3689"</span>))</span>
+<span id="cb31-12"><a href="#cb31-12" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb31-13"><a href="#cb31-13" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb31-14"><a href="#cb31-14" aria-hidden="true" tabindex="-1"></a>, <span class="at">overwrite =</span> <span class="cn">TRUE</span>) <span class="co"># you need to add overwrite = TRUE to overwrite the file</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 <p>You have to be very disciplined here, because you have to make sure that you keep updating this and documenting which version of the package should get used for which project. Also, make sure that you can store generated <code>.tar.gz</code> alongside the project and that you provide clear installation instructions. To install a package from a <code>.tar.gz</code> file, open a new R session and run the following:</p>
-<div class="sourceCode" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_local</span>(</span>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_local</span>(</span>
 <span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"path/to/package/housing_0.0.0.9000.tar.gz"</span></span>
 <span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>     )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 </section>
 <section id="marketing-your-work" class="level3" data-number="11.5.3">
 <h3 data-number="11.5.3" class="anchored" data-anchor-id="marketing-your-work"><span class="header-section-number">11.5.3</span> Marketing your work</h3>
