@@ -39,7 +39,7 @@ But you could just as well start directly with an empty `{fusen}` package
 template, and then start your analysis from there. Package development with
 `{fusen}` is simply writing RMarkdown code.
 
-## Benefits of packages
+## Benefits of 
 
 Let’s first go over the benefits of turning your analysis into a package once
 again, as this is crucial.
@@ -887,7 +887,7 @@ to your teammates, or archive for future you. Ideally, before creating this
 file, you should go to `0-dev_history.Rmd` and update the version number in the
 `fusen::fill_description()` function, like so:
 
-```
+```{r, eval = F}
 fusen::fill_description(
   pkg = here::here(),
   fields = list(
@@ -911,7 +911,7 @@ alongside the project and that you provide clear installation instructions. To
 install a package from a `.tar.gz` file, open a new R session and run the
 following:
 
-```r
+```{r, eval = F}
 remotes::install_local(
   "path/to/package/housing_0.0.0.9000.tar.gz"
      )
