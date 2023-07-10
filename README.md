@@ -15,5 +15,7 @@ If you spot a typo, feel free to open an issue or pull request.
 
 ## NEWS
 
+2023-07-10: Two formatting issues were fixed on pages 338 and 419 from the PDF.
+
 2023-06-29: A typo was spotted on the PDF version of the book, at the top of 
 page 468. The command after `docker push:` was missing. This is now fixed.
