@@ -887,7 +887,8 @@ to your teammates, or archive for future you. Ideally, before creating this
 file, you should go to `0-dev_history.Rmd` and update the version number in the
 `fusen::fill_description()` function, like so:
 
-```{r, eval = F}
+````{verbatim}
+```{r description, eval=FALSE}
 fusen::fill_description(
   pkg = here::here(),
   fields = list(
@@ -903,6 +904,7 @@ fusen::fill_description(
   )
 , overwrite = TRUE) # you need to add overwrite = TRUE to overwrite the file
 ```
+````
 
 You have to be very disciplined here, because you have to make sure that you
 keep updating this and documenting which version of the package should get used
