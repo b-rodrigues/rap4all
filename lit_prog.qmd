@@ -753,7 +753,7 @@ create this. This is this function:
 ```{r}
 return_section <- function(dataset, var){
   a <- knitr::knit_expand(text = c(
-               ## Frequency table for variable: {{variable}}",
+               "## Frequency table for variable: {{variable}}",
                 create_table(dataset, var)),
                 variable = var)
   cat(a, sep = "\n")
@@ -984,7 +984,7 @@ that I recommend tick the following two important boxes:
 - Work the same way regardless of output format (Word, PDF or Html);
 - Work for any type of table: summary tables, regression tables, two-way tables, etc.
 
-Let's start with the simplest type of table, which would is a table that simply
+Let's start with the simplest type of table, which would be a table that simply
 shows some rows of data. `{knitr}` comes with the `kable()` function, but this
 function generates a very plain looking output. For something
 publication-worthy, we recommend the `{flextable}` package, developed by
