@@ -352,7 +352,7 @@ We can scrape current communes:
 ```{r}
 get_current_communes <- function(
                  url = "https://w.wiki/6nPu",
-                 table_position = 1
+                 table_position = 2
                  ){
 
   read_html(url) %>%
