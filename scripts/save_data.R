@@ -94,11 +94,11 @@ country_level_data <- full_join(country_level, offers_country) |>
 current_communes <- "https://en.wikipedia.org/wiki/List_of_communes_of_Luxembourg" |>
   rvest::read_html() |>
   rvest::html_table() |>
-  purrr::pluck(1) |>
+  purrr::pluck(2) |>
   janitor::clean_names()
 
 # Test if all communes are there
-setdiff(unique(commune_level_data$locality), current_communes$commune)
+setdiff(unique(commune_level_data$locality), current_communes$name_2)
 
 # We need former communes
 former_communes <- "https://en.wikipedia.org/wiki/Communes_of_Luxembourg#Former_communes" |>  
