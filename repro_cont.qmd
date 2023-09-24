@@ -82,7 +82,7 @@ architecture with their Apple silicon CPUs (as of writing, the Mac Pro is the
 only computer manufactured by Apple that doesn't use an Apple silicon CPU and
 only because it was released in 2019) and it wouldn't surprise me if other
 manufacturers follow suit and develop their own ARM cpus. This means that
-projects written today may not run anymore in the future, because of this
+projects written today may not run anymore in the future, because of these
 architecture changes. Libraries compiled for current architectures would need to
 be recompiled for ARM, and that may be difficult.
 
@@ -534,7 +534,7 @@ Google search (but I'm giving it to you, dear reader, for free).
 
 Then come `RUN` statements. The first one uses Ubuntu's package manager to first
 refresh the repositories (this ensures that our local Ubuntu installation
-repositories are in synch with the latest software updates that were pushed to
+repositories are in sync with the latest software updates that were pushed to
 the central Ubuntu repos). Then we use Ubuntu's package manager to install
 `r-base`. `r-base` is the package that installs R. We then finish this
 Dockerfile by running `CMD ["R"]`. This is the command that will be executed
@@ -587,7 +587,7 @@ What is going on here? When you run a container, the command specified by `CMD`
 gets executed, and then the container quits. So here, the container ran the
 command `R`, which started the R interpreter, but then quit immediately. When
 quitting R, users should specify if they want to save or not save the workspace.
-This is what the message above is telling us. So, how can be use this? Is there
+This is what the message above is telling us. So, how can we use this? Is there
 a way to use this R version interactively?
 
 Yes, there is a way to use this R version boxed inside our Docker image
@@ -694,7 +694,7 @@ as a file. I’ll explain how later.
 The Rocker project offers many different images, which are described
 [here](https://rocker-project.org/images/)^[https://rocker-project.org/images/].
 We are going to be using the *versioned* images. These are images that ship
-specific versions of R. This way, it doesn't matter when the image gets build,
+specific versions of R. This way, it doesn't matter when the image gets built,
 the same version of R will be installed by getting built from source. Let me
 explain why building R from source is important. When we build the image from
 the Dockerfile we wrote before, R gets installed from the Ubuntu repositories.
@@ -882,7 +882,7 @@ and final step:
 
 This runs the `R` program from the Linux command line with the option `-e`. This
 option allows you to pass an `R` expression to the command line, which needs to
-be written between `""`. Using `R -e` will quickly become an habit, because this
+be written between `""`. Using `R -e` will quickly become a habit, because this
 is how you can run R non-interactively, from the command line. The expression we
 pass sets the working directory to `/home/housing`, and then we use
 `renv::init()` and `renv::restore()` to restore the packages from the
@@ -1086,7 +1086,7 @@ the R session in the right directory. So we move to the right directory, then we
 run the pipeline using `R -e "targets::tar_make()"`. Notice that we do both
 operations within a `RUN` statement. This means that the pipeline will run at
 build-time (remember, `RUN` statements run at build-time, `CMD` statements at
-run-time). In order words, the image will contain the outputs. This way, if the
+run-time). In other words, the image will contain the outputs. This way, if the
 build process and the pipeline take a long time to run, you can simply leave
 them running overnight for example. In the morning, while sipping on your
 coffee, you can then simply run the container to instantly get the outputs. This
@@ -1320,7 +1320,7 @@ By following these two rules, you should keep any issues to a minimum. When or
 if you need to update R and/or the package library on your machine, simply
 create a new Docker image that reflects these changes.
 
-However, if work in a field where operating system versions matter, then yes,
+However, if you work in a field where operating system versions matter, then yes,
 you should find a way to either use the dockerized environment for development,
 or you should install Ubuntu on your computer (the same version as in Docker of
 course).
@@ -1636,7 +1636,7 @@ needs mitigation, and thus a plan B. This plan B could be to host the images
 yourself, by saving them using `docker save`. Or you could even self-host an
 image registry (or lobby your employer/institution/etc to host a registry for
 its developers/data scientists/researchers). In any case, it's good to have
-options and now what potential risks using this technology entail.
+options and know what potential risks using this technology entail.
 
 ### Is Docker enough?
 
