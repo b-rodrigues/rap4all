@@ -329,7 +329,7 @@ We’re now scraping data from Wikipedia of former Luxembourguish communes:
 
 ```{r}
 get_former_communes <- function(
-            url = "https://w.wiki/_wFe7",
+            url = "https://is.gd/lux_former_communes",
             min_year = 2009,
             table_position = 3
             ){
@@ -351,8 +351,8 @@ We can scrape current communes:
 
 ```{r}
 get_current_communes <- function(
-                 url = "https://w.wiki/6nPu",
-                 table_position = 1
+                 url = "https://is.gd/lux_communes",
+                 table_position = 2
                  ){
 
   read_html(url) %>%
