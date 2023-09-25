@@ -617,96 +617,52 @@ Always look at your data.
 </div>
 </div>
 <p>Now the data looks clean, and we can start the actual analysis… or can we? Before proceeding, it would be nice to make sure that we got every commune in there. For this, we need a list of communes from Luxembourg. <a href="https://en.wikipedia.org/wiki/List_of_communes_of_Luxembourg">Thankfully, Wikipedia has such a list</a><a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a>.</p>
-<p>Let’s scrape and save this list:</p>
+<p>An issue with scraping tables off the web is that they might change in the future. It is therefore a good idea to save the page by right clicking on it and then selecting save as, and then re-hosting it. I use Github pages to re-host the Wikipedia page above <a href="https://b-rodrigues.github.io/list_communes/">here</a>. I now have full control of this page, and won’t get any bad surprises if someone decides to eventually update it. Instead of re-hosting it, you could simply save it as any other file of your project.</p>
+<p>So let’s scrape and save this list:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>current_communes <span class="ot">&lt;-</span> <span class="st">"https://w.wiki/6nPu"</span> <span class="sc">|&gt;</span></span>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>current_communes <span class="ot">&lt;-</span> <span class="st">"https://is.gd/lux_communes"</span> <span class="sc">|&gt;</span></span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  rvest<span class="sc">::</span><span class="fu">read_html</span>() <span class="sc">|&gt;</span></span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  rvest<span class="sc">::</span><span class="fu">html_table</span>() <span class="sc">|&gt;</span></span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  purrr<span class="sc">::</span><span class="fu">pluck</span>(<span class="dv">1</span>) <span class="sc">|&gt;</span></span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>  janitor<span class="sc">::</span><span class="fu">clean_names</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  purrr<span class="sc">::</span><span class="fu">pluck</span>(<span class="dv">2</span>) <span class="sc">|&gt;</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>  janitor<span class="sc">::</span><span class="fu">clean_names</span>() <span class="sc">|&gt;</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(name_2 <span class="sc">!=</span> <span class="st">"Name"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">rename</span>(<span class="at">commune =</span> name_2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>We scrape the table from the Wikipedia page using <code>{rvest}</code>. <code>rvest::html_table()</code> returns a list of tables from the Wikipedia table, and then we use <code>purrr::pluck()</code> to keep the first table from the website, which is what we need (I made the calls to the packages explicit, because you might not be familiar with these packages). <code>janitor::clean_names()</code> transforms column names written for human eyes into machine-friendly names (for example <code>Growth rate in %</code> would be transformed to <code>growth_rate_in_percent</code>).</p>
+<p>We scrape the table from the re-hosted Wikipedia page using <code>{rvest}</code>. <code>rvest::html_table()</code> returns a list of tables from the Wikipedia table, and then we use <code>purrr::pluck()</code> to keep the second table from the website, which is what we need (I made the calls to the packages explicit, because you might not be familiar with these packages). <code>janitor::clean_names()</code> transforms column names written for human eyes into machine-friendly names (for example <code>Growth rate in %</code> would be transformed to <code>growth_rate_in_percent</code>) and then I use the <code>{dplyr}</code> package for some further cleaning and renaming.</p>
 <p>Let’s see if we have all the communes in our data:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">setdiff</span>(<span class="fu">unique</span>(commune_level_data<span class="sc">$</span>locality),</span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>        current_communes<span class="sc">$</span>commune)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Unknown or uninitialised column: `commune`.</code></pre>
-</div>
 <div class="cell-output cell-output-stdout">
-<pre><code>  [1] "Bascharage"           "Beaufort"            
-  [3] "Bech"                 "Beckerich"           
-  [5] "Berdorf"              "Bertrange"           
-  [7] "Bettembourg"          "Bettendorf"          
-  [9] "Betzdorf"             "Bissen"              
- [11] "Biwer"                "Boevange-sur-Attert" 
- [13] "Boulaide"             "Bourscheid"          
- [15] "Bous"                 "Burmerange"          
- [17] "Clémency"             "Clervaux"            
- [19] "Colmar-Berg"          "Consdorf"            
- [21] "Consthum"             "Contern"             
- [23] "Dalheim"              "Diekirch"            
- [25] "Differdange"          "Dippach"             
- [27] "Dudelange"            "Echternach"          
- [29] "Ell"                  "Ermsdorf"            
- [31] "Erpeldange"           "Esch-sur-Alzette"    
- [33] "Esch-sur-Sûre"        "Eschweiler"          
- [35] "Ettelbruck"           "Feulen"              
- [37] "Fischbach"            "Flaxweiler"          
- [39] "Frisange"             "Garnich"             
- [41] "Goesdorf"             "Grevenmacher"        
- [43] "Grosbous"             "Heffingen"           
- [45] "Heiderscheid"         "Heinerscheid"        
- [47] "Hesperange"           "Hobscheid"           
- [49] "Hoscheid"             "Hosingen"            
- [51] "Junglinster"          "Kayl"                
- [53] "Kehlen"               "Kiischpelt"          
- [55] "Koerich"              "Kopstal"             
- [57] "Lac de la Haute-Sûre" "Larochette"          
- [59] "Lenningen"            "Leudelange"          
- [61] "Lintgen"              "Lorentzweiler"       
- [63] "Luxembourg"           "Mamer"               
- [65] "Manternach"           "Medernach"           
- [67] "Mersch"               "Mertert"             
- [69] "Mertzig"              "Mompach"             
- [71] "Mondercange"          "Mondorf-les-Bains"   
- [73] "Munshausen"           "Neunhausen"          
- [75] "Niederanven"          "Nommern"             
- [77] "Pétange"              "Préizerdaul"         
- [79] "Putscheid"            "Rambrouch"           
- [81] "Reckange-sur-Mess"    "Redange-sur-Attert"  
- [83] "Reisdorf"             "Remich"              
- [85] "Roeser"               "Rosport"             
- [87] "Rumelange"            "Saeul"               
- [89] "Sandweiler"           "Sanem"               
- [91] "Schengen"             "Schieren"            
- [93] "Schifflange"          "Schuttrange"         
- [95] "Septfontaines"        "Stadtbredimus"       
- [97] "Steinfort"            "Steinsel"            
- [99] "Strassen"             "Tandel"              
-[101] "Troisvierges"         "Tuntange"            
-[103] "Useldange"            "Vianden"             
-[105] "Vichten"              "Wahl"                
-[107] "Waldbillig"           "Waldbredimus"        
-[109] "Walferdange"          "Weiler-la-Tour"      
-[111] "Weiswampach"          "Wellenstein"         
-[113] "Wiltz"                "Wincrange"           
-[115] "Winseler"             "Wormeldange"         
-[117] "Kaerjeng"             "Parc Hosingen"       
-[119] "Vallée de l'Ernz"     "Habscht"             
-[121] "Helperknapp"          "Rosport-Mompach"     </code></pre>
+<pre><code> [1] "Bascharage"          "Boevange-sur-Attert"
+ [3] "Burmerange"          "Clémency"           
+ [5] "Clervaux"            "Consthum"           
+ [7] "Diekirch"            "Echternach"         
+ [9] "Ermsdorf"            "Erpeldange"         
+[11] "Esch-sur-Alzette"    "Eschweiler"         
+[13] "Grevenmacher"        "Heiderscheid"       
+[15] "Heinerscheid"        "Hobscheid"          
+[17] "Hoscheid"            "Hosingen"           
+[19] "Luxembourg"          "Mamer"              
+[21] "Medernach"           "Mersch"             
+[23] "Mompach"             "Munshausen"         
+[25] "Neunhausen"          "Redange-sur-Attert" 
+[27] "Remich"              "Rosport"            
+[29] "Septfontaines"       "Tuntange"           
+[31] "Vianden"             "Wellenstein"        
+[33] "Wiltz"               "Kaerjeng"           </code></pre>
 </div>
 </div>
-<p>We see many communes that are in our <code>commune_level_data</code>, but not in <code>current_communes</code>. There’s one obvious reason: differences in spelling, for example, “Kaerjeng” in our data, but “Käerjeng” in the table from Wikipedia. But there’s also a less obvious reason; since 2010, several communes have merged into new ones. So there are communes that are in our data in 2010 and 2011, but disappear from 2012 onwards. So we need to do several things: first, get a list of all existing communes from 2010 onwards, and then, harmonise spelling. Here again, we can use a list from Wikipedia:</p>
+<p>We see many communes that are in our <code>commune_level_data</code>, but not in <code>current_communes</code>. There’s one obvious reason: differences in spelling, for example, “Kaerjeng” in our data, but “Käerjeng” in the table from Wikipedia. But there’s also a less obvious reason; since 2010, several communes have merged into new ones. So there are communes that are in our data in 2010 and 2011, but disappear from 2012 onwards. So we need to do several things: first, get a list of all existing communes from 2010 onwards, and then, harmonise spelling. Here again, we can use a list from Wikipedia, and here again, I decide to re-host it on Github pages to avoid problems in the future:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>former_communes <span class="ot">&lt;-</span> <span class="st">"https://w.wiki/_wFe7"</span> <span class="sc">|&gt;</span></span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  rvest<span class="sc">::</span><span class="fu">read_html</span>() <span class="sc">|&gt;</span></span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  rvest<span class="sc">::</span><span class="fu">html_table</span>() <span class="sc">|&gt;</span></span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>  purrr<span class="sc">::</span><span class="fu">pluck</span>(<span class="dv">3</span>) <span class="sc">|&gt;</span></span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>  janitor<span class="sc">::</span><span class="fu">clean_names</span>() <span class="sc">|&gt;</span></span>
-<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(year_dissolved <span class="sc">&gt;</span> <span class="dv">2009</span>)</span>
-<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>former_communes</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>former_communes <span class="ot">&lt;-</span> <span class="st">"https://is.gd/lux_former_communes"</span> <span class="sc">|&gt;</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  rvest<span class="sc">::</span><span class="fu">read_html</span>() <span class="sc">|&gt;</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  rvest<span class="sc">::</span><span class="fu">html_table</span>() <span class="sc">|&gt;</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>  purrr<span class="sc">::</span><span class="fu">pluck</span>(<span class="dv">3</span>) <span class="sc">|&gt;</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>  janitor<span class="sc">::</span><span class="fu">clean_names</span>() <span class="sc">|&gt;</span></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(year_dissolved <span class="sc">&gt;</span> <span class="dv">2009</span>)</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>former_communes</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 20 × 3
    name                year_dissolved reason                
@@ -735,78 +691,30 @@ Always look at your data.
 </div>
 <p>As you can see, since 2010 many communes have merged to form new ones. We can now combine the list of current and former communes, as well as harmonise their names:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>communes <span class="ot">&lt;-</span> <span class="fu">unique</span>(<span class="fu">c</span>(former_communes<span class="sc">$</span>name,</span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>                     current_communes<span class="sc">$</span>commune))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Unknown or uninitialised column: `commune`.</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># we need to rename some communes</span></span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Different spelling of these communes between wikipedia and the data</span></span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>communes[<span class="fu">which</span>(communes <span class="sc">==</span> <span class="st">"Clemency"</span>)] <span class="ot">&lt;-</span> <span class="st">"Clémency"</span></span>
-<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>communes[<span class="fu">which</span>(communes <span class="sc">==</span> <span class="st">"Redange"</span>)] <span class="ot">&lt;-</span> <span class="st">"Redange-sur-Attert"</span></span>
-<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>communes[<span class="fu">which</span>(communes <span class="sc">==</span> <span class="st">"Erpeldange-sur-Sûre"</span>)] <span class="ot">&lt;-</span> <span class="st">"Erpeldange"</span></span>
-<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>communes[<span class="fu">which</span>(communes <span class="sc">==</span> <span class="st">"Luxembourg-City"</span>)] <span class="ot">&lt;-</span> <span class="st">"Luxembourg"</span></span>
-<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>communes[<span class="fu">which</span>(communes <span class="sc">==</span> <span class="st">"Käerjeng"</span>)] <span class="ot">&lt;-</span> <span class="st">"Kaerjeng"</span></span>
-<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>communes[<span class="fu">which</span>(communes <span class="sc">==</span> <span class="st">"Petange"</span>)] <span class="ot">&lt;-</span> <span class="st">"Pétange"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>communes <span class="ot">&lt;-</span> <span class="fu">unique</span>(<span class="fu">c</span>(former_communes<span class="sc">$</span>name,</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>                     current_communes<span class="sc">$</span>commune))</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="co"># we need to rename some communes</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Different spelling of these communes between wikipedia and the data</span></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>communes[<span class="fu">which</span>(communes <span class="sc">==</span> <span class="st">"Clemency"</span>)] <span class="ot">&lt;-</span> <span class="st">"Clémency"</span></span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>communes[<span class="fu">which</span>(communes <span class="sc">==</span> <span class="st">"Redange"</span>)] <span class="ot">&lt;-</span> <span class="st">"Redange-sur-Attert"</span></span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>communes[<span class="fu">which</span>(communes <span class="sc">==</span> <span class="st">"Erpeldange-sur-Sûre"</span>)] <span class="ot">&lt;-</span> <span class="st">"Erpeldange"</span></span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>communes[<span class="fu">which</span>(communes <span class="sc">==</span> <span class="st">"Luxembourg-City"</span>)] <span class="ot">&lt;-</span> <span class="st">"Luxembourg"</span></span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>communes[<span class="fu">which</span>(communes <span class="sc">==</span> <span class="st">"Käerjeng"</span>)] <span class="ot">&lt;-</span> <span class="st">"Kaerjeng"</span></span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>communes[<span class="fu">which</span>(communes <span class="sc">==</span> <span class="st">"Petange"</span>)] <span class="ot">&lt;-</span> <span class="st">"Pétange"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Let’s run our test again:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">setdiff</span>(<span class="fu">unique</span>(commune_level_data<span class="sc">$</span>locality),</span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>        communes)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">setdiff</span>(<span class="fu">unique</span>(commune_level_data<span class="sc">$</span>locality),</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>        communes)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>  [1] "Beaufort"             "Bech"                
-  [3] "Beckerich"            "Berdorf"             
-  [5] "Bertrange"            "Bettembourg"         
-  [7] "Bettendorf"           "Betzdorf"            
-  [9] "Bissen"               "Biwer"               
- [11] "Boulaide"             "Bourscheid"          
- [13] "Bous"                 "Clervaux"            
- [15] "Colmar-Berg"          "Consdorf"            
- [17] "Contern"              "Dalheim"             
- [19] "Diekirch"             "Differdange"         
- [21] "Dippach"              "Dudelange"           
- [23] "Echternach"           "Ell"                 
- [25] "Erpeldange"           "Esch-sur-Alzette"    
- [27] "Esch-sur-Sûre"        "Ettelbruck"          
- [29] "Feulen"               "Fischbach"           
- [31] "Flaxweiler"           "Frisange"            
- [33] "Garnich"              "Goesdorf"            
- [35] "Grevenmacher"         "Grosbous"            
- [37] "Heffingen"            "Hesperange"          
- [39] "Junglinster"          "Kayl"                
- [41] "Kehlen"               "Kiischpelt"          
- [43] "Koerich"              "Kopstal"             
- [45] "Lac de la Haute-Sûre" "Larochette"          
- [47] "Lenningen"            "Leudelange"          
- [49] "Lintgen"              "Lorentzweiler"       
- [51] "Luxembourg"           "Mamer"               
- [53] "Manternach"           "Mersch"              
- [55] "Mertert"              "Mertzig"             
- [57] "Mondercange"          "Mondorf-les-Bains"   
- [59] "Niederanven"          "Nommern"             
- [61] "Pétange"              "Préizerdaul"         
- [63] "Putscheid"            "Rambrouch"           
- [65] "Reckange-sur-Mess"    "Redange-sur-Attert"  
- [67] "Reisdorf"             "Remich"              
- [69] "Roeser"               "Rumelange"           
- [71] "Saeul"                "Sandweiler"          
- [73] "Sanem"                "Schengen"            
- [75] "Schieren"             "Schifflange"         
- [77] "Schuttrange"          "Stadtbredimus"       
- [79] "Steinfort"            "Steinsel"            
- [81] "Strassen"             "Tandel"              
- [83] "Troisvierges"         "Useldange"           
- [85] "Vianden"              "Vichten"             
- [87] "Wahl"                 "Waldbillig"          
- [89] "Waldbredimus"         "Walferdange"         
- [91] "Weiler-la-Tour"       "Weiswampach"         
- [93] "Wiltz"                "Wincrange"           
- [95] "Winseler"             "Wormeldange"         
- [97] "Kaerjeng"             "Parc Hosingen"       
- [99] "Vallée de l'Ernz"     "Habscht"             
-[101] "Helperknapp"          "Rosport-Mompach"     </code></pre>
+<pre><code> [1] "Clervaux"           "Diekirch"          
+ [3] "Echternach"         "Esch-sur-Alzette"  
+ [5] "Grevenmacher"       "Luxembourg"        
+ [7] "Mamer"              "Mersch"            
+ [9] "Redange-sur-Attert" "Remich"            
+[11] "Vianden"            "Wiltz"             </code></pre>
 </div>
 </div>
 <p>Great! When we compare the communes that are in our data with every commune that has existed since 2010, we don’t have any commune that is unaccounted for. So are we done with cleaning the data? Yes, we can now start with analysing the data. Take a look <a href="https://raw.githubusercontent.com/b-rodrigues/rap4all/master/scripts/save_data.R">here</a><a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a> to see the finalised script. Also read some of the comments that I’ve added. This is a typical R script, and at first glance, one might wonder what is wrong with it. Actually, not much, but the problem if you leave this script as it is, is that it is very likely that we will have problems rerunning it in the future. As it turns out, this script is not reproducible. But we will discuss this in much more detail later on. For now, let’s analyse our cleaned data.</p>
