@@ -691,6 +691,7 @@ is that I’ve added examples:
 ````{verbatim}
 ```{r examples-get_laspeyeres, eval = FALSE}
 #' \dontrun{
+#' country_level_data_laspeyeres <- get_laspeyeres_index(country_level_data)
 #' commune_level_data_laspeyeres <- get_laspeyeres(commune_level_data)
 #' }
 ```
@@ -730,7 +731,7 @@ Something important to notice as well: my fusen-ready `.Rmd` file is simply
 called `save_data.Rmd`, while the generated, inflated file, that will be part of
 the package under the `vignettes/` folder is called `dev-save_data.Rmd`. 
 
-When you inflate you a flat file into a package, the R console will be verbose.
+When you inflate a flat file into a package, the R console will be verbose.
 This lists all files that are created or modified, but there is also a long list
 of checks that run automatically. This is the output of `devtools::check()` that
 is included inside `fusen::inflate()`. This function verifies that your package,
@@ -848,7 +849,7 @@ It is also possible to install the package from a specific branch:
 
 ```{r, eval = F}
 remotes::install_github(
-  "github_username/repository_name@repo_name"
+  "github_username/repository_name@branch_name"
 )
 ```
 
@@ -857,7 +858,7 @@ commit:
 
 ```{r, eval = F}
 remotes::install_github(
-  "github_username/repository_name@repo_name",
+  "github_username/repository_name@branch_name",
   ref = "commit_hash"
 )
 ```

@@ -216,7 +216,7 @@ can find in the `renv` folder. Let’s take a look at the contents of this folde
 
 ::: {.content-hidden when-format="pdf"}
 ```bash
-owner@localhost ➤ ls renv
+owner@localhost ➤ ls -la renv
 ```
 :::
 
@@ -575,7 +575,7 @@ The first problem, and I’m repeating myself here, is that `{renv}` only record
 the R version used for the project, but does not restore it when calling
 `renv::restore()`. You need to install the right R version yourself. On Windows
 this should be fairly easy to do, but then you need to start juggling R versions
-and know which scrips need which R version, which can get confusing.
+and know which scripts need which R version, which can get confusing.
 
 There is the `{rig}` package that makes it easy to install and switch between R
 versions that you could check
