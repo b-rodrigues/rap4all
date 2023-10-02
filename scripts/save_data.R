@@ -97,7 +97,8 @@ current_communes <- "https://is.gd/lux_communes" |>
   purrr::pluck(2) |>
   janitor::clean_names() |>
   dplyr::filter(name_2 != "Name") |>
-  dplyr::rename(commune = name_2)
+  dplyr::rename(commune = name_2) |>
+  dplyr::mutate(commune = stringr::str_remove(commune, " .$"))
 
 # Test if all communes are there
 setdiff(unique(commune_level_data$locality), current_communes$commune)
@@ -121,12 +122,12 @@ communes <- unique(c(former_communes$name, current_communes$commune))
 communes[which(communes == "Clemency")] <- "Clémency"
 communes[which(communes == "Redange")] <- "Redange-sur-Attert"
 communes[which(communes == "Erpeldange-sur-Sûre")] <- "Erpeldange"
-communes[which(communes == "Luxembourg-City")] <- "Luxembourg"
+communes[which(communes == "Luxembourg City")] <- "Luxembourg"
 communes[which(communes == "Käerjeng")] <- "Kaerjeng"
 communes[which(communes == "Petange")] <- "Pétange"
 
 
-# Test if this set is empty, if yes, we’re good
+# Test if this set is empty, if yes, we're good
 setdiff(unique(commune_level_data$locality), communes)
 
 # save the data (uncomment if you need to save)

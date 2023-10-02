@@ -220,6 +220,7 @@ read_clean <- function(..., sheet){
    ) |>
     mutate(locality = str_trim(locality)) |>
     select(year, locality, n_offers, starts_with("average"))
+}
 
 ```
 
@@ -355,10 +356,14 @@ get_current_communes <- function(
                  table_position = 2
                  ){
 
-  read_html(url) %>%
-    html_table() %>%
-    pluck(table_position) %>%
-    clean_names()
+  read_html(url) |>
+    html_table() |>
+    pluck(table_position) |>
+    clean_names() |>
+    filter(name_2 != "Name") |>
+    rename(commune = name_2) |>
+    mutate(commune = str_remove(commune, " .$"))
+
 }
 
 ```
@@ -388,7 +393,7 @@ get_test_communes <- function(former_communes, current_communes){
   communes[which(communes == "Clemency")] <- "Clémency"
   communes[which(communes == "Redange")] <- "Redange-sur-Attert"
   communes[which(communes == "Erpeldange-sur-Sûre")] <- "Erpeldange"
-  communes[which(communes == "Luxembourg-City")] <- "Luxembourg"
+  communes[which(communes == "Luxembourg City")] <- "Luxembourg"
   communes[which(communes == "Käerjeng")] <- "Kaerjeng"
   communes[which(communes == "Petange")] <- "Pétange"
 
