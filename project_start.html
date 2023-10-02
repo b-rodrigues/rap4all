@@ -626,9 +626,10 @@ Always look at your data.
 <span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  purrr<span class="sc">::</span><span class="fu">pluck</span>(<span class="dv">2</span>) <span class="sc">|&gt;</span></span>
 <span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>  janitor<span class="sc">::</span><span class="fu">clean_names</span>() <span class="sc">|&gt;</span></span>
 <span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(name_2 <span class="sc">!=</span> <span class="st">"Name"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">rename</span>(<span class="at">commune =</span> name_2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">rename</span>(<span class="at">commune =</span> name_2) <span class="sc">|&gt;</span></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">commune =</span> stringr<span class="sc">::</span><span class="fu">str_remove</span>(commune, <span class="st">" .$"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>We scrape the table from the re-hosted Wikipedia page using <code>{rvest}</code>. <code>rvest::html_table()</code> returns a list of tables from the Wikipedia table, and then we use <code>purrr::pluck()</code> to keep the second table from the website, which is what we need (I made the calls to the packages explicit, because you might not be familiar with these packages). <code>janitor::clean_names()</code> transforms column names written for human eyes into machine-friendly names (for example <code>Growth rate in %</code> would be transformed to <code>growth_rate_in_percent</code>) and then I use the <code>{dplyr}</code> package for some further cleaning and renaming.</p>
+<p>We scrape the table from the re-hosted Wikipedia page using <code>{rvest}</code>. <code>rvest::html_table()</code> returns a list of tables from the Wikipedia table, and then we use <code>purrr::pluck()</code> to keep the second table from the website, which is what we need (I made the calls to the packages explicit, because you might not be familiar with these packages). <code>janitor::clean_names()</code> transforms column names written for human eyes into machine-friendly names (for example <code>Growth rate in %</code> would be transformed to <code>growth_rate_in_percent</code>) and then I use the <code>{dplyr}</code> package for some further cleaning and renaming; the very last step removes a dagger symbol next to certain communes names, in other words it turns “Commune †” into “Commune”.</p>
 <p>Let’s see if we have all the communes in our data:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">setdiff</span>(<span class="fu">unique</span>(commune_level_data<span class="sc">$</span>locality),</span>
@@ -636,21 +637,16 @@ Always look at your data.
 <div class="cell-output cell-output-stdout">
 <pre><code> [1] "Bascharage"          "Boevange-sur-Attert"
  [3] "Burmerange"          "Clémency"           
- [5] "Clervaux"            "Consthum"           
- [7] "Diekirch"            "Echternach"         
- [9] "Ermsdorf"            "Erpeldange"         
-[11] "Esch-sur-Alzette"    "Eschweiler"         
-[13] "Grevenmacher"        "Heiderscheid"       
-[15] "Heinerscheid"        "Hobscheid"          
-[17] "Hoscheid"            "Hosingen"           
-[19] "Luxembourg"          "Mamer"              
-[21] "Medernach"           "Mersch"             
-[23] "Mompach"             "Munshausen"         
-[25] "Neunhausen"          "Redange-sur-Attert" 
-[27] "Remich"              "Rosport"            
-[29] "Septfontaines"       "Tuntange"           
-[31] "Vianden"             "Wellenstein"        
-[33] "Wiltz"               "Kaerjeng"           </code></pre>
+ [5] "Consthum"            "Ermsdorf"           
+ [7] "Erpeldange"          "Eschweiler"         
+ [9] "Heiderscheid"        "Heinerscheid"       
+[11] "Hobscheid"           "Hoscheid"           
+[13] "Hosingen"            "Luxembourg"         
+[15] "Medernach"           "Mompach"            
+[17] "Munshausen"          "Neunhausen"         
+[19] "Rosport"             "Septfontaines"      
+[21] "Tuntange"            "Wellenstein"        
+[23] "Kaerjeng"           </code></pre>
 </div>
 </div>
 <p>We see many communes that are in our <code>commune_level_data</code>, but not in <code>current_communes</code>. There’s one obvious reason: differences in spelling, for example, “Kaerjeng” in our data, but “Käerjeng” in the table from Wikipedia. But there’s also a less obvious reason; since 2010, several communes have merged into new ones. So there are communes that are in our data in 2010 and 2011, but disappear from 2012 onwards. So we need to do several things: first, get a list of all existing communes from 2010 onwards, and then, harmonise spelling. Here again, we can use a list from Wikipedia, and here again, I decide to re-host it on Github pages to avoid problems in the future:</p>
@@ -709,12 +705,7 @@ Always look at your data.
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">setdiff</span>(<span class="fu">unique</span>(commune_level_data<span class="sc">$</span>locality),</span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>        communes)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1] "Clervaux"           "Diekirch"          
- [3] "Echternach"         "Esch-sur-Alzette"  
- [5] "Grevenmacher"       "Luxembourg"        
- [7] "Mamer"              "Mersch"            
- [9] "Redange-sur-Attert" "Remich"            
-[11] "Vianden"            "Wiltz"             </code></pre>
+<pre><code>[1] "Luxembourg"</code></pre>
 </div>
 </div>
 <p>Great! When we compare the communes that are in our data with every commune that has existed since 2010, we don’t have any commune that is unaccounted for. So are we done with cleaning the data? Yes, we can now start with analysing the data. Take a look <a href="https://raw.githubusercontent.com/b-rodrigues/rap4all/master/scripts/save_data.R">here</a><a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a> to see the finalised script. Also read some of the comments that I’ve added. This is a typical R script, and at first glance, one might wonder what is wrong with it. Actually, not much, but the problem if you leave this script as it is, is that it is very likely that we will have problems rerunning it in the future. As it turns out, this script is not reproducible. But we will discuss this in much more detail later on. For now, let’s analyse our cleaned data.</p>
