@@ -101,7 +101,7 @@ current_communes <- "https://is.gd/lux_communes" |>
   dplyr::mutate(commune = stringr::str_remove(commune, " .$"))
 
 # Test if all communes are there
-setdiff(unique(commune_level_data$locality), current_communes$name_2)
+setdiff(unique(commune_level_data$locality), current_communes$commune)
 
 # We need former communes
 former_communes <- "https://is.gd/lux_former_communes" |>
