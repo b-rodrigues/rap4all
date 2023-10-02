@@ -926,7 +926,7 @@ This pipeline loads the `.csv` file from before and creates a summary of the
 data as well as plot. But we don’t simply want these objects to be saved as
 `.rds` files by the pipeline, we want to be able to use them to write a document
 (either in the `.Rmd` or `.Qmd` format). For this, we need another package,
-called `{tarchetypes}`. This package comes many functions that allow you to
+called `{tarchetypes}`. This package comes with many functions that allow you to
 define new types of targets (these functions are called *target factories* in
 `{targets}` jargon). The new target factory that we need is
 `tarchetypes::tar_render()`. As you can probably guess from the name, this
@@ -1373,7 +1373,7 @@ default, `data()` loads the data in the global environment. But remember, we
 want our function to be pure, meaning, it should only return the data object and
 not load anything into the global environment! So that’s where the temporary
 environment created in the first line of the body of the function comes into
-play. What happens is that the functions loads the data object into this
+play. What happens is that the function loads the data object into this
 temporary environment, which is different from the global environment. Once
 we’re done, we can simply discard this environment, and so our global
 environment stays clean.

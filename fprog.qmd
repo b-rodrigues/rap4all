@@ -484,10 +484,10 @@ sqrt(-5)
 This only raises a warning and returns `NaN` (Not a Number). This can be quite
 dangerous, especially when working non-interactively, which is what we will be
 doing a lot later on. It is much better if a pipeline fails early due to an
-error, than dragging a `NaN` value. This also happens with `sqrt()`:
+error, than dragging a `NaN` value. This also happens with `log10()`:
 
 ```{r}
-sqrt(-10)
+log10(-10)
 ```
 
 So it could be useful to redefine these functions to raise an error instead, for
@@ -705,7 +705,6 @@ fact_iter <- function(n){
   result = 1
   for(i in 1:n){
     result = result * i
-    i = i + 1
   }
   result
 }

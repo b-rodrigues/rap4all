@@ -39,7 +39,7 @@ raw_data <- raw_data |>
 
 str(raw_data)
 
-# Let’s take a look at the spelling
+# Let's take a look at the spelling
 raw_data |>
   dplyr::filter(grepl("Luxembourg", locality)) |>
   dplyr::count(locality)
@@ -91,17 +91,20 @@ country_level_data <- full_join(country_level, offers_country) |>
 
 
 # We need to check if communes are all in our data
-current_communes <- "https://en.wikipedia.org/wiki/List_of_communes_of_Luxembourg" |>
+current_communes <- "https://is.gd/lux_communes" |>
   rvest::read_html() |>
   rvest::html_table() |>
   purrr::pluck(2) |>
-  janitor::clean_names()
+  janitor::clean_names() |>
+  dplyr::filter(name_2 != "Name") |>
+  dplyr::rename(commune = name_2) |>
+  dplyr::mutate(commune = stringr::str_remove(commune, " .$"))
 
 # Test if all communes are there
 setdiff(unique(commune_level_data$locality), current_communes$name_2)
 
 # We need former communes
-former_communes <- "https://en.wikipedia.org/wiki/Communes_of_Luxembourg#Former_communes" |>  
+former_communes <- "https://is.gd/lux_former_communes" |>
   rvest::read_html() |>
   rvest::html_table() |>
   purrr::pluck(3) |>
@@ -119,12 +122,12 @@ communes <- unique(c(former_communes$name, current_communes$commune))
 communes[which(communes == "Clemency")] <- "Clémency"
 communes[which(communes == "Redange")] <- "Redange-sur-Attert"
 communes[which(communes == "Erpeldange-sur-Sûre")] <- "Erpeldange"
-communes[which(communes == "Luxembourg-City")] <- "Luxembourg"
+communes[which(communes == "Luxembourg City")] <- "Luxembourg"
 communes[which(communes == "Käerjeng")] <- "Kaerjeng"
 communes[which(communes == "Petange")] <- "Pétange"
 
 
-# Test if this set is empty, if yes, we’re good
+# Test if this set is empty, if yes, we're good
 setdiff(unique(commune_level_data$locality), communes)
 
 # save the data (uncomment if you need to save)
