@@ -383,23 +383,35 @@ there. For this, we need a list of communes from Luxembourg. [Thankfully,
 Wikipedia has such a
 list](https://en.wikipedia.org/wiki/List_of_communes_of_Luxembourg)^[https://w.wiki/6nPu].
 
-Let's scrape and save this list:
+An issue with scraping tables off the web is that they might change in the
+future. It is therefore a good idea to save the page by right clicking on it and
+then selecting save as, and then re-hosting it. I use Github pages to re-host
+the Wikipedia page above
+[here](https://b-rodrigues.github.io/list_communes/)^[https://is.gd/lux_communes].
+I now have full control of this page, and won't get any bad surprises if someone
+decides to eventually update it. Instead of re-hosting it, you could simply save
+it as any other file of your project.
+
+So let's scrape and save this list:
 
 ```{r}
-current_communes <- "https://w.wiki/6nPu" |>
+current_communes <- "https://is.gd/lux_communes" |>
   rvest::read_html() |>
   rvest::html_table() |>
-  purrr::pluck(1) |>
-  janitor::clean_names()
+  purrr::pluck(2) |>
+  janitor::clean_names() |>
+  dplyr::filter(name_2 != "Name") |>
+  dplyr::rename(commune = name_2)
 ```
 
-We scrape the table from the Wikipedia page using `{rvest}`.
+We scrape the table from the re-hosted Wikipedia page using `{rvest}`.
 `rvest::html_table()` returns a list of tables from the Wikipedia table, and
-then we use `purrr::pluck()` to keep the first table from the website, which is
+then we use `purrr::pluck()` to keep the second table from the website, which is
 what we need (I made the calls to the packages explicit, because you might not
 be familiar with these packages). `janitor::clean_names()` transforms column
 names written for human eyes into machine-friendly names (for example `Growth
-rate in %` would be transformed to `growth_rate_in_percent`).
+rate in %` would be transformed to `growth_rate_in_percent`) and then I use
+the `{dplyr}` package for some further cleaning and renaming.
 
 Let’s see if we have all the communes in our data:
 
@@ -415,10 +427,11 @@ there’s also a less obvious reason; since 2010, several communes have merged
 into new ones. So there are communes that are in our data in 2010 and
 2011, but disappear from 2012 onwards. So we need to do several things: first,
 get a list of all existing communes from 2010 onwards, and then, harmonise
-spelling. Here again, we can use a list from Wikipedia:
+spelling. Here again, we can use a list from Wikipedia, and here again, I decide
+to re-host it on Github pages to avoid problems in the future:
 
 ```{r}
-former_communes <- "https://w.wiki/_wFe7" |>
+former_communes <- "https://is.gd/lux_former_communes" |>
   rvest::read_html() |>
   rvest::html_table() |>
   purrr::pluck(3) |>

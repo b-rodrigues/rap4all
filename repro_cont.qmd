@@ -913,7 +913,7 @@ owner@localhost $ docker run --rm -it --name housing_container housing_image bas
 :::
 
 This starts `bash` (Ubuntu’s command line) inside the `housing_container` that
-gets started from the `housing_image` image. We add the `--rm` flag do `docker
+gets started from the `housing_image` image. We add the `--rm` flag to `docker
 run`, this way the Docker container gets stopped when we log out (if not, then
 the Docker container will continue running in the background). Once logged in,
 we can move to the folder’s project using:

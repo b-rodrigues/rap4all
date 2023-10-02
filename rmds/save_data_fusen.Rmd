@@ -226,3 +226,51 @@ write.csv(country_level_data,
           "datasets/house_prices_country_level_data.csv",
           row.names = FALSE)
 ```
+
+## Functions used for analysis
+
+The following function compute the Laspeyeres prices index:
+
+```{r}
+get_laspeyeres <- function(dataset){
+
+  which_dataset <- deparse(substitute(dataset))
+
+  group_var <- if(grepl("commune", which_dataset)){
+                 quo(locality)
+               } else {
+                 NULL
+               }
+  dataset %>%
+    group_by(!!group_var) %>%
+    mutate(p0 = ifelse(year == "2010", average_price_nominal_euros, NA)) %>%
+    fill(p0, .direction = "down") %>%
+    mutate(p0_m2 = ifelse(year == "2010", average_price_m2_nominal_euros, NA)) %>%
+    fill(p0_m2, .direction = "down") %>%
+    ungroup() %>%
+    mutate(pl = average_price_nominal_euros/p0*100,
+           pl_m2 = average_price_m2_nominal_euros/p0_m2*100)
+
+}
+```
+
+and this function plots the data:
+
+```{r}
+make_plot <- function(commune){
+
+  commune_data <- commune_level_data %>%
+    filter(locality == commune)
+
+  data_to_plot <- bind_rows(
+    country_level_data,
+    commune_data
+  )
+
+  ggplot(data_to_plot) +
+    geom_line(aes(y = pl_m2,
+                  x = year,
+                  group = locality,
+                  colour = locality))
+}
+```

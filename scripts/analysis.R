@@ -3,12 +3,12 @@ library(ggplot2)
 library(purrr)
 library(tidyr)
 
-#Let’s load the datasets:
+#Let's load the datasets:
 
 commune_level_data <- read.csv("datasets/commune_level_data.csv")
 country_level_data <- read.csv("datasets/country_level_data.csv")
 
-#Let’s compute the Laspeyeres index for each commune:
+#Let's compute the Laspeyeres index for each commune:
 
 commune_level_data <- commune_level_data %>%
   group_by(locality) %>%
@@ -21,7 +21,7 @@ commune_level_data <- commune_level_data %>%
          pl_m2 = average_price_m2_nominal_euros/p0_m2*100)
 
 
-#Let’s also compute it for the whole country:
+#Let's also compute it for the whole country:
 
 country_level_data <- country_level_data %>%
   mutate(p0 = ifelse(year == "2010", average_price_nominal_euros, NA)) %>%
@@ -33,7 +33,7 @@ country_level_data <- country_level_data %>%
 
 
 #We are going to create a plot for 5 communes and compare the price evolution in the communes
-#to the national price evolution. Let’s first list the communes:
+#to the national price evolution. Let's first list the communes:
 
 communes <- c("Luxembourg",
               "Esch-sur-Alzette",
@@ -122,7 +122,7 @@ wincrange_plot <- ggplot(data_to_plot) +
                 group = locality,
                 colour = locality))
 
-# Let’s save the plots
+# Let's save the plots
 ggsave("plots/lux_plot.pdf", lux_plot)
 ggsave("plots/esch_plot.pdf", esch_plot)
 ggsave("plots/mamer_plot.pdf", mamer_plot)
