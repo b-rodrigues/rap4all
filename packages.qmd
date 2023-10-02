@@ -466,7 +466,7 @@ to load the needed functions and data.
 Next step, move the functions `get_laspeyeres()` and `make_plot()` from
 `analyse_data.Rmd` to `save_data.Rmd`. Simply cut and paste these functions from
 one `.Rmd` to the other. Make sure `save_data.Rmd` looks something like
-[this](https://gist.githubusercontent.com/b-rodrigues/16952727d35355bf3b9cbd5f37843c20/raw/7e5dc76560f6cbe7281862dc7b6a2f00f79b485b/save_data.Rmd)^[https://is.gd/SpzL88],
+[this](https://raw.githubusercontent.com/b-rodrigues/rap4all/master/rmds/save_data_fusen.Rmd)^[https://is.gd/fusen_save_data],
 take a look at the end of the script to find the functions we’ve moved over. The
 `analyse_data.Rmd` script is exactly the same, minus the functions that we’ve
 just moved over.
@@ -478,7 +478,7 @@ like](https://is.gd/anRjt4)^[https://is.gd/anRjt4] (no worries, I’m going to
 explain how I got there). For consistency with your future use of {fusen}, you could also rename the `save_data.Rmd` to `flat_save_data.Rmd`, although this won't avoid {fusen} to work properly.
 
 Let’s start with the first function, `get_raw_data()`. If you compare the
-[before](https://gist.githubusercontent.com/b-rodrigues/16952727d35355bf3b9cbd5f37843c20/raw/7e5dc76560f6cbe7281862dc7b6a2f00f79b485b/save_data.Rmd)^[https://is.gd/n3m6In]
+[before](https://raw.githubusercontent.com/b-rodrigues/rap4all/master/rmds/save_data_fusen.Rmd)^[https://is.gd/fusen_save_data],
 and [after](https://is.gd/anRjt4)^[https://is.gd/anRjt4], the differences are
 that we have named the chunk containing the function, `function-get_raw_data`
 and added documentation in the form of `{roxygen2}` comments. Naming the chunks
