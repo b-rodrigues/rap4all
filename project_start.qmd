@@ -401,7 +401,8 @@ current_communes <- "https://is.gd/lux_communes" |>
   purrr::pluck(2) |>
   janitor::clean_names() |>
   dplyr::filter(name_2 != "Name") |>
-  dplyr::rename(commune = name_2)
+  dplyr::rename(commune = name_2) |>
+  dplyr::mutate(commune = stringr::str_remove(commune, " .$"))
 ```
 
 We scrape the table from the re-hosted Wikipedia page using `{rvest}`.
@@ -411,7 +412,9 @@ what we need (I made the calls to the packages explicit, because you might not
 be familiar with these packages). `janitor::clean_names()` transforms column
 names written for human eyes into machine-friendly names (for example `Growth
 rate in %` would be transformed to `growth_rate_in_percent`) and then I use
-the `{dplyr}` package for some further cleaning and renaming.
+the `{dplyr}` package for some further cleaning and renaming; the very last
+step removes a dagger symbol next to certain communes names, in other words
+it turns "Commune †" into "Commune".
 
 Let’s see if we have all the communes in our data:
 
