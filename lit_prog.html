@@ -758,7 +758,7 @@ A rendered LaTeX equation.
 <span id="cb20-54"><a href="#cb20-54" aria-hidden="true" tabindex="-1"></a>```{r}</span>
 <span id="cb20-55"><a href="#cb20-55" aria-hidden="true" tabindex="-1"></a>return_section &lt;- function(dataset, var){</span>
 <span id="cb20-56"><a href="#cb20-56" aria-hidden="true" tabindex="-1"></a>  a &lt;- knitr::knit_expand(text = c(</span>
-<span id="cb20-57"><a href="#cb20-57" aria-hidden="true" tabindex="-1"></a>               ## Frequency table for variable: {{variable}}",</span>
+<span id="cb20-57"><a href="#cb20-57" aria-hidden="true" tabindex="-1"></a>               "## Frequency table for variable: {{variable}}",</span>
 <span id="cb20-58"><a href="#cb20-58" aria-hidden="true" tabindex="-1"></a>                create_table(dataset, var)),</span>
 <span id="cb20-59"><a href="#cb20-59" aria-hidden="true" tabindex="-1"></a>                variable = var)</span>
 <span id="cb20-60"><a href="#cb20-60" aria-hidden="true" tabindex="-1"></a>  cat(a, sep = "\n")</span>
@@ -919,7 +919,7 @@ A rendered LaTeX equation.
 <li>Work the same way regardless of output format (Word, PDF or Html);</li>
 <li>Work for any type of table: summary tables, regression tables, two-way tables, etc.</li>
 </ul>
-<p>Let’s start with the simplest type of table, which would is a table that simply shows some rows of data. <code>{knitr}</code> comes with the <code>kable()</code> function, but this function generates a very plain looking output. For something publication-worthy, we recommend the <code>{flextable}</code> package, developed by <span class="citation" data-cites="gohel23">Gohel and Skintzos (<a href="references.html#ref-gohel23" role="doc-biblioref">2023</a>)</span>:</p>
+<p>Let’s start with the simplest type of table, which would be a table that simply shows some rows of data. <code>{knitr}</code> comes with the <code>kable()</code> function, but this function generates a very plain looking output. For something publication-worthy, we recommend the <code>{flextable}</code> package, developed by <span class="citation" data-cites="gohel23">Gohel and Skintzos (<a href="references.html#ref-gohel23" role="doc-biblioref">2023</a>)</span>:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(flextable)</span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a></span>

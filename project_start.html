@@ -617,7 +617,7 @@ Always look at your data.
 </div>
 </div>
 <p>Now the data looks clean, and we can start the actual analysis… or can we? Before proceeding, it would be nice to make sure that we got every commune in there. For this, we need a list of communes from Luxembourg. <a href="https://en.wikipedia.org/wiki/List_of_communes_of_Luxembourg">Thankfully, Wikipedia has such a list</a><a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a>.</p>
-<p>An issue with scraping tables off the web is that they might change in the future. It is therefore a good idea to save the page by right clicking on it and then selecting save as, and then re-hosting it. I use Github pages to re-host the Wikipedia page above <a href="https://b-rodrigues.github.io/list_communes/">here</a>. I now have full control of this page, and won’t get any bad surprises if someone decides to eventually update it. Instead of re-hosting it, you could simply save it as any other file of your project.</p>
+<p>An issue with scraping tables off the web is that they might change in the future. It is therefore a good idea to save the page by right clicking on it and then selecting save as, and then re-hosting it. I use Github pages to re-host the Wikipedia page above <a href="https://b-rodrigues.github.io/list_communes/">here</a><a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a>. I now have full control of this page, and won’t get any bad surprises if someone decides to eventually update it. Instead of re-hosting it, you could simply save it as any other file of your project.</p>
 <p>So let’s scrape and save this list:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>current_communes <span class="ot">&lt;-</span> <span class="st">"https://is.gd/lux_communes"</span> <span class="sc">|&gt;</span></span>
@@ -717,14 +717,14 @@ Always look at your data.
 [11] "Vianden"            "Wiltz"             </code></pre>
 </div>
 </div>
-<p>Great! When we compare the communes that are in our data with every commune that has existed since 2010, we don’t have any commune that is unaccounted for. So are we done with cleaning the data? Yes, we can now start with analysing the data. Take a look <a href="https://raw.githubusercontent.com/b-rodrigues/rap4all/master/scripts/save_data.R">here</a><a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a> to see the finalised script. Also read some of the comments that I’ve added. This is a typical R script, and at first glance, one might wonder what is wrong with it. Actually, not much, but the problem if you leave this script as it is, is that it is very likely that we will have problems rerunning it in the future. As it turns out, this script is not reproducible. But we will discuss this in much more detail later on. For now, let’s analyse our cleaned data.</p>
+<p>Great! When we compare the communes that are in our data with every commune that has existed since 2010, we don’t have any commune that is unaccounted for. So are we done with cleaning the data? Yes, we can now start with analysing the data. Take a look <a href="https://raw.githubusercontent.com/b-rodrigues/rap4all/master/scripts/save_data.R">here</a><a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a> to see the finalised script. Also read some of the comments that I’ve added. This is a typical R script, and at first glance, one might wonder what is wrong with it. Actually, not much, but the problem if you leave this script as it is, is that it is very likely that we will have problems rerunning it in the future. As it turns out, this script is not reproducible. But we will discuss this in much more detail later on. For now, let’s analyse our cleaned data.</p>
 </section>
 <section id="analysing-the-data" class="level2" data-number="3.3">
 <h2 data-number="3.3" class="anchored" data-anchor-id="analysing-the-data"><span class="header-section-number">3.3</span> Analysing the data</h2>
 <p>We are now going to analyse the data. The first thing we are going to do is compute a Laspeyeres price index. This price index allows us to make comparisons through time; for example, the index at year 2012 measures how much more expensive (or cheaper) housing became relative to the base year (2010). However, since we only have one ‘good’ (housing), this index becomes quite simple to compute: it is nothing but the prices at year <em>t</em> divided by the prices in 2010 (if we had a basket of goods, we would need to use the Laspeyeres index formula to compute the index at all periods).</p>
-<p>For this section, I will perform a rather simple analysis. I will immediately show you the R script: take a look at it <a href="https://raw.githubusercontent.com/b-rodrigues/rap4all/master/scripts/analysis.R">here</a><a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a>. For the analysis I selected 5 communes and plotted the evolution of prices compared to the national average.</p>
+<p>For this section, I will perform a rather simple analysis. I will immediately show you the R script: take a look at it <a href="https://raw.githubusercontent.com/b-rodrigues/rap4all/master/scripts/analysis.R">here</a><a href="#fn9" class="footnote-ref" id="fnref9" role="doc-noteref"><sup>9</sup></a>. For the analysis I selected 5 communes and plotted the evolution of prices compared to the national average.</p>
 <p>This analysis might seem trivially simple, but it contains all the needed ingredients to illustrate everything else that I’m going to teach you in this book.</p>
-<p>Most analyses would stop here: after all, we have what we need; our goal was to get the plots for the 5 communes of Luxembourg, Esch-sur-Alzette, Mamer, Schengen (which gave its name to the <a href="https://en.wikipedia.org/wiki/Schengen_Area">Schengen Area</a><a href="#fn9" class="footnote-ref" id="fnref9" role="doc-noteref"><sup>9</sup></a>) and Wincrange. However, let’s ask ourselves the following important questions:</p>
+<p>Most analyses would stop here: after all, we have what we need; our goal was to get the plots for the 5 communes of Luxembourg, Esch-sur-Alzette, Mamer, Schengen (which gave its name to the <a href="https://en.wikipedia.org/wiki/Schengen_Area">Schengen Area</a><a href="#fn10" class="footnote-ref" id="fnref10" role="doc-noteref"><sup>10</sup></a>) and Wincrange. However, let’s ask ourselves the following important questions:</p>
 <ul>
 <li>How easy would it be for someone else to rerun the analysis?</li>
 <li>How easy would it be to update the analysis once new data gets published?</li>
@@ -780,9 +780,10 @@ Wickham, Hadley, Mara Averick, Jennifer Bryan, Winston Chang, Lucy D’Agostino 
 <li id="fn4"><p>https://is.gd/1vvBAc<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn5"><p>https://data.public.lu/en/datasets/prix-annonces-des-logements-par-commune/<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn6"><p>https://w.wiki/6nPu<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn7"><p>https://is.gd/7PhUjd<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn8"><p>https://is.gd/qCJEbi<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn9"><p>https://en.wikipedia.org/wiki/Schengen_Area<a href="#fnref9" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn7"><p>https://is.gd/lux_communes<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn8"><p>https://is.gd/7PhUjd<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn9"><p>https://is.gd/qCJEbi<a href="#fnref9" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn10"><p>https://en.wikipedia.org/wiki/Schengen_Area<a href="#fnref10" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 
