@@ -15,6 +15,10 @@ If you spot a typo, feel free to open an issue or pull request.
 
 ## NEWS
 
+2023-10-03: Several typos were corrected (thanks to the many contributors) and
+            the wikipedia tables that are scraped at the beginning of the book
+            are now re-hosted on Github Pages for reproducibility purposes.
+
 2023-07-10: Two formatting issues were fixed on pages 338 and 419 from the PDF.
 
 2023-06-29: A typo was spotted on the PDF version of the book, at the top of 
