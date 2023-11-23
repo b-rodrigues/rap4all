@@ -447,7 +447,7 @@ div.csl-indent {
 <span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>             <span class="fu">summarize_data</span>(data)) <span class="co"># Call your custom functions.</span></span>
 <span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>The pipeline is nothing but a list (told you lists where a very important object) of <em>targets</em>. A target is defined using the <code>tar_target()</code> function and has at least two inputs: the first is the name of the target (without quotes) and the second is the function that generates the target. So a target defined as <code>tar_target(y, f(x))</code> can be understood as <code>y &lt;- f(x)</code>. The next target can use the output of the previous target as an input, so you could have something like <code>tar_target(z, f(y))</code> (just like in the template).</p>
+<p>The pipeline is nothing but a list (told you lists were a very important object) of <em>targets</em>. A target is defined using the <code>tar_target()</code> function and has at least two inputs: the first is the name of the target (without quotes) and the second is the function that generates the target. So a target defined as <code>tar_target(y, f(x))</code> can be understood as <code>y &lt;- f(x)</code>. The next target can use the output of the previous target as an input, so you could have something like <code>tar_target(z, f(y))</code> (just like in the template).</p>
 </section>
 </section>
 <section id="a-pipeline-is-a-composition-of-pure-functions" class="level2" data-number="13.3">
