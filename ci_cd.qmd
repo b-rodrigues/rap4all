@@ -3,13 +3,13 @@
 As I wrote in the conclusion of the previous chapter, the book could have
 stopped there. So consider this chapter as a bonus. What I’m going to show here
 is not the most important aspect of reproducibility, and you could even make the
-case that is not needed at all. However, I still think that it is worth showing
+case that it is not needed at all. However, I still think that it is worth showing
 you how to use CI/CD, even if only superficially, and then you decide whether
 this is a tool that you should add to your toolbox.
 
 The CI/CD (*C*ontinuous *I*ntegration and *C*ontinuous *D*eployment or
-*D*elivery) platform I’ll be discussing here is Github Actions, which should not
-surprise you since we’ve been using Github for version control. But maybe you’re
+*D*elivery) platform I’ll be discussing here is GitHub Actions, which should not
+surprise you since we’ve been using GitHub for version control. But maybe you’re
 wondering what a "CI/CD platform" even is, so let me start there.
 
 Let’s go back to the first idea of this book: Don’t Repeat Yourself. We have
@@ -34,46 +34,46 @@ According to [Atlassian](https://www.atlassian.com/devops)^[https://www.atlassia
 
 Most of the tools and practices described in this book would make adopting
 DevOps in your day-to-day a breeze. Strictly speaking though, we will be using
-"GitOps", because our Github repository will be the centre stage of our project.
-The Github repository will not only contain the code of our project but also the
-definition of the infrastructure the code will run on. This way, our Github
+"GitOps", because our GitHub repository will be the centre stage of our project.
+The GitHub repository will not only contain the code of our project but also the
+definition of the infrastructure the code will run on. This way, our GitHub
 repository will be a single source of truth.
 
 Concretely this means that each time we will push code (or merge a pull request,
-or perform any other Git-related event) to our Github repository, we can define
+or perform any other Git-related event) to our GitHub repository, we can define
 a certain set of arbitrary actions to get executed, like building a Docker
 image. This image can then be pushed to Docker Hub, or a container can be
 executed. This container in turn can run a pipeline and the output can then be
-downloaded from Github. All of this happens in the cloud, all you need to do is
-push code changes to Github. As stated in the chapter on Git, Github offers 2000
+downloaded from GitHub. All of this happens in the cloud; all you need to do is
+push code changes to GitHub. As stated in the chapter on Git, GitHub offers 2,000
 minutes of computation time a month for CI/CD, which should be really sufficient
 for a lot of purposes (but of course, if your RAP takes hours to complete, you
 might want to run it locally instead).
 
-Github Actions is very flexible, and you could use it to perform many tasks, not
+GitHub Actions is very flexible, and you could use it to perform many tasks, not
 just building Docker images or running containers. For example, this book gets
 built and published online automatically each time I push an update to the
 [repository](https://github.com/b-rodrigues/rap4all)^[https://github.com/b-rodrigues/rap4all]
 holding the book’s source code. If you’re developing a package, you could run `R
 CMD check` each time you push code to the repository. `R CMD check` runs many
 tests, including the package’s unit tests (when using `{fusen}`, `R CMD check`
-is run each time a flat file gets inflated.) and using Github Actions, it’s
+is run each time a flat file gets inflated.) and using GitHub Actions, it’s
 possible to run `R CMD check` on Ubuntu (Linux), Windows and even macOS (see
 [this documentation
 page](https://docs.github.com/en/actions/using-jobs/using-a-matrix-for-your-jobs)^[https://is.gd/F9AOZI]
 if you’re interested).
 
-In this chapter, I’m going to show you how to use Github Actions to:
+In this chapter, I’m going to show you how to use GitHub Actions to:
 
 - run some simple arbitrary code;
 - run a `{targets}` pipeline without Docker;
-- build a Docker image containing a development environment (dev env) and push it to Docker Hub when pushing changes to its Dockerfile on Github;
-- run a Docker container that runs a RAP and builds some output that we can then download from Github.
+- build a Docker image containing a development environment (dev env) and push it to Docker Hub when pushing changes to its Dockerfile on GitHub;
+- run a Docker container that runs a RAP and builds some output that we can then download from GitHub.
 
 Finally, what does *integration* and *deployment* or *delivery* even mean?
 Continuous integration means that changes get merged to the master or main
 branch continuously. Remember Trunk-based development? In TBD, the goal is
-achieving continuous integration, and Gitops is one efficient way of doing so.
+achieving continuous integration, and GitOps is one efficient way of doing so.
 Now, what's the difference between deployment and delivery? Both obviously mean
 that we're shipping a product. The difference is only in how the project is
 managed. If the code gets pushed immediately to production, then we speak of
@@ -85,9 +85,9 @@ deployment simply as "shipping".
 ## CI/CD quickstart for R programmers (and others)
 
 Before defining a "Hello World" pipeline that gets executed in the cloud, I
-need to define some terms. A workflow that runs on Github Actions is defined as
+need to define some terms. A workflow that runs on GitHub Actions is defined as
 a Yaml file, and this file contains a succession of "actions", and each action
-performs a specific task. Here is the simplest Github Actions workflow file 
+performs a specific task. Here is the simplest GitHub Actions workflow file 
 that you could write (source: [link](https://gist.github.com/weibeld/f136048d0a82aacc063f42e684e3c494)^[https://is.gd/9mDykY]):
 
 ```
@@ -102,7 +102,7 @@ jobs:
 ```
 
 This needs to be saved in a `hello_world.yml` file, and placed inside the
-`.github/workflows/` directories in the Github repository you want this 
+`.github/workflows/` directories in the GitHub repository you want this 
 action to run each time something gets pushed to the repo.
 
 Each time code gets pushed to the repository containing this workflow file, a
@@ -111,7 +111,7 @@ workflow file is thus defined as a series of steps, that can either run code, or
 an action (more on actions later) that get executed on a so-called runner (in
 essence, a container). This workflow gets executed when a specific event occurs,
 in the example above that event is pushing to the repo. To see the output of the
-workflow, click on "Actions" on your Github repository:
+workflow, click on "Actions" on your GitHub repository:
 
 ::: {.content-hidden when-format="pdf"}
 <figure>
@@ -151,10 +151,10 @@ knitr::include_graphics("images/ga_hello-world.png")
 
 To help you define complex workflows, you can use pre-defined actions that you
 can choose from to perform a series of common tasks. You can find them in the
-[Github Actions
+[GitHub Actions
 Marketplace](https://github.com/marketplace)^[https://github.com/marketplace].
 
-We are not going to use any actions from the Github Actions Marketplace just yet
+We are not going to use any actions from the GitHub Actions Marketplace just yet
 though, but instead, we will be looking at a repository containing actions
 specifically made for R users (if you're using another programming language, it
 is quite likely that you might find a repository of actions for that programming
@@ -162,7 +162,7 @@ language).
 
 [This repository](https://github.com/r-lib/actions)^[https://github.com/r-lib/actions]
 contains many actions for R users. For example, let’s say that you want to
-install R and run some code using Github Actions. Simply take a look at the
+install R and run some code using GitHub Actions. Simply take a look at the
 [setup-r](https://github.com/r-lib/actions/tree/v2/setup-r)^[https://github.com/r-lib/actions/tree/v2/setup-r]
 and see how it’s used. Let me edit my `hello_world.yml` from before, and add one
 step that downloads R and prints `"Hello from R!"` using R:
@@ -190,11 +190,11 @@ jobs:
 ```
 
 So now my job performs two tasks, one that prints `"Hello from Bash!"` and
-another that prints `"Hello from R!"`. There are several steps involved, the
-second step, called `checkout-repo` runs the action `actions/checkout@v3` and
-the third step, called `install-r` uses the action `r-lib/actions/setup-r@v2`.
-The first action, `actions/checkout@v3` is an action that you will see on almost
-any Github Actions workflow file, even though it is likely superfluous in this
+another that prints `"Hello from R!"`. There are several steps involved: the
+second step, called `checkout-repo` runs the action `actions/checkout@v3`, and
+the third step, called `install-r`, uses the action `r-lib/actions/setup-r@v2`.
+The first action, `actions/checkout@v3`, is an action that you will see on almost
+any GitHub Actions workflow file, even though it is likely superfluous in this
 case. You can read about it
 [here](https://github.com/actions/checkout)^[https://github.com/actions/checkout]
 and it essentially makes the files inside the repository available to the
@@ -203,7 +203,7 @@ runner. Sometimes I think that it would have made more sense to call this action
 that this is not the case. The next action is `setup-r@v2` which downloads and
 installs, in our example here, R version 3.5.3. The final step then runs the
 command `Rscript -e 'print("Hello from R!")'`. If you check out the "Actions"
-tab on Github, you should now see this:
+tab on GitHub, you should now see this:
 
 ::: {.content-hidden when-format="pdf"}
 <figure>
@@ -255,9 +255,9 @@ like the above, each time you push, every step will run from scratch (apart from
 package installation using `r-lib/actions/setup-renv@v2` because packages will
 be cached for future runs of the workflow), and this may take some time to run.
 
-## Running a RAP using Github Actions
+## Running a RAP using GitHub Actions
 
-Because running `{targets}` pipelines on Github Actions is a common task, there
+Because running `{targets}` pipelines on GitHub Actions is a common task, there
 is of course a way to do it very easily, without the need to write our own
 workflow file. Simply go to the folder that contains your pipeline (which, I
 hope, is versioned using Git, right?), open an R session and run
@@ -290,33 +290,33 @@ HTML file is in the newly created `targets-runs` branch of the repository. This
 branch gets created automatically by the workflow and the output gets saved in
 there automatically.
 
-So it turns out that running a RAP on Github Actions is quite easy, you only
+So it turns out that running a RAP on GitHub Actions is quite easy, you only
 need to use `targets::tar_github_actions()`, and adapt the `targets.yaml` file a
 little bit to install the right version of R and run it on the right version of
-Ubuntu (or Windows or macOS, but careful, you only have 2000 free minutes and
+Ubuntu (or Windows or macOS, but careful, you only have 2,000 free minutes and
 Windows and macOS are more expensive than Ubuntu, 1 minute of CPU time on Ubuntu
 is equal to 2 minutes of run-time on macOS). By using `{renv}` and the generated
 `renv.lock` file, the pipeline dependencies get installed seamlessly as well.
-You can now focus on coding, each time you push to this branch, you will see the
+You can now focus on coding: each time you push to this branch, you will see the
 output get generated (and because caching is being used, runs will be executed
 rather quickly).
 
 But, and yes there is a but, you should think about the following, potential, issues:
 
-- you are limited to 2000 minutes of free run-time. If your pipeline takes several hours to run, you might need to upgrade to a paid account, or run it locally (but this is mitigated thanks to caching on Github and by using `{targets}` that caches results as well);
-- Github Actions does not keep old versions of operating systems for too long. For example, as of writing, only versions 20.04 and 22.04 of Ubuntu are available. Ubuntu 18.04 was removed in August 2022. If your RAP absolutely needs a specific version of Ubuntu for a very long time, Github Actions might not be the right solution. The same is true for Windows or macOS as well. However, what you might want to do instead is migrate the pipeline to newer versions of Ubuntu when these become available. Generally speaking, this should not be a very painful process.
+- You are limited to 2,000 minutes of free run time. If your pipeline takes several hours to run, you might need to upgrade to a paid account, or run it locally (but this is mitigated thanks to caching on GitHub and by using `{targets}` that caches results as well);
+- GitHub Actions does not keep old versions of operating systems for too long. For example, as of writing, only versions 20.04 and 22.04 of Ubuntu are available. Ubuntu 18.04 was removed in August 2022. If your RAP absolutely needs a specific version of Ubuntu for a very long time, GitHub Actions might not be the right solution. The same is true for Windows or macOS as well. However, what you might want to do instead is migrate the pipeline to newer versions of Ubuntu when these become available. Generally speaking, this should not be a very painful process.
 
 So you need to think about what it is you really need. Does your pipeline run
 relatively quickly, and you don’t need to keep it running forever on the same
-operating system? Then Github Actions is for you. Or perhaps you are writing a
+operating system? Then GitHub Actions is for you. Or perhaps you are writing a
 book using Rmarkdown, or Quarto, and don’t want to bother building it and
-deploying it manually? Then Github Actions is for you as well (and take a look
+deploying it manually? Then GitHub Actions is for you as well (and take a look
 at this book’s workflow file
 [here](https://github.com/b-rodrigues/rap4all/blob/master/.github/workflows/quarto-publish.yml)^[https::/is.gd/6nhYaf]
 for an example of exactly this). But if you are working on a pipeline that may
 take several hours to run, and you want it to stay reproducible for a very long
 time, then using Docker might be a better option. Thankfully, you can also use
-Github Actions to build Docker images and upload them to Docker Hub. You can
+GitHub Actions to build Docker images and upload them to Docker Hub. You can
 even then run a Docker container that runs your RAP (but here again, if your
 pipeline takes several hours to run, you may not want to do that).
 
@@ -324,27 +324,27 @@ pipeline takes several hours to run, you may not want to do that).
 
 This section and the next are going to mirror the sections on dockerizing
 projects and dockerizing dev envs (development environments) from the previous
-chapter. The only difference is that all the heavy lifting will happen on Github
+chapter. The only difference is that all the heavy lifting will happen on GitHub
 Actions, instead of our own computer.
 
 I'm going to describe the following
 [repository](https://github.com/b-rodrigues/ga_demo/tree/main)^[https://github.com/b-rodrigues/ga_demo/tree/main].
 This repository contains a Dockerfile, and a `.github/workflows/` folder with a
-Github Actions workflow file. Each time I push any change to any file from this
+GitHub Actions workflow file. Each time I push any change to any file from this
 repository, a new Docker image gets built automatically and pushed to Docker
 Hub. The image that gets built defines a dev env that we will
 then use for our RAPs.
 
 As stated before, the advantage of using Docker images for your RAPs instead of
-simply running them directly inside Github Actions (as in the previous section),
-is that you don't rely on Github to have the base image (in our example,
+simply running them directly inside GitHub Actions (as in the previous section),
+is that you don't rely on GitHub to have the base image (in our example,
 `ubuntu-22.04`), forever available, which they won't.
 
 The idea is the same as before: work on the code of your project, define a
 Dockerfile and get an updated image each time you push your changes to the
 repository.
 
-Let's start with the Github Actions workflow file that we need. Here it is:
+Let's start with the GitHub Actions workflow file that we need. Here it is:
 
 ```
 name: build_docker
@@ -395,14 +395,14 @@ a look at the Dockerfile afterwards. Then, the action
 `docker/setup-buildx-action@v2` simply sets up everything for `buildx` to run
 smoothly (`buildx` will build the Docker image using the `docker buildx` command
 an alternative to `docker build`). Honestly, I don't even know exactly what it
-sets up. I guess it may at least checkout the repository to make the files
+sets up. I guess it may at least check out the repository to make the files
 available to the next actions and maybe set some other variables for `docker
 buildx`.
 
-Then we use the `docker/login-action@v2` to login from Github Actions to Docker
-Hub. Essentially, we need to be able to tell our Github Actions runner how to
+Then we use the `docker/login-action@v2` to login from GitHub Actions to Docker
+Hub. Essentially, we need to be able to tell our GitHub Actions runner how to
 login to Docker Hub, and of course we want to do so in a secure manner (and it
-must run non-interactively). To login to Docker Hub from Github Actions, you
+must run non-interactively). To login to Docker Hub from GitHub Actions, you
 need first to create an access token from your Docker Hub account. Login to your
 Docker Hub account, go to your account settings and then to the "Security" tab:
 
@@ -440,7 +440,7 @@ knitr::include_graphics("images/docker_hub_copy_token.png")
 :::
 
 You then need to go to the settings area of the repository. Under "Security",
-"Secrets and variables" and finally "Actions" you can create a secret called
+"Secrets and variables" and finally "Actions", you can create a repository secret (as opposed to an environment secret) called
 `DOCKERHUB_TOKEN` and copy the value of the token in the free text area:
 
 ::: {.content-hidden when-format="pdf"}
@@ -476,7 +476,7 @@ that you've defined in the beginning of the workflow file. Careful though:
 Docker Hub username as already stated, but `r_4.2.2` is a repository that you
 need to create on Docker Hub. So both your image name and the repository name on
 Docker Hub will be `r_4.2.2`. If you don't create a repository on Docker Hub
-that is exactly named like that, your image will not get pushed, because Github
+that is exactly named like that, your image will not get pushed, because GitHub
 Actions will not know where to push the image. So if this is not already the
 case, go back to Docker Hub and create a repository named `r_4.2.2`. For the
 version, you can do whatever you want, but I suggest to use the context
@@ -494,14 +494,14 @@ images:
 ::: {.content-hidden when-format="pdf"}
 <figure>
     <img src="images/ga_dockerfile.png"
-         alt="Two successful runs of Github Actions."></img>
-    <figcaption>Two successful runs of Github Actions.</figcaption>
+         alt="Two successful runs of GitHub Actions."></img>
+    <figcaption>Two successful runs of GitHub Actions.</figcaption>
 </figure>
 :::
 
 ::: {.content-visible when-format="pdf"}
 ```{r, echo = F, out.width="300px"}
-#| fig-cap: "Two successful runs of Github Actions."
+#| fig-cap: "Two successful runs of GitHub Actions."
 knitr::include_graphics("images/ga_dockerfile.png")
 ```
 :::
@@ -549,10 +549,12 @@ knitr::include_graphics("images/docker_hub_image.png")
 \newpage
 :::
 
+(When running GitHub Actions, you may encounter an error complaining about permission being denied to "github-actions[bot]" and therefore being unable to access your repository. To address this problem, you may need to change the access settings of your repository to give write permission to the workflow. Under the settings area of the repository, select "Actions" then "General", and then scroll to the bottom to the "Workflow permissions" section. Select "Read and write permissions" and then click the "Save" button. Then try running the workflow again.)
+
 ## Run a RAP using a dockerized dev env on GA
 
 Now that we have a dockerized dev env that gets built by pushing
-changes to a Github repo, it is now time to use it for our RAPs. As I wrote in
+changes to a GitHub repo, it is now time to use it for our RAPs. As I wrote in
 the beginning, this will mirror the section on running a RAP that uses a
 dockerized environment, so we can start from that repository.
 [This](https://github.com/rap4all/housing/tree/docker)^[https://github.com/rap4all/housing/tree/docker]
@@ -561,7 +563,7 @@ with the same content (but you can remove the `.gitignore` file, it won't be
 needed here). [This is what my
 repository](https://github.com/b-rodrigues/ga_demo_rap)^[https://github.com/b-rodrigues/ga_demo_rap]
 looks like. The only difference with the first repository is the Dockerfile and
-the Github Actions workflow file that is inside `.github/workflows`. Let's take
+the GitHub Actions workflow file that is inside `.github/workflows`. Let's take
 a look at the Dockerfile first:
 
 
@@ -702,7 +704,7 @@ the other steps. Then we build the Docker image. For this, I'm doing this the
 machine. Then we run the container. Once again I use the command that I would
 use locally. But you'll notice that I use `/github/workspace/shared_folder` as
 the path to the shared folder. You likely guessed it, `/github/workspace/` is
-the "local" path inside the Github Actions runner. This is equivalent to the
+the "local" path inside the GitHub Actions runner. This is equivalent to the
 `/home/` directory on a Linux machine. The command is also on multiple lines
 (to write a command over multiple lines on github actions, you need to
 start by `>` and then use as many lines as you need).
@@ -713,7 +715,7 @@ github.sha }}` will get replaced by the hash from the commit that triggered the
 action. This will be a zip file that you can then download. But download from
 where?
 
-Simply click on the "Actions" tab on the Github repository, and then click on the 
+Simply click on the "Actions" tab on the GitHub repository, and then click on the 
 run that you want the artifact from (pipeline outputs are called artifacts):
 
 ::: {.content-hidden when-format="pdf"}
@@ -744,7 +746,7 @@ to that commit to get past outputs.
 At the start of this chapter, I stated that this chapter was optional, because
 it is not necessary to use a CI/CD service to ensure that your projects are
 reproducible. However, I believe that setting up your project to make it run on
-Github Actions (or any other CI/CD service) truly forces you to master all the
+GitHub Actions (or any other CI/CD service) truly forces you to master all the
 topics presented in this book. In the conclusion of part 1 of the book, I wrote
 that it seemed as if functional programming was only about putting restrictions
 on our code, for very little gain. In some ways, forcing yourself to use a CI/CD
@@ -756,7 +758,7 @@ the very same basic steps: clone the repository, build a Docker image and run a
 container (or set up the required R package library using `{renv}` and then run
 the pipeline with `{targets}` if you’re not using Docker).
 
-If you work in research, but cannot push the data to Github, you could always
+If you work in research, but cannot push the data to GitHub, you could always
 work on the code and the infrastructure using synthetic data for instance. The
 repository alongside the synthetic data could then be a nice complement to the
 paper (but again, only in case the data cannot be published).

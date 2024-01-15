@@ -859,7 +859,7 @@ simply because the original `renv.lock` file was generated using `{renv}`
 version 0.16.0 and so to avoid any potential compatibility issues, I also use
 this one to restore the required packages for the pipeline. But it is very
 likely that I could have installed the current version of `{renv}` to restore
-the packages, and that it would have worked without problems. But just to be on
+the packages, and that it would have worked without problems. (Note that for later versions of `{renv}`, you may need to insert a 'v' before the version number: `renv@v1.0.2` for example.) But just to be on
 the safe side, I install the right version of `{renv}`. By the way, I knew how
 to do this because I read [this
 vignette](https://rstudio.github.io/renv/articles/docker.html)^[https://rstudio.github.io/renv/articles/docker.html]
