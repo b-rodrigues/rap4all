@@ -66,7 +66,7 @@ same computer but in the future.
 
 This works because `{renv}` does more than simply create a list of the used
 packages and recording their versions inside the `renv.lock` file: it actually
-creates a per-project library that is completely isolated for the main, default,
+creates a per-project library that is completely isolated from the main, default,
 R library on your machine, but also from the other `{renv}` libraries that you
 might have set up for your other projects (remember, the *library* is the set of
 R packages installed on your computer). To save time when setting up an `{renv}`
