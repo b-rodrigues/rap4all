@@ -883,7 +883,7 @@ outputs you need in the document, and then defining the document as a target to
 be computed as well. For example, if you’re showing a table in the document,
 create a target in the pipeline that builds the underlying data. Do the same for
 a plot, or a statistical model. Then, in the `.Rmd` (or `.Qmd`) source file, use
-`targets::tar_read()`to load the different objects you need.
+`targets::tar_read()` to load the different objects you need.
 
 Consider the following `_targets.R` file:
 
