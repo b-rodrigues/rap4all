@@ -475,7 +475,7 @@ Ok, so now, we need to make `save_data.Rmd` ready to be inflated. Take
 inspiration from the `flat_minimal.Rmd` that `fusen::create_fusen()` put in the
 `dev/` folder. This is what the end-result should [look
 like](https://is.gd/anRjt4)^[https://is.gd/anRjt4] (no worries, I’m going to
-explain how I got there). For consistency with your future use of {fusen}, you could also rename the `save_data.Rmd` to `flat_save_data.Rmd`, although this won't prevent {fusen} from working properly.
+explain how I got there). For consistency with your future use of {fusen}, you could also rename the `save_data.Rmd` to `flat_save_data.Rmd`, although this won't avoid {fusen} to work properly.
 
 Let’s start with the first function, `get_raw_data()`. If you compare the
 [before](https://raw.githubusercontent.com/b-rodrigues/rap4all/master/rmds/save_data_fusen.Rmd)^[https://is.gd/fusen_save_data],
@@ -541,10 +541,10 @@ Then come the `@importFrom` statements. This is where you list dependencies:
 #' @importFrom purrr map_dfr
 ```
 
-This is important, because the statements will write the dependencies into the
+This is important because the statements will write the dependencies into the
 package’s `NAMESPACE` file. This file is important, because any function defined
 there will be available to your package’s functions when you load the package.
-So if your function use `dplyr::mutate()` for example, your package needs to
+So if your function uses `dplyr::mutate()` for example, your package needs to
 know where to look for `mutate()`. This is where the `NAMESPACE` file comes into
 play. Take the opportunity to list the dependencies of your function to review
 them: maybe you're using a package for a single dependency that you could easily
