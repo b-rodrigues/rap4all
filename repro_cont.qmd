@@ -404,7 +404,7 @@ pandoc
 libxml2-dev
 ```
 
-This why r2u is so useful: by adding this repository, what you’re essentially
+This is why r2u is so useful: by adding this repository, what you’re essentially
 doing is telling R to not fetch the packages from CRAN, but from the r2u
 repository. And this repository contains compiled R packages for Ubuntu. So the
 required system-level dependencies get installed automatically and the R package
@@ -1470,7 +1470,7 @@ install the packages required for my projects, I can keep using it for years
 (and LTS versions of Ubuntu like Jammy get supported for 5 years).
 
 If you want to test this, you could delete all images and containers from your
-system. This way, when you will build the image using the above Dockerfile, it
+system. This way, when you build the image using the above Dockerfile, it
 will have to pull from Docker Hub. To delete all containers, start by using
 `docker system prune`. You can then delete all images using `docker rmi $(docker
 images -a -q)`. This should remove everything. Now, let's build the image using
