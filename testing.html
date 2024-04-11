@@ -675,7 +675,7 @@ Expected match: "message is wrong"
 Actual message: "dataset must be one of `commune_level_data`
                    or `country_level_data`"</code></pre>
 <p>So now, not only does our function fail for the right reasons, our test is able to tell us that as well!</p>
-<p>Before inflating to run these tests, you should also change the test titled “get_laspeyeres() provides correct answers”. This is because the name of the input dataset used for the test is <code>input_df</code>. So if you leave it like this, the assertion that we’ve included in the function will make this test fail. So change this test by simply saving <code>input_df</code> <code>commune_level_data</code>:</p>
+<p>Before inflating to run these tests, you should also change the test titled “get_laspeyeres() provides correct answers”. This is because the name of the input dataset used for the test is <code>input_df</code>. So if you leave it like this, the assertion that we’ve included in the function will make this test fail. So change this test by simply saving <code>input_df</code> as <code>commune_level_data</code>:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># rename data to make assertion pass</span></span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>commune_level_data <span class="ot">&lt;-</span> input_df</span>
