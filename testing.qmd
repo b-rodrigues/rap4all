@@ -536,7 +536,7 @@ Before inflating to run these tests, you should also change the test titled
 "get_laspeyeres() provides correct answers". This is because the name of the
 input dataset used for the test is `input_df`. So if you leave it like this, the
 assertion that we’ve included in the function will make this test fail. So
-change this test by simply saving `input_df` `commune_level_data`:
+change this test by simply saving `input_df` as `commune_level_data`:
 
 ```{r, eval = F}
 # rename data to make assertion pass
